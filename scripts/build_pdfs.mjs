@@ -116,8 +116,14 @@ function preparePageForPdf({ maxCodeLines, onlineUrl }) {
 function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
-const HF_STYLE = 'font-family: Roboto, Helvetica, Arial, sans-serif; font-size: 8px; color: #777; ' +
-                 'width: 100%; padding: 0 15mm; display: flex; justify-content: space-between;';
+const HF_FONT = "'Linux Libertine O', 'Noto Serif', 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
+const HF_HEADER = `font-family: ${HF_FONT}; font-size: 8.5px; color: #555555; ` +
+                  'box-sizing: border-box; width: 100%; padding: 0 15mm 3px 15mm; ' +
+                  'border-bottom: 0.5pt solid #D6D6D6; display: flex; justify-content: space-between; ' +
+                  'letter-spacing: 0.5px;';
+const HF_FOOTER = `font-family: ${HF_FONT}; font-size: 8.5px; color: #666666; ` +
+                  'box-sizing: border-box; width: 100%; padding: 3px 15mm 0 15mm; ' +
+                  'display: flex; justify-content: space-between;';
 
 async function renderChapter(context, baseUrl, siteName, entry) {
   const page = await context.newPage();
@@ -160,10 +166,10 @@ async function renderChapter(context, baseUrl, siteName, entry) {
       path: outPath,
       format: 'A4',
       printBackground: true,
-      margin: { top: '18mm', bottom: '18mm', left: '15mm', right: '15mm' },
+      margin: { top: '22mm', bottom: '20mm', left: '15mm', right: '15mm' },
       displayHeaderFooter: true,
-      headerTemplate: `<div style="${HF_STYLE}"><span>${esc(siteName)}</span><span>${esc(entry.title)}</span></div>`,
-      footerTemplate: `<div style="${HF_STYLE}"><span>${esc(entry.public_url)}</span>` +
+      headerTemplate: `<div style="${HF_HEADER}"><span>${esc(siteName)}</span><span>${esc(entry.title)}</span></div>`,
+      footerTemplate: `<div style="${HF_FOOTER}"><span>${esc(entry.public_url)}</span>` +
                       `<span>Pagina <span class="pageNumber"></span> di <span class="totalPages"></span></span></div>`,
     });
     const pdfPages = (buffer.toString('latin1').match(/\/Type\s*\/Page[^s]/g) || []).length;

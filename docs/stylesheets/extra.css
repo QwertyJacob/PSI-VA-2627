@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Libertinus+Serif:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
+
 /* Custom styling for PSI interactive widgets and runnable code blocks.
    Uses Material for MkDocs' own CSS variables so colors follow the active
    light/dark palette automatically instead of hardcoding a theme. */
@@ -217,12 +219,151 @@
    generated PDFs carry their own running header/footer instead. */
 @page {
   size: A4;
-  margin: 18mm 15mm;
+  margin: 22mm 15mm 20mm 15mm;
   @bottom-center { content: none; }
   @bottom-right { content: none; }
 }
 
 @media print {
+  /* -------------------------------------------------------------
+     Academic Typography (matching mdprint / Linux Libertine standard)
+     ------------------------------------------------------------- */
+  body, .md-typeset {
+    font-family: "Libertinus Serif", "Linux Libertine O", "Linux Libertine", "Noto Serif", "DejaVu Serif", "Liberation Serif", serif !important;
+    font-size: 10pt !important;
+    line-height: 1.55 !important;
+    color: #1a1a1a !important;
+  }
+
+  .md-typeset p,
+  .md-typeset li {
+    text-align: justify !important;
+    text-justify: inter-word !important;
+    hyphens: auto !important;
+  }
+
+  .md-typeset h1 {
+    font-family: "Libertinus Serif", "Linux Libertine O", "Linux Libertine", "Noto Serif", serif !important;
+    font-size: 18pt !important;
+    color: #006D5E !important;
+    text-align: center !important;
+    font-weight: 700 !important;
+    margin-top: 10pt !important;
+    margin-bottom: 12pt !important;
+    break-after: avoid;
+  }
+
+  .md-typeset h2 {
+    font-family: "Libertinus Serif", "Linux Libertine O", "Linux Libertine", "Noto Serif", serif !important;
+    font-size: 13pt !important;
+    color: #006D5E !important;
+    border-bottom: 0.6pt solid #D6D6D6 !important;
+    padding-bottom: 3pt !important;
+    margin-top: 18pt !important;
+    margin-bottom: 8pt !important;
+    break-after: avoid;
+  }
+
+  .md-typeset h3 {
+    font-family: "Libertinus Serif", "Linux Libertine O", "Linux Libertine", "Noto Serif", serif !important;
+    font-size: 11pt !important;
+    color: #2c3e50 !important;
+    margin-top: 14pt !important;
+    margin-bottom: 6pt !important;
+    break-after: avoid;
+  }
+
+  .md-typeset h4 {
+    font-family: "Libertinus Serif", "Linux Libertine O", "Linux Libertine", "Noto Serif", serif !important;
+    font-size: 10pt !important;
+    color: #006D5E !important;
+    margin-top: 10pt !important;
+    margin-bottom: 4pt !important;
+    break-after: avoid;
+  }
+
+  /* Blockquotes & Citations */
+  .md-typeset blockquote {
+    margin: 10pt 0 !important;
+    padding: 8pt 14pt !important;
+    background-color: #f7faf9 !important;
+    border-left: 3pt solid #006D5E !important;
+    font-style: italic !important;
+    color: #2c3e50 !important;
+    break-inside: avoid;
+  }
+
+  .md-typeset blockquote p:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Admonitions (callout boxes) */
+  .md-typeset .admonition,
+  .md-typeset details {
+    margin: 12pt 0 !important;
+    border-radius: 4px !important;
+    break-inside: avoid;
+  }
+
+  .md-typeset .admonition-title,
+  .md-typeset summary {
+    font-family: "Libertinus Serif", "Linux Libertine O", "Linux Libertine", "Noto Serif", serif !important;
+    font-weight: 700 !important;
+    break-after: avoid;
+  }
+
+  /* Code blocks & Inline code */
+  .md-typeset pre,
+  .md-typeset code {
+    font-family: "DejaVu Sans Mono", "Linux Libertine Mono O", "Courier New", monospace !important;
+  }
+
+  .md-typeset code {
+    background-color: #f1f5f9 !important;
+    padding: 1pt 3pt !important;
+    border-radius: 3px !important;
+    font-size: 8.5pt !important;
+  }
+
+  .md-typeset pre code {
+    background: none !important;
+    padding: 0 !important;
+  }
+
+  .md-typeset pre {
+    background-color: #f8f9fa !important;
+    border: 0.5pt solid #e2e8f0 !important;
+    border-radius: 4px !important;
+    padding: 8pt 10pt !important;
+    font-size: 7.8pt !important;
+    line-height: 1.4 !important;
+    break-inside: avoid;
+  }
+
+  /* Clean academic tables */
+  .md-typeset table:not([class]) {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin: 12pt 0 !important;
+    font-size: 8.5pt !important;
+    break-inside: avoid;
+  }
+
+  .md-typeset table:not([class]) th {
+    background-color: #f1f5f9 !important;
+    color: #1e293b !important;
+    font-weight: 600 !important;
+    text-align: left !important;
+    padding: 5pt 8pt !important;
+    border-bottom: 1.5pt solid #cbd5e1 !important;
+  }
+
+  .md-typeset table:not([class]) td {
+    padding: 4pt 8pt !important;
+    border-bottom: 0.5pt solid #e2e8f0 !important;
+  }
+
+  /* Interactive widgets & hidden print elements */
   .psi-controls,
   .psi-reset-btn,
   .psi-exec-toolbar,
@@ -249,10 +390,6 @@
   .psi-exec-output:not([hidden]) { display: block !important; }
 
   /* Pagination: never orphan a heading, never slice a figure or a formula. */
-  .md-typeset h1, .md-typeset h2, .md-typeset h3, .md-typeset h4,
-  .md-typeset .admonition-title, .md-typeset summary {
-    break-after: avoid;
-  }
   .md-typeset pre, .md-typeset .highlight, .md-typeset img, .md-typeset figure,
   .md-typeset table, .psi-widget-host, .psi-print-omitted,
   mjx-container[display="true"] {

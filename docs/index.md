@@ -12,7 +12,7 @@ Il materiale integra il patrimonio concettuale ed epistemologico dei grandi clas
 
 ## Come usare questo sito
 
-- **Naviga** i capitoli dal menu in alto: il percorso è articolato in 4 moduli tematici (12 lezioni), dai fondamenti epistemologici fino all'inferenza statistica e al Machine Learning.
+- **Naviga** i capitoli dal menu in alto: il percorso è articolato in 4 moduli tematici distribuiti su **12 settimane** (24 lezioni d'aula complessive), dai fondamenti epistemologici fino all'inferenza statistica e al Machine Learning.
 - **Approfondimenti** (contrassegnati come tali) espandono un argomento con dettagli facoltativi; **esempi svolti** applicano la teoria a problemi concreti.
 - **Widget interattivi**: dove vedi dei cursori sotto un grafico, trascinali per vedere come cambia la curva — è lo stesso identico grafico del testo, ma con i parametri nelle tue mani.
 - **Codice eseguibile**: i blocchi di codice con il pulsante "▶ Esegui" girano Python vero nel tuo browser (nessuna installazione richiesta). Puoi modificare il codice prima di eseguirlo.
@@ -20,36 +20,36 @@ Il materiale integra il patrimonio concettuale ed epistemologico dei grandi clas
 
 ## Il percorso in breve
 
-Il percorso adotta una prospettiva storica ed epistemologica (*Erlebnis*, la dimensione dell'esperienza vissuta e del dramma conoscitivo), affiancando al rigore matematico lo sviluppo di un solo grande modello mentale per lezione e la sua connessione diretta con l'informatica moderna.
+Il percorso adotta una prospettiva storica ed epistemologica (*Erlebnis*, la dimensione dell'esperienza vissuta e del dramma conoscitivo), affiancando al rigore matematico lo sviluppo di un'unica grande unità concettuale per settimana, con lezioni dedicate all'intuizione, all'interazione con i widget e al laboratorio computazionale in Python.
 
-### Modulo I — La genesi della certezza sfocata (Lezioni 1–3)
+### Modulo I — La genesi della certezza sfocata (Settimane 1–3)
 
-| Lezione | Argomenti e dramma conoscitivo |
+| Settimana | Argomenti e dramma conoscitivo |
 |---|---|
-| **[0. Che senso ha essere qui?](0-senso.md)** *(Lezione 1)* | **Giustificazione formativa ed excursus epistemologico:** l'attenzione come disciplina intellettuale (Weil, Lamport); il paradosso della moneta e del supercomputer; il contenitore vuoto di Kolmogorov; polo epistemico vs polo ontico e i criteri di Wesley Salmon. |
-| **Lezione 2** *(in arrivo)* | **La sintassi di Kolmogorov e il Teorema di Bayes:** spazio campionario, assiomi, indipendenza stocastica, alberi di probabilità e il dramma dei falsi positivi nei sistemi software e negli IDS. |
-| **Lezione 3** *(in arrivo)* | **Pascal, Fermat e le tabelle hash:** la corrispondenza del 1654 e il problema delle parti; combinatoria minima essenziale, paradosso dei compleanni e Birthday Attack in crittografia. |
+| **[0. Che senso ha essere qui?](0-senso.md)** *(Settimana 1)* | **Giustificazione formativa ed excursus epistemologico:** l'attenzione come disciplina intellettuale (Weil, Lamport); il paradosso della moneta e del supercomputer; il contenitore vuoto di Kolmogorov; polo epistemico vs polo ontico e i criteri di Wesley Salmon. |
+| **Settimana 2** *(in arrivo)* | **La sintassi di Kolmogorov e il Teorema di Bayes:** spazio campionario, assiomi, indipendenza stocastica, alberi di probabilità e il dramma dei falsi positivi nei sistemi software e negli IDS. |
+| **Settimana 3** *(in arrivo)* | **Pascal, Fermat e le tabelle hash:** la corrispondenza del 1654 e il problema delle parti; combinatoria minima essenziale, paradosso dei compleanni e Birthday Attack in crittografia. |
 
-### Modulo II — Quantificare il mondo discreto e continuo (Lezioni 4–6)
+### Modulo II — Quantificare il mondo discreto e continuo (Settimane 4–6)
 
-| Lezione | Argomenti e dramma conoscitivo |
+| Settimana | Argomenti e dramma conoscitivo |
 |---|---|
-| **Lezione 4** *(in arrivo)* | **Huygens e il prezzo equo:** variabili aleatorie, valore atteso come baricentro razionale, la magia della linearità di Feller e applicazione alla complessità algoritmica. |
-| **Lezione 5** *(in arrivo)* | **Bortkiewicz, Poisson e i filtri di Bloom:** la distribuzione Geometrica (assenza di memoria), Poisson e gli eventi rari nei registri militari prussiani; strutture dati probabilistiche nei sistemi distribuiti. |
-| **Lezione 6** *(in arrivo)* | **Bertrand, Gauss e l'asteroide Cerere:** la crisi del continuo (paradosso di Bertrand), densità (PDF) vs CDF, la distribuzione esponenziale, la campana di Gauss e la scoperta di Cerere. |
+| **Settimana 4** *(in arrivo)* | **Huygens e il prezzo equo:** variabili aleatorie, valore atteso come baricentro razionale, la magia della linearità di Feller e applicazione alla complessità algoritmica. |
+| **Settimana 5** *(in arrivo)* | **Bortkiewicz, Poisson e i filtri di Bloom:** la distribuzione Geometrica (assenza di memoria), Poisson e gli eventi rari nei registri militari prussiani; strutture dati probabilistiche nei sistemi distribuiti. |
+| **Settimana 6** *(in arrivo)* | **Bertrand, Gauss e l'asteroide Cerere:** la crisi del continuo (paradosso di Bertrand), densità (PDF) vs CDF, la distribuzione esponenziale, la campana di Gauss e la scoperta di Cerere. |
 
-### Modulo III — La macchina del mondo e i teoremi limite (Lezioni 7–9)
+### Modulo III — La macchina del mondo e i teoremi limite (Settimane 7–9)
 
-| Lezione | Argomenti e dramma conoscitivo |
+| Settimana | Argomenti e dramma conoscitivo |
 |---|---|
-| **Lezione 7** *(in arrivo)* | **Il Quincunx di Galton e la correlazione:** distribuzioni congiunte e marginali, covarianza, correlazione di Pearson e il monito *"correlazione non implica causazione"*. |
-| **Lezione 8** *(in arrivo)* | **La scuola russa e il Teorema del Limite Centrale:** disuguaglianze universali di Markov e Čebyšëv, Legge Debole dei Grandi Numeri e la convergenza universale del CLT. |
-| **Lezione 9** *(in arrivo)* | **Dalla birreria Guinness a Stanford:** il ribaltamento verso l'inferenza statistica, campionamento, Gosset (Student) e la rivoluzione computazionale del Bootstrap di Efron. |
+| **Settimana 7** *(in arrivo)* | **Il Quincunx di Galton e la correlazione:** distribuzioni congiunte e marginali, covarianza, correlazione di Pearson e il monito *"correlazione non implica causazione"*. |
+| **Settimana 8** *(in arrivo)* | **La scuola russa e il Teorema del Limite Centrale:** disuguaglianze universali di Markov e Čebyšëv, Legge Debole dei Grandi Numeri e la convergenza universale del CLT. |
+| **Settimana 9** *(in arrivo)* | **Dalla birreria Guinness a Stanford:** il ribaltamento verso l'inferenza statistica, campionamento, Gosset (Student) e la rivoluzione computazionale del Bootstrap di Efron. |
 
-### Modulo IV — Dispute epistemologiche e Intelligenza Artificiale (Lezioni 10–12)
+### Modulo IV — Dispute epistemologiche e Intelligenza Artificiale (Settimane 10–12)
 
-| Lezione | Argomenti e dramma conoscitivo |
+| Settimana | Argomenti e dramma conoscitivo |
 |---|---|
-| **Lezione 10** *(in arrivo)* | **Ronald Fisher e la massima verosimiglianza (MLE):** la nascita del Machine Learning moderno; log-likelihood, derivazione analitica e il legame con la Binary Cross-Entropy e l'MSE. |
-| **Lezione 11** *(in arrivo)* | **La guerra santa della statistica:** Fisher contro Neyman-Pearson; il vero significato del $p$-value contro le regole di decisione meccanica ($\alpha, \beta$); A/B testing industriale nel software. |
-| **Lezione 12** *(in arrivo)* | **La riconciliazione di Jaynes e il silicio:** la probabilità come estensione della logica (E.T. Jaynes); il classificatore Naive Bayes con Laplace smoothing; laboratorio pratico e chiusura del cerchio. |
+| **Settimana 10** *(in arrivo)* | **Ronald Fisher e la massima verosimiglianza (MLE):** la nascita del Machine Learning moderno; log-likelihood, derivazione analitica e il legame con la Binary Cross-Entropy e l'MSE. |
+| **Settimana 11** *(in arrivo)* | **La guerra santa della statistica:** Fisher contro Neyman-Pearson; il vero significato del $p$-value contro le regole di decisione meccanica ($\alpha, \beta$); A/B testing industriale nel software. |
+| **Settimana 12** *(in arrivo)* | **La riconciliazione di Jaynes e il silicio:** la probabilità come estensione della logica (E.T. Jaynes); il classificatore Naive Bayes con Laplace smoothing; laboratorio pratico e chiusura del cerchio. |

@@ -34,7 +34,7 @@ requirements-docs.txt      dipendenze Python per la build
 package.json               dipendenze Node.js per Playwright
 ```
 
-> **Stato dei contenuti:** Attualmente è pubblicato il capitolo introduttivo (*0. Che senso ha essere qui?*). I 4 moduli tematici del corso (12 lezioni) verranno integrati e pubblicati progressivamente durante il semestre secondo la nuova struttura didattica ed epistemologica.
+> **Stato dei contenuti:** Attualmente è pubblicato il capitolo introduttivo (*0. Che senso ha essere qui?*). I 4 moduli tematici del corso (12 settimane, 24 lezioni complessive) verranno integrati e pubblicati progressivamente durante il semestre secondo la nuova struttura didattica ed epistemologica.
 
 ---
 

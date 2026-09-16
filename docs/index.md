@@ -4,7 +4,7 @@ Dispense del corso di Probabilità e Statistica, Corso di Laurea in Informatica,
 
 Questo sito raccoglie in forma leggibile e stampabile il materiale didattico del corso, con l'aggiunta di **widget interattivi** (per esplorare come cambiano le curve di densità/probabilità al variare dei parametri) e di **blocchi di codice eseguibili** direttamente nel browser, per sperimentare mentre si legge.
 
-Il materiale è adattato e tradotto da:
+Il materiale integra il patrimonio concettuale ed epistemologico dei grandi classici storici (Laplace, Bayes, Bernoulli, Gauss, Fisher, Jaynes) con i riferimenti contemporanei per l'informatica:
 
 - D. Forsyth, *Probability for Computer Science*, Springer Nature, 2018
 - C. Piech, *Probability for Computer Science* (CS109 Course Reader), Stanford, 2024
@@ -12,26 +12,44 @@ Il materiale è adattato e tradotto da:
 
 ## Come usare questo sito
 
-- **Naviga** i capitoli dal menu in alto: il percorso segue l'ordine del corso, dall'incertezza (cap. 0) fino a campionamento e inferenza (cap. 4).
+- **Naviga** i capitoli dal menu in alto: il percorso è articolato in 4 moduli tematici (12 lezioni), dai fondamenti epistemologici fino all'inferenza statistica e al Machine Learning.
 - **Approfondimenti** (contrassegnati come tali) espandono un argomento con dettagli facoltativi; **esempi svolti** applicano la teoria a problemi concreti.
 - **Widget interattivi**: dove vedi dei cursori sotto un grafico, trascinali per vedere come cambia la curva — è lo stesso identico grafico del testo, ma con i parametri nelle tue mani.
 - **Codice eseguibile**: i blocchi di codice con il pulsante "▶ Esegui" girano Python vero nel tuo browser (nessuna installazione richiesta). Puoi modificare il codice prima di eseguirlo.
-- **Stampa**: ogni pagina è pensata per essere stampata singolarmente (Ctrl/Cmd+P) — i controlli interattivi vengono nascosti automaticamente e sostituiti da un'istantanea statica dell'ultimo grafico esplorato. In fondo al menu trovi anche un'opzione per stampare l'intero corso in un unico documento.
+- **Stampa**: ogni pagina è pensata per essere stampata singolarmente (Ctrl/Cmd+P o pulsante "Scarica il PDF") — i controlli interattivi vengono nascosti automaticamente e sostituiti da un'istantanea statica dell'ultimo grafico esplorato. In fondo al menu trovi anche un'opzione per stampare l'intero corso in un unico documento.
 
 ## Il percorso in breve
 
-| Capitolo | Di cosa parla |
+Il percorso adotta una prospettiva storica ed epistemologica (*Erlebnis*, la dimensione dell'esperienza vissuta e del dramma conoscitivo), affiancando al rigore matematico lo sviluppo di un solo grande modello mentale per lezione e la sua connessione diretta con l'informatica moderna.
+
+### Modulo I — La genesi della certezza sfocata (Lezioni 1–3)
+
+| Lezione | Argomenti e dramma conoscitivo |
 |---|---|
-| [0. Che senso ha essere qui?](0-senso.md) | Che senso ha studiare e faticare con questa materia: attenzione, metodo e complessità |
-| *0. Incertezza (in preparazione)* | Perché l'incertezza è ovunque e cosa significa decidere in sua presenza |
-| *1. Probabilità (in preparazione)* | Spazio campionario, assiomi, definizione classica |
-| *2. Conteggio (in preparazione)* | Disposizioni e combinazioni, probabilità condizionata, esempi svolti |
-| *3. Variabili aleatorie discrete (in preparazione)* | Valore atteso, varianza, Bernoulli, binomiale, geometrica, Poisson |
-| *4. Variabili aleatorie continue (in preparazione)* | Densità, gaussiana, disuguaglianze, distribuzioni congiunte, teorema del limite centrale, campionamento |
+| **[0. Che senso ha essere qui?](0-senso.md)** *(Lezione 1)* | **Giustificazione formativa ed excursus epistemologico:** l'attenzione come disciplina intellettuale (Weil, Lamport); il paradosso della moneta e del supercomputer; il contenitore vuoto di Kolmogorov; polo epistemico vs polo ontico e i criteri di Wesley Salmon. |
+| **Lezione 2** *(in arrivo)* | **La sintassi di Kolmogorov e il Teorema di Bayes:** spazio campionario, assiomi, indipendenza stocastica, alberi di probabilità e il dramma dei falsi positivi nei sistemi software e negli IDS. |
+| **Lezione 3** *(in arrivo)* | **Pascal, Fermat e le tabelle hash:** la corrispondenza del 1654 e il problema delle parti; combinatoria minima essenziale, paradosso dei compleanni e Birthday Attack in crittografia. |
 
-Le sezioni marcate come **Approfondimento** sono facoltative: espandono un argomento
-senza essere necessarie per seguire il filo principale.
+### Modulo II — Quantificare il mondo discreto e continuo (Lezioni 4–6)
 
-## Materiale originale
+| Lezione | Argomenti e dramma conoscitivo |
+|---|---|
+| **Lezione 4** *(in arrivo)* | **Huygens e il prezzo equo:** variabili aleatorie, valore atteso come baricentro razionale, la magia della linearità di Feller e applicazione alla complessità algoritmica. |
+| **Lezione 5** *(in arrivo)* | **Bortkiewicz, Poisson e i filtri di Bloom:** la distribuzione Geometrica (assenza di memoria), Poisson e gli eventi rari nei registri militari prussiani; strutture dati probabilistiche nei sistemi distribuiti. |
+| **Lezione 6** *(in arrivo)* | **Bertrand, Gauss e l'asteroide Cerere:** la crisi del continuo (paradosso di Bertrand), densità (PDF) vs CDF, la distribuzione esponenziale, la campana di Gauss e la scoperta di Cerere. |
 
-I notebook originali (Jupyter/Colab), pensati per essere eseguiti ed estesi liberamente, restano disponibili nel repository [colab_handouts_PSI](https://github.com/QwertyJacob/colab_handouts_PSI) — ogni pagina di questo sito include un link diretto al notebook corrispondente, sia per aprirlo in Colab sia per proporre una modifica.
+### Modulo III — La macchina del mondo e i teoremi limite (Lezioni 7–9)
+
+| Lezione | Argomenti e dramma conoscitivo |
+|---|---|
+| **Lezione 7** *(in arrivo)* | **Il Quincunx di Galton e la correlazione:** distribuzioni congiunte e marginali, covarianza, correlazione di Pearson e il monito *"correlazione non implica causazione"*. |
+| **Lezione 8** *(in arrivo)* | **La scuola russa e il Teorema del Limite Centrale:** disuguaglianze universali di Markov e Čebyšëv, Legge Debole dei Grandi Numeri e la convergenza universale del CLT. |
+| **Lezione 9** *(in arrivo)* | **Dalla birreria Guinness a Stanford:** il ribaltamento verso l'inferenza statistica, campionamento, Gosset (Student) e la rivoluzione computazionale del Bootstrap di Efron. |
+
+### Modulo IV — Dispute epistemologiche e Intelligenza Artificiale (Lezioni 10–12)
+
+| Lezione | Argomenti e dramma conoscitivo |
+|---|---|
+| **Lezione 10** *(in arrivo)* | **Ronald Fisher e la massima verosimiglianza (MLE):** la nascita del Machine Learning moderno; log-likelihood, derivazione analitica e il legame con la Binary Cross-Entropy e l'MSE. |
+| **Lezione 11** *(in arrivo)* | **La guerra santa della statistica:** Fisher contro Neyman-Pearson; il vero significato del $p$-value contro le regole di decisione meccanica ($\alpha, \beta$); A/B testing industriale nel software. |
+| **Lezione 12** *(in arrivo)* | **La riconciliazione di Jaynes e il silicio:** la probabilità come estensione della logica (E.T. Jaynes); il classificatore Naive Bayes con Laplace smoothing; laboratorio pratico e chiusura del cerchio. |

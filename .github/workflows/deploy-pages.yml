@@ -12,6 +12,7 @@ on:
       - "requirements-docs.txt"
       - "package.json"
       - "package-lock.json"
+      - "README.md"
       - ".github/workflows/deploy-pages.yml"
   workflow_dispatch: {}
 

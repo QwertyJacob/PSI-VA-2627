@@ -22,11 +22,12 @@ Il materiale è adattato e tradotto da:
 
 | Capitolo | Di cosa parla |
 |---|---|
-| [0. Incertezza](0-incertezza.md) | Perché l'incertezza è ovunque e cosa significa decidere in sua presenza |
-| [1. Probabilità](1-probabilita/index.md) | Spazio campionario, assiomi, definizione classica |
-| [2. Conteggio](2-conteggio/index.md) | Disposizioni e combinazioni, probabilità condizionata, esempi svolti |
-| [3. Variabili aleatorie discrete](3-variabili-discrete/index.md) | Valore atteso, varianza, Bernoulli, binomiale, geometrica, Poisson |
-| [4. Variabili aleatorie continue](4-variabili-continue/index.md) | Densità, gaussiana, disuguaglianze, distribuzioni congiunte, teorema del limite centrale, campionamento |
+| [0. Che senso ha essere qui?](0-senso.md) | Che senso ha studiare e faticare con questa materia: attenzione, metodo e complessità |
+| *0. Incertezza (in preparazione)* | Perché l'incertezza è ovunque e cosa significa decidere in sua presenza |
+| *1. Probabilità (in preparazione)* | Spazio campionario, assiomi, definizione classica |
+| *2. Conteggio (in preparazione)* | Disposizioni e combinazioni, probabilità condizionata, esempi svolti |
+| *3. Variabili aleatorie discrete (in preparazione)* | Valore atteso, varianza, Bernoulli, binomiale, geometrica, Poisson |
+| *4. Variabili aleatorie continue (in preparazione)* | Densità, gaussiana, disuguaglianze, distribuzioni congiunte, teorema del limite centrale, campionamento |
 
 Le sezioni marcate come **Approfondimento** sono facoltative: espandono un argomento
 senza essere necessarie per seguire il filo principale.

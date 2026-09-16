@@ -1,0 +1,47 @@
+site_name: PSI — Probabilità e Statistica
+site_description: Dispense interattive del corso di Probabilità e Statistica, Università degli Studi dell'Insubria
+site_url: https://qwertyjacob.github.io/PSI-VA-2627/
+repo_url: https://github.com/QwertyJacob/PSI-VA-2627
+repo_name: QwertyJacob/PSI-VA-2627
+edit_uri: ""
+docs_dir: docs
+
+theme:
+  name: material
+  language: it
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Passa alla modalità scura
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Passa alla modalità chiara
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - toc.follow
+    - content.code.copy
+    - search.suggest
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - footnotes
+  - tables
+  - pymdownx.details
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+
+nav:
+  - "Che senso ha essere qui?": 0-senso.md

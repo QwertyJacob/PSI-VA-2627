@@ -1,0 +1,262 @@
+/* Custom styling for PSI interactive widgets and runnable code blocks.
+   Uses Material for MkDocs' own CSS variables so colors follow the active
+   light/dark palette automatically instead of hardcoding a theme. */
+
+.psi-widget-host {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.4rem;
+  padding: 1rem 1.2rem;
+  margin: 1.5rem 0;
+  background: var(--md-code-bg-color);
+}
+
+.psi-widget-canvas {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.psi-caption {
+  font-size: 0.75rem;
+  color: var(--md-default-fg-color--light);
+  text-align: center;
+  margin: 0.5rem 0 1rem;
+}
+
+.psi-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.psi-control-row {
+  display: grid;
+  grid-template-columns: minmax(9rem, 1fr) 3fr 3.5rem;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.psi-control-label {
+  font-size: 0.85rem;
+}
+
+.psi-control-value {
+  font-family: var(--md-code-font-family, monospace);
+  font-size: 0.85rem;
+  text-align: right;
+}
+
+.psi-slider {
+  width: 100%;
+  accent-color: var(--md-primary-fg-color);
+}
+
+.psi-reset-btn {
+  align-self: flex-start;
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 1rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  background: transparent;
+  color: var(--md-default-fg-color);
+  cursor: pointer;
+}
+.psi-reset-btn:hover { background: var(--md-default-fg-color--lightest); }
+
+.psi-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 0.8rem;
+  font-size: 0.85rem;
+}
+.psi-stat-label { color: var(--md-default-fg-color--light); }
+.psi-stat-value { font-weight: 700; font-family: var(--md-code-font-family, monospace); }
+
+.psi-print-snapshot { display: none; max-width: 100%; }
+
+/* Runnable Pyodide code blocks */
+.psi-exec { margin: 1.5rem 0; }
+
+.psi-exec-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.4rem;
+}
+
+.psi-exec-run-btn {
+  font-size: 0.8rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 1rem;
+  border: 1px solid var(--md-primary-fg-color);
+  background: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+  cursor: pointer;
+}
+.psi-exec-run-btn:hover { filter: brightness(1.08); }
+.psi-exec-run-btn:disabled { opacity: 0.6; cursor: wait; }
+
+.psi-exec-status {
+  font-size: 0.78rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.psi-exec-editor {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--md-code-font-family, monospace);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  padding: 0.75rem;
+  border-radius: 0.3rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  background: var(--md-code-bg-color);
+  color: var(--md-code-fg-color);
+  resize: vertical;
+}
+
+.psi-exec-output { margin-top: 0.6rem; }
+.psi-exec-stdout {
+  background: var(--md-code-bg-color);
+  border-left: 3px solid var(--md-default-fg-color--lighter);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+}
+.psi-exec-error {
+  background: var(--md-code-bg-color);
+  border-left: 3px solid #e05656;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.78rem;
+  white-space: pre-wrap;
+  color: #e05656;
+}
+.psi-exec-note { font-size: 0.8rem; color: var(--md-default-fg-color--light); font-style: italic; }
+.psi-exec-figure { max-width: 100%; display: block; margin: 0.6rem auto; }
+
+/* Distinct visual identity for "Approfondimento" (theory extension) vs
+   "Esempi Svolti" (worked example) admonitions, on top of Material's defaults. */
+.md-typeset .admonition.approfondimento,
+.md-typeset details.approfondimento {
+  border-color: #7e57c2;
+}
+.md-typeset .approfondimento > .admonition-title,
+.md-typeset .approfondimento > summary {
+  background-color: rgba(126, 87, 194, 0.1);
+}
+.md-typeset .approfondimento > .admonition-title::before,
+.md-typeset .approfondimento > summary::before {
+  background-color: #7e57c2;
+}
+
+.md-typeset .admonition.esempio-svolto,
+.md-typeset details.esempio-svolto {
+  border-color: #26a69a;
+}
+.md-typeset .esempio-svolto > .admonition-title,
+.md-typeset .esempio-svolto > summary {
+  background-color: rgba(38, 166, 154, 0.1);
+}
+.md-typeset .esempio-svolto > .admonition-title::before,
+.md-typeset .esempio-svolto > summary::before {
+  background-color: #26a69a;
+}
+
+/* "Scarica il PDF" button (overrides/main.html), top-right of every chapter,
+   in the spot where Material puts its own edit/view page actions. */
+.md-typeset .psi-pdf-button {
+  float: right;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.4rem 0 0.4rem 0.8rem;
+  padding: 0.25rem 0.7rem 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--md-primary-fg-color);
+  border: 1px solid var(--md-primary-fg-color);
+  border-radius: 1rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.md-typeset .psi-pdf-button:hover,
+.md-typeset .psi-pdf-button:focus-visible {
+  color: var(--md-primary-bg-color);
+  background: var(--md-primary-fg-color);
+}
+.md-typeset .psi-pdf-button svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+/* Placeholder that scripts/build_pdfs.mjs swaps in for code blocks too long
+   to be worth printing; only ever visible inside the generated PDFs. */
+.md-typeset .psi-print-omitted {
+  margin: 1rem 0;
+  padding: 0.5rem 0.8rem;
+  border-left: 3px solid var(--md-default-fg-color--lighter);
+  background: var(--md-code-bg-color);
+  color: var(--md-default-fg-color--light);
+  font-size: 0.7rem;
+  font-style: italic;
+}
+
+/* Print / PDF: keep interactive chrome out, keep the substance in.
+   These rules drive both Ctrl+P and the per-chapter PDFs generated by
+   scripts/build_pdfs.mjs (headless Chromium, print media). */
+
+/* mkdocs-print-site injects its print-site-material.css into EVERY page, and
+   its @page rule stamps a large serif "Page N" in the bottom-right corner of
+   each chapter. This sheet loads after it, so override the page box here; the
+   generated PDFs carry their own running header/footer instead. */
+@page {
+  size: A4;
+  margin: 18mm 15mm;
+  @bottom-center { content: none; }
+  @bottom-right { content: none; }
+}
+
+@media print {
+  .psi-controls,
+  .psi-reset-btn,
+  .psi-exec-toolbar,
+  .psi-exec-editor,
+  .psi-pdf-button,
+  .md-header, .md-tabs, .md-sidebar, .md-footer, .md-top,
+  /* "Proponi una modifica" (GitHub) is an action, not content; the sibling
+     "Apri in Colab" button stays because it is a useful link in the PDF. */
+  .md-typeset a.md-button[href^="https://github.com/"] {
+    display: none !important;
+  }
+  /* Chart.js sets display:block as an inline style on the canvas for its
+     responsive sizing; only an !important rule can override an inline style. */
+  .psi-widget-canvas canvas { display: none !important; }
+  /* The snapshot is captured at 2x device pixels, so cap it at the on-screen
+     chart width instead of letting it fill the page. */
+  .psi-print-snapshot {
+    display: block !important;
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    margin: 0 auto;
+  }
+  .psi-exec-output:not([hidden]) { display: block !important; }
+
+  /* Pagination: never orphan a heading, never slice a figure or a formula. */
+  .md-typeset h1, .md-typeset h2, .md-typeset h3, .md-typeset h4,
+  .md-typeset .admonition-title, .md-typeset summary {
+    break-after: avoid;
+  }
+  .md-typeset pre, .md-typeset .highlight, .md-typeset img, .md-typeset figure,
+  .md-typeset table, .psi-widget-host, .psi-print-omitted,
+  mjx-container[display="true"] {
+    break-inside: avoid;
+  }
+  .md-typeset a { color: inherit; }
+}

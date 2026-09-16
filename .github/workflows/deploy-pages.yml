@@ -2,7 +2,17 @@ name: Deploy PSI handouts to GitHub Pages
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "overrides/**"
+      - "scripts/pdf_hook.py"
+      - "scripts/build_pdfs.mjs"
+      - "mkdocs.yml"
+      - "requirements-docs.txt"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/deploy-pages.yml"
   workflow_dispatch: {}
 
 permissions:
@@ -20,19 +30,38 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        # No submodules needed: everything served by Pages is plain content
+        # already committed under docs/, derived once from colab_handouts_PSI.
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           cache: "pip"
-          cache-dependency-path: requirements.txt
+          cache-dependency-path: requirements-docs.txt
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements-docs.txt
 
       - name: Build site
         run: mkdocs build --strict
+
+      # Per-chapter PDFs are rendered from the built site with headless
+      # Chromium (so MathJax and the Chart.js widgets look exactly as on
+      # screen) and land in site/pdf/ before the artifact is uploaded.
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install Playwright Chromium
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Generate per-chapter PDFs
+        run: node scripts/build_pdfs.mjs
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

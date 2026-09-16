@@ -5,9 +5,11 @@ repo_url: https://github.com/QwertyJacob/PSI-VA-2627
 repo_name: QwertyJacob/PSI-VA-2627
 edit_uri: ""
 docs_dir: docs
+site_dir: site
 
 theme:
   name: material
+  custom_dir: overrides
   language: it
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -29,19 +31,62 @@ theme:
     - toc.follow
     - content.code.copy
     - search.suggest
+  icon:
+    admonition:
+      approfondimento: material/telescope
+      esempio-svolto: material/notebook-check
 
 markdown_extensions:
   - admonition
+  - md_in_html
   - attr_list
   - footnotes
   - tables
+  - pymdownx.arithmatex:
+      generic: true
+      # The course source writes inline math as "$ \mu $" (spaces inside the
+      # delimiters). Arithmatex's default smart_dollar mode rejects that form,
+      # which silently left EVERY inline formula on EVERY page as literal text.
+      smart_dollar: false
   - pymdownx.details
   - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.snippets
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - toc:
       permalink: true
 
+extra_css:
+  - stylesheets/extra.css
+
+# Per-chapter PDF wiring (button + manifest); see scripts/pdf_hook.py.
+hooks:
+  - scripts/pdf_hook.py
+
+extra_javascript:
+  - javascripts/mathjax-config.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - javascripts/vendor/chart.umd.min.js
+  - javascripts/widgets/widget-runtime.js
+  - javascripts/pyodide/code-runner.js
+
 plugins:
   - search
+  - print-site:
+      add_to_navigation: true
+      print_page_title: 'Stampa l''intero corso'
+      add_print_site_banner: false
+      add_table_of_contents: true
+      enumerate_headings: false
+      enumerate_figures: false
+      add_cover_page: false
+      path_to_pdf: ""
+      exclude:
+        - index.md
 
 nav:
-  - "Che senso ha essere qui?": 0-senso.md
+  - Home: index.md
+  - "0. Che senso ha essere qui?": 0-senso.md

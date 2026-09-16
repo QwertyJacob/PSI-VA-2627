@@ -1,0 +1,19 @@
+{#
+  Theme override: adds a "Scarica il PDF" button at the top of every chapter.
+  `page.meta.pdf_file` is set by scripts/pdf_hook.py; the file itself is
+  produced after the build by scripts/build_pdfs.mjs.
+#}
+{% extends "base.html" %}
+
+{% block content %}
+  {% if page.meta.pdf_file %}
+    <a href="{{ page.meta.pdf_file | url }}"
+       class="psi-pdf-button"
+       target="_blank" rel="noopener"
+       title="Apri la versione PDF di questo capitolo in una nuova scheda: da lì puoi scaricarla o stamparla">
+      {% include ".icons/material/file-pdf-box.svg" %}
+      <span>Scarica il PDF</span>
+    </a>
+  {% endif %}
+  {{ super() }}
+{% endblock %}

@@ -76,6 +76,21 @@
       color: #edf2f7;
       margin: 8px 0;
     }
+    #btnRerunCoin {
+      transition: all 0.2s ease;
+    }
+    #btnRerunCoin:hover {
+      filter: brightness(1.12);
+      transform: translateY(-1px);
+    }
+    .slide-btn-link {
+      transition: all 0.2s ease;
+    }
+    .slide-btn-link:hover {
+      background: rgba(255, 255, 255, 0.18) !important;
+      color: #fff !important;
+      transform: translateY(-1px);
+    }
   </style>
 </head>
 <body>
@@ -188,7 +203,29 @@
         </div>
       </section>
 
-      <!-- Slide 10: Autore — Karl Popper -->
+      <!-- Slide 10: Esperimento Live — La Moneta di Pascal -->
+      <section id="slide-simulazione">
+        <div class="badge" style="background: #3182ce;">Esperimento Live • Pascal & Bernoulli</div>
+        <h2 style="font-size: 1.8em; font-weight: 700; margin-bottom: 5px;">Convergenza della Media Campionaria</h2>
+        <p class="subtitle" style="font-size: 0.95em; margin-top: 0; margin-bottom: 12px;">
+          4 serie indipendenti da $N = 1.000$ lanci di moneta ($p = 0.5$)
+        </p>
+
+        <div style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 10px; max-width: 780px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.15);">
+          <canvas id="coinCanvas" width="760" height="250" style="width: 100%; height: auto; display: block; border-radius: 8px;"></canvas>
+        </div>
+
+        <div style="margin-top: 12px; display: flex; justify-content: center; gap: 10px; align-items: center;">
+          <button id="btnRerunCoin" style="background: #38ef7d; color: #0f172a; border: none; padding: 5px 13px; border-radius: 14px; font-weight: 700; font-size: 0.58em; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+            <span>▶</span> Lancia Monete Live
+          </button>
+          <a href="../#lab-moneta" target="_blank" class="slide-btn-link" style="background: rgba(255,255,255,0.08); color: #edf2f7; text-decoration: none; padding: 5px 13px; border-radius: 14px; font-weight: 600; font-size: 0.58em; border: 1px solid rgba(255,255,255,0.2);">
+            💻 Laboratorio Python ↗
+          </a>
+        </div>
+      </section>
+
+      <!-- Slide 11: Autore — Karl Popper -->
       <section>
         <div class="badge">1959 • Polo Ontico (Propensionismo)</div>
         <h2 class="author-name">Karl Popper</h2>
@@ -200,7 +237,7 @@
         </div>
       </section>
 
-      <!-- Slide 11: Il paradosso di Alice e Bob -->
+      <!-- Slide 12: Il paradosso di Alice e Bob -->
       <section>
         <div class="badge" style="background: #dd6b20;">Optional Stopping</div>
         <h2 class="huge-question">9 Teste, 3 Croci</h2>
@@ -219,7 +256,7 @@
         </div>
       </section>
 
-      <!-- Slide 12: Principio di Verosimiglianza -->
+      <!-- Slide 13: Principio di Verosimiglianza -->
       <section>
         <div class="badge">La Risposta Bayesiana</div>
         <h2 class="huge-question">Principio di Verosimiglianza</h2>
@@ -230,7 +267,7 @@
         </div>
       </section>
 
-      <!-- Slide 13: Takeaway Ingegneristico -->
+      <!-- Slide 14: Takeaway Ingegneristico -->
       <section>
         <div class="badge">Per l'Ingegnere del Software</div>
         <h2 class="huge-question">Pluralismo Pragmatico</h2>
@@ -253,6 +290,102 @@
       center: true,
       hash: true,
       plugins: [ RevealMath.KaTeX ]
+    });
+
+    function runCoinSimulation() {
+      var canvas = document.getElementById('coinCanvas');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var w = canvas.width;
+      var h = canvas.height;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Sfondo dark
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(0, 0, w, h);
+
+      var pad = { top: 20, right: 25, bottom: 35, left: 55 };
+      var plotW = w - pad.left - pad.right;
+      var plotH = h - pad.top - pad.bottom;
+
+      // Griglia asse Y (da 0.2 a 0.8)
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.lineWidth = 1;
+      var yTicks = [0.2, 0.35, 0.5, 0.65, 0.8];
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '11px Inter, sans-serif';
+      ctx.textAlign = 'right';
+
+      yTicks.forEach(function(val) {
+        var y = pad.top + plotH * (1 - (val - 0.2) / 0.6);
+        ctx.beginPath();
+        ctx.moveTo(pad.left, y);
+        ctx.lineTo(w - pad.right, y);
+        ctx.stroke();
+        ctx.fillText(val.toFixed(2), pad.left - 8, y + 4);
+      });
+
+      // Asse X (N lanci)
+      ctx.textAlign = 'center';
+      var xTicks = [1, 200, 400, 600, 800, 1000];
+      xTicks.forEach(function(val) {
+        var x = pad.left + plotW * ((val - 1) / 999);
+        ctx.fillText(val, x, h - pad.bottom + 18);
+      });
+      ctx.fillText("Numero di lanci (N)", pad.left + plotW / 2, h - 5);
+
+      // Linea teorica rossa tratteggiata (p = 0.5)
+      var y50 = pad.top + plotH * (1 - (0.5 - 0.2) / 0.6);
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([5, 5]);
+      ctx.beginPath();
+      ctx.moveTo(pad.left, y50);
+      ctx.lineTo(w - pad.right, y50);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Label p = 0.5
+      ctx.fillStyle = '#ef4444';
+      ctx.textAlign = 'left';
+      ctx.font = 'bold 11px Inter, sans-serif';
+      ctx.fillText('Teorico: p = 0.500', pad.left + 10, y50 - 8);
+
+      // Simulazione di 4 campioni indipendenti da N = 1000
+      var N = 1000;
+      var colors = ['#38bdf8', '#34d399', '#fbbf24', '#c084fc'];
+
+      for (var s = 0; s < 4; s++) {
+        var heads = 0;
+        ctx.strokeStyle = colors[s];
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+
+        for (var n = 1; n <= N; n++) {
+          if (Math.random() < 0.5) heads++;
+          var mean = heads / n;
+          var x = pad.left + plotW * ((n - 1) / (N - 1));
+          var y = pad.top + plotH * (1 - (mean - 0.2) / 0.6);
+
+          if (n === 1) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+    }
+
+    // Esegui la prima volta e aggancia agli eventi
+    Reveal.on('ready', function() {
+      runCoinSimulation();
+      var btn = document.getElementById('btnRerunCoin');
+      if (btn) btn.addEventListener('click', runCoinSimulation);
+    });
+
+    Reveal.on('slidechanged', function(event) {
+      if (event.currentSlide && event.currentSlide.id === 'slide-simulazione') {
+        runCoinSimulation();
+      }
     });
   </script>
 </body>

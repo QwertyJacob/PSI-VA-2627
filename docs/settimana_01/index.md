@@ -80,6 +80,18 @@ Nel saggio *The Foundations of Scientific Inference* (si veda l'approfondimento 
 2. **Accertabilità:** I valori di probabilità devono poter essere empiricamente misurati o verificati dagli esseri umani.
 3. **Applicabilità:** I valori devono servire come "guida per la vita" — ovvero costituire una base razionale per agire e prendere decisioni pratiche in condizioni di incertezza (riprendendo la celebre massima del vescovo Joseph Butler nel Settecento: *"La probabilità è la vera guida della vita"*).
 
+!!! question "L'apparente banalità dell'Accertabilità: perché è invece una trappola mortale?"
+    A prima vista, il criterio di **accertabilità** suona ovvio, quasi tautologico: *ovvio che una grandezza scientifica debba poter essere misurata o verificata empiricamente!* Chi accetterebbe una teoria fisica che postula numeri inaccessibili all'osservazione?
+    
+    Eppure, nel momento esatto in cui si cerca di applicarlo al mondo reale, **quasi tutte le teorie della probabilità crollano o vacillano proprio su questo scoglio**:
+    
+    * **Il Frequentismo di von Mises fallisce sull'infinito:** definisce la probabilità come limite delle frequenze relative per $n \to \infty$. Ma nessun essere umano può compiere infinite osservazioni. Su qualsiasi orizzonte finito $N$, la frequenza relativa continua a oscillare: il "vero" valore asintotico della probabilità rimane per principio metafisico, inaccessibile e mai verificabile empiricamente nel finito.
+    * **La Propensione di Popper vacilla sul caso singolo:** postula che la probabilità sia una "tendenza fisica reale" insita nella configurazione sperimentale di un singolo evento. Ma come si accerta sperimentalmente la propensione numerica intrinseca di *un singolo lancio irripetibile*, senza finire per forza a contare le frequenze di tanti lanci successivi (ricadendo nel frequentismo)?
+    * **La Teoria Classica di Laplace scivola nella circolarità:** richiede di contare i "casi ugualmente possibili". Ma accertare se due facce di un dado reale siano *veramente* simmetriche ed equiprobabili prima di lanciarlo richiede misure fisiche infinite o assume a priori ciò che dovrebbe dimostrare.
+    * **Il Soggettivismo di de Finetti lotta con la psicologia reale:** cerca di accertare il grado di fiducia attraverso le scommesse e le quote economiche, ma nella pratica il valore dichiarato è inquinato dall'avversione al rischio, dall'utilità soggettiva marginale del denaro e dalle distorsioni cognitive.
+
+    L'accertabilità è dunque un requisito di disarmante buonsenso, ma trasformarlo in un protocollo operativo privo di paradossi è una delle sfide concettuali più ardue dell'epistemologia moderna.
+
 Il dramma conoscitivo è vertiginoso: **nessuna interpretazione pura nota soddisfa simultaneamente tutti e tre i criteri!**
 
 ---
@@ -457,99 +469,51 @@ Per il QBism, il cosiddetto "collasso della funzione d'onda" non è una misterio
 
 ---
 
-## Atto VII: Oltre la dicotomia — Il Terzo Asse: Metafisica contro Teoria
+## Laboratorio Computazionale: Dalla Frequenza alla Teoria — La Moneta di Pascal {: #lab-moneta }
 
-La controversia sulla probabilità non è solo semantica (mente vs mondo) o metodologica (soggettivo vs oggettivo). C'è una frattura ancora più radicale: **il Terzo Asse Metateorico**, ovvero la **confusione tra Mappa e Territorio**.
+Torniamo all'innesco iniziale della lezione: lanciamo una moneta in aria. Per il supercomputer newtoniano l'esito è certo al 100% o 0%, ma per noi umani è pura incertezza (50%). 
 
-```
-                      [ASSE 3: STATUTO METATEORICO]
-                       Mappa vs Territorio
-                                │
-                                ▲
-                   REIFICAZIONE / ESSENZIALISMO
-                   (Il modello È la realtà fisica)
-                   • Propensioni di Popper (1959)
-                   • Kollektiv infiniti di von Mises (1928)
-                   • Interpretazioni ψ-ontiche (Everett, Bohm)
-                                │
-                                │
-      [ASSE 1: SEMANTICA]       │        [ASSE 2: METODOLOGIA]
-  Epistemico ◄──────────────────┼──────────────────► Ontico
- (Stato della Mente)            │                  (Proprietà del Mondo)
-                                │
-                   STRUMENTALISMO / PRAGMATISMO
-                   (Il modello è un'interfaccia cognitiva)
-                   • Soggettivismo di de Finetti ("La probabilità non esiste")
-                   • Logicismo di Jaynes ("Mind Projection Fallacy")
-                   • QBism in Meccanica Quantistica
-                                ▼
-```
+Cosa accade quando raccogliamo dati nel mondo reale? Premi il pulsante **▶ Esegui** per simulare **4 popolazioni di campioni indipendenti** da $N = 1.000$ lanci ciascuna. Per ogni serie calcoliamo la **media campionaria progressiva** (la frequenza relativa di Teste accumulata fino a quel momento):
 
-Come ha insegnato Edwin T. Jaynes con la sua celebre **Mind Projection Fallacy**:
-> L'errore fondamentale consiste nell'attribuire la nostra ignoranza alla natura come se fosse una proprietà fisica, oppure nel proiettare i nostri costrutti matematici sul mondo come se fossero oggetti materiali.
+$$\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$$
 
-La scienza entra in crisi non quando inventa modelli matematici astratti, ma **quando dimentica che sono modelli e pretende che la natura sia fatta della loro stessa stoffa**.
-
-### Tavola Sinottica sui Tre Assi
-
-| Scuola di Pensiero | Asse 1: Semantica *(Cos'è $P$?)* | Asse 2: Metodologia *(Come si assegna?)* | Asse 3: Statuto *(Mappa o Territorio?)* | Destino Metafisico del Modello |
-| :--- | :--- | :--- | :--- | :--- |
-| **Frequentismo Puro** *(von Mises)* | **Ontico:** Frequenza empirica asintotica. | **Oggettivo:** Misurabile empiricamente da campioni. | **Reificato (Metafisico):** Confonde la serie finita con il limite all'infinito. | Ipostatizza i *Kollektiv* infiniti non osservabili. |
-| **Propensionismo** *(Popper)* | **Ontico:** Tendenza fisica causale della materia. | **Oggettivo:** Proprietà dell'assetto sperimentale. | **Iper-Reificato:** Attribuisce la probabilità alle cose. | Ricade nel paradosso di Humphreys e nella *virtus dormitiva*. |
-| **$\psi$-ontica Quantistica** *(Everett, Bohm)* | **Ontico:** Onda materiale / stato fisico reale. | **Oggettivo:** Evoluzione deterministica di Schrödinger. | **Reificato Radicale:** L'equazione è la materia stessa. | Moltiplicazione esponenziale di universi paralleli. |
-| **Probabilità Logica** *(Carnap)* | **Ontico-Formale (Fallito):** Proprietà logica oggettiva delle relazioni formali. | **Oggettivo:** Fissato a priori dalla sintassi linguistica. | **Formalista Astratto:** Chiuso nell'ontologia della semantica. | Paralizzato dall'arbitrio del parametro induttivo $\lambda$ e dal paradosso di Goodman. |
-| **Bayesiano Oggettivo** *(Jaynes)* | **Epistemico:** Logica induttiva con info parziale. | **Oggettivo:** Vincolato da simmetrie e Massima Entropia. | **Strumentale:** Riconosce la *Mind Projection Fallacy*. | Separa il mondo fisico dal modello mentale di inferenza. |
-| **Soggettivismo** *(de Finetti)* | **Epistemico:** Grado di fiducia (scommessa). | **Soggettivo:** Libero, vincolato dalla coerenza interna. | **Pragmatico Radicale:** *"La probabilità non esiste nel mondo."* | Rifiuta qualsiasi ontologia: la probabilità è interfaccia decisionale. |
-| **QBism Quantistico** *(Fuchs, Mermin)* | **Epistemico:** Scommessa sulle esperienze future. | **Soggettivo:** Assegnazione bayesiana del ricercatore. | **Pragmatico / Strumentale:** Nessun collasso ontico nello spazio. | Salva la località relativistica dissolvendo l'onda materiale. |
-
----
-
-## Laboratorio Computazionale: Sperimenta l'Optional Stopping
-
-Tocca con mano nel tuo browser l'esperimento di Alice e Bob. Premi il pulsante **▶ Esegui** per verificare come gli stessi identici dati empirici ($9\text{T}, 3\text{C}$) producano p-value frequentisti divergenti a causa della regola di arresto, e come l'approccio bayesiano ristabilisca la coerenza dei dati:
-
-<div class="psi-exec" data-packages="scipy" markdown="1">
+<div class="psi-exec" markdown="1">
 ```python
 import numpy as np
-from scipy import stats
+import matplotlib.pyplot as plt
 
-# Dati sperimentali identici sul tavolo
-teste = 9
-croci = 3
-totale = teste + croci
-p0 = 0.5  # Ipotesi nulla: moneta non truccata
+# Parametri dell'esperimento
+n_lanci = 1000
+n_campioni = 4
+colori = ['#2b6cb0', '#2c7a7b', '#c05621', '#805ad5']
 
-# 1. Calcolo di Alice (Fissa N = 12 lanci - Modello Binomiale)
-# p-value = P(K >= 9 | N=12, p=0.5)
-p_val_alice = 1.0 - stats.binom.cdf(teste - 1, totale, p0)
+plt.figure(figsize=(9, 4.5), dpi=100)
 
-# 2. Calcolo di Bob (Fissa r = 3 croci - Modello Binomiale Negativa)
-# p-value = P(N >= 12 | r=3, p=0.5) = P(croci <= 2 nei primi 11 lanci)
-p_val_bob = stats.binom.cdf(croci - 1, totale - 1, p0)
+for i in range(n_campioni):
+    # Simulazione: 1 = Testa, 0 = Croce (moneta equa, p = 0.5)
+    lanci = np.random.choice([0, 1], size=n_lanci)
+    # Media campionaria progressiva (frequenza relativa cumulata)
+    medie_cumulative = np.cumsum(lanci) / np.arange(1, n_lanci + 1)
+    
+    plt.plot(np.arange(1, n_lanci + 1), medie_cumulative, 
+             label=f'Campione {i+1} (finale: {medie_cumulative[-1]:.3f})', 
+             color=colori[i], alpha=0.85, linewidth=1.6)
 
-print(f"===========================================================")
-print(f"DATI SPERIMENTALI OSSERVATI: {teste} Teste, {croci} Croci (12 lanci)")
-print(f"===========================================================")
-print(f"\n[ANALISI FREQUENTISTA CLASSICA]")
-print(f"Alice (N=12 fisso):  p-value = {p_val_alice:.4f}")
-print(f"  -> Verdetto (alpha=0.05): {'Rifiuta H0 (Truccata!)' if p_val_alice < 0.05 else 'Accetta H0 (Nessuna prova di trucco)'}")
-print(f"Bob   (r=3 fisse):   p-value = {p_val_bob:.4f}")
-print(f"  -> Verdetto (alpha=0.05): {'Rifiuta H0 (Truccata!)' if p_val_bob < 0.05 else 'Accetta H0 (Nessuna prova di trucco)'}")
+# Valore teorico atteso (Pascal / simmetria classica: p = 0.5)
+plt.axhline(0.5, color='#e53e3e', linestyle='--', linewidth=2, label='Valore teorico (p = 0.5)')
 
-# 3. Analisi Bayesiana (Principio di Verosimiglianza)
-# Con prior uniforme Beta(1, 1), la posterior è Beta(1 + 9, 1 + 3) = Beta(10, 4)
-alpha_post = 1 + teste
-beta_post = 1 + croci
-media_post = alpha_post / (alpha_post + beta_post)
-ci_low = stats.beta.ppf(0.025, alpha_post, beta_post)
-ci_high = stats.beta.ppf(0.975, alpha_post, beta_post)
+plt.title('Convergenza della Media Campionaria al Valore Teorico', fontsize=12, fontweight='bold')
+plt.xlabel('Dimensione del campione (Numero di lanci N)', fontsize=10)
+plt.ylabel('Media campionaria (Frequenza relativa di Teste)', fontsize=10)
+plt.ylim(0.2, 0.8)
+plt.grid(True, linestyle=':', alpha=0.6)
+plt.legend(loc='upper right', framealpha=0.9)
+plt.tight_layout()
+plt.show()
 
-print(f"\n[ANALISI BAYESIANA (Principio di Verosimiglianza)]")
-print("La funzione di verosimiglianza (P invertita) P(Dati|p) e' proporzionale a p^9 * (1-p)^3 per ENTRAMBI!")
-print("Nessun dato fantasma viene sommato.")
-print(f"Distribuzione a posteriori congiunta: Beta({alpha_post}, {beta_post})")
-print(f"Stima di p (media a posteriori): {media_post:.3f}")
-print(f"Intervallo di credibilità al 95%: [{ci_low:.3f}, {ci_high:.3f}]")
+print("Simulazione completata!")
+print("Nei primi 50 lanci l'incertezza e le fluttuazioni sono evidenti;")
+print("al crescere di N, tutte le serie si schiacciano sulla media teorica di 0.500!")
 ```
 </div>
 
@@ -603,9 +567,6 @@ Comportandosi così, il team ha replicato alla perfezione la condotta di **Bob**
 - Interrompere la raccolta dei dati al primo momento in cui si osserva un esito favorevole trasforma la procedura in un **Optional Stopping**.
 - Questa pratica annienta il livello di significatività nominale del 5%: la probabilità reale di incorrere in un **falso positivo** (credere che la variante B sia migliore quando invece è identica o persino peggiore di A) **esplode al 30-40% o più**!
 - Innumerevoli linee di codice o modifiche di design vengono così celebrate e messe in produzione aziendale sulla base di pure fluttuazioni casuali scambiate per verità scientifiche.
-
-### 3. La Mappa non è il Territorio
-Quando addestriamo un classificatore di Deep Learning e il modello restituisce in output `confidence = 0.98` per una previsione, quel numero misura lo stato di attivazione interna dei pesi della rete (la mappa), non una proprietà metafisica oggettiva del mondo reale (il territorio). Dimenticarlo significa cadere nella *Mind Projection Fallacy* e costruire sistemi automatizzati ciechi di fronte alle proprie allucinazioni.
 
 ---
 

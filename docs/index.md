@@ -26,7 +26,7 @@ Il percorso adotta una prospettiva storica ed epistemologica (*Erlebnis*, la dim
 
 | Settimana | Argomenti e dramma conoscitivo |
 |---|---|
-| **[0. Che senso ha essere qui?](0-senso.md)** *(Settimana 1)* | **Giustificazione formativa ed excursus epistemologico:** l'attenzione come disciplina intellettuale (Weil, Lamport); il paradosso della moneta e del supercomputer; il contenitore vuoto di Kolmogorov; polo epistemico vs polo ontico e i criteri di Wesley Salmon. |
+| **[0. Che senso ha essere qui?](0-senso.md)** & **[1. Che cos'è la probabilità?](settimana_01/index.md)** *(Settimana 1)* | **Giustificazione formativa e fondamenti:** l'attenzione come disciplina intellettuale (Weil, Lamport); il paradosso della moneta e del supercomputer; il contenitore vuoto di Kolmogorov; polo epistemico vs polo ontico, l'Optional Stopping di Alice e Bob e i criteri di Wesley Salmon. |
 | **Settimana 2** *(in arrivo)* | **La sintassi di Kolmogorov e il Teorema di Bayes:** spazio campionario, assiomi, indipendenza stocastica, alberi di probabilità e il dramma dei falsi positivi nei sistemi software e negli IDS. |
 | **Settimana 3** *(in arrivo)* | **Pascal, Fermat e le tabelle hash:** la corrispondenza del 1654 e il problema delle parti; combinatoria minima essenziale, paradosso dei compleanni e Birthday Attack in crittografia. |
 

@@ -90,3 +90,4 @@ plugins:
 nav:
   - Home: index.md
   - "0. Che senso ha essere qui?": 0-senso.md
+  - "1. Che cos'è la probabilità?": settimana_01/index.md

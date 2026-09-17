@@ -172,6 +172,10 @@ async function renderChapter(context, baseUrl, siteName, entry) {
       footerTemplate: `<div style="${HF_FOOTER}"><span>${esc(entry.public_url)}</span>` +
                       `<span>Pagina <span class="pageNumber"></span> di <span class="totalPages"></span></span></div>`,
     });
+    // Also mirror to docs/pdf so mkdocs serve can serve it during local preview
+    const docsPath = path.join(ROOT, 'docs', entry.pdf);
+    await fs.mkdir(path.dirname(docsPath), { recursive: true });
+    await fs.writeFile(docsPath, buffer);
     const pdfPages = (buffer.toString('latin1').match(/\/Type\s*\/Page[^s]/g) || []).length;
     return { entry, ok: true, pdfPages, bytes: buffer.length, omitted: stats.omitted, problems };
   } catch (e) {
@@ -195,7 +199,8 @@ async function renderChapter(context, baseUrl, siteName, entry) {
 
   const { server, port } = await startServer(SITE_DIR);
   const baseUrl = `http://127.0.0.1:${port}/`;
-  const browser = await chromium.launch({ headless: true });
+  const executablePath = process.env.CHROME_BIN || process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || '/usr/bin/google-chrome';
+  const browser = await chromium.launch({ headless: true, executablePath });
   // 2x device pixels: the widget snapshots are bitmaps, this keeps them crisp.
   const context = await browser.newContext({ deviceScaleFactor: 2, colorScheme: 'light', viewport: { width: 1280, height: 900 } });
 

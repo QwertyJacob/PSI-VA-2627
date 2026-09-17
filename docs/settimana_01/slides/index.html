@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>PSI 26/27 — Settimana 1: Che cos'è la probabilità?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+  <style>
+    :root {
+      --r-main-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --r-heading-font: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --r-heading-text-transform: none;
+    }
+    .reveal .slides section {
+      text-align: center;
+    }
+    .highlight {
+      color: #38ef7d;
+    }
+    .accent {
+      color: #11998e;
+    }
+    .warning {
+      color: #ff4b2b;
+    }
+    .huge-question {
+      font-size: 2.1em !important;
+      line-height: 1.25 !important;
+      font-weight: 700 !important;
+    }
+    .subtitle {
+      font-size: 1.15em;
+      color: #a0aec0;
+      margin-top: 15px;
+    }
+    .box {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px 25px;
+      margin: 15px auto;
+      max-width: 850px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .badge {
+      display: inline-block;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.55em;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      background: #11998e;
+      color: #fff;
+    }
+    .author-name {
+      font-size: 2em !important;
+      font-weight: 800 !important;
+      margin: 0 0 10px 0 !important;
+    }
+    .author-photo {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 50%;
+      border: 3px solid #11998e;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 239, 125, 0.25);
+      margin: 10px auto 15px auto;
+      display: block;
+    }
+    .author-quote {
+      font-size: 1.15em;
+      font-weight: 600;
+      color: #edf2f7;
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      
+      <!-- Slide 1: Titolo -->
+      <section>
+        <div class="badge">PSI 26/27 • Settimana 01</div>
+        <h1 style="font-size: 2.4em; font-weight: 800;">Che cos'è la probabilità?</h1>
+        <p class="subtitle">L'invenzione dell'incertezza: dal gioco d'azzardo alla mente</p>
+      </section>
+
+      <!-- Slide 2: L'innesco -->
+      <section>
+        <p class="badge" style="background: #e53e3e;">L'innesco del dubbio</p>
+        <h2 class="huge-question">Lanci una moneta in aria.<br>Qual è la probabilità che esca <span class="highlight">Testa</span>?</h2>
+      </section>
+
+      <!-- Slide 3: Il contrasto -->
+      <section>
+        <h2 class="huge-question">Per l'uomo: <span class="highlight">50%</span><br><br>Per il supercomputer: <span class="warning">100% o 0%</span></h2>
+        <p class="subtitle">La probabilità è una proprietà della moneta, o la misura della nostra ignoranza?</p>
+      </section>
+
+      <!-- Slide 4: Autore — Andrej Kolmogorov -->
+      <section>
+        <div class="badge">1933 • Assiomatizzazione Sintattica</div>
+        <h2 class="author-name">Andrej Kolmogorov</h2>
+        <img src="img/kolmogorov.jpg" class="author-photo" alt="Andrej Kolmogorov">
+        <p class="author-quote">«Una grammatica perfetta.<br><span class="warning">Senza vocabolario.»</span></p>
+        <div class="box">
+          <p style="font-size: 1.05em; color: #edf2f7; margin: 0;">Gli assiomi spiegano come sommare e moltiplicare numeri tra 0 e 1.<br><strong>Non dicono cosa significhino nel mondo reale.</strong></p>
+        </div>
+      </section>
+
+      <!-- Slide 5: Autore — Wesley Salmon -->
+      <section>
+        <div class="badge">1966 • Filosofia della Scienza</div>
+        <h2 class="author-name">Wesley Salmon</h2>
+        <img src="img/salmon.jpg" class="author-photo" alt="Wesley Salmon">
+        <p class="author-quote">I 3 Criteri di Adeguatezza: il tribunale della razionalità</p>
+        <div style="display: flex; justify-content: space-around; gap: 15px; margin-top: 15px;">
+          <div class="box" style="flex: 1; padding: 15px;">
+            <h3 class="highlight" style="font-size: 1.1em; margin-bottom: 5px;">1. Ammissibile</h3>
+            <p style="font-size: 0.9em; margin: 0;">Rispetta gli assiomi matematici</p>
+          </div>
+          <div class="box" style="flex: 1; padding: 15px;">
+            <h3 class="highlight" style="font-size: 1.1em; margin-bottom: 5px;">2. Accertabile</h3>
+            <p style="font-size: 0.9em; margin: 0;">Misurabile empiricamente nel mondo</p>
+          </div>
+          <div class="box" style="flex: 1; padding: 15px;">
+            <h3 class="highlight" style="font-size: 1.1em; margin-bottom: 5px;">3. Applicabile</h3>
+            <p style="font-size: 0.9em; margin: 0;">Guida razionale per l'azione</p>
+          </div>
+        </div>
+        <p class="subtitle" style="margin-top: 15px; color: #fc8181; font-size: 1em;">Nessuna interpretazione li soddisfa tutti contemporaneamente!</p>
+      </section>
+
+      <!-- Slide 6: Il bivio -->
+      <section>
+        <h2 class="huge-question">Il grande bivio</h2>
+        <div style="display: flex; gap: 30px; margin-top: 30px;">
+          <div class="box" style="flex: 1; border-color: #38ef7d;">
+            <h3 class="highlight">Polo Epistemico</h3>
+            <p>La probabilità è nella <strong>mente</strong>.</p>
+            <p style="color: #a0aec0; font-size: 0.9em;">Misura della conoscenza parziale<br>Laplace • de Finetti</p>
+          </div>
+          <div class="box" style="flex: 1; border-color: #4299e1;">
+            <h3 style="color: #4299e1;">Polo Ontico</h3>
+            <p>La probabilità è nella <strong>materia</strong>.</p>
+            <p style="color: #a0aec0; font-size: 0.9em;">Proprietà fisica del mondo esterno<br>von Mises • Popper</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 7: Autore — Pierre-Simon Laplace -->
+      <section>
+        <div class="badge">1814 • Polo Epistemico (Classico)</div>
+        <h2 class="author-name">Pierre-Simon Laplace</h2>
+        <img src="img/laplace.jpg" class="author-photo" alt="Pierre-Simon Laplace">
+        <p class="author-quote">«Il buon senso ridotto a calcolo»</p>
+        <div class="box">
+          <p style="font-size: 1.05em; color: #edf2f7; margin-bottom: 8px;"><strong>Principio di Indifferenza:</strong> in assenza di prove, tutti gli esiti sono equiprobabili ($1/N$).</p>
+          <p style="font-size: 0.95em; color: #a0aec0; margin: 0;">Nel determinismo newtoniano il caso non esiste: misura solo la nostra ignoranza.<br><span style="color: #fc8181;">Limite: collassa negli spazi continui (Paradosso di Bertrand).</span></p>
+        </div>
+      </section>
+
+      <!-- Slide 8: Autore — Bruno de Finetti -->
+      <section>
+        <div class="badge">1937 • Polo Epistemico (Soggettivismo)</div>
+        <h2 class="author-name">Bruno de Finetti</h2>
+        <img src="img/definetti.jpg" class="author-photo" alt="Bruno de Finetti">
+        <h3 class="huge-question" style="color: #fc8181; font-size: 1.6em; margin: 10px 0;">«LA PROBABILITÀ NON ESISTE»</h3>
+        <p class="subtitle" style="margin-top: 5px;">Esiste solo il grado di fiducia coerente del decisore.</p>
+        <div class="box" style="margin-top: 15px;">
+          <p style="font-size: 1em; color: #edf2f7; margin: 0;">Nessuna proprietà oggettiva nella moneta: solo la stima razionale con cui un agente scommette coerentemente sul futuro.</p>
+        </div>
+      </section>
+
+      <!-- Slide 9: Autore — Richard von Mises -->
+      <section>
+        <div class="badge">1928 • Polo Ontico (Frequentismo)</div>
+        <h2 class="author-name">Richard von Mises</h2>
+        <img src="img/vonmises.jpg" class="author-photo" alt="Richard von Mises">
+        <p class="author-quote" style="color: #4299e1;">Il limite empirico delle sequenze infinite</p>
+        <div class="box">
+          <p style="font-size: 1.05em; color: #edf2f7; margin-bottom: 8px;"><strong>Il Collettivo (<em>Kollektiv</em>):</strong> $P(A) = \lim_{N \to \infty} \frac{n_A}{N}$ su prove identiche ripetibili.</p>
+          <p style="font-size: 0.95em; color: #a0aec0; margin: 0;"><span style="color: #fc8181;">Vicolo cieco: muto sul caso singolo!</span> La moneta fusa nella fornace dopo un lancio, o gli eventi storici unici.</p>
+        </div>
+      </section>
+
+      <!-- Slide 10: Autore — Karl Popper -->
+      <section>
+        <div class="badge">1959 • Polo Ontico (Propensionismo)</div>
+        <h2 class="author-name">Karl Popper</h2>
+        <img src="img/popper.jpg" class="author-photo" alt="Karl Popper">
+        <p class="author-quote" style="color: #ed8936;">La probabilità come forza fisica reale</p>
+        <div class="box">
+          <p style="font-size: 1.05em; color: #edf2f7; margin-bottom: 8px;"><strong>Propensione:</strong> una reale tendenza fisica dell'apparato sperimentale a produrre l'evento.</p>
+          <p style="font-size: 0.95em; color: #a0aec0; margin: 0;"><span style="color: #fc8181;">Paradosso di Humphreys:</span> la causalità va solo avanti nel tempo; gli assiomi probabilistici invertono la freccia temporale.</p>
+        </div>
+      </section>
+
+      <!-- Slide 11: Il paradosso di Alice e Bob -->
+      <section>
+        <div class="badge" style="background: #dd6b20;">Optional Stopping</div>
+        <h2 class="huge-question">9 Teste, 3 Croci</h2>
+        <p class="subtitle">Stessi identici dati fisici sul tavolo.</p>
+        <div style="display: flex; gap: 25px; margin-top: 25px;">
+          <div class="box" style="flex: 1;">
+            <h3>Alice (N = 12 fisso)</h3>
+            <p class="highlight" style="font-size: 1.4em; margin: 10px 0;">p = 0.073</p>
+            <p style="color: #cbd5e0; margin: 0;">Accetta l'equità ($p > 0.05$)</p>
+          </div>
+          <div class="box" style="flex: 1;">
+            <h3>Bob (r = 3 croci)</h3>
+            <p class="warning" style="font-size: 1.4em; margin: 10px 0;">p = 0.033</p>
+            <p style="color: #fc8181; margin: 0;">Rifiuta l'equità: truccata! ($p < 0.05$)</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 12: Principio di Verosimiglianza -->
+      <section>
+        <div class="badge">La Risposta Bayesiana</div>
+        <h2 class="huge-question">Principio di Verosimiglianza</h2>
+        <div class="box">
+          <p style="font-size: 1.5em; margin: 15px 0;">$$P(\text{Dati} \mid p) \propto p^9 (1-p)^3$$</p>
+          <p style="font-size: 1.1em; color: #edf2f7; margin-bottom: 8px;">Usiamo direttamente la <strong>$P$ invertita</strong> (probabilità dei dati condizionata al parametro).</p>
+          <p style="color: #a0aec0; font-size: 0.95em; margin: 0;">I dati fantasma non contano. La funzione $P(\text{Dati} \mid p)$ è identica per Alice e Bob!</p>
+        </div>
+      </section>
+
+      <!-- Slide 13: Takeaway Ingegneristico -->
+      <section>
+        <div class="badge">Per l'Ingegnere del Software</div>
+        <h2 class="huge-question">Pluralismo Pragmatico</h2>
+        <div class="box" style="text-align: left; font-size: 1.05em; line-height: 1.6;">
+          <p>📊 <strong>Big Data & Log di Rete:</strong> Frequentismo (limiti stabili, grandi numeri).</p>
+          <p>🛡️ <strong>Cybersecurity & Eventi Rari:</strong> Bayesianesimo (prior razionali, stima dell'incertezza).</p>
+          <p>⚠️ <strong>A/B Testing:</strong> Mai fare "peeking" come Bob senza correggere il campionamento!</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      center: true,
+      hash: true,
+      plugins: [ RevealMath.KaTeX ]
+    });
+  </script>
+</body>
+</html>

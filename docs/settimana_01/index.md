@@ -72,27 +72,7 @@ Quando un bollettino meteorologico annuncia una *"probabilità di pioggia del 70
  └──────────────────────┘                            └──────────────────────┘
 ```
 
-### I tre criteri implacabili di Wesley Salmon (1966)
-
-Nel saggio *The Foundations of Scientific Inference* (si veda l'approfondimento della [Stanford Encyclopedia of Philosophy](https://plato.stanford.edu/entries/probability-interpret/)), il filosofo della scienza **Wesley C. Salmon** dimostrò che qualsiasi tentativo di dare un significato reale alla probabilità deve superare tre esami spietati:
-
-1. **Ammissibilità:** L'interpretazione deve rispettare rigorosamente gli assiomi matematici di Kolmogorov (non può generare valori negativi o somme diverse da 1).
-2. **Accertabilità:** I valori di probabilità devono poter essere empiricamente misurati o verificati dagli esseri umani.
-3. **Applicabilità:** I valori devono servire come "guida per la vita" — ovvero costituire una base razionale per agire e prendere decisioni pratiche in condizioni di incertezza (riprendendo la celebre massima del vescovo Joseph Butler nel Settecento: *"La probabilità è la vera guida della vita"*).
-
-!!! question "L'apparente banalità dell'Accertabilità: perché è invece una trappola mortale?"
-    A prima vista, il criterio di **accertabilità** suona ovvio, quasi tautologico: *ovvio che una grandezza scientifica debba poter essere misurata o verificata empiricamente!* Chi accetterebbe una teoria fisica che postula numeri inaccessibili all'osservazione?
-    
-    Eppure, nel momento esatto in cui si cerca di applicarlo al mondo reale, **quasi tutte le teorie della probabilità crollano o vacillano proprio su questo scoglio**:
-    
-    * **Il Frequentismo di von Mises fallisce sull'infinito:** definisce la probabilità come limite delle frequenze relative per $n \to \infty$. Ma nessun essere umano può compiere infinite osservazioni. Su qualsiasi orizzonte finito $N$, la frequenza relativa continua a oscillare: il "vero" valore asintotico della probabilità rimane per principio metafisico, inaccessibile e mai verificabile empiricamente nel finito.
-    * **La Propensione di Popper vacilla sul caso singolo:** postula che la probabilità sia una "tendenza fisica reale" insita nella configurazione sperimentale di un singolo evento. Ma come si accerta sperimentalmente la propensione numerica intrinseca di *un singolo lancio irripetibile*, senza finire per forza a contare le frequenze di tanti lanci successivi (ricadendo nel frequentismo)?
-    * **La Teoria Classica di Laplace scivola nella circolarità:** richiede di contare i "casi ugualmente possibili". Ma accertare se due facce di un dado reale siano *veramente* simmetriche ed equiprobabili prima di lanciarlo richiede misure fisiche infinite o assume a priori ciò che dovrebbe dimostrare.
-    * **Il Soggettivismo di de Finetti lotta con la psicologia reale:** cerca di accertare il grado di fiducia attraverso le scommesse e le quote economiche, ma nella pratica il valore dichiarato è inquinato dall'avversione al rischio, dall'utilità soggettiva marginale del denaro e dalle distorsioni cognitive.
-
-    L'accertabilità è dunque un requisito di disarmante buonsenso, ma trasformarlo in un protocollo operativo privo di paradossi è una delle sfide concettuali più ardue dell'epistemologia moderna.
-
-Il dramma conoscitivo è vertiginoso: **nessuna interpretazione pura nota soddisfa simultaneamente tutti e tre i criteri!**
+Il dramma conoscitivo è vertiginoso: **nessuna interpretazione pura nota riesce a spiegare da sola tutta la probabilità senza imbattersi in paradossi, circolarità o vicoli ciechi nel mondo reale**.
 
 ---
 
@@ -519,11 +499,11 @@ print("al crescere di N, tutte le serie si schiacciano sulla media teorica di 0.
 
 ---
 
-## Sintesi: Il Tribunale di Wesley Salmon
+## Sintesi: Confronto tra le interpretazioni storiche
 
-Mettiamo alla prova le quattro interpretazioni storiche secondo i tre criteri di adeguatezza formulati da Wesley Salmon:
+Mettiamo a confronto le quattro grandi interpretazioni, i loro punti di forza e i loro limiti concettuali:
 
-| Teoria | Polo | 1. Ammissibilità *(Matematica)* | 2. Accertabilità *(Misura empirica)* | 3. Applicabilità *(Guida all'azione)* | Il Vicolo Cieco Concettuale |
+| Teoria | Polo | Coerenza matematica | Misura empirica | Guida alle decisioni | Limite concettuale |
 |---|:---:|:---:|:---:|:---:|---|
 | **Classica (Laplace)** | Epistemico | ✅ Negli insiemi finiti | ⚠️ Solo se c'è perfetta simmetria | ✅ Utile nei giochi equi | Collassa negli spazi continui (Paradosso di Bertrand). |
 | **Frequentista (von Mises)** | Ontico | ✅ Assiomatizzata su Kollektiv | ✅ Misurabile empiricamente | ❌ Muta sul caso singolo | Nega la probabilità agli eventi irripetibili (Moneta fusa). |
@@ -595,4 +575,4 @@ Tutti i testi storici ed epistemologici citati sono liberamente consultabili att
 * **Christopher A. Fuchs, N. David Mermin, Rüdiger Schack (2014)** — *An Introduction to QBism with an Application to the Locality of Quantum States*, American Journal of Physics. Articolo e preprint liberamente scaricabili da [arXiv:1311.5253](https://arxiv.org/abs/1311.5253).
 * **Paul W. Humphreys (1985)** — *Why Propensities Cannot Be Probabilities*, The Philosophical Review, 94(4), 557–570.
 * **James O. Berger & Donald A. Berry (1988)** — *Statistical Analysis and the Illusion of Objectivity*, American Scientist, 76(2), 159–165.
-* **Wesley C. Salmon (1966)** — *The Foundations of Scientific Inference*, University of Pittsburgh Press. Si veda l'ampia sintesi critica di Alan Hájek su *Interpretations of Probability* nella [Stanford Encyclopedia of Philosophy](https://plato.stanford.edu/entries/probability-interpret/).
+* **Alan Hájek (2019)** — *Interpretations of Probability*, Stanford Encyclopedia of Philosophy. Ampia rassegna critica consultabile ad accesso aperto su [plato.stanford.edu](https://plato.stanford.edu/entries/probability-interpret/).

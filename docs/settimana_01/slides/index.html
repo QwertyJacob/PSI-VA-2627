@@ -11,6 +11,7 @@
       --r-main-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       --r-heading-font: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
       --r-heading-text-transform: none;
+      --r-main-font-size: 30px;
     }
     .reveal .slides section {
       text-align: center;
@@ -39,14 +40,14 @@
       border-radius: 12px;
       padding: 20px 25px;
       margin: 15px auto;
-      max-width: 850px;
+      max-width: 960px;
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
     .badge {
       display: inline-block;
       padding: 5px 14px;
       border-radius: 20px;
-      font-size: 0.55em;
+      font-size: 0.65em;
       font-weight: 600;
       letter-spacing: 1px;
       text-transform: uppercase;
@@ -59,9 +60,9 @@
       font-weight: 800 !important;
       margin: 0 0 10px 0 !important;
     }
-    .author-photo {
-      width: 140px;
-      height: 140px;
+    .reveal .author-photo {
+      width: 130px;
+      height: 130px;
       object-fit: cover;
       object-position: top;
       border-radius: 50%;
@@ -211,15 +212,15 @@
           4 serie indipendenti da $N = 1.000$ lanci di moneta ($p = 0.5$)
         </p>
 
-        <div style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 10px; max-width: 780px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.15);">
+        <div style="background: rgba(15, 23, 42, 0.7); border-radius: 12px; padding: 10px; max-width: 960px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.15);">
           <canvas id="coinCanvas" width="760" height="250" style="width: 100%; height: auto; display: block; border-radius: 8px;"></canvas>
         </div>
 
         <div style="margin-top: 12px; display: flex; justify-content: center; gap: 10px; align-items: center;">
-          <button id="btnRerunCoin" style="background: #38ef7d; color: #0f172a; border: none; padding: 5px 13px; border-radius: 14px; font-weight: 700; font-size: 0.58em; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+          <button id="btnRerunCoin" style="background: #38ef7d; color: #0f172a; border: none; padding: 5px 13px; border-radius: 14px; font-weight: 700; font-size: 0.7em; cursor: pointer; display: flex; align-items: center; gap: 5px;">
             <span>▶</span> Lancia Monete Live
           </button>
-          <a href="../#lab-moneta" target="_blank" class="slide-btn-link" style="background: rgba(255,255,255,0.08); color: #edf2f7; text-decoration: none; padding: 5px 13px; border-radius: 14px; font-weight: 600; font-size: 0.58em; border: 1px solid rgba(255,255,255,0.2);">
+          <a href="../#lab-moneta" target="_blank" class="slide-btn-link" style="background: rgba(255,255,255,0.08); color: #edf2f7; text-decoration: none; padding: 5px 13px; border-radius: 14px; font-weight: 600; font-size: 0.7em; border: 1px solid rgba(255,255,255,0.2);">
             💻 Laboratorio Python ↗
           </a>
         </div>
@@ -285,6 +286,9 @@
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
   <script>
     Reveal.initialize({
+      width: 1280,
+      height: 720,
+      margin: 0.04,
       controls: true,
       progress: true,
       center: true,

@@ -87,6 +87,7 @@ Vediamo una casistica fondamentale di esempi per apprezzarne la varietà:
   $$
   \Omega = \{GB, BGB, BBGB, GGB, BGGB, \dots, \underbrace{BB\dots B}_{k\text{ volte}}GB, \dots\}
   $$
+
   C'è un limite inferiore alla lunghezza della sequenza (almeno 2 figli: $GB$), ma **non c'è alcun limite superiore**. La stringa può essere arbitrariamente lunga. Questo dimostra un principio cardine: **gli spazi campionari non devono necessariamente essere finiti per essere matematicamente trattabili**.
 
 * **Esempio 4 (Continuo non numerabile — Il tempo di attesa o la misura fisica):**  
@@ -95,6 +96,7 @@ Vediamo una casistica fondamentale di esempi per apprezzarne la varietà:
   $$
   \Omega = [0, +\infty) \quad \text{oppure} \quad \Omega = [0, 2\pi)
   $$
+
   Qui la cardinalità di $\Omega$ è continua (la potenza del continuo $|\mathbb{R}|$).
 
 ---
@@ -111,32 +113,20 @@ Un **evento** è un insieme di esiti, ovvero un **sottoinsieme dello spazio camp
 
 Nel 1888, il logico e filosofo britannico **John Venn** (che ritroveremo presto come uno dei massimi alfieri del polo ontico della probabilità) formalizzò l'uso di diagrammi geometrici piani per rappresentare le relazioni logiche tra insiemi. Poiché gli eventi sono sottoinsiemi di $\Omega$, le operazioni fondamentali della teoria degli insiemi corrispondono esattamente ai connettivi logici dell'informatica:
 
-```
-    SPAZIO CAMPIONARIO Ω             INTERSEZIONE (A ∩ B)             UNIONE (A ∪ B)
-  ┌─────────────────────────┐     ┌─────────────────────────┐     ┌─────────────────────────┐
-  │  ┌───────┐   ┌───────┐  │     │      ┌───────┐          │     │    ████████████████     │
-  │  │   A   │   │   B   │  │     │    ┌─┼───┐   │          │     │   ██████████████████    │
-  │  │       │   │       │  │     │    │ │███│   │          │     │  ████████████████████   │
-  │  └───────┘   └───────┘  │     │    └─┼───┘   │          │     │   ██████████████████    │
-  │                         │     │      └───────┘          │     │    ████████████████     │
-  └─────────────────────────┘     └─────────────────────────┘     └─────────────────────────┘
-   Eventi Disgiunti (A ∩ B = ∅)       "A E B contemporaneamente"        "A OPPURE B (almeno uno)"
+![Operazioni insiemistiche e diagrammi di Venn (Unione, Intersezione, Complemento, Differenza)](../assets/img/1-probabilita/intro_cell17.png)
 
-       COMPLEMENTO (Aᶜ)               DIFFERENZA (A \ B)           LEAD TO DE MORGAN: (A ∪ B)ᶜ
-  ┌─────────────────────────┐     ┌─────────────────────────┐     ┌─────────────────────────┐
-  │█████████████████████████│     │    ████                 │     │█████████████████████████│
-  │████  ┌───────┐  ████████│     │  ██████  ┌───────┐      │     │████  ┌───┐   ┌───┐  ████│
-  │████  │   A   │  ████████│     │  ██████──┼───┐   │      │     │████  │ A │   │ B │  ████│
-  │████  └───────┘  ████████│     │  ██████  │   │   │      │     │████  └───┘   └───┘  ████│
-  │█████████████████████████│     │    ████  └───────┘      │     │█████████████████████████│
-  └─────────────────────────┘     └─────────────────────────┘     └─────────────────────────┘
-    "NON A (tutto tranne A)"         "A MA NON B (A senza B)"       "NÉ A NÉ B (Aᶜ ∩ Bᶜ)"
-```
+| Operazione | Notazione | Definizione insiemistica | Logica Booleana | Linguaggio Naturale |
+| :--- | :--- | :--- | :--- | :--- |
+| **Unione** (Fig. 2.1a) | $A \cup B$ | $\{ \omega \in \Omega \mid \omega \in A \lor \omega \in B \}$ | `A OR B` | $A$ *oppure* $B$ (almeno uno dei due) |
+| **Intersezione** (Fig. 2.1b) | $A \cap B$ | $\{ \omega \in \Omega \mid \omega \in A \land \omega \in B \}$ | `A AND B` | $A$ *e* $B$ (entrambi contemporaneamente) |
+| **Complemento** (Fig. 2.1c) | $\overline{A}$ o $A^c$ | $\{ \omega \in \Omega \mid \omega \notin A \} = \Omega \setminus A$ | `NOT A` | *non* $A$ (tutto tranne $A$) |
+| **Differenza** (Fig. 2.1d) | $A \setminus B$ | $\{ \omega \in \Omega \mid \omega \in A \land \omega \notin B \} = A \cap B^c$ | `A AND NOT B` | $A$ *ma non* $B$ |
 
-* **Unione ($A \cup B$):** Si verifica se si verifica $A$ *oppure* $B$ (cioè se l'esito appartiene ad almeno uno dei due insiemi). In logica booleana: `A OR B`.
-* **Intersezione ($A \cap B$):** Si verifica se si verifica $A$ *e* $B$ (l'esito appartiene contemporaneamente a entrambi gli insiemi). In logica booleana: `A AND B`. Se $A \cap B = \emptyset$, gli eventi si dicono *mutualmente esclusivi* o *disgiunti* (incompatibili).
-* **Complemento ($\bar{A}$ o $A^c = \Omega \setminus A$):** Si verifica se e solo se $A$ *non* si verifica. In logica booleana: `NOT A`.
+* **Unione ($A \cup B$):** Si verifica se si verifica $A$ *oppure* $B$ (cioè se l'esito appartiene ad almeno uno dei due insiemi).
+* **Intersezione ($A \cap B$):** Si verifica se si verifica sia $A$ sia $B$ (l'esito appartiene contemporaneamente a entrambi). Se $A \cap B = \emptyset$, gli eventi si dicono *mutualmente esclusivi* o *disgiunti* (incompatibili).
+* **Complemento ($\bar{A}$ o $A^c = \Omega \setminus A$):** Si verifica se e solo se $A$ *non* si verifica.
 * **Differenza ($A \setminus B$ o $A \cap B^c$):** Si verifica se si verifica $A$ *ma non* $B$.
+* **Eventi Esaustivi:** Una famiglia di eventi è detta esaustiva se la loro unione copre l'intero spazio campionario ($A \cup B \cup \dots = \Omega$): almeno uno di essi si verifica con assoluta certezza. Se sono anche a due a due disgiunti, formano una *partizione* di $\Omega$.
 
 #### Proprietà algebriche e Leggi di De Morgan
 
@@ -144,6 +134,7 @@ Le operazioni tra eventi godono delle note proprietà algebriche di commutativit
 $$
 A \cap (B \cup C) = (A \cap B) \cup (A \cap C)
 $$
+
 $$
 A \cup (B \cap C) = (A \cup B) \cap (A \cup C)
 $$
@@ -153,6 +144,7 @@ Fondamentali nell'architettura del software e nella logica proposizionale sono l
 $$
 (A \cup B)^c = A^c \cap B^c
 $$
+
 $$
 (A \cap B)^c = A^c \cup B^c
 $$
@@ -187,10 +179,12 @@ Kolmogorov fissò tre soli assiomi categorici:
    $$
    P(A) \ge 0
    $$
+
 2. **Normalizzazione:** La probabilità dell'evento certo è pari a uno:
    $$
    P(\Omega) = 1
    $$
+
 3. **$\sigma$-additività (Additività numerabile):** Se una sequenza di eventi $A_1, A_2, A_3, \dots$ è disgiunta a due a due ($A_i \cap A_j = \emptyset$ per ogni $i \neq j$), allora la probabilità dell'unione numerabile è la somma delle singole probabilità:
    $$
    P\left(\bigcup_{i=1}^\infty A_i\right) = \sum_{i=1}^\infty P(A_i)
@@ -214,6 +208,7 @@ $$
 $$
 P(\Omega) = P(\Omega \cup \emptyset) = P(\Omega) + P(\emptyset)
 $$
+
 Sottraendo $P(\Omega)$ da entrambi i membri otteniamo immediatamente $P(\emptyset) = 0$. $\square$
 
 #### B. La regola del complementare
@@ -242,6 +237,7 @@ Se applicassimo ciecamente l'additività, sommeremmo:
 $$
 0.70 + 0.50 = 1.20 \quad (\text{IMPOSSIBILE!})
 $$
+
 Una probabilità maggiore di 1 è una contraddizione logica insanabile. L'errore risiede nel fatto che lunedì e martedì **non sono mutualmente esclusivi**: non è affatto impossibile che la rete collassi in entrambi i giorni! Sommando $P(L)$ e $P(M)$, l'area di sovrapposizione $P(L \cap M)$ è stata **contata due volte**.
 
 Dobbiamo quindi sottrarre la sovrapposizione:
@@ -251,6 +247,7 @@ Dobbiamo quindi sottrarre la sovrapposizione:
     $$
     P(A \cup B) = P(A) + P(B) - P(A \cap B)
     $$
+
     Se e solo se gli eventi sono disgiunti ($A \cap B = \emptyset$), il termine sottratto si annulla: $P(A \cup B) = P(A) + P(B)$.
 
 Se nell'esempio precedente la probabilità di guasto contemporaneo in entrambi i giorni è $P(L \cap M) = 0.35$, la probabilità corretta di avere almeno un guasto è:
@@ -263,7 +260,10 @@ Se consideriamo tre eventi $A, B, C$:
 $$
 P(A \cup B \cup C) = P(A) + P(B) + P(C) - [P(A \cap B) + P(A \cap C) + P(B \cap C)] + P(A \cap B \cap C)
 $$
+
 *Intuizione dal diagramma di Venn:* Sommando i tre cerchi, le intersezioni doppie vengono contate due volte (quindi vanno sottratte). Ma sottraendo tutte le intersezioni doppie, la regione centrale tripla $A \cap B \cap C$ — che era stata sommata 3 volte e poi sottratta 3 volte — è sparita del tutto: va dunque ri-aggiunta alla fine.
+
+![Principio di Inclusione-Esclusione a due e tre eventi (Fig. 2.2)](../assets/img/1-probabilita/assiomi_cell10.png)
 
 ---
 
@@ -361,6 +361,7 @@ Da qui discende la definizione universale:
   $$
   P(A \mid B) = \frac{\text{Numero di esiti favorevoli in } A \cap B}{\text{Numero totale di esiti possibili in } B} = \frac{|A \cap B|}{|B|}
   $$
+
 * **Nel modello frequentista (Venn, von Mises):** Se ripetiamo l'esperimento $N$ volte, filtriamo solo le prove in cui $B$ si è verificato (siano esse $\#B$). La frazione in cui si è verificato anche $A$ è:
   $$
   P(A \mid B) = \lim_{N \to \infty} \frac{\#(A \cap B)}{\#B} = \lim_{N \to \infty} \frac{\#(A \cap B) / N}{\#B / N} = \frac{P(A \cap B)}{P(B)}
@@ -374,6 +375,7 @@ La probabilità condizionata è:
 $$
 P(A \mid B) = \frac{1/52}{13/52} = \frac{1}{13}
 $$
+
 Il risultato coincide perfettamente con il buonsenso: tra le 13 carte di cuori, vi è un solo asso.
 
 ---
@@ -410,6 +412,7 @@ P(A \cap B \cap C) &= P(A) \cdot P(B \mid A) \cdot P(C \mid A \cap B) \\
 &= P(C) \cdot P(A \mid C) \cdot P(B \mid A \cap C) \quad \text{e così via.}
 \end{align}
 $$
+
 Questa flessibilità permette all'ingegnere di scegliere la scomposizione più comoda a seconda di quali dati condizionati siano disponibili nei log o nei test empirici.
 
 * **Esempio informatico (Pipeline di Continuous Integration / Controllo Qualità):**  
@@ -441,6 +444,7 @@ Sostituendo questa relazione nella regola del prodotto $P(A \cap B) = P(B) P(A \
     $$
     P(A \cap B) = P(A) \cdot P(B)
     $$
+
     Per una collezione di eventi $A_1, \dots, A_n$, l'indipendenza reciproca (mutua) richiede che la probabilità dell'intersezione di qualsiasi sottoinsieme sia uguale al prodotto delle singole probabilità.
 
 #### Proprietà dell'indipendenza
@@ -462,6 +466,7 @@ Se $A$ e $B$ sono indipendenti, allora sono mutuamente indipendenti anche tutte 
     $$
     P(A \cap B) = 0 \neq P(A) \cdot P(B) > 0
     $$
+
     **Due eventi disgiunti non sono MAI stocasticamente indipendenti!**
     
     Al contrario, essere disgiunti rappresenta la **massima forma di dipendenza possibile**: se so che si è verificato $A$, so con certezza assoluta ($100\%$) che $B$ **non può essersi verificato** ($P(B \mid A) = 0$). Il verificarsi di uno distrugge completamente la probabilità dell'altro!
@@ -495,6 +500,7 @@ Per la legge di De Morgan e l'indipendenza dei complementari, la probabilità ch
 $$
 P(\text{Guasto totale}) = P(G_1 \cap G_2 \cap \dots \cap G_n) = \prod_{i=1}^n q_i
 $$
+
 L'affidabilità (probabilità di funzionamento) del sistema in parallelo è dunque:
 $$
 P(\text{Sistema Funzionante}) = 1 - \prod_{i=1}^n q_i
@@ -506,10 +512,12 @@ $$
   $$
   P(\text{Dati perduti}) = 0.01 \times 0.02 \times 0.02 = 0.000004 \quad (4 \text{ su un milione})
   $$
+
   L'affidabilità del sistema passa dal $99\%$ di un disco singolo allo straordinario:
   $$
   P(\text{Dati salvati}) = 1 - 0.000004 = 0.999996 \quad (99.9996\%)
   $$
+
   Ecco perché l'ingegneria del software distribuisce i nodi e replica i database in parallelo!
 
 #### B. Collegamento in Serie (La Catena degli Anelli Deboli)
@@ -532,6 +540,7 @@ $$
   $$
   P(\text{Lancio in tempo}) = (1 - 0.01) \times (1 - 0.02) \times (1 - 0.02) = 0.99 \times 0.98 \times 0.98 = 0.950792 \approx 95.08\%
   $$
+
   *Riflessione ingegneristica:* Nonostante i singoli componenti siano affidabili al $98-99\%$, la probabilità di fallimento dell'intero sistema è salita a quasi il $5\%$ ($1 - 0.9508 = 4.92\%$). In serie, ogni nuovo componente aggiunto degrada inesorabilmente l'affidabilità complessiva.
 
 ---

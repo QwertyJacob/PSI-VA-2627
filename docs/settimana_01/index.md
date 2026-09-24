@@ -917,40 +917,15 @@ Avendo osservato entrambi 9 teste e 3 croci, Alice e Bob ottengono per un bayesi
 
 ---
 
-## Atto VI: L'abisso subatomico — Il dilemma quantistico e il QBism
+## Atto VI: Uno sguardo all'abisso subatomico — Epistemico, Ontico e Non-Località
 
-Proprio quando matematici e statistici ritenevano di aver esaurito ogni argomento di scontro tra epistemico e ontico, la fisica del Novecento fece crollare le certezze di entrambi i campi.
+Proprio quando matematici e filosofi credevano di aver circoscritto ogni aspetto della disputa tra mente e mondo, la fisica quantistica del Novecento ha portato la contesa tra polo epistemico e polo ontico alle sue estreme conseguenze:
 
-### Max Born e l'onda di probabilità (1926)
-Nella meccanica quantistica, un elettrone è descritto da una funzione d'onda complessa e continua $\psi(x, t)$, che evolve nel tempo secondo l'equazione deterministica di Schrödinger. Ma quando un fisico inserisce un rilevatore per misurare dove si trovi l'elettrone, non osserva mai un'onda sparpagliata nello spazio: registra un lampo secco, puntiforme e discreto in una posizione precisa.
+* **La via ontica (il caso intrinseco nella materia):** Con la regola di Max Born (1926), la probabilità entra direttamente nel cuore della materia fondamentale: a livello subatomico, la natura sembrerebbe autenticamente e irriducibilmente casuale ($P(x) = |\psi(x)|^2$). Non vi sarebbe alcun supercomputer newtoniano o demone di Laplace capace di prevedere l'esito: il caso appartiene al mondo fisico esterno.
+* **La resistenza epistemica e il prezzo della non-località:** Albert Einstein rifiutò visceralmente questa resa all'azzardo (*«Dio non gioca a dadi»*), difendendo l'idea che la probabilità fosse un artefatto puramente **epistemico**, una maschera della nostra temporanea ignoranza di "variabili nascoste" che determinano deterministicamente lo stato prima della misura (come due guanti riposti in due scatole separate: chi apre la prima a Ginevra sa istantaneamente cosa c'è a Tokyo).  
+Tuttavia, il celebre **Teorema di Bell (1964)** e le successive verifiche sperimentali hanno inferto un colpo decisivo a questa speranza classica: se si vuole interpretare la probabilità quantistica in senso epistemico postulando cause oggettive preesistenti, si è costretti ad ammettere che l'universo sia **intrinsecamente non-locale**. Ciò significa che eventi separati nello spazio possono influenzarsi istantaneamente.
 
-Nel 1926, **Max Born** formulò la sua celebre regola:
-> *La funzione d'onda non è un'onda di materia fisica; il suo modulo quadro $|\psi(x, t)|^2$ rappresenta la densità di probabilità di trovare la particella nel punto $x$ all'istante $t$.*
-
-La probabilità entrava per la prima volta nel cuore della materia fondamentale.
-
-### I guanti di Einstein e la difesa del realismo locale (1935)
-Albert Einstein rifiutò visceralmente questa conclusione (*"Dio non gioca a dadi con l'universo"*). 
-
-Cosa direbbe Einstein? Ci direbbe qualcosa del genere:
-
-> «Io non posso credere che la teoria fondamentale dell'universo sia basata sul puro azzardo ontico. Non posso credere che una particella scelga dove manifestarsi nel momento stesso in cui un fisico guarda dentro un cannocchiale, come se la Luna esistesse soltanto quando io decido di volgere lo sguardo al cielo!
->
-> La meccanica quantistica formulata da Bohr e Born è senza dubbio un trionfo ingegneristico straordinario: le sue previsioni numeriche sono impeccabili. Ma confondere una teoria statisticamente utile con una descrizione ontologicamente completa della realtà è una resa epistemologica che non posso accettare. Quando Born scrive $P(x) = |\psi(x)|^2$, egli sta usando uno strumento epistemico eccellente per descrivere la nostra incapacità momentanea di penetrare le variabili subatomiche più profonde.
->
-> Ricordate l'argomento che ho formulato nel 1935 con Podolsky e Rosen (il paradosso EPR), e l'analogia dei due guanti riposti in due scatole separate e spedite a grande distanza: se apro la mia scatola a Ginevra e vi trovo un guanto sinistro, so istantaneamente che a Tokyo c'è il guanto destro. Non vi è alcuna trasmissione misteriosa o telepatica più veloce della luce! Il guanto a Tokyo era destro fin dal momento in cui è stato chiuso nella scatola. La probabilità misurava soltanto la nostra ignoranza temporanea prima di aprire il coperchio, non la dissoluzione della realtà fisica oggettiva. Rinunciare al realismo locale significa trasformare la fisica in magia.»
-
-Einstein voleva disperatamente che la probabilità quantistica fosse **epistemica**: una misura provvisoria dell'ignoranza umana su **variabili nascoste locali** che determinavano lo stato prima della misura.
-
-### Il bivio fondamentale: Realtà fisica oggettiva o informazione dell'osservatore?
-
-Il confronto tra Born ed Einstein evidenzia come persino la fisica subatomica non possa sfuggire alla contesa tra polo ontico e polo epistemico. Se la probabilità descrive i costituenti ultimi della materia, ci troviamo di fronte a due visioni inconciliabili del cosmo:
-
-1. **La via ontica (L'indeterminismo intrinseco della natura):** Se la funzione d'onda $\psi$ descrive uno stato oggettivo del mondo fisico esterno, dobbiamo accettare che a livello fondamentale la natura sia autenticamente casuale. La probabilità non è una maschera della nostra ignoranza, ma una proprietà primaria, irriducibile e permanente della materia stessa.
-2. **La via epistemica radicale (QBism — Quantum Bayesianism):** Elaborato da Christopher Fuchs, Rüdiger Schack e David Mermin ([arXiv:1311.5253](https://arxiv.org/abs/1311.5253)), il QBism porta il soggettivismo di de Finetti direttamente nel cuore della meccanica quantistica:
-   > La funzione d'onda $|\psi\rangle$ non è un'onda materiale che fluttua nello spazio; è un catalogo personale dello sperimentatore, una regola razionale per aggiornare le proprie scommesse personali sui risultati delle future interazioni di laboratorio.
-
-Per il QBism, il cosiddetto "collasso della funzione d'onda" non è una misteriosa catastrofe fisica che avviene all'esterno: è semplicemente un ordinario aggiornamento bayesiano della nostra mente all'arrivo di una nuova evidenza sperimentale. La probabilità rimane fedele al suo statuto epistemico: misura la nostra informazione, non la sostanza delle cose.
+Che si abbracci l'indeterminismo ontico o la non-località della conoscenza, la fisica moderna ribadisce la vertigine inaugurata da Kolmogorov: persino nel cuore della realtà materiale, la probabilità costringe lo scienziato a confrontarsi con il confine sottile tra ciò che appartiene al territorio del mondo e ciò che appartiene alla mappa della nostra mente.
 
 ---
 
@@ -1059,10 +1034,8 @@ Comportandosi così, il team ha replicato alla perfezione la condotta di **Bob**
 
 Siamo partiti dal contenitore vuoto e perfetto di Kolmogorov. Quando abbiamo provato a riempirlo con il disordine del mondo reale, quel contenitore si è fratturato in mille pezzi: dalle quote dei bookmaker londinesi alla moneta fusa nella fornace, dalla freccia del tempo infranta di Humphreys alla disputa di Alice e Bob fino all'abisso del mondo subatomico e al dilemma quantistico.
 
-Questa è la bellezza vertiginosa della probabilità: **la disciplina più esatta della scienza contemporanea poggia su un mistero filosofico irrisolto**.
+Questa è la bellezza vertiginosa della probabilità (e, un po' della scienza come tale): **la probabilità, come una delle discipline più significative per la scienza contemporanea poggia su un mistero filosofico irrisolto**.
 
-Se torniamo con la mente al demone di Laplace — a quell'intelletto supremo capace di conoscere la traiettoria di ogni atomo dell'universo —, ci rendiamo conto che per quell'entità la probabilità svanirebbe all'istante nel nulla.
-È possibile che per secoli abbiamo costruito la nostra matematica più raffinata, le nostre equazioni più belle e i nostri algoritmi più potenti non su una proprietà fisica del cosmo, ma unicamente sull'**infinita, feconda e inevitabile misura della nostra ignoranza umana**.
 
 ---
 

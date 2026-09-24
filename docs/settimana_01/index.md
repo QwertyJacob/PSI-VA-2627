@@ -41,6 +41,7 @@ Prima di addentrarci negli assiomi, è fondamentale comprendere la base concettu
 Useremo in questo corso un sistema formale che poggia su due **nozioni primitive** legate da una **relazione circolare, non meglio definita**, che però ciascuno può accettare come valida senza scandalizzarsi e darne allo stesso tempo un'interpretazione del tutto ragionevole: i concetti di **"esperimento"** ed **"esito"**.
 
 La loro relazione fondamentale racchiude infatti un'apparente tautologia:
+
 * **"L'esito è ciò che un esperimento genera"**
 * **"L'esperimento è ciò che genera esiti"**
 
@@ -80,6 +81,7 @@ Vediamo una casistica fondamentale di esempi per apprezzarne la varietà:
   Una coppia decide di continuare ad avere figli finché non nasce, in sequenza temporale, una femmina ($G$) seguita subito da un maschio ($B$).  
   Quali sono gli esiti possibili?  
   Scrivendo $B$ per maschio e $G$ per femmina, ogni esito è una stringa che:
+
   1. Termina tassativamente con la sequenza $GB$;
   2. Non contiene alcuna altra occorrenza di $GB$ prima della fine.  
   
@@ -104,6 +106,7 @@ Vediamo una casistica fondamentale di esempi per apprezzarne la varietà:
 ### 3. Eventi, Diagrammi di Venn e Algebra Booleana
 
 Un **evento** è un insieme di esiti, ovvero un **sottoinsieme dello spazio campionario** ($A \subseteq \Omega$).
+
 * Diciamo che **un evento $A$ si verifica** se l'esito $\omega$ effettivamente prodotto dall'esperimento appartiene ad $A$ ($\omega \in A$).
 * Se $\Omega$ è finito e ha cardinalità $|\Omega| = N$, il numero totale di eventi possibili (tutti i possibili sottoinsiemi, cioè l'insieme delle parti $\mathcal{P}(\Omega)$) è pari a $2^N$.
 * L'intero spazio $\Omega$ è l'**evento certo** (si verifica sempre, perché l'esperimento genera sempre un esito appartenente ad $\Omega$).
@@ -160,6 +163,7 @@ $$
 Non sempre possiamo limitarci a prendere "qualsiasi" sottoinsieme. Quando lo spazio campionario è continuo (come la retta reale $\mathbb{R}$ o l'intervallo $[0, 1]$), considerare arbitrariamente tutti i possibili sottoinsiemi genera paradossi insolubili nella teoria della misura (esistenza di insiemi non misurabili, come nella costruzione di Vitali o nel paradosso di Banach-Tarski, dove una sfera può essere scomposta in un numero finito di pezzi e riassemblata in due sfere identiche alla prima).
 
 Si richiede quindi che la collezione $\mathcal{F}$ degli eventi a cui possiamo sensatamente associare una probabilità sia una **$\sigma$-algebra** su $\Omega$, cioè una famiglia di sottoinsiemi di $\Omega$ chiusa rispetto alle operazioni logiche fondamentali:
+
 1. **Contiene lo spazio intero:** $\Omega \in \mathcal{F}$;
 2. **Chiusura rispetto al complemento:** Se $A \in \mathcal{F}$, allora anche $A^c \in \mathcal{F}$;
 3. **Chiusura rispetto all'unione numerabile:** Se $A_1, A_2, A_3, \dots \in \mathcal{F}$, allora $\bigcup_{i=1}^\infty A_i \in \mathcal{F}$.
@@ -219,7 +223,10 @@ $$
 
 *Dimostrazione:* Per definizione, $A$ e $A^c$ sono disgiunti ($A \cap A^c = \emptyset$) e la loro unione ricopre l'intero spazio ($A \cup A^c = \Omega$). Dunque:
 $$
-P(\Omega) = P(A \cup A^c) = P(A) + P(A^c) \implies 1 = P(A) + P(A^c) \implies P(A^c) = 1 - P(A). \quad \square
+\begin{aligned}
+P(\Omega) = P(A \cup A^c) = P(A) + P(A^c) &\implies 1 = P(A) + P(A^c) \\
+&\implies P(A^c) = 1 - P(A). \quad \square
+\end{aligned}
 $$
 
 * **Esempio informatico 1 (Antivirus):** Se un sistema è protetto contro un nuovo malware con probabilità $0.70$, la probabilità che sia vulnerabile è $1 - 0.70 = 0.30$.
@@ -258,7 +265,11 @@ $$
 #### Estensione a tre eventi (Inclusione-Esclusione)
 Se consideriamo tre eventi $A, B, C$:
 $$
-P(A \cup B \cup C) = P(A) + P(B) + P(C) - [P(A \cap B) + P(A \cap C) + P(B \cap C)] + P(A \cap B \cap C)
+\begin{aligned}
+P(A \cup B \cup C) &= P(A) + P(B) + P(C) \\
+&\quad - [P(A \cap B) + P(A \cap C) + P(B \cap C)] \\
+&\quad + P(A \cap B \cap C)
+\end{aligned}
 $$
 
 *Intuizione dal diagramma di Venn:* Sommando i tre cerchi, le intersezioni doppie vengono contate due volte (quindi vanno sottratte). Ma sottraendo tutte le intersezioni doppie, la regione centrale tripla $A \cap B \cap C$ — che era stata sommata 3 volte e poi sottratta 3 volte — è sparita del tutto: va dunque ri-aggiunta alla fine.
@@ -357,14 +368,22 @@ Da qui discende la definizione universale:
     $$
 
 #### La convergenza tra interpretazione classica e frequentista
+
 * **Nel modello classico (Laplace):** Se gli esiti sono equiprobabili, contiamo i casi favorevoli:
   $$
-  P(A \mid B) = \frac{\text{Numero di esiti favorevoli in } A \cap B}{\text{Numero totale di esiti possibili in } B} = \frac{|A \cap B|}{|B|}
+  \begin{aligned}
+  P(A \mid B) &= \frac{\text{Numero di esiti favorevoli in } A \cap B}{\text{Numero totale di esiti possibili in } B} \\
+  &= \frac{|A \cap B|}{|B|}
+  \end{aligned}
   $$
 
 * **Nel modello frequentista (Venn, von Mises):** Se ripetiamo l'esperimento $N$ volte, filtriamo solo le prove in cui $B$ si è verificato (siano esse $\#B$). La frazione in cui si è verificato anche $A$ è:
   $$
-  P(A \mid B) = \lim_{N \to \infty} \frac{\#(A \cap B)}{\#B} = \lim_{N \to \infty} \frac{\#(A \cap B) / N}{\#B / N} = \frac{P(A \cap B)}{P(B)}
+  \begin{aligned}
+  P(A \mid B) &= \lim_{N \to \infty} \frac{\#(A \cap B)}{\#B} \\
+  &= \lim_{N \to \infty} \frac{\#(A \cap B) / N}{\#B / N} \\
+  &= \frac{P(A \cap B)}{P(B)}
+  \end{aligned}
   $$
 
 *Esempio didattico (Il mazzo di 52 carte):*  
@@ -391,17 +410,24 @@ Questa formula è la chiave per calcolare la probabilità di eventi composti che
 
 * **Esempio (Estrazioni senza reimmissione):**  
   Estraiamo due carte consecutive da un mazzo da 52 senza rimettere la prima nel mazzo. Qual è la probabilità di estrarre due Assi consecutivi?
-  * Prima estrazione ($A_1$): $P(A_1) = 4/52 = 1/13$.
-  * Seconda estrazione ($A_2$), sapendo che un asso è già uscito: nel mazzo restano 51 carte di cui solo 3 assi, dunque $P(A_2 \mid A_1) = 3/51 = 1/17$.
-  * Probabilità congiunta:
+
+    * Prima estrazione ($A_1$): $P(A_1) = 4/52 = 1/13$.
+    * Seconda estrazione ($A_2$), sapendo che un asso è già uscito: nel mazzo restano 51 carte di cui solo 3 assi, dunque $P(A_2 \mid A_1) = 3/51 = 1/17$.
+    * Probabilità congiunta:
     $$
-    P(A_1 \cap A_2) = P(A_1) \cdot P(A_2 \mid A_1) = \frac{1}{13} \cdot \frac{1}{17} = \frac{1}{221} \approx 0.00452
+    \begin{aligned}
+    P(A_1 \cap A_2) &= P(A_1) \cdot P(A_2 \mid A_1) \\
+    &= \frac{1}{13} \cdot \frac{1}{17} = \frac{1}{221} \approx 0.00452
+    \end{aligned}
     $$
 
 #### Fattorizzazione a catena per $n$ eventi
 La regola del prodotto si generalizza a un numero arbitrario di eventi concatenati:
 $$
-P(A_1 \cap A_2 \cap \dots \cap A_n) = P(A_1) \cdot P(A_2 \mid A_1) \cdot P(A_3 \mid A_1 \cap A_2) \cdots P(A_n \mid A_1 \cap \dots \cap A_{n-1})
+\begin{aligned}
+P(A_1 \cap A_2 \cap \dots \cap A_n) = P(A_1) &\cdot P(A_2 \mid A_1) \cdot P(A_3 \mid A_1 \cap A_2) \\
+&\cdots P(A_n \mid A_1 \cap \dots \cap A_{n-1})
+\end{aligned}
 $$
 
 Grazie alla proprietà commutativa dell'intersezione, per tre eventi $A, B, C$ esistono $3! = 6$ decomposizioni equivalenti:
@@ -417,13 +443,18 @@ Questa flessibilità permette all'ingegnere di scegliere la scomposizione più c
 
 * **Esempio informatico (Pipeline di Continuous Integration / Controllo Qualità):**  
   Un processo di rilascio software attraversa tre fasi sequenziali:
+
   1. $M$: la compilazione e i test unitari passano ($P(M) = 0.90$);
   2. $D$: l'analisi statica del codice approva l'architettura ($P(D \mid M) = 0.80$);
   3. $T$: i test di carico e sicurezza finali hanno successo ($P(T \mid M \cap D) = 0.95$).  
   
   La probabilità che una release superi l'intera pipeline è data dalla regola del prodotto:
   $$
-  P(M \cap D \cap T) = P(M) \cdot P(D \mid M) \cdot P(T \mid M \cap D) = 0.90 \times 0.80 \times 0.95 = 0.684 \quad (68.4\%)
+  \begin{aligned}
+  P(M \cap D \cap T) &= P(M) \cdot P(D \mid M) \cdot P(T \mid M \cap D) \\
+  &= 0.90 \times 0.80 \times 0.95 \\
+  &= 0.684 \quad (68.4\%)
+  \end{aligned}
   $$
 
 ---
@@ -449,6 +480,7 @@ Sostituendo questa relazione nella regola del prodotto $P(A \cap B) = P(B) P(A \
 
 #### Proprietà dell'indipendenza
 Se $A$ e $B$ sono indipendenti, allora sono mutuamente indipendenti anche tutte le loro combinazioni con i complementari:
+
 * $A$ e $B^c$ sono indipendenti: $P(A \cap B^c) = P(A) P(B^c)$;
 * $A^c$ e $B$ sono indipendenti: $P(A^c \cap B) = P(A^c) P(B)$;
 * $A^c$ e $B^c$ sono indipendenti: $P(A^c \cap B^c) = P(A^c) P(B^c)$.
@@ -510,7 +542,10 @@ $$
   Un server memorizza dati critici su un disco principale con probabilità di rottura annua dell'$1\%$ ($q_H = 0.01$). Per sicurezza, vengono installati 2 backup indipendenti, ciascuno con probabilità di guasto del $2\%$ ($q_{B1} = q_{B2} = 0.02$).  
   I dati vengono persi solo se tutti e tre i dischi si rompono nello stesso anno:
   $$
-  P(\text{Dati perduti}) = 0.01 \times 0.02 \times 0.02 = 0.000004 \quad (4 \text{ su un milione})
+  \begin{aligned}
+  P(\text{Dati perduti}) &= 0.01 \times 0.02 \times 0.02 \\
+  &= 0.000004 \quad (4 \text{ su un milione})
+  \end{aligned}
   $$
 
   L'affidabilità del sistema passa dal $99\%$ di un disco singolo allo straordinario:
@@ -538,7 +573,11 @@ $$
   Il lancio programmato di uno shuttle spaziale dipende da tre sistemi avionici critici collegati in serie, operanti in modo indipendente. Le rispettive probabilità di anomalia prima del decollo sono appena dell'$1\%$, $2\%$ e $2\%$ ($q_1 = 0.01$, $q_2 = 0.02$, $q_3 = 0.02$).  
   Qual è la probabilità che il lancio avvenga in orario senza rinvii?
   $$
-  P(\text{Lancio in tempo}) = (1 - 0.01) \times (1 - 0.02) \times (1 - 0.02) = 0.99 \times 0.98 \times 0.98 = 0.950792 \approx 95.08\%
+  \begin{aligned}
+  P(\text{Lancio in tempo}) &= (1 - 0.01) \times (1 - 0.02) \times (1 - 0.02) \\
+  &= 0.99 \times 0.98 \times 0.98 \\
+  &= 0.950792 \approx 95.08\%
+  \end{aligned}
   $$
 
   *Riflessione ingegneristica:* Nonostante i singoli componenti siano affidabili al $98-99\%$, la probabilità di fallimento dell'intero sistema è salita a quasi il $5\%$ ($1 - 0.9508 = 4.92\%$). In serie, ogni nuovo componente aggiunto degrada inesorabilmente l'affidabilità complessiva.
@@ -627,6 +666,7 @@ Per scoprire come l'umanità ha cercato disperatamente di dare un significato a 
 Per capire la frattura moderna, bisogna ricordare che per secoli la parola *probabile* non ha avuto nulla a che fare con la matematica o con i conteggi. Derivata dal latino *probabilis*, indicava un'opinione degna di approvazione morale (*probata* da persone sagge, autorevoli o virtuose). 
 
 Nel Medioevo vigeva una rigida separazione epistemologica:
+
 * Da una parte c'era la **Scientia**: la conoscenza certa, dimostrativa, dedotta da principi primi immutabili (come la geometria euclidea o la teologia).
 * Dall'altra c'era l'**Opinio**: il regno dell'incertezza, delle vicende umane, del commercio e del diritto, dove la verità assoluta era inaccessibile e ci si doveva accontentare di argomenti "probabili" (plausibili, credibili).
 
@@ -642,17 +682,17 @@ Se si divide la posta in proporzione ai punti fatti ($2$ contro $1$, ovvero $2/3
 Pascal avviò un fitto scambio epistolare con il giurista e matematico di Tolosa **Pierre de Fermat**. La loro corrispondenza nell'estate del 1654 segna l'atto di nascita della teoria matematica della probabilità.
 
 L'intuizione folgorante di Pascal e Fermat fu di ribaltare la prospettiva: la divisione del denaro **non doveva guardare al passato (i punti già conquistati), ma pesare geometricamente i rami dei futuri possibili**.
+
 * Se si fosse giocata una manche successiva:
   * Con probabilità $1/2$ avrebbe vinto A, raggiungendo 3 punti e intascando tutte le 64 pistole.
   * Con probabilità $1/2$ avrebbe vinto B, portando la partita sul 2 a 2 (patta). In questo scenario di parità, a ciascuno sarebbero spettate di diritto 32 pistole.
 Il valore equo dell'aspettativa di vincita (il *valore atteso*) prima di giocare quella manche è dunque il valore garantito (32 pistole) più la metà del piatto conteso:
 
 $$
-\text{Spettanza di A} = 32 + \frac{1}{2}(32) = 48 \text{ pistole} \quad (3/4 \text{ del totale})
-$$
-
-$$
-\text{Spettanza di B} = \frac{1}{2}(32) = 16 \text{ pistole} \quad (1/4 \text{ del totale})
+\begin{aligned}
+\text{Spettanza di A} &= 32 + \frac{1}{2}(32) = 48 \text{ pistole} \quad \left(\frac{3}{4} \text{ del totale}\right) \\
+\text{Spettanza di B} &= \frac{1}{2}(32) = 16 \text{ pistole} \quad \left(\frac{1}{4} \text{ del totale}\right)
+\end{aligned}
 $$
 
 Per la prima volta nella storia, l'incertezza del futuro veniva domata dal calcolo esatto. Ma questo trionfo aprì una voragine filosofica che non si è mai più richiusa: cosa stiamo calcolando esattamente quando pesiamo quei rami futuri?
@@ -741,12 +781,14 @@ De Finetti rispose con un'idea mutuata dall'**operazionalismo scientifico** degl
 Procediamo a rallentatore, passo dopo passo:
 
 1. **Il contratto condizionato (il "biglietto")**:  
-   Immagina un certificato finanziario legato a un evento futuro e incerto, ad esempio *"Domani piove a Varese"*. Questo contratto stabilisce una regola semplicissima: se domani piove ti paga una somma fissata $S$ (poniamo $S = 100\ €$), se non piove ti paga $0\ €$.
+   Immagina un certificato finanziario legato a un evento futuro e incerto, ad esempio *"Domani piove a Varese"*. Questo contratto stabilisce una regola semplicissima: se domani piove ti paga una somma fissata $S$ (poniamo $S = 100\ $€), se non piove ti paga $0\ $€.
 2. **Il prezzo equo ($p \cdot S$)**:  
    Quanto saresti disposto a pagare oggi per comprare quel certificato?  
-   * Se sei convintissimo che pioverà, sarai disposto a pagarlo quasi $100\ €$.  
-   * Se pensi che sia quasi impossibile, non ci spenderai più di $1\ €$ o $2\ €$.  
-   * Se ritieni che il prezzo equo di scambio sia $70\ €$, significa che stai valutando il rischio a una quota unitaria $p = \frac{70}{100} = 0{,}70$.
+
+    * Se sei convintissimo che pioverà, sarai disposto a pagarlo quasi $100\ $€.  
+    * Se pensi che sia quasi impossibile, non ci spenderai più di $1\ $€ o $2\ $€.  
+    * Se ritieni che il prezzo equo di scambio sia $70\ $€, significa che stai valutando il rischio a una quota unitaria $p = \frac{70}{100} = 0{,}70$.
+
 3. **La probabilità è un prezzo unitario**:  
    Quel numero $p \in [0, 1]$ non misura l'umidità delle nuvole nel cielo: misura **il prezzo monetario unitario che tu attribuisci a un guadagno condizionato all'incertezza**. 
 
@@ -762,17 +804,20 @@ Non puoi barare: devi avere *"la pelle in gioco"* da entrambi i lati del tavolo.
 A questo punto accade la magia. Cosa succede se attribuisci le tue probabilità in modo stravagante, senza rispettare la matematica?
 
 Immagina di lanciare una moneta e di dichiarare:
-* $P(\text{Testa}) = 0{,}60$ (prezzo equo per incassare $100\ €$: $60\ €$)
-* $P(\text{Croce}) = 0{,}60$ (prezzo equo per incassare $100\ €$: $60\ €$)
+
+* $P(\text{Testa}) = 0{,}60$ (prezzo equo per incassare $100\ $€: $60\ $€)
+* $P(\text{Croce}) = 0{,}60$ (prezzo equo per incassare $100\ $€: $60\ $€)
 
 A prima vista potrebbe sembrare una tua legittima opinione ottimista. Ma un allibratore o un avversario razionale ti proporrà subito due scommesse:
-* Ti vende un biglietto su **Testa** a $60\ €$.
-* Ti vende un biglietto su **Croce** a $60\ €$.
+
+* Ti vende un biglietto su **Testa** a $60\ $€.
+* Ti vende un biglietto su **Croce** a $60\ $€.
 
 Tu le accetti entrambe perché le consideri entrambe eque. Cosa accade al tuo portafoglio?
-* **Oggi escono dalle tue tasche**: $60 + 60 = 120\ €$.
-* **Domani la moneta atterra**: o esce Testa o esce Croce. In entrambi i casi incassi la vincita di **un solo biglietto**: $100\ €$.
-* **Bilancio finale**: hai perso con certezza assoluta $20\ €$ ($100 - 120 = -20\ €$), qualunque faccia mostri la moneta!
+
+* **Oggi escono dalle tue tasche**: $60 + 60 = 120\ $€.
+* **Domani la moneta atterra**: o esce Testa o esce Croce. In entrambi i casi incassi la vincita di **un solo biglietto**: $100\ $€.
+* **Bilancio finale**: hai perso con certezza assoluta $20\ $€ ($100 - 120 = -20\$€), qualunque faccia mostri la moneta!
 
 Questo meccanismo micidiale è noto come **Dutch Book** (arbitraggio puro): se le tue valutazioni violano anche solo una regola elementare del calcolo delle probabilità, un avversario può combinare una serie di scommesse che ti portano a **perdere sistematicamente denaro in ogni scenario possibile**.
 
@@ -834,6 +879,7 @@ Per Venn, la probabilità è dunque una proprietà empirica delle serie storiche
 Nel 1928, il matematico e ingegnere aerospaziale **Richard von Mises** portò l'intuizione di Venn al massimo vertice di rigore con il volume *Wahrscheinlichkeit, Statistik und Wahrheit* (*Probabilità, statistica e verità*).
 
 Von Mises stabilì che ha senso parlare di probabilità solo ed esclusivamente all'interno di una classe ideale di eventi ripetibili chiamata **Kollektiv**: una successione infinita di prove empiriche $\omega = (x_1, x_2, x_3, \dots)$ caratterizzata da due assiomi inflessibili:
+
 1. **Esistenza del limite:** La frequenza relativa con cui compare l'esito $A$ deve convergere a un limite numerico finito quando il numero di lanci tende all'infinito: $P(A) = \lim_{N \to \infty} \frac{N(A)}{N}$.
 
 2. **Assioma di casualità (*Regellosigkeit*):** Tale limite deve rimanere identico per qualsiasi sottosuccessione infinita estratta applicando una "regola di selezione" che non guardi al futuro (ad esempio estraendo solo i lanci con indice pari, o solo i lanci con indice primo).
@@ -851,6 +897,7 @@ Per Richard von Mises, la risposta è categorica e disarmante:
 > «La domanda non ha alcun senso scientifico. Per una moneta distrutta non esiste alcun collettivo, non esiste alcuna sequenza infinita di prove. Parlare della probabilità di un singolo evento è un non-senso linguistico, analogo a chiedere quale sia la temperatura di una singola molecola isolata.»
 
 Fermiamoci a riflettere: ciascuno di noi, ogni giorno, deve prendere decisioni capitali su **eventi singoli e irripetibili**:
+
 * Qual è la probabilità che domani esploda la caldera vulcanica dei Campi Flegrei?
 * Qual è la probabilità che una specifica startup informatica fallisca entro due anni?
 * Qual è la probabilità che un paziente superi un'operazione al cuore a cui si sottopone una sola volta nella vita?
@@ -871,6 +918,7 @@ Per Popper, quando diciamo che la moneta ha una probabilità del 50% di mostrare
 La proposta di Popper sembrava la quadratura del cerchio: salvare la realtà materiale della probabilità applicandola al caso singolo. Ma nel 1985, il filosofo della scienza **Paul W. Humphreys** inferse un colpo di grazia logico alla teoria delle propensioni.
 
 Humphreys mise in luce una contraddizione strutturale insanabile tra la simmetria della matematica e l'asimmetria della fisica:
+
 1. **La causalità fisica è asimmetrica nel tempo:** Le cause precedono sempre gli effetti. Una pietra lanciata contro una finestra ($C$) possiede una forte propensione a mandare in frantumi il vetro ($E$). Non ha invece alcun senso fisico sostenere che i cocci di vetro frantumati sul pavimento abbiano la propensione causale a viaggiare all'indietro nel tempo per costringere la mano del lanciatore a scagliare la pietra!
 2. **La probabilità condizionata matematica è intrinsecamente simmetrica e reversibile:** Negli assiomi di Kolmogorov e nel Teorema di Bayes, se esiste la probabilità condizionata $P(E \mid C) > 0$, deve tassativamente esistere ed essere calcolabile la probabilità inversa: $P(\text{Causa} \mid \text{Effetto}) = \frac{P(\text{Effetto} \mid \text{Causa}) P(\text{Causa})}{P(\text{Effetto})}$.
 
@@ -919,7 +967,10 @@ Stessi dati fisici, verdetti opposti. Perché? Perché il p-value somma la proba
 Per i bayesiani (**Harold Jeffreys**, **Edwin Jaynes**) questo è inaccettabile: le intenzioni mentali dello sperimentatore non possono cambiare la natura fisica della moneta. Vale il **Principio di Verosimiglianza**: contano solo i dati realmente osservati.
 
 $$
-\text{Posterior (Nuova convinzione)} \;\propto\; \text{Prior (Convinzione iniziale)} \;\times\; \text{Verosimiglianza (Dati reali)}
+\begin{aligned}
+\text{Posterior (Nuova convinzione)} \;\propto\;& \text{Prior (Convinzione iniziale)} \\
+&\times\; \text{Verosimiglianza (Dati reali)}
+\end{aligned}
 $$
 
 Avendo osservato entrambi 9 teste e 3 croci, Alice e Bob ottengono per un bayesiano **la stessa identica conclusione**.
@@ -1007,6 +1058,7 @@ Come informatici, programmatori e futuri architetti di sistemi intelligenti, cos
 
 ### 1. Il Pluralismo Pragmatico
 La probabilità non è un dogma di fede, ma un prisma concettuale che dobbiamo saper orientare a seconda del problema ingegneristico:
+
 * **Nei Big Data, nei server distribuiti e nel monitoraggio di rete**, dove fluiscono miliardi di pacchetti e log, il **frequentismo** è lo strumento principe: le medie empiriche convergono con straordinaria stabilità ai limiti asintotici.
 * **Nella Cybersecurity, nell'affidabilità di sistemi critici e nel Machine Learning**, dove affrontiamo attacchi informatici inediti o decisioni mediche ad alto rischio in condizioni di scarsità di dati, l'approccio **bayesiano** è l'unico capace di guidare razionalmente l'aggiornamento della credenza.
 
@@ -1016,6 +1068,7 @@ La probabilità non è un dogma di fede, ma un prisma concettuale che dobbiamo s
 Nell'ingegneria del software, nello sviluppo web e nei sistemi digitali ad alto traffico, un **A/B test** è un **esperimento controllato e randomizzato** (*Randomized Controlled Trial*) condotto direttamente in produzione su utenti reali.
 
 Il principio operativo è strutturato in tre pilastri:
+
 1. **Suddivisione casuale del traffico (Traffic Splitting):** Quando un utente accede all'applicazione o al sito, un meccanismo di instradamento deterministico (spesso basato su una funzione di hash del suo identificativo utente) lo assegna in modo casuale e trasparente a una di due varianti:
    - **Gruppo A (Controllo):** visualizza la versione attualmente in uso (*baseline*, ad esempio il layout corrente di una pagina, il colore originario di un pulsante di acquisto o l'algoritmo di ricerca standard).
    - **Gruppo B (Trattamento):** visualizza una variante modificata del sistema (ad esempio una nuova interfaccia grafica, una procedura di checkout snellita o una strategia di raccomandazione alternativa).
@@ -1023,6 +1076,7 @@ Il principio operativo è strutturato in tre pilastri:
 3. **Inferenza statistica formale:** L'obiettivo scientifico è determinare se la variante B apporta un reale miglioramento misurabile rispetto alla variante A, oppure se le discrepanze registrate siano compatibili con il puro rumore statistico.
 
 Formalmente, si imposta un test di ipotesi frequentista:
+
 - **Ipotesi Nulla ($H_0$):** La variante B non apporta alcun beneficio rispetto alla versione A ($p_B \le p_A$).
 - **Ipotesi Alternativa ($H_1$):** La variante B produce un incremento significativo delle prestazioni ($p_B > p_A$).
 
@@ -1033,6 +1087,7 @@ Nelle aziende tecnologiche accade tuttavia quotidianamente una distorsione metod
 Il team rilascia l'A/B test e il manager consulta la dashboard di monitoraggio in tempo reale più volte al giorno (*data peeking*). Non appena vede che il p-value scende temporaneamente sotto $0,05$ (magari al terzo giorno, dopo appena 1.200 visite), esulta, proclama la superiorità della variante B e **interrompe immediatamente l'esperimento in anticipo** per rilasciare la nuova versione a tutti gli utenti.
 
 Comportandosi così, il team ha replicato alla perfezione la condotta di **Bob** nell'esperimento della moneta:
+
 - Interrompere la raccolta dei dati al primo momento in cui si osserva un esito favorevole trasforma la procedura in un **Optional Stopping**.
 - Questa pratica annienta il livello di significatività nominale del 5%: la probabilità reale di incorrere in un **falso positivo** (credere che la variante B sia migliore quando invece è identica o persino peggiore di A) **esplode al 30-40% o più**!
 - Innumerevoli linee di codice o modifiche di design vengono così celebrate e messe in produzione aziendale sulla base di pure fluttuazioni casuali scambiate per verità scientifiche.

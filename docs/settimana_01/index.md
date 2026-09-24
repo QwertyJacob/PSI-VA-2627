@@ -26,7 +26,7 @@ Da oltre tre secoli, matematici, fisici e filosofi si affrontano in scontri acca
 
 ---
 
-## Atto I: La grammatica senza vocabolario — Il miracolo di Kolmogorov (1933)
+## Atto I: La grammatica della probabilità — Il miracolo di Kolmogorov e l'algebra degli eventi
 
 Per capire perché la probabilità sia un terreno filosoficamente lacerato, dobbiamo partire dal 1933. In quell'anno, il matematico sovietico **Andrej Nikolaevič Kolmogorov** diede alle stampe una breve monografia in lingua tedesca: *Grundbegriffe der Wahrscheinlichkeitsrechnung* (*Fondamenti del calcolo delle probabilità*, consultabile liberamente nell'edizione inglese su [Internet Archive](https://archive.org/details/foundationsofthe00kolm)).
 
@@ -34,7 +34,9 @@ Prima di Kolmogorov, la probabilità era un pantano concettuale. Si poggiava su 
 
 Prima di addentrarci negli assiomi, è fondamentale comprendere la base concettuale su cui poggia l'intera formalizzazione della probabilità.
 
-### Il fondamento concettuale: La circolare e necessaria nozione di «Esperimento» ed «Esito»
+---
+
+### 1. Il fondamento concettuale: «Esperimento» ed «Esito»
 
 Useremo in questo corso un sistema formale che poggia su due **nozioni primitive** legate da una **relazione circolare, non meglio definita**, che però ciascuno può accettare come valida senza scandalizzarsi e darne allo stesso tempo un'interpretazione del tutto ragionevole: i concetti di **"esperimento"** ed **"esito"**.
 
@@ -48,11 +50,8 @@ Ogni singola esecuzione dell'esperimento produce **uno e uno solo** degli esiti 
 
 ---
 
-### Gli ingredienti formali: Spazio Campionario, Eventi e $\sigma$-Algebra
+### 2. Spazio Campionario ($\Omega$) e la casistica dei regimi di cardinalità
 
-Costruiamo ora, passo dopo passo, i mattoni del modello matematico:
-
-#### 1. Spazio Campionario ($\Omega$)
 Lo **spazio campionario** (o spazio campione), indicato universalmente con la lettera greca maiuscola $\Omega$, è l'insieme di tutti i possibili esiti di un esperimento aleatorio:
 $$
 \Omega = \{\omega_1, \omega_2, \dots\}
@@ -98,31 +97,87 @@ Vediamo una casistica fondamentale di esempi per apprezzarne la varietà:
   $$
   Qui la cardinalità di $\Omega$ è continua (la potenza del continuo $|\mathbb{R}|$).
 
-#### 2. Evento
+---
+
+### 3. Eventi, Diagrammi di Venn e Algebra Booleana
+
 Un **evento** è un insieme di esiti, ovvero un **sottoinsieme dello spazio campionario** ($A \subseteq \Omega$).
 * Diciamo che **un evento $A$ si verifica** se l'esito $\omega$ effettivamente prodotto dall'esperimento appartiene ad $A$ ($\omega \in A$).
 * Se $\Omega$ è finito e ha cardinalità $|\Omega| = N$, il numero totale di eventi possibili (tutti i possibili sottoinsiemi, cioè l'insieme delle parti $\mathcal{P}(\Omega)$) è pari a $2^N$.
 * L'intero spazio $\Omega$ è l'**evento certo** (si verifica sempre, perché l'esperimento genera sempre un esito appartenente ad $\Omega$).
 * L'insieme vuoto $\emptyset$ è l'**evento impossibile** (non contiene alcun esito, dunque non si verifica mai).
 
-#### 3. Operazioni tra eventi
-Poiché gli eventi sono insiemi, si combinano tramite le consuete operazioni della teoria degli insiemi (rappresentabili con i diagrammi di Venn):
-* **Unione ($A \cup B$):** Si verifica se si verifica $A$ *oppure* $B$ (cioè se l'esito appartiene ad almeno uno dei due insiemi).
-* **Intersezione ($A \cap B$):** Si verifica se si verifica $A$ *e* $B$ (l'esito appartiene contemporaneamente a entrambi gli insiemi). Se $A \cap B = \emptyset$, gli eventi si dicono *mutualmente esclusivi* o *disgiunti* (incompatibili).
-* **Complemento ($\bar{A}$ o $A^c = \Omega \setminus A$):** Si verifica se e solo se $A$ *non* si verifica.
-* **Differenza ($A \setminus B$):** Si verifica se si verifica $A$ *ma non* $B$.
+#### Operazioni fondamentali tra eventi e Diagrammi di Venn
 
-#### 4. La Famiglia degli Eventi: La $\sigma$-algebra ($\mathcal{F}$)
-Non sempre possiamo limitarci a prendere "qualsiasi" sottoinsieme. Quando lo spazio campionario è continuo (come la retta reale $\mathbb{R}$ o l'intervallo $[0, 1]$), considerare arbitrariamente tutti i sottoinsiemi genera paradossi insolubili nella teoria della misura (insiemi non misurabili, come nella costruzione di Vitali o nel paradosso di Banach-Tarski).
+Nel 1888, il logico e filosofo britannico **John Venn** (che ritroveremo presto come uno dei massimi alfieri del polo ontico della probabilità) formalizzò l'uso di diagrammi geometrici piani per rappresentare le relazioni logiche tra insiemi. Poiché gli eventi sono sottoinsiemi di $\Omega$, le operazioni fondamentali della teoria degli insiemi corrispondono esattamente ai connettivi logici dell'informatica:
 
-Si richiede quindi che la collezione $\mathcal{F}$ degli eventi a cui possiamo sensatamente associare una probabilità sia una **$\sigma$-algebra** su $\Omega$, cioè una famiglia di sottoinsiemi di $\Omega$ chiusa rispetto alle operazioni logiche fondamentali:
-1. **Contiene lo spazio intero:** $\Omega \in \mathcal{F}$.
-2. **Chiusura rispetto al complemento:** Se $A \in \mathcal{F}$, allora anche $A^c \in \mathcal{F}$.
-3. **Chiusura rispetto all'unione numerabile:** Se $A_1, A_2, A_3, \dots \in \mathcal{F}$, allora $\bigcup_{i=1}^\infty A_i \in \mathcal{F}$.
+```
+    SPAZIO CAMPIONARIO Ω             INTERSEZIONE (A ∩ B)             UNIONE (A ∪ B)
+  ┌─────────────────────────┐     ┌─────────────────────────┐     ┌─────────────────────────┐
+  │  ┌───────┐   ┌───────┐  │     │      ┌───────┐          │     │    ████████████████     │
+  │  │   A   │   │   B   │  │     │    ┌─┼───┐   │          │     │   ██████████████████    │
+  │  │       │   │       │  │     │    │ │███│   │          │     │  ████████████████████   │
+  │  └───────┘   └───────┘  │     │    └─┼───┘   │          │     │   ██████████████████    │
+  │                         │     │      └───────┘          │     │    ████████████████     │
+  └─────────────────────────┘     └─────────────────────────┘     └─────────────────────────┘
+   Eventi Disgiunti (A ∩ B = ∅)       "A E B contemporaneamente"        "A OPPURE B (almeno uno)"
+
+       COMPLEMENTO (Aᶜ)               DIFFERENZA (A \ B)           LEAD TO DE MORGAN: (A ∪ B)ᶜ
+  ┌─────────────────────────┐     ┌─────────────────────────┐     ┌─────────────────────────┐
+  │█████████████████████████│     │    ████                 │     │█████████████████████████│
+  │████  ┌───────┐  ████████│     │  ██████  ┌───────┐      │     │████  ┌───┐   ┌───┐  ████│
+  │████  │   A   │  ████████│     │  ██████──┼───┐   │      │     │████  │ A │   │ B │  ████│
+  │████  └───────┘  ████████│     │  ██████  │   │   │      │     │████  └───┘   └───┘  ████│
+  │█████████████████████████│     │    ████  └───────┘      │     │█████████████████████████│
+  └─────────────────────────┘     └─────────────────────────┘     └─────────────────────────┘
+    "NON A (tutto tranne A)"         "A MA NON B (A senza B)"       "NÉ A NÉ B (Aᶜ ∩ Bᶜ)"
+```
+
+* **Unione ($A \cup B$):** Si verifica se si verifica $A$ *oppure* $B$ (cioè se l'esito appartiene ad almeno uno dei due insiemi). In logica booleana: `A OR B`.
+* **Intersezione ($A \cap B$):** Si verifica se si verifica $A$ *e* $B$ (l'esito appartiene contemporaneamente a entrambi gli insiemi). In logica booleana: `A AND B`. Se $A \cap B = \emptyset$, gli eventi si dicono *mutualmente esclusivi* o *disgiunti* (incompatibili).
+* **Complemento ($\bar{A}$ o $A^c = \Omega \setminus A$):** Si verifica se e solo se $A$ *non* si verifica. In logica booleana: `NOT A`.
+* **Differenza ($A \setminus B$ o $A \cap B^c$):** Si verifica se si verifica $A$ *ma non* $B$.
+
+#### Proprietà algebriche e Leggi di De Morgan
+
+Le operazioni tra eventi godono delle note proprietà algebriche di commutatività e associatività, nonché della **proprietà distributiva**:
+$$
+A \cap (B \cup C) = (A \cap B) \cup (A \cap C)
+$$
+$$
+A \cup (B \cap C) = (A \cup B) \cap (A \cup C)
+$$
+
+Fondamentali nell'architettura del software e nella logica proposizionale sono le **Leggi di De Morgan**, che stabiliscono come la negazione interagisce con le congiunzioni e le disgiunzioni:
+
+$$
+(A \cup B)^c = A^c \cap B^c
+$$
+$$
+(A \cap B)^c = A^c \cup B^c
+$$
+
+!!! tip "De Morgan nel codice"
+    La prima legge afferma: *"Non è vero che accade almeno uno tra A e B"* equivale a dire *"Non accade A E non accade B"*.  
+    Nel refactoring del codice, `!(condA || condB)` è logicamente identico a `(!condA && !condB)`. Nel calcolo delle probabilità, calcolare la probabilità che *"almeno un componente funzioni"* ($A \cup B$) si risolve quasi sempre passando dal complementare: $1 - P(A^c \cap B^c)$.
 
 ---
 
-### Solo ora: Gli Assiomi di Kolmogorov (1933)
+### 4. La Famiglia degli Eventi: La $\sigma$-algebra ($\mathcal{F}$)
+
+Non sempre possiamo limitarci a prendere "qualsiasi" sottoinsieme. Quando lo spazio campionario è continuo (come la retta reale $\mathbb{R}$ o l'intervallo $[0, 1]$), considerare arbitrariamente tutti i possibili sottoinsiemi genera paradossi insolubili nella teoria della misura (esistenza di insiemi non misurabili, come nella costruzione di Vitali o nel paradosso di Banach-Tarski, dove una sfera può essere scomposta in un numero finito di pezzi e riassemblata in due sfere identiche alla prima).
+
+Si richiede quindi che la collezione $\mathcal{F}$ degli eventi a cui possiamo sensatamente associare una probabilità sia una **$\sigma$-algebra** su $\Omega$, cioè una famiglia di sottoinsiemi di $\Omega$ chiusa rispetto alle operazioni logiche fondamentali:
+1. **Contiene lo spazio intero:** $\Omega \in \mathcal{F}$;
+2. **Chiusura rispetto al complemento:** Se $A \in \mathcal{F}$, allora anche $A^c \in \mathcal{F}$;
+3. **Chiusura rispetto all'unione numerabile:** Se $A_1, A_2, A_3, \dots \in \mathcal{F}$, allora $\bigcup_{i=1}^\infty A_i \in \mathcal{F}$.
+
+* **Esempio minimale (Degenere):** La più piccola $\sigma$-algebra possibile contiene solo l'evento certo e l'evento impossibile: $\mathcal{F}_{\min} = \{\emptyset, \Omega\}$.
+* **Esempio massimale (Insieme delle parti):** Negli spazi discreti finiti con $|\Omega| = N$, la $\sigma$-algebra coincide quasi sempre con l'intero insieme delle parti: $\mathcal{F} = \mathcal{P}(\Omega) = 2^\Omega$, contenente $2^N$ eventi.
+
+---
+
+### 5. Gli Assiomi di Kolmogorov (1933)
 
 Dati uno spazio campionario $\Omega$ e una $\sigma$-algebra $\mathcal{F}$ di eventi su $\Omega$, possiamo finalmente definire formalmente che cos'è una **misura di probabilità** $P: \mathcal{F} \to \mathbb{R}$.
 
@@ -143,11 +198,384 @@ Kolmogorov fissò tre soli assiomi categorici:
 
 La terna $(\Omega, \mathcal{F}, P)$ prende il nome di **spazio di probabilità**.
 
-La comunità matematica tirò un respiro di sollievo. Finalmente la probabilità possedeva assiomi rigorosi quanto la geometria di Euclide. Si potevano dimostrare teoremi sui limiti, integrare, formalizzare le catene di Markov e la Legge Forte dei Grandi Numeri senza il rischio di incoerenze logiche.
+---
 
-### Il vuoto semantico
+### 6. I primi teoremi della grammatica: Conseguenze immediate degli assiomi
 
-Eppure, nel trionfo di Kolmogorov si annidava un'omissione gigantesca e deliberata. Kolmogorov aveva costruito un **contenitore sintatticamente inattaccabile**, ma **semanticamente del tutto vuoto**.
+Tutte le leggi del calcolo probabilistico derivano deduttivamente da questi tre assiomi.
+
+#### A. Probabilità dell'evento impossibile
+L'evento vuoto ha probabilità rigorosamente nulla:
+$$
+P(\emptyset) = 0
+$$
+
+*Dimostrazione:* Poiché $\Omega$ e $\emptyset$ sono disgiunti ($\Omega \cap \emptyset = \emptyset$) e la loro unione è $\Omega \cup \emptyset = \Omega$, applichiamo l'assioma di additività:
+$$
+P(\Omega) = P(\Omega \cup \emptyset) = P(\Omega) + P(\emptyset)
+$$
+Sottraendo $P(\Omega)$ da entrambi i membri otteniamo immediatamente $P(\emptyset) = 0$. $\square$
+
+#### B. La regola del complementare
+Per qualunque evento $A$, la probabilità che non si verifichi è pari a uno meno la probabilità che si verifichi:
+$$
+P(A^c) = 1 - P(A)
+$$
+
+*Dimostrazione:* Per definizione, $A$ e $A^c$ sono disgiunti ($A \cap A^c = \emptyset$) e la loro unione ricopre l'intero spazio ($A \cup A^c = \Omega$). Dunque:
+$$
+P(\Omega) = P(A \cup A^c) = P(A) + P(A^c) \implies 1 = P(A) + P(A^c) \implies P(A^c) = 1 - P(A). \quad \square
+$$
+
+* **Esempio informatico 1 (Antivirus):** Se un sistema è protetto contro un nuovo malware con probabilità $0.70$, la probabilità che sia vulnerabile è $1 - 0.70 = 0.30$.
+* **Esempio informatico 2 (Bug nel codice):** Se un modulo software è privo di errori con probabilità $0.45$, la probabilità che contenga **almeno un bug** è $1 - 0.45 = 0.55$.
+
+#### C. La Conseguenza Regina: La regola dell'unione e il dramma della sovrapposizione
+
+Cosa accade se vogliamo calcolare la probabilità che si verifichi $A$ **oppure** $B$, ma i due eventi **non sono disgiunti**?
+
+Consideriamo questo scenario reale:
+> Durante la manutenzione di un'infrastruttura cloud, un disservizio di rete si verifica il lunedì con probabilità $P(L) = 0.70$, e il martedì con probabilità $P(M) = 0.50$.  
+> Qual è la probabilità che si verifichi un disservizio il lunedì **oppure** il martedì?
+
+Se applicassimo ciecamente l'additività, sommeremmo:
+$$
+0.70 + 0.50 = 1.20 \quad (\text{IMPOSSIBILE!})
+$$
+Una probabilità maggiore di 1 è una contraddizione logica insanabile. L'errore risiede nel fatto che lunedì e martedì **non sono mutualmente esclusivi**: non è affatto impossibile che la rete collassi in entrambi i giorni! Sommando $P(L)$ e $P(M)$, l'area di sovrapposizione $P(L \cap M)$ è stata **contata due volte**.
+
+Dobbiamo quindi sottrarre la sovrapposizione:
+
+!!! note "La Conseguenza Regina (Formula di inclusione-esclusione a 2 eventi)"
+    Per due eventi qualsiasi $A$ e $B$:
+    $$
+    P(A \cup B) = P(A) + P(B) - P(A \cap B)
+    $$
+    Se e solo se gli eventi sono disgiunti ($A \cap B = \emptyset$), il termine sottratto si annulla: $P(A \cup B) = P(A) + P(B)$.
+
+Se nell'esempio precedente la probabilità di guasto contemporaneo in entrambi i giorni è $P(L \cap M) = 0.35$, la probabilità corretta di avere almeno un guasto è:
+$$
+P(L \cup M) = 0.70 + 0.50 - 0.35 = 0.85 \quad (85\%)
+$$
+
+#### Estensione a tre eventi (Inclusione-Esclusione)
+Se consideriamo tre eventi $A, B, C$:
+$$
+P(A \cup B \cup C) = P(A) + P(B) + P(C) - [P(A \cap B) + P(A \cap C) + P(B \cap C)] + P(A \cap B \cap C)
+$$
+*Intuizione dal diagramma di Venn:* Sommando i tre cerchi, le intersezioni doppie vengono contate due volte (quindi vanno sottratte). Ma sottraendo tutte le intersezioni doppie, la regione centrale tripla $A \cap B \cap C$ — che era stata sommata 3 volte e poi sottratta 3 volte — è sparita del tutto: va dunque ri-aggiunta alla fine.
+
+---
+
+### Laboratorio Computazionale: Verifica empirica della regola dell'unione {: #lab-unione }
+
+Verifichiamo questo risultato senza fidarci ciecamente della formula, simulando $200.000$ settimane di attività dell'infrastruttura di rete. Premi **▶ Esegui** per testare il codice nel browser:
+
+<div class="psi-exec" markdown="1">
+```python
+import numpy as np
+
+# Parametri del problema
+p_lunedi = 0.70
+p_martedi = 0.50
+p_entrambi = 0.35
+n_settimane = 200000
+
+# Simulazione Monte Carlo
+# Generiamo gli stati congiunti rispettando le probabilità marginali e l'intersezione
+u = np.random.random(n_settimane)
+# P(L e M) = 0.35
+# P(L e non M) = 0.70 - 0.35 = 0.35
+# P(non L e M) = 0.50 - 0.35 = 0.15
+# P(nessun guasto) = 1 - 0.85 = 0.15
+L = (u < 0.70)
+M = ((u < 0.35) | ((u >= 0.70) & (u < 0.85)))
+
+p_L_sim = np.mean(L)
+p_M_sim = np.mean(M)
+p_inter_sim = np.mean(L & M)
+p_unione_sim = np.mean(L | M)
+
+print(f"P(Lunedì)         stimata: {p_L_sim:.4f} (teorica: 0.7000)")
+print(f"P(Martedì)        stimata: {p_M_sim:.4f} (teorica: 0.5000)")
+print(f"P(L ∩ M)          stimata: {p_inter_sim:.4f} (teorica: 0.3500)")
+print(f"P(L ∪ M)          stimata: {p_unione_sim:.4f} (teorica: 0.8500)")
+print("------------------------------------------------------------")
+print(f"Somma ingenua: P(L) + P(M) = {p_lunedi + p_martedi:.2f}  <-- Errore: maggiore di 1!")
+print(f"Formula regina: 0.70 + 0.50 - 0.35 = {0.70 + 0.50 - 0.35:.2f} <-- Perfetta coincidenza!")
+```
+</div>
+
+La simulazione non conosce gli assiomi: conta semplicemente le settimane in cui si è verificato almeno un allarme. L'esperimento conferma in modo inequivocabile che il valore converge a $0.85$, dimostrando fisicamente la necessità di sottrarre la sovrapposizione.
+
+---
+
+### 7. L'Arrivo dell'Informazione: Il Condizionamento come "Zoom" nello Spazio Campionario
+
+Finora abbiamo trattato la probabilità come una fotografia statica scattata prima dell'esperimento. Ma cosa accade quando il tempo scorre e acquisiamo **informazione parziale** prima dell'esito finale?
+
+Consideriamo un esempio della vita quotidiana:
+> Sei in aeroporto ad attendere un amico. La probabilità storica che il suo volo arrivi puntuale è dell'$80\%$ ($P(A) = 0.80$).  
+> Improvvisamente il tabellone annuncia che l'aereo è decollato dalla città di partenza con un'ora di ritardo ($B$).  
+> Qual è ora la probabilità che il volo atterri puntuale?  
+> Chiaramente precipita: magari al $5\%$ ($P(A \mid B) = 0.05$).
+
+La nuova evidenza $B$ ha alterato la nostra valutazione. Questa nuova grandezza è la **probabilità condizionata** di $A$ dato l'evento $B$.
+
+#### L'operazione geometrica di "Zoom"
+
+I diagrammi di Venn forniscono un'interpretazione visiva straordinariamente nitida:
+
+```
+        SPAZIO CAMPIONARIO ORIGINARIO Ω                     ZOOM: NUOVO UNIVERSO B
+  ┌───────────────────────────────────────────┐         ┌───────────────────────────┐
+  │                                           │         │  B diventa il nuovo Ω!    │
+  │      ┌───────────────┐                    │         │  P(B | B) = 1             │
+  │      │       B       │                    │         │  ┌─────────────────────┐  │
+  │      │   ┌───────┐   │                    │  ====>  │  │                     │  │
+  │      │   │ A ∩ B │   │                    │ (Zoom)  │  │       A ∩ B         │  │
+  │      │   └───────┘   │                    │         │  │ (Porzione interna ad A)│
+  │      └───────┬───────┘                    │         │  └─────────────────────┘  │
+  │              │                            │         │                           │
+  │              ▼ Tutto ciò che è fuori da B │         │  L'area di A ∩ B viene    │
+  │                diventa IMPOSSIBILE (P = 0)│         │  riscalata dividendo      │
+  └───────────────────────────────────────────┘         │  per l'area di B          │
+                                                        └───────────────────────────┘
+```
+
+1. Quando apprendiamo con certezza che $B$ si è verificato, tutti gli esiti esterni a $B$ ($B^c$) diventano impossibili: la loro probabilità crolla a zero.
+2. L'intero universo delle possibilità si contrae: **"zoomiamo" sull'insieme $B$**, che diventa il nostro **nuovo spazio campionario effettivo**.
+3. All'interno di $B$, l'unico modo in cui $A$ può ancora verificarsi è attraverso la sua intersezione $A \cap B$.
+4. Per soddisfare l'assioma di normalizzazione di Kolmogorov nel nuovo universo ($P(B \mid B) = 1$), dobbiamo **riscalare tutte le misure dividendo per la probabilità della condizione $P(B)$**.
+
+Da qui discende la definizione universale:
+
+!!! note "Definizione (Probabilità Condizionata)"
+    Dati due eventi $A$ e $B$ con $P(B) > 0$, la **probabilità condizionata di $A$ dato $B$** è:
+    $$
+    P(A \mid B) = \frac{P(A \cap B)}{P(B)}
+    $$
+
+#### La convergenza tra interpretazione classica e frequentista
+* **Nel modello classico (Laplace):** Se gli esiti sono equiprobabili, contiamo i casi favorevoli:
+  $$
+  P(A \mid B) = \frac{\text{Numero di esiti favorevoli in } A \cap B}{\text{Numero totale di esiti possibili in } B} = \frac{|A \cap B|}{|B|}
+  $$
+* **Nel modello frequentista (Venn, von Mises):** Se ripetiamo l'esperimento $N$ volte, filtriamo solo le prove in cui $B$ si è verificato (siano esse $\#B$). La frazione in cui si è verificato anche $A$ è:
+  $$
+  P(A \mid B) = \lim_{N \to \infty} \frac{\#(A \cap B)}{\#B} = \lim_{N \to \infty} \frac{\#(A \cap B) / N}{\#B / N} = \frac{P(A \cap B)}{P(B)}
+  $$
+
+*Esempio didattico (Il mazzo di 52 carte):*  
+Peschiamo una carta coperta. Sia $A$ l'evento "la carta è un Asso" e $B$ l'evento "la carta è di Cuori".  
+Senza informazioni: $P(A) = 4/52 = 1/13$.  
+Se qualcuno ci rivela che la carta è di Cuori ($B$): l'intersezione $A \cap B$ è solo l'Asso di Cuori ($P(A \cap B) = 1/52$), mentre $P(B) = 13/52 = 1/4$.  
+La probabilità condizionata è:
+$$
+P(A \mid B) = \frac{1/52}{13/52} = \frac{1}{13}
+$$
+Il risultato coincide perfettamente con il buonsenso: tra le 13 carte di cuori, vi è un solo asso.
+
+---
+
+### 8. La Regola del Prodotto e la Scomposizione Sequenziale
+
+Riorganizzando la formula del condizionamento, ricaviamo la probabilità dell'intersezione (la **Regola del Prodotto**):
+$$
+P(A \cap B) = P(B) \cdot P(A \mid B) = P(A) \cdot P(B \mid A)
+$$
+
+Questa formula è la chiave per calcolare la probabilità di eventi composti che si sviluppano in sequenza temporale o logica:
+
+* **Esempio (Estrazioni senza reimmissione):**  
+  Estraiamo due carte consecutive da un mazzo da 52 senza rimettere la prima nel mazzo. Qual è la probabilità di estrarre due Assi consecutivi?
+  * Prima estrazione ($A_1$): $P(A_1) = 4/52 = 1/13$.
+  * Seconda estrazione ($A_2$), sapendo che un asso è già uscito: nel mazzo restano 51 carte di cui solo 3 assi, dunque $P(A_2 \mid A_1) = 3/51 = 1/17$.
+  * Probabilità congiunta:
+    $$
+    P(A_1 \cap A_2) = P(A_1) \cdot P(A_2 \mid A_1) = \frac{1}{13} \cdot \frac{1}{17} = \frac{1}{221} \approx 0.00452
+    $$
+
+#### Fattorizzazione a catena per $n$ eventi
+La regola del prodotto si generalizza a un numero arbitrario di eventi concatenati:
+$$
+P(A_1 \cap A_2 \cap \dots \cap A_n) = P(A_1) \cdot P(A_2 \mid A_1) \cdot P(A_3 \mid A_1 \cap A_2) \cdots P(A_n \mid A_1 \cap \dots \cap A_{n-1})
+$$
+
+Grazie alla proprietà commutativa dell'intersezione, per tre eventi $A, B, C$ esistono $3! = 6$ decomposizioni equivalenti:
+$$
+\begin{align}
+P(A \cap B \cap C) &= P(A) \cdot P(B \mid A) \cdot P(C \mid A \cap B) \\
+&= P(B) \cdot P(A \mid B) \cdot P(C \mid A \cap B) \\
+&= P(C) \cdot P(A \mid C) \cdot P(B \mid A \cap C) \quad \text{e così via.}
+\end{align}
+$$
+Questa flessibilità permette all'ingegnere di scegliere la scomposizione più comoda a seconda di quali dati condizionati siano disponibili nei log o nei test empirici.
+
+* **Esempio informatico (Pipeline di Continuous Integration / Controllo Qualità):**  
+  Un processo di rilascio software attraversa tre fasi sequenziali:
+  1. $M$: la compilazione e i test unitari passano ($P(M) = 0.90$);
+  2. $D$: l'analisi statica del codice approva l'architettura ($P(D \mid M) = 0.80$);
+  3. $T$: i test di carico e sicurezza finali hanno successo ($P(T \mid M \cap D) = 0.95$).  
+  
+  La probabilità che una release superi l'intera pipeline è data dalla regola del prodotto:
+  $$
+  P(M \cap D \cap T) = P(M) \cdot P(D \mid M) \cdot P(T \mid M \cap D) = 0.90 \times 0.80 \times 0.95 = 0.684 \quad (68.4\%)
+  $$
+
+---
+
+### 9. Indipendenza Stocastica e il Trabocchetto Fondamentale
+
+Cosa succede se apprendere che l'evento $B$ si è verificato **non altera minimamente** la probabilità di $A$?
+
+In termini formali, significa che la probabilità condizionata coincide esattamente con la probabilità a priori:
+$$
+P(A \mid B) = P(A)
+$$
+
+Sostituendo questa relazione nella regola del prodotto $P(A \cap B) = P(B) P(A \mid B)$, otteniamo la definizione classica di **indipendenza stocastica**:
+
+!!! note "Definizione (Indipendenza Stocastica)"
+    Due eventi $A$ e $B$ sono **stocasticamente indipendenti** se e solo se:
+    $$
+    P(A \cap B) = P(A) \cdot P(B)
+    $$
+    Per una collezione di eventi $A_1, \dots, A_n$, l'indipendenza reciproca (mutua) richiede che la probabilità dell'intersezione di qualsiasi sottoinsieme sia uguale al prodotto delle singole probabilità.
+
+#### Proprietà dell'indipendenza
+Se $A$ e $B$ sono indipendenti, allora sono mutuamente indipendenti anche tutte le loro combinazioni con i complementari:
+* $A$ e $B^c$ sono indipendenti: $P(A \cap B^c) = P(A) P(B^c)$;
+* $A^c$ e $B$ sono indipendenti: $P(A^c \cap B) = P(A^c) P(B)$;
+* $A^c$ e $B^c$ sono indipendenti: $P(A^c \cap B^c) = P(A^c) P(B^c)$.
+
+#### IL TRABOCCHETTO DA SRADICARE: Disgiunzione NON è Indipendenza!
+
+!!! caution "L'errore cognitivo più diffuso negli esami universitari"
+    Nel linguaggio comune diciamo che due fatti sono "indipendenti" se "non hanno nulla a che fare l'uno con l'altro", e l'immagine mentale suggerisce due cerchi separati, disgiunti.  
+    **Nel calcolo delle probabilità, questa intuizione comune è completamente rovesciata:**
+    
+    * **Eventi disgiunti (incompatibili):** $A \cap B = \emptyset \implies P(A \cap B) = 0$.
+    * **Eventi indipendenti:** $P(A \cap B) = P(A) \cdot P(B)$.
+
+    Se due eventi $A$ e $B$ hanno probabilità positiva ($P(A) > 0$ e $P(B) > 0$) e sono **disgiunti**, allora:
+    $$
+    P(A \cap B) = 0 \neq P(A) \cdot P(B) > 0
+    $$
+    **Due eventi disgiunti non sono MAI stocasticamente indipendenti!**
+    
+    Al contrario, essere disgiunti rappresenta la **massima forma di dipendenza possibile**: se so che si è verificato $A$, so con certezza assoluta ($100\%$) che $B$ **non può essersi verificato** ($P(B \mid A) = 0$). Il verificarsi di uno distrugge completamente la probabilità dell'altro!
+
+*Esempio dei voli aerei:*  
+Il 90% dei voli decolla in orario ($P(D) = 0.90$), l'80% atterra in orario ($P(A) = 0.80$), e il 75% parte E arriva in orario ($P(A \cap D) = 0.75$).  
+I due eventi sono indipendenti?  
+Calcoliamo il prodotto delle marginali: $P(A) \cdot P(D) = 0.80 \times 0.90 = 0.72$.  
+Poiché $P(A \cap D) = 0.75 \neq 0.72$, i due eventi **non sono indipendenti**.  
+Inoltre: $P(A \mid D) = \frac{0.75}{0.90} \approx 0.833 > P(A) = 0.80$.  
+Sapere che l'aereo è decollato in orario aumenta la probabilità di un arrivo puntuale: vi è una chiara dipendenza stocastica positiva.
+
+---
+
+### 10. Ingegneria della Resilienza: Affidabilità di Sistemi Software e Hardware (Reliability)
+
+L'indipendenza stocastica è il pilastro su cui poggia l'ingegneria dell'affidabilità (*Reliability Engineering*). Quando assembliamo componenti (microservizi, dischi rigidi, sensori, collegamenti di rete) che operano o si guastano in modo indipendente, la topologia della loro connessione determina il destino del sistema.
+
+#### A. Collegamento in Parallelo (Ridondanza e Tolleranza ai Guasti)
+In un'architettura in parallelo, il sistema continua a funzionare se **almeno uno** dei componenti è operativo. Il sistema fallisce se e solo se **tutti** i componenti si guastano contemporaneamente.
+
+```
+                  ┌───[ Componente 1 (q₁) ]───┐
+      ─── INGRESSO ┼───[ Componente 2 (q₂) ]───┼─── USCITA ───
+                  └───[ Componente 3 (q₃ ]───┘
+               (Basta che UNO funzioni: Ridondanza)
+```
+
+Siano $q_1, q_2, \dots, q_n$ le probabilità di guasto dei singoli dispositivi indipendenti.  
+Per la legge di De Morgan e l'indipendenza dei complementari, la probabilità che il sistema collassi è:
+$$
+P(\text{Guasto totale}) = P(G_1 \cap G_2 \cap \dots \cap G_n) = \prod_{i=1}^n q_i
+$$
+L'affidabilità (probabilità di funzionamento) del sistema in parallelo è dunque:
+$$
+P(\text{Sistema Funzionante}) = 1 - \prod_{i=1}^n q_i
+$$
+
+* **Esempio reale (Affidabilità dei backup):**  
+  Un server memorizza dati critici su un disco principale con probabilità di rottura annua dell'$1\%$ ($q_H = 0.01$). Per sicurezza, vengono installati 2 backup indipendenti, ciascuno con probabilità di guasto del $2\%$ ($q_{B1} = q_{B2} = 0.02$).  
+  I dati vengono persi solo se tutti e tre i dischi si rompono nello stesso anno:
+  $$
+  P(\text{Dati perduti}) = 0.01 \times 0.02 \times 0.02 = 0.000004 \quad (4 \text{ su un milione})
+  $$
+  L'affidabilità del sistema passa dal $99\%$ di un disco singolo allo straordinario:
+  $$
+  P(\text{Dati salvati}) = 1 - 0.000004 = 0.999996 \quad (99.9996\%)
+  $$
+  Ecco perché l'ingegneria del software distribuisce i nodi e replica i database in parallelo!
+
+#### B. Collegamento in Serie (La Catena degli Anelli Deboli)
+In un'architettura in serie, il sistema funziona se e solo se **ogni singolo componente** funziona. Il guasto di un qualsiasi elemento causa il blocco immediato dell'intero servizio (Single Point of Failure).
+
+```
+      ─── INGRESSO ───[ Modulo 1 ]───[ Modulo 2 ]───[ Modulo 3 ]─── USCITA ───
+                            (Devono funzionare TUTTI)
+```
+
+Siano $p_i = 1 - q_i$ le probabilità di funzionamento dei componenti indipendenti.  
+L'affidabilità del sistema in serie è il prodotto delle singole affidabilità:
+$$
+P(\text{Sistema Funzionante}) = \prod_{i=1}^n p_i = \prod_{i=1}^n (1 - q_i)
+$$
+
+* **Esempio reale (Il lancio dello Space Shuttle):**  
+  Il lancio programmato di uno shuttle spaziale dipende da tre sistemi avionici critici collegati in serie, operanti in modo indipendente. Le rispettive probabilità di anomalia prima del decollo sono appena dell'$1\%$, $2\%$ e $2\%$ ($q_1 = 0.01$, $q_2 = 0.02$, $q_3 = 0.02$).  
+  Qual è la probabilità che il lancio avvenga in orario senza rinvii?
+  $$
+  P(\text{Lancio in tempo}) = (1 - 0.01) \times (1 - 0.02) \times (1 - 0.02) = 0.99 \times 0.98 \times 0.98 = 0.950792 \approx 95.08\%
+  $$
+  *Riflessione ingegneristica:* Nonostante i singoli componenti siano affidabili al $98-99\%$, la probabilità di fallimento dell'intero sistema è salita a quasi il $5\%$ ($1 - 0.9508 = 4.92\%$). In serie, ogni nuovo componente aggiunto degrada inesorabilmente l'affidabilità complessiva.
+
+---
+
+### Laboratorio Computazionale: Simulatore di Resilienza (Parallelo vs Serie) {: #lab-affidabilita }
+
+Esplora dal vivo come cambia l'affidabilità modificando il numero di nodi di backup in parallelo o aggiungendo dipendenze critiche in serie:
+
+<div class="psi-exec" markdown="1">
+```python
+p_hard_disk = 0.01     # probabilità di guasto dell'hard disk
+p_backup = 0.02        # probabilità di guasto di un singolo backup
+n_backup = 2           # Prova a cambiare questo valore (es. 1, 3, 5)!
+
+# Architettura in PARALLELO: i dati si perdono solo se si rompono TUTTI
+p_perduta = p_hard_disk * (p_backup ** n_backup)
+p_salvata = 1.0 - p_perduta
+
+print(f"=== ARCHITETTURA IN PARALLELO ({n_backup} nodi di backup) ===")
+print(f"Probabilità di perdita totale: {p_perduta:.8f}")
+print(f"Affidabilità del dato salvato: {p_salvata * 100:.6f} %\n")
+
+# Architettura in SERIE: basta un singolo guasto per fermare il sistema
+# Prova ad aggiungere o togliere moduli dalla lista!
+guasti_serie = [0.01, 0.02, 0.02, 0.015] 
+p_funziona_serie = 1.0
+for q in guasti_serie:
+    p_funziona_serie *= (1.0 - q)
+
+print(f"=== ARCHITETTURA IN SERIE ({len(guasti_serie)} moduli critici) ===")
+print(f"Affidabilità complessiva: {p_funziona_serie * 100:.4f} %")
+print(f"Rischio di disservizio totale: {(1.0 - p_funziona_serie) * 100:.4f} %")
+```
+</div>
+
+---
+
+### 11. La Rivelazione: Il Contenitore Sintattico è Semanticamente Vuoto
+
+Siamo partiti dall'esperimento e dallo spazio campionario, abbiamo costruito l'algebra degli eventi con Venn e De Morgan, introdotto la $\sigma$-algebra e gli assiomi di Kolmogorov, derivato la conseguenza regina dell'unione, il condizionamento come operazione di "zoom", la moltiplicazione a catena e l'ingegneria dell'affidabilità dei sistemi.
+
+La macchina formale è completa, elegante, matematicamente inattaccabile. 
+
+Eppure, proprio al culmine di questo trionfo matematico, si spalanca un'omissione gigantesca e deliberata: **Kolmogorov ha costruito un contenitore sintatticamente perfetto, ma semanticamente del tutto vuoto**.
 
 I suoi assiomi spiegano con chirurgica precisione *come* le probabilità si sommano, si moltiplicano e si condizionano tra loro, ma non dicono una sola parola su **cosa quei numeri misurino nel mondo reale**. È come ricevere la grammatica definitiva di una lingua antica sconosciuta — con tutte le regole per le declinazioni, i verbi e i pronomi — senza avere a disposizione un dizionario. Si possono comporre frasi grammaticalmente perfette, ma non si ha la minima idea di cosa si stia dicendo.
 
@@ -179,6 +607,8 @@ Quando un bollettino meteorologico annuncia una *"probabilità di pioggia del 70
 ```
 
 Il dramma conoscitivo è vertiginoso: **nessuna interpretazione pura nota riesce a spiegare da sola tutta la probabilità senza imbattersi in paradossi, circolarità o vicoli ciechi nel mondo reale**.
+
+Per scoprire come l'umanità ha cercato disperatamente di dare un significato a questi numeri, dobbiamo fare un salto indietro nel tempo, fino a un'estate parigina del Seicento.
 
 ---
 

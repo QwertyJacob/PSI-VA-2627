@@ -72,3 +72,50 @@ npm run pdf
 ## Pubblicazione automatica
 
 A ogni commit/push sul branch `main`, il workflow GitHub Actions [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) esegue la compilazione del sito (`mkdocs build --strict`), la generazione dei PDF per ciascun capitolo e pubblica automaticamente il bundle su GitHub Pages.
+
+---
+
+## Come contribuire e fare Fork (per gli studenti) 🎓
+
+Il materiale delle dispense è aperto e in continua evoluzione: il contributo di voi studenti è fondamentale per correggere refusi, migliorare la chiarezza delle spiegazioni, proporre nuovi esempi pratici o ottimizzare widget e codice interattivo!
+
+> ⭐ **Supporta il progetto:** Se trovi utile questo repository o il sito delle dispense per il tuo studio, **lascia una stella (Star)** in alto a destra su GitHub! Aiuta a dare visibilità al materiale didattico aperto.
+
+### Come inviare una modifica (Pull Request)
+
+1. **Fai un Fork del repository**  
+   Clicca sul pulsante **Fork** in alto a destra su questa pagina GitHub per creare una copia del repository sul tuo account personale.
+
+2. **Clona il tuo fork in locale**  
+   ```bash
+   git clone https://github.com/<TUO-USERNAME>/PSI-VA-2627.git
+   cd PSI-VA-2627
+   ```
+
+3. **Crea un branch tematico**  
+   Evita di lavorare direttamente sul branch `main`. Crea un branch dedicato con un nome descrittivo:
+   ```bash
+   git checkout -b fix/refuso-settimana-01
+   ```
+
+4. **Apporta le modifiche e testale in locale**  
+   Modifica i file Markdown o i sorgenti sotto `docs/`. Prima di procedere, verifica in locale che la build non segnali errori o link interrotti:
+   ```bash
+   # Attiva l'ambiente virtuale
+   source .venv/bin/activate
+   # Verifica l'integrità del sito
+   mkdocs build --strict
+   ```
+
+5. **Esegui commit e push**  
+   Scrivi un messaggio di commit chiaro e sintetico:
+   ```bash
+   git add docs/
+   git commit -m "docs: correggi refuso nella definizione di probabilità condizionata"
+   git push origin fix/refuso-settimana-01
+   ```
+
+6. **Apri una Pull Request (PR)**  
+   Torna sulla pagina GitHub del repository originale ([qwertyjacob/PSI-VA-2627](https://github.com/qwertyjacob/PSI-VA-2627)): troverai in evidenza il pulsante **Compare & pull request**.  
+   Descrivi brevemente cosa hai corretto o aggiunto: la modifica verrà revisionata e, se approvata, integrata nel sito ufficiale!
+

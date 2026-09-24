@@ -4,3 +4,6 @@ node_modules/
 __pycache__/
 *.pyc
 .DS_Store
+
+# librerie delle slide scaricate in locale (npm run vendor)
+docs/assets/vendor/

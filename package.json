@@ -1,7 +1,8 @@
 {
   "scripts": {
     "pdf": "node scripts/build_pdfs.mjs",
-    "qa": "node qa-all.mjs"
+    "qa": "node qa-all.mjs",
+    "vendor": "bash scripts/fetch_slides_vendor.sh"
   },
   "devDependencies": {
     "playwright": "^1.63.0"

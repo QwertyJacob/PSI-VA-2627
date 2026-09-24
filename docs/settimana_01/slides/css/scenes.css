@@ -1,0 +1,1184 @@
+/* Scene animate delle slide (motore in js/scene.js, scene in js/atto*.js). */
+
+:root {
+  /* Colori fissi per tutto il mazzo, ripresi anche nelle formule KaTeX. */
+  --psi-a: #38bdf8;
+  --psi-b: #fbbf24;
+  --psi-c: #c084fc;
+  --psi-sel: #38ef7d;
+  --psi-omega: #cbd5e0;
+  --psi-void: #06080c;
+  --psi-text: #edf2f7;
+  --psi-muted: #a0aec0;
+}
+
+/* ── Impaginazione comune ── */
+.reveal .scene-title {
+  font-size: 1.45em;
+  font-weight: 700;
+  margin: 0 0 18px;
+}
+.reveal .scene-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 36px;
+  align-items: center;
+  text-align: left;
+}
+.reveal .scene-svg {
+  display: block;
+}
+/* Formule un po' più grandi del default di KaTeX (1.21em), in tutto il mazzo. */
+.reveal .katex {
+  font-size: 1.34em;
+}
+/* Una formula inline non va mai spezzata su due righe. */
+.reveal .scene-grid .katex,
+.reveal .bt-panel .katex {
+  white-space: nowrap;
+}
+
+/* ── Elementi SVG ── */
+.reveal .scene-svg text {
+  font-family: KaTeX_Main, 'Times New Roman', serif;
+  fill: var(--psi-text);
+}
+.reveal .scene-svg .it {
+  font-family: KaTeX_Math, 'Times New Roman', serif;
+  font-style: italic;
+}
+.reveal .scene-svg .math-lbl {
+  font-size: 36px;
+}
+.reveal .scene-svg .omega {
+  fill: rgba(255, 255, 255, 0.025);
+  stroke: rgba(203, 213, 224, 0.55);
+  stroke-width: 2px;
+}
+.reveal .scene-svg .set {
+  stroke-width: 3.5px;
+}
+.reveal .scene-svg .set-a {
+  fill: rgba(56, 189, 248, 0.08);
+  stroke: var(--psi-a);
+}
+.reveal .scene-svg .set-b {
+  fill: rgba(251, 191, 36, 0.08);
+  stroke: var(--psi-b);
+}
+.reveal .scene-svg .lbl-a,
+.reveal .scene-svg .zm-lbl-a {
+  fill: var(--psi-a);
+}
+.reveal .scene-svg .lbl-b,
+.reveal .scene-svg .zm-lbl-b {
+  fill: var(--psi-b);
+}
+.reveal .scene-svg .region {
+  fill: var(--psi-sel);
+}
+
+/* ── Scena: operazioni tra eventi ── */
+.reveal .op-panel {
+  font-size: 0.72em;
+}
+.reveal .op-chips {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.reveal .op-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: var(--psi-sel);
+}
+.reveal .op-cards {
+  position: relative;
+  height: 320px;
+}
+.reveal .op-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.reveal .op-card h3 {
+  color: var(--psi-sel);
+  font-size: 1.35em;
+  margin: 0 0 12px;
+}
+.reveal .op-card p {
+  margin: 0 0 12px;
+  line-height: 1.35;
+}
+.reveal .op-formula {
+  font-size: 1.45em;
+}
+.reveal .op-def {
+  color: #cbd5e0;
+}
+.reveal .op-code {
+  display: inline-block;
+  font-family: ui-monospace, 'JetBrains Mono', 'DejaVu Sans Mono', monospace;
+  font-size: 0.9em;
+  color: var(--psi-sel);
+  background: rgba(56, 239, 125, 0.12);
+  border-radius: 8px;
+  padding: 4px 14px;
+  margin: 2px 0 14px;
+}
+
+/* ── Scena: zoom ── */
+.reveal .zoom-grid {
+  grid-template-columns: 700px 1fr;
+  gap: 34px;
+}
+.reveal .scene-svg .zm-lens {
+  fill: var(--psi-sel);
+}
+.reveal .scene-svg .zm-b-fill {
+  fill: rgba(251, 191, 36, 0.08);
+}
+.reveal .scene-svg .zm-b-line {
+  fill: none;
+  stroke: var(--psi-b);
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+}
+.reveal .scene-svg .zm-arc {
+  fill: none;
+  stroke: var(--psi-a);
+}
+.reveal .scene-svg .zm-void {
+  fill: var(--psi-void);
+}
+.reveal .scene-svg .zm-frame {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.14);
+  stroke-width: 1.5px;
+}
+.reveal .scene-svg .zm-void-lbl {
+  font-family: var(--r-main-font);
+  font-size: 22px;
+  fill: var(--psi-muted);
+}
+.reveal .scene-svg .zm-lbl-new {
+  font-size: 30px;
+}
+.reveal .scene-svg .zm-lbl-lens,
+.reveal .scene-svg .zm-lbl-rest {
+  font-size: 34px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+.reveal .scene-svg .sup {
+  font-size: 22px;
+}
+.reveal .scene-svg .zm-pct {
+  font-family: var(--r-main-font);
+  font-size: 26px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+.reveal .scene-legend {
+  display: flex;
+  justify-content: center;
+  gap: 26px;
+  margin: 12px 0 0;
+  font-size: 0.6em;
+}
+.reveal .scene-legend .sw {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  margin-right: 8px;
+  vertical-align: -1px;
+}
+.reveal .sw-a { background: var(--psi-a); }
+.reveal .sw-b { background: var(--psi-b); }
+.reveal .sw-ab { background: var(--psi-sel); }
+.reveal .scene-panel {
+  font-size: 0.64em;
+}
+.reveal .scene-panel .scene-steps {
+  display: block;
+  list-style: none;
+  counter-reset: scene-step;
+  margin: 0;
+  padding: 0;
+}
+.reveal .scene-steps li {
+  counter-increment: scene-step;
+  position: relative;
+  padding-left: 48px;
+  margin: 0 0 16px;
+  line-height: 1.35;
+}
+.reveal .scene-steps li::before {
+  content: counter(scene-step);
+  position: absolute;
+  left: 0;
+  top: -2px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85em;
+  font-weight: 700;
+  color: var(--psi-b);
+  background: rgba(251, 191, 36, 0.16);
+}
+.reveal .scene-def {
+  border-left: 4px solid var(--psi-sel);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 2px 18px;
+  margin: 18px 0 12px;
+}
+.reveal .scene-def .katex-display {
+  margin: 0.5em 0;
+}
+.reveal .scene-note {
+  margin: 0;
+  color: var(--psi-muted);
+}
+
+/* ── Scena: paradosso di Bertrand ── */
+.reveal .bt-question {
+  font-size: 0.78em;
+  margin: 0 auto 6px;
+  max-width: 1150px;
+}
+.reveal .bt-legend {
+  font-size: 0.56em;
+  color: var(--psi-muted);
+  margin: 0 0 14px;
+}
+.reveal .bt-key {
+  display: inline-block;
+  width: 26px;
+  height: 4px;
+  border-radius: 2px;
+  margin: 0 8px 0 18px;
+  vertical-align: middle;
+}
+.reveal .bt-key-long { background: var(--psi-sel); }
+.reveal .bt-key-short { background: #fc8181; }
+.reveal .bt-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+.reveal .bt-panel {
+  text-align: center;
+}
+.reveal .bt-svg {
+  margin: 0 auto;
+}
+.reveal .bt-panel h3 {
+  font-size: 0.78em;
+  margin: 8px 0 4px;
+  color: var(--psi-text);
+}
+.reveal .bt-how {
+  font-size: 0.54em;
+  line-height: 1.3;
+  color: var(--psi-muted);
+  margin: 0 auto 6px;
+  max-width: 330px;
+  min-height: 2.6em;
+}
+.reveal .bt-freq {
+  font-size: 1.05em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+.reveal .bt-theory {
+  color: var(--psi-sel);
+  margin-left: 12px;
+}
+.reveal .bt-count {
+  font-size: 0.5em;
+  color: var(--psi-muted);
+  margin: 0;
+}
+.reveal .bt-verdict {
+  font-size: 0.7em;
+  max-width: 1080px;
+  margin: 16px auto 0;
+}
+.reveal .bt-svg .bt-circle {
+  fill: rgba(255, 255, 255, 0.03);
+  stroke: var(--psi-omega);
+  stroke-width: 2px;
+}
+.reveal .bt-svg .bt-tri {
+  fill: none;
+  stroke: var(--psi-text);
+  stroke-opacity: 0.75;
+  stroke-width: 1.5px;
+}
+.reveal .bt-svg line.long {
+  stroke: var(--psi-sel);
+  stroke-opacity: 0.42;
+  stroke-width: 1.1px;
+}
+.reveal .bt-svg line.short {
+  stroke: #fc8181;
+  stroke-opacity: 0.2;
+  stroke-width: 1.1px;
+}
+.reveal .bt-svg .bt-good,
+.reveal .bt-svg .bt-bad {
+  fill: none;
+  stroke-width: 7px;
+  stroke-linecap: round;
+}
+.reveal .bt-svg .bt-good { stroke: var(--psi-sel); }
+.reveal .bt-svg .bt-bad { stroke: #fc8181; }
+.reveal .bt-svg .bt-ring {
+  fill: rgba(56, 239, 125, 0.1);
+  stroke: var(--psi-sel);
+  stroke-width: 3px;
+  stroke-dasharray: 8 6;
+}
+.reveal .bt-svg .bt-pin {
+  fill: var(--psi-text);
+}
+
+/* ── Pannelli di testo comuni ── */
+.reveal .scene-lead {
+  margin: 0 0 12px;
+  line-height: 1.35;
+}
+.reveal .scene-quote {
+  margin: 0 0 18px;
+  padding-left: 14px;
+  border-left: 3px solid rgba(255, 255, 255, 0.25);
+  color: #cbd5e0;
+  font-style: italic;
+  line-height: 1.45;
+}
+
+/* ── Elementi SVG ricorrenti ── */
+.reveal .scene-svg .node {
+  fill: rgba(255, 255, 255, 0.05);
+  stroke: var(--psi-omega);
+  stroke-width: 2px;
+}
+.reveal .scene-svg .node-lbl {
+  font-family: var(--r-main-font);
+  font-size: 24px;
+  font-weight: 600;
+}
+.reveal .scene-svg .flow {
+  fill: none;
+  stroke-width: 3px;
+  stroke-dasharray: 12 9;
+  animation: psi-flow 1.3s linear infinite;
+}
+.reveal .scene-svg .flow-a { stroke: var(--psi-a); }
+.reveal .scene-svg .flow-b { stroke: var(--psi-b); }
+@keyframes psi-flow {
+  to { stroke-dashoffset: -42; }
+}
+.reveal .scene-svg .flow-lbl {
+  font-family: var(--r-main-font);
+  font-size: 19px;
+  fill: var(--psi-muted);
+}
+.reveal .scene-svg .cap-lbl {
+  font-family: var(--r-main-font);
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  fill: var(--psi-muted);
+}
+.reveal .scene-svg .chip {
+  fill: rgba(56, 239, 125, 0.14);
+  stroke: var(--psi-sel);
+  stroke-width: 2.5px;
+}
+.reveal .scene-svg .chip-lbl {
+  font-family: var(--r-main-font);
+  font-size: 26px;
+  font-weight: 700;
+}
+.reveal .scene-svg .junk-lbl {
+  font-family: var(--r-main-font);
+  font-size: 18px;
+  fill: var(--psi-muted);
+}
+.reveal .scene-svg .token {
+  fill: rgba(255, 255, 255, 0.06);
+  stroke: var(--psi-omega);
+  stroke-width: 2px;
+}
+.reveal .scene-svg .token-lbl {
+  font-family: var(--r-main-font);
+  font-size: 18px;
+  font-weight: 700;
+}
+.reveal .scene-svg .good { fill: var(--psi-sel); }
+.reveal .scene-svg .bad { fill: #fc8181; }
+.reveal .scene-svg .math-lbl.small { font-size: 26px; }
+.reveal .scene-svg .light { fill: #edf2f7; }
+.reveal .scene-svg .set-c {
+  fill: rgba(192, 132, 252, 0.08);
+  stroke: var(--psi-c);
+}
+.reveal .scene-svg .lbl-c { fill: var(--psi-c); }
+.reveal .scene-svg .lbl-sel { fill: var(--psi-sel); }
+
+/* ── Scena: spazio campionario ── */
+.reveal .om-lead {
+  text-align: center;
+  font-size: 0.72em;
+  margin: 0 0 12px;
+}
+.reveal .om-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.reveal .om-panel { text-align: center; }
+.reveal .om-svg { margin: 0 auto; }
+.reveal .om-panel h3 {
+  font-size: 0.74em;
+  margin: 6px 0 2px;
+}
+.reveal .om-desc {
+  font-size: 0.55em;
+  line-height: 1.3;
+  color: var(--psi-muted);
+  margin: 0 auto 8px;
+  max-width: 250px;
+  min-height: 2.6em;
+}
+.reveal .om-formula {
+  font-size: 0.6em;
+  margin: 0 0 4px;
+}
+.reveal .om-card {
+  font-size: 0.58em;
+  color: var(--psi-sel);
+  margin: 0;
+}
+.reveal .scene-svg .card-rect {
+  fill: #1f2937;
+  stroke: var(--psi-omega);
+  stroke-width: 2px;
+}
+.reveal .scene-svg .card-letter { font-size: 34px; }
+.reveal .scene-svg .hdr {
+  font-family: var(--r-main-font);
+  font-size: 18px;
+  font-weight: 700;
+  fill: var(--psi-muted);
+}
+.reveal .scene-svg .hdr.small { font-size: 15px; }
+.reveal .scene-svg .cell {
+  fill: rgba(56, 189, 248, 0.1);
+  stroke: rgba(56, 189, 248, 0.5);
+  stroke-width: 1.5px;
+}
+.reveal .scene-svg .cell-lbl {
+  font-family: var(--r-main-font);
+  font-size: 17px;
+  font-weight: 600;
+}
+.reveal .scene-svg .seq {
+  font-family: ui-monospace, 'DejaVu Sans Mono', monospace;
+  font-size: 17px;
+}
+.reveal .scene-svg .seq-b { fill: var(--psi-a); fill-opacity: 0.65; }
+.reveal .scene-svg .seq-g { fill: #f472b6; fill-opacity: 0.65; }
+.reveal .scene-svg .seq-end { fill-opacity: 1; font-weight: 700; }
+.reveal .scene-svg .seq-dots {
+  font-size: 26px;
+  fill: var(--psi-muted);
+}
+.reveal .scene-svg .wheel {
+  fill: rgba(255, 255, 255, 0.04);
+  stroke: var(--psi-omega);
+  stroke-width: 2px;
+}
+.reveal .scene-svg .tick {
+  stroke: rgba(203, 213, 224, 0.5);
+  stroke-width: 1.5px;
+}
+.reveal .scene-svg .wheel-arc {
+  fill: none;
+  stroke: var(--psi-sel);
+  stroke-width: 5px;
+  stroke-linecap: round;
+}
+.reveal .scene-svg .needle {
+  stroke: var(--psi-b);
+  stroke-width: 4px;
+  stroke-linecap: round;
+}
+.reveal .scene-svg .needle-tip { fill: var(--psi-b); }
+.reveal .scene-svg .hub { fill: var(--psi-text); }
+
+/* ── Scena: eventi ── */
+.reveal .scene-svg .die {
+  fill: #1f2937;
+  stroke: var(--psi-omega);
+  stroke-width: 2px;
+}
+.reveal .scene-svg .pip { fill: var(--psi-text); }
+.reveal .scene-svg .lasso {
+  fill: rgba(56, 239, 125, 0);
+  stroke: var(--psi-sel);
+  stroke-width: 3px;
+}
+.reveal .scene-svg .omega-ring {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 3px;
+}
+.reveal .scene-svg .verdict {
+  font-family: var(--r-main-font);
+  font-size: 24px;
+  font-weight: 600;
+}
+.reveal .scene-svg .caption {
+  font-family: var(--r-main-font);
+  font-size: 19px;
+}
+.reveal .scene-svg .badge { fill: var(--psi-sel); }
+.reveal .scene-svg .badge-lbl {
+  font-family: var(--r-main-font);
+  font-size: 14px;
+  font-weight: 800;
+  fill: #0f172a;
+}
+
+/* ── Scene: De Morgan e distributiva ── */
+.reveal .dm-heads {
+  display: grid;
+  grid-template-columns: 520px 80px 520px;
+  justify-content: center;
+  font-size: 0.85em;
+  margin-bottom: 6px;
+}
+.reveal .dm-head {
+  position: relative;
+  height: 1.9em;
+}
+.reveal .dm-head > span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+.reveal .dm-svg { margin: 0 auto; }
+.reveal .dm-foot {
+  font-size: 0.7em;
+  margin-top: 10px;
+}
+.reveal .dm-codes {
+  position: relative;
+  height: 1.9em;
+}
+.reveal .dm-codes .op-code {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+}
+.reveal .dm-prob { margin: 10px 0 0; }
+.reveal .ds-foot {
+  font-size: 0.72em;
+  margin: 12px 0 0;
+  color: var(--psi-muted);
+}
+.reveal .scene-svg .hatch-a {
+  stroke: var(--psi-a);
+  stroke-width: 2.2px;
+}
+.reveal .scene-svg .hatch-b {
+  stroke: var(--psi-b);
+  stroke-width: 2.2px;
+}
+.reveal .scene-svg .dm-eq { font-size: 64px; }
+
+/* ── Scena: σ-algebra ── */
+.reveal .scene-svg .hedge {
+  stroke: rgba(203, 213, 224, 0.35);
+  stroke-width: 2px;
+}
+.reveal .scene-svg .hnode { stroke-width: 2px; }
+.reveal .scene-svg .hnode-lbl { font-size: 22px; }
+.reveal .scene-svg .sg-arrow {
+  fill: none;
+  stroke: var(--psi-b);
+  stroke-width: 3px;
+  stroke-dasharray: 8 6;
+}
+.reveal .scene-svg .sg-arrow-lbl {
+  font-family: var(--r-main-font);
+  font-size: 18px;
+  font-weight: 600;
+  fill: var(--psi-b);
+  paint-order: stroke;
+  stroke: #191919;
+  stroke-width: 6px;
+  stroke-linejoin: round;
+}
+.reveal .scene-panel .sg-rules {
+  display: block;
+  margin: 0 0 18px;
+  padding-left: 1.4em;
+}
+.reveal .sg-rules li { margin: 0 0 8px; }
+.reveal .scene-cards {
+  position: relative;
+  min-height: 140px;
+}
+.reveal .scene-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 12px 16px;
+  border-left: 4px solid var(--psi-sel);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  line-height: 1.4;
+}
+
+/* ── Scena: assiomi ── */
+.reveal .scene-svg .as-fill { fill: rgba(237, 242, 247, 0.12); }
+.reveal .scene-svg .as-blob {
+  fill: rgba(56, 189, 248, 0.25);
+  stroke: var(--psi-a);
+  stroke-width: 3px;
+}
+.reveal .scene-svg .as-note {
+  font-family: var(--r-main-font);
+  font-size: 20px;
+  fill: var(--psi-muted);
+}
+.reveal .scene-svg .as-big { font-size: 46px; }
+.reveal .scene-svg .as-piece {
+  stroke: #191919;
+  stroke-width: 2px;
+}
+.reveal .scene-svg .as-frac {
+  font-family: var(--r-main-font);
+  font-weight: 700;
+  fill: #0f172a;
+}
+.reveal .as-sum {
+  font-size: 1.05em;
+  margin: 10px 0;
+}
+
+/* ── Scena: complementare e P(∅) = 0 ── */
+.reveal .scene-svg .cp-a { fill: rgba(56, 189, 248, 0.3); }
+.reveal .scene-svg .cp-c { fill: rgba(251, 191, 36, 0.3); }
+.reveal .scene-svg .cp-edge {
+  stroke: #fff;
+  stroke-width: 3px;
+}
+.reveal .scene-svg .cp-num {
+  font-family: var(--r-main-font);
+  font-size: 34px;
+  font-weight: 700;
+}
+.reveal .scene-svg .cp-name {
+  font-family: var(--r-main-font);
+  font-size: 20px;
+  fill: var(--psi-muted);
+}
+.reveal .scene-svg .cp-facts {
+  font-family: var(--r-main-font);
+  font-size: 22px;
+}
+.reveal .proof {
+  max-width: 1000px;
+  margin: 30px auto 0;
+  text-align: left;
+  font-size: 0.95em;
+}
+.reveal .proof p { margin: 0 0 22px; }
+.reveal .proof .proof-end { color: var(--psi-sel); }
+
+/* ── Scena: unione ── */
+.reveal .scene-grid.wide {
+  grid-template-columns: 700px 1fr;
+  gap: 34px;
+}
+.reveal .scene-svg .band-l {
+  fill: rgba(56, 189, 248, 0.22);
+  stroke: var(--psi-a);
+  stroke-width: 2px;
+}
+.reveal .scene-svg .band-m {
+  fill: rgba(251, 191, 36, 0.22);
+  stroke: var(--psi-b);
+  stroke-width: 2px;
+}
+.reveal .scene-svg .band-l.soft,
+.reveal .scene-svg .band-m.soft {
+  stroke: none;
+  fill-opacity: 0.45;
+}
+.reveal .scene-svg .band-hl { fill: var(--psi-sel); }
+.reveal .scene-svg .band-lbl {
+  font-family: var(--r-main-font);
+  font-size: 20px;
+  font-weight: 600;
+}
+.reveal .scene-svg .band-num {
+  font-family: var(--r-main-font);
+  font-size: 22px;
+  font-weight: 700;
+}
+.reveal .scene-svg .band-num.dim { fill: var(--psi-muted); }
+.reveal .scene-svg .ruler {
+  stroke: rgba(203, 213, 224, 0.6);
+  stroke-width: 2px;
+}
+.reveal .scene-svg .ruler.one {
+  stroke: #fff;
+  stroke-width: 3px;
+}
+.reveal .scene-svg .ruler-lbl {
+  font-family: var(--r-main-font);
+  font-size: 17px;
+  fill: var(--psi-muted);
+}
+.reveal .scene-svg .red-zone { fill: rgba(255, 75, 43, 0.18); }
+.reveal .scene-svg .bar-l {
+  fill: rgba(56, 189, 248, 0.55);
+  stroke: var(--psi-a);
+  stroke-width: 1.5px;
+}
+.reveal .scene-svg .bar-m {
+  fill: rgba(251, 191, 36, 0.55);
+  stroke: var(--psi-b);
+  stroke-width: 1.5px;
+}
+.reveal .scene-svg .bar-hl {
+  fill: rgba(56, 239, 125, 0.55);
+  stroke: var(--psi-sel);
+  stroke-width: 2px;
+}
+.reveal .scene-svg .total {
+  font-family: var(--r-main-font);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* ── Scena: inclusione-esclusione ── */
+.reveal .scene-svg .ie-flash { fill: #edf2f7; }
+.reveal .scene-svg .ie-count {
+  font-family: var(--r-main-font);
+  font-size: 32px;
+  font-weight: 800;
+  paint-order: stroke;
+  stroke: #191919;
+  stroke-width: 5px;
+}
+.reveal .scene-svg .ie-gone {
+  font-family: var(--r-main-font);
+  font-size: 16px;
+  font-weight: 700;
+  fill: #fc8181;
+}
+.reveal .ie-lines { margin: 8px 0 16px; }
+.reveal .ie-line { margin: 0 0 8px; }
+
+/* ── Scena: Monte Carlo ── */
+.reveal .scene-svg .band-edge {
+  stroke-width: 2px;
+  stroke-dasharray: 6 5;
+}
+.reveal .scene-svg .edge-a { stroke: var(--psi-a); }
+.reveal .scene-svg .edge-b { stroke: var(--psi-b); }
+.reveal .scene-svg .pt-both { fill: var(--psi-sel); }
+.reveal .scene-svg .pt-l { fill: var(--psi-a); }
+.reveal .scene-svg .pt-m { fill: var(--psi-b); }
+.reveal .scene-svg .pt-none { fill: #718096; }
+.reveal .mc-table {
+  margin: 6px 0 8px;
+  border-collapse: collapse;
+}
+.reveal .mc-table th,
+.reveal .mc-table td {
+  padding: 4px 14px;
+  border: none;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.reveal .mc-table th {
+  font-size: 0.8em;
+  font-weight: 600;
+  color: var(--psi-muted);
+}
+.reveal .mc-table td:first-child { text-align: left; }
+.reveal .mc-key td {
+  color: var(--psi-sel);
+  font-weight: 700;
+}
+.reveal .mc-n {
+  margin: 4px 0 10px;
+  color: var(--psi-muted);
+}
+.reveal .mc-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+.reveal .psi-btn {
+  background: #38ef7d;
+  color: #0f172a;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 0.85em;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+.reveal .psi-btn.ghost {
+  background: rgba(255, 255, 255, 0.08);
+  color: #edf2f7;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+}
+
+/* Alone scuro dietro il testo che attraversa linee o punti. */
+.reveal .scene-svg .halo,
+.reveal .scene-svg .cp-facts {
+  paint-order: stroke;
+  stroke: #191919;
+  stroke-width: 6px;
+  stroke-linejoin: round;
+}
+.reveal .mc-table td[data-k] {
+  font-size: 1.1em;
+  font-weight: 700;
+}
+.reveal .mc-table td:last-child { color: var(--psi-muted); }
+.reveal .mc-key td:last-child { color: var(--psi-sel); }
+
+/* ── Scena: il mazzo da 52 ── */
+.reveal .scene-svg .deck-card rect {
+  fill: #1f2937;
+  stroke: rgba(203, 213, 224, 0.5);
+  stroke-width: 1.5px;
+}
+.reveal .scene-svg .deck-rank {
+  font-family: var(--r-main-font);
+  font-size: 16px;
+  font-weight: 700;
+  fill: #e2e8f0;
+}
+.reveal .scene-svg .deck-suit {
+  font-family: 'DejaVu Sans', sans-serif;
+  font-size: 26px;
+  fill: #e2e8f0;
+}
+.reveal .scene-svg .deck-card.red .deck-rank,
+.reveal .scene-svg .deck-card.red .deck-suit { fill: #fc8181; }
+.reveal .scene-svg .deck-sel-a {
+  fill: none;
+  stroke: var(--psi-a);
+  stroke-width: 3px;
+}
+.reveal .scene-svg .deck-sel-b {
+  fill: none;
+  stroke: var(--psi-b);
+  stroke-width: 3px;
+}
+
+/* ── Scena: classica e frequentista ── */
+.reveal .scene-svg .fq-tile { opacity: 0.45; }
+.reveal .scene-svg .fq-tile rect { fill: #3a4252; }
+.reveal .scene-svg .fq-tile.heart,
+.reveal .scene-svg .fq-tile.hit { opacity: 1; }
+.reveal .scene-svg .fq-tile.heart rect { fill: #fc8181; }
+.reveal .scene-svg .fq-tile.hit rect { fill: var(--psi-sel); }
+.reveal .scene-svg .fq-ace {
+  font-family: var(--r-main-font);
+  font-size: 12px;
+  font-weight: 800;
+  fill: #e2e8f0;
+}
+.reveal .scene-svg .fq-tile.hit .fq-ace { fill: #0f172a; }
+.reveal .fq-live { margin: 6px 0 12px; }
+.reveal .fq-live b { color: var(--psi-sel); }
+
+/* ── Scena: regola del prodotto ── */
+.reveal .pr-top {
+  text-align: center;
+  font-size: 0.72em;
+  margin: 0 0 6px;
+}
+.reveal .pr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.reveal .pr-grid svg { margin: 0 auto; }
+.reveal .pr-cap {
+  font-size: 0.55em;
+  color: var(--psi-muted);
+  margin: 2px 0 0;
+}
+.reveal .pr-chain {
+  font-size: 0.62em;
+  max-width: 1000px;
+  margin: 8px auto 0;
+}
+.reveal .scene-svg .tr-branch {
+  stroke: rgba(203, 213, 224, 0.6);
+  stroke-width: 3px;
+}
+.reveal .scene-svg .tr-node { fill: var(--psi-text); }
+.reveal .scene-svg .tr-p {
+  font-family: var(--r-main-font);
+  font-size: 18px;
+  font-weight: 600;
+  fill: var(--psi-b);
+}
+.reveal .scene-svg .tr-name {
+  font-family: var(--r-main-font);
+  font-size: 17px;
+  fill: var(--psi-muted);
+}
+.reveal .scene-svg .tr-prod {
+  font-family: var(--r-main-font);
+  font-size: 22px;
+  font-weight: 700;
+  fill: var(--psi-sel);
+}
+.reveal .scene-svg .pp-base { fill: rgba(56, 189, 248, 0.18); }
+.reveal .scene-svg .pp-cut { fill: rgba(6, 8, 12, 0.85); }
+.reveal .scene-svg .pp-keep { fill: rgba(56, 239, 125, 0.35); }
+.reveal .scene-svg .pp-lbl {
+  font-family: var(--r-main-font);
+  font-size: 16px;
+  font-weight: 600;
+  fill: var(--psi-muted);
+}
+.reveal .scene-svg .pp-count {
+  font-family: var(--r-main-font);
+  font-size: 48px;
+  font-weight: 800;
+}
+.reveal .scene-svg .pp-formula {
+  font-family: var(--r-main-font);
+  font-size: 20px;
+  font-weight: 700;
+  fill: var(--psi-sel);
+}
+
+/* ── Scena: indipendenza ── */
+.reveal .scene-svg .ind-ref {
+  stroke: #fff;
+  stroke-width: 2px;
+  stroke-dasharray: 8 6;
+}
+.reveal .scene-svg .ind-ref-lbl {
+  font-family: var(--r-main-font);
+  font-size: 16px;
+}
+
+/* ── Scena: il trabocchetto ── */
+.reveal .scene-svg .tb-lens { opacity: 0.55; }
+.reveal .scene-svg .tb-handle {
+  cursor: grab;
+  touch-action: none;
+}
+.reveal .tb-meter { margin: 0 0 10px; }
+.reveal .tb-row {
+  display: grid;
+  grid-template-columns: 150px 1fr 70px;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 10px;
+}
+.reveal .tb-bar {
+  height: 14px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+.reveal .tb-fill {
+  display: block;
+  height: 100%;
+  border-radius: 7px;
+}
+.reveal .tb-ab,
+.reveal .tb-cond { background: var(--psi-sel); }
+.reveal .tb-prod,
+.reveal .tb-pb { background: var(--psi-muted); }
+.reveal .tb-v {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.reveal .tb-badge {
+  display: inline-block;
+  margin: 6px 0 12px;
+  padding: 4px 14px;
+  border-radius: 16px;
+  font-weight: 700;
+}
+.reveal .tb-badge.ind { background: rgba(56, 239, 125, 0.18); color: var(--psi-sel); }
+.reveal .tb-badge.dip { background: rgba(251, 191, 36, 0.18); color: var(--psi-b); }
+.reveal .tb-badge.dis { background: rgba(255, 75, 43, 0.18); color: #fc8181; }
+.reveal .tb-hint {
+  font-size: 0.8em;
+  color: var(--psi-muted);
+  margin: 8px 0 0;
+}
+
+/* ── Scena: affidabilità ── */
+.reveal .rl-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+.reveal .rl-col h3 {
+  font-size: 0.8em;
+  margin: 0 0 4px;
+}
+.reveal .rl-svg { margin: 0 auto; }
+.reveal .rl-f {
+  font-size: 0.6em;
+  margin: 2px 0;
+}
+.reveal .rl-r {
+  font-size: 0.58em;
+  font-weight: 700;
+  color: var(--psi-sel);
+  margin: 0 0 6px;
+}
+.reveal .rl-ctrl {
+  font-size: 0.6em;
+  margin: 4px 0 0;
+}
+.reveal .rl-ctrl .psi-btn {
+  padding: 2px 12px;
+  font-size: 1em;
+}
+.reveal .rl-ctrl b {
+  display: inline-block;
+  min-width: 1.4em;
+}
+.reveal .rl-note {
+  font-size: 0.62em;
+  margin: 12px 0 0;
+}
+.reveal .scene-svg .wire {
+  fill: none;
+  stroke: #4a5568;
+  stroke-width: 3px;
+}
+.reveal .scene-svg .wire.live {
+  stroke: var(--psi-sel);
+  stroke-dasharray: 12 9;
+  animation: psi-flow 1s linear infinite;
+}
+.reveal .scene-svg .comp {
+  fill: #1f2937;
+  stroke: var(--psi-omega);
+  stroke-width: 2px;
+}
+.reveal .scene-svg .comp.down {
+  fill: rgba(255, 75, 43, 0.2);
+  stroke: #fc8181;
+}
+.reveal .scene-svg .comp-lbl {
+  font-family: var(--r-main-font);
+  font-size: 16px;
+  font-weight: 600;
+}
+.reveal .scene-svg .comp-q {
+  font-family: var(--r-main-font);
+  font-size: 14px;
+  fill: var(--psi-muted);
+}
+.reveal .scene-svg .rl-end {
+  fill: #1f2937;
+  stroke: var(--psi-omega);
+  stroke-width: 2px;
+}
+.reveal .scene-svg .rl-end.ok { fill: rgba(56, 239, 125, 0.3); stroke: var(--psi-sel); }
+.reveal .scene-svg .rl-end.ko { fill: rgba(255, 75, 43, 0.3); stroke: #fc8181; }
+.reveal .scene-svg .rl-end-lbl {
+  font-family: var(--r-main-font);
+  font-size: 14px;
+  font-weight: 700;
+  fill: var(--psi-muted);
+}
+.reveal .scene-svg .rl-end-lbl.bad { fill: #fc8181; }
+
+/* ── Scena: la rivelazione ── */
+.reveal .scene-svg .rv-box {
+  fill: rgba(255, 255, 255, 0.04);
+  stroke: var(--psi-omega);
+  stroke-width: 3px;
+}
+.reveal .scene-svg .rv-lid {
+  fill: rgba(203, 213, 224, 0.25);
+  stroke: var(--psi-omega);
+  stroke-width: 2px;
+}
+.reveal .scene-svg .rv-axiom { font-size: 32px; }
+.reveal .scene-svg .rv-ask {
+  font-size: 150px;
+  font-weight: 700;
+  fill: #fc8181;
+}
+.reveal .scene-svg .rv-q {
+  font-family: var(--r-main-font);
+  font-size: 22px;
+  font-style: italic;
+}
+.reveal .scene-svg .rv-q.dim {
+  fill: var(--psi-muted);
+  font-style: normal;
+}
+.reveal .scene-svg .rv-arrow {
+  fill: none;
+  stroke-width: 3px;
+}
+.reveal .scene-svg .rv-arrow.e { stroke: #38ef7d; }
+.reveal .scene-svg .rv-arrow.o { stroke: #4299e1; }
+.reveal .scene-svg .rv-pole {
+  font-family: var(--r-main-font);
+  font-size: 20px;
+  font-weight: 700;
+}
+.reveal .scene-svg .rv-pole.e { fill: #38ef7d; }
+.reveal .scene-svg .rv-pole.o { fill: #4299e1; }
+.reveal .scene-svg .rv-pole-sub {
+  font-family: var(--r-main-font);
+  font-size: 16px;
+  fill: var(--psi-muted);
+}
+.reveal .rv-panel { text-align: center; }
+.reveal .rv-quote {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin: 10px 0 14px;
+}

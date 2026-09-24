@@ -4,8 +4,40 @@
   <meta charset="utf-8">
   <title>PSI 26/27 — Settimana 1: Che cos'è la probabilità?</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+  <script>
+    // Le librerie si caricano dalla copia locale in assets/vendor (npm run vendor,
+    // esclusa da git), così le slide funzionano senza rete. Se la copia manca,
+    // come sul sito pubblicato, ogni file ripiega sulla stessa versione dal CDN.
+    var PSI_VENDOR = '../../assets/vendor/';
+    var PSI_CDN = 'https://cdn.jsdelivr.net/npm/';
+
+    function psiCdn(link) {
+      link.onerror = null;
+      link.href = PSI_CDN + link.getAttribute('href').slice(PSI_VENDOR.length);
+    }
+
+    function psiScript(src) {
+      return new Promise(function (resolve, reject) {
+        var s = document.createElement('script');
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = function () { s.remove(); reject(new Error(src)); };
+        document.head.appendChild(s);
+      });
+    }
+
+    function psiLoad(paths) {
+      return paths.reduce(function (chain, path) {
+        return chain.then(function () {
+          return psiScript(PSI_VENDOR + path).catch(function () { return psiScript(PSI_CDN + path); });
+        });
+      }, Promise.resolve());
+    }
+  </script>
+  <link rel="stylesheet" href="../../assets/vendor/reveal.js@5.1.0/dist/reveal.css" onerror="psiCdn(this)">
+  <link rel="stylesheet" href="../../assets/vendor/reveal.js@5.1.0/dist/theme/black.css" onerror="psiCdn(this)">
+  <link rel="stylesheet" href="../../assets/vendor/katex@0.18.9/dist/katex.min.css" onerror="psiCdn(this)">
+  <link rel="stylesheet" href="css/scenes.css">
   <style>
     :root {
       --r-main-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -117,38 +149,521 @@
         <p class="subtitle">La probabilità è una proprietà della moneta, o la misura della nostra ignoranza?</p>
       </section>
 
-      <!-- Slide 4: Autore — Andrej Kolmogorov -->
+      <!-- Atto I • Kolmogorov: la grammatica della probabilità -->
       <section>
-        <div class="badge">1933 • Assiomatizzazione Sintattica</div>
+        <div class="badge">Atto I • 1933 • La grammatica</div>
         <h2 class="author-name">Andrej Kolmogorov</h2>
         <img src="img/kolmogorov.jpg" class="author-photo" alt="Andrej Kolmogorov">
-        <p class="author-quote">«Una grammatica perfetta.<br><span class="warning">Senza vocabolario.»</span></p>
+        <p class="author-quote">Dal pantano alla teoria della misura</p>
         <div class="box">
-          <p style="font-size: 1.05em; color: #edf2f7; margin: 0;">Gli assiomi spiegano come sommare e moltiplicare numeri tra 0 e 1.<br><strong>Non dicono cosa significhino nel mondo reale.</strong></p>
+          <p style="font-size: 1.05em; color: #edf2f7; margin: 0 0 8px;">Nei <em>Grundbegriffe der Wahrscheinlichkeitsrechnung</em> la probabilità diventa una <strong>misura</strong>, come lunghezze, aree e volumi.</p>
+          <p style="font-size: 0.95em; color: #a0aec0; margin: 0;">Prima c'erano definizioni circolari: «casi ugualmente probabili» usa la probabilità per definire la probabilità.</p>
         </div>
       </section>
 
-      <!-- Slide 5: Autore — Wesley Salmon -->
-      <section>
-        <div class="badge">1966 • Filosofia della Scienza</div>
-        <h2 class="author-name">Wesley Salmon</h2>
-        <img src="img/salmon.jpg" class="author-photo" alt="Wesley Salmon">
-        <p class="author-quote">I 3 Criteri di Adeguatezza: il tribunale della razionalità</p>
-        <div style="display: flex; justify-content: space-around; gap: 15px; margin-top: 15px;">
-          <div class="box" style="flex: 1; padding: 15px;">
-            <h3 class="highlight" style="font-size: 1.1em; margin-bottom: 5px;">1. Ammissibile</h3>
-            <p style="font-size: 0.9em; margin: 0;">Rispetta gli assiomi matematici</p>
-          </div>
-          <div class="box" style="flex: 1; padding: 15px;">
-            <h3 class="highlight" style="font-size: 1.1em; margin-bottom: 5px;">2. Accertabile</h3>
-            <p style="font-size: 0.9em; margin: 0;">Misurabile empiricamente nel mondo</p>
-          </div>
-          <div class="box" style="flex: 1; padding: 15px;">
-            <h3 class="highlight" style="font-size: 1.1em; margin-bottom: 5px;">3. Applicabile</h3>
-            <p style="font-size: 0.9em; margin: 0;">Guida razionale per l'azione</p>
+      <!-- Atto I • Esperimento ed esito (scena animata: js/atto1-insiemi.js) -->
+      <section id="esperimento">
+        <h2 class="scene-title">Esperimento ed esito: le nozioni primitive</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="640" height="440" viewBox="0 0 640 440" role="img" aria-label="Il ciclo tra esperimento ed esito"></svg>
+          <div class="scene-panel">
+            <p class="scene-lead">Due nozioni <strong>primitive</strong>, ciascuna definita tramite l'altra:</p>
+            <p class="scene-quote">«L'esito è ciò che un esperimento genera»<br>«L'esperimento è ciò che genera esiti»</p>
+            <ol class="scene-steps">
+              <li><strong>Idealizzare:</strong> gli esiti possibili si fissano in anticipo; le contingenze irrilevanti restano fuori.</li>
+              <li><strong>Uno e uno solo:</strong> ogni prova produce esattamente un esito. Mai due insieme, mai nessuno.</li>
+              <li>Vale per una moneta come per il traffico di rete su un server o l'avvio di una startup.</li>
+            </ol>
           </div>
         </div>
-        <p class="subtitle" style="margin-top: 15px; color: #fc8181; font-size: 1em;">Nessuna interpretazione li soddisfa tutti contemporaneamente!</p>
+      </section>
+
+      <!-- Atto I • Lo spazio campionario (scena animata: js/atto1-insiemi.js) -->
+      <section id="omega">
+        <h2 class="scene-title">Lo spazio campionario $\Omega$</h2>
+        <p class="scene-lead om-lead">Regola aurea: $\Omega$ è sempre la <strong>prima</strong> cosa da definire.</p>
+        <div class="om-grid">
+          <div class="om-panel">
+            <svg class="scene-svg om-svg" width="270" height="200" viewBox="0 0 270 200" role="img" aria-label="Tre carte: Q, K, J"></svg>
+            <h3>Finito</h3>
+            <p class="om-desc">Si pesca una carta tra tre</p>
+            <p class="om-formula">$\Omega = \{Q, K, J\}$</p>
+            <p class="om-card">$|\Omega| = 3$</p>
+          </div>
+          <div class="om-panel">
+            <svg class="scene-svg om-svg" width="270" height="200" viewBox="0 0 270 200" role="img" aria-label="Griglia delle coppie di carte"></svg>
+            <h3>Prodotto cartesiano</h3>
+            <p class="om-desc">Due carte in fila, con reimmissione</p>
+            <p class="om-formula">$\Omega = \{QQ, QK, \dots, JJ\}$</p>
+            <p class="om-card">$|\Omega| = 3 \times 3 = 9$</p>
+          </div>
+          <div class="om-panel">
+            <svg class="scene-svg om-svg" width="270" height="200" viewBox="0 0 270 200" role="img" aria-label="Sequenze di figli che terminano con GB"></svg>
+            <h3>Infinito numerabile</h3>
+            <p class="om-desc">Figli finché nasce una femmina ($G$) seguita da un maschio ($B$)</p>
+            <p class="om-formula">$\Omega = \{GB, BGB, GGB, \dots\}$</p>
+            <p class="om-card">nessun limite superiore</p>
+          </div>
+          <div class="om-panel">
+            <svg class="scene-svg om-svg" width="270" height="200" viewBox="0 0 270 200" role="img" aria-label="Ruota della fortuna"></svg>
+            <h3>Continuo</h3>
+            <p class="om-desc">L'angolo a cui si ferma una ruota della fortuna</p>
+            <p class="om-formula">$\Omega = [0, 2\pi)$</p>
+            <p class="om-card">$|\Omega| = |\mathbb{R}|$</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto I • Eventi (scena animata: js/atto1-insiemi.js) -->
+      <section id="eventi">
+        <h2 class="scene-title">Un evento è un sottoinsieme di $\Omega$</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="640" height="440" viewBox="0 0 640 440" role="img" aria-label="Le sei facce di un dado e l'evento «esce pari»"></svg>
+          <div class="scene-panel">
+            <p class="scene-lead">Lancio di un dado: $\Omega = \{1, 2, 3, 4, 5, 6\}$</p>
+            <ol class="scene-steps">
+              <li>«Esce un numero pari» è il sottoinsieme $A = \{2, 4, 6\}$.</li>
+              <li>$A$ <strong>si verifica</strong> se l'esito prodotto gli appartiene: $\omega \in A$.</li>
+              <li>$\Omega$ è l'<strong>evento certo</strong>, $\emptyset$ l'<strong>evento impossibile</strong>.</li>
+              <li>Ogni esito sta dentro o fuori: gli eventi sono $2^6 = 64$, in generale $|\mathcal{P}(\Omega)| = 2^N$.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto I • Operazioni tra eventi (scena animata: js/atto1.js) -->
+      <section id="venn-ops">
+        <h2 class="scene-title">Eventi come insiemi: le operazioni</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="640" height="440" viewBox="0 0 640 440" role="img" aria-label="Diagramma di Venn degli eventi A e B nello spazio campionario">
+            <defs>
+              <circle id="vo-a" cx="250" cy="220" r="130"/>
+              <circle id="vo-b" cx="390" cy="220" r="130"/>
+              <clipPath id="vo-in-a"><use href="#vo-a"/></clipPath>
+              <mask id="vo-out-a" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="440">
+                <rect width="640" height="440" fill="#fff"/><use href="#vo-a" fill="#000"/>
+              </mask>
+              <mask id="vo-out-b" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="440">
+                <rect width="640" height="440" fill="#fff"/><use href="#vo-b" fill="#000"/>
+              </mask>
+              <mask id="vo-out-ab" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="440">
+                <rect width="640" height="440" fill="#fff"/><use href="#vo-a" fill="#000"/><use href="#vo-b" fill="#000"/>
+              </mask>
+            </defs>
+            <rect class="omega" x="20" y="20" width="600" height="400" rx="16"/>
+            <rect class="region" data-region="none" x="20" y="20" width="600" height="400" rx="16" mask="url(#vo-out-ab)"/>
+            <rect class="region" data-region="notA" x="20" y="20" width="600" height="400" rx="16" mask="url(#vo-out-a)"/>
+            <use class="region" data-region="a" href="#vo-a" mask="url(#vo-out-b)"/>
+            <use class="region" data-region="ab" href="#vo-b" clip-path="url(#vo-in-a)"/>
+            <use class="region" data-region="b" href="#vo-b" mask="url(#vo-out-a)"/>
+            <use class="set set-a" href="#vo-a"/>
+            <use class="set set-b" href="#vo-b"/>
+            <text class="math-lbl" x="44" y="68">Ω</text>
+            <text class="math-lbl it lbl-a" x="150" y="100">A</text>
+            <text class="math-lbl it lbl-b" x="490" y="100">B</text>
+            <text class="math-lbl lbl-empty" x="310" y="398" text-anchor="middle"><tspan class="it">A</tspan> ∩ <tspan class="it">B</tspan> = ∅</text>
+          </svg>
+          <div class="op-panel">
+            <div class="op-chips">
+              <span class="op-chip">$\cup$</span>
+              <span class="op-chip">$\cap$</span>
+              <span class="op-chip">$A^c$</span>
+              <span class="op-chip">$\setminus$</span>
+              <span class="op-chip">$\emptyset$</span>
+            </div>
+            <div class="op-cards">
+              <div class="op-card">
+                <h3>Due eventi in $\Omega$</h3>
+                <p>Un evento è un <strong>sottoinsieme</strong> di $\Omega$: si verifica se l'esito $\omega$ prodotto dall'esperimento gli appartiene.</p>
+                <p class="op-def">Le operazioni tra eventi sono le operazioni tra insiemi, cioè i connettivi logici dell'informatica.</p>
+              </div>
+              <div class="op-card">
+                <h3>Unione</h3>
+                <p class="op-formula">$A \cup B$</p>
+                <p class="op-def">$\{\omega \in \Omega \mid \omega \in A \lor \omega \in B\}$</p>
+                <code class="op-code">A OR B</code>
+                <p>$A$ <em>oppure</em> $B$: almeno uno dei due</p>
+              </div>
+              <div class="op-card">
+                <h3>Intersezione</h3>
+                <p class="op-formula">$A \cap B$</p>
+                <p class="op-def">$\{\omega \in \Omega \mid \omega \in A \land \omega \in B\}$</p>
+                <code class="op-code">A AND B</code>
+                <p>$A$ <em>e</em> $B$: entrambi contemporaneamente</p>
+              </div>
+              <div class="op-card">
+                <h3>Complemento</h3>
+                <p class="op-formula">$A^c = \Omega \setminus A$</p>
+                <p class="op-def">$\{\omega \in \Omega \mid \omega \notin A\}$</p>
+                <code class="op-code">NOT A</code>
+                <p><em>non</em> $A$: tutto tranne $A$</p>
+              </div>
+              <div class="op-card">
+                <h3>Differenza</h3>
+                <p class="op-formula">$A \setminus B = A \cap B^c$</p>
+                <p class="op-def">$\{\omega \in \Omega \mid \omega \in A \land \omega \notin B\}$</p>
+                <code class="op-code">A AND NOT B</code>
+                <p>$A$ <em>ma non</em> $B$</p>
+              </div>
+              <div class="op-card">
+                <h3>Eventi disgiunti</h3>
+                <p class="op-formula">$A \cap B = \emptyset$</p>
+                <p class="op-def">Mutuamente esclusivi (incompatibili): non si verificano mai insieme.</p>
+                <code class="op-code">A AND B ≡ false</code>
+                <p>Se in più coprono tutto $\Omega$, formano una <strong>partizione</strong>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto I • De Morgan e, sotto, la distributiva (scene animate: js/atto1-insiemi.js) -->
+      <section>
+        <section id="demorgan">
+          <h2 class="scene-title">Le leggi di De Morgan</h2>
+          <div class="dm-heads">
+            <div class="dm-head"><span class="dm-h1">$(A \cup B)^c$</span><span class="dm-h2">$(A \cap B)^c$</span></div>
+            <div></div>
+            <div class="dm-head"><span class="dm-h1">$A^c \cap B^c$</span><span class="dm-h2">$A^c \cup B^c$</span></div>
+          </div>
+          <svg class="scene-svg dm-svg" width="1160" height="320" viewBox="0 0 1160 320" role="img" aria-label="Le leggi di De Morgan su due diagrammi di Venn affiancati"></svg>
+          <div class="dm-foot">
+            <div class="dm-codes"><code class="op-code dm-c1">!(a || b) === (!a &amp;&amp; !b)</code><code class="op-code dm-c2">!(a &amp;&amp; b) === (!a || !b)</code></div>
+            <p class="dm-prob">«Almeno uno» si calcola passando da «nessuno»: $P(A \cup B) = 1 - P(A^c \cap B^c)$</p>
+          </div>
+        </section>
+        <section id="distributiva">
+          <h2 class="scene-title">La proprietà distributiva</h2>
+          <div class="dm-heads">
+            <div class="dm-head"><span>$A \cap (B \cup C)$</span></div>
+            <div></div>
+            <div class="dm-head"><span>$(A \cap B) \cup (A \cap C)$</span></div>
+          </div>
+          <svg class="scene-svg dm-svg" width="1160" height="330" viewBox="0 0 1160 330" role="img" aria-label="La proprietà distributiva su due diagrammi di Venn a tre insiemi"></svg>
+          <p class="ds-foot">E simmetricamente: $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$</p>
+        </section>
+      </section>
+
+      <!-- Atto I • La σ-algebra (scena animata: js/atto1-insiemi.js) -->
+      <section id="sigma">
+        <h2 class="scene-title">La famiglia degli eventi: la $\sigma$-algebra $\mathcal{F}$</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="620" height="440" viewBox="0 0 620 440" role="img" aria-label="Gli otto sottoinsiemi di Omega ordinati per inclusione"></svg>
+          <div class="scene-panel">
+            <p class="scene-lead">Gli eventi a cui si assegna una probabilità formano una famiglia $\mathcal{F}$ chiusa rispetto alle operazioni logiche:</p>
+            <ol class="sg-rules">
+              <li>$\Omega \in \mathcal{F}$</li>
+              <li>$A \in \mathcal{F} \;\Rightarrow\; A^c \in \mathcal{F}$</li>
+              <li>$A_1, A_2, \dots \in \mathcal{F} \;\Rightarrow\; \bigcup_i A_i \in \mathcal{F}$</li>
+            </ol>
+            <div class="scene-cards">
+              <p class="scene-card">La più piccola: $\mathcal{F}_{\min} = \{\emptyset, \Omega\}$</p>
+              <p class="scene-card">Generata da $\{Q\}$: $\{\emptyset, \{Q\}, \{K, J\}, \Omega\}$</p>
+              <p class="scene-card">La più grande: $\mathcal{P}(\Omega)$, con $2^3 = 8$ eventi</p>
+              <p class="scene-card">Nel continuo non si può prendere <em>ogni</em> sottoinsieme: esistono insiemi non misurabili (Vitali, Banach–Tarski).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto I • Gli assiomi di Kolmogorov (scena animata: js/atto1-assiomi.js) -->
+      <section id="assiomi">
+        <h2 class="scene-title">Gli assiomi di Kolmogorov (1933)</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="600" height="440" viewBox="0 0 600 440" role="img" aria-label="La probabilità come area nel quadrato Omega"></svg>
+          <div class="scene-panel">
+            <p class="scene-lead">Una <strong>misura di probabilità</strong> $P: \mathcal{F} \to \mathbb{R}$ rispetta tre soli assiomi. Pensala come un'area:</p>
+            <ol class="scene-steps">
+              <li><strong>Non negatività:</strong> $P(A) \ge 0$</li>
+              <li><strong>Normalizzazione:</strong> $P(\Omega) = 1$</li>
+              <li><strong>$\sigma$-additività:</strong> per $A_1, A_2, \dots$ a due a due disgiunti, $P\big(\bigcup_i A_i\big) = \sum_i P(A_i)$</li>
+            </ol>
+            <p class="scene-note as-sum">$\tfrac12 + \tfrac14 + \tfrac18 + \tfrac1{16} + \cdots = 1$</p>
+            <div class="scene-def as-triple">La terna $(\Omega, \mathcal{F}, P)$ è uno <strong>spazio di probabilità</strong>.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto I • Complementare e, sotto, l'evento impossibile (js/atto1-assiomi.js) -->
+      <section>
+        <section id="complementare">
+          <h2 class="scene-title">La regola del complementare</h2>
+          <div class="scene-grid">
+            <svg class="scene-svg" width="600" height="440" viewBox="0 0 600 440" role="img" aria-label="Omega diviso tra A e il suo complementare"></svg>
+            <div class="scene-panel">
+              <ol class="scene-steps">
+                <li>$A$ e $A^c$ sono disgiunti e insieme coprono tutto $\Omega$.</li>
+                <li>Additività e normalizzazione: $P(A) + P(A^c) = P(\Omega) = 1$.</li>
+                <li>Antivirus: protetto con probabilità $0.70$, vulnerabile con $1 - 0.70 = 0.30$.</li>
+                <li>Modulo pulito con probabilità $0.45$: <strong>almeno un bug</strong> con $1 - 0.45 = 0.55$.</li>
+              </ol>
+              <div class="scene-def">$$P(A^c) = 1 - P(A)$$</div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2 class="scene-title">L'evento impossibile: $P(\emptyset) = 0$</h2>
+          <div class="proof">
+            <p class="fragment">$\Omega$ ed $\emptyset$ sono disgiunti: $\;\Omega \cap \emptyset = \emptyset$</p>
+            <p class="fragment">e la loro unione è $\Omega$: $\;\Omega \cup \emptyset = \Omega$</p>
+            <p class="fragment">Per l'additività: $\;P(\Omega) = P(\Omega \cup \emptyset) = P(\Omega) + P(\emptyset)$</p>
+            <p class="fragment proof-end">Si sottrae $P(\Omega)$ da entrambi i membri: $\;P(\emptyset) = 0 \quad \square$</p>
+          </div>
+        </section>
+      </section>
+
+      <!-- Atto I • La regola dell'unione (scena animata: js/atto1-assiomi.js) -->
+      <section id="unione">
+        <h2 class="scene-title">La regola dell'unione: il dramma della sovrapposizione</h2>
+        <div class="scene-grid wide">
+          <svg class="scene-svg" width="700" height="440" viewBox="0 0 700 440" role="img" aria-label="Le bande dei guasti di lunedì e martedì e il righello delle probabilità"></svg>
+          <div class="scene-panel">
+            <p class="scene-lead">Guasti di rete: lunedì $P(L) = 0.70$, martedì $P(M) = 0.50$, entrambi $P(L \cap M) = 0.35$.</p>
+            <ol class="scene-steps">
+              <li>Somma ingenua: $0.70 + 0.50 = 1.20$. <strong>Impossibile</strong>: supera 1.</li>
+              <li>I guasti in entrambi i giorni ($L \cap M$) sono stati contati <strong>due volte</strong>.</li>
+              <li>Si toglie il doppione: $0.70 + 0.50 - 0.35 = 0.85$.</li>
+            </ol>
+            <div class="scene-def">$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$</div>
+            <p class="scene-note">Solo se $A \cap B = \emptyset$ il termine sparisce: $P(A \cup B) = P(A) + P(B)$.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto I • Inclusione-esclusione (scena animata: js/atto1-assiomi.js) -->
+      <section id="inclusione">
+        <h2 class="scene-title">Tre eventi: inclusione-esclusione</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="620" height="440" viewBox="0 0 620 440" role="img" aria-label="Diagramma di Venn a tre insiemi con il conteggio di ogni regione"></svg>
+          <div class="scene-panel">
+            <p class="scene-lead">Il numero in ogni regione dice <strong>quante volte</strong> è stata contata.</p>
+            <div class="ie-lines">
+              <p class="ie-line">$P(A \cup B \cup C) = P(A) + P(B) + P(C)$</p>
+              <p class="ie-line">$\quad - \big[P(A \cap B) + P(A \cap C) + P(B \cap C)\big]$</p>
+              <p class="ie-line">$\quad + P(A \cap B \cap C)$</p>
+            </div>
+            <div class="scene-cards">
+              <p class="scene-card">Sommando i tre cerchi, le intersezioni doppie contano 2 e il centro 3.</p>
+              <p class="scene-card">Togliendo le tre intersezioni doppie, il centro è sommato 3 volte e sottratto 3 volte: sparisce.</p>
+              <p class="scene-card">Si riaggiunge il centro: ora ogni regione conta <strong>una volta sola</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto I • Esperimento live: Monte Carlo dell'unione (js/atto1-assiomi.js) -->
+      <section id="montecarlo">
+        <h2 class="scene-title">Esperimento live: contare le settimane</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="600" height="420" viewBox="0 0 600 420" role="img" aria-label="Settimane simulate come punti nelle bande di lunedì e martedì"></svg>
+          <div class="scene-panel">
+            <p class="scene-lead">Ogni punto è una settimana simulata: cade in $L$, in $M$, in entrambi o in nessuno.</p>
+            <table class="mc-table">
+              <thead><tr><th></th><th>stima</th><th>teoria</th></tr></thead>
+              <tbody>
+                <tr><td>$P(L)$</td><td data-k="L">—</td><td>0.70</td></tr>
+                <tr><td>$P(M)$</td><td data-k="M">—</td><td>0.50</td></tr>
+                <tr><td>$P(L \cap M)$</td><td data-k="LM">—</td><td>0.35</td></tr>
+                <tr class="mc-key"><td>$P(L \cup M)$</td><td data-k="LuM">—</td><td>0.85</td></tr>
+              </tbody>
+            </table>
+            <p class="mc-n"><span class="mc-count">0</span> settimane</p>
+            <p class="scene-note">La simulazione non conosce gli assiomi: conta le settimane con almeno un guasto e trova $0.85$.</p>
+            <div class="mc-buttons">
+              <button class="psi-btn mc-rerun" type="button">▶ Nuove settimane</button>
+              <a class="psi-btn ghost" href="../#lab-unione" target="_blank">💻 Laboratorio Python ↗</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto I • L'arrivo dell'informazione -->
+      <section>
+        <div class="badge" style="background: #3182ce;">L'arrivo dell'informazione</div>
+        <h2 class="huge-question" style="font-size: 1.7em !important;">Aspetti un amico in aeroporto</h2>
+        <div class="box" style="font-size: 1.05em; line-height: 1.5;">
+          <p style="margin: 8px 0;">Il suo volo arriva puntuale l'80% delle volte: $P(A) = 0.80$</p>
+          <p class="fragment" style="margin: 8px 0;">Il tabellone annuncia: <strong>decollato con un'ora di ritardo</strong> ($B$)</p>
+          <p class="fragment" style="margin: 8px 0;">La puntualità crolla: <span class="warning">$P(A \mid B) \approx 0.05$</span></p>
+        </div>
+        <p class="subtitle fragment">Un'informazione parziale ha cambiato la probabilità. Come?</p>
+      </section>
+
+      <!-- Atto I • La probabilità condizionata come zoom (scena animata: js/atto1.js) -->
+      <section id="zoom">
+        <h2 class="scene-title">Condizionare significa zoomare</h2>
+        <div class="scene-grid zoom-grid">
+          <div>
+            <svg class="scene-svg" width="700" height="460" viewBox="0 0 700 460" role="img" aria-label="Zoom sull'evento B, che diventa il nuovo spazio campionario">
+              <defs>
+                <clipPath id="zm-frame"><rect width="700" height="460" rx="18"/></clipPath>
+                <circle id="zm-a"/>
+                <circle id="zm-b"/>
+                <mask id="zm-out-b" maskUnits="userSpaceOnUse" x="-100" y="-100" width="900" height="660">
+                  <rect x="-100" y="-100" width="900" height="660" fill="#fff"/><use href="#zm-b" fill="#000"/>
+                </mask>
+              </defs>
+              <g clip-path="url(#zm-frame)">
+                <g class="zm-world">
+                  <rect class="omega" x="20" y="20" width="660" height="420" rx="16"/>
+                  <use class="set set-a" href="#zm-a"/>
+                  <path class="zm-b-fill"/>
+                  <path class="zm-lens"/>
+                  <path class="zm-arc"/>
+                  <rect class="zm-void" x="20" y="20" width="660" height="420" rx="16" mask="url(#zm-out-b)"/>
+                  <text class="zm-void-lbl" x="660" y="418" text-anchor="end">fuori da B: impossibile, P = 0</text>
+                  <path class="zm-b-line"/>
+                </g>
+              </g>
+              <rect class="zm-frame" x="0.75" y="0.75" width="698.5" height="458.5" rx="18"/>
+              <text class="math-lbl zm-lbl-omega" x="44" y="68">Ω</text>
+              <text class="math-lbl it zm-lbl-a">A</text>
+              <text class="math-lbl it zm-lbl-b">B</text>
+              <text class="math-lbl zm-lbl-lens"><tspan class="it">A</tspan> ∩ <tspan class="it">B</tspan></text>
+              <text class="math-lbl zm-lbl-rest"><tspan class="it">A</tspan><tspan class="sup" dy="-14">c</tspan><tspan dy="14"> ∩ </tspan><tspan class="it">B</tspan></text>
+              <text class="zm-pct zm-pct-lens">60%</text>
+              <text class="zm-pct zm-pct-rest">40%</text>
+              <text class="zm-lbl-new" x="44" y="68"><tspan class="it">B</tspan> = nuovo Ω</text>
+            </svg>
+            <p class="scene-legend">
+              <span><span class="sw sw-a"></span>$P(A) = 0.30$</span>
+              <span><span class="sw sw-b"></span>$P(B) = 0.10$</span>
+              <span><span class="sw sw-ab"></span>$P(A \cap B) = 0.06$</span>
+            </p>
+          </div>
+          <div class="scene-panel">
+            <ol class="scene-steps">
+              <li>Sappiamo che $B$ è accaduto: tutto ciò che sta fuori da $B$ diventa <strong>impossibile</strong>.</li>
+              <li><strong>Zoom</strong> su $B$: il resto di $\Omega$ non conta più.</li>
+              <li>Dentro $B$, l'evento $A$ può verificarsi solo come $A \cap B$.</li>
+              <li><strong>$B$ diventa il nuovo $\Omega$:</strong> ora $P(B \mid B) = 1$, quindi ogni area si divide per $P(B)$.</li>
+            </ol>
+            <div class="scene-def">
+              $$P(A \mid B) = \frac{\color{#38ef7d} P(A \cap B)}{\color{#fbbf24} P(B)} = \frac{0.06}{0.10} = 0.60$$
+            </div>
+            <p class="scene-note">L'informazione ha <strong>raddoppiato</strong> la probabilità di $A$: da $0.30$ a $0.60$.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto I • Il mazzo da 52 e, sotto, la lettura frequentista (js/atto1-condizionata.js) -->
+      <section>
+        <section id="mazzo">
+          <h2 class="scene-title">Zoom nel discreto: il mazzo da 52</h2>
+          <div class="scene-grid wide">
+            <svg class="scene-svg" width="700" height="416" viewBox="0 0 740 440" role="img" aria-label="Le 52 carte: la colonna degli assi e la riga dei cuori"></svg>
+            <div class="scene-panel">
+              <p class="scene-lead">Si pesca una carta: $A$ = «è un asso», $B$ = «è di cuori».</p>
+              <ol class="scene-steps">
+                <li>Senza informazioni: $P(A) = 4/52 = 1/13$.</li>
+                <li>Qualcuno rivela: <strong>è di cuori</strong>. Le altre 39 carte diventano impossibili.</li>
+                <li>Dentro $B$ c'è un solo asso su 13: $P(A \mid B) = |A \cap B| \,/\, |B| = 1/13$.</li>
+                <li>Con la formula: $\dfrac{P(A \cap B)}{P(B)} = \dfrac{1/52}{13/52} = \dfrac{1}{13}$</li>
+              </ol>
+              <p class="scene-note">Qui l'informazione non ha cambiato nulla: $P(A \mid B) = P(A)$. È l'<strong>indipendenza</strong>, tra poco.</p>
+            </div>
+          </div>
+        </section>
+        <section id="frequentista">
+          <h2 class="scene-title">Due strade, la stessa definizione</h2>
+          <div class="scene-grid">
+            <svg class="scene-svg" width="560" height="440" viewBox="0 0 560 440" role="img" aria-label="520 carte pescate: i cuori evidenziati, l'asso di cuori in verde"></svg>
+            <div class="scene-panel">
+              <p class="scene-lead"><strong>Classica</strong> (Laplace): si contano i casi favorevoli dentro $B$.</p>
+              <div class="scene-def">$$P(A \mid B) = \frac{|A \cap B|}{|B|} = \frac{1}{13} \approx 0.077$$</div>
+              <p class="scene-lead fq-freq"><strong>Frequentista</strong> (Venn, von Mises): si ripete la pesca e si tengono solo le prove in cui è uscito cuori.</p>
+              <p class="fq-live"><b class="fq-n">0</b> pescate · $\#B$ = <b class="fq-b">0</b> · $\#(A \cap B)$ = <b class="fq-ab">0</b> · rapporto <b class="fq-r">—</b></p>
+              <div class="scene-def fq-def">$$\frac{\#(A \cap B)}{\#B} = \frac{\#(A \cap B)/N}{\#B/N} \;\longrightarrow\; \frac{P(A \cap B)}{P(B)}$$</div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- Atto I • La regola del prodotto (scena animata: js/atto1-condizionata.js) -->
+      <section id="prodotto">
+        <h2 class="scene-title">La regola del prodotto</h2>
+        <p class="scene-lead pr-top">Dalla definizione di condizionata: $\;P(A \cap B) = P(B)\,P(A \mid B) = P(A)\,P(B \mid A)$</p>
+        <div class="pr-grid">
+          <div>
+            <svg class="scene-svg" width="560" height="350" viewBox="0 0 560 370" role="img" aria-label="Albero delle due estrazioni senza reimmissione"></svg>
+            <p class="pr-cap">Due assi di fila, senza reimmissione</p>
+          </div>
+          <div>
+            <svg class="scene-svg" width="560" height="350" viewBox="0 0 560 370" role="img" aria-label="La pipeline di rilascio come zoom successivi"></svg>
+            <p class="pr-cap">Pipeline di rilascio: compilazione $M$, analisi statica $D$, test finali $T$</p>
+          </div>
+        </div>
+        <div class="scene-def pr-chain">$$P(A_1 \cap \dots \cap A_n) = P(A_1)\,P(A_2 \mid A_1) \cdots P(A_n \mid A_1 \cap \dots \cap A_{n-1})$$</div>
+      </section>
+
+      <!-- Atto I • Indipendenza (scena animata: js/atto1-condizionata.js) -->
+      <section id="indipendenza">
+        <h2 class="scene-title">Indipendenza stocastica</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="600" height="440" viewBox="0 0 600 440" role="img" aria-label="Le strisce di A e B nel quadrato Omega, poi il caso dei voli"></svg>
+          <div class="scene-panel">
+            <ol class="scene-steps">
+              <li>$A$ occupa il 40% di $\Omega$: $P(A) = 0.40$.</li>
+              <li>$B$ è la metà inferiore: $P(A \cap B) = 0.40 \cdot 0.50 = 0.20$.</li>
+              <li>Zoom su $B$: dentro $B$, $A$ occupa ancora il 40%. Sapere $B$ non cambia nulla: $P(A \mid B) = P(A)$.</li>
+              <li>Voli: decollo puntuale $P(D) = 0.90$, arrivo puntuale $P(A) = 0.80$, entrambi $0.75 \neq 0.72 = P(A)\,P(D)$.</li>
+            </ol>
+            <div class="scene-def">$A$ e $B$ sono <strong>indipendenti</strong> se $\;P(A \cap B) = P(A)\,P(B)$</div>
+            <p class="scene-note">Il bordo di $A$ ha un gradino: dentro $D$ l'arrivo puntuale è più probabile, $P(A \mid D) \approx 0.833 > 0.80$. Dipendenza positiva.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto I • Il trabocchetto (scena animata e interattiva: js/atto1-condizionata.js) -->
+      <section id="trabocchetto">
+        <h2 class="scene-title">Il trabocchetto: disgiunti non vuol dire indipendenti</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="620" height="440" viewBox="0 0 620 440" role="img" aria-label="Due eventi A e B; B si può trascinare"></svg>
+          <div class="scene-panel">
+            <div class="tb-meter">
+              <p class="tb-row"><span>$P(A \cap B)$</span><span class="tb-bar"><i class="tb-fill tb-ab"></i></span><b class="tb-v tb-vab">0.050</b></p>
+              <p class="tb-row"><span>$P(A)\,P(B)$</span><span class="tb-bar"><i class="tb-fill tb-prod"></i></span><b class="tb-v">0.050</b></p>
+              <p class="tb-row"><span>$P(B \mid A)$</span><span class="tb-bar"><i class="tb-fill tb-cond"></i></span><b class="tb-v tb-vcond">0.200</b></p>
+              <p class="tb-row"><span>$P(B)$</span><span class="tb-bar"><i class="tb-fill tb-pb"></i></span><b class="tb-v">0.200</b></p>
+            </div>
+            <p class="tb-badge">indipendenti</p>
+            <p class="scene-note">Se so che è successo $A$, so con certezza che $B$ non è successo: $P(B \mid A) = 0$. Due eventi disgiunti con probabilità positiva non sono <strong>mai</strong> indipendenti.</p>
+            <p class="tb-hint">Trascina $B$ con il mouse.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto I • Affidabilità (scena animata e interattiva: js/atto1-condizionata.js) -->
+      <section id="affidabilita">
+        <h2 class="scene-title">Ingegneria della resilienza: parallelo e serie</h2>
+        <div class="rl-grid">
+          <div class="rl-col">
+            <h3>Parallelo: la ridondanza</h3>
+            <svg class="scene-svg rl-svg" width="560" height="300" viewBox="0 0 560 300" role="img" aria-label="Disco e backup in parallelo"></svg>
+            <div class="rl-par-out"><p class="rl-f rl-par-f"></p><p class="rl-r rl-par-r"></p></div>
+            <p class="rl-ctrl">backup <button class="psi-btn ghost" type="button" data-sys="backup" data-step="-1">−</button> <b class="rl-n-par">2</b> <button class="psi-btn ghost" type="button" data-sys="backup" data-step="1">+</button></p>
+          </div>
+          <div class="rl-col">
+            <h3>Serie: l'anello debole</h3>
+            <svg class="scene-svg rl-svg" width="560" height="300" viewBox="0 0 560 300" role="img" aria-label="Moduli in serie"></svg>
+            <div class="rl-ser-out"><p class="rl-f rl-ser-f"></p><p class="rl-r rl-ser-r"></p></div>
+            <p class="rl-ctrl">moduli <button class="psi-btn ghost" type="button" data-sys="moduli" data-step="-1">−</button> <b class="rl-n-ser">3</b> <button class="psi-btn ghost" type="button" data-sys="moduli" data-step="1">+</button></p>
+          </div>
+        </div>
+        <p class="scene-note rl-note">In parallelo ogni backup in più migliora il sistema; in serie ogni modulo in più lo peggiora.</p>
+      </section>
+
+      <!-- Atto I • La rivelazione (scena animata: js/atto1-condizionata.js) -->
+      <section id="rivelazione">
+        <h2 class="scene-title">La rivelazione: un contenitore vuoto</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="700" height="440" viewBox="0 0 700 440" role="img" aria-label="Gli assiomi come un contenitore da riempire"></svg>
+          <div class="scene-panel rv-panel">
+            <img src="img/kolmogorov.jpg" class="author-photo rv-photo" alt="Andrej Kolmogorov">
+            <p class="rv-quote">«Una grammatica perfetta.<br><span class="warning">Senza vocabolario.»</span></p>
+            <p class="scene-note">Gli assiomi dicono come le probabilità si sommano, si moltiplicano e si condizionano. Non dicono <strong>che cosa misurano</strong> nel mondo reale.</p>
+          </div>
+        </div>
       </section>
 
       <!-- Slide 6: Il bivio -->
@@ -178,6 +693,62 @@
           <p style="font-size: 1.05em; color: #edf2f7; margin-bottom: 8px;"><strong>Principio di Indifferenza:</strong> in assenza di prove, tutti gli esiti sono equiprobabili ($1/N$).</p>
           <p style="font-size: 0.95em; color: #a0aec0; margin: 0;">Nel determinismo newtoniano il caso non esiste: misura solo la nostra ignoranza.<br><span style="color: #fc8181;">Limite: collassa negli spazi continui (Paradosso di Bertrand).</span></p>
         </div>
+      </section>
+
+      <!-- Atto III • Il paradosso di Bertrand (scena animata: js/atto3.js) -->
+      <section id="bertrand">
+        <h2 class="scene-title">Il paradosso di Bertrand (1889)</h2>
+        <p class="bt-question">Si traccia una corda <em>a caso</em>: con che probabilità è più lunga del lato $\ell = R\sqrt{3}$ del triangolo inscritto?</p>
+        <p class="bt-legend"><span class="bt-key bt-key-long"></span>più lunga di $\ell$ <span class="bt-key bt-key-short"></span>più corta</p>
+        <div class="bt-grid">
+          <div class="bt-panel">
+            <svg class="scene-svg bt-svg" width="270" height="270" viewBox="0 0 300 300" role="img" aria-label="Metodo 1: estremi casuali">
+              <g class="bt-chords"></g>
+              <circle class="bt-circle" cx="150" cy="150" r="125"/>
+              <polygon class="bt-tri" points="150,25 258.25,212.5 41.75,212.5"/>
+              <g class="bt-hint">
+                <path class="bt-good" d="M258.25,212.5 A125,125 0 0 1 41.75,212.5"/>
+                <circle class="bt-pin" cx="150" cy="25" r="7"/>
+              </g>
+            </svg>
+            <h3>1 · Estremi casuali</h3>
+            <p class="bt-how">Un estremo fisso, l'altro uniforme sulla circonferenza: conta l'arco verde</p>
+            <p class="bt-freq"><span class="bt-num">—</span><span class="bt-theory">$\to 1/3$</span></p>
+            <p class="bt-count">0 corde</p>
+          </div>
+          <div class="bt-panel">
+            <svg class="scene-svg bt-svg" width="270" height="270" viewBox="0 0 300 300" role="img" aria-label="Metodo 2: raggio casuale">
+              <g class="bt-chords"></g>
+              <circle class="bt-circle" cx="150" cy="150" r="125"/>
+              <polygon class="bt-tri" points="150,25 258.25,212.5 41.75,212.5"/>
+              <g class="bt-hint">
+                <line class="bt-good" x1="150" y1="150" x2="212.5" y2="150"/>
+                <line class="bt-bad" x1="212.5" y1="150" x2="275" y2="150"/>
+                <circle class="bt-pin" cx="150" cy="150" r="6"/>
+              </g>
+            </svg>
+            <h3>2 · Raggio casuale</h3>
+            <p class="bt-how">Punto medio uniforme lungo un raggio: conta la metà interna</p>
+            <p class="bt-freq"><span class="bt-num">—</span><span class="bt-theory">$\to 1/2$</span></p>
+            <p class="bt-count">0 corde</p>
+          </div>
+          <div class="bt-panel">
+            <svg class="scene-svg bt-svg" width="270" height="270" viewBox="0 0 300 300" role="img" aria-label="Metodo 3: punto medio casuale">
+              <g class="bt-chords"></g>
+              <circle class="bt-circle" cx="150" cy="150" r="125"/>
+              <polygon class="bt-tri" points="150,25 258.25,212.5 41.75,212.5"/>
+              <g class="bt-hint">
+                <circle class="bt-ring" cx="150" cy="150" r="62.5"/>
+                <circle class="bt-pin" cx="150" cy="150" r="6"/>
+              </g>
+            </svg>
+            <h3>3 · Punto medio casuale</h3>
+            <p class="bt-how">Punto medio uniforme nel disco: conta il cerchio interno</p>
+            <p class="bt-freq"><span class="bt-num">—</span><span class="bt-theory">$\to 1/4$</span></p>
+            <p class="bt-count">0 corde</p>
+          </div>
+        </div>
+        <p class="bt-verdict">Tre ragionamenti ineccepibili, tre risposte diverse: il Principio di Indifferenza non dice <em>quale</em> uniformità scegliere, e nel continuo «a caso» non ha un significato unico.</p>
       </section>
 
       <!-- Slide 8: Autore — Bruno de Finetti -->
@@ -282,20 +853,12 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+  <script src="js/scene.js"></script>
+  <script src="js/atto1-insiemi.js"></script>
+  <script src="js/atto1-assiomi.js"></script>
+  <script src="js/atto1-condizionata.js"></script>
+  <script src="js/atto3.js"></script>
   <script>
-    Reveal.initialize({
-      width: 1280,
-      height: 720,
-      margin: 0.04,
-      controls: true,
-      progress: true,
-      center: true,
-      hash: true,
-      plugins: [ RevealMath.KaTeX ]
-    });
-
     function runCoinSimulation() {
       var canvas = document.getElementById('coinCanvas');
       if (!canvas) return;
@@ -379,17 +942,48 @@
       }
     }
 
-    // Esegui la prima volta e aggancia agli eventi
-    Reveal.on('ready', function() {
-      runCoinSimulation();
-      var btn = document.getElementById('btnRerunCoin');
-      if (btn) btn.addEventListener('click', runCoinSimulation);
-    });
+    psiLoad([
+      'reveal.js@5.1.0/dist/reveal.js',
+      'katex@0.18.9/dist/katex.min.js',
+      'katex@0.18.9/dist/contrib/auto-render.min.js',
+      'gsap@3.15.0/dist/gsap.min.js'
+    ]).then(function () {
+      renderMathInElement(document.querySelector('.reveal .slides'), {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\(', right: '\\)', display: false },
+          { left: '\\[', right: '\\]', display: true }
+        ],
+        throwOnError: false
+      });
+      PSI.buildScenes();
 
-    Reveal.on('slidechanged', function(event) {
-      if (event.currentSlide && event.currentSlide.id === 'slide-simulazione') {
+      Reveal.initialize({
+        width: 1280,
+        height: 720,
+        margin: 0.04,
+        controls: true,
+        progress: true,
+        center: true,
+        hash: true,
+        // Nell'export PDF ogni scena animata è una pagina sola, nello stato finale.
+        pdfSeparateFragments: false
+      });
+
+      // Esegui la prima volta e aggancia agli eventi
+      Reveal.on('ready', function() {
+        PSI.bindScenes(Reveal);
         runCoinSimulation();
-      }
+        var btn = document.getElementById('btnRerunCoin');
+        if (btn) btn.addEventListener('click', runCoinSimulation);
+      });
+
+      Reveal.on('slidechanged', function(event) {
+        if (event.currentSlide && event.currentSlide.id === 'slide-simulazione') {
+          runCoinSimulation();
+        }
+      });
     });
   </script>
 </body>

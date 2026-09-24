@@ -54,6 +54,7 @@ Ogni singola esecuzione dell'esperimento produce **uno e uno solo** degli esiti 
 ### 2. Spazio Campionario ($\Omega$) e la casistica dei regimi di cardinalità
 
 Lo **spazio campionario** (o spazio campione), indicato universalmente con la lettera greca maiuscola $\Omega$, è l'insieme di tutti i possibili esiti di un esperimento aleatorio:
+
 $$
 \Omega = \{\omega_1, \omega_2, \dots\}
 $$
@@ -66,16 +67,18 @@ Vediamo una casistica fondamentale di esempi per apprezzarne la varietà:
 * **Esempio 1 (Discreto finito elementare — Il mazzo ridotto):**  
   Abbiamo 3 carte coperte sul tavolo: una Regina ($Q$), un Re ($K$) e un Fante ($J$). L'esperimento consiste nel pescarne una.  
   Lo spazio campione è:
-  $$
-  \Omega = \{Q, K, J\} \quad (|\Omega| = 3)
-  $$
+
+$$
+\Omega = \{Q, K, J\} \quad (|\Omega| = 3)
+$$
 
 * **Esempio 2 (Esperimento composto con reimmissione — Prodotto cartesiano):**  
   Ripetiamo l'esperimento precedente estraendo due carte in successione con reimmissione (peschiamo una carta, annotiamo l'esito, la rimettiamo nel mazzo, mescoliamo e ripeschiamo).  
   Ogni esito è ora una coppia ordinata di carte:
-  $$
-  \Omega = \{QQ, QK, QJ, KQ, KK, KJ, JQ, JK, JJ\} \quad (|\Omega| = 3 \times 3 = 9)
-  $$
+
+$$
+\Omega = \{QQ, QK, QJ, KQ, KK, KJ, JQ, JK, JJ\} \quad (|\Omega| = 3 \times 3 = 9)
+$$
 
 * **Esempio 3 (Discreto infinito numerabile — La pianificazione familiare):**  
   Una coppia decide di continuare ad avere figli finché non nasce, in sequenza temporale, una femmina ($G$) seguita subito da un maschio ($B$).  
@@ -86,18 +89,20 @@ Vediamo una casistica fondamentale di esempi per apprezzarne la varietà:
   2. Non contiene alcuna altra occorrenza di $GB$ prima della fine.  
   
   Alcuni esiti possibili sono:
-  $$
-  \Omega = \{GB, BGB, BBGB, GGB, BGGB, \dots, \underbrace{BB\dots B}_{k\text{ volte}}GB, \dots\}
-  $$
+
+$$
+\Omega = \{GB, BGB, BBGB, GGB, BGGB, \dots, \underbrace{BB\dots B}_{k\text{ volte}}GB, \dots\}
+$$
 
   C'è un limite inferiore alla lunghezza della sequenza (almeno 2 figli: $GB$), ma **non c'è alcun limite superiore**. La stringa può essere arbitrariamente lunga. Questo dimostra un principio cardine: **gli spazi campionari non devono necessariamente essere finiti per essere matematicamente trattabili**.
 
 * **Esempio 4 (Continuo non numerabile — Il tempo di attesa o la misura fisica):**  
   Misuriamo il tempo $T$ (in secondi) che intercorre prima che un server web riceva la prossima richiesta HTTP, oppure l'angolo $\theta$ a cui si ferma una freccia su una ruota della fortuna.  
   In questo caso gli esiti non possono essere elencati uno ad uno, ma formano un intervallo continuo:
-  $$
-  \Omega = [0, +\infty) \quad \text{oppure} \quad \Omega = [0, 2\pi)
-  $$
+
+$$
+\Omega = [0, +\infty) \quad \text{oppure} \quad \Omega = [0, 2\pi)
+$$
 
   Qui la cardinalità di $\Omega$ è continua (la potenza del continuo $|\mathbb{R}|$).
 
@@ -114,7 +119,7 @@ Un **evento** è un insieme di esiti, ovvero un **sottoinsieme dello spazio camp
 
 #### Operazioni fondamentali tra eventi e Diagrammi di Venn
 
-Nel 1888, il logico e filosofo britannico **John Venn** (che ritroveremo presto come uno dei massimi alfieri del polo ontico della probabilità) formalizzò l'uso di diagrammi geometrici piani per rappresentare le relazioni logiche tra insiemi. Poiché gli eventi sono sottoinsiemi di $\Omega$, le operazioni fondamentali della teoria degli insiemi corrispondono esattamente ai connettivi logici dell'informatica:
+Nel 1888, il logico e filosofo britannico **John Venn** (che ritroveremo presto come uno dei massimi alfieri del polo ontico della probabilità) formalizzò l'uso di diagrammi geometrici piani per rappresentare le relazioni logiche tra insiemi. Le operazioni fondamentali della teoria degli insiemi corrispondono esattamente ai connettivi logici dell'informatica:
 
 ![Operazioni insiemistiche e diagrammi di Venn (Unione, Intersezione, Complemento, Differenza)](../assets/img/1-probabilita/intro_cell17.png)
 
@@ -122,18 +127,19 @@ Nel 1888, il logico e filosofo britannico **John Venn** (che ritroveremo presto 
 | :--- | :--- | :--- | :--- | :--- |
 | **Unione** (Fig. 2.1a) | $A \cup B$ | $\{ \omega \in \Omega \mid \omega \in A \lor \omega \in B \}$ | `A OR B` | $A$ *oppure* $B$ (almeno uno dei due) |
 | **Intersezione** (Fig. 2.1b) | $A \cap B$ | $\{ \omega \in \Omega \mid \omega \in A \land \omega \in B \}$ | `A AND B` | $A$ *e* $B$ (entrambi contemporaneamente) |
-| **Complemento** (Fig. 2.1c) | $\overline{A}$ o $A^c$ | $\{ \omega \in \Omega \mid \omega \notin A \} = \Omega \setminus A$ | `NOT A` | *non* $A$ (tutto tranne $A$) |
+| **Complemento** (Fig. 2.1c) | $\overline{A}$ oppure $A^c$ | $\{ \omega \in \Omega \mid \omega \notin A \} = \Omega \setminus A$ | `NOT A` | *non* $A$ (tutto tranne $A$) |
 | **Differenza** (Fig. 2.1d) | $A \setminus B$ | $\{ \omega \in \Omega \mid \omega \in A \land \omega \notin B \} = A \cap B^c$ | `A AND NOT B` | $A$ *ma non* $B$ |
 
 * **Unione ($A \cup B$):** Si verifica se si verifica $A$ *oppure* $B$ (cioè se l'esito appartiene ad almeno uno dei due insiemi).
 * **Intersezione ($A \cap B$):** Si verifica se si verifica sia $A$ sia $B$ (l'esito appartiene contemporaneamente a entrambi). Se $A \cap B = \emptyset$, gli eventi si dicono *mutualmente esclusivi* o *disgiunti* (incompatibili).
-* **Complemento ($\bar{A}$ o $A^c = \Omega \setminus A$):** Si verifica se e solo se $A$ *non* si verifica.
-* **Differenza ($A \setminus B$ o $A \cap B^c$):** Si verifica se si verifica $A$ *ma non* $B$.
+* **Complemento ($\bar{A}$ oppure $A^c = \Omega \setminus A$):** Si verifica se e solo se $A$ *non* si verifica.
+* **Differenza ($A \setminus B$ oppure $A \cap B^c$):** Si verifica se si verifica $A$ *ma non* $B$.
 * **Eventi Esaustivi:** Una famiglia di eventi è detta esaustiva se la loro unione copre l'intero spazio campionario ($A \cup B \cup \dots = \Omega$): almeno uno di essi si verifica con assoluta certezza. Se sono anche a due a due disgiunti, formano una *partizione* di $\Omega$.
 
 #### Proprietà algebriche e Leggi di De Morgan
 
 Le operazioni tra eventi godono delle note proprietà algebriche di commutatività e associatività, nonché della **proprietà distributiva**:
+
 $$
 A \cap (B \cup C) = (A \cap B) \cup (A \cap C)
 $$
@@ -160,7 +166,7 @@ $$
 
 ### 4. La Famiglia degli Eventi: La $\sigma$-algebra ($\mathcal{F}$)
 
-Non sempre possiamo limitarci a prendere "qualsiasi" sottoinsieme. Quando lo spazio campionario è continuo (come la retta reale $\mathbb{R}$ o l'intervallo $[0, 1]$), considerare arbitrariamente tutti i possibili sottoinsiemi genera paradossi insolubili nella teoria della misura (esistenza di insiemi non misurabili, come nella costruzione di Vitali o nel paradosso di Banach-Tarski, dove una sfera può essere scomposta in un numero finito di pezzi e riassemblata in due sfere identiche alla prima).
+Quando parliamo di eventi, non sempre possiamo limitarci a prendere "qualsiasi" sottoinsieme. Quando lo spazio campionario è continuo (come la retta reale $\mathbb{R}$ o l'intervallo $[0, 1]$), considerare arbitrariamente tutti i possibili sottoinsiemi genera qualche difficoltà dal punto di vista matematico.
 
 Si richiede quindi che la collezione $\mathcal{F}$ degli eventi a cui possiamo sensatamente associare una probabilità sia una **$\sigma$-algebra** su $\Omega$, cioè una famiglia di sottoinsiemi di $\Omega$ chiusa rispetto alle operazioni logiche fondamentali:
 
@@ -169,7 +175,7 @@ Si richiede quindi che la collezione $\mathcal{F}$ degli eventi a cui possiamo s
 3. **Chiusura rispetto all'unione numerabile:** Se $A_1, A_2, A_3, \dots \in \mathcal{F}$, allora $\bigcup_{i=1}^\infty A_i \in \mathcal{F}$.
 
 * **Esempio minimale (Degenere):** La più piccola $\sigma$-algebra possibile contiene solo l'evento certo e l'evento impossibile: $\mathcal{F}_{\min} = \{\emptyset, \Omega\}$.
-* **Esempio massimale (Insieme delle parti):** Negli spazi discreti finiti con $|\Omega| = N$, la $\sigma$-algebra coincide quasi sempre con l'intero insieme delle parti: $\mathcal{F} = \mathcal{P}(\Omega) = 2^\Omega$, contenente $2^N$ eventi.
+* **Esempio massimale (Insieme delle parti):** Negli spazi discreti **finiti** con $|\Omega| = N$, una $\sigma$-algebra molto usata è l'intero insieme delle parti: $\mathcal{F} = \mathcal{P}(\Omega) = 2^\Omega$, contenente $2^N$ eventi.
 
 ---
 
@@ -180,19 +186,23 @@ Dati uno spazio campionario $\Omega$ e una $\sigma$-algebra $\mathcal{F}$ di eve
 Kolmogorov fissò tre soli assiomi categorici:
 
 1. **Non-negatività:** Per qualsiasi evento $A \in \mathcal{F}$, la probabilità è non negativa:
-   $$
-   P(A) \ge 0
-   $$
+
+$$
+P(A) \ge 0
+$$
 
 2. **Normalizzazione:** La probabilità dell'evento certo è pari a uno:
-   $$
-   P(\Omega) = 1
-   $$
+
+$$
+P(\Omega) = 1
+$$
 
 3. **$\sigma$-additività (Additività numerabile):** Se una sequenza di eventi $A_1, A_2, A_3, \dots$ è disgiunta a due a due ($A_i \cap A_j = \emptyset$ per ogni $i \neq j$), allora la probabilità dell'unione numerabile è la somma delle singole probabilità:
-   $$
-   P\left(\bigcup_{i=1}^\infty A_i\right) = \sum_{i=1}^\infty P(A_i)
-   $$
+
+
+$$
+P\left(\bigcup_{i=1}^\infty A_i\right) = \sum_{i=1}^\infty P(A_i)
+$$
 
 La terna $(\Omega, \mathcal{F}, P)$ prende il nome di **spazio di probabilità**.
 
@@ -204,11 +214,13 @@ Tutte le leggi del calcolo probabilistico derivano deduttivamente da questi tre 
 
 #### A. Probabilità dell'evento impossibile
 L'evento vuoto ha probabilità rigorosamente nulla:
+
 $$
 P(\emptyset) = 0
 $$
 
 *Dimostrazione:* Poiché $\Omega$ e $\emptyset$ sono disgiunti ($\Omega \cap \emptyset = \emptyset$) e la loro unione è $\Omega \cup \emptyset = \Omega$, applichiamo l'assioma di additività:
+
 $$
 P(\Omega) = P(\Omega \cup \emptyset) = P(\Omega) + P(\emptyset)
 $$
@@ -217,11 +229,13 @@ Sottraendo $P(\Omega)$ da entrambi i membri otteniamo immediatamente $P(\emptyse
 
 #### B. La regola del complementare
 Per qualunque evento $A$, la probabilità che non si verifichi è pari a uno meno la probabilità che si verifichi:
+
 $$
 P(A^c) = 1 - P(A)
 $$
 
 *Dimostrazione:* Per definizione, $A$ e $A^c$ sono disgiunti ($A \cap A^c = \emptyset$) e la loro unione ricopre l'intero spazio ($A \cup A^c = \Omega$). Dunque:
+
 $$
 \begin{aligned}
 P(\Omega) = P(A \cup A^c) = P(A) + P(A^c) &\implies 1 = P(A) + P(A^c) \\
@@ -241,6 +255,7 @@ Consideriamo questo scenario reale:
 > Qual è la probabilità che si verifichi un disservizio il lunedì **oppure** il martedì?
 
 Se applicassimo ciecamente l'additività, sommeremmo:
+
 $$
 0.70 + 0.50 = 1.20 \quad (\text{IMPOSSIBILE!})
 $$
@@ -251,6 +266,7 @@ Dobbiamo quindi sottrarre la sovrapposizione:
 
 !!! note "La Conseguenza Regina (Formula di inclusione-esclusione a 2 eventi)"
     Per due eventi qualsiasi $A$ e $B$:
+
     $$
     P(A \cup B) = P(A) + P(B) - P(A \cap B)
     $$
@@ -258,12 +274,14 @@ Dobbiamo quindi sottrarre la sovrapposizione:
     Se e solo se gli eventi sono disgiunti ($A \cap B = \emptyset$), il termine sottratto si annulla: $P(A \cup B) = P(A) + P(B)$.
 
 Se nell'esempio precedente la probabilità di guasto contemporaneo in entrambi i giorni è $P(L \cap M) = 0.35$, la probabilità corretta di avere almeno un guasto è:
+
 $$
 P(L \cup M) = 0.70 + 0.50 - 0.35 = 0.85 \quad (85\%)
 $$
 
 #### Estensione a tre eventi (Inclusione-Esclusione)
 Se consideriamo tre eventi $A, B, C$:
+
 $$
 \begin{aligned}
 P(A \cup B \cup C) &= P(A) + P(B) + P(C) \\
@@ -317,7 +335,7 @@ print(f"Formula regina: 0.70 + 0.50 - 0.35 = {0.70 + 0.50 - 0.35:.2f} <-- Perfet
 ```
 </div>
 
-La simulazione non conosce gli assiomi: conta semplicemente le settimane in cui si è verificato almeno un allarme. L'esperimento conferma in modo inequivocabile che il valore converge a $0.85$, dimostrando fisicamente la necessità di sottrarre la sovrapposizione.
+La simulazione non conosce gli assiomi: conta semplicemente le settimane in cui si è verificato almeno un allarme. L'esperimento conferma in modo inequivocabile che il valore converge a $0.85$.
 
 ---
 

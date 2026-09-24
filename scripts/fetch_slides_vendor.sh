@@ -2,7 +2,8 @@
 # Scarica in docs/assets/vendor/ le librerie usate dalle slide (reveal.js,
 # KaTeX, GSAP...), così le lezioni funzionano anche senza rete in aula.
 #
-# Le versioni non sono scritte qui: lo script cerca nelle slide i riferimenti
+# Le versioni non sono scritte qui: lo script cerca nelle slide e in
+# docs/assets/slides/deck.js i riferimenti
 # della forma "nome@x.y.z/dist/" e scarica dal registry npm ogni pacchetto
 # citato. La cartella è esclusa da git; dove manca (per esempio sul sito
 # pubblicato) le slide ripiegano sul CDN jsdelivr con le stesse versioni.

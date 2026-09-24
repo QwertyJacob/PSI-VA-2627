@@ -340,30 +340,181 @@
       .addLabel('s2');
   });
 
-  // ── La regola del prodotto: albero delle estrazioni e pipeline a catena ──
-  PSI.scene('prodotto', function (el, tl) {
-    var q = PSI.q(el), boards = q.all('svg'), tree = boards[0], pipe = boards[1];
+  // Etichetta matematica in SVG da una stringa compatta: A, B, C in corsivo
+  // (e nel loro colore), _x pedice, ^x apice. Esempio: 'P(A_2 | A_1^c) = 3/51'.
+  function mathText(parent, x, y, source, cls, attrs) {
+    var node = text(parent, x, y, '', cls, attrs);
+    var COLORS = { A: 'lbl-a', B: 'lbl-b', C: 'lbl-c' };
+    var shift = 0, colored = !!(attrs && attrs.colored);
+    if (colored) node.removeAttribute('colored');
+    function span(content, css, dy) {
+      var t = svg('tspan', { 'class': css || null, dy: dy || null }, node);
+      t.textContent = content;
+    }
+    for (var i = 0; i < source.length; i++) {
+      var ch = source[i];
+      if ((ch === '_' || ch === '^') && i + 1 < source.length) {
+        var d = ch === '_' ? 5 : -8;
+        span(source[++i], 'mt-small', d - shift);
+        shift = d;
+      } else {
+        var css = /[ABC]/.test(ch) ? 'it' + (colored ? ' ' + COLORS[ch] : '') : null;
+        span(ch, css, shift ? -shift : null);
+        shift = 0;
+      }
+    }
+    return node;
+  }
 
-    // Albero delle due estrazioni senza reimmissione.
-    var NODE = { r: [40, 185], a: [230, 95], na: [230, 275], aa: [410, 50], ana: [410, 140], naa: [410, 230], nana: [410, 320] };
-    var EDGE = [['r', 'a', '4/52', 118, 128], ['r', 'na', '48/52', 118, 258], ['a', 'aa', '3/51', 304, 58],
-      ['a', 'ana', '48/51', 312, 144], ['na', 'naa', '4/51', 304, 238], ['na', 'nana', '47/51', 312, 322]];
-    var branch = {}, probs = [];
+  // ── La regola del prodotto: l'albero delle due estrazioni ──
+  PSI.scene('prodotto', function (el, tl) {
+    var q = PSI.q(el), tree = q.one('svg');
+    var steps = q.all('.scene-steps li'), calc = q.all('.pr-line');
+    var NODE = { r: [46, 220], a: [250, 120], na: [250, 320], aa: [520, 58], ana: [520, 182], naa: [520, 258], nana: [520, 382] };
+    // Rami: da, a, etichetta, posizione dell'etichetta.
+    var EDGE = [
+      ['r', 'a', 'P(A_1) = 4/52', 128, 146], ['r', 'na', 'P(A_1^c) = 48/52', 128, 306],
+      ['a', 'aa', 'P(A_2 | A_1) = 3/51', 382, 74], ['a', 'ana', 'P(A_2^c | A_1) = 48/51', 392, 184],
+      ['na', 'naa', 'P(A_2 | A_1^c) = 4/51', 382, 274], ['na', 'nana', 'P(A_2^c | A_1^c) = 47/51', 392, 384]
+    ];
+    // Zone del condizionamento: dentro A₁ (e dentro A₁ᶜ) il mazzo è cambiato.
+    var zoneA = svg('rect', { x: 226, y: 22, width: 404, height: 196, rx: 16, 'class': 'pr-zone' }, tree);
+    var zoneNA = svg('rect', { x: 226, y: 222, width: 404, height: 196, rx: 16, 'class': 'pr-zone' }, tree);
+    var zoneLbl = [
+      text(tree, 616, 44, 'dentro A₁: restano 51 carte, 3 assi', 'pr-zone-lbl', { 'text-anchor': 'end' }),
+      text(tree, 616, 410, 'dentro A₁ᶜ: restano 51 carte, 4 assi', 'pr-zone-lbl', { 'text-anchor': 'end' })
+    ];
+    var branch = {}, labels = {};
     EDGE.forEach(function (e) {
       branch[e[1]] = svg('line', { x1: NODE[e[0]][0], y1: NODE[e[0]][1], x2: NODE[e[1]][0], y2: NODE[e[1]][1], 'class': 'tr-branch' }, tree);
-      probs.push(text(tree, e[3], e[4], e[2], 'tr-p', { 'text-anchor': 'middle' }));
+      labels[e[1]] = mathText(tree, e[3], e[4], e[2], 'tr-p', { 'text-anchor': 'middle' });
     });
     var dot = {};
     Object.keys(NODE).forEach(function (k) { dot[k] = svg('circle', { cx: NODE[k][0], cy: NODE[k][1], r: 7, 'class': 'tr-node' }, tree); });
-    var names = [
-      text(tree, 220, 78, 'asso', 'tr-name', { 'text-anchor': 'end' }),
-      text(tree, 220, 302, 'non asso', 'tr-name', { 'text-anchor': 'end' }),
-      text(tree, 422, 56, 'asso', 'tr-name'), text(tree, 422, 146, 'non asso', 'tr-name'),
-      text(tree, 422, 236, 'asso', 'tr-name'), text(tree, 422, 326, 'non asso', 'tr-name')
-    ];
-    var product = text(tree, 300, 22, '1/13 · 1/17 = 1/221 ≈ 0.0045', 'tr-prod', { 'text-anchor': 'middle' });
+    var leaves = [['aa', '1/221'], ['ana', '16/221'], ['naa', '16/221'], ['nana', '188/221']].map(function (l) {
+      return text(tree, NODE[l[0]][0] + 16, NODE[l[0]][1] + 6, l[1], 'tr-leaf');
+    });
 
-    // Pipeline: ogni fase tiene una frazione di ciò che resta, come zoom successivi.
+    var first = [branch.a, branch.na, labels.a, labels.na, dot.a, dot.na];
+    var second = [branch.aa, branch.ana, branch.naa, branch.nana, labels.aa, labels.ana, labels.naa, labels.nana,
+      dot.aa, dot.ana, dot.naa, dot.nana];
+    gsap.set([first, second, zoneA, zoneNA, zoneLbl, leaves, calc, q.one('.scene-note')], { opacity: 0 });
+    gsap.set(steps, { opacity: 0.25 });
+    tl.addLabel('s0');
+
+    // 1. Primo livello: probabilità semplici.
+    tl.to(steps[0], { opacity: 1, duration: 0.4 })
+      .to(first, { opacity: 1, duration: 0.5, stagger: 0.05 }, '<0.2')
+      .addLabel('s1');
+
+    // 2. Secondo livello: su ogni ramo una probabilità condizionata.
+    tl.to(steps[1], { opacity: 1, duration: 0.4 })
+      .to([zoneA, zoneLbl[0]], { opacity: 1, duration: 0.5 }, '<0.2')
+      .to([branch.aa, branch.ana, labels.aa, labels.ana, dot.aa, dot.ana], { opacity: 1, duration: 0.5 })
+      .to([zoneNA, zoneLbl[1]], { opacity: 1, duration: 0.5 }, '+=0.4')
+      .to([branch.naa, branch.nana, labels.naa, labels.nana, dot.naa, dot.nana], { opacity: 1, duration: 0.5 })
+      .addLabel('s2');
+
+    // 3. Lungo il percorso «asso, asso» le probabilità si moltiplicano.
+    tl.to(steps[2], { opacity: 1, duration: 0.4 })
+      .to([zoneA, zoneNA, zoneLbl], { opacity: 0.35, duration: 0.4 }, '<')
+      .to([branch.a, branch.aa, dot.r, dot.a, dot.aa], { stroke: '#38ef7d', duration: 0.5 }, '<')
+      .to([branch.a, branch.aa], { strokeWidth: 5, duration: 0.5 }, '<')
+      .to([dot.r, dot.a, dot.aa], { fill: '#38ef7d', duration: 0.5 }, '<')
+      .to([labels.a, labels.aa], { fill: '#38ef7d', duration: 0.5 }, '<');
+    calc.forEach(function (line) { tl.to(line, { opacity: 1, duration: 0.45 }, '+=0.35'); });
+    tl.to(leaves[0], { opacity: 1, duration: 0.4 })
+      .addLabel('s3');
+
+    // 4. Le quattro foglie sono una partizione: sommano a 1.
+    tl.to(steps[3], { opacity: 1, duration: 0.4 })
+      .to(leaves.slice(1), { opacity: 1, duration: 0.4, stagger: 0.2 }, '<0.2')
+      .to(q.one('.scene-note'), { opacity: 1, duration: 0.5 })
+      .addLabel('s4');
+  });
+
+  // ── La regola a catena: per tre eventi, 3! = 6 ordini equivalenti ──
+  PSI.scene('catena', function (el, tl) {
+    var q = PSI.q(el), root = q.one('svg');
+    var ORDERS = ['ABC', 'BAC', 'CAB', 'ACB', 'BCA', 'CBA'];
+    var COLOR = { A: '#38bdf8', B: '#fbbf24', C: '#c084fc' };
+    function sorted(a, b) { return a < b ? a + ' ∩ ' + b : b + ' ∩ ' + a; }
+    function factors(o) { return ['P(' + o[0] + ')', 'P(' + o[1] + ' | ' + o[0] + ')', 'P(' + o[2] + ' | ' + sorted(o[0], o[1]) + ')']; }
+
+    // Formule in colonna, rese con KaTeX.
+    var list = q.one('.ct-list'), rows = [];
+    function tex(s) { return s.replace(/[ABC]/g, function (c) { return '\\textcolor{' + COLOR[c] + '}{' + c + '}'; }).replace(/∩/g, '\\cap ').replace(/\|/g, '\\mid '); }
+    ORDERS.forEach(function (o) {
+      var li = document.createElement('li');
+      katex.render(tex(factors(o).join(' \\cdot ')), li, { throwOnError: false });
+      list.appendChild(li);
+      rows.push(li);
+    });
+
+    // A sinistra: tre gettoni che si mettono in fila nell'ordine di condizionamento.
+    var SLOT = [90, 250, 410];
+    text(root, 250, 34, 'ordine in cui si condiziona', 'cap-lbl', { 'text-anchor': 'middle' });
+    svg('line', { x1: SLOT[0] + 40, y1: 100, x2: SLOT[1] - 40, y2: 100, 'class': 'ct-arrow' }, root);
+    svg('line', { x1: SLOT[1] + 40, y1: 100, x2: SLOT[2] - 40, y2: 100, 'class': 'ct-arrow' }, root);
+    var tokens = {};
+    ['A', 'B', 'C'].forEach(function (c) {
+      var g = svg('g', {}, root);
+      svg('circle', { cx: 0, cy: 100, r: 34, 'class': 'ct-token', stroke: COLOR[c] }, g);
+      text(g, 0, 111, c, 'math-lbl it', { 'text-anchor': 'middle', fill: COLOR[c] });
+      tokens[c] = g;
+    });
+    var boxes = [0, 1, 2].map(function (i) {
+      svg('rect', { x: SLOT[i] - 72, y: 170, width: 144, height: 56, rx: 12, 'class': 'ct-box' }, root);
+      return svg('g', {}, root);
+    });
+    var times = text(root, 170, 206, '·', 'ct-dot', { 'text-anchor': 'middle' });
+    var times2 = text(root, 330, 206, '·', 'ct-dot', { 'text-anchor': 'middle' });
+    var total = mathText(root, 250, 300, '= P(A ∩ B ∩ C)', 'ct-total', { 'text-anchor': 'middle', colored: true });
+    var counter = text(root, 250, 360, '', 'ct-count', { 'text-anchor': 'middle' });
+
+    var st = { k: 0 };
+    function render() {
+      var step = Math.floor(st.k + 1e-6), k = Math.min(5, step), o = ORDERS[k], f = factors(o);
+      boxes.forEach(function (b, i) {
+        while (b.firstChild) b.removeChild(b.firstChild);
+        mathText(b, SLOT[i], 206, f[i], 'ct-factor', { 'text-anchor': 'middle', colored: true });
+      });
+      counter.textContent = step > 5 ? 'tutti e 6 gli ordini: stesso risultato' : 'ordine ' + (k + 1) + ' di 6';
+      rows.forEach(function (r, i) {
+        r.classList.toggle('on', step <= 5 && i === k);
+        r.classList.toggle('seen', step > 5 || i < k);
+      });
+    }
+    ['A', 'B', 'C'].forEach(function (c, i) { gsap.set(tokens[c], { x: SLOT[i] }); });
+    render();
+
+    gsap.set([root.children, q.one('.ct-list'), q.one('.scene-note')], { opacity: 0 });
+    tl.to(root.children, { opacity: 1, duration: 0.5 })
+      .to(q.one('.ct-list'), { opacity: 1, duration: 0.5 }, '<')
+      .addLabel('s0');
+
+    function toOrder(k, at, dur) {
+      var o = ORDERS[k];
+      o.split('').forEach(function (c, i) { tl.to(tokens[c], { x: SLOT[i], duration: dur, ease: 'power2.inOut' }, at); });
+      tl.to(st, { k: k, duration: 0.01, onUpdate: render }, at + dur * 0.5);
+    }
+    // 1. Scambiando i primi due si ottiene la seconda scomposizione.
+    toOrder(1, tl.duration() + 0.1, 0.9);
+    tl.addLabel('s1');
+    // 2. Le altre quattro, una dopo l'altra.
+    var t = tl.duration();
+    [2, 3, 4, 5].forEach(function (k, i) { toOrder(k, t + 0.1 + i * 1.3, 0.8); });
+    tl.addLabel('s2');
+    // 3. Sono tutte uguali: si sceglie quella per cui si hanno i dati.
+    tl.to(st, { k: 6, duration: 0.01, onUpdate: render })
+      .to(q.one('.scene-note'), { opacity: 1, duration: 0.5 })
+      .addLabel('s3');
+  });
+
+  // ── La pipeline di rilascio: la regola a catena come zoom successivi ──
+  PSI.scene('pipeline', function (el, tl) {
+    var q = PSI.q(el), pipe = q.one('svg');
+    var steps = q.all('.scene-steps li');
     var P = { x: 30, y: 40, w: 500, h: 300 };
     svg('rect', { x: P.x, y: P.y, width: P.w, height: P.h, 'class': 'pp-base' }, pipe);
     var cuts = [
@@ -379,45 +530,23 @@
       text(pipe, P.x + 0.8775 * P.w, P.y - 10, 'T ✗ 5%', 'pp-lbl', { 'text-anchor': 'middle' })
     ];
     var count = text(pipe, P.x + 0.4275 * P.w, P.y + 0.40 * P.h + 14, '1000', 'pp-count', { 'text-anchor': 'middle' });
-    var countLbl = text(pipe, P.x + 0.4275 * P.w, P.y + 0.40 * P.h + 44, 'release', 'pp-lbl', { 'text-anchor': 'middle' });
-    var formula = text(pipe, 280, 365, '0.90 × 0.80 × 0.95 = 0.684', 'pp-formula', { 'text-anchor': 'middle' });
+    text(pipe, P.x + 0.4275 * P.w, P.y + 0.40 * P.h + 44, 'release', 'pp-lbl', { 'text-anchor': 'middle' });
     var VALUES = [1000, 900, 720, 684];
     var st = { k: 0 };
     function render() { count.textContent = VALUES[Math.floor(st.k + 1e-6)]; }
     render();
 
-    var path = [branch.a, branch.aa, dot.r, dot.a, dot.aa];
-    gsap.set([Object.keys(branch).map(function (k) { return branch[k]; }), probs, names, product,
-      ['a', 'na', 'aa', 'ana', 'naa', 'nana'].map(function (k) { return dot[k]; }),
-      cuts, keep, cutLbl, formula, q.one('.pr-chain')], { opacity: 0 });
+    gsap.set([cuts, keep, cutLbl, q.one('.scene-def')], { opacity: 0 });
+    gsap.set(steps, { opacity: 0.25 });
     tl.addLabel('s0');
-
-    // 1. L'albero cresce.
-    tl.to([branch.a, branch.na, probs[0], probs[1]], { opacity: 1, duration: 0.5 })
-      .to([dot.a, dot.na, names[0], names[1]], { opacity: 1, duration: 0.4 }, '<0.3')
-      .to([branch.aa, branch.ana, branch.naa, branch.nana, probs.slice(2)], { opacity: 1, duration: 0.5 })
-      .to([dot.aa, dot.ana, dot.naa, dot.nana, names.slice(2)], { opacity: 1, duration: 0.4 }, '<0.3')
-      .addLabel('s1');
-
-    // 2. Il percorso «asso, asso»: le probabilità lungo il ramo si moltiplicano.
-    tl.to(path, { stroke: '#38ef7d', duration: 0.5 })
-      .to([branch.a, branch.aa], { strokeWidth: 5, duration: 0.5 }, '<')
-      .to([dot.r, dot.a, dot.aa], { fill: '#38ef7d', duration: 0.5 }, '<')
-      .to(product, { opacity: 1, duration: 0.5 })
-      .addLabel('s2');
-
-    // 3. La pipeline: 1000 release, poi 900, 720, 684.
-    var t = tl.duration();
     cuts.forEach(function (cut, i) {
-      var at = t + i * 1.1;
-      tl.to([cut, cutLbl[i]], { opacity: 1, duration: 0.5 }, at)
-        .to(st, { k: i + 1, duration: 0.01, onUpdate: render }, at + 0.3);
+      tl.to(steps[i], { opacity: 1, duration: 0.4 })
+        .to([cut, cutLbl[i]], { opacity: 1, duration: 0.5 }, '<')
+        .to(st, { k: i + 1, duration: 0.01, onUpdate: render }, '<0.3')
+        .addLabel('s' + (i + 1));
     });
     tl.to(keep, { opacity: 1, duration: 0.5 })
-      .to(formula, { opacity: 1, duration: 0.5 }, '<')
-      .addLabel('s3');
-
-    tl.to(q.one('.pr-chain'), { opacity: 1, duration: 0.5 })
+      .to(q.one('.scene-def'), { opacity: 1, duration: 0.5 }, '<')
       .addLabel('s4');
   });
 
@@ -442,22 +571,9 @@
     var lblNew = text(root, X + S - 16, Y + 44, 'B = nuovo Ω', 'zm-lbl-new halo', { 'text-anchor': 'end' });
     var lblFrac = text(root, X + 0.20 * S, Y + S / 2 + 10, '40% di B', 'band-num halo', { 'text-anchor': 'middle' });
 
-    // Seconda parte: i voli. D striscia (0.90); A ha un gradino sul bordo di D.
-    var part2 = svg('g', {}, root);
-    var hA = 0.75 / 0.90, hOut = 0.05 / 0.10; // frazione di A dentro D e fuori da D
-    svg('rect', { x: X, y: Y, width: 0.90 * S, height: S, 'class': 'band-m' }, part2);
-    svg('path', { d: 'M' + X + ',' + (Y + (1 - hA) * S) + ' H' + (X + 0.90 * S) + ' V' + (Y + (1 - hOut) * S) +
-      ' H' + (X + S) + ' V' + (Y + S) + ' H' + X + ' Z', 'class': 'band-l' }, part2);
-    svg('line', { x1: X, y1: Y + 0.20 * S, x2: X + S, y2: Y + 0.20 * S, 'class': 'ind-ref' }, part2);
-    text(part2, X + 16, Y + 40, 'D', 'math-lbl it lbl-b halo');
-    text(part2, X + 16, Y + S - 20, 'A', 'math-lbl it lbl-a halo');
-    text(part2, X + 0.45 * S, Y + 0.20 * S + 30, 'confine di A se fosse indipendente (0.80)', 'ind-ref-lbl halo', { 'text-anchor': 'middle' });
-    text(part2, X + 0.45 * S, Y + 0.62 * S, 'A ∩ D = 0.75', 'band-num halo', { 'text-anchor': 'middle' });
-    text(part2, X + 0.45 * S, Y + 0.62 * S + 30, 'invece di 0.72', 'ind-ref-lbl halo', { 'text-anchor': 'middle' });
-
     svg('rect', { x: X, y: Y, width: S, height: S, rx: 4, 'class': 'omega' }, root);
 
-    gsap.set([stripA, stripB, both, outside, lblA, lblB, lblBoth, lblNew, lblFrac, part2,
+    gsap.set([stripA, stripB, both, outside, lblA, lblB, lblBoth, lblNew, lblFrac,
       q.one('.scene-def'), q.one('.scene-note')], { opacity: 0 });
     gsap.set(steps, { opacity: 0.25 });
     gsap.set(stretch, { svgOrigin: (X + S / 2) + ' ' + (Y + S) });
@@ -481,10 +597,8 @@
       .to(q.one('.scene-def'), { opacity: 1, duration: 0.5 }, '<')
       .addLabel('s3');
 
-    // 4. I voli: il bordo di A ha un gradino, quindi A e D sono dipendenti.
+    // 4. I voli: un controesempio numerico, solo nel pannello.
     tl.to(steps[3], { opacity: 1, duration: 0.4 })
-      .to([part1, lblA, lblNew, lblFrac], { opacity: 0, duration: 0.5 }, '<')
-      .to(part2, { opacity: 1, duration: 0.6 })
       .to(q.one('.scene-note'), { opacity: 1, duration: 0.5 }, '<0.3')
       .addLabel('s4');
   });
@@ -587,10 +701,11 @@
       wire(root, 'M390,150 H514', ok);
       for (var k = 0; k < n; k++) {
         var y = 150 + (k - (n - 1) / 2) * 52, up = k >= failed;
-        wire(root, 'M170,150 V' + y + ' H210', up);
-        wire(root, 'M350,' + y + ' H390 V150', up);
-        svg('rect', { x: 210, y: y - 19, width: 140, height: 38, rx: 8, 'class': 'comp' + (up ? '' : ' down') }, root);
-        text(root, 280, y + 6, (k === 0 ? 'disco' : 'backup ' + k) + (up ? '' : '  ✗'), 'comp-lbl', { 'text-anchor': 'middle' });
+        wire(root, 'M170,150 V' + y + ' H192', up);
+        wire(root, 'M368,' + y + ' H390 V150', up);
+        svg('rect', { x: 192, y: y - 20, width: 176, height: 40, rx: 8, 'class': 'comp' + (up ? '' : ' down') }, root);
+        var lbl = text(root, 280, y + 6, (k === 0 ? 'disco' : 'backup ' + k) + (up ? '' : ' ✗') + '  ', 'comp-lbl', { 'text-anchor': 'middle' });
+        svg('tspan', { 'class': 'comp-q-in' }, lbl).textContent = 'q = ' + (k === 0 ? '0.01' : '0.02');
       }
       ends(root, ok);
     }
@@ -602,9 +717,9 @@
       for (var k = 0; k < n; k++) {
         var x = 70 + k * slot + (slot - w) / 2, up = k !== broken;
         wire(root, 'M' + prev + ',150 H' + x, live);
-        svg('rect', { x: x, y: 131, width: w, height: 38, rx: 8, 'class': 'comp' + (up ? '' : ' down') }, root);
-        text(root, x + w / 2, 156, 'M' + (k + 1) + (up ? '' : ' ✗'), 'comp-lbl', { 'text-anchor': 'middle' });
-        text(root, x + w / 2, 196, 'q = ' + Q_SERIE[k], 'comp-q', { 'text-anchor': 'middle' });
+        svg('rect', { x: x, y: 124, width: w, height: 52, rx: 8, 'class': 'comp' + (up ? '' : ' down') }, root);
+        text(root, x + w / 2, 146, 'M' + (k + 1) + (up ? '' : ' ✗'), 'comp-lbl', { 'text-anchor': 'middle' });
+        text(root, x + w / 2, 166, (w >= 70 ? 'q = ' : '') + Q_SERIE[k], 'comp-q-in', { 'text-anchor': 'middle' });
         if (!up) live = false;
         prev = x + w;
       }

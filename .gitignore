@@ -7,3 +7,7 @@ __pycache__/
 
 # librerie delle slide scaricate in locale (npm run vendor)
 docs/assets/vendor/
+
+# di .claude/ si versionano solo le skill del progetto
+.claude/*
+!.claude/skills/

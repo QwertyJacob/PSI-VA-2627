@@ -1,0 +1,219 @@
+/*
+ * Stile comune delle scene animate di tutte le settimane.
+ * Motore: scene.js; avvio del mazzo: deck.js. Le regole di una singola
+ * scena stanno in css/settimana.css della settimana.
+ */
+
+:root {
+  /* Colori fissi per tutto il mazzo, ripresi anche nelle formule KaTeX. */
+  --psi-a: #38bdf8;
+  --psi-b: #fbbf24;
+  --psi-c: #c084fc;
+  --psi-sel: #38ef7d;
+  --psi-omega: #cbd5e0;
+  --psi-void: #06080c;
+  --psi-text: #edf2f7;
+  --psi-muted: #a0aec0;
+}
+/* ── Impaginazione comune ── */
+.reveal .scene-title {
+  font-size: 1.45em;
+  font-weight: 700;
+  margin: 0 0 18px;
+}
+.reveal .scene-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 36px;
+  align-items: center;
+  text-align: left;
+}
+.reveal .scene-svg {
+  display: block;
+}
+/* Formule un po' più grandi del default di KaTeX (1.21em), in tutto il mazzo. */
+.reveal .katex {
+  font-size: 1.34em;
+}
+/* Una formula inline non va mai spezzata su due righe. */
+.reveal .scene-grid .katex,
+.reveal .bt-panel .katex {
+  white-space: nowrap;
+}
+/* ── Elementi SVG ── */
+.reveal .scene-svg text {
+  font-family: KaTeX_Main, 'Times New Roman', serif;
+  fill: var(--psi-text);
+}
+.reveal .scene-svg .it {
+  font-family: KaTeX_Math, 'Times New Roman', serif;
+  font-style: italic;
+}
+.reveal .scene-svg .math-lbl {
+  font-size: 36px;
+}
+.reveal .scene-svg .omega {
+  fill: rgba(255, 255, 255, 0.025);
+  stroke: rgba(203, 213, 224, 0.55);
+  stroke-width: 2px;
+}
+.reveal .scene-svg .set {
+  stroke-width: 3.5px;
+}
+.reveal .scene-svg .set-a {
+  fill: rgba(56, 189, 248, 0.08);
+  stroke: var(--psi-a);
+}
+.reveal .scene-svg .set-b {
+  fill: rgba(251, 191, 36, 0.08);
+  stroke: var(--psi-b);
+}
+.reveal .scene-svg .lbl-a {
+  fill: var(--psi-a);
+}
+.reveal .scene-svg .lbl-b {
+  fill: var(--psi-b);
+}
+.reveal .scene-svg .region {
+  fill: var(--psi-sel);
+}
+.reveal .scene-svg .sup {
+  font-size: 22px;
+}
+.reveal .scene-legend {
+  display: flex;
+  justify-content: center;
+  gap: 26px;
+  margin: 12px 0 0;
+  font-size: 0.6em;
+}
+.reveal .scene-legend .sw {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  margin-right: 8px;
+  vertical-align: -1px;
+}
+.reveal .sw-a { background: var(--psi-a); }
+.reveal .sw-b { background: var(--psi-b); }
+.reveal .sw-ab { background: var(--psi-sel); }
+.reveal .scene-panel {
+  font-size: 0.64em;
+}
+.reveal .scene-panel .scene-steps {
+  display: block;
+  list-style: none;
+  counter-reset: scene-step;
+  margin: 0;
+  padding: 0;
+}
+.reveal .scene-steps li {
+  counter-increment: scene-step;
+  position: relative;
+  padding-left: 48px;
+  margin: 0 0 16px;
+  line-height: 1.35;
+}
+.reveal .scene-steps li::before {
+  content: counter(scene-step);
+  position: absolute;
+  left: 0;
+  top: -2px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85em;
+  font-weight: 700;
+  color: var(--psi-b);
+  background: rgba(251, 191, 36, 0.16);
+}
+.reveal .scene-def {
+  border-left: 4px solid var(--psi-sel);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 2px 18px;
+  margin: 18px 0 12px;
+}
+.reveal .scene-def .katex-display {
+  margin: 0.5em 0;
+}
+.reveal .scene-note {
+  margin: 0;
+  color: var(--psi-muted);
+}
+/* ── Pannelli di testo comuni ── */
+.reveal .scene-lead {
+  margin: 0 0 12px;
+  line-height: 1.35;
+}
+.reveal .scene-quote {
+  margin: 0 0 18px;
+  padding-left: 14px;
+  border-left: 3px solid rgba(255, 255, 255, 0.25);
+  color: #cbd5e0;
+  font-style: italic;
+  line-height: 1.45;
+}
+@keyframes psi-flow {
+  to { stroke-dashoffset: -42; }
+}
+.reveal .scene-svg .good { fill: var(--psi-sel); }
+.reveal .scene-svg .bad { fill: #fc8181; }
+.reveal .scene-svg .math-lbl.small { font-size: 26px; }
+.reveal .scene-svg .light { fill: #edf2f7; }
+.reveal .scene-svg .set-c {
+  fill: rgba(192, 132, 252, 0.08);
+  stroke: var(--psi-c);
+}
+.reveal .scene-svg .lbl-c { fill: var(--psi-c); }
+.reveal .scene-svg .lbl-sel { fill: var(--psi-sel); }
+.reveal .scene-cards {
+  position: relative;
+  min-height: 140px;
+}
+.reveal .scene-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 12px 16px;
+  border-left: 4px solid var(--psi-sel);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  line-height: 1.4;
+}
+/* ── Scena: unione ── */
+.reveal .scene-grid.wide {
+  grid-template-columns: 700px 1fr;
+  gap: 34px;
+}
+.reveal .psi-btn {
+  background: #38ef7d;
+  color: #0f172a;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 0.85em;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+.reveal .psi-btn.ghost {
+  background: rgba(255, 255, 255, 0.08);
+  color: #edf2f7;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+}
+/* Alone scuro dietro il testo che attraversa linee o punti. */
+.reveal .scene-svg .halo {
+  paint-order: stroke;
+  stroke: #191919;
+  stroke-width: 6px;
+  stroke-linejoin: round;
+}

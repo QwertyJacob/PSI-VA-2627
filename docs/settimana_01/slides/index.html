@@ -4,40 +4,8 @@
   <meta charset="utf-8">
   <title>PSI 26/27 — Settimana 1: Che cos'è la probabilità?</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script>
-    // Le librerie si caricano dalla copia locale in assets/vendor (npm run vendor,
-    // esclusa da git), così le slide funzionano senza rete. Se la copia manca,
-    // come sul sito pubblicato, ogni file ripiega sulla stessa versione dal CDN.
-    var PSI_VENDOR = '../../assets/vendor/';
-    var PSI_CDN = 'https://cdn.jsdelivr.net/npm/';
-
-    function psiCdn(link) {
-      link.onerror = null;
-      link.href = PSI_CDN + link.getAttribute('href').slice(PSI_VENDOR.length);
-    }
-
-    function psiScript(src) {
-      return new Promise(function (resolve, reject) {
-        var s = document.createElement('script');
-        s.src = src;
-        s.onload = resolve;
-        s.onerror = function () { s.remove(); reject(new Error(src)); };
-        document.head.appendChild(s);
-      });
-    }
-
-    function psiLoad(paths) {
-      return paths.reduce(function (chain, path) {
-        return chain.then(function () {
-          return psiScript(PSI_VENDOR + path).catch(function () { return psiScript(PSI_CDN + path); });
-        });
-      }, Promise.resolve());
-    }
-  </script>
-  <link rel="stylesheet" href="../../assets/vendor/reveal.js@5.1.0/dist/reveal.css" onerror="psiCdn(this)">
-  <link rel="stylesheet" href="../../assets/vendor/reveal.js@5.1.0/dist/theme/black.css" onerror="psiCdn(this)">
-  <link rel="stylesheet" href="../../assets/vendor/katex@0.18.9/dist/katex.min.css" onerror="psiCdn(this)">
-  <link rel="stylesheet" href="css/scenes.css">
+  <script src="../../assets/slides/deck.js"></script>
+  <link rel="stylesheet" href="css/settimana.css">
   <style>
     :root {
       --r-main-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -579,21 +547,59 @@
         </section>
       </section>
 
-      <!-- Atto I • La regola del prodotto (scena animata: js/atto1-condizionata.js) -->
+      <!-- Atto I • La regola del prodotto: l'albero (scena animata: js/atto1-condizionata.js) -->
       <section id="prodotto">
         <h2 class="scene-title">La regola del prodotto</h2>
         <p class="scene-lead pr-top">Dalla definizione di condizionata: $\;P(A \cap B) = P(B)\,P(A \mid B) = P(A)\,P(B \mid A)$</p>
-        <div class="pr-grid">
-          <div>
-            <svg class="scene-svg" width="560" height="350" viewBox="0 0 560 370" role="img" aria-label="Albero delle due estrazioni senza reimmissione"></svg>
-            <p class="pr-cap">Due assi di fila, senza reimmissione</p>
-          </div>
-          <div>
-            <svg class="scene-svg" width="560" height="350" viewBox="0 0 560 370" role="img" aria-label="La pipeline di rilascio come zoom successivi"></svg>
-            <p class="pr-cap">Pipeline di rilascio: compilazione $M$, analisi statica $D$, test finali $T$</p>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="640" height="440" viewBox="0 0 640 440" role="img" aria-label="Albero delle due estrazioni senza reimmissione, con le probabilità condizionate sui rami"></svg>
+          <div class="scene-panel">
+            <p class="scene-lead">Due carte di fila, senza reimmissione. $A_i$ = «la carta $i$ è un asso».</p>
+            <ol class="scene-steps">
+              <li>Primo ramo: $P(A_1) = 4/52$.</li>
+              <li>Secondo livello: sui rami ci sono probabilità <strong>condizionate</strong>. Dentro $A_1$ restano 51 carte e 3 assi, quindi $P(A_2 \mid A_1) = 3/51$.</li>
+              <li>Lungo un percorso le probabilità si <strong>moltiplicano</strong>:</li>
+              <li>Le quattro foglie sono una partizione di $\Omega$.</li>
+            </ol>
+            <div class="scene-def pr-calc">
+              <p class="pr-line">$P(A_1 \cap A_2) = P(A_1) \cdot P(A_2 \mid A_1)$</p>
+              <p class="pr-line">$\qquad = \dfrac{4}{52} \cdot \dfrac{3}{51} = \dfrac{1}{13} \cdot \dfrac{1}{17}$</p>
+              <p class="pr-line">$\qquad = \dfrac{1}{221} \approx 0.0045$</p>
+            </div>
+            <p class="scene-note">Le foglie sommano a 1: $\frac{1 + 16 + 16 + 188}{221} = 1$.</p>
           </div>
         </div>
-        <div class="scene-def pr-chain">$$P(A_1 \cap \dots \cap A_n) = P(A_1)\,P(A_2 \mid A_1) \cdots P(A_n \mid A_1 \cap \dots \cap A_{n-1})$$</div>
+      </section>
+
+      <!-- Atto I • La regola a catena: 3! = 6 scomposizioni (scena animata: js/atto1-condizionata.js) -->
+      <section id="catena">
+        <h2 class="scene-title">La regola a catena: sei strade equivalenti</h2>
+        <div class="scene-def ct-general">$$P(A_1 \cap \dots \cap A_n) = P(A_1)\,P(A_2 \mid A_1) \cdots P(A_n \mid A_1 \cap \dots \cap A_{n-1})$$</div>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="500" height="380" viewBox="0 0 500 380" role="img" aria-label="Tre eventi messi in fila in tutti gli ordini possibili"></svg>
+          <div class="scene-panel">
+            <p class="scene-lead">L'intersezione è commutativa: per tre eventi l'ordine in cui si condiziona si può scegliere in $3! = 6$ modi.</p>
+            <ol class="ct-list"></ol>
+            <p class="scene-note">Il risultato è sempre $P(A \cap B \cap C)$: si usa la scomposizione per cui si hanno i dati condizionati (log, test).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto I • La pipeline di rilascio (scena animata: js/atto1-condizionata.js) -->
+      <section id="pipeline">
+        <h2 class="scene-title">La catena al lavoro: una pipeline di rilascio</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="560" height="370" viewBox="0 0 560 370" role="img" aria-label="La pipeline di rilascio come zoom successivi"></svg>
+          <div class="scene-panel">
+            <p class="scene-lead">Tre fasi in sequenza: compilazione $M$, analisi statica $D$, test finali $T$.</p>
+            <ol class="scene-steps">
+              <li>$P(M) = 0.90$: il 10% delle release non compila.</li>
+              <li>$P(D \mid M) = 0.80$: tra quelle compilate, l'80% supera l'analisi.</li>
+              <li>$P(T \mid M \cap D) = 0.95$: tra queste, il 95% supera i test.</li>
+            </ol>
+            <div class="scene-def">$$\begin{aligned} P(M \cap D \cap T) &= P(M)\,P(D \mid M)\,P(T \mid M \cap D) \\ &= 0.90 \cdot 0.80 \cdot 0.95 = 0.684 \end{aligned}$$</div>
+          </div>
+        </div>
       </section>
 
       <!-- Atto I • Indipendenza (scena animata: js/atto1-condizionata.js) -->
@@ -609,7 +615,7 @@
               <li>Voli: decollo puntuale $P(D) = 0.90$, arrivo puntuale $P(A) = 0.80$, entrambi $0.75 \neq 0.72 = P(A)\,P(D)$.</li>
             </ol>
             <div class="scene-def">$A$ e $B$ sono <strong>indipendenti</strong> se $\;P(A \cap B) = P(A)\,P(B)$</div>
-            <p class="scene-note">Il bordo di $A$ ha un gradino: dentro $D$ l'arrivo puntuale è più probabile, $P(A \mid D) \approx 0.833 > 0.80$. Dipendenza positiva.</p>
+            <p class="scene-note">Sapere che il volo è decollato in orario rende più probabile l'arrivo puntuale: $P(A \mid D) = 0.75 / 0.90 \approx 0.833 > 0.80$. Dipendenza positiva.</p>
           </div>
         </div>
       </section>
@@ -853,7 +859,7 @@
     </div>
   </div>
 
-  <script src="js/scene.js"></script>
+  <script src="../../assets/slides/scene.js"></script>
   <script src="js/atto1-insiemi.js"></script>
   <script src="js/atto1-assiomi.js"></script>
   <script src="js/atto1-condizionata.js"></script>
@@ -942,48 +948,17 @@
       }
     }
 
-    psiLoad([
-      'reveal.js@5.1.0/dist/reveal.js',
-      'katex@0.18.9/dist/katex.min.js',
-      'katex@0.18.9/dist/contrib/auto-render.min.js',
-      'gsap@3.15.0/dist/gsap.min.js'
-    ]).then(function () {
-      renderMathInElement(document.querySelector('.reveal .slides'), {
-        delimiters: [
-          { left: '$$', right: '$$', display: true },
-          { left: '$', right: '$', display: false },
-          { left: '\\(', right: '\\)', display: false },
-          { left: '\\[', right: '\\]', display: true }
-        ],
-        throwOnError: false
-      });
-      PSI.buildScenes();
-
-      Reveal.initialize({
-        width: 1280,
-        height: 720,
-        margin: 0.04,
-        controls: true,
-        progress: true,
-        center: true,
-        hash: true,
-        // Nell'export PDF ogni scena animata è una pagina sola, nello stato finale.
-        pdfSeparateFragments: false
-      });
-
-      // Esegui la prima volta e aggancia agli eventi
-      Reveal.on('ready', function() {
-        PSI.bindScenes(Reveal);
+    PSIDeck.start({
+      onReady: function (deck) {
         runCoinSimulation();
         var btn = document.getElementById('btnRerunCoin');
         if (btn) btn.addEventListener('click', runCoinSimulation);
-      });
-
-      Reveal.on('slidechanged', function(event) {
-        if (event.currentSlide && event.currentSlide.id === 'slide-simulazione') {
-          runCoinSimulation();
-        }
-      });
+        deck.on('slidechanged', function (event) {
+          if (event.currentSlide && event.currentSlide.id === 'slide-simulazione') {
+            runCoinSimulation();
+          }
+        });
+      }
     });
   </script>
 </body>

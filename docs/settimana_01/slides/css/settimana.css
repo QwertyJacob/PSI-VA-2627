@@ -1,83 +1,11 @@
-/* Scene animate delle slide (motore in js/scene.js, scene in js/atto*.js). */
+/* Scene della settimana 1. Le regole comuni sono in assets/slides/scenes.css. */
 
-:root {
-  /* Colori fissi per tutto il mazzo, ripresi anche nelle formule KaTeX. */
-  --psi-a: #38bdf8;
-  --psi-b: #fbbf24;
-  --psi-c: #c084fc;
-  --psi-sel: #38ef7d;
-  --psi-omega: #cbd5e0;
-  --psi-void: #06080c;
-  --psi-text: #edf2f7;
-  --psi-muted: #a0aec0;
-}
-
-/* ── Impaginazione comune ── */
-.reveal .scene-title {
-  font-size: 1.45em;
-  font-weight: 700;
-  margin: 0 0 18px;
-}
-.reveal .scene-grid {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 36px;
-  align-items: center;
-  text-align: left;
-}
-.reveal .scene-svg {
-  display: block;
-}
-/* Formule un po' più grandi del default di KaTeX (1.21em), in tutto il mazzo. */
-.reveal .katex {
-  font-size: 1.34em;
-}
-/* Una formula inline non va mai spezzata su due righe. */
-.reveal .scene-grid .katex,
-.reveal .bt-panel .katex {
-  white-space: nowrap;
-}
-
-/* ── Elementi SVG ── */
-.reveal .scene-svg text {
-  font-family: KaTeX_Main, 'Times New Roman', serif;
-  fill: var(--psi-text);
-}
-.reveal .scene-svg .it {
-  font-family: KaTeX_Math, 'Times New Roman', serif;
-  font-style: italic;
-}
-.reveal .scene-svg .math-lbl {
-  font-size: 36px;
-}
-.reveal .scene-svg .omega {
-  fill: rgba(255, 255, 255, 0.025);
-  stroke: rgba(203, 213, 224, 0.55);
-  stroke-width: 2px;
-}
-.reveal .scene-svg .set {
-  stroke-width: 3.5px;
-}
-.reveal .scene-svg .set-a {
-  fill: rgba(56, 189, 248, 0.08);
-  stroke: var(--psi-a);
-}
-.reveal .scene-svg .set-b {
-  fill: rgba(251, 191, 36, 0.08);
-  stroke: var(--psi-b);
-}
-.reveal .scene-svg .lbl-a,
 .reveal .scene-svg .zm-lbl-a {
   fill: var(--psi-a);
 }
-.reveal .scene-svg .lbl-b,
 .reveal .scene-svg .zm-lbl-b {
   fill: var(--psi-b);
 }
-.reveal .scene-svg .region {
-  fill: var(--psi-sel);
-}
-
 /* ── Scena: operazioni tra eventi ── */
 .reveal .op-panel {
   font-size: 0.72em;
@@ -133,7 +61,6 @@
   padding: 4px 14px;
   margin: 2px 0 14px;
 }
-
 /* ── Scena: zoom ── */
 .reveal .zoom-grid {
   grid-template-columns: 700px 1fr;
@@ -177,9 +104,6 @@
   text-anchor: middle;
   dominant-baseline: middle;
 }
-.reveal .scene-svg .sup {
-  font-size: 22px;
-}
 .reveal .scene-svg .zm-pct {
   font-family: var(--r-main-font);
   font-size: 26px;
@@ -187,72 +111,6 @@
   text-anchor: middle;
   dominant-baseline: middle;
 }
-.reveal .scene-legend {
-  display: flex;
-  justify-content: center;
-  gap: 26px;
-  margin: 12px 0 0;
-  font-size: 0.6em;
-}
-.reveal .scene-legend .sw {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
-  margin-right: 8px;
-  vertical-align: -1px;
-}
-.reveal .sw-a { background: var(--psi-a); }
-.reveal .sw-b { background: var(--psi-b); }
-.reveal .sw-ab { background: var(--psi-sel); }
-.reveal .scene-panel {
-  font-size: 0.64em;
-}
-.reveal .scene-panel .scene-steps {
-  display: block;
-  list-style: none;
-  counter-reset: scene-step;
-  margin: 0;
-  padding: 0;
-}
-.reveal .scene-steps li {
-  counter-increment: scene-step;
-  position: relative;
-  padding-left: 48px;
-  margin: 0 0 16px;
-  line-height: 1.35;
-}
-.reveal .scene-steps li::before {
-  content: counter(scene-step);
-  position: absolute;
-  left: 0;
-  top: -2px;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.85em;
-  font-weight: 700;
-  color: var(--psi-b);
-  background: rgba(251, 191, 36, 0.16);
-}
-.reveal .scene-def {
-  border-left: 4px solid var(--psi-sel);
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 2px 18px;
-  margin: 18px 0 12px;
-}
-.reveal .scene-def .katex-display {
-  margin: 0.5em 0;
-}
-.reveal .scene-note {
-  margin: 0;
-  color: var(--psi-muted);
-}
-
 /* ── Scena: paradosso di Bertrand ── */
 .reveal .bt-question {
   font-size: 0.78em;
@@ -356,21 +214,6 @@
 .reveal .bt-svg .bt-pin {
   fill: var(--psi-text);
 }
-
-/* ── Pannelli di testo comuni ── */
-.reveal .scene-lead {
-  margin: 0 0 12px;
-  line-height: 1.35;
-}
-.reveal .scene-quote {
-  margin: 0 0 18px;
-  padding-left: 14px;
-  border-left: 3px solid rgba(255, 255, 255, 0.25);
-  color: #cbd5e0;
-  font-style: italic;
-  line-height: 1.45;
-}
-
 /* ── Elementi SVG ricorrenti ── */
 .reveal .scene-svg .node {
   fill: rgba(255, 255, 255, 0.05);
@@ -390,9 +233,6 @@
 }
 .reveal .scene-svg .flow-a { stroke: var(--psi-a); }
 .reveal .scene-svg .flow-b { stroke: var(--psi-b); }
-@keyframes psi-flow {
-  to { stroke-dashoffset: -42; }
-}
 .reveal .scene-svg .flow-lbl {
   font-family: var(--r-main-font);
   font-size: 19px;
@@ -430,17 +270,6 @@
   font-size: 18px;
   font-weight: 700;
 }
-.reveal .scene-svg .good { fill: var(--psi-sel); }
-.reveal .scene-svg .bad { fill: #fc8181; }
-.reveal .scene-svg .math-lbl.small { font-size: 26px; }
-.reveal .scene-svg .light { fill: #edf2f7; }
-.reveal .scene-svg .set-c {
-  fill: rgba(192, 132, 252, 0.08);
-  stroke: var(--psi-c);
-}
-.reveal .scene-svg .lbl-c { fill: var(--psi-c); }
-.reveal .scene-svg .lbl-sel { fill: var(--psi-sel); }
-
 /* ── Scena: spazio campionario ── */
 .reveal .om-lead {
   text-align: center;
@@ -531,7 +360,6 @@
 }
 .reveal .scene-svg .needle-tip { fill: var(--psi-b); }
 .reveal .scene-svg .hub { fill: var(--psi-text); }
-
 /* ── Scena: eventi ── */
 .reveal .scene-svg .die {
   fill: #1f2937;
@@ -565,7 +393,6 @@
   font-weight: 800;
   fill: #0f172a;
 }
-
 /* ── Scene: De Morgan e distributiva ── */
 .reveal .dm-heads {
   display: grid;
@@ -614,7 +441,6 @@
   stroke-width: 2.2px;
 }
 .reveal .scene-svg .dm-eq { font-size: 64px; }
-
 /* ── Scena: σ-algebra ── */
 .reveal .scene-svg .hedge {
   stroke: rgba(203, 213, 224, 0.35);
@@ -644,23 +470,6 @@
   padding-left: 1.4em;
 }
 .reveal .sg-rules li { margin: 0 0 8px; }
-.reveal .scene-cards {
-  position: relative;
-  min-height: 140px;
-}
-.reveal .scene-card {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  margin: 0;
-  padding: 12px 16px;
-  border-left: 4px solid var(--psi-sel);
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  line-height: 1.4;
-}
-
 /* ── Scena: assiomi ── */
 .reveal .scene-svg .as-fill { fill: rgba(237, 242, 247, 0.12); }
 .reveal .scene-svg .as-blob {
@@ -687,7 +496,6 @@
   font-size: 1.05em;
   margin: 10px 0;
 }
-
 /* ── Scena: complementare e P(∅) = 0 ── */
 .reveal .scene-svg .cp-a { fill: rgba(56, 189, 248, 0.3); }
 .reveal .scene-svg .cp-c { fill: rgba(251, 191, 36, 0.3); }
@@ -717,12 +525,6 @@
 }
 .reveal .proof p { margin: 0 0 22px; }
 .reveal .proof .proof-end { color: var(--psi-sel); }
-
-/* ── Scena: unione ── */
-.reveal .scene-grid.wide {
-  grid-template-columns: 700px 1fr;
-  gap: 34px;
-}
 .reveal .scene-svg .band-l {
   fill: rgba(56, 189, 248, 0.22);
   stroke: var(--psi-a);
@@ -784,7 +586,6 @@
   font-size: 22px;
   font-weight: 700;
 }
-
 /* ── Scena: inclusione-esclusione ── */
 .reveal .scene-svg .ie-flash { fill: #edf2f7; }
 .reveal .scene-svg .ie-count {
@@ -803,7 +604,6 @@
 }
 .reveal .ie-lines { margin: 8px 0 16px; }
 .reveal .ie-line { margin: 0 0 8px; }
-
 /* ── Scena: Monte Carlo ── */
 .reveal .scene-svg .band-edge {
   stroke-width: 2px;
@@ -845,27 +645,6 @@
   gap: 10px;
   margin-top: 14px;
 }
-.reveal .psi-btn {
-  background: #38ef7d;
-  color: #0f172a;
-  border: none;
-  padding: 6px 14px;
-  border-radius: 14px;
-  font-family: inherit;
-  font-size: 0.85em;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-}
-.reveal .psi-btn.ghost {
-  background: rgba(255, 255, 255, 0.08);
-  color: #edf2f7;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  font-weight: 600;
-}
-
-/* Alone scuro dietro il testo che attraversa linee o punti. */
-.reveal .scene-svg .halo,
 .reveal .scene-svg .cp-facts {
   paint-order: stroke;
   stroke: #191919;
@@ -878,7 +657,6 @@
 }
 .reveal .mc-table td:last-child { color: var(--psi-muted); }
 .reveal .mc-key td:last-child { color: var(--psi-sel); }
-
 /* ── Scena: il mazzo da 52 ── */
 .reveal .scene-svg .deck-card rect {
   fill: #1f2937;
@@ -908,7 +686,6 @@
   stroke: var(--psi-b);
   stroke-width: 3px;
 }
-
 /* ── Scena: classica e frequentista ── */
 .reveal .scene-svg .fq-tile { opacity: 0.45; }
 .reveal .scene-svg .fq-tile rect { fill: #3a4252; }
@@ -925,7 +702,6 @@
 .reveal .scene-svg .fq-tile.hit .fq-ace { fill: #0f172a; }
 .reveal .fq-live { margin: 6px 0 12px; }
 .reveal .fq-live b { color: var(--psi-sel); }
-
 /* ── Scena: regola del prodotto ── */
 .reveal .pr-top {
   text-align: center;
@@ -990,7 +766,6 @@
   font-weight: 700;
   fill: var(--psi-sel);
 }
-
 /* ── Scena: indipendenza ── */
 .reveal .scene-svg .ind-ref {
   stroke: #fff;
@@ -1001,7 +776,6 @@
   font-family: var(--r-main-font);
   font-size: 16px;
 }
-
 /* ── Scena: il trabocchetto ── */
 .reveal .scene-svg .tb-lens { opacity: 0.55; }
 .reveal .scene-svg .tb-handle {
@@ -1050,7 +824,6 @@
   color: var(--psi-muted);
   margin: 8px 0 0;
 }
-
 /* ── Scena: affidabilità ── */
 .reveal .rl-grid {
   display: grid;
@@ -1131,7 +904,6 @@
   fill: var(--psi-muted);
 }
 .reveal .scene-svg .rl-end-lbl.bad { fill: #fc8181; }
-
 /* ── Scena: la rivelazione ── */
 .reveal .scene-svg .rv-box {
   fill: rgba(255, 255, 255, 0.04);
@@ -1181,4 +953,80 @@
   font-size: 1.5em;
   font-weight: 600;
   margin: 10px 0 14px;
+}
+
+/* Il foglio comune viene prima: qui il rosso va ribadito. */
+.reveal .scene-svg .junk-lbl.bad { fill: #fc8181; }
+
+/* ── Scena: albero della regola del prodotto ── */
+.reveal .scene-svg .pr-zone {
+  fill: rgba(251, 191, 36, 0.05);
+  stroke: rgba(251, 191, 36, 0.5);
+  stroke-width: 2px;
+  stroke-dasharray: 8 6;
+}
+.reveal .scene-svg .pr-zone-lbl {
+  font-family: var(--r-main-font);
+  font-size: 15px;
+  font-weight: 600;
+  fill: var(--psi-b);
+}
+.reveal .scene-svg .mt-small { font-size: 70%; }
+.reveal .scene-svg .tr-leaf {
+  font-family: var(--r-main-font);
+  font-size: 17px;
+  font-weight: 700;
+  fill: var(--psi-sel);
+}
+.reveal .scene-svg .tr-p { font-family: KaTeX_Main, serif; font-size: 19px; }
+.reveal .pr-calc p { margin: 4px 0; }
+
+/* ── Scena: regola a catena ── */
+.reveal .ct-general {
+  font-size: 0.62em;
+  max-width: 980px;
+  margin: 0 auto 10px;
+}
+.reveal .scene-panel .ct-list {
+  display: block;
+  margin: 8px 0 14px;
+  padding-left: 1.6em;
+}
+.reveal .ct-list li {
+  margin: 0 0 6px;
+  opacity: 0.3;
+  transition: opacity 0.3s;
+}
+.reveal .ct-list li.seen { opacity: 0.75; }
+.reveal .ct-list li.on { opacity: 1; }
+.reveal .ct-list li.on::marker { color: var(--psi-sel); }
+.reveal .scene-svg .ct-token {
+  fill: #1f2937;
+  stroke-width: 4px;
+}
+.reveal .scene-svg .ct-arrow {
+  stroke: var(--psi-muted);
+  stroke-width: 2px;
+  stroke-dasharray: 6 5;
+}
+.reveal .scene-svg .ct-box {
+  fill: rgba(255, 255, 255, 0.05);
+  stroke: rgba(203, 213, 224, 0.4);
+  stroke-width: 1.5px;
+}
+.reveal .scene-svg .ct-factor { font-size: 22px; }
+.reveal .scene-svg .ct-dot { font-size: 34px; }
+.reveal .scene-svg .ct-total { font-size: 30px; }
+.reveal .scene-svg .ct-count {
+  font-family: var(--r-main-font);
+  font-size: 18px;
+  fill: var(--psi-muted);
+}
+
+/* Probabilità di guasto dentro i blocchi dell'affidabilità. */
+.reveal .scene-svg .comp-q-in {
+  font-family: var(--r-main-font);
+  font-size: 15px;
+  font-weight: 700;
+  fill: var(--psi-b);
 }

@@ -381,6 +381,7 @@ Da qui discende la definizione universale:
 
 !!! note "Definizione (Probabilità Condizionata)"
     Dati due eventi $A$ e $B$ con $P(B) > 0$, la **probabilità condizionata di $A$ dato $B$** è:
+
     $$
     P(A \mid B) = \frac{P(A \cap B)}{P(B)}
     $$
@@ -388,27 +389,30 @@ Da qui discende la definizione universale:
 #### La convergenza tra interpretazione classica e frequentista
 
 * **Nel modello classico (Laplace):** Se gli esiti sono equiprobabili, contiamo i casi favorevoli:
-  $$
-  \begin{aligned}
-  P(A \mid B) &= \frac{\text{Numero di esiti favorevoli in } A \cap B}{\text{Numero totale di esiti possibili in } B} \\
-  &= \frac{|A \cap B|}{|B|}
-  \end{aligned}
-  $$
+
+$$
+\begin{aligned}
+P(A \mid B) &= \frac{\text{Numero di esiti favorevoli in } A \cap B}{\text{Numero totale di esiti possibili in } B} \\
+&= \frac{|A \cap B|}{|B|}
+\end{aligned}
+$$
 
 * **Nel modello frequentista (Venn, von Mises):** Se ripetiamo l'esperimento $N$ volte, filtriamo solo le prove in cui $B$ si è verificato (siano esse $\#B$). La frazione in cui si è verificato anche $A$ è:
-  $$
-  \begin{aligned}
-  P(A \mid B) &= \lim_{N \to \infty} \frac{\#(A \cap B)}{\#B} \\
-  &= \lim_{N \to \infty} \frac{\#(A \cap B) / N}{\#B / N} \\
-  &= \frac{P(A \cap B)}{P(B)}
-  \end{aligned}
-  $$
+
+$$
+\begin{aligned}
+P(A \mid B) &= \lim_{N \to \infty} \frac{\#(A \cap B)}{\#B} \\
+&= \lim_{N \to \infty} \frac{\#(A \cap B) / N}{\#B / N} \\
+&= \frac{P(A \cap B)}{P(B)}
+\end{aligned}
+$$
 
 *Esempio didattico (Il mazzo di 52 carte):*  
 Peschiamo una carta coperta. Sia $A$ l'evento "la carta è un Asso" e $B$ l'evento "la carta è di Cuori".  
 Senza informazioni: $P(A) = 4/52 = 1/13$.  
 Se qualcuno ci rivela che la carta è di Cuori ($B$): l'intersezione $A \cap B$ è solo l'Asso di Cuori ($P(A \cap B) = 1/52$), mentre $P(B) = 13/52 = 1/4$.  
 La probabilità condizionata è:
+
 $$
 P(A \mid B) = \frac{1/52}{13/52} = \frac{1}{13}
 $$
@@ -420,6 +424,7 @@ Il risultato coincide perfettamente con il buonsenso: tra le 13 carte di cuori, 
 ### 8. La Regola del Prodotto e la Scomposizione Sequenziale
 
 Riorganizzando la formula del condizionamento, ricaviamo la probabilità dell'intersezione (la **Regola del Prodotto**):
+
 $$
 P(A \cap B) = P(B) \cdot P(A \mid B) = P(A) \cdot P(B \mid A)
 $$
@@ -432,15 +437,17 @@ Questa formula è la chiave per calcolare la probabilità di eventi composti che
     * Prima estrazione ($A_1$): $P(A_1) = 4/52 = 1/13$.
     * Seconda estrazione ($A_2$), sapendo che un asso è già uscito: nel mazzo restano 51 carte di cui solo 3 assi, dunque $P(A_2 \mid A_1) = 3/51 = 1/17$.
     * Probabilità congiunta:
-    $$
-    \begin{aligned}
-    P(A_1 \cap A_2) &= P(A_1) \cdot P(A_2 \mid A_1) \\
-    &= \frac{1}{13} \cdot \frac{1}{17} = \frac{1}{221} \approx 0.00452
-    \end{aligned}
-    $$
+
+$$
+\begin{aligned}
+P(A_1 \cap A_2) &= P(A_1) \cdot P(A_2 \mid A_1) \\
+&= \frac{1}{13} \cdot \frac{1}{17} = \frac{1}{221} \approx 0.00452
+\end{aligned}
+$$
 
 #### Fattorizzazione a catena per $n$ eventi
 La regola del prodotto si generalizza a un numero arbitrario di eventi concatenati:
+
 $$
 \begin{aligned}
 P(A_1 \cap A_2 \cap \dots \cap A_n) = P(A_1) &\cdot P(A_2 \mid A_1) \cdot P(A_3 \mid A_1 \cap A_2) \\
@@ -449,12 +456,13 @@ P(A_1 \cap A_2 \cap \dots \cap A_n) = P(A_1) &\cdot P(A_2 \mid A_1) \cdot P(A_3 
 $$
 
 Grazie alla proprietà commutativa dell'intersezione, per tre eventi $A, B, C$ esistono $3! = 6$ decomposizioni equivalenti:
+
 $$
-\begin{align}
+\begin{aligned}
 P(A \cap B \cap C) &= P(A) \cdot P(B \mid A) \cdot P(C \mid A \cap B) \\
 &= P(B) \cdot P(A \mid B) \cdot P(C \mid A \cap B) \\
 &= P(C) \cdot P(A \mid C) \cdot P(B \mid A \cap C) \quad \text{e così via.}
-\end{align}
+\end{aligned}
 $$
 
 Questa flessibilità permette all'ingegnere di scegliere la scomposizione più comoda a seconda di quali dati condizionati siano disponibili nei log o nei test empirici.
@@ -467,13 +475,14 @@ Questa flessibilità permette all'ingegnere di scegliere la scomposizione più c
   3. $T$: i test di carico e sicurezza finali hanno successo ($P(T \mid M \cap D) = 0.95$).  
   
   La probabilità che una release superi l'intera pipeline è data dalla regola del prodotto:
-  $$
-  \begin{aligned}
-  P(M \cap D \cap T) &= P(M) \cdot P(D \mid M) \cdot P(T \mid M \cap D) \\
-  &= 0.90 \times 0.80 \times 0.95 \\
-  &= 0.684 \quad (68.4\%)
-  \end{aligned}
-  $$
+
+$$
+\begin{aligned}
+P(M \cap D \cap T) &= P(M) \cdot P(D \mid M) \cdot P(T \mid M \cap D) \\
+&= 0.90 \times 0.80 \times 0.95 \\
+&= 0.684 \quad (68.4\%)
+\end{aligned}
+$$
 
 ---
 
@@ -482,6 +491,7 @@ Questa flessibilità permette all'ingegnere di scegliere la scomposizione più c
 Cosa succede se apprendere che l'evento $B$ si è verificato **non altera minimamente** la probabilità di $A$?
 
 In termini formali, significa che la probabilità condizionata coincide esattamente con la probabilità a priori:
+
 $$
 P(A \mid B) = P(A)
 $$
@@ -490,6 +500,7 @@ Sostituendo questa relazione nella regola del prodotto $P(A \cap B) = P(B) P(A \
 
 !!! note "Definizione (Indipendenza Stocastica)"
     Due eventi $A$ e $B$ sono **stocasticamente indipendenti** se e solo se:
+
     $$
     P(A \cap B) = P(A) \cdot P(B)
     $$
@@ -513,6 +524,7 @@ Se $A$ e $B$ sono indipendenti, allora sono mutuamente indipendenti anche tutte 
     * **Eventi indipendenti:** $P(A \cap B) = P(A) \cdot P(B)$.
 
     Se due eventi $A$ e $B$ hanno probabilità positiva ($P(A) > 0$ e $P(B) > 0$) e sono **disgiunti**, allora:
+
     $$
     P(A \cap B) = 0 \neq P(A) \cdot P(B) > 0
     $$
@@ -547,11 +559,13 @@ In un'architettura in parallelo, il sistema continua a funzionare se **almeno un
 
 Siano $q_1, q_2, \dots, q_n$ le probabilità di guasto dei singoli dispositivi indipendenti.  
 Per la legge di De Morgan e l'indipendenza dei complementari, la probabilità che il sistema collassi è:
+
 $$
 P(\text{Guasto totale}) = P(G_1 \cap G_2 \cap \dots \cap G_n) = \prod_{i=1}^n q_i
 $$
 
 L'affidabilità (probabilità di funzionamento) del sistema in parallelo è dunque:
+
 $$
 P(\text{Sistema Funzionante}) = 1 - \prod_{i=1}^n q_i
 $$
@@ -559,17 +573,19 @@ $$
 * **Esempio reale (Affidabilità dei backup):**  
   Un server memorizza dati critici su un disco principale con probabilità di rottura annua dell'$1\%$ ($q_H = 0.01$). Per sicurezza, vengono installati 2 backup indipendenti, ciascuno con probabilità di guasto del $2\%$ ($q_{B1} = q_{B2} = 0.02$).  
   I dati vengono persi solo se tutti e tre i dischi si rompono nello stesso anno:
-  $$
-  \begin{aligned}
-  P(\text{Dati perduti}) &= 0.01 \times 0.02 \times 0.02 \\
-  &= 0.000004 \quad (4 \text{ su un milione})
-  \end{aligned}
-  $$
+
+$$
+\begin{aligned}
+P(\text{Dati perduti}) &= 0.01 \times 0.02 \times 0.02 \\
+&= 0.000004 \quad (4 \text{ su un milione})
+\end{aligned}
+$$
 
   L'affidabilità del sistema passa dal $99\%$ di un disco singolo allo straordinario:
-  $$
-  P(\text{Dati salvati}) = 1 - 0.000004 = 0.999996 \quad (99.9996\%)
-  $$
+
+$$
+P(\text{Dati salvati}) = 1 - 0.000004 = 0.999996 \quad (99.9996\%)
+$$
 
   Ecco perché l'ingegneria del software distribuisce i nodi e replica i database in parallelo!
 
@@ -583,6 +599,7 @@ In un'architettura in serie, il sistema funziona se e solo se **ogni singolo com
 
 Siano $p_i = 1 - q_i$ le probabilità di funzionamento dei componenti indipendenti.  
 L'affidabilità del sistema in serie è il prodotto delle singole affidabilità:
+
 $$
 P(\text{Sistema Funzionante}) = \prod_{i=1}^n p_i = \prod_{i=1}^n (1 - q_i)
 $$
@@ -590,13 +607,14 @@ $$
 * **Esempio reale (Il lancio dello Space Shuttle):**  
   Il lancio programmato di uno shuttle spaziale dipende da tre sistemi avionici critici collegati in serie, operanti in modo indipendente. Le rispettive probabilità di anomalia prima del decollo sono appena dell'$1\%$, $2\%$ e $2\%$ ($q_1 = 0.01$, $q_2 = 0.02$, $q_3 = 0.02$).  
   Qual è la probabilità che il lancio avvenga in orario senza rinvii?
-  $$
-  \begin{aligned}
-  P(\text{Lancio in tempo}) &= (1 - 0.01) \times (1 - 0.02) \times (1 - 0.02) \\
-  &= 0.99 \times 0.98 \times 0.98 \\
-  &= 0.950792 \approx 95.08\%
-  \end{aligned}
-  $$
+
+$$
+\begin{aligned}
+P(\text{Lancio in tempo}) &= (1 - 0.01) \times (1 - 0.02) \times (1 - 0.02) \\
+&= 0.99 \times 0.98 \times 0.98 \\
+&= 0.950792 \approx 95.08\%
+\end{aligned}
+$$
 
   *Riflessione ingegneristica:* Nonostante i singoli componenti siano affidabili al $98-99\%$, la probabilità di fallimento dell'intero sistema è salita a quasi il $5\%$ ($1 - 0.9508 = 4.92\%$). In serie, ogni nuovo componente aggiunto degrada inesorabilmente l'affidabilità complessiva.
 
@@ -1013,7 +1031,9 @@ Torniamo all'innesco iniziale della lezione: lanciamo una moneta in aria. Per il
 
 Cosa accade quando raccogliamo dati nel mondo reale? Premi il pulsante **▶ Esegui** per simulare **4 popolazioni di campioni indipendenti** da $N = 1.000$ lanci ciascuna. Per ogni serie calcoliamo la **media campionaria progressiva** (la frequenza relativa di Teste accumulata fino a quel momento):
 
-$$\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$$
+$$
+\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i
+$$
 
 <div class="psi-exec" markdown="1">
 ```python

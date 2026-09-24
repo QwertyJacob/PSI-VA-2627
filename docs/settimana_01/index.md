@@ -441,89 +441,49 @@ Poiché la matematica della probabilità può scorrere a ritroso come un filmato
 
 ---
 
-## Atto V: Guerra civile nei laboratori — Statistica Classica contro Statistica Bayesiana
+## Atto V: Frequentisti contro Bayesiani — Il paradosso di Alice e Bob
 
-Mentre i filosofi disputavano nelle accademie, gli scienziati nei laboratori dovevano prendere decisioni pratiche: stabilire se un vaccino funzionasse o se una nuova tecnologia fosse superiore alla precedente. Tra gli anni Venti e Trenta del Novecento, queste visioni sfociarono in una vera e propria contesa metodologica tra **Statistica Frequentista (Classica)** e **Statistica Bayesiana**.
+Mentre i filosofi dibattevano, nei laboratori bisognava decidere se un farmaco funzionasse o una teoria fosse valida. Tra gli anni '20 e '30 nacque così la contesa tra **statistica frequentista** e **statistica bayesiana**.
 
-### La fortezza ortodossa: Fisher, Neyman e Pearson
-Guidata dal celebre scienziato britannico **Sir Ronald A. Fisher**, e in seguito formalizzata da **Jerzy Neyman** ed **Egon Pearson**, la statistica classica si prefisse di espellere dal metodo scientifico ogni traccia di credenza soggettiva o opinione personale.
-
-Il loro principio di base era categorico: *non ha senso attribuire una probabilità a un'ipotesi scientifica.* Una teoria o è vera o è falsa nel mondo reale; un algoritmo o scala in un certo tempo o non lo fa. Non possiamo affermare scientificamente che "la nostra ipotesi ha il 70% di probabilità di essere corretta".
-
-L'unica cosa che possiamo fare in modo oggettivo è rovesciare la prospettiva: *assumiamo che non ci sia alcun effetto reale (la cosiddetta **Ipotesi Nulla** $H_0$, ad esempio che una moneta sia perfettamente equa) e calcoliamo quanto sarebbe raro osservare per puro caso un risultato strano o estremo come quello ottenuto.*
-
-Da questo principio nasce il celebre **p-value**:
+### L'approccio classico: Fisher e il p-value
+Per i frequentisti (**Ronald Fisher**, **Jerzy Neyman**, **Egon Pearson**) non ha senso attribuire una probabilità a un'ipotesi: una teoria è vera o falsa. Si calcola invece il **p-value**: *se l'ipotesi nulla $H_0$ (nessun effetto / moneta equa) fosse vera, quanto sarebbe raro ottenere per puro caso un risultato così o più estremo?*
 
 $$
-\text{p-value} = P(\text{Ottenere dati uguali o ancora più estremi di quelli osservati} \mid H_0)
+\text{p-value} = P(\text{Dati uguali o più estremi} \mid H_0)
 $$
 
-Se questo valore è molto basso (per convenzione storica inferiore al $5\%$, ossia $0{,}05$), i ricercatori dicono: *"È un evento troppo insolito per essere frutto del puro caso. Respingiamo l'ipotesi nulla e dichiariamo la scoperta statisticamente significativa!"*
+Se $p < 0{,}05$ (meno del 5% di probabilità), si respinge $H_0$ e si dichiara il risultato "statisticamente significativo".
 
 ---
 
-### Lo scandalo dell'Optional Stopping: Il paradosso di Alice e Bob
+### Il cortocircuito: Il paradosso dell'Optional Stopping
+Sembra un metodo oggettivo, ma nasconde un paradosso sorprendente (Lindley, 1957):
 
-L'impianto frequentista sembra a prima vista rigoroso e incorruttibile. Eppure cela un paradosso logico disorientante: **la significatività scientifica finisce per dipendere non solo dai dati fisici raccolti, ma da cosa il ricercatore aveva intenzione di fare nella propria testa prima di iniziare.**
-
-Questo fenomeno, noto come enigma dell'**Optional Stopping** (formulato da Dennis Lindley e reso celebre da James Berger e Donald Berry), si può illustrare con una situazione sorprendente:
-
-> Due ricercatori, **Alice** e **Bob**, vogliono verificare se una moneta sia truccata a favore di Testa. Entrambi usano la stessa moneta e lavorano in laboratori indipendenti.
-> Per una curiosa coincidenza, entrambi completano l'esperimento e si ritrovano sul tavolo con **lo stesso identico dato empirico**:
-> 
-> <p style="text-align: center; font-weight: bold; font-size: 1.1em; margin: 1em 0;">9 Teste e 3 Croci (12 lanci complessivi)</p>
-
-Entrambi si siedono alla scrivania per calcolare il p-value e decidere se la moneta si possa dichiarare truccata alla soglia standard del $5\%$ ($\alpha = 0{,}05$).
-
-#### Il verdetto di Alice: "Fisso 12 lanci"
-* Alice aveva stabilito prima di iniziare: *"Farò esattamente 12 lanci e conterò quante teste escono."*
-* Con questo protocollo, calcola la probabilità che una moneta onesta produca un risultato sbilanciato come 9 o più teste su 12 tiri. Il calcolo classico dà circa il **$7{,}3\%$** ($p = 0{,}073$).
-* Poiché $7{,}3\% > 5\%$, per le regole ortodosse il risultato **non è statisticamente significativo**. Alice conclude che non vi è prova sufficiente di trucco e archivia i dati.
-
-#### Il verdetto di Bob: "Mi fermo alla 3ª croce"
-* Bob aveva invece stabilito una regola diversa prima di cominciare: *"Continuerò a lanciare finché non vedrò comparire esattamente 3 croci, e a quel punto mi fermerò subito."*
-* Con questo differente piano di arresto, calcola quanto fosse improbabile dover aspettare ben 9 teste prima di raggiungere la terza croce. Con le formule classiche per questo scenario, il risultato è circa il **$3{,}3\%$** ($p = 0{,}033$).
-* Poiché $3{,}3\% < 5\%$, per le medesime regole il risultato **è statisticamente significativo**! Bob dichiara con sicurezza accademica che la moneta è truccata e prepara la pubblicazione.
-
-#### La vertigine metodologica
-Fermiamoci un istante a riflettere su cosa è appena accaduto:
+> **Alice** e **Bob** vogliono verificare se una moneta sia truccata. Entrambi raccolgono sul tavolo **lo stesso identico dato**:
+> <p style="text-align: center; font-weight: bold; margin: 0.8em 0;">9 Teste e 3 Croci (12 lanci)</p>
+>
+> * **Alice** aveva deciso prima di fare **12 lanci**: per lei il calcolo dà $p \approx 0{,}073$ ($> 5\%$) $\implies$ **Moneta equa (non significativo)**.
+> * **Bob** aveva deciso prima di tirare **fino alla 3ª croce**: per lui il calcolo dà $p \approx 0{,}033$ ($< 5\%$) $\implies$ **Moneta truccata (significativo!)**
 
 ```
-  Dati reali sul tavolo: [ 9 Teste, 3 Croci ] (Identici atomo per atomo!)
+  Dati reali sul tavolo: [ 9 Teste, 3 Croci ] (Identici!)
 
-  ALICE:  p-value ≈ 0,073  ───► NON SIGNIFICATIVO (Moneta considerata equa)
-  BOB:    p-value ≈ 0,033  ───► SIGNIFICATIVO     (Moneta considerata truccata!)
+  Alice (regola: 12 lanci)       ──► p ≈ 0,073 (Non significativo, moneta equa)
+  Bob   (regola: fino a 3 croci) ──► p ≈ 0,033 (Significativo, moneta truccata!)
 ```
 
-Le evidenze fisiche reali sul tavolo sono indistinguibili. Eppure Alice sostiene che non c'è trucco e Bob sostiene che il trucco c'è.
-
-Perché accade questo paradosso? Perché il p-value classico non valuta soltanto ciò che è accaduto, ma include nel calcolo la probabilità di dati che **non si sono mai verificati nel mondo reale**: i dati ipotetici *"ancora più estremi"*. E quali dati siano considerati "più estremi" dipende dal disegno sperimentale e dal piano di arresto che il ricercatore aveva in mente!
-
-Se Bob fosse stato colpito da una perdita di memoria subito dopo il dodicesimo lancio, dimenticando quale fosse la sua regola di arresto iniziale, nessun comitato scientifico al mondo avrebbe potuto calcolare se i suoi dati fossero significativi o no.
-
-Come scrisse con ironia il matematico Harold Jeffreys:
-> *"La statistica classica rifiuta un'ipotesi basandosi sulla probabilità di eventi che avrebbero potuto accadere, ma che di fatto non sono mai accaduti."*
+Stessi dati fisici, verdetti opposti. Perché? Perché il p-value somma la probabilità di dati che **non sono mai accaduti** (gli esiti *"più estremi"*), che dipendono da quando il ricercatore aveva in mente di fermarsi.
 
 ---
 
-### Il contrattacco bayesiano: Il Principio di Verosimiglianza
-
-Per i pensatori bayesiani, tra cui **Harold Jeffreys** ed **Edwin T. Jaynes**, questo paradosso dimostra i limiti dell'approccio frequentista standard e suggerisce un principio alternativo: il **Principio di Verosimiglianza**.
-> *Tutta l'evidenza empirica che i dati forniscono sulle nostre ipotesi deve dipendere esclusivamente dalla probabilità di ciò che abbiamo **realmente osservato**, e non da eventi ipotetici mai avvenuti.*
-
-Nel pensiero bayesiano, l'evidenza portata da 9 teste e 3 croci è **esattamente la stessa** sia per Alice sia per Bob. Le intenzioni mentali con cui lo sperimentatore intendeva fermarsi non hanno il potere magico di alterare la natura fisica della moneta.
-
-Il metodo bayesiano aggiorna la conoscenza in modo diretto e trasparente:
+### La risposta bayesiana: Il Principio di Verosimiglianza
+Per i bayesiani (**Harold Jeffreys**, **Edwin Jaynes**) questo è inaccettabile: le intenzioni mentali dello sperimentatore non possono cambiare la natura fisica della moneta. Vale il **Principio di Verosimiglianza**: contano solo i dati realmente osservati.
 
 $$
-\text{Credenza Aggiornata (Posterior)} \;\propto\; \text{Credenza Iniziale (Prior)} \;\times\; \text{Forza dei Dati Osservati (Verosimiglianza)}
+\text{Posterior (Nuova convinzione)} \;\propto\; \text{Prior (Convinzione iniziale)} \;\times\; \text{Verosimiglianza (Dati reali)}
 $$
 
-1. Si parte da una valutazione iniziale plausibile sull'equità della moneta (**Prior**).
-2. Si valuta quanto i dati concreti raccolti (9 teste e 3 croci) siano compatibili con ciascuna ipotesi (**Verosimiglianza**).
-3. Si ricava la nuova convinzione aggiornata (**Posterior**).
-
-Partendo dalle stesse premesse iniziali e osservando gli stessi 9 successi e 3 insuccessi, Alice e Bob ottengono **la stessa identica conclusione**. La conoscenza torna così a basarsi sui fatti reali avvenuti sul tavolo, liberandosi dalle intenzioni segrete dello sperimentatore.
+Avendo osservato entrambi 9 teste e 3 croci, Alice e Bob ottengono per un bayesiano **la stessa identica conclusione**.
 
 ---
 

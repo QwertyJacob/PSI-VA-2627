@@ -516,10 +516,58 @@ Ricordiamo prima una distinzione della [Settimana 1, §5](../settimana_01/index.
 ??? approfondimento "Dimostrazione"
     1. $P(A \cap B) \ge 0$ per il primo assioma e $P(B) > 0$, quindi il loro rapporto è $\ge 0$.
     2. $P(\Omega \mid B) = P(\Omega \cap B)/P(B) = P(B)/P(B) = 1$.
-    3. Se gli $A_i$ si escludono a vicenda, anche i pezzi $A_i \cap B$ si escludono a vicenda (sono contenuti negli $A_i$). Per la proprietà distributiva, $\big(\bigcup_i A_i\big) \cap B = \bigcup_i (A_i \cap B)$. Quindi, usando il terzo assioma per $P$:
+    3. Supponiamo che $A_1, A_2, \dots$ si escludano a vicenda. Vogliamo calcolare $P\big(\bigcup_i A_i \mid B\big)$, cioè la probabilità condizionata dell'evento «si verifica almeno uno degli $A_i$». Procediamo un passo alla volta.
+
+        *Passo 1: applichiamo la definizione di probabilità condizionata.* La definizione dice $P(E \mid B) = P(E \cap B)/P(B)$ per qualunque evento $E$. Qui l'evento $E$ è l'unione $\bigcup_i A_i$, quindi:
 
         $$
-        P\Big(\bigcup_i A_i \,\Big|\, B\Big) = \frac{P\big(\bigcup_i (A_i \cap B)\big)}{P(B)} = \frac{\sum_i P(A_i \cap B)}{P(B)} = \sum_i P(A_i \mid B). \qquad \blacksquare
+        P\Big(\bigcup_i A_i \,\Big|\, B\Big) = \frac{P\Big(\big(\bigcup_i A_i\big) \cap B\Big)}{P(B)}.
+        $$
+
+        *Passo 2: riscriviamo il numeratore con la proprietà distributiva.* «Almeno uno degli $A_i$, *e* $B$» è lo stesso che «almeno uno tra ($A_1$ e $B$), ($A_2$ e $B$), …»:
+
+        $$
+        \Big(\bigcup_i A_i\Big) \cap B = \bigcup_i (A_i \cap B).
+        $$
+
+        Sostituendo nel numeratore:
+
+        $$
+        P\Big(\bigcup_i A_i \,\Big|\, B\Big) = \frac{P\big(\bigcup_i (A_i \cap B)\big)}{P(B)}.
+        $$
+
+        *Passo 3: i pezzi $A_i \cap B$ si escludono a vicenda.* Ogni pezzo $A_i \cap B$ è contenuto in $A_i$; poiché gli $A_i$ non hanno esiti in comune, non possono averne nemmeno i pezzi. Possiamo quindi usare il terzo assioma (per la $P$ originale) sul numeratore: la probabilità dell'unione è la somma delle probabilità:
+
+        $$
+        P\Big(\bigcup_i (A_i \cap B)\Big) = \sum_i P(A_i \cap B).
+        $$
+
+        Quindi:
+
+        $$
+        P\Big(\bigcup_i A_i \,\Big|\, B\Big) = \frac{\sum_i P(A_i \cap B)}{P(B)}.
+        $$
+
+        *Passo 4: dividiamo termine per termine.* Dividere una somma per $P(B)$ equivale a dividere ciascun addendo per $P(B)$:
+
+        $$
+        \frac{\sum_i P(A_i \cap B)}{P(B)} = \sum_i \frac{P(A_i \cap B)}{P(B)}.
+        $$
+
+        *Passo 5: riconosciamo la definizione.* Ciascun addendo $\dfrac{P(A_i \cap B)}{P(B)}$ è, per definizione, $P(A_i \mid B)$. Mettendo insieme i passi:
+
+        $$
+        P\Big(\bigcup_i A_i \,\Big|\, B\Big) = \sum_i P(A_i \mid B). \qquad \blacksquare
+        $$
+
+        *Esempio con due eventi.* Con solo $A_1$ e $A_2$ incompatibili, la catena è:
+
+        $$
+        P(A_1 \cup A_2 \mid B)
+        = \frac{P\big((A_1 \cup A_2) \cap B\big)}{P(B)}
+        = \frac{P\big((A_1 \cap B) \cup (A_2 \cap B)\big)}{P(B)}
+        = \frac{P(A_1 \cap B) + P(A_2 \cap B)}{P(B)}
+        = P(A_1 \mid B) + P(A_2 \mid B).
         $$
 
 **Perché è importante?** Perché ogni teorema che abbiamo dimostrato usando soltanto gli assiomi vale **automaticamente** anche per le probabilità condizionate. Per esempio vale la regola del complementare «dentro» $B$:

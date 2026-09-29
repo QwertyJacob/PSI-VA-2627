@@ -27,7 +27,7 @@ Il percorso è articolato in 4 moduli tematici distribuiti su **12 settimane**, 
 | Settimana | Argomenti |
 |---|---|
 | **[0. Che senso ha essere qui?](0-senso.md)** & **[1. Che cos'è la probabilità?](settimana_01/index.md)** *(Settimana 1)* | **Fondamenti, Sintassi di Kolmogorov e Resilienza:** il senso dello studio e il dibattito epistemologico; spazio campionario, diagrammi di Venn, leggi di De Morgan, assiomi di Kolmogorov e la conseguenza regina dell'unione; condizionamento come "zoom", regola del prodotto, indipendenza stocastica e affidabilità dei sistemi (ridondanza parallela vs catena in serie). |
-| **Settimana 2** *(in arrivo)* | **Alberi di Probabilità e Teorema di Bayes:** alberi di probabilità, partizioni dello spazio campionario e legge della probabilità totale; Teorema di Bayes (prior, verosimiglianza, posterior) e il dramma del falso positivo nei sistemi software, nei test diagnostici e negli Intrusion Detection Systems (IDS). |
+| **[2. Dall'effetto alla causa: alberi e Teorema di Bayes](settimana_02/index.md)** *(Settimana 2)* | **Alberi di Probabilità e Teorema di Bayes:** alberi di probabilità, partizioni dello spazio campionario e legge della probabilità totale; Teorema di Bayes (prior, verosimiglianza, posterior) e il dramma del falso positivo nei sistemi software, nei test diagnostici e negli Intrusion Detection Systems (IDS). |
 | **Settimana 3** *(in arrivo)* | **Calcolo combinatorio e collisioni:** permutazioni, disposizioni, combinazioni; il problema delle parti, paradosso dei compleanni e analisi delle collisioni nelle tabelle hash. |
 
 ### Modulo II — Variabili aleatorie discrete e continue (Settimane 4–6)

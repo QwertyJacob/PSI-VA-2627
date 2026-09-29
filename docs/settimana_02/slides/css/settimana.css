@@ -1,0 +1,535 @@
+/*
+ * Stile delle scene della Settimana 2. Lo stile comune (palette, pannelli,
+ * pulsanti) è in assets/slides/scenes.css, caricato prima di questo file.
+ * Ipotesi H in rosso, evidenza E in ambra, posterior in verde.
+ */
+:root {
+  --psi-h: #f87171;
+  --psi-hc: #94a3b8;
+  --psi-e: #fbbf24;
+}
+
+/* ── Elementi ricorrenti ── */
+.reveal .scene-svg .tr-branch {
+  stroke: rgba(203, 213, 224, 0.6);
+  stroke-width: 3px;
+}
+.reveal .scene-svg .tr-node { fill: var(--psi-text); }
+.reveal .scene-svg .tr-p {
+  font-family: KaTeX_Main, serif;
+  font-size: 21px;
+  font-weight: 600;
+  fill: var(--psi-b);
+}
+.reveal .scene-svg .tv-axis {
+  stroke: rgba(203, 213, 224, 0.6);
+  stroke-width: 2px;
+}
+.reveal .chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+.reveal .chip {
+  padding: 4px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+.reveal .chip b { color: var(--psi-text); }
+.reveal .chip.e { border-color: var(--psi-e); color: var(--psi-e); }
+.reveal .chip .katex { font-size: 1.1em; }
+
+/* ── Prologo: l'allarme e il sondaggio ── */
+.reveal .al-title { margin: 0 0 18px !important; }
+.reveal .al-facts {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  margin: 0 0 22px;
+}
+.reveal .al-fact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 230px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.reveal .al-fact b { font-size: 1.7em; line-height: 1.1; }
+.reveal .al-fact b.h { color: var(--psi-h); }
+.reveal .al-fact b.e { color: var(--psi-e); }
+.reveal .al-fact span { font-size: 0.62em; color: var(--psi-muted); }
+.reveal .al-q { font-size: 1.05em; font-weight: 700; margin: 0 0 10px; }
+.reveal .poll {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 26px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+.reveal .poll-opt {
+  display: grid;
+  grid-template-columns: 150px 1fr 44px;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--psi-text);
+  font-family: inherit;
+  font-size: 0.66em;
+  cursor: pointer;
+  text-align: left;
+}
+.reveal .poll-opt:hover { background: rgba(255, 255, 255, 0.09); }
+.reveal .poll-track {
+  height: 14px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+.reveal .poll-bar {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--psi-a);
+  transition: width 0.3s;
+}
+.reveal .poll-n { text-align: right; }
+.reveal .poll-opt.right { border-color: var(--psi-sel); }
+.reveal .poll-opt.right .poll-bar { background: var(--psi-sel); }
+.reveal .poll-hint { font-size: 0.42em; color: #718096; margin: 8px 0 0; }
+.reveal .poll-mirror { margin-top: 26px; pointer-events: none; }
+
+/* ── La barra ── */
+.reveal .br-svg { margin: 0 auto; }
+.reveal .scene-svg .br-tok { font-size: 62px; }
+.reveal .scene-svg .br-word { font-family: var(--r-main-font); font-weight: 700; font-size: 54px; }
+.reveal .scene-svg .br-e { fill: var(--psi-e); }
+.reveal .scene-svg .br-h { fill: var(--psi-h); }
+.reveal .scene-svg .br-ask { fill: var(--psi-sel); font-weight: 700; }
+.reveal .scene-svg .br-cap {
+  font-family: var(--r-main-font);
+  font-size: 21px;
+  fill: var(--psi-muted);
+}
+.reveal .scene-svg .br-neq { font-size: 90px; fill: var(--psi-sel); }
+
+/* ── Il tavolo di Bayes ── */
+.reveal .scene-svg .tv-felt {
+  fill: rgba(22, 101, 52, 0.35);
+  stroke: #a16207;
+  stroke-width: 6px;
+}
+.reveal .scene-svg .tv-hidden {
+  font-family: var(--r-main-font);
+  font-size: 90px;
+  font-weight: 800;
+  fill: rgba(255, 255, 255, 0.18);
+}
+.reveal .scene-svg .tv-wline {
+  stroke: #fff;
+  stroke-width: 3px;
+}
+.reveal .scene-svg .tv-wdown { stroke-dasharray: 8 7; stroke-width: 2.5px; }
+.reveal .scene-svg .tv-wball { fill: #fff; stroke: #0f172a; stroke-width: 2px; }
+.reveal .scene-svg .tv-wlbl { font-family: var(--r-main-font); font-weight: 800; font-size: 20px; }
+.reveal .scene-svg .tv-o { stroke: rgba(0, 0, 0, 0.5); stroke-width: 1px; }
+.reveal .scene-svg .tv-o-l { fill: var(--psi-a); }
+.reveal .scene-svg .tv-o-r { fill: var(--psi-b); }
+.reveal .scene-svg .tv-area { fill: rgba(56, 239, 125, 0.18); }
+.reveal .scene-svg .tv-curve {
+  fill: none;
+  stroke: var(--psi-sel);
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+}
+.reveal .scene-svg .tv-plotlbl {
+  font-family: var(--r-main-font);
+  font-size: 16px;
+  fill: var(--psi-muted);
+}
+.reveal .tv-panel { font-size: 0.7em; }
+.reveal .tv-row { margin: 0 0 8px; }
+.reveal .tv-row b { color: var(--psi-text); }
+.reveal .tv-key {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-right: 10px;
+  vertical-align: -1px;
+}
+.reveal .tv-w { background: #fff; }
+.reveal .tv-l { background: var(--psi-a); }
+.reveal .tv-r { background: var(--psi-b); }
+.reveal .tv-note { font-size: 0.95em; margin: 0 0 14px; }
+.reveal .tv-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ── Il sole di Price ── */
+.reveal .scene-svg .ab-left { fill: rgba(148, 163, 184, 0.25); }
+.reveal .scene-svg .ab-right { fill: rgba(56, 239, 125, 0.28); }
+.reveal .scene-svg .ab-mid { stroke: rgba(203, 213, 224, 0.5); stroke-width: 1.5px; stroke-dasharray: 6 6; }
+.reveal .scene-svg .ab-tick { font-size: 24px; }
+.reveal .scene-svg .ab-x { font-size: 28px; }
+.reveal .scene-svg .ab-area {
+  font-family: var(--r-main-font);
+  font-size: 22px;
+  font-weight: 700;
+  fill: var(--psi-muted);
+}
+.reveal .scene-svg .ab-area-r { fill: var(--psi-sel); }
+.reveal .scene-svg .ab-price {
+  font-family: var(--r-main-font);
+  font-size: 20px;
+  font-weight: 700;
+  fill: var(--psi-b);
+}
+.reveal .ab-panel { font-size: 0.72em; }
+.reveal .ab-n { font-size: 1.2em; margin: 0 0 6px; }
+.reveal .ab-sun { color: var(--psi-b); }
+.reveal .ab-odds { font-size: 2.4em; font-weight: 800; color: var(--psi-sel); margin: 0; line-height: 1.1; }
+.reveal .ab-cap { margin: 0 0 12px; }
+.reveal .ab-laplace { margin: 0 0 12px; }
+.reveal .ab-laplace b { color: var(--psi-sel); }
+.reveal .ab-slider { display: flex; align-items: center; gap: 10px; color: var(--psi-muted); }
+.reveal .ab-slider input { width: 240px; accent-color: var(--psi-b); }
+
+/* ── Harvard ── */
+.reveal .scene-svg .hv-person { fill: #4a5568; }
+.reveal .hv-panel { font-size: 0.72em; }
+.reveal .hv-q { font-size: 1.4em; font-weight: 700; margin: 4px 0 16px; }
+.reveal .hv-res { font-size: 1.3em; margin: 0 0 8px; }
+.reveal .hv-res b { font-size: 1.4em; }
+.reveal .hv-bad b { color: var(--psi-h); }
+.reveal .hv-good b { color: var(--psi-sel); }
+
+/* ── L'albero come rettangolo ── */
+.reveal .scene-svg .tm-col-a { fill: rgba(56, 189, 248, 0.14); }
+.reveal .scene-svg .tm-col-na { fill: rgba(148, 163, 184, 0.1); }
+.reveal .scene-svg .tm-b { fill: rgba(251, 191, 36, 0.2); }
+.reveal .scene-svg .tm-cut { stroke: #e2e8f0; stroke-width: 2.5px; }
+.reveal .scene-svg .tm-coll { font-size: 30px; }
+.reveal .scene-svg .tm-leaf {
+  fill: rgba(56, 239, 125, 0.12);
+  stroke: var(--psi-sel);
+  stroke-width: 3px;
+}
+.reveal .scene-svg .tm-val {
+  font-family: var(--r-main-font);
+  font-size: 26px;
+  font-weight: 700;
+}
+.reveal .scene-svg .tm-name { font-size: 30px; }
+.reveal .scene-svg .tm-leafname { font-size: 22px; }
+.reveal .scene-svg .tm-leafval { fill: var(--psi-sel); font-weight: 700; }
+.reveal .scene-svg .tm-prod {
+  font-family: var(--r-main-font);
+  font-size: 24px;
+  font-weight: 700;
+  fill: var(--psi-sel);
+}
+.reveal .tm-rule { font-size: 0.68em; color: var(--psi-muted); margin: 4px 0 0; }
+.reveal .tm-rule b { color: var(--psi-sel); }
+
+/* ── Tre monete ── */
+.reveal .scene-svg .mn-t { stroke: rgba(56, 189, 248, 0.75); }
+.reveal .scene-svg .mn-c { stroke: rgba(203, 213, 224, 0.45); }
+.reveal .scene-svg .mn-lbl {
+  font-family: var(--r-main-font);
+  font-size: 14px;
+  font-weight: 600;
+  fill: var(--psi-b);
+}
+.reveal .scene-svg .mn-bg { fill: var(--psi-sel); opacity: 0; }
+.reveal .scene-svg .mn-leaf {
+  font-family: KaTeX_Main, serif;
+  font-size: 19px;
+  font-weight: 700;
+}
+.reveal .scene-svg .mn-eighth { font-size: 22px; fill: var(--psi-b); }
+.reveal .mn-panel { font-size: 0.78em; }
+.reveal .mn-q { font-weight: 700; margin: 0 0 6px; }
+.reveal .mn-a { color: var(--psi-sel); font-size: 1.2em; margin: 0 0 22px; }
+.reveal .mn-note { font-size: 0.85em; }
+
+/* ── Ribaltare l'albero ── */
+.reveal .scene-svg .rb-name { font-size: 30px; }
+.reveal .scene-svg .rb-h { fill: var(--psi-h); }
+.reveal .scene-svg .rb-e { fill: var(--psi-e); }
+.reveal .scene-svg .rb-box {
+  fill: rgba(148, 163, 184, 0.12);
+  stroke: rgba(148, 163, 184, 0.5);
+  stroke-width: 2px;
+}
+.reveal .scene-svg .rb-box-h { fill: rgba(248, 113, 113, 0.18); }
+.reveal .scene-svg .rb-box-e { stroke: var(--psi-e); stroke-width: 3px; }
+.reveal .scene-svg .rb-leafname { font-size: 18px; fill: var(--psi-muted); }
+.reveal .scene-svg .rb-leafval {
+  font-family: var(--r-main-font);
+  font-size: 22px;
+  font-weight: 700;
+}
+.reveal .scene-svg .rb-sum { fill: var(--psi-e); }
+.reveal .scene-svg .rb-div { fill: var(--psi-sel); font-size: 26px; }
+.reveal .scene-svg .rb-formula {
+  font-family: var(--r-main-font);
+  font-size: 24px;
+  font-weight: 700;
+}
+.reveal .scene-svg .rb-e-txt { fill: var(--psi-e); }
+.reveal .scene-svg .rb-sel-txt { fill: var(--psi-sel); }
+.reveal .rb-caps {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  font-size: 0.6em;
+  color: var(--psi-muted);
+  margin-top: 2px;
+}
+.reveal .rb-cap-l { text-align: left; padding-left: 60px; }
+.reveal .rb-cap-r { text-align: right; padding-right: 60px; }
+.reveal .rb-cap b { color: var(--psi-text); }
+
+/* ── Popolazioni su canvas ── */
+.reveal .pop-canvas { display: block; }
+.reveal .pop-panel { font-size: 0.7em; }
+.reveal .pop-ask { font-size: 1.25em; font-weight: 700; margin: 0 0 12px; }
+.reveal .pop-row { margin: 0 0 6px; }
+.reveal .pop-row b { font-size: 1.25em; }
+.reveal .pop-key {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-right: 10px;
+  vertical-align: -1px;
+}
+.reveal .k-h { background: var(--psi-h); }
+.reveal .k-tp { background: var(--psi-h); box-shadow: 0 0 0 3px var(--psi-e); }
+.reveal .k-fp { background: var(--psi-hc); box-shadow: 0 0 0 3px var(--psi-e); }
+.reveal .pop-res { margin-top: 14px; }
+.reveal .pop-extra { margin-top: 10px; font-size: 0.9em; }
+
+/* ── Prevalenza ── */
+.reveal .scene-svg .pv-grid { stroke: rgba(255, 255, 255, 0.07); stroke-width: 1px; }
+.reveal .scene-svg .pv-tick { font-family: var(--r-main-font); font-size: 15px; fill: var(--psi-muted); }
+.reveal .scene-svg .pv-axis { font-family: var(--r-main-font); font-size: 16px; fill: var(--psi-muted); }
+.reveal .scene-svg .pv-ref { fill: none; stroke: rgba(203, 213, 224, 0.45); stroke-width: 2px; stroke-dasharray: 7 6; }
+.reveal .scene-svg .pv-reflbl { font-family: var(--r-main-font); font-size: 14px; fill: var(--psi-muted); }
+.reveal .scene-svg .pv-live { fill: none; stroke: var(--psi-sel); stroke-width: 4px; }
+.reveal .scene-svg .pv-drop { stroke: var(--psi-sel); stroke-width: 1.5px; stroke-dasharray: 4 5; }
+.reveal .scene-svg .pv-mark { fill: var(--psi-sel); stroke: #0f172a; stroke-width: 2px; }
+.reveal .scene-svg .pv-marklbl {
+  font-family: var(--r-main-font);
+  font-size: 22px;
+  font-weight: 800;
+  fill: var(--psi-sel);
+}
+.reveal .pv-panel { font-size: 0.66em; }
+.reveal .pv-big { font-size: 1.3em; margin: 0 0 16px; }
+.reveal .pv-big b { color: var(--psi-sel); font-size: 1.3em; }
+.reveal .pv-slider {
+  display: grid;
+  grid-template-columns: 120px 1fr 86px;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 10px;
+}
+.reveal .pv-slider input { width: 100%; accent-color: var(--psi-sel); }
+.reveal .pv-slider b { text-align: right; }
+.reveal .pv-freq { margin: 14px 0 8px; }
+.reveal .pv-tp { color: var(--psi-h); }
+.reveal .pv-fp { color: var(--psi-hc); }
+
+/* ── Moduli software: il mosaico ── */
+.reveal .scene-svg .md-col { fill-opacity: 0.16; }
+.reveal .scene-svg .md-crash { fill-opacity: 0.85; }
+.reveal .scene-svg .md-sep { stroke: rgba(203, 213, 224, 0.5); stroke-width: 1.5px; }
+.reveal .scene-svg .md-name { font-family: var(--r-main-font); font-size: 17px; font-weight: 700; }
+.reveal .scene-svg .md-prior { font-family: var(--r-main-font); font-size: 17px; fill: var(--psi-muted); }
+.reveal .scene-svg .md-lik { font-family: var(--r-main-font); font-size: 18px; font-weight: 700; fill: var(--psi-e); }
+.reveal .scene-svg .md-c { font-size: 30px; fill: var(--psi-e); }
+.reveal .scene-svg .md-fly { stroke: #0f172a; stroke-width: 1.5px; }
+.reveal .scene-svg .md-total {
+  font-family: var(--r-main-font);
+  font-size: 22px;
+  font-weight: 700;
+  fill: var(--psi-e);
+}
+.reveal .scene-svg .md-post {
+  font-family: var(--r-main-font);
+  font-size: 20px;
+  font-weight: 800;
+  fill: #0f172a;
+}
+.reveal .scene-svg .md-win { fill: none; stroke: var(--psi-sel); stroke-width: 4px; }
+.reveal .scene-svg .md-one { font-family: var(--r-main-font); font-size: 20px; fill: var(--psi-muted); }
+.reveal .md-f1, .reveal .md-f2 { font-size: 0.9em; margin: 10px 0; }
+
+/* ── Vero o falso, trappola ── */
+.reveal .vf, .reveal .tr-opts { max-width: 900px; margin: 10px auto; }
+.reveal .vf-row, .reveal .tr-opt {
+  display: grid;
+  grid-template-columns: 520px 1fr;
+  align-items: center;
+  margin: 0 0 14px;
+  white-space: nowrap;
+  padding: 10px 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  text-align: left;
+}
+.reveal .vf-row b, .reveal .tr-opt b { font-size: 1.3em; }
+.reveal .vf-row small, .reveal .tr-opt small { font-size: 0.55em; font-weight: 400; color: var(--psi-muted); }
+.reveal .vf-yes { color: var(--psi-sel); }
+.reveal .vf-no { color: #fc8181; }
+
+/* ── Vocabolario ── */
+.reveal .vc-formula { font-size: 1.5em; margin: 20px 0 10px; }
+.reveal .vc-names { display: flex; justify-content: center; gap: 36px; margin: 10px 0 24px; }
+.reveal .vc-name { font-size: 1.05em; font-weight: 700; display: flex; flex-direction: column; }
+.reveal .vc-name small { font-size: 0.6em; font-weight: 400; color: var(--psi-muted); }
+.reveal .vc-prop { font-size: 1.1em; color: var(--psi-sel); }
+.reveal .ig-box p, .reveal .qb-box p { margin: 12px 0; }
+.reveal .ig-verdict { font-size: 1.05em; }
+
+/* ── Odds ── */
+.reveal .od-def { font-size: 0.72em; max-width: 760px; margin: 0 auto 4px; }
+.reveal .od-svg { margin: 0 auto; }
+.reveal .od-buttons { display: flex; justify-content: center; gap: 10px; font-size: 0.62em; }
+.reveal .scene-svg .od-axis { stroke: rgba(203, 213, 224, 0.7); stroke-width: 2.5px; }
+.reveal .scene-svg .od-tick { font-family: var(--r-main-font); font-size: 18px; fill: var(--psi-muted); }
+.reveal .scene-svg .od-end { font-family: var(--r-main-font); font-size: 15px; fill: #718096; }
+.reveal .scene-svg .od-marker { fill: var(--psi-sel); }
+.reveal .scene-svg .od-mlbl {
+  font-family: var(--r-main-font);
+  font-size: 24px;
+  font-weight: 800;
+  fill: var(--psi-sel);
+}
+.reveal .scene-svg .od-warn { font-family: var(--r-main-font); font-size: 20px; font-weight: 700; fill: #f472b6; }
+.reveal .scene-svg .od-arrow { stroke-width: 5px; stroke-linecap: round; }
+.reveal .scene-svg .od-arrow.od-up { stroke: var(--psi-e); }
+.reveal .scene-svg .od-arrow.od-down { stroke: var(--psi-a); }
+.reveal .scene-svg .od-arrow.od-zero { stroke: #f472b6; }
+.reveal .scene-svg .od-head.od-up { fill: var(--psi-e); }
+.reveal .scene-svg .od-head.od-down { fill: var(--psi-a); }
+.reveal .scene-svg .od-head.od-zero { fill: #f472b6; }
+.reveal .scene-svg .od-alab { font-family: var(--r-main-font); font-size: 16px; font-weight: 700; }
+.reveal .scene-svg .od-alab.od-up { fill: var(--psi-e); }
+.reveal .scene-svg .od-alab.od-down { fill: var(--psi-a); }
+.reveal .scene-svg .od-alab.od-zero { fill: #f472b6; }
+
+/* ── Controllo qualità ── */
+.reveal .scene-svg .ql-lbl { font-family: var(--r-main-font); font-size: 14px; font-weight: 600; fill: var(--psi-b); }
+.reveal .scene-svg .ql-leaf { font-family: var(--r-main-font); font-size: 18px; font-weight: 700; }
+.reveal .scene-svg .ql-bar { fill: rgba(248, 113, 113, 0.55); }
+.reveal .scene-svg .ql-best { fill: var(--psi-sel); }
+.reveal .scene-svg .ql-post { font-family: var(--r-main-font); font-size: 18px; font-weight: 700; fill: var(--psi-muted); }
+.reveal .scene-svg .ql-best-t { fill: var(--psi-sel); }
+.reveal .ql-panel { font-size: 0.66em; }
+.reveal .ql-row { color: var(--psi-muted); margin: 0 0 14px; }
+.reveal .ql-row b { color: var(--psi-text); }
+.reveal .ql-q { margin: 0 0 14px; }
+.reveal .ql-panel .katex { font-size: 1.15em; }
+
+/* ── Compiti non firmati ── */
+.reveal .scene-svg .cp-block { fill: rgba(148, 163, 184, 0.3); }
+.reveal .scene-svg .cp-who { font-family: KaTeX_Math, serif; font-style: italic; font-size: 22px; }
+.reveal .scene-svg .cp-ok { font-size: 18px; fill: var(--psi-sel); }
+.reveal .scene-svg .cp-ko { font-size: 18px; fill: #fc8181; }
+.reveal .scene-svg .cp-p { font-family: var(--r-main-font); font-size: 18px; font-weight: 800; fill: #0f172a; }
+.reveal .scene-svg .cp-ev { font-family: var(--r-main-font); font-size: 18px; font-weight: 700; fill: var(--psi-e); }
+.reveal .cp-panel { font-size: 0.72em; }
+.reveal .cp-lead { margin: 0 0 18px; line-height: 1.5; }
+.reveal .cp-ask { font-size: 1.2em; font-weight: 700; margin: 0 0 18px; }
+.reveal .cp-guess { font-size: 0.75em; font-weight: 400; color: var(--psi-muted); }
+.reveal .cp-res { color: var(--psi-sel); font-size: 1.1em; }
+
+/* ── Simulazione IDS ── */
+.reveal .sim-canvas { display: block; }
+.reveal .sim-panel { font-size: 0.66em; }
+.reveal .sim-n { font-size: 1.2em; margin: 0 0 14px; }
+.reveal .sim-n b { color: var(--psi-text); }
+.reveal .sim-line { margin: 0 0 10px; }
+.reveal .sim-line i {
+  display: inline-block;
+  width: 26px;
+  height: 4px;
+  border-radius: 2px;
+  margin-right: 10px;
+  vertical-align: 5px;
+}
+.reveal .sim-line b { float: right; font-variant-numeric: tabular-nums; }
+.reveal .sim-line.s1 i { background: var(--psi-e); }
+.reveal .sim-line.s2 i { background: var(--psi-sel); }
+.reveal .sim-line.s3 i { background: repeating-linear-gradient(90deg, #f472b6 0 4px, transparent 4px 9px); }
+.reveal .sim-note { margin: 8px 0 14px; }
+.reveal .mc-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ── Matrice di confusione ── */
+.reveal .scene-svg .cf-head { font-family: var(--r-main-font); font-size: 19px; font-weight: 700; fill: var(--psi-muted); }
+.reveal .scene-svg .cf-e { fill: var(--psi-e); }
+.reveal .scene-svg .cf-h { fill: var(--psi-h); }
+.reveal .scene-svg .cf-cell { fill: rgba(255, 255, 255, 0.05); }
+.reveal .scene-svg .cf-num { font-family: var(--r-main-font); font-size: 40px; font-weight: 800; }
+.reveal .scene-svg .cf-name { font-family: var(--r-main-font); font-size: 16px; fill: var(--psi-muted); }
+.reveal .scene-svg .cf-hl { fill: none; stroke: var(--psi-h); stroke-width: 4px; }
+.reveal .scene-svg .cf-hl-e { stroke: var(--psi-e); }
+.reveal .scene-svg .cf-hl-d { stroke: var(--psi-a); }
+.reveal .cf-panel { font-size: 0.72em; }
+.reveal .cf-m { margin: 0 0 14px; }
+.reveal .cf-m b { float: right; margin-left: 20px; }
+.reveal .cf-rec b { color: var(--psi-h); }
+.reveal .cf-prec b { color: var(--psi-e); }
+.reveal .cf-acc b { color: var(--psi-a); }
+.reveal .cf-lazy { margin-top: 18px; padding: 10px 14px; border-left: 4px solid #fc8181; background: rgba(255, 255, 255, 0.05); border-radius: 8px; }
+
+/* ── SIEM ── */
+.reveal .sm-grid { display: flex; justify-content: center; gap: 60px; margin: 24px 0; }
+.reveal .sm-num { display: flex; flex-direction: column; align-items: center; margin: 0; }
+.reveal .sm-num b { font-size: 2.6em; line-height: 1.1; }
+.reveal .sm-num span { font-size: 0.7em; color: var(--psi-muted); }
+
+/* ── Ribaltamento ad aree proporzionali (§2.2) ── */
+.reveal .scene-svg .rb-sq {
+  fill: rgba(148, 163, 184, 0.75);
+  stroke: rgba(15, 23, 42, 0.8);
+  stroke-width: 1px;
+}
+.reveal .scene-svg .rb-sq-h { fill: var(--psi-h); }
+.reveal .scene-svg .rb-leaf { font-family: var(--r-main-font); font-size: 19px; font-weight: 700; }
+.reveal .scene-svg .rb-cap { font-family: var(--r-main-font); font-size: 16px; fill: var(--psi-muted); }
+.reveal .rb-ctrl {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+  font-size: 0.55em;
+  margin-top: 4px;
+}
+.reveal .rb-sl { display: flex; align-items: center; gap: 8px; }
+.reveal .rb-sl input { width: 150px; accent-color: var(--psi-sel); }
+.reveal .rb-sl b { min-width: 58px; text-align: left; }
+
+/* ── Tavolo: strisce e istogramma (§2.5 C) ── */
+.reveal .scene-svg .tv-strip { stroke: rgba(255, 255, 255, 0.12); stroke-width: 1px; }
+.reveal .scene-svg .tv-bar { fill: rgba(56, 239, 125, 0.55); }
+.reveal .scene-svg .tv-bar.hit { fill: var(--psi-sel); }
+.reveal .tv-filo { font-size: 0.72em; color: #718096; margin: 12px 0 0; }
+
+/* ── Albero: congiunte e condizionamento a Ω; esercizio del test medico ── */
+.reveal .scene-svg .tm-joint { font-family: var(--r-main-font); font-size: 17px; font-weight: 700; fill: var(--psi-sel); }
+.reveal .scene-svg .tm-omega { fill: var(--psi-e); }
+.reveal .scene-svg .am-box { fill: rgba(255, 255, 255, 0.04); stroke: rgba(148, 163, 184, 0.4); stroke-width: 1.5px; }
+.reveal .scene-svg .am-e { fill: var(--psi-e); }
+.reveal .am-panel { font-size: 0.74em; }
+.reveal .am-q { margin: 0 0 16px; color: var(--psi-muted); }
+.reveal .am-l { margin: 0 0 14px; }

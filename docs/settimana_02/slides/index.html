@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>PSI 26/27 — Settimana 2: Dall'effetto alla causa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../assets/slides/deck.js"></script>
+  <link rel="stylesheet" href="css/settimana.css">
+  <style>
+    :root {
+      --r-main-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --r-heading-font: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --r-heading-text-transform: none;
+      --r-main-font-size: 30px;
+    }
+    .reveal .slides section { text-align: center; }
+    .highlight { color: #38ef7d; }
+    .warning { color: #ff4b2b; }
+    .huge-question {
+      font-size: 2.1em !important;
+      line-height: 1.25 !important;
+      font-weight: 700 !important;
+    }
+    .subtitle {
+      font-size: 1.15em;
+      color: #a0aec0;
+      margin-top: 15px;
+    }
+    .box {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px 25px;
+      margin: 15px auto;
+      max-width: 960px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .badge {
+      display: inline-block;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.65em;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      background: #11998e;
+      color: #fff;
+    }
+    .badge.red { background: #e53e3e; }
+    .badge.blue { background: #3182ce; }
+    .badge.orange { background: #dd6b20; }
+    .author-name {
+      font-size: 2em !important;
+      font-weight: 800 !important;
+      margin: 0 0 10px 0 !important;
+    }
+    .reveal .author-photo {
+      width: 230px;
+      height: 230px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 50%;
+      border: 3px solid #11998e;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 239, 125, 0.25);
+      margin: 14px auto 22px auto;
+      display: block;
+    }
+    .author-quote {
+      font-size: 1.3em;
+      font-weight: 600;
+      color: #edf2f7;
+      margin: 8px auto;
+      max-width: 1000px;
+    }
+    .photo-credit {
+      font-size: 0.34em;
+      color: #718096;
+      margin-top: 26px;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Titolo -->
+      <section>
+        <div class="badge">PSI 26/27 • Settimana 02</div>
+        <h1 style="font-size: 2.4em; font-weight: 800;">Dall'effetto alla causa</h1>
+        <p class="subtitle">Alberi di probabilità e Teorema di Bayes</p>
+      </section>
+
+      <!-- Prologo: l'allarme e il sondaggio (clic sulle risposte: js/storia.js) -->
+      <section id="allarme">
+        <p class="badge red">Ore 3:00</p>
+        <h2 class="huge-question al-title">Scatta un allarme.</h2>
+        <div class="al-facts">
+          <div class="al-fact"><b class="h">1%</b><span>connessioni malevole</span></div>
+          <div class="al-fact"><b class="e">99%</b><span>attacco → allarme</span></div>
+          <div class="al-fact"><b class="e">1%</b><span>innocua → allarme</span></div>
+        </div>
+        <div class="fragment">
+          <p class="al-q">È davvero un attacco?</p>
+          <div class="poll">
+            <button class="poll-opt" type="button" data-k="a"><span class="poll-l">(a) ≈ 99%</span><span class="poll-track"><i class="poll-bar"></i></span><b class="poll-n">0</b></button>
+            <button class="poll-opt" type="button" data-k="b"><span class="poll-l">(b) ≈ 90%</span><span class="poll-track"><i class="poll-bar"></i></span><b class="poll-n">0</b></button>
+            <button class="poll-opt" type="button" data-k="c"><span class="poll-l">(c) ≈ 50%</span><span class="poll-track"><i class="poll-bar"></i></span><b class="poll-n">0</b></button>
+            <button class="poll-opt" type="button" data-k="d"><span class="poll-l">(d) &lt; 10%</span><span class="poll-track"><i class="poll-bar"></i></span><b class="poll-n">0</b></button>
+          </div>
+          <p class="poll-hint">clic = +1 &nbsp;·&nbsp; maiusc + clic = −1</p>
+        </div>
+      </section>
+
+      <!-- La barra verticale: le due domande (scena: js/storia.js) -->
+      <section id="barra">
+        <h2 class="scene-title">Attenzione alla barra</h2>
+        <svg class="scene-svg br-svg" width="1100" height="440" viewBox="0 0 1100 440" role="img" aria-label="P(allarme | attacco) e P(attacco | allarme): gli stessi eventi scambiati di posto"></svg>
+      </section>
+
+      <!-- Erlebnis: gli imputati -->
+      <section>
+        <div class="badge">1761 • Tunbridge Wells</div>
+        <h2 class="author-name">Thomas Bayes</h2>
+        <img src="img/bayes.jpg" class="author-photo" alt="Thomas Bayes">
+        <p class="author-quote">Risolse il problema. Poi lo lasciò in un cassetto.</p>
+        <p class="photo-credit">Il ritratto tradizionale: con ogni probabilità non è lui · pubblico dominio</p>
+      </section>
+
+      <section>
+        <div class="badge">1763 • Royal Society</div>
+        <h2 class="author-name">Richard Price</h2>
+        <img src="img/price.jpg" class="author-photo" alt="Richard Price">
+        <p class="author-quote">Aprì il cassetto e spedì il saggio alla Royal Society.</p>
+        <p class="photo-credit">Benjamin West, 1784 · pubblico dominio</p>
+      </section>
+
+      <section>
+        <div class="badge">1748 • L'induzione</div>
+        <h2 class="author-name">David Hume</h2>
+        <img src="img/hume.jpg" class="author-photo" alt="David Hume">
+        <p class="author-quote">«Che il Sole domani <span class="warning">non</span> sorgerà non è meno intelligibile che affermare che sorgerà.»</p>
+        <p class="photo-credit">Allan Ramsay, 1754 · pubblico dominio</p>
+      </section>
+
+      <!-- Il tavolo di Bayes (scena interattiva: js/storia.js) -->
+      <section id="tavolo">
+        <h2 class="scene-title">Il tavolo di Bayes</h2>
+        <div class="scene-grid wide">
+          <svg class="scene-svg" width="700" height="480" viewBox="0 0 700 480" role="img" aria-label="Il tavolo: la palla W si ferma in un punto nascosto, le palle O cadono a sinistra o a destra della sua linea; sotto, la credenza sulla posizione di W"></svg>
+          <div class="scene-panel tv-panel">
+            <p class="tv-row"><span class="tv-key tv-w"></span>W: <b>dove?</b></p>
+            <p class="tv-row"><span class="tv-key tv-l"></span>O a sinistra: <b class="tv-p">0</b></p>
+            <p class="tv-row"><span class="tv-key tv-r"></span>O a destra: <b class="tv-q">0</b></p>
+            <div class="scene-def">$$P(\text{striscia } x_j \mid \text{dati}) \propto x_j^{\,p}\,(1-x_j)^{q}$$</div>
+            <p class="scene-note tv-note">prima → dati → dopo</p>
+            <div class="tv-buttons">
+              <button class="psi-btn tv-one" type="button">+1 O</button>
+              <button class="psi-btn tv-ten" type="button">+10 O</button>
+              <button class="psi-btn ghost tv-new" type="button">🎲 nuovo tavolo</button>
+              <button class="psi-btn ghost tv-strips" type="button">10 strisce</button>
+              <button class="psi-btn ghost tv-show" type="button">👁 W</button>
+            </div>
+            <p class="tv-filo">Nel saggio nessuno volta le spalle al tavolo: si contano solo $p$ e $q$.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Il sole di Price (scena: js/storia.js) -->
+      <section id="alba">
+        <h2 class="scene-title">Il Sole sorgerà domani?</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="620" height="440" viewBox="0 0 620 440" role="img" aria-label="La credenza sulla probabilità che il Sole sorga, dopo n albe"></svg>
+          <div class="scene-panel ab-panel">
+            <p class="ab-n"><span class="ab-sun">☀</span> × <b class="ab-count">0</b> albe</p>
+            <p class="ab-odds"><b class="ab-o">1 : 1</b></p>
+            <p class="scene-note ab-cap">scommessa che $x > \tfrac12$</p>
+            <div class="scene-def ab-rule">Laplace: $\;P(\text{domani}) = \dfrac{n+1}{n+2}$</div>
+            <p class="scene-note ab-laplace">5000 anni = 1.826.213 albe → <b>1.826.214 : 1</b></p>
+            <label class="ab-slider">n <input type="range" min="0" max="40" step="1" value="10"></label>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="badge">1774 • 1814</div>
+        <h2 class="author-name">Pierre-Simon Laplace</h2>
+        <img src="img/laplace.jpg" class="author-photo" alt="Pierre-Simon Laplace">
+        <p class="author-quote">«Passare dagli eventi alle cause.»</p>
+        <p class="photo-credit">pubblico dominio</p>
+      </section>
+
+      <!-- Harvard 1978 (scena: js/storia.js) -->
+      <section id="harvard">
+        <h2 class="scene-title">Harvard, 1978: 60 medici</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="620" height="400" viewBox="0 0 620 400" role="img" aria-label="Le risposte di 60 tra studenti e medici"></svg>
+          <div class="scene-panel hv-panel">
+            <div class="chips">
+              <span class="chip">malattia: <b>1 su 1000</b></span>
+              <span class="chip">falsi positivi: <b>5%</b></span>
+              <span class="chip e">test positivo</span>
+            </div>
+            <p class="hv-q">malato?</p>
+            <p class="hv-res hv-bad"><b>27</b> × «95%»</p>
+            <p class="hv-res hv-good"><b>11</b> × «≈ 2%»</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="badge">1995 • Frequenze naturali</div>
+        <h2 class="author-name">Gerd Gigerenzer</h2>
+        <img src="img/gigerenzer.jpg" class="author-photo" alt="Gerd Gigerenzer">
+        <p class="author-quote">Contate persone, non percentuali.</p>
+        <p class="photo-credit">Foto: Stephan Röhl / Heinrich-Böll-Stiftung · CC BY-SA 2.0</p>
+      </section>
+
+      <!-- Atto II • L'albero è un'area (scena: js/alberi.js) -->
+      <section id="albero">
+        <div class="badge">Atto II • Alberi</div>
+        <h2 class="scene-title">L'albero è un rettangolo tagliato</h2>
+        <svg class="scene-svg" width="1180" height="450" viewBox="0 0 1180 450" role="img" aria-label="Un albero di probabilità a due livelli e lo stesso albero come tagli del quadrato Omega"></svg>
+        <p class="tm-rule">nodi = eventi &nbsp;·&nbsp; rami = condizionate &nbsp;·&nbsp; <b>foglia = prodotto del cammino</b></p>
+      </section>
+
+      <!-- Esercizio: il test medico con il solo albero (§2.1 C) (scena: js/alberi.js) -->
+      <section id="albero-medico">
+        <h2 class="scene-title">Esercizio: test positivo, sei malato?</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="660" height="420" viewBox="0 0 660 420" role="img" aria-label="Albero del test medico: malattia, poi test"></svg>
+          <div class="scene-panel am-panel">
+            <div class="chips">
+              <span class="chip">prevalenza <b>1%</b></span>
+              <span class="chip">sensibilità <b>95%</b></span>
+              <span class="chip">specificità <b>90%</b></span>
+            </div>
+            <p class="am-q">Solo l'albero e $P(A \mid B) = \dfrac{P(A \cap B)}{P(B)}$</p>
+            <p class="am-l am-l1">$P(E) = 0.0095 + 0.0990 = 0.1085$</p>
+            <p class="am-l am-l2">$P(H \mid E) = \dfrac{0.0095}{0.1085} \approx \color{#38ef7d}{0.088}$</p>
+            <p class="scene-note am-l am-l3">Test «buono al 95%»: meno di 1 positivo su 10 è malato.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Esercizio: tre monete (scena: js/alberi.js) -->
+      <section id="monete">
+        <h2 class="scene-title">Esercizio: tre monete</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="660" height="440" viewBox="0 0 660 440" role="img" aria-label="Albero dei tre lanci di moneta"></svg>
+          <div class="scene-panel mn-panel">
+            <p class="mn-q mn-q1">$P(\text{esattamente 2 teste})$?</p>
+            <p class="mn-a mn-a1">$3 \cdot \tfrac18 = \tfrac38$</p>
+            <p class="mn-q mn-q2">$P(\text{almeno una testa})$?</p>
+            <p class="mn-a mn-a2">$1 - \tfrac18 = \tfrac78$</p>
+            <p class="scene-note mn-note">Rami tutti uguali: l'indipendenza <strong>si vede</strong>. Si scrive $T_1 \cap T_2$, mai $T \cap T$.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto III • Ribaltare l'albero (scena interattiva: js/alberi.js) -->
+      <section id="ribalta">
+        <div class="badge">Atto III • Il ribaltamento</div>
+        <h2 class="scene-title">Bayes = ribaltare l'albero</h2>
+        <svg class="scene-svg" width="1180" height="430" viewBox="0 0 1180 430" role="img" aria-label="L'albero causale attacco-allarme e lo stesso albero ribaltato: le foglie, ad area proporzionale, sono le stesse"></svg>
+        <div class="rb-ctrl">
+          <label class="rb-sl"><span>$P(H)$</span><input type="range" data-k="lp" min="-4" max="-0.3" step="0.01"><b data-v="lp"></b></label>
+          <label class="rb-sl"><span>sens.</span><input type="range" data-k="sens" min="0.5" max="1" step="0.001"><b data-v="sens"></b></label>
+          <label class="rb-sl"><span>spec.</span><input type="range" data-k="spec" min="0.5" max="1" step="0.0005"><b data-v="spec"></b></label>
+          <button class="psi-btn ghost rb-scale" type="button">aree: log</button>
+          <button class="psi-btn rb-flip" type="button">⇄ Ribalta</button>
+        </div>
+      </section>
+
+      <!-- 10.000 connessioni (scena su canvas: js/popolazione.js) -->
+      <section id="popolazione">
+        <h2 class="scene-title">10.000 connessioni</h2>
+        <div class="scene-grid wide">
+          <canvas class="pop-canvas" width="1400" height="880" style="width: 700px; height: 440px;" aria-label="10.000 connessioni: attacchi, allarmi veri e falsi allarmi"></canvas>
+          <div class="scene-panel pop-panel">
+            <p class="pop-row"><span class="pop-key k-h"></span><b data-k="h">100</b> attacchi</p>
+            <p class="pop-row"><span class="pop-key k-tp"></span><b data-k="tp">99</b> allarmi veri</p>
+            <p class="pop-row"><span class="pop-key k-fp"></span><b data-k="fp">99</b> falsi allarmi</p>
+            <div class="scene-def pop-res">$$P(H \mid E) = \frac{\color{#f87171}99}{\color{#f87171}99 \color{#edf2f7}+ \color{#94a3b8}99} = 50\%$$</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- La risposta al sondaggio (js/storia.js) -->
+      <section id="risposta">
+        <p class="badge red">La risposta</p>
+        <h2 class="huge-question">(c) &nbsp;<span class="highlight">50%</span></h2>
+        <div class="poll poll-mirror"></div>
+        <p class="subtitle fragment">Metà degli allarmi sono falsi, con un rilevatore che sbaglia l'1% delle volte.</p>
+      </section>
+
+      <!-- Quanto conta la rarità (scena interattiva: js/popolazione.js) -->
+      <section id="prevalenza">
+        <h2 class="scene-title">Quanto conta la rarità?</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="640" height="440" viewBox="0 0 640 440" role="img" aria-label="P(attacco | allarme) in funzione della prevalenza"></svg>
+          <div class="scene-panel pv-panel">
+            <p class="pv-big">$P(H \mid E) =$ <b class="pv-post">50%</b></p>
+            <label class="pv-slider"><span>prevalenza</span><input type="range" data-k="lp" min="-4" max="0" step="0.01"><b data-v="lp"></b></label>
+            <label class="pv-slider"><span>sensibilità</span><input type="range" data-k="sens" min="0.5" max="1" step="0.001"><b data-v="sens"></b></label>
+            <label class="pv-slider"><span>specificità</span><input type="range" data-k="spec" min="0.9" max="1" step="0.0001"><b data-v="spec"></b></label>
+            <p class="pv-freq">su 10.000 allarmi: <b class="pv-tp">5.000</b> veri · <b class="pv-fp">5.000</b> falsi</p>
+            <p class="scene-note pv-note">La leva vera: i falsi allarmi.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quiz: è una partizione? (trappola 4 del §6.3) -->
+      <section>
+        <p class="badge orange">È una partizione?</p>
+        <h2 class="huge-question" style="font-size: 1.4em !important;">Due moduli: $A$ = errore nel I, $B$ = errore nel II</h2>
+        <div class="tr-opts">
+          <p class="tr-opt"><span>$\{A,\; B,\; A \cap B\}$</span><b class="fragment vf-no">✗ &nbsp;<small>si sovrappongono, manca «nessuno»</small></b></p>
+          <p class="tr-opt"><span>$\{A \cap B^c,\; A^c \cap B,\; A \cap B,\; A^c \cap B^c\}$</span><b class="fragment vf-yes">✓ &nbsp;<small>solo I · solo II · entrambi · nessuno</small></b></p>
+        </div>
+        <p class="subtitle fragment">Controllo: i prior sommano a 1. &nbsp;$0.12 + 0.32 + 0.08 + 0.48 = 1$</p>
+      </section>
+
+      <!-- Atto IV • Probabilità totale e Bayes sul mosaico (scena: js/bayes.js) -->
+      <section id="moduli">
+        <div class="badge">Atto IV • La matematica</div>
+        <h2 class="scene-title">Il programma è andato in crash: di chi è la colpa?</h2>
+        <div class="scene-grid wide">
+          <svg class="scene-svg" width="700" height="450" viewBox="0 0 700 450" role="img" aria-label="Omega diviso nei quattro casi di errore; dentro ogni caso la parte con crash"></svg>
+          <div class="scene-panel">
+            <ol class="scene-steps">
+              <li><strong>Partizione</strong>: 4 casi, prior che sommano a 1</li>
+              <li><strong>Verosimiglianza</strong> $P(C \mid H_i)$: somma 2.2, non 1!</li>
+              <li><strong>Somma</strong> i pezzi: $P(C) = 0.388$</li>
+              <li><strong>Dividi</strong>: ogni pezzo diventa un posterior</li>
+            </ol>
+            <div class="scene-def md-f1">$$P(C) = \sum_i P(C \mid H_i)\,P(H_i)$$</div>
+            <div class="scene-def md-f2">$$P(H_j \mid C) = \frac{P(C \mid H_j)\,P(H_j)}{P(C)}$$</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vero o falso -->
+      <section>
+        <p class="badge orange">Vero o falso?</p>
+        <div class="vf">
+          <p class="vf-row"><span>$P(A \mid B) + P(A^c \mid B) = 1$</span><b class="fragment vf-yes">✓</b></p>
+          <p class="vf-row"><span>$P(A \mid B) + P(A \mid B^c) = 1$</span><b class="fragment vf-no">✗ &nbsp;<small>$0.95 + 0.10$</small></b></p>
+          <p class="vf-row"><span>$\sum_i P(C \mid H_i) = 1$</span><b class="fragment vf-no">✗ &nbsp;<small>$2.2$</small></b></p>
+          <p class="vf-row"><span>$\sum_i P(H_i \mid C) = 1$</span><b class="fragment vf-yes">✓</b></p>
+        </div>
+        <p class="subtitle fragment">Sommano a 1 solo le probabilità con la <strong>stessa condizione</strong> a destra della barra.</p>
+      </section>
+
+      <!-- Il vocabolario -->
+      <section id="vocabolario">
+        <h2 class="scene-title">Ogni pezzo ha un nome</h2>
+        <div class="vc-formula">$$\color{#38ef7d}P(H \mid E) \color{#edf2f7} = \frac{\color{#fbbf24}P(E \mid H)\,\color{#edf2f7}\cdot\,\color{#f87171}P(H)}{\color{#c084fc}P(E)}$$</div>
+        <div class="vc-names">
+          <span class="fragment vc-name" style="color: #f87171;">prior<small>prima dei dati</small></span>
+          <span class="fragment vc-name" style="color: #fbbf24;">verosimiglianza<small>quanto H spiega E</small></span>
+          <span class="fragment vc-name" style="color: #c084fc;">evidenza<small>tutte le cause</small></span>
+          <span class="fragment vc-name" style="color: #38ef7d;">posterior<small>dopo i dati</small></span>
+        </div>
+        <p class="vc-prop fragment">posterior $\;\propto\;$ verosimiglianza $\times$ prior</p>
+      </section>
+
+      <!-- Ignorare il prior -->
+      <section>
+        <p class="badge orange">E se ignorassi il prior?</p>
+        <h2 class="huge-question" style="font-size: 1.6em !important;">Chi risponde «99%»…</h2>
+        <div class="box ig-box">
+          <p class="fragment">$\dfrac{0.99 \cdot \color{#f87171}{0.5}}{0.99 \cdot \color{#f87171}{0.5}\color{#edf2f7} + 0.01 \cdot \color{#f87171}{0.5}} = 0.99$</p>
+          <p class="fragment ig-verdict">…sta usando $P(H) = 0.5$: <span class="warning">metà delle connessioni sono attacchi.</span></p>
+        </div>
+        <p class="subtitle fragment">Ignorare il prior = usare il prior sbagliato.</p>
+      </section>
+
+      <!-- La forma a odds (scena interattiva: js/bayes.js) -->
+      <section id="odds">
+        <h2 class="scene-title">Odds: l'evidenza si somma</h2>
+        <div class="scene-def od-def">$$O(H \mid E) = \Lambda \cdot O(H) \qquad \Lambda = \frac{P(E \mid H)}{P(E \mid H^c)}$$</div>
+        <svg class="scene-svg od-svg" width="1160" height="300" viewBox="0 0 1160 300" role="img" aria-label="La credenza su una scala di log-odds: ogni evidenza la sposta di un tratto fisso"></svg>
+        <div class="od-buttons">
+          <button class="psi-btn" type="button" data-lr="99">🚨 allarme rete ×99</button>
+          <button class="psi-btn" type="button" data-lr="19">🖥 allarme server ×19</button>
+          <button class="psi-btn ghost" type="button" data-lr="0.0101">🔕 nessun allarme ×1/99</button>
+          <button class="psi-btn ghost od-copy" type="button" data-lr="1">📋 copia dei log di rete</button>
+          <button class="psi-btn ghost od-reset" type="button">↺</button>
+        </div>
+      </section>
+
+      <!-- Esercizio: quanto deve essere buono un IDS -->
+      <section>
+        <p class="badge orange">Esercizio</p>
+        <h2 class="huge-question" style="font-size: 1.5em !important;">Attacchi: 1 su 10.000. Vuoi allarmi veri al 90%.<br>Quanti falsi allarmi puoi permetterti?</h2>
+        <div class="box qb-box">
+          <p class="fragment">prima: $O(H) = \dfrac{1}{9999}$ &nbsp;&nbsp; obiettivo: $O(H \mid E) \ge \dfrac{0.9}{0.1} = 9$</p>
+          <p class="fragment">$\Lambda \ge 9 \cdot 9999 \approx 90\,000$</p>
+          <p class="fragment">$P(E \mid H^c) \le \dfrac{0.99}{90\,000} \approx \color{#38ef7d}{0.00001}$</p>
+        </div>
+        <p class="subtitle fragment">Un errore ogni <strong>centomila</strong> connessioni legittime.</p>
+      </section>
+
+      <!-- Atto V • Esempi: test medico (scena su canvas: js/popolazione.js) -->
+      <section id="es-medico">
+        <div class="badge">Atto V • Esempi</div>
+        <h2 class="scene-title">Il test medico</h2>
+        <div class="scene-grid wide">
+          <canvas class="pop-canvas" width="1400" height="880" style="width: 700px; height: 440px;" aria-label="2000 persone: malati, positivi veri e falsi"></canvas>
+          <div class="scene-panel pop-panel">
+            <div class="chips">
+              <span class="chip">prevalenza <b>1%</b></span>
+              <span class="chip">sensibilità <b>95%</b></span>
+              <span class="chip">specificità <b>90%</b></span>
+            </div>
+            <p class="pop-ask">Positivo. Malato?</p>
+            <p class="pop-row"><span class="pop-key k-h"></span><b data-k="h">20</b> malati</p>
+            <p class="pop-row"><span class="pop-key k-tp"></span><b data-k="tp">19</b> positivi malati</p>
+            <p class="pop-row"><span class="pop-key k-fp"></span><b data-k="fp">198</b> positivi sani</p>
+            <div class="scene-def pop-res">$$\frac{\color{#f87171}19}{\color{#f87171}19\color{#edf2f7} + \color{#94a3b8}198} \approx 9\%$$</div>
+            <p class="scene-note pop-extra">Negativo? $1$ malato su $1783$: $0.06\%$. Ottimo per <strong>escludere</strong>.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trappola di traduzione -->
+      <section>
+        <p class="badge orange">Trappola</p>
+        <h2 class="huge-question" style="font-size: 1.5em !important;">«Affidabile al 99% sui sani»</h2>
+        <div class="tr-opts">
+          <p class="tr-opt"><span>$P(S \mid V^c) = 0.99$</span><b class="fragment vf-no">✗ &nbsp;<small>il 99% dei sani positivo!</small></b></p>
+          <p class="tr-opt"><span>$P(S^c \mid V^c) = 0.99$</span><b class="fragment vf-yes">✓ &nbsp;<small>quindi $P(S \mid V^c) = 0.01$</small></b></p>
+        </div>
+        <p class="subtitle fragment">Di quale evento è la probabilità? <strong>Sapendo che cosa?</strong></p>
+      </section>
+
+      <!-- Il virus (Baron 2.34) (scena su canvas: js/popolazione.js) -->
+      <section id="es-virus">
+        <h2 class="scene-title">Il virus (Baron 2.34)</h2>
+        <div class="scene-grid wide">
+          <canvas class="pop-canvas" width="1400" height="880" style="width: 700px; height: 440px;" aria-label="2000 computer: infetti, segnalati veri e falsi"></canvas>
+          <div class="scene-panel pop-panel">
+            <div class="chips">
+              <span class="chip">infetti <b>4%</b></span>
+              <span class="chip">$P(S \mid V) = $ <b>0.95</b></span>
+              <span class="chip">$P(S \mid V^c) = $ <b>0.01</b></span>
+            </div>
+            <p class="pop-ask">Segnalato. Infetto?</p>
+            <p class="pop-row"><span class="pop-key k-h"></span><b data-k="h">80</b> infetti</p>
+            <p class="pop-row"><span class="pop-key k-tp"></span><b data-k="tp">76</b> segnalati infetti</p>
+            <p class="pop-row"><span class="pop-key k-fp"></span><b data-k="fp">19</b> segnalati sani</p>
+            <div class="scene-def pop-res">$$\frac{\color{#f87171}76}{\color{#f87171}76\color{#edf2f7} + \color{#94a3b8}19} \approx 80\%$$</div>
+            <p class="scene-note pop-extra">Con prevalenza 1%: $\approx 49\%$. Stesso test, <strong>prior</strong> diverso.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Il quiz di Harvard risolto (scena su canvas: js/popolazione.js) -->
+      <section id="es-harvard">
+        <h2 class="scene-title">Harvard 1978, risolto</h2>
+        <div class="scene-grid wide">
+          <canvas class="pop-canvas" width="1400" height="880" style="width: 700px; height: 440px;" aria-label="1000 persone: un malato e circa 50 falsi positivi"></canvas>
+          <div class="scene-panel pop-panel">
+            <div class="chips">
+              <span class="chip">malattia <b>1 su 1000</b></span>
+              <span class="chip">falsi positivi <b>5%</b></span>
+            </div>
+            <p class="pop-ask">Positivo. Malato?</p>
+            <p class="pop-row"><span class="pop-key k-h"></span><b data-k="h">1</b> malato</p>
+            <p class="pop-row"><span class="pop-key k-tp"></span><b data-k="tp">1</b> positivo malato</p>
+            <p class="pop-row"><span class="pop-key k-fp"></span><b data-k="fp">50</b> positivi sani</p>
+            <div class="scene-def pop-res">$$\frac{\color{#f87171}1}{\color{#f87171}1\color{#edf2f7} + \color{#94a3b8}50} \approx 2\%$$</div>
+            <p class="scene-note pop-extra">Il «95%» era $1 - P(E \mid H^c)$: tutt'altra domanda.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Controllo qualità: dove si è rotto? (scena: js/bayes.js) -->
+      <section id="qualita">
+        <h2 class="scene-title">Test finale fallito: dove si è rotto?</h2>
+        <div class="scene-grid wide">
+          <svg class="scene-svg" width="700" height="450" viewBox="0 0 700 450" role="img" aria-label="Albero a tre livelli: materiali, design, test finale"></svg>
+          <div class="scene-panel ql-panel">
+            <p class="ql-row"><b>M</b> materiali &nbsp; <b>D</b> design &nbsp; <b>T</b> test</p>
+            <p class="ql-q ql-q1">$P(M \cap D \cap T) = 0.9 \cdot 0.8 \cdot 0.95 = 0.684$</p>
+            <p class="ql-q ql-q2">$P(T^c) = 0.036 + 0.072 + 0.016 + 0.042 = 0.166$</p>
+            <p class="ql-q ql-q3">Colpevole più probabile: <b class="highlight">design, con materiali buoni</b></p>
+            <p class="scene-note ql-q4">Più di 1 fallimento su 5 aveva superato entrambi i controlli.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Esercizio: i compiti non firmati (scena: js/bayes.js) -->
+      <section id="compiti">
+        <h2 class="scene-title">Esercizio: tre compiti senza nome</h2>
+        <div class="scene-grid wide">
+          <svg class="scene-svg" width="700" height="440" viewBox="0 0 700 440" role="img" aria-label="Gli otto esiti dei tre compiti come strisce di Omega"></svg>
+          <div class="scene-panel cp-panel">
+            <p class="cp-lead">Buoni con prob. <b>0.8</b>, <b>0.7</b>, <b>0.5</b>.<br>Trovati: <b class="highlight">2 buoni, 1 insufficiente</b>.</p>
+            <p class="cp-ask">Di chi è l'insufficiente?<br><span class="cp-guess">a istinto?</span></p>
+            <p class="cp-res">$P(Z \mid \text{GGB}) = \tfrac{28}{47} \approx 60\%$</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Simulazione Monte Carlo dell'IDS (scena su canvas: js/simulazioni.js) -->
+      <section id="sim-ids">
+        <h2 class="scene-title">Esperimento live: 200.000 connessioni</h2>
+        <div class="scene-grid wide">
+          <canvas class="sim-canvas" width="1400" height="880" style="width: 700px; height: 440px;" aria-label="Frequenza di attacchi veri tra gli allarmi, al crescere delle connessioni simulate"></canvas>
+          <div class="scene-panel sim-panel">
+            <p class="sim-n"><b class="sim-count">0</b> connessioni</p>
+            <p class="sim-line s1"><i></i>dopo 1 allarme <b class="sim-v1">—</b></p>
+            <p class="sim-line s2"><i></i>+ 2° rilevatore indipendente <b class="sim-v2">—</b></p>
+            <p class="sim-line s3"><i></i>+ copia del 1° <b class="sim-v3">—</b></p>
+            <p class="scene-note sim-note">La copia non aggiunge nulla: stessa evidenza contata due volte.</p>
+            <div class="mc-buttons">
+              <button class="psi-btn sim-rerun" type="button">▶ Nuove connessioni</button>
+              <a class="psi-btn ghost" href="../#lab-montecarlo" target="_blank">💻 Laboratorio ↗</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Matrice di confusione (scena: js/simulazioni.js) -->
+      <section id="confusione">
+        <div class="badge">Per l'ingegnere del software</div>
+        <h2 class="scene-title">La matrice di confusione è l'albero</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="620" height="400" viewBox="0 0 620 400" role="img" aria-label="La matrice di confusione dell'IDS su 10.000 connessioni"></svg>
+          <div class="scene-panel cf-panel">
+            <p class="cf-m cf-rec">recall &nbsp;$= P(E \mid H)$ <b>99%</b></p>
+            <p class="cf-m cf-prec">precision $= P(H \mid E)$ <b>50%</b></p>
+            <p class="cf-m cf-acc">accuracy <b class="cf-acc-v">99%</b></p>
+            <p class="cf-lazy">Rilevatore che <strong>non suona mai</strong>: accuracy <b>99%</b>, recall <b class="warning">0%</b>.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SIEM -->
+      <section>
+        <div class="badge">Alert fatigue</div>
+        <h2 class="huge-question" style="font-size: 1.6em !important;">1.000.000 di eventi al giorno</h2>
+        <div class="sm-grid">
+          <p class="fragment sm-num"><b class="warning">10.000</b><span>falsi allarmi<br>(falsi positivi 1%)</span></p>
+          <p class="fragment sm-num"><b class="highlight">≤ 100</b><span>allarmi veri<br>(anche con recall 100%)</span></p>
+        </div>
+        <p class="subtitle fragment">Le leve: meno falsi positivi · più contesto (prior) · rilevatori davvero indipendenti.</p>
+      </section>
+
+      <!-- Domanda d'uscita (regia, week_02_extended §6.1) -->
+      <section>
+        <p class="badge orange">Domanda d'uscita</p>
+        <h2 class="huge-question" style="font-size: 1.5em !important;">Il tuo rilevatore ha precision <span class="highlight">50%</span> in laboratorio,<br>dove metà del traffico è malevolo.<br>In produzione è malevolo l'1%. Precision?</h2>
+        <div class="box qb-box">
+          <p class="fragment">$\dfrac{r \cdot 0.5}{r \cdot 0.5 + f \cdot 0.5} = 0.5 \;\Rightarrow\; r = f \;\Rightarrow\; \Lambda = 1$</p>
+          <p class="fragment">Il rilevatore non distingue nulla: posterior = prior = <span class="warning">1%</span></p>
+        </div>
+      </section>
+
+      <!-- Chiusura -->
+      <section>
+        <h2 class="huge-question">Il posterior di oggi<br>è il <span class="highlight">prior</span> di domani.</h2>
+        <p class="subtitle">Rileggi Laplace: <em>una foglia, diviso la somma delle foglie compatibili con ciò che hai visto.</em></p>
+        <p style="margin-top: 30px;"><a class="psi-btn ghost" href="../" target="_blank">📖 Dispensa e laboratorio ↗</a></p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="../../assets/slides/scene.js"></script>
+  <script src="js/comuni.js"></script>
+  <script src="js/storia.js"></script>
+  <script src="js/alberi.js"></script>
+  <script src="js/popolazione.js"></script>
+  <script src="js/bayes.js"></script>
+  <script src="js/simulazioni.js"></script>
+  <script>
+    PSIDeck.start({ onReady: function (deck) { S2.onReady(deck); } });
+  </script>
+</body>
+</html>

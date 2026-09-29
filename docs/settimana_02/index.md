@@ -504,6 +504,8 @@ In parole: ogni volta che $A$ si verifica, si verifica insieme a esattamente uno
 
 Nella Settimana 1 abbiamo descritto il condizionamento come uno *zoom*: sappiamo che $B$ è accaduto, quindi $B$ diventa il nostro nuovo universo. Possiamo rendere precisa questa idea.
 
+Ricordiamo prima una distinzione della [Settimana 1, §5](../settimana_01/index.md#5-gli-assiomi-di-kolmogorov-1933). Una **misura di probabilità** è una *funzione* $P$ che a ogni evento $A$ associa un numero $P(A)$ e rispetta i tre assiomi di Kolmogorov: non-negatività, normalizzazione ($P(\Omega) = 1$) e $\sigma$-additività. Lo **spazio di probabilità** è invece la terna $(\Omega, \mathcal{F}, P)$: gli esiti possibili, gli eventi e la misura che assegna loro una probabilità. Il teorema qui sotto lascia fermi $\Omega$ e $\mathcal{F}$ e cambia solo la misura: al posto di $P$ mettiamo $P(\cdot \mid B)$, dove il puntino indica il posto in cui va l'evento $A$.
+
 !!! note "Teorema ($P(\cdot \mid B)$ è una misura di probabilità)"
     Sia $P(B) > 0$. La funzione che a ogni evento $A$ associa il numero $P(A \mid B)$ soddisfa tutti e tre gli assiomi di Kolmogorov:
 

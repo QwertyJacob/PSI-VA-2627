@@ -600,6 +600,8 @@ Sull'albero abbiamo usato una regola pratica: la probabilità di un nodo è il p
     P(N_m) = P(N_1 \mid N_0) \cdot P(N_2 \mid N_1) \cdots P(N_m \mid N_{m-1}).
     $$
 
+    Non compare un fattore $P(N_0)$ perché $N_0 = \Omega$ e $P(\Omega) = 1$; per lo stesso motivo il primo ramo $P(N_1 \mid N_0)$ coincide con $P(N_1)$.
+
     Inoltre, in un albero in cui tutte le foglie stanno allo stesso livello, **i nodi di ciascun livello formano una partizione di $\Omega$**, e quindi le loro probabilità sommano a 1.
 
 In un albero «sequenziale», dove al livello $t$ si decide se accade un evento $A_t$ oppure il suo complementare, questa è esattamente la regola del prodotto a catena della Settimana 1:
@@ -609,7 +611,7 @@ P(A_1 \cap A_2 \cap A_3) = P(A_1) \cdot P(A_2 \mid A_1) \cdot P(A_3 \mid A_1 \ca
 $$
 
 ??? approfondimento "Dimostrazione (per induzione sul numero di rami)"
-    *Idea dell'induzione.* Si dimostra la tesi per il cammino più corto possibile (caso base), poi si mostra che, se vale per un cammino di $m$ rami, vale anche aggiungendo un ramo ($m+1$). Allora vale per tutti i cammini, come in una fila di tessere del domino.
+    *Idea dell'induzione.* Si dimostra la tesi per il cammino più corto possibile (caso base), poi si mostra che, se vale per un cammino di $m$ rami, vale anche aggiungendo un ramo ($m+1$). Allora vale per tutti i cammini, come in una fila di tessere del domino: se cade la prima, e ogni tessera che cade fa cadere la successiva, cadono tutte.
 
     *Caso base, $m = 0$.* Il nodo è la radice, $P(\Omega) = 1$: il prodotto di zero fattori vale 1 per convenzione.
 
@@ -724,10 +726,10 @@ $$
 
     Questi tre passi sono tutto ciò che fa lo Script 1 del laboratorio.
 
-!!! caution "La verosimiglianza non è una probabilità delle ipotesi"
+!!! caution "La verosimiglianza non è una misura di probabilità delle ipotesi"
     Fissata l'evidenza $E$, i numeri $P(E \mid H_1), P(E \mid H_2), \dots$ **non sommano a 1**, e non devono farlo: ciascuno è calcolato in un «universo» diverso (dentro $H_1$, dentro $H_2$…). Nell'esempio dei moduli software che vedremo tra poco, le verosimiglianze sono $0.5$, $0.8$, $0.9$ e $0$, con somma $2.2$. Sono invece i **posterior** $P(H_1 \mid E), P(H_2 \mid E), \dots$ a sommare a 1, perché sono tutti calcolati nello stesso universo, quello in cui $E$ si è verificato.
 
-    È lo stesso concetto emerso nella Settimana 1 con il paradosso di Alice e Bob: la verosimiglianza misura che cosa i dati dicono **sulle** ipotesi, non è una probabilità **delle** ipotesi.
+    
 
 **Due casi limite istruttivi.**
 

@@ -2,6 +2,7 @@
 //
 //   npm run slides:check -- settimana_01 [opzioni]
 //
+//   --page NOME        il file del mazzo, senza .html (predefinito: index)
 //   --scenes id1,id2   solo queste scene (predefinito: tutte quelle animate)
 //   --out DIR          dove salvare gli screenshot (predefinito: cartella temporanea)
 //   --wait MS          attesa dopo ogni avanzamento (predefinito: 3500)
@@ -29,6 +30,7 @@ const flag = (name) => args.includes('--' + name);
 const deck = args.find((a) => !a.startsWith('--') && !args[args.indexOf(a) - 1]?.startsWith('--')) || 'settimana_01';
 const out = path.resolve(opt('out', path.join(os.tmpdir(), 'psi-slides', deck)));
 const wait = Number(opt('wait', 3500));
+const pageName = opt('page', 'index');
 
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png',
   '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.woff': 'font/woff', '.ttf': 'font/ttf', '.json': 'application/json' };
@@ -63,7 +65,7 @@ async function grid(browser, files, target, cols = 3) {
 }
 
 const server = await serve();
-const base = `http://127.0.0.1:${server.address().port}/${deck}/slides/index.html`;
+const base = `http://127.0.0.1:${server.address().port}/${deck}/slides/${pageName}.html`;
 const browser = await chromium.launch(process.env.PSI_CHROMIUM ? { executablePath: process.env.PSI_CHROMIUM } : {});
 const problems = [];
 await fs.mkdir(out, { recursive: true });

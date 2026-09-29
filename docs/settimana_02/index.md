@@ -1,4 +1,4 @@
-[:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" }
+[:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" } [:material-presentation-play: Slide estese (con ripasso)](slides/extended.html){ .md-button target="_blank" }
 
 # Settimana 2 — Dall'effetto alla causa: alberi di probabilità e Teorema di Bayes
 *Come si torna indietro da ciò che vediamo (un allarme, un test positivo, un crash) a ciò che non vediamo (un attacco, una malattia, un bug), e perché quasi tutti, medici compresi, sbagliano questo conto.*
@@ -222,8 +222,8 @@ $$
 Quindi la regola «sui rami ci sono probabilità condizionate» vale per **tutti** i rami, senza eccezioni: al primo livello il condizionamento è all'evento certo, e per questo non si vede.
 
 !!! tip "I due controlli da fare su ogni albero"
-    1. **I rami che escono da uno stesso nodo sommano a 1.** Qui: $0.4 + 0.6 = 1$, $0.7 + 0.3 = 1$, $0.3 + 0.7 = 1$. Se un nodo non passa questo controllo, l'albero è costruito male: hai dimenticato un caso, oppure hai messo due casi che si sovrappongono.
-    2. **Le foglie sommano a 1.** Qui: $0.28 + 0.12 + 0.18 + 0.42 = 1$. Se questo controllo fallisce, c'è un errore nei conti.
+    1. **Le probabilità dei rami che escono da uno stesso nodo sommano a 1.** Qui: $0.4 + 0.6 = 1$, $0.7 + 0.3 = 1$, $0.3 + 0.7 = 1$. Se un nodo non passa questo controllo, l'albero è costruito male: hai dimenticato un caso, oppure hai messo due casi che si sovrappongono.
+    2. **Le probabilità delle foglie sommano a 1.** Qui: $0.28 + 0.12 + 0.18 + 0.42 = 1$. Se questo controllo fallisce, c'è un errore nei conti.
 
     Più in generale, **tutti i nodi di uno stesso livello sommano a 1**, perché insieme descrivono tutti i modi in cui la storia può essere andata fino a quel punto.
 
@@ -267,7 +267,6 @@ $$
 
 Lanciamo tre volte una moneta equa. Per distinguere i lanci numeriamo gli eventi: $T_i$ = «testa all'$i$-esimo lancio» e $C_i = T_i^c$ = «croce all'$i$-esimo lancio».
 
-(Attenzione: a volte si trova scritto $T \cap T \cap T$ per «tre teste». È una scorciatoia sbagliata, perché come insiemi $T \cap T = T$: la scrittura non distingue il primo lancio dal secondo. Gli indici servono proprio a questo.)
 
 ```
                                               ┌─ T₃ (½) ─▶ T₁∩T₂∩T₃  [0.125]
@@ -505,7 +504,7 @@ In parole: ogni volta che $A$ si verifica, si verifica insieme a esattamente uno
 
 Nella Settimana 1 abbiamo descritto il condizionamento come uno *zoom*: sappiamo che $B$ è accaduto, quindi $B$ diventa il nostro nuovo universo. Possiamo rendere precisa questa idea.
 
-!!! note "Teorema ($P(\cdot \mid B)$ è una probabilità)"
+!!! note "Teorema ($P(\cdot \mid B)$ è una misura di probabilità)"
     Sia $P(B) > 0$. La funzione che a ogni evento $A$ associa il numero $P(A \mid B)$ soddisfa tutti e tre gli assiomi di Kolmogorov:
 
     1. $P(A \mid B) \ge 0$ per ogni $A$;

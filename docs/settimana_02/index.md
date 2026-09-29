@@ -766,57 +766,38 @@ $$
 
 Due allarmi, e siamo passati dall'1% al 95%.
 
-Questo ragionamento è corretto? **Sì, ma a una condizione precisa**, che è importantissimo saper riconoscere.
+Guardiamo bene che cosa abbiamo messo nella formula. Il prior $0.5$ è **aggiornato**: è $P(H \mid E_1)$, il posterior dopo il primo allarme. Usare il posterior come nuovo prior è sempre lecito. Le verosimiglianze $0.95$ e $0.05$, invece, **non** sono aggiornate: sono i dati del produttore, $P(E_2 \mid H)$ e $P(E_2 \mid H^c)$, che descrivono il secondo rilevatore da solo, senza sapere nulla del primo.
 
-!!! note "Definizione (Indipendenza condizionata)"
-    Sia $P(H) > 0$. Due eventi $E_1$ ed $E_2$ sono **condizionatamente indipendenti dato $H$** se
+È lecito riusare le verosimiglianze del produttore del secondo rilevatore (cioè sensibilità $0.95$ e tasso di falsi positivi $0.05$) anche dopo aver visto il primo allarme? Dipende da **dove nascono gli errori** dei due rilevatori. Immaginiamo una notte **senza** attacchi in cui il primo rilevatore ha dato un falso allarme. Il secondo ha qualche motivo per sbagliare anche lui?
 
-    $$
-    P(E_1 \cap E_2 \mid H) = P(E_1 \mid H) \cdot P(E_2 \mid H).
-    $$
+* **Rilevatori che guardano dati diversi.** Il primo analizza il traffico di rete, il secondo i file del server. Qualcosa di strano nel traffico ha ingannato il primo, ma il secondo quel traffico non lo vede nemmeno. La probabilità che sbagli resta quella dichiarata dal produttore, $0.05$. Lo stesso vale nelle notti con un attacco. In questo caso le verosimiglianze del produttore vanno bene, e il conto che dà il 95% è corretto.
+* **Rilevatori che guardano gli stessi dati.** Entrambi leggono lo stesso log di rete. Ogni notte alle tre parte un backup legittimo che invia molti dati all'esterno: somiglia a un furto di dati e inganna **tutti e due**. Quindi, se il primo ha già dato un falso allarme, è molto probabile che anche il secondo stia sbagliando sulla stessa connessione, molto più del $5\%$ dichiarato dal produttore. Usare quel $5\%$ dà un posterior troppo alto.
 
-    Cioè: **una volta che sappiamo se $H$ è vera**, sapere che si è verificato $E_1$ non cambia la probabilità di $E_2$. È la solita definizione di indipendenza, applicata però dentro l'universo «$H$ si è verificato».
+Conta **che cosa guardano** i due rilevatori, non quanto sono precisi. Il primo rilevatore sbaglia sull'$1\%$ delle connessioni legittime, il secondo sul $5\%$. Queste percentuali dicono **quanto spesso** sbaglia ciascuno, ma non **su quali connessioni**. Due rilevatori che leggono lo stesso log possono avere percentuali di errore diverse e sbagliare comunque sulle stesse connessioni. Al contrario, due copie dello stesso software, una che analizza il traffico di rete e una che analizza il server, hanno le stesse percentuali di errore ma guardano dati diversi: ciò che inganna una, l'altra non lo vede nemmeno, e quindi non sbagliano insieme.
 
-Il conto che abbiamo fatto usa per il secondo allarme la verosimiglianza $P(E_2 \mid H) = 0.95$ fornita dal produttore. Ma, a rigore, dopo aver visto il primo allarme la verosimiglianza giusta sarebbe $P(E_2 \mid H \cap E_1)$: la probabilità del secondo allarme sapendo che c'è un attacco **e che il primo allarme è già scattato**. Le due coincidono proprio quando $E_1$ ed $E_2$ sono condizionatamente indipendenti dato $H$ (e dato $H^c$).
+Quando gli errori dei due rilevatori non hanno cause in comune, si dice che i due allarmi sono **condizionatamente indipendenti** dato lo stato del sistema: indipendenti *una volta che sappiamo* se c'è un attacco oppure no. In formula, $P(E_2 \mid H \cap E_1) = P(E_2 \mid H)$, e lo stesso con $H^c$ al posto di $H$. La definizione precisa la vedremo nella Settimana 12, dove è l'ipotesi su cui si regge il classificatore Naive Bayes.
 
-!!! success "Aggiornamento sequenziale"
-    Se le evidenze $E_1, E_2$ sono condizionatamente indipendenti dato ciascuna delle ipotesi, allora:
+!!! esempio "Il caso estremo: un rilevatore che copia il primo"
+    Supponiamo che il «secondo rilevatore» sia una semplice copia del primo (sensibilità $0.99$, falsi positivi $0.01$): suona esattamente quando suona il primo.
 
-    * aggiornare **una alla volta** (il posterior dopo $E_1$ diventa il prior per $E_2$),
-    * aggiornare **tutto in blocco** con la verosimiglianza congiunta $P(E_1 \cap E_2 \mid H) = P(E_1 \mid H)\,P(E_2 \mid H)$,
-
-    danno **lo stesso risultato**, e l'ordine in cui arrivano le evidenze non conta.
-
-??? approfondimento "Perché funziona: condizionare due volte è come condizionare una volta sola"
-    Il punto chiave è un piccolo lemma. Se $P(B \cap C) > 0$, condizionare prima su $B$ e poi, dentro quel nuovo universo, su $C$, dà lo stesso risultato che condizionare una volta sola su $B \cap C$. Scriviamo $P_B(\cdot) = P(\cdot \mid B)$ per la probabilità condizionata a $B$ (che, come abbiamo dimostrato, è una probabilità a tutti gli effetti). Allora:
+    *Conto ingenuo*, con i dati del produttore:
 
     $$
-    P_B(A \mid C) = \frac{P_B(A \cap C)}{P_B(C)} = \frac{P(A \cap C \cap B)/P(B)}{P(C \cap B)/P(B)} = \frac{P(A \cap B \cap C)}{P(B \cap C)} = P(A \mid B \cap C). \qquad \blacksquare
+    \frac{0.99 \cdot 0.5}{0.99 \cdot 0.5 + 0.01 \cdot 0.5} = 0.99.
     $$
 
-    Di conseguenza il posterior dopo $E_1$, cioè $P_{E_1}$, è una probabilità vera e propria, e si può usare come prior applicando il Teorema di Bayes «dentro» $E_1$. Si ottiene, per ogni ipotesi $H_j$ della partizione:
+    *Conto corretto.* Se il primo allarme è già scattato, la copia scatta di sicuro, con o senza attacco: $P(E_2 \mid H \cap E_1) = P(E_2 \mid H^c \cap E_1) = 1$. Quindi
 
     $$
-    P(H_j \mid E_1 \cap E_2) = \frac{P(E_2 \mid H_j \cap E_1)\,P(H_j \mid E_1)}{\sum_i P(E_2 \mid H_i \cap E_1)\,P(H_i \mid E_1)}.
+    \frac{1 \cdot 0.5}{1 \cdot 0.5 + 1 \cdot 0.5} = 0.5.
     $$
 
-    Questa formula è **sempre** corretta. L'indipendenza condizionata serve solo a sostituire $P(E_2 \mid H_i \cap E_1)$, che di solito nessuno ci fornisce, con $P(E_2 \mid H_i)$, che è il dato del produttore. Infatti, se $P(H \cap E_1) > 0$:
-
-    $$
-    P(E_2 \mid H \cap E_1) = P_H(E_2 \mid E_1) = \frac{P_H(E_1 \cap E_2)}{P_H(E_1)},
-    $$
-
-    e questa quantità è uguale a $P_H(E_2)$ se e solo se $P_H(E_1 \cap E_2) = P_H(E_1)\,P_H(E_2)$, che è esattamente la definizione di indipendenza condizionata.
-
-**Indipendenza e indipendenza condizionata sono due cose diverse.** Nessuna delle due implica l'altra. Due esempi lo mostrano.
-
-* **Condizionatamente indipendenti, ma dipendenti.** I due allarmi dell'esempio sono condizionatamente indipendenti dato lo stato del sistema. Eppure, *senza* sapere se c'è un attacco, sono fortemente **dipendenti**: si ha $P(E_1) = 0.0198$, $P(E_2) = 0.95 \cdot 0.01 + 0.05 \cdot 0.99 = 0.059$ e $P(E_1 \cap E_2) = 0.99 \cdot 0.95 \cdot 0.01 + 0.01 \cdot 0.05 \cdot 0.99 = 0.0099$, mentre $P(E_1)\,P(E_2) \approx 0.0012$. Il motivo: entrambi «guardano» la stessa causa. Se scatta il primo, diventa più probabile che ci sia un attacco, e quindi diventa più probabile anche il secondo.
-* **Indipendenti, ma non condizionatamente indipendenti.** Lanciamo due volte una moneta equa: $T_1$ e $T_2$ sono indipendenti. Ma se qualcuno ci dice che è uscita **esattamente una testa** (chiamiamo $S$ questo evento), allora $P(T_1 \mid S) = P(T_2 \mid S) = \tfrac12$, mentre $P(T_1 \cap T_2 \mid S) = 0 \neq \tfrac14$: sapere che il primo lancio è testa ci dice con certezza che il secondo è croce. Condizionare su un effetto comune crea dipendenza tra cause indipendenti.
+    Il posterior non si muove, ed è giusto così: la copia non porta nessuna informazione nuova. Il conto ingenuo arriva al 99% perché **conta due volte la stessa evidenza**.
 
 !!! warning "Nota per l'ingegnere"
-    Due rilevatori che leggono **lo stesso flusso di log**, o che usano **le stesse regole**, **non** sono condizionatamente indipendenti: se uno sbaglia su una connessione legittima, è probabile che sbagli anche l'altro. Moltiplicare le loro verosimiglianze significa contare **due volte la stessa evidenza**, e il posterior risultante è troppo sicuro di sé. Caso estremo: se il secondo allarme è una semplice copia del primo, non porta nessuna informazione nuova e il posterior non dovrebbe muoversi affatto.
+    Prima di combinare due allarmi, chiediti da quali dati partono. Se i due rilevatori leggono **lo stesso flusso di log** o usano **le stesse regole**, non sono condizionatamente indipendenti: usare le verosimiglianze del produttore significa contare **due volte la stessa evidenza**, e il posterior che ne esce è troppo sicuro di sé.
 
-Il grafico seguente mostra come cresce il posterior dopo $k$ allarmi consecutivi, **supponendo** che siano condizionatamente indipendenti e tutti prodotti da rilevatori uguali.
+Il grafico seguente mostra come cresce il posterior dopo $k$ allarmi consecutivi, **supponendo** che siano condizionatamente indipendenti e tutti prodotti da rilevatori con la stessa sensibilità e lo stesso tasso di falsi positivi.
 
 <div class="psi-widget" id="s02-widget-sequenziale"></div>
 <script>
@@ -1296,7 +1277,7 @@ Nella Settimana 12 chiuderemo il cerchio con il classificatore **Naive Bayes**: 
 3. **Sommare le condizionate sbagliate.** $P(A \mid B) + P(A^c \mid B) = 1$ è vero; $P(A \mid B) + P(A \mid B^c) = 1$ in generale è falso (controesempio: $0.95 + 0.10 = 1.05$).
 4. **Usare ipotesi che non formano una partizione.** Per esempio $\{A, B, A \cap B\}$ per i due moduli: conta due volte gli errori in entrambi e dimentica «nessun errore». Controllo: i prior devono sommare a 1.
 5. **Trattare la verosimiglianza come una distribuzione.** Non stupirti se $\sum_j P(E \mid H_j) \neq 1$, e non «normalizzarla»: sono i posterior a sommare a 1.
-6. **Confondere indipendenza e indipendenza condizionata.** Moltiplicare le verosimiglianze di due rilevatori che leggono gli stessi log, oppure credere che due allarmi condizionatamente indipendenti siano indipendenti.
+6. **Contare due volte la stessa evidenza.** Riusare le verosimiglianze del produttore per due rilevatori che leggono gli stessi log: non sono condizionatamente indipendenti, e il posterior che ne esce è troppo sicuro di sé.
 7. **Pensare di poter ignorare il prior.** Ignorarlo significa usare implicitamente il prior «50 e 50», che di solito è il più sbagliato di tutti.
 8. **Scrivere etichette ambigue sugli alberi.** $T \cap T$ per due lanci diversi, oppure notazioni miste per il complementare ($\overline{B}$, $B'$…). Usa gli indici ($T_1$, $T_2$) e una sola notazione ($B^c$).
 
@@ -1309,7 +1290,7 @@ Nella Settimana 12 chiuderemo il cerchio con il classificatore **Naive Bayes**: 
 * **Probabilità totale:** $P(E) = \sum_i P(E \mid H_i)\,P(H_i)$, cioè la somma delle foglie compatibili con $E$.
 * **Teorema di Bayes:** $P(H_j \mid E) = P(E \mid H_j)\,P(H_j) \,/\, P(E)$, cioè una foglia divisa per la somma delle foglie compatibili con $E$. È il **ribaltamento dell'albero**.
 * **Vocabolario:** prior $P(H)$, verosimiglianza $P(E \mid H)$, evidenza $P(E)$, posterior $P(H \mid E)$. Posterior $\propto$ verosimiglianza $\times$ prior.
-* **Aggiornamento sequenziale:** il posterior di oggi è il prior di domani; moltiplicare le verosimiglianze è lecito solo con evidenze **condizionatamente indipendenti**.
+* **Aggiornamento sequenziale:** il posterior di oggi è **sempre** il prior di domani; riusare le verosimiglianze originali (e moltiplicarle) è lecito solo con evidenze **condizionatamente indipendenti**, cioè indipendenti una volta noto lo stato del sistema.
 * **Quando l'ipotesi è rara, il prior domina anche un test eccellente.** Un IDS al 99% su attacchi che sono l'1% del traffico produce allarmi veri solo nel 50% dei casi; se gli attacchi sono uno su diecimila, meno di un allarme su cento è vero. Conta il tasso di falsi allarmi.
 
 ---

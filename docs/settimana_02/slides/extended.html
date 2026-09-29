@@ -2,9 +2,10 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <title>PSI 26/27 — Settimana 2: Dall'effetto alla causa</title>
+  <title>PSI 26/27 — Settimana 2 (estesa): Dall'effetto alla causa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="../../assets/slides/deck.js"></script>
+  <link rel="stylesheet" href="../../settimana_01/slides/css/settimana.css">
   <link rel="stylesheet" href="css/settimana.css">
   <style>
     :root {
@@ -82,6 +83,245 @@
 <body>
   <div class="reveal">
     <div class="slides">
+
+      <!-- Nella puntata precedente: sei slide della settimana 1.
+           Le scene vengono da ../../settimana_01/slides/js; per modificarle si modifica la settimana 1. -->
+      <section>
+        <div class="badge">PSI 26/27 • Settimana 01</div>
+        <h2 class="huge-question">Nella puntata precedente…</h2>
+        <p class="subtitle">Esiti, eventi, operazioni, unione e condizionata</p>
+      </section>
+
+      <!-- Atto I • Esperimento ed esito (scena animata: js/atto1-insiemi.js) -->
+      <section id="esperimento">
+        <h2 class="scene-title">Esperimento ed esito: le nozioni primitive</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="640" height="440" viewBox="0 0 640 440" role="img" aria-label="Il ciclo tra esperimento ed esito"></svg>
+          <div class="scene-panel">
+            <p class="scene-lead">Due nozioni <strong>primitive</strong>, ciascuna definita tramite l'altra:</p>
+            <p class="scene-quote">«L'esito è ciò che un esperimento genera»<br>«L'esperimento è ciò che genera esiti»</p>
+            <ol class="scene-steps">
+              <li><strong>Idealizzare:</strong> gli esiti possibili si fissano in anticipo; le contingenze irrilevanti restano fuori.</li>
+              <li><strong>Uno e uno solo:</strong> ogni prova produce esattamente un esito. Mai due insieme, mai nessuno.</li>
+              <li>Vale per una moneta come per il traffico di rete su un server o l'avvio di una startup.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto I • Lo spazio campionario (scena animata: js/atto1-insiemi.js) -->
+      <section id="omega">
+        <h2 class="scene-title">Lo spazio campionario $\Omega$</h2>
+        <p class="scene-lead om-lead">Regola aurea: $\Omega$ è sempre la <strong>prima</strong> cosa da definire.</p>
+        <div class="om-grid">
+          <div class="om-panel">
+            <svg class="scene-svg om-svg" width="270" height="200" viewBox="0 0 270 200" role="img" aria-label="Tre carte: Q, K, J"></svg>
+            <h3>Finito</h3>
+            <p class="om-desc">Si pesca una carta tra tre</p>
+            <p class="om-formula">$\Omega = \{Q, K, J\}$</p>
+            <p class="om-card">$|\Omega| = 3$</p>
+          </div>
+          <div class="om-panel">
+            <svg class="scene-svg om-svg" width="270" height="200" viewBox="0 0 270 200" role="img" aria-label="Griglia delle coppie di carte"></svg>
+            <h3>Prodotto cartesiano</h3>
+            <p class="om-desc">Due carte in fila, con reimmissione</p>
+            <p class="om-formula">$\Omega = \{QQ, QK, \dots, JJ\}$</p>
+            <p class="om-card">$|\Omega| = 3 \times 3 = 9$</p>
+          </div>
+          <div class="om-panel">
+            <svg class="scene-svg om-svg" width="270" height="200" viewBox="0 0 270 200" role="img" aria-label="Sequenze di figli che terminano con GB"></svg>
+            <h3>Infinito numerabile</h3>
+            <p class="om-desc">Figli finché nasce una femmina ($G$) seguita da un maschio ($B$)</p>
+            <p class="om-formula">$\Omega = \{GB, BGB, GGB, \dots\}$</p>
+            <p class="om-card">nessun limite superiore</p>
+          </div>
+          <div class="om-panel">
+            <svg class="scene-svg om-svg" width="270" height="200" viewBox="0 0 270 200" role="img" aria-label="Ruota della fortuna"></svg>
+            <h3>Continuo</h3>
+            <p class="om-desc">L'angolo a cui si ferma una ruota della fortuna</p>
+            <p class="om-formula">$\Omega = [0, 2\pi)$</p>
+            <p class="om-card">$|\Omega| = |\mathbb{R}|$</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto I • Eventi (scena animata: js/atto1-insiemi.js) -->
+      <section id="eventi">
+        <h2 class="scene-title">Un evento è un sottoinsieme di $\Omega$</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="640" height="440" viewBox="0 0 640 440" role="img" aria-label="Le sei facce di un dado e l'evento «esce pari»"></svg>
+          <div class="scene-panel">
+            <p class="scene-lead">Lancio di un dado: $\Omega = \{1, 2, 3, 4, 5, 6\}$</p>
+            <ol class="scene-steps">
+              <li>«Esce un numero pari» è il sottoinsieme $A = \{2, 4, 6\}$.</li>
+              <li>$A$ <strong>si verifica</strong> se l'esito prodotto gli appartiene: $\omega \in A$.</li>
+              <li>$\Omega$ è l'<strong>evento certo</strong>, $\emptyset$ l'<strong>evento impossibile</strong>.</li>
+              <li>Ogni esito sta dentro o fuori: gli eventi sono $2^6 = 64$, in generale $|\mathcal{P}(\Omega)| = 2^N$.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto I • Operazioni tra eventi (scena animata: js/atto1.js) -->
+      <section id="venn-ops">
+        <h2 class="scene-title">Eventi come insiemi: le operazioni</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="640" height="440" viewBox="0 0 640 440" role="img" aria-label="Diagramma di Venn degli eventi A e B nello spazio campionario">
+            <defs>
+              <circle id="vo-a" cx="250" cy="220" r="130"/>
+              <circle id="vo-b" cx="390" cy="220" r="130"/>
+              <clipPath id="vo-in-a"><use href="#vo-a"/></clipPath>
+              <mask id="vo-out-a" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="440">
+                <rect width="640" height="440" fill="#fff"/><use href="#vo-a" fill="#000"/>
+              </mask>
+              <mask id="vo-out-b" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="440">
+                <rect width="640" height="440" fill="#fff"/><use href="#vo-b" fill="#000"/>
+              </mask>
+              <mask id="vo-out-ab" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="440">
+                <rect width="640" height="440" fill="#fff"/><use href="#vo-a" fill="#000"/><use href="#vo-b" fill="#000"/>
+              </mask>
+            </defs>
+            <rect class="omega" x="20" y="20" width="600" height="400" rx="16"/>
+            <rect class="region" data-region="none" x="20" y="20" width="600" height="400" rx="16" mask="url(#vo-out-ab)"/>
+            <rect class="region" data-region="notA" x="20" y="20" width="600" height="400" rx="16" mask="url(#vo-out-a)"/>
+            <use class="region" data-region="a" href="#vo-a" mask="url(#vo-out-b)"/>
+            <use class="region" data-region="ab" href="#vo-b" clip-path="url(#vo-in-a)"/>
+            <use class="region" data-region="b" href="#vo-b" mask="url(#vo-out-a)"/>
+            <use class="set set-a" href="#vo-a"/>
+            <use class="set set-b" href="#vo-b"/>
+            <text class="math-lbl" x="44" y="68">Ω</text>
+            <text class="math-lbl it lbl-a" x="150" y="100">A</text>
+            <text class="math-lbl it lbl-b" x="490" y="100">B</text>
+            <text class="math-lbl lbl-empty" x="310" y="398" text-anchor="middle"><tspan class="it">A</tspan> ∩ <tspan class="it">B</tspan> = ∅</text>
+          </svg>
+          <div class="op-panel">
+            <div class="op-chips">
+              <span class="op-chip">$\cup$</span>
+              <span class="op-chip">$\cap$</span>
+              <span class="op-chip">$A^c$</span>
+              <span class="op-chip">$\setminus$</span>
+              <span class="op-chip">$\emptyset$</span>
+            </div>
+            <div class="op-cards">
+              <div class="op-card">
+                <h3>Due eventi in $\Omega$</h3>
+                <p>Un evento è un <strong>sottoinsieme</strong> di $\Omega$: si verifica se l'esito $\omega$ prodotto dall'esperimento gli appartiene.</p>
+                <p class="op-def">Le operazioni tra eventi sono le operazioni tra insiemi, cioè i connettivi logici dell'informatica.</p>
+              </div>
+              <div class="op-card">
+                <h3>Unione</h3>
+                <p class="op-formula">$A \cup B$</p>
+                <p class="op-def">$\{\omega \in \Omega \mid \omega \in A \lor \omega \in B\}$</p>
+                <code class="op-code">A OR B</code>
+                <p>$A$ <em>oppure</em> $B$: almeno uno dei due</p>
+              </div>
+              <div class="op-card">
+                <h3>Intersezione</h3>
+                <p class="op-formula">$A \cap B$</p>
+                <p class="op-def">$\{\omega \in \Omega \mid \omega \in A \land \omega \in B\}$</p>
+                <code class="op-code">A AND B</code>
+                <p>$A$ <em>e</em> $B$: entrambi contemporaneamente</p>
+              </div>
+              <div class="op-card">
+                <h3>Complemento</h3>
+                <p class="op-formula">$A^c = \Omega \setminus A$</p>
+                <p class="op-def">$\{\omega \in \Omega \mid \omega \notin A\}$</p>
+                <code class="op-code">NOT A</code>
+                <p><em>non</em> $A$: tutto tranne $A$</p>
+              </div>
+              <div class="op-card">
+                <h3>Differenza</h3>
+                <p class="op-formula">$A \setminus B = A \cap B^c$</p>
+                <p class="op-def">$\{\omega \in \Omega \mid \omega \in A \land \omega \notin B\}$</p>
+                <code class="op-code">A AND NOT B</code>
+                <p>$A$ <em>ma non</em> $B$</p>
+              </div>
+              <div class="op-card">
+                <h3>Eventi disgiunti</h3>
+                <p class="op-formula">$A \cap B = \emptyset$</p>
+                <p class="op-def">Mutuamente esclusivi (incompatibili): non si verificano mai insieme.</p>
+                <code class="op-code">A AND B ≡ false</code>
+                <p>Se in più coprono tutto $\Omega$, formano una <strong>partizione</strong>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto I • La regola dell'unione (scena animata: js/atto1-assiomi.js) -->
+      <section id="unione">
+        <h2 class="scene-title">La regola dell'unione: il dramma della sovrapposizione</h2>
+        <div class="scene-grid wide">
+          <svg class="scene-svg" width="700" height="440" viewBox="0 0 700 440" role="img" aria-label="Le bande dei guasti di lunedì e martedì e il righello delle probabilità"></svg>
+          <div class="scene-panel">
+            <p class="scene-lead">Guasti di rete: lunedì $P(L) = 0.70$, martedì $P(M) = 0.50$, entrambi $P(L \cap M) = 0.35$.</p>
+            <ol class="scene-steps">
+              <li>Somma ingenua: $0.70 + 0.50 = 1.20$. <strong>Impossibile</strong>: supera 1.</li>
+              <li>I guasti in entrambi i giorni ($L \cap M$) sono stati contati <strong>due volte</strong>.</li>
+              <li>Si toglie il doppione: $0.70 + 0.50 - 0.35 = 0.85$.</li>
+            </ol>
+            <div class="scene-def">$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$</div>
+            <p class="scene-note">Solo se $A \cap B = \emptyset$ il termine sparisce: $P(A \cup B) = P(A) + P(B)$.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Atto I • La probabilità condizionata come zoom (scena animata: js/atto1.js) -->
+      <section id="zoom">
+        <h2 class="scene-title">Condizionare significa zoomare</h2>
+        <div class="scene-grid zoom-grid">
+          <div>
+            <svg class="scene-svg" width="700" height="460" viewBox="0 0 700 460" role="img" aria-label="Zoom sull'evento B, che diventa il nuovo spazio campionario">
+              <defs>
+                <clipPath id="zm-frame"><rect width="700" height="460" rx="18"/></clipPath>
+                <circle id="zm-a"/>
+                <circle id="zm-b"/>
+                <mask id="zm-out-b" maskUnits="userSpaceOnUse" x="-100" y="-100" width="900" height="660">
+                  <rect x="-100" y="-100" width="900" height="660" fill="#fff"/><use href="#zm-b" fill="#000"/>
+                </mask>
+              </defs>
+              <g clip-path="url(#zm-frame)">
+                <g class="zm-world">
+                  <rect class="omega" x="20" y="20" width="660" height="420" rx="16"/>
+                  <use class="set set-a" href="#zm-a"/>
+                  <path class="zm-b-fill"/>
+                  <path class="zm-lens"/>
+                  <path class="zm-arc"/>
+                  <rect class="zm-void" x="20" y="20" width="660" height="420" rx="16" mask="url(#zm-out-b)"/>
+                  <text class="zm-void-lbl" x="660" y="418" text-anchor="end">fuori da B: impossibile, P = 0</text>
+                  <path class="zm-b-line"/>
+                </g>
+              </g>
+              <rect class="zm-frame" x="0.75" y="0.75" width="698.5" height="458.5" rx="18"/>
+              <text class="math-lbl zm-lbl-omega" x="44" y="68">Ω</text>
+              <text class="math-lbl it zm-lbl-a">A</text>
+              <text class="math-lbl it zm-lbl-b">B</text>
+              <text class="math-lbl zm-lbl-lens"><tspan class="it">A</tspan> ∩ <tspan class="it">B</tspan></text>
+              <text class="math-lbl zm-lbl-rest"><tspan class="it">A</tspan><tspan class="sup" dy="-14">c</tspan><tspan dy="14"> ∩ </tspan><tspan class="it">B</tspan></text>
+              <text class="zm-pct zm-pct-lens">60%</text>
+              <text class="zm-pct zm-pct-rest">40%</text>
+              <text class="zm-lbl-new" x="44" y="68"><tspan class="it">B</tspan> = nuovo Ω</text>
+            </svg>
+            <p class="scene-legend">
+              <span><span class="sw sw-a"></span>$P(A) = 0.30$</span>
+              <span><span class="sw sw-b"></span>$P(B) = 0.10$</span>
+              <span><span class="sw sw-ab"></span>$P(A \cap B) = 0.06$</span>
+            </p>
+          </div>
+          <div class="scene-panel">
+            <ol class="scene-steps">
+              <li>Sappiamo che $B$ è accaduto: tutto ciò che sta fuori da $B$ diventa <strong>impossibile</strong>.</li>
+              <li><strong>Zoom</strong> su $B$: il resto di $\Omega$ non conta più.</li>
+              <li>Dentro $B$, l'evento $A$ può verificarsi solo come $A \cap B$.</li>
+              <li><strong>$B$ diventa il nuovo $\Omega$:</strong> ora $P(B \mid B) = 1$, quindi ogni area si divide per $P(B)$.</li>
+            </ol>
+            <div class="scene-def">
+              $$P(A \mid B) = \frac{\color{#38ef7d} P(A \cap B)}{\color{#fbbf24} P(B)} = \frac{0.06}{0.10} = 0.60$$
+            </div>
+            <p class="scene-note">L'informazione ha <strong>raddoppiato</strong> la probabilità di $A$: da $0.30$ a $0.60$.</p>
+          </div>
+        </div>
+      </section>
 
       <!-- Titolo -->
       <section>
@@ -208,6 +448,14 @@
         </div>
       </section>
 
+      <section>
+        <div class="badge">1995 • Frequenze naturali</div>
+        <h2 class="author-name">Gerd Gigerenzer</h2>
+        <img src="img/gigerenzer.jpg" class="author-photo" alt="Gerd Gigerenzer">
+        <p class="author-quote">Contate persone, non percentuali.</p>
+        <p class="photo-credit">Foto: Stephan Röhl / Heinrich-Böll-Stiftung · CC BY-SA 2.0</p>
+      </section>
+
       <!-- Atto II • L'albero è un'area (scena: js/alberi.js) -->
       <section id="albero">
         <div class="badge">Atto II • Alberi</div>
@@ -257,19 +505,11 @@
         <svg class="scene-svg" width="1180" height="430" viewBox="0 0 1180 430" role="img" aria-label="L'albero causale attacco-allarme e lo stesso albero ribaltato: le foglie, ad area proporzionale, sono le stesse"></svg>
         <div class="rb-ctrl">
           <label class="rb-sl"><span>$P(H)$</span><input type="range" data-k="lp" min="-4" max="-0.3" step="0.01"><b data-v="lp"></b></label>
-          <label class="rb-sl"><span>sens.</span><input type="range" data-k="sens" min="0.975" max="0.999" step="0.001"><b data-v="sens"></b></label>
-          <label class="rb-sl"><span>spec.</span><input type="range" data-k="spec" min="0.975" max="0.999" step="0.001"><b data-v="spec"></b></label>
+          <label class="rb-sl"><span>sens.</span><input type="range" data-k="sens" min="0.5" max="1" step="0.001"><b data-v="sens"></b></label>
+          <label class="rb-sl"><span>spec.</span><input type="range" data-k="spec" min="0.5" max="1" step="0.0005"><b data-v="spec"></b></label>
           <button class="psi-btn ghost rb-scale" type="button">aree: log</button>
           <button class="psi-btn rb-flip" type="button">⇄ Ribalta</button>
         </div>
-      </section>
-
-      <section>
-        <div class="badge">1995 • Frequenze naturali</div>
-        <h2 class="author-name">Gerd Gigerenzer</h2>
-        <img src="img/gigerenzer.jpg" class="author-photo" alt="Gerd Gigerenzer">
-        <p class="author-quote">Contate persone, non percentuali.</p>
-        <p class="photo-credit">Foto: Stephan Röhl / Heinrich-Böll-Stiftung · CC BY-SA 2.0</p>
       </section>
 
       <!-- 10.000 connessioni (scena su canvas: js/popolazione.js) -->
@@ -308,14 +548,6 @@
             <p class="scene-note pv-note">La leva vera: i falsi allarmi.</p>
           </div>
         </div>
-      </section>
-
-      <section>
-        <div class="badge">1999 • Intrusion detection</div>
-        <h2 class="author-name">Stefan Axelsson</h2>
-        <img src="img/axelsson.jpg" class="author-photo" style="object-position: 45% 20%;" alt="Stefan Axelsson">
-        <p class="author-quote">«Il limite di un IDS non è riconoscere gli attacchi, ma <span class="warning">sopprimere i falsi allarmi</span>.»</p>
-        <p class="photo-credit">The base-rate fallacy and its implications for the difficulty of intrusion detection · ACM CCS 1999</p>
       </section>
 
       <!-- Quiz: è una partizione? (trappola 4 del §6.3) -->
@@ -360,30 +592,28 @@
         <p class="subtitle fragment">Sommano a 1 solo le probabilità con la <strong>stessa condizione</strong> a destra della barra.</p>
       </section>
 
-      <!-- Il vocabolario (+ sotto, opzionale: ignorare il prior) -->
-      <section>
-        <section id="vocabolario">
-          <h2 class="scene-title">Ogni pezzo ha un nome</h2>
-          <div class="vc-formula">$$\color{#38ef7d}P(H \mid E) \color{#edf2f7} = \frac{\color{#fbbf24}P(E \mid H)\,\color{#edf2f7}\cdot\,\color{#f87171}P(H)}{\color{#c084fc}P(E)}$$</div>
-          <div class="vc-names">
-            <span class="fragment vc-name" style="color: #f87171;">prior<small>prima dei dati</small></span>
-            <span class="fragment vc-name" style="color: #fbbf24;">verosimiglianza<small>quanto H spiega E</small></span>
-            <span class="fragment vc-name" style="color: #c084fc;">evidenza<small>tutte le cause</small></span>
-            <span class="fragment vc-name" style="color: #38ef7d;">posterior<small>dopo i dati</small></span>
-          </div>
-          <p class="vc-prop fragment">posterior $\;\propto\;$ verosimiglianza $\times$ prior</p>
-        </section>
+      <!-- Il vocabolario -->
+      <section id="vocabolario">
+        <h2 class="scene-title">Ogni pezzo ha un nome</h2>
+        <div class="vc-formula">$$\color{#38ef7d}P(H \mid E) \color{#edf2f7} = \frac{\color{#fbbf24}P(E \mid H)\,\color{#edf2f7}\cdot\,\color{#f87171}P(H)}{\color{#c084fc}P(E)}$$</div>
+        <div class="vc-names">
+          <span class="fragment vc-name" style="color: #f87171;">prior<small>prima dei dati</small></span>
+          <span class="fragment vc-name" style="color: #fbbf24;">verosimiglianza<small>quanto H spiega E</small></span>
+          <span class="fragment vc-name" style="color: #c084fc;">evidenza<small>tutte le cause</small></span>
+          <span class="fragment vc-name" style="color: #38ef7d;">posterior<small>dopo i dati</small></span>
+        </div>
+        <p class="vc-prop fragment">posterior $\;\propto\;$ verosimiglianza $\times$ prior</p>
+      </section>
 
-        <!-- Ignorare il prior (opzionale, freccia giù) -->
-        <section>
-          <p class="badge orange">E se ignorassi il prior?</p>
-          <h2 class="huge-question" style="font-size: 1.6em !important;">Chi risponde «99%»…</h2>
-          <div class="box ig-box">
-            <p class="fragment">$\dfrac{0.99 \cdot \color{#f87171}{0.5}}{0.99 \cdot \color{#f87171}{0.5}\color{#edf2f7} + 0.01 \cdot \color{#f87171}{0.5}} = 0.99$</p>
-            <p class="fragment ig-verdict">…sta usando $P(H) = 0.5$: <span class="warning">metà delle connessioni sono attacchi.</span></p>
-          </div>
-          <p class="subtitle fragment">Ignorare il prior = usare il prior sbagliato.</p>
-        </section>
+      <!-- Ignorare il prior -->
+      <section>
+        <p class="badge orange">E se ignorassi il prior?</p>
+        <h2 class="huge-question" style="font-size: 1.6em !important;">Chi risponde «99%»…</h2>
+        <div class="box ig-box">
+          <p class="fragment">$\dfrac{0.99 \cdot \color{#f87171}{0.5}}{0.99 \cdot \color{#f87171}{0.5}\color{#edf2f7} + 0.01 \cdot \color{#f87171}{0.5}} = 0.99$</p>
+          <p class="fragment ig-verdict">…sta usando $P(H) = 0.5$: <span class="warning">metà delle connessioni sono attacchi.</span></p>
+        </div>
+        <p class="subtitle fragment">Ignorare il prior = usare il prior sbagliato.</p>
       </section>
 
       <!-- La forma a odds (scena interattiva: js/bayes.js) -->
@@ -580,6 +810,15 @@
   </div>
 
   <script src="../../assets/slides/scene.js"></script>
+  <script>
+    // I file della settimana 1 registrano anche scene che qui non ci sono: si tengono solo quelle presenti.
+    (function (register) {
+      PSI.scene = function (id, build) { if (document.getElementById(id)) register(id, build); };
+    })(PSI.scene);
+  </script>
+  <script src="../../settimana_01/slides/js/atto1-insiemi.js"></script>
+  <script src="../../settimana_01/slides/js/atto1-assiomi.js"></script>
+  <script src="../../settimana_01/slides/js/atto1-condizionata.js"></script>
   <script src="js/comuni.js"></script>
   <script src="js/storia.js"></script>
   <script src="js/alberi.js"></script>

@@ -739,71 +739,22 @@ $$
 !!! question "E se ignorassimo il prior?"
     Nel problema dell'IDS, rispondere «99%» sembra un modo di non usare il prior. In realtà, se sensibilità e specificità valgono entrambe $0.99$, si ottiene un posterior del 99% **solo** ponendo $P(H) = 0.5$, cioè supponendo che metà delle connessioni siano attacchi. **Ignorare il prior non significa non averne uno: significa usarne uno sbagliato**, di solito quello «50 e 50». Questo è il vero significato della fallacia del tasso di base, ed è la risposta alla quarta domanda guida.
 
-### 7. La forma a odds: un modo più rapido di fare Bayes
-
-Chi scommette non parla di probabilità, ma di **quote**, in inglese *odds*: «3 contro 1», «99 contro 1». Price e Laplace usavano proprio questo linguaggio. Gli odds rendono il Teorema di Bayes sorprendentemente semplice.
-
-!!! note "Definizioni: odds e rapporto di verosimiglianza"
-    Per un evento $H$ con $0 < P(H) < 1$, gli **odds** di $H$ sono il rapporto tra la probabilità che accada e la probabilità che non accada:
-
-    $$
-    O(H) = \frac{P(H)}{P(H^c)} = \frac{P(H)}{1 - P(H)}.
-    $$
-
-    Per tornare indietro dagli odds alla probabilità: $P(H) = \dfrac{O(H)}{1 + O(H)}$.
-
-    Il **rapporto di verosimiglianza** dell'evidenza $E$ misura quanto $E$ è più probabile se $H$ è vera che se è falsa:
-
-    $$
-    \Lambda(E) = \frac{P(E \mid H)}{P(E \mid H^c)}.
-    $$
-
-    ($\Lambda$ è la lettera greca lambda maiuscola.)
-
-*Esempi.* Una probabilità di $0.75$ corrisponde a odds $0.75/0.25 = 3$, cioè «3 contro 1». Una probabilità di $0.5$ corrisponde a odds $1$, cioè «alla pari». Una probabilità di $0.01$ corrisponde a odds $0.01/0.99 = 1/99$, cioè «1 contro 99».
-
-!!! note "Teorema di Bayes (forma a odds)"
-    Se $P(E) > 0$ e $P(E \mid H^c) > 0$:
-
-    $$
-    O(H \mid E) = \Lambda(E) \cdot O(H).
-    $$
-
-    In parole: **odds dopo l'evidenza = rapporto di verosimiglianza × odds prima dell'evidenza.**
-
-**Dimostrazione.** Scriviamo il Teorema di Bayes (forma a due eventi) per $H$ e per $H^c$, e dividiamo la prima uguaglianza per la seconda:
+**Quanto deve essere buono un IDS?** Supponiamo che gli attacchi siano uno su diecimila, $P(H) = 10^{-4}$, e che il rilevatore abbia sensibilità $0.99$. Quanti falsi allarmi $f = P(E \mid H^c)$ possiamo permetterci, se vogliamo che un allarme sia vero almeno nel 90% dei casi? Imponiamo $P(H \mid E) \ge 0.9$:
 
 $$
-\frac{P(H \mid E)}{P(H^c \mid E)} = \frac{P(E \mid H)\,P(H)\,/\,P(E)}{P(E \mid H^c)\,P(H^c)\,/\,P(E)} = \frac{P(E \mid H)}{P(E \mid H^c)} \cdot \frac{P(H)}{P(H^c)}.
+\frac{0.99 \cdot 10^{-4}}{0.99 \cdot 10^{-4} + f \cdot 0.9999} \ge 0.9
+\quad\Longleftrightarrow\quad
+0.99 \cdot 10^{-4} \ge 9 \cdot f \cdot 0.9999
+\quad\Longleftrightarrow\quad
+f \le \frac{0.99 \cdot 10^{-4}}{9 \cdot 0.9999} \approx 0.000011.
 $$
 
-A sinistra c'è $O(H \mid E)$, a destra $\Lambda(E) \cdot O(H)$. Il denominatore $P(E)$, cioè la parte più laboriosa di tutto il calcolo, **si semplifica e sparisce**. $\blacksquare$
+Circa un errore ogni centomila connessioni legittime. Ecco, in numeri, la conclusione di Axelsson: **conta il tasso di falsi allarmi, non la sensibilità**.
 
-**L'IDS in una riga.** Odds iniziali: $O(H) = 0.01/0.99 = 1/99$. Rapporto di verosimiglianza: $\Lambda(E) = 0.99/0.01 = 99$. Quindi
+!!! info "Più avanti nel corso: la forma a odds"
+    Il Teorema di Bayes ha anche una forma ancora più compatta, che usa le **quote** degli scommettitori (*odds*, «3 contro 1») e il **rapporto di verosimiglianza** $P(E \mid H) / P(E \mid H^c)$. In quella forma ogni nuova evidenza **moltiplica** le quote per un fattore fisso, e in scala logaritmica le evidenze **si sommano**. La vedremo nella Settimana 12, quando servirà per il classificatore Naive Bayes.
 
-$$
-O(H \mid E) = 99 \cdot \frac{1}{99} = 1,
-$$
-
-cioè odds alla pari: $P(H \mid E) = 1/(1+1) = 0.5$. L'allarme moltiplica gli odds per 99, ma gli odds di partenza erano 1 contro 99, e le due cose si annullano. È la stessa compensazione che abbiamo visto sulle foglie dell'albero.
-
-**Quanto deve essere buono un IDS?** Supponiamo che gli attacchi siano uno su diecimila: $O(H) = 1/9999$. Vogliamo che un allarme sia vero almeno nel 90% dei casi, cioè $O(H \mid E) \ge 0.9/0.1 = 9$. Serve allora
-
-$$
-\Lambda(E) \ge 9 \cdot 9999 = 89\,991.
-$$
-
-Anche con sensibilità $0.99$, il tasso di falsi allarmi $P(E \mid H^c)$ deve essere al massimo $0.99/89\,991 \approx 0.000011$: circa un errore ogni centomila connessioni legittime. Ecco, in numeri, la conclusione di Axelsson: **conta il tasso di falsi allarmi, non la sensibilità**.
-
-**Log-odds: l'evidenza si somma.** Se prendiamo il logaritmo di entrambi i membri, il prodotto diventa una somma:
-
-$$
-\log O(H \mid E) = \log \Lambda(E) + \log O(H).
-$$
-
-Ogni prova aggiunge (o toglie, se $\Lambda < 1$) una quantità fissa di «punti» alla nostra fiducia nell'ipotesi. Questa è esattamente la struttura del classificatore **Naive Bayes** che vedremo nella Settimana 12: per decidere se un'email è spam, ogni parola dell'email aggiunge il suo $\log \Lambda$ al punteggio.
-
-### 8. Il posterior di oggi è il prior di domani
+### 7. Il posterior di oggi è il prior di domani
 
 Torniamo alle tre di notte. Dopo il primo allarme, la probabilità di attacco è salita dall'1% al 50%. Ora scatta un **secondo** allarme, da un altro rilevatore installato sul server (non sulla rete). Come aggiorniamo?
 
@@ -813,7 +764,7 @@ $$
 P(H \mid E_1 \cap E_2) = \frac{0.95 \cdot 0.5}{0.95 \cdot 0.5 + 0.05 \cdot 0.5} = 0.95.
 $$
 
-Con gli odds è ancora più rapido: $\tfrac{1}{99} \cdot 99 \cdot \tfrac{0.95}{0.05} = 1 \cdot 19 = 19$, cioè $P = 19/20 = 0.95$. Due allarmi, e siamo passati dall'1% al 95%.
+Due allarmi, e siamo passati dall'1% al 95%.
 
 Questo ragionamento è corretto? **Sì, ma a una condizione precisa**, che è importantissimo saper riconoscere.
 
@@ -833,7 +784,6 @@ Il conto che abbiamo fatto usa per il secondo allarme la verosimiglianza $P(E_2 
 
     * aggiornare **una alla volta** (il posterior dopo $E_1$ diventa il prior per $E_2$),
     * aggiornare **tutto in blocco** con la verosimiglianza congiunta $P(E_1 \cap E_2 \mid H) = P(E_1 \mid H)\,P(E_2 \mid H)$,
-    * **moltiplicare i rapporti di verosimiglianza**: $O(H \mid E_1 \cap E_2) = \Lambda(E_1)\,\Lambda(E_2)\,O(H)$,
 
     danno **lo stesso risultato**, e l'ordine in cui arrivano le evidenze non conta.
 
@@ -864,7 +814,7 @@ Il conto che abbiamo fatto usa per il secondo allarme la verosimiglianza $P(E_2 
 * **Indipendenti, ma non condizionatamente indipendenti.** Lanciamo due volte una moneta equa: $T_1$ e $T_2$ sono indipendenti. Ma se qualcuno ci dice che è uscita **esattamente una testa** (chiamiamo $S$ questo evento), allora $P(T_1 \mid S) = P(T_2 \mid S) = \tfrac12$, mentre $P(T_1 \cap T_2 \mid S) = 0 \neq \tfrac14$: sapere che il primo lancio è testa ci dice con certezza che il secondo è croce. Condizionare su un effetto comune crea dipendenza tra cause indipendenti.
 
 !!! warning "Nota per l'ingegnere"
-    Due rilevatori che leggono **lo stesso flusso di log**, o che usano **le stesse regole**, **non** sono condizionatamente indipendenti: se uno sbaglia su una connessione legittima, è probabile che sbagli anche l'altro. Moltiplicare i loro rapporti di verosimiglianza significa contare **due volte la stessa evidenza**, e il posterior risultante è troppo sicuro di sé. Caso estremo: se il secondo allarme è una semplice copia del primo, non porta nessuna informazione nuova e il posterior non dovrebbe muoversi affatto.
+    Due rilevatori che leggono **lo stesso flusso di log**, o che usano **le stesse regole**, **non** sono condizionatamente indipendenti: se uno sbaglia su una connessione legittima, è probabile che sbagli anche l'altro. Moltiplicare le loro verosimiglianze significa contare **due volte la stessa evidenza**, e il posterior risultante è troppo sicuro di sé. Caso estremo: se il secondo allarme è una semplice copia del primo, non porta nessuna informazione nuova e il posterior non dovrebbe muoversi affatto.
 
 Il grafico seguente mostra come cresce il posterior dopo $k$ allarmi consecutivi, **supponendo** che siano condizionatamente indipendenti e tutti prodotti da rilevatori uguali.
 
@@ -893,12 +843,12 @@ document.addEventListener('DOMContentLoaded', function () {
     stats: function (p) {
       return [
         { label: 'Prior P(H)', value: Math.pow(10, p.logprior).toPrecision(2) },
-        { label: 'Rapporto di verosimiglianza Λ', value: (p.sens / p.fpr).toFixed(1) },
         { label: 'Dopo 1 allarme', value: (100 * dopoKAllarmi(1, p)).toFixed(2) + '%' },
-        { label: 'Dopo 2 allarmi', value: (100 * dopoKAllarmi(2, p)).toFixed(2) + '%' }
+        { label: 'Dopo 2 allarmi', value: (100 * dopoKAllarmi(2, p)).toFixed(2) + '%' },
+        { label: 'Dopo 3 allarmi', value: (100 * dopoKAllarmi(3, p)).toFixed(2) + '%' }
       ];
     },
-    caption: 'Ogni allarme moltiplica gli odds per Λ. Vale SOLO se gli allarmi sono condizionatamente indipendenti dato lo stato del sistema: due rilevatori che leggono gli stessi log non lo sono.'
+    caption: 'Ogni allarme usa come prior il posterior dell’allarme precedente. Vale SOLO se gli allarmi sono condizionatamente indipendenti dato lo stato del sistema: due rilevatori che leggono gli stessi log non lo sono.'
   });
 });
 </script>
@@ -1130,7 +1080,7 @@ print("Script 3: tutti gli assert superati.")
 
 ### Script 4 — Il secondo allarme {: #lab-sequenziale }
 
-Verifichiamo che, con due rilevatori condizionatamente indipendenti, aggiornare in sequenza, aggiornare in blocco e moltiplicare i rapporti di verosimiglianza danno lo stesso risultato: $0.95$. Nella parte Monte Carlo, il secondo allarme viene generato in modo indipendente dal primo **una volta noto** se c'è un attacco: è così che si costruisce l'indipendenza condizionata in una simulazione.
+Verifichiamo che, con due rilevatori condizionatamente indipendenti, aggiornare in sequenza e aggiornare in blocco danno lo stesso risultato: $0.95$. Nella parte Monte Carlo, il secondo allarme viene generato in modo indipendente dal primo **una volta noto** se c'è un attacco: è così che si costruisce l'indipendenza condizionata in una simulazione.
 
 *Da provare:* modifica la simulazione in modo che `e2 = e1` (il secondo rilevatore copia il primo). Il posterior stimato torna a circa $0.5$ e l'ultimo `assert` fallisce, giustamente: il secondo allarme non porta nessuna informazione nuova, e la formula che dava $0.95$ non vale più.
 
@@ -1147,9 +1097,8 @@ d2 = (0.95, 0.05)     # rilevatore sul server, condizionatamente indipendente da
 post1 = aggiorna(prior, *d1)
 post12 = aggiorna(post1, *d2)                                   # il posterior diventa prior
 blocco = aggiorna(prior, d1[0] * d2[0], d1[1] * d2[1])          # E1 ∩ E2 in un colpo solo
-odds = prior / (1 - prior) * (d1[0] / d1[1]) * (d2[0] / d2[1]) # forma a odds
-print(f"Dopo E1: {post1:.4f} | dopo E1 poi E2: {post12:.4f} | in blocco: {blocco:.4f} | da odds: {odds/(1+odds):.4f}")
-assert round(post1, 6) == 0.5 and abs(post12 - blocco) < 1e-12 and abs(odds / (1 + odds) - blocco) < 1e-12
+print(f"Dopo E1: {post1:.4f} | dopo E1 poi E2: {post12:.4f} | in blocco: {blocco:.4f}")
+assert round(post1, 6) == 0.5 and abs(post12 - blocco) < 1e-12
 assert round(blocco, 6) == 0.95
 
 # Verifica Monte Carlo: si generano E1 ed E2 indipendenti *dato* H
@@ -1235,7 +1184,7 @@ Se la linea di W sta alla frazione $x$ della larghezza del tavolo, ogni lancio d
 
 Guarda come l'istogramma, piatto all'inizio, si concentra lancio dopo lancio attorno alla posizione vera. In fondo, con strisce sottilissime, lo script ritrova due risultati storici:
 
-1. **Il «3 contro 1» di Price.** Dopo una sola osservazione favorevole, la probabilità che $x$ superi $\tfrac12$ vale $\tfrac34$, cioè odds di 3 contro 1. Price lo calcola nell'appendice del saggio, ed è il numero del suo esempio del sole.
+1. **Il «3 contro 1» di Price.** Dopo una sola osservazione favorevole, la probabilità che $x$ superi $\tfrac12$ vale $\tfrac34$, cioè una scommessa di 3 contro 1. Price lo calcola nell'appendice del saggio, ed è il numero del suo esempio del sole.
 2. **La regola di successione di Laplace.** La media a posteriori vale $(p+1)/(n+2)$, dove $n = p + q$ è il numero totale di lanci. È la regola con cui Laplace ottiene le sue 1.826.214 contro 1.
 
 <div class="psi-exec" markdown="1">
@@ -1263,14 +1212,14 @@ for k in (0, 1, 5, 20):
 # Con strisce sottilissime si ritrovano i risultati di Price e Laplace
 centri, post = posterior_tavolo(1, 0, 10_000)
 p_oltre_meta = sum(v for x, v in zip(centri, post) if x > 0.5)
-print(f"Dopo un'alba: P(x > 1/2) = {p_oltre_meta:.4f}  -> odds {p_oltre_meta/(1-p_oltre_meta):.2f} a 1")
+print(f"Dopo un'alba: P(x > 1/2) = {p_oltre_meta:.4f}  -> {p_oltre_meta/(1-p_oltre_meta):.2f} contro 1")
 assert abs(p_oltre_meta - 0.75) < 1e-3
 centri, post = posterior_tavolo(7, 3, 10_000)
 media = sum(x * v for x, v in zip(centri, post))
 print(f"p=7, q=3: media a posteriori = {media:.4f}  (regola di successione (p+1)/(n+2) = {8/12:.4f})")
 assert abs(media - 8 / 12) < 1e-4
 n = 1_826_213                                         # giorni in 5000 anni (Laplace)
-print(f"Sole di Laplace: odds (n+1) a 1 = {n + 1} a 1")
+print(f"Sole di Laplace: (n+1) contro 1 = {n + 1} contro 1")
 print("Script 7: tutti gli assert superati.")
 ```
 </div>
@@ -1285,13 +1234,13 @@ Rifacciamo a mente un conto con numeri tondi. Un sistema di monitoraggio della s
 
 * Se il suo tasso di falsi positivi è dell'1%, produce circa **10.000 falsi allarmi al giorno**, *qualunque sia la sua sensibilità*.
 * Se gli eventi davvero malevoli sono 100 al giorno (prevalenza $10^{-4}$), anche un rilevatore **perfetto** sugli attacchi produce al massimo 100 allarmi veri: **meno dell'1% del totale**.
-* Per portare la frazione di allarmi veri al 90% serve un tasso di falsi positivi dell'ordine di $10^{-5}$ (lo abbiamo calcolato con la forma a odds).
+* Per portare la frazione di allarmi veri al 90% serve un tasso di falsi positivi dell'ordine di $10^{-5}$ (lo abbiamo calcolato nell'Atto IV).
 
 Il nome operativo del fenomeno è **alert fatigue**, «stanchezza da allarmi»: gli analisti, sommersi da allarmi quasi sempre falsi, imparano a ignorarli, e l'allarme vero finisce in una coda che nessuno legge più. La probabilità spiega perché il problema **non** si risolve comprando un rilevatore più sensibile. Le leve che funzionano sono tre, e ognuna corrisponde a un pezzo della formula di Bayes:
 
 1. **abbassare i falsi positivi $P(E \mid H^c)$**: regole più specifiche, liste di eccezioni note (*allow-list*), soppressione dei falsi positivi già riconosciuti;
 2. **alzare il prior prima di valutare l'allarme**: considerare il contesto (un server critico, un utente amministratore, un orario anomalo). Tecnicamente significa condizionare su informazioni aggiuntive e ragionare con $P(\cdot \mid \text{contesto})$, un universo in cui gli attacchi sono meno rari;
-3. **incrociare rilevatori condizionatamente indipendenti**: due allarmi indipendenti dato lo stato del sistema moltiplicano i rapporti di verosimiglianza. Ma due rilevatori che leggono gli stessi log **non** lo sono.
+3. **incrociare rilevatori condizionatamente indipendenti**: due allarmi indipendenti dato lo stato del sistema si possono usare uno dopo l'altro, e ognuno alza il posterior. Ma due rilevatori che leggono gli stessi log **non** lo sono.
 
 ### 2. Il dizionario del machine learning
 
@@ -1336,7 +1285,7 @@ Fare debugging significa ragionare **dall'effetto** (il sintomo: un crash, un te
 * **Approssimare invece di calcolare.** I *Variational Autoencoder* ([Kingma & Welling, 2013](https://arxiv.org/abs/1312.6114)) affrontano proprio questo problema: invece di calcolare il posterior esatto, lo approssimano con una famiglia di distribuzioni più semplici, ottimizzando un limite inferiore (tecnica detta *inferenza variazionale*). Anche i modelli di diffusione che generano immagini ([Ho, Jain & Abbeel, 2020](https://arxiv.org/abs/2006.11239)) vengono addestrati su un limite variazionale di questo tipo.
 * **Un modello che sa quando non sa.** [Gal & Ghahramani (2016)](https://arxiv.org/abs/1506.02142) hanno mostrato che una tecnica molto usata nelle reti neurali, il *dropout*, può essere interpretata come inferenza bayesiana approssimata, e ne hanno ricavato un modo per stimare quanto il modello è incerto sulle proprie previsioni. In applicazioni critiche (diagnosi, guida autonoma, sicurezza) un modello che sa quando non sa è più utile di uno che risponde sempre con sicurezza.
 
-Nella Settimana 12 chiuderemo il cerchio con il classificatore **Naive Bayes**: il Teorema di Bayes con partizione, più l'ipotesi di indipendenza condizionata, letto in log-odds.
+Nella Settimana 12 chiuderemo il cerchio con il classificatore **Naive Bayes**: il Teorema di Bayes con partizione, più l'ipotesi di indipendenza condizionata, riscritto nella forma a odds.
 
 ---
 
@@ -1360,7 +1309,6 @@ Nella Settimana 12 chiuderemo il cerchio con il classificatore **Naive Bayes**: 
 * **Probabilità totale:** $P(E) = \sum_i P(E \mid H_i)\,P(H_i)$, cioè la somma delle foglie compatibili con $E$.
 * **Teorema di Bayes:** $P(H_j \mid E) = P(E \mid H_j)\,P(H_j) \,/\, P(E)$, cioè una foglia divisa per la somma delle foglie compatibili con $E$. È il **ribaltamento dell'albero**.
 * **Vocabolario:** prior $P(H)$, verosimiglianza $P(E \mid H)$, evidenza $P(E)$, posterior $P(H \mid E)$. Posterior $\propto$ verosimiglianza $\times$ prior.
-* **Forma a odds:** $O(H \mid E) = \Lambda(E) \cdot O(H)$. In log-odds, le evidenze si sommano.
 * **Aggiornamento sequenziale:** il posterior di oggi è il prior di domani; moltiplicare le verosimiglianze è lecito solo con evidenze **condizionatamente indipendenti**.
 * **Quando l'ipotesi è rara, il prior domina anche un test eccellente.** Un IDS al 99% su attacchi che sono l'1% del traffico produce allarmi veri solo nel 50% dei casi; se gli attacchi sono uno su diecimila, meno di un allarme su cento è vero. Conta il tasso di falsi allarmi.
 

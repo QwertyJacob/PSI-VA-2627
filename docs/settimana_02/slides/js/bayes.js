@@ -1,7 +1,6 @@
 /*
  * Scene degli Atti IV e V: probabilità totale e Bayes sul mosaico (moduli
- * software), la forma a odds su una scala di log-odds, il controllo qualità
- * letto all'indietro, i compiti non firmati.
+ * software), il controllo qualità letto all'indietro, i compiti non firmati.
  * Motore e utilità: scene.js, comuni.js.
  */
 (function () {
@@ -98,80 +97,6 @@
     tl.to([postLbl, one], { opacity: 1, duration: 0.4 })
       .to(winner, { opacity: 1, duration: 0.4 })
       .addLabel('s4');
-  });
-
-  // ── Odds: la credenza su una scala di log-odds ──
-  //
-  // Ogni evidenza sposta la credenza di log10(Λ): l'allarme di rete +2,
-  // quello del server +1.28, una copia dei log di rete 0.
-  PSI.scene('odds', function (el, tl) {
-    var q = PSI.q(el), root = q.one('svg');
-    var X0 = 70, X1 = 1090, AY = 232, LMIN = -4, LMAX = 4;
-    var sx = function (l) { return X0 + (S2.clamp(l, LMIN, LMAX) - LMIN) / (LMAX - LMIN) * (X1 - X0); };
-    var logit = function (p) { return Math.log10(p / (1 - p)); };
-
-    svg('line', { x1: X0, y1: AY, x2: X1, y2: AY, 'class': 'od-axis' }, root);
-    [[0.0001, '0.01%'], [0.001, '0.1%'], [0.01, '1%'], [0.1, '10%'], [0.5, '50%'], [0.9, '90%'], [0.99, '99%'], [0.999, '99.9%'], [0.9999, '99.99%']].forEach(function (t) {
-      var x = sx(logit(t[0]));
-      svg('line', { x1: x, y1: AY - 8, x2: x, y2: AY + 8, 'class': 'od-axis' }, root);
-      text(root, x, AY + 34, t[1], 'od-tick', { 'text-anchor': 'middle' });
-    });
-    text(root, X0 - 4, AY + 64, 'meno probabile', 'od-end');
-    text(root, X1 + 4, AY + 64, 'più probabile', 'od-end', { 'text-anchor': 'end' });
-    var arrows = svg('g', {}, root);
-    var marker = svg('path', { 'class': 'od-marker' }, root);
-    var mLbl = text(root, 0, AY - 26, '', 'od-mlbl halo', { 'text-anchor': 'middle' });
-    var warn = text(root, (X0 + X1) / 2, 26, 'copia degli stessi log: stessa evidenza, Λ = 1', 'od-warn', { 'text-anchor': 'middle' });
-
-    var PRIOR = logit(0.01);
-    var script = [{ lr: 99, name: 'allarme rete ×99' }, { lr: 19, name: 'allarme server ×19' }, { lr: 1, name: 'copia ×1' }];
-    var extras = [], st = { k: 0, warn: 0 };
-    function render() {
-      while (arrows.firstChild) arrows.removeChild(arrows.firstChild);
-      var items = [], full = Math.floor(st.k), part = st.k - full;
-      for (var i = 0; i < Math.min(full, script.length); i++) items.push({ e: script[i], f: 1 });
-      if (full < script.length && part > 0) items.push({ e: script[full], f: part });
-      if (full >= script.length) extras.forEach(function (e) { items.push({ e: e, f: 1 }); });
-      var l = PRIOR;
-      items.forEach(function (it, k) {
-        var d = Math.log10(it.e.lr) * it.f, y = 176 - (k % 4) * 34;
-        var x0 = sx(l), x1 = sx(l + d), cls = it.e.lr > 1 ? 'od-up' : it.e.lr < 1 ? 'od-down' : 'od-zero';
-        svg('line', { x1: x0, y1: y, x2: x1, y2: y, 'class': 'od-arrow ' + cls }, arrows);
-        if (Math.abs(x1 - x0) > 4) {
-          var dir = x1 > x0 ? 1 : -1;
-          svg('path', { d: 'M' + x1 + ',' + y + 'l' + (-12 * dir) + ',-7v14z', 'class': 'od-head ' + cls }, arrows);
-        } else {
-          svg('circle', { cx: x0, cy: y, r: 6, 'class': 'od-head ' + cls }, arrows);
-        }
-        text(arrows, (x0 + x1) / 2 + (Math.abs(x1 - x0) < 60 ? 70 : 0), y - 9, it.e.name, 'od-alab halo ' + cls, { 'text-anchor': 'middle' });
-        l += d;
-      });
-      var x = sx(l);
-      marker.setAttribute('d', 'M' + x + ',' + (AY - 4) + 'l-11,-18h22z');
-      var p = 1 / (1 + Math.pow(10, -l)), o = Math.pow(10, l);
-      var odds = o >= 1 ? S2.count(o) + ' : 1' : '1 : ' + S2.count(1 / o);
-      mLbl.setAttribute('x', S2.clamp(x, X0 + 60, X1 - 60));
-      mLbl.textContent = S2.pct(p, p < 0.01 || p > 0.99 ? 2 : 0) + '  ·  ' + odds;
-      warn.style.opacity = st.warn;
-    }
-    render();
-
-    tl.addLabel('s0');
-    tl.to(st, { k: 1, duration: 1, ease: 'power1.inOut', onUpdate: render }).addLabel('s1');
-    tl.to(st, { k: 2, duration: 1, ease: 'power1.inOut', onUpdate: render }).addLabel('s2');
-    tl.to(st, { k: 3, duration: 0.6, onUpdate: render })
-      .to(st, { warn: 1, duration: 0.5, onUpdate: render })
-      .addLabel('s3');
-
-    q.all('.od-buttons [data-lr]').forEach(function (b) {
-      b.addEventListener('click', function () {
-        this.blur();
-        var lr = +this.dataset.lr;
-        extras.push({ lr: lr, name: lr === 1 ? 'copia ×1' : lr < 1 ? 'nessun allarme ×1/99' : lr === 99 ? 'rete ×99' : 'server ×19' });
-        render();
-      });
-    });
-    q.one('.od-reset').addEventListener('click', function () { this.blur(); extras = []; render(); });
   });
 
   // ── Controllo qualità: l'albero a tre livelli letto all'indietro ──

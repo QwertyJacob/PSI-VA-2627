@@ -616,28 +616,13 @@
         <p class="subtitle fragment">Ignorare il prior = usare il prior sbagliato.</p>
       </section>
 
-      <!-- La forma a odds (scena interattiva: js/bayes.js) -->
-      <section id="odds">
-        <h2 class="scene-title">Odds: l'evidenza si somma</h2>
-        <div class="scene-def od-def">$$O(H \mid E) = \Lambda \cdot O(H) \qquad \Lambda = \frac{P(E \mid H)}{P(E \mid H^c)}$$</div>
-        <svg class="scene-svg od-svg" width="1160" height="300" viewBox="0 0 1160 300" role="img" aria-label="La credenza su una scala di log-odds: ogni evidenza la sposta di un tratto fisso"></svg>
-        <div class="od-buttons">
-          <button class="psi-btn" type="button" data-lr="99">🚨 allarme rete ×99</button>
-          <button class="psi-btn" type="button" data-lr="19">🖥 allarme server ×19</button>
-          <button class="psi-btn ghost" type="button" data-lr="0.0101">🔕 nessun allarme ×1/99</button>
-          <button class="psi-btn ghost od-copy" type="button" data-lr="1">📋 copia dei log di rete</button>
-          <button class="psi-btn ghost od-reset" type="button">↺</button>
-        </div>
-      </section>
-
       <!-- Esercizio: quanto deve essere buono un IDS -->
       <section>
         <p class="badge orange">Esercizio</p>
         <h2 class="huge-question" style="font-size: 1.5em !important;">Attacchi: 1 su 10.000. Vuoi allarmi veri al 90%.<br>Quanti falsi allarmi puoi permetterti?</h2>
         <div class="box qb-box">
-          <p class="fragment">prima: $O(H) = \dfrac{1}{9999}$ &nbsp;&nbsp; obiettivo: $O(H \mid E) \ge \dfrac{0.9}{0.1} = 9$</p>
-          <p class="fragment">$\Lambda \ge 9 \cdot 9999 \approx 90\,000$</p>
-          <p class="fragment">$P(E \mid H^c) \le \dfrac{0.99}{90\,000} \approx \color{#38ef7d}{0.00001}$</p>
+          <p class="fragment">$\dfrac{0.99 \cdot 10^{-4}}{0.99 \cdot 10^{-4} + f \cdot 0.9999} \ge 0.9$</p>
+          <p class="fragment">$f \le \dfrac{0.99 \cdot 10^{-4}}{9 \cdot 0.9999} \approx \color{#38ef7d}{0.00001}$</p>
         </div>
         <p class="subtitle fragment">Un errore ogni <strong>centomila</strong> connessioni legittime.</p>
       </section>
@@ -794,7 +779,7 @@
         <p class="badge orange">Domanda d'uscita</p>
         <h2 class="huge-question" style="font-size: 1.5em !important;">Il tuo rilevatore ha precision <span class="highlight">50%</span> in laboratorio,<br>dove metà del traffico è malevolo.<br>In produzione è malevolo l'1%. Precision?</h2>
         <div class="box qb-box">
-          <p class="fragment">$\dfrac{r \cdot 0.5}{r \cdot 0.5 + f \cdot 0.5} = 0.5 \;\Rightarrow\; r = f \;\Rightarrow\; \Lambda = 1$</p>
+          <p class="fragment">$\dfrac{r \cdot 0.5}{r \cdot 0.5 + f \cdot 0.5} = 0.5 \;\Rightarrow\; r = f$</p>
           <p class="fragment">Il rilevatore non distingue nulla: posterior = prior = <span class="warning">1%</span></p>
         </div>
       </section>

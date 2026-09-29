@@ -400,33 +400,6 @@
 .reveal .ig-box p, .reveal .qb-box p { margin: 12px 0; }
 .reveal .ig-verdict { font-size: 1.05em; }
 
-/* ── Odds ── */
-.reveal .od-def { font-size: 0.72em; max-width: 760px; margin: 0 auto 4px; }
-.reveal .od-svg { margin: 0 auto; }
-.reveal .od-buttons { display: flex; justify-content: center; gap: 10px; font-size: 0.62em; }
-.reveal .scene-svg .od-axis { stroke: rgba(203, 213, 224, 0.7); stroke-width: 2.5px; }
-.reveal .scene-svg .od-tick { font-family: var(--r-main-font); font-size: 18px; fill: var(--psi-muted); }
-.reveal .scene-svg .od-end { font-family: var(--r-main-font); font-size: 15px; fill: #718096; }
-.reveal .scene-svg .od-marker { fill: var(--psi-sel); }
-.reveal .scene-svg .od-mlbl {
-  font-family: var(--r-main-font);
-  font-size: 24px;
-  font-weight: 800;
-  fill: var(--psi-sel);
-}
-.reveal .scene-svg .od-warn { font-family: var(--r-main-font); font-size: 20px; font-weight: 700; fill: #f472b6; }
-.reveal .scene-svg .od-arrow { stroke-width: 5px; stroke-linecap: round; }
-.reveal .scene-svg .od-arrow.od-up { stroke: var(--psi-e); }
-.reveal .scene-svg .od-arrow.od-down { stroke: var(--psi-a); }
-.reveal .scene-svg .od-arrow.od-zero { stroke: #f472b6; }
-.reveal .scene-svg .od-head.od-up { fill: var(--psi-e); }
-.reveal .scene-svg .od-head.od-down { fill: var(--psi-a); }
-.reveal .scene-svg .od-head.od-zero { fill: #f472b6; }
-.reveal .scene-svg .od-alab { font-family: var(--r-main-font); font-size: 16px; font-weight: 700; }
-.reveal .scene-svg .od-alab.od-up { fill: var(--psi-e); }
-.reveal .scene-svg .od-alab.od-down { fill: var(--psi-a); }
-.reveal .scene-svg .od-alab.od-zero { fill: #f472b6; }
-
 /* ── Controllo qualità ── */
 .reveal .scene-svg .ql-lbl { font-family: var(--r-main-font); font-size: 14px; font-weight: 600; fill: var(--psi-b); }
 .reveal .scene-svg .ql-leaf { font-family: var(--r-main-font); font-size: 18px; font-weight: 700; }

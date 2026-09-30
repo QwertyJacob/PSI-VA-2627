@@ -35,21 +35,21 @@ Il percorso è articolato in 4 moduli tematici distribuiti su **12 settimane**, 
 | Settimana | Argomenti |
 |---|---|
 | **Settimana 4** *(in arrivo)* | **Variabili aleatorie discrete e valore atteso:** variabili aleatorie discrete, funzione di massa di probabilità (PMF), valore atteso e linearità del valore atteso, distribuzione di Bernoulli e Binomiale, varianza; analisi del caso medio negli algoritmi. |
-| **Settimana 5** *(in arrivo)* | **Distribuzioni discrete notevoli:** distribuzione Geometrica (tempo di attesa e assenza di memoria), distribuzione di Poisson (eventi rari); strutture dati probabilistiche nei sistemi distribuiti (filtri di Bloom). |
+| **Settimana 5** *(in arrivo)* | **Distribuzioni discrete notevoli:** distribuzione Geometrica (tempo di attesa e assenza di memoria), distribuzione di Poisson (eventi rari e limite della binomiale); applicazioni ai sistemi distribuiti. |
 | **Settimana 6** *(in arrivo)* | **Variabili aleatorie continue e distribuzione Normale:** densità di probabilità (PDF) e funzione di ripartizione (CDF), distribuzione uniforme ed esponenziale, distribuzione Normale (Gaussiana) e standardizzazione. |
 
-### Modulo III — Distribuzioni congiunte e teoremi limite (Settimane 7–9)
+### Modulo III — Distribuzioni congiunte, teoremi limite e campionamento (Settimane 7–10)
 
 | Settimana | Argomenti |
 |---|---|
 | **Settimana 7** *(in arrivo)* | **Distribuzioni congiunte e correlazione:** variabili aleatorie congiunte e distribuzioni marginali, covarianza, coefficiente di correlazione e retta di regressione. |
-| **Settimana 8** *(in arrivo)* | **Teoremi limite e convergenza:** disuguaglianze notevoli (Markov, Čebyšëv), Legge Debole dei Grandi Numeri (WLLN) e Teorema del Limite Centrale (CLT). |
-| **Settimana 9** *(in arrivo)* | **Campionamento e introduzione all'inferenza:** campionamento statistico, stimatori puntuali e loro proprietà, distribuzione $t$ di Student, intervalli di confidenza e introduzione al Bootstrap computazionale. |
+| **Settimana 8** *(in arrivo)* | **Disuguaglianze e Legge dei Grandi Numeri:** somma di variabili aleatorie indipendenti, disuguaglianze di Markov e Čebyšëv, convergenza in probabilità e Legge Debole dei Grandi Numeri. |
+| **Settimana 9** *(in arrivo)* | **Il Teorema del Limite Centrale:** enunciato, cosa garantisce e cosa no, approssimazione normale della binomiale, errore standard e intervalli di confidenza. |
+| **Settimana 10** *(in arrivo)* | **Campionamento e introduzione all'inferenza:** campionamento statistico, stimatori puntuali e loro proprietà, intervalli di confidenza e Bootstrap computazionale. |
 
-### Modulo IV — Inferenza statistica e Machine Learning (Settimane 10–12)
+### Modulo IV — Inferenza e Machine Learning (Settimane 11–12)
 
 | Settimana | Argomenti |
 |---|---|
-| **Settimana 10** *(in arrivo)* | **Stima dei parametri e Massima Verosimiglianza (MLE):** funzione di verosimiglianza e log-verosimiglianza, stima di massima verosimiglianza per modelli discreti e continui; legame con le funzioni di perdita nel Machine Learning. |
-| **Settimana 11** *(in arrivo)* | **Verifica delle ipotesi e decisioni statistiche:** formulazione delle ipotesi, errori di I e II tipo, livello di significatività e $p$-value; test statistici e metodologia dell'A/B testing nel software. |
-| **Settimana 12** *(in arrivo)* | **Inferenza bayesiana e Machine Learning:** approccio bayesiano, probabilità a priori e a posteriori, stima MAP, il classificatore Naive Bayes con Laplace smoothing e sintesi finale del corso. |
+| **Settimana 11** *(in arrivo)* | **Massima Verosimiglianza (MLE):** funzione di verosimiglianza e log-verosimiglianza, stima di massima verosimiglianza; legame con le funzioni di perdita nel Machine Learning. Ripasso generale. |
+| **Settimana 12** *(in arrivo)* | **Inferenza bayesiana e Machine Learning:** il classificatore Naive Bayes con Laplace smoothing, cenni all'inferenza variazionale e sintesi finale del corso. |

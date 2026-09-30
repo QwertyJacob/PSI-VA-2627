@@ -649,17 +649,6 @@
         </div>
       </section>
 
-      <!-- Trappola di traduzione -->
-      <section>
-        <p class="badge orange">Trappola</p>
-        <h2 class="huge-question" style="font-size: 1.5em !important;">«Affidabile al 99% sui sani»</h2>
-        <div class="tr-opts">
-          <p class="tr-opt"><span>$P(S \mid V^c) = 0.99$</span><b class="fragment vf-no">✗ &nbsp;<small>il 99% dei sani positivo!</small></b></p>
-          <p class="tr-opt"><span>$P(S^c \mid V^c) = 0.99$</span><b class="fragment vf-yes">✓ &nbsp;<small>quindi $P(S \mid V^c) = 0.01$</small></b></p>
-        </div>
-        <p class="subtitle fragment">Di quale evento è la probabilità? <strong>Sapendo che cosa?</strong></p>
-      </section>
-
       <!-- Il virus (Baron 2.34) (scena su canvas: js/popolazione.js) -->
       <section id="es-virus">
         <h2 class="scene-title">Il virus (Baron 2.34)</h2>
@@ -671,11 +660,11 @@
               <span class="chip">$P(S \mid V) = $ <b>0.95</b></span>
               <span class="chip">$P(S \mid V^c) = $ <b>0.01</b></span>
             </div>
-            <p class="pop-ask">Segnalato. Infetto?</p>
-            <p class="pop-row"><span class="pop-key k-h"></span><b data-k="h">80</b> infetti</p>
-            <p class="pop-row"><span class="pop-key k-tp"></span><b data-k="tp">76</b> segnalati infetti</p>
-            <p class="pop-row"><span class="pop-key k-fp"></span><b data-k="fp">19</b> segnalati sani</p>
-            <div class="scene-def pop-res">$$\frac{\color{#f87171}76}{\color{#f87171}76\color{#edf2f7} + \color{#94a3b8}19} \approx 80\%$$</div>
+            <p class="pop-ask">Su <b>2000 computer</b>: segnalato. Infetto?</p>
+            <p class="pop-row"><span class="pop-key k-h"></span><b data-k="h">80</b> infetti <span style="font-size: 0.8em; opacity: 0.75; vertical-align: baseline;">$= 0.04 \cdot 2000$</span></p>
+            <p class="pop-row"><span class="pop-key k-tp"></span><b data-k="tp">76</b> segnalati infetti <span style="font-size: 0.8em; opacity: 0.75; vertical-align: baseline;">$= 0.95 \cdot 0.04 \cdot 2000$</span></p>
+            <p class="pop-row"><span class="pop-key k-fp"></span><b data-k="fp">19</b> segnalati sani <span style="font-size: 0.8em; opacity: 0.75; vertical-align: baseline;">$\approx 0.01 \cdot 0.96 \cdot 2000$</span></p>
+            <div class="scene-def pop-res">$$\frac{\color{#f87171}76}{\color{#f87171}76\color{#edf2f7} + \color{#94a3b8}19} \approx 80\%$$<p class="scene-note">È Bayes: probabilità × 2000 = conteggi.</p></div>
             <p class="scene-note pop-extra">Con prevalenza 1%: $\approx 49\%$. Stesso test, <strong>prior</strong> diverso.</p>
           </div>
         </div>
@@ -716,7 +705,7 @@
         </div>
       </section>
 
-      <!-- Esercizio: i compiti non firmati (scena: js/bayes.js) -->
+      <!-- Esercizio: i compiti non firmati (scena: js/bayes.js): slide commentata, esercizio tolto dalla dispensa
       <section id="compiti">
         <h2 class="scene-title">Esercizio: tre compiti senza nome</h2>
         <div class="scene-grid wide">
@@ -728,6 +717,7 @@
           </div>
         </div>
       </section>
+      -->
 
       <!-- Simulazione Monte Carlo dell'IDS (scena su canvas: js/simulazioni.js) -->
       <section id="sim-ids">

@@ -931,17 +931,6 @@ Ora applichiamo quanto visto a una serie di problemi. Per ciascuno seguiamo semp
 
     *Lettura:* la causa più probabile di un fallimento finale è **un difetto di design con materiali buoni (43%)**. E più di un fallimento su cinque (21,7%) avviene su prodotti che avevano superato **entrambi** i controlli intermedi: è il prezzo dei falsi negativi dei controlli a monte.
 
-### Esercizio: i compiti non firmati (Baron, Esempio 2.33)
-
-Questo esercizio lo svolgeremo insieme in aula. Prova prima da solo, **senza** guardare il laboratorio.
-
-!!! question "Esercizio"
-    Tre studenti, X, Y e Z, dimenticano di firmare il compito. Scrivono un buon compito con probabilità $0.8$, $0.7$ e $0.5$ rispettivamente, indipendentemente l'uno dall'altro. Il professore trova **due compiti buoni e uno insufficiente**. Qual è la probabilità che il compito insufficiente sia di Z? E di X?
-
-    *Prima di fare i conti*, scrivi una risposta a istinto. Poi confrontala con il risultato.
-
-    *Suggerimento:* elenca tutti i modi in cui può accadere «due buoni e uno insufficiente». Quali sono le ipotesi? Qual è l'evidenza? Formano una partizione? I tuoi posterior sommano a 1?
-
 ---
 
 ## Laboratorio computazionale
@@ -1124,40 +1113,7 @@ print("Script 5: tutti gli assert superati.")
 ```
 </div>
 
-### Script 6 — I compiti non firmati, a forza bruta {: #lab-compiti }
-
-!!! warning "Spoiler"
-    Questo script risolve l'esercizio dei compiti non firmati. Eseguilo **dopo** averlo svolto a mano.
-
-Con tre studenti ci sono $2^3 = 8$ combinazioni possibili di compiti buoni e insufficienti. Lo script le elenca tutte, usa frazioni esatte (modulo `fractions`, niente arrotondamenti), tiene solo quelle con due compiti buoni e uno insufficiente e calcola i posterior. È l'approccio «forza bruta» che a un informatico viene spontaneo, e rende tangibile la probabilità totale come *somma su un sottoinsieme di esiti*.
-
-<div class="psi-exec" markdown="1">
-```python
-# Script 6 — Enumerazione esatta dei compiti non firmati (Baron, Esempio 2.33)
-from fractions import Fraction as F
-from itertools import product
-p_buono = {"X": F(8, 10), "Y": F(7, 10), "Z": F(5, 10)}
-studenti = list(p_buono)
-p_GGB = F(0)
-p_insuff = {s: F(0) for s in studenti}        # P(s insufficiente ∩ GGB)
-for esiti in product([True, False], repeat=3):  # 2^3 = 8 esiti, True = buono
-    p = F(1)
-    for s, buono in zip(studenti, esiti):
-        p *= p_buono[s] if buono else 1 - p_buono[s]     # indipendenza
-    if sum(esiti) == 2:                                   # evento GGB: due buoni, uno insufficiente
-        p_GGB += p
-        p_insuff[studenti[esiti.index(False)]] += p
-print(f"P(GGB) = {p_GGB} = {float(p_GGB):.2f}")
-for s in studenti:
-    post = p_insuff[s] / p_GGB
-    print(f"P({s} insufficiente | GGB) = {post} ≈ {float(post):.4f}")
-assert sum(p_insuff.values()) == p_GGB          # le tre ipotesi dividono GGB in casi
-assert sum(p_insuff[s] / p_GGB for s in studenti) == 1   # i posterior sommano a 1
-print("Script 6: tutti gli assert superati.")
-```
-</div>
-
-### Script 7 — Il tavolo di Bayes {: #lab-tavolo }
+### Script 6 — Il tavolo di Bayes {: #lab-tavolo }
 
 Torniamo al tavolo quadrato dell'Atto I. Lo dividiamo in 10 strisce parallele e ci chiediamo in quale striscia si trovi la linea della palla W. All'inizio non sappiamo nulla, quindi diamo a tutte le strisce la stessa probabilità (è il postulato che tormentava Bayes!).
 
@@ -1170,7 +1126,7 @@ Guarda come l'istogramma, piatto all'inizio, si concentra lancio dopo lancio att
 
 <div class="psi-exec" markdown="1">
 ```python
-# Script 7 — Il tavolo di Bayes discretizzato
+# Script 6 — Il tavolo di Bayes discretizzato
 import random
 def posterior_tavolo(p, q, strisce):
     """Posterior sulla striscia di W dopo p eventi M e q eventi M^c (prior uniforme)."""
@@ -1201,7 +1157,7 @@ print(f"p=7, q=3: media a posteriori = {media:.4f}  (regola di successione (p+1)
 assert abs(media - 8 / 12) < 1e-4
 n = 1_826_213                                         # giorni in 5000 anni (Laplace)
 print(f"Sole di Laplace: (n+1) contro 1 = {n + 1} contro 1")
-print("Script 7: tutti gli assert superati.")
+print("Script 6: tutti gli assert superati.")
 ```
 </div>
 
@@ -1233,8 +1189,8 @@ La tabella delle frequenze naturali è la **matrice di confusione** che si usa p
 | **Specificità** (TNR) | TN / (TN + FP) | $P(E^c \mid H^c)$ | |
 | **False positive rate** (FPR) | FP / (FP + TN) | $P(E \mid H^c) = 1 -$ specificità | |
 | **Prevalenza** | (TP + FN) / N | $P(H)$ | prior |
-| **Precision** (PPV) | TP / (TP + FP) | $P(H \mid E)$ | **posterior** |
-| **NPV** | TN / (TN + FN) | $P(H^c \mid E^c)$ | posterior del test negativo |
+| **Precision** (PPV, *positive predictive value*, valore predittivo positivo) | TP / (TP + FP) | $P(H \mid E)$ | **posterior** |
+| **NPV** (*negative predictive value*, valore predittivo negativo) | TN / (TN + FN) | $P(H^c \mid E^c)$ | posterior del test negativo |
 | **Accuracy** | (TP + TN) / N | $P(E \mid H)P(H) + P(E^c \mid H^c)P(H^c)$ | probabilità totale |
 
 (TP, FN, FP, TN sono i quattro conteggi della matrice di confusione: veri positivi, falsi negativi, falsi positivi, veri negativi; N è il totale.)
@@ -1247,8 +1203,8 @@ Due conseguenze importanti:
     \text{precision} = \frac{\text{recall} \cdot \text{prevalenza}}{\text{recall} \cdot \text{prevalenza} + \text{FPR} \cdot (1 - \text{prevalenza})}.
     $$
 
-    Dipende dalla prevalenza, mentre recall e FPR no. Per questo un modello con precision del 50% in laboratorio, dove metà dei dati di test sono attacchi, può avere una precision disastrosa in produzione, dove gli attacchi sono l'1%. (È un buon esercizio: calcola quanto diventa.) E per lo stesso motivo, su classi rare, le curve precision-recall mostrano il problema che le curve ROC (recall contro FPR) nascondono.
-* **«Accurato al 99%» da solo non significa nulla.** L'accuracy è una media pesata di sensibilità e specificità, con pesi prevalenza e $1 -$ prevalenza (è la probabilità totale). Con prevalenza 1%, un rilevatore che **non segnala mai nulla** ha accuracy del 99%, recall pari a 0 e precision indefinita. Per questo la domanda del Prologo dava sensibilità e specificità separate. Davanti a un «99%», chiediti sempre: *99% di che cosa, calcolato su chi?*
+    Dipende dalla prevalenza, mentre recall e FPR no. Per questo un modello con precision del 50% in laboratorio, dove metà dei dati di test sono attacchi, può avere una precision disastrosa in produzione, dove gli attacchi sono l'1%. (È un buon esercizio: calcola quanto diventa.) 
+* **«Accurato al 99%» da solo non significa nulla.** L'accuracy è una media pesata di sensibilità e specificità, con pesi prevalenza e $1 -$ prevalenza (è la probabilità totale). Con prevalenza 1%, un rilevatore che **non segnala mai nulla** ha accuracy del 99%, recall pari a 0 e precision indefinita. 
 
 ### 3. Il debugging è probabilità inversa
 
@@ -1262,9 +1218,9 @@ Fare debugging significa ragionare **dall'effetto** (il sintomo: un crash, un te
 ### 4. Bayes nell'era dell'intelligenza artificiale
 
 * **Il cervello bayesiano.** Nelle neuroscienze computazionali è stata proposta l'ipotesi che il cervello rappresenti le informazioni sensoriali in forma probabilistica e le combini con le aspettative precedenti in un modo vicino a quello ottimo di Bayes ([Knill & Pouget, 2004](https://doi.org/10.1016/j.tins.2004.10.007)). È un'**ipotesi di ricerca** influente, sostenuta da esperimenti su percezione e movimento, non un fatto acquisito.
-* **Il denominatore che non si riesce a calcolare.** Il denominatore di Bayes, $P(E) = \sum_i P(E \mid H_i)\,P(H_i)$, è una somma su **tutte** le ipotesi. Con due ipotesi è banale. Ma quando le «ipotesi» sono tutte le possibili configurazioni di milioni di variabili nascoste in un modello di deep learning, quella somma diventa impossibile da calcolare esattamente. È lo stesso problema del denominatore che hai appena incontrato, portato su scala gigantesca.
+* **Il denominatore che non si riesce a calcolare.** Il denominatore di Bayes, $P(E) = \sum_i P(E \mid H_i)\,P(H_i)$, è una somma su **tutte** le ipotesi. Con due ipotesi è banale. Ma quando le «ipotesi» sono tutte le possibili configurazioni di milioni di variabili nascoste in un modello di deep learning, quella somma diventa impossibile da calcolare esattamente.
 * **Approssimare invece di calcolare.** I *Variational Autoencoder* ([Kingma & Welling, 2013](https://arxiv.org/abs/1312.6114)) affrontano proprio questo problema: invece di calcolare il posterior esatto, lo approssimano con una famiglia di distribuzioni più semplici, ottimizzando un limite inferiore (tecnica detta *inferenza variazionale*). Anche i modelli di diffusione che generano immagini ([Ho, Jain & Abbeel, 2020](https://arxiv.org/abs/2006.11239)) vengono addestrati su un limite variazionale di questo tipo.
-* **Un modello che sa quando non sa.** [Gal & Ghahramani (2016)](https://arxiv.org/abs/1506.02142) hanno mostrato che una tecnica molto usata nelle reti neurali, il *dropout*, può essere interpretata come inferenza bayesiana approssimata, e ne hanno ricavato un modo per stimare quanto il modello è incerto sulle proprie previsioni. In applicazioni critiche (diagnosi, guida autonoma, sicurezza) un modello che sa quando non sa è più utile di uno che risponde sempre con sicurezza.
+
 
 Nella Settimana 12 chiuderemo il cerchio con il classificatore **Naive Bayes**: il Teorema di Bayes con partizione, più l'ipotesi di indipendenza condizionata, riscritto nella forma a odds.
 
@@ -1279,7 +1235,6 @@ Nella Settimana 12 chiuderemo il cerchio con il classificatore **Naive Bayes**: 
 5. **Trattare la verosimiglianza come una distribuzione.** Non stupirti se $\sum_j P(E \mid H_j) \neq 1$, e non «normalizzarla»: sono i posterior a sommare a 1.
 6. **Contare due volte la stessa evidenza.** Riusare le verosimiglianze del produttore per due rilevatori che leggono gli stessi log: non sono condizionatamente indipendenti, e il posterior che ne esce è troppo sicuro di sé.
 7. **Pensare di poter ignorare il prior.** Ignorarlo significa usare implicitamente il prior «50 e 50», che di solito è il più sbagliato di tutti.
-8. **Scrivere etichette ambigue sugli alberi.** $T \cap T$ per due lanci diversi, oppure notazioni miste per il complementare ($\overline{B}$, $B'$…). Usa gli indici ($T_1$, $T_2$) e una sola notazione ($B^c$).
 
 ---
 

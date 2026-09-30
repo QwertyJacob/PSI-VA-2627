@@ -1185,10 +1185,11 @@ La tabella delle frequenze naturali è la **matrice di confusione** che si usa p
 
 | Metrica ML | Formula sui conteggi | Probabilità | Nome in questa settimana |
 |:---|:---|:---|:---|
-| **Recall** (sensibilità, TPR) | TP / (TP + FN) | $P(E \mid H)$ | verosimiglianza |
-| **Specificità** (TNR) | TN / (TN + FP) | $P(E^c \mid H^c)$ | |
-| **False positive rate** (FPR) | FP / (FP + TN) | $P(E \mid H^c) = 1 -$ specificità | |
+| **Recall** (sensibilità, TPR) | TP / (TP + FN) | $P(E \mid H)$ | verosimiglianza (sotto $H$) |
+| **Specificità** (TNR) | TN / (TN + FP) | $P(E^c \mid H^c)$ | complemento della verosimiglianza sotto $H^c$ |
+| **False positive rate** (FPR) | FP / (FP + TN) | $P(E \mid H^c) = 1 -$ specificità | verosimiglianza (sotto $H^c$) |
 | **Prevalenza** | (TP + FN) / N | $P(H)$ | prior |
+| **Tasso di positivi predetti** (*positive prediction rate*, tasso di allarme) | (TP + FP) / N | $P(E)$ | **evidenza** |
 | **Precision** (PPV, *positive predictive value*, valore predittivo positivo) | TP / (TP + FP) | $P(H \mid E)$ | **posterior** |
 | **NPV** (*negative predictive value*, valore predittivo negativo) | TN / (TN + FN) | $P(H^c \mid E^c)$ | posterior del test negativo |
 | **Accuracy** | (TP + TN) / N | $P(E \mid H)P(H) + P(E^c \mid H^c)P(H^c)$ | probabilità totale |

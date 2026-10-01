@@ -27,6 +27,7 @@ docs/                      sorgenti Markdown delle dispense
   stylesheets/extra.css    stili personalizzati per widget, codice e stampa
 overrides/main.html        override del tema (pulsante per download PDF)
 scripts/
+  publish_pages.sh         automazione merge dev->main, push e deploy Pages
   pdf_hook.py              hook MkDocs per il binding e manifest dei PDF
   build_pdfs.mjs           generatore dei PDF tramite Chromium headless (Playwright)
 mkdocs.yml                 configurazione di MkDocs e navigazione
@@ -72,6 +73,31 @@ npm run pdf
 ## Pubblicazione automatica
 
 A ogni commit/push sul branch `main`, il workflow GitHub Actions [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) esegue la compilazione del sito (`mkdocs build --strict`), la generazione dei PDF per ciascun capitolo e pubblica automaticamente il bundle su GitHub Pages.
+
+### Script di pubblicazione (`publish_pages.sh`)
+
+Durante lo sviluppo si lavora normalmente sul branch `dev`. Per sincronizzare le modifiche su `main` e pubblicarle su GitHub Pages con un solo comando, è disponibile lo script [`scripts/publish_pages.sh`](scripts/publish_pages.sh):
+
+```bash
+# Esegui dalla root del repository o tramite npm
+npm run publish
+# oppure:
+./scripts/publish_pages.sh
+```
+
+**Cosa fa lo script:**
+1. Verifica che la working directory sia pulita (nessuna modifica non committata).
+2. Effettua il push di eventuali commit locali da `dev` a `origin/dev`.
+3. Passa al branch `main` ed esegue il merge fast-forward di `dev`.
+4. Effettua il `git push origin main` (innescando il workflow di deploy).
+5. Riporta automaticamente il repository sul branch `dev`.
+6. Se la GitHub CLI (`gh`) è installata, monitora l'avanzamento della build e del deploy in tempo reale fino alla conferma di pubblicazione.
+
+> **Opzione rapida (senza attesa):**  
+> Se non desideri attendere il completamento della build su GitHub Actions, usa il flag `-n` / `--no-watch`:
+> ```bash
+> ./scripts/publish_pages.sh -n
+> ```
 
 ---
 

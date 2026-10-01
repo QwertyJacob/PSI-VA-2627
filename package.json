@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "publish": "bash scripts/publish_pages.sh",
     "pdf": "node scripts/build_pdfs.mjs",
     "qa": "node qa-all.mjs",
     "vendor": "bash scripts/fetch_slides_vendor.sh",

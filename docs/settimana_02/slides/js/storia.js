@@ -68,7 +68,7 @@
   // La palla W si ferma in x (frazione della larghezza) e resta nascosta.
   // Ogni palla O cade a sinistra della linea di W con probabilità x.
   // Sotto il tavolo, sullo stesso asse, la credenza sulla striscia che
-  // contiene la linea di W (week_02_extended §2.5 C): prior uniforme (il
+  // contiene la linea di W: prior uniforme (il
   // postulato di Bayes), poi posterior ∝ x_j^p (1−x_j)^q, con 10 o 100 strisce.
   PSI.scene('tavolo', function (el, tl) {
     var q = PSI.q(el), root = q.one('svg');

@@ -132,7 +132,7 @@
       .addLabel('s5');
   });
 
-  // ── Esercizio: il test medico con il solo albero (week_02_extended §2.1 C) ──
+  // ── Esercizio: il test medico con il solo albero ──
   PSI.scene('albero-medico', function (el, tl) {
     var q = PSI.q(el), root = q.one('svg');
     var N = { r: [36, 210], h: [240, 105], nh: [240, 315] };
@@ -239,7 +239,7 @@
       .addLabel('s4');
   });
 
-  // ── Ribaltare l'albero (week_02_extended §2.2 e §2.5 A) ──
+  // ── Ribaltare l'albero ──
   //
   // Quattro stati: 0 albero causale (prima H, poi E) con le foglie disegnate
   // come quadrati di area proporzionale alla probabilità; 1 i rami verso Eᶜ

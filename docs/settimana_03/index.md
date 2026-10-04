@@ -79,14 +79,33 @@ Con pochi punti mancanti l'albero si disegna a mano. Ma proviamo un caso più gr
 Il 2–0 è già stato giocato e non si cambia: l'albero descrive solo le manche **che restano da giocare**. Quante possono essere?
 
 * **Al minimo 3 manche.** È il caso in cui $A$ vince di fila le 3 manche che gli mancano ($AAA$). Meno di 3 non si può: ad $A$ ne servono 3, e a $B$ ne servirebbero 5.
-* **Al massimo 7 manche.** Finché la partita non è decisa, tra le manche giocate dopo l'interruzione $A$ ne ha vinte al più 2 (con 3 avrebbe già raggiunto il traguardo) e $B$ al più 4 (con 5 avrebbe già finito). Dopo 6 manche si può quindi essere ancora indecisi, per esempio con $A$ a 2 vittorie e $B$ a 4. Ma la settima manche decide per forza: o $A$ arriva a 3 o $B$ arriva a 5. In generale, se a un certo punto della partita ad $A$ mancano $a$ manche per vincere e a $B$ ne mancano $b$, da quel punto in poi si giocano al più $a + b - 1$ manche. Qui $a + b - 1 = 3 + 5 - 1 = 7$, ed è lo stesso numero $n = a + b - 1$ che ritroveremo con Fermat.
+* **Al massimo 7 manche.** Finché la partita non è decisa, tra le manche giocate dopo l'interruzione $A$ ne ha vinte al più 2 (con 3 avrebbe già raggiunto il traguardo) e $B$ al più 4 (con 5 avrebbe già finito). Dopo 6 manche si può quindi essere ancora indecisi, per esempio con $A$ a 2 vittorie e $B$ a 4. Ma la settima manche decide per forza: o $A$ arriva a 3 o $B$ arriva a 5. In generale, se a un certo punto della partita ad $A$ mancano $a$ manche per vincere e a $B$ ne mancano $b$, da quel punto in poi si giocano al più $a + b - 1$ manche. Qui $a + b - 1 = 3 + 5 - 1 = 7$.
 
-Le foglie dell'albero sono tutte le sequenze di manche che terminano **nel momento in cui uno dei due raggiunge il traguardo**, e sono **56**: 35 con $A$ vincente e 21 con $B$ vincente. Vediamo da dove vengono questi numeri, riga per riga.
+Le foglie dell'albero sono tutte le sequenze di manche che si fermano **nel momento in cui uno dei due raggiunge il traguardo**, e sono **56**: 35 con $A$ vincente e 21 con $B$ vincente. Vediamo da dove vengono questi numeri, contando le foglie una lunghezza alla volta. Scriviamo ogni sequenza dopo l'interruzione come una parola: $ABAA$ significa che la prima manche dopo l'interruzione la vince $A$, la seconda $B$, la terza e la quarta $A$.
 
-* **$A$ vince alla manche $d$** (con $d = 3, \dots, 7$) quando l'ultima manche è sua e nelle $d-1$ manche precedenti ne ha vinte esattamente 2 (e $B$ le altre, ma meno di 5). Per $d = 3$ c'è una sola sequenza, $AAA$. Per $d = 4$ l'ultima è di $A$, e nelle prime tre ci sono due $A$ e una $B$: la $B$ può stare in 3 posti ($BAA\,A$, $ABA\,A$, $AAB\,A$), quindi 3 sequenze. Per $d = 5$ nelle prime quattro ci sono due $A$ e due $B$, e le disposizioni sono 6. Continuando si trova 1, 3, 6, 10, 15, che sommati danno **35**. (Contare questi «posti» in modo sistematico è proprio il tema dell'Atto III.)
-* **$B$ vince alla manche $d$** (con $d = 5, 6, 7$) quando l'ultima manche è sua e nelle precedenti ne ha vinte 4, con $A$ ferma a meno di 3. Le sequenze sono 1, 5 e 15 rispettivamente, in totale **21**.
+**Le foglie in cui vince $A$.** Dopo l'interruzione, ad $A$ servono 3 vittorie. Se $A$ vince la partita alla manche numero $d$, devono valere due cose:
 
-Ogni foglia a profondità $d$ (cioè dopo $d$ manche giocate dall'interruzione) ha probabilità $(\tfrac12)^d$, perché è il prodotto di $d$ rami da $\tfrac12$. Le foglie con $A$ vincente sono così distribuite:
+1. l'**ultima** manche è sua: se avesse già raggiunto 3 vittorie prima, la partita sarebbe finita prima;
+2. nelle manche **precedenti** ha vinto esattamente 2 volte, e tutte le altre manche le ha vinte $B$.
+
+Contiamo ora le sequenze, una lunghezza alla volta.
+
+* **$d = 3$.** Le manche precedenti sono 2 e $A$ le vince entrambe: l'unica sequenza è $AAA$. **1 sequenza.**
+* **$d = 4$.** Le manche precedenti sono 3: due le vince $A$ e una $B$. Resta solo da decidere *in quale delle tre* ha vinto $B$, e le possibilità sono $BAA$, $ABA$, $AAB$. Aggiungendo in fondo la vittoria finale di $A$ si ottengono $BAAA$, $ABAA$, $AABA$. **3 sequenze.**
+* **$d = 5$.** Le manche precedenti sono 4: due di $A$ e due di $B$. Scriviamo tutti i modi di disporle: $AABB$, $ABAB$, $ABBA$, $BAAB$, $BABA$, $BBAA$. Sono 6, e a ciascuna si aggiunge in fondo la $A$ finale. **6 sequenze.**
+* **$d = 6$ e $d = 7$.** Il ragionamento è identico: si dispongono 2 vittorie di $A$ tra le 5 manche precedenti (per $d=6$), o tra le 6 (per $d=7$), e $B$ vince le altre. Elencarle diventa lungo, e per questo il conteggio è già un problema di combinatoria. Il risultato è **10** e **15** sequenze. (In nessun caso $B$ arriva a 5 vittorie prima di $A$: ne ha al massimo 4.)
+
+Sommando: $1 + 3 + 6 + 10 + 15 = \mathbf{35}$ foglie con $A$ vincente.
+
+**Le foglie in cui vince $B$.** Il ragionamento è lo stesso, a parti invertite. A $B$ servono 5 vittorie, quindi può vincere solo alla manche $d = 5$, $6$ o $7$. L'ultima manche è sua, e nelle precedenti ha vinto esattamente 4 volte; le altre le ha vinte $A$, che quindi ha al massimo 2 vittorie e non ha ancora finito.
+
+* **$d = 5$.** Le manche precedenti sono 4 e le vince tutte $B$: l'unica sequenza è $BBBBB$. **1 sequenza.**
+* **$d = 6$.** Tra le 5 manche precedenti ne vince 4 $B$ e una $A$: basta scegliere *quale* delle 5 è di $A$. **5 sequenze.**
+* **$d = 7$.** Tra le 6 manche precedenti ne vincono 4 $B$ e 2 $A$: sono **15** sequenze, lo stesso numero del caso $d=7$ di prima.
+
+Sommando: $1 + 5 + 15 = \mathbf{21}$ foglie con $B$ vincente, e in tutto $35 + 21 = 56$ foglie. (Contare questi «posti» in modo sistematico, senza elencare, è proprio il tema dell'Atto III.)
+
+Si noti come ogni foglia a profondità $d$ (cioè dopo $d$ manche giocate dall'interruzione) ha probabilità $(\tfrac12)^d$, perché è il prodotto di $d$ rami da $\tfrac12$. Le foglie con $A$ vincente sono così distribuite:
 
 | manche da giocare | foglie con $A$ vincente | probabilità di ciascuna | contributo |
 |:--:|:--:|:--:|:--:|

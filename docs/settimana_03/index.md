@@ -58,7 +58,14 @@ Pochi anni dopo, nel 1657, **Christiaan Huygens** pubblica *De ratiociniis in lu
 
 ### L'albero delle manche {: #albero }
 
-Riprendiamo il caso della Settimana 1. Si gioca a **3 punti**, ciascuno ha puntato 32 pistole (la «pistola» era una moneta d'oro dell'epoca; posta totale: 64). Il giocatore $A$ ha 2 punti, $B$ ne ha 1: ad $A$ manca **un** punto, a $B$ ne mancano **due**. Ammettiamo, come nelle lettere, che i due siano ugualmente bravi: a ogni manche ciascuno vince con probabilità $\tfrac12$.
+Riprendiamo il caso della Settimana 1. Si gioca a **3 punti**, ciascuno ha puntato 32 pistole (la «pistola» era una moneta d'oro dell'epoca; posta totale: 64). Il giocatore $A$ ha 2 punti, $B$ ne ha 1: ad $A$ manca **un** punto, a $B$ ne mancano **due**. Prima di disegnare l'albero fissiamo con precisione che cosa stiamo assumendo, come nelle lettere. Sono **due** ipotesi, e una sola non basta.
+
+1. **Uguale bravura.** In ogni manche $A$ vince con probabilità $\tfrac12$ e $B$ con probabilità $\tfrac12$.
+2. **Indipendenza delle manche.** L'esito di una manche non cambia le probabilità delle manche successive. Se $A$ ha appena vinto, la manche dopo è ancora $\tfrac12$ a $\tfrac12$: niente «serie fortunata», niente stanchezza, niente rivincita.
+
+La seconda ipotesi è ciò che ci permette di scrivere $\tfrac12$ su **ogni** ramo dell'albero, anche dopo che qualcosa è già successo, e di moltiplicare lungo i cammini: è la regola del prodotto della Settimana 1, con $P(B \mid A) = P(B)$. Ha anche una conseguenza che useremo più avanti: **per sapere come andrà a finire la partita conta solo quanto manca a ciascuno, non la storia che ci ha portato fin lì.** Due partite in cui ad $A$ mancano 2 punti e a $B$ ne mancano 3 hanno lo stesso futuro, anche se una è arrivata a quel punto dopo $AAB$ e l'altra dopo $ABA$.
+
+Sono ipotesi del modello, non fatti: in un gioco reale potrebbero essere false. Pascal e Fermat le ammettono, e noi con loro.
 
 Si gioca una manche alla volta e ci si ferma appena uno dei due raggiunge il traguardo. Se $A$ vince la prossima manche, la partita è finita; se la vince $B$, se ne gioca un'altra, e a quel punto basta che $A$ vinca per chiudere, altrimenti vince $B$:
 
@@ -105,9 +112,9 @@ Sommando: $1 + 3 + 6 + 10 + 15 = \mathbf{35}$ foglie con $A$ vincente.
 
 Sommando: $1 + 5 + 15 = \mathbf{21}$ foglie con $B$ vincente, e in tutto $35 + 21 = 56$ foglie. (Contare questi «posti» in modo sistematico, senza elencare, è proprio il tema dell'Atto III.)
 
-Si noti come ogni foglia a profondità $d$ (cioè dopo $d$ manche giocate dall'interruzione) ha probabilità $(\tfrac12)^d$, perché è il prodotto di $d$ rami da $\tfrac12$. Le foglie con $A$ vincente sono così distribuite:
+Si noti che ogni foglia a profondità $d$ (cioè dopo $d$ manche giocate dall'interruzione) ha probabilità $(\tfrac12)^d$, perché è il prodotto di $d$ rami da $\tfrac12$. Le foglie con $A$ vincente sono così distribuite:
 
-| manche da giocare | foglie con $A$ vincente | probabilità di ciascuna | contributo |
+| manche giocate dall'interruzione ($d$) | foglie con $A$ vincente | probabilità di ciascuna | contributo |
 |:--:|:--:|:--:|:--:|
 | 3 | 1 | $\tfrac1{8}$ | $\tfrac{16}{128}$ |
 | 4 | 3 | $\tfrac1{16}$ | $\tfrac{24}{128}$ |
@@ -119,16 +126,33 @@ Sommando: $P(A \text{ vince}) = \tfrac{16+24+24+20+15}{128} = \tfrac{99}{128}$. 
 
 ### Pascal: dedurre ogni caso dal successivo {: #pascal }
 
-Pascal, nella lettera del 29 luglio 1654, usa un metodo che chiama più «breve». Indichiamo con $V(a, b)$ la probabilità che $A$ vinca quando ad $A$ mancano $a$ punti e a $B$ ne mancano $b$. Due casi sono ovvi: se $a = 0$ ha già vinto, $V(0, b) = 1$; se $b = 0$ ha già perso, $V(a, 0) = 0$. In tutti gli altri casi si gioca **una** manche, e questa porta in uno di due stati:
+Pascal, nella lettera del 29 luglio 1654, usa un metodo che chiama più «breve». Lo seguiamo un passo alla volta.
+
+**Passo 1: un nome per «quanto manca».** Per l'indipendenza delle manche, il futuro della partita dipende solo da quanti punti mancano ad $A$ e a $B$. Diamo allora un nome alla probabilità che $A$ vinca: $V(a, b)$, quando ad $A$ mancano $a$ punti e a $B$ ne mancano $b$. Non è un numero ma una **tabella**: a ogni coppia $(a, b)$ corrisponde il suo valore. Di questi valori ne conosci già due, uno per ciascuno dei due giochi visti sopra. Nel gioco a 3 punti interrotto sul 2–1 ad $A$ manca 1 punto e a $B$ ne mancano 2, e l'albero piccolo ci ha dato $V(1, 2) = \tfrac34$. Nel gioco a 5 punti interrotto sul 2–0 ad $A$ mancano 3 punti e a $B$ ne mancano 5, e le 56 foglie ci hanno dato $V(3, 5) = \tfrac{99}{128}$. Lo stesso simbolo $V$ vale per entrambi i giochi, perché conta solo quanto manca a ciascuno, non il punteggio a cui si gioca.
+
+**Passo 2: i casi che non richiedono calcoli.** Se $a = 0$, ad $A$ non manca più nulla e ha già vinto: $V(0, b) = 1$. Se $b = 0$ ha già vinto $B$, quindi $A$ ha perso: $V(a, 0) = 0$.
+
+**Passo 3: giochiamo una sola manche, sul caso piccolo.** Riprendi l'albero del 2–1, cioè $(a, b) = (1, 2)$. La prossima manche ha due esiti:
+
+* vince $A$, con probabilità $\tfrac12$: ora mancano $(0, 2)$, la partita è finita e $A$ ha vinto;
+* vince $B$, con probabilità $\tfrac12$: ora mancano $(1, 1)$. Guarda la parte di albero che parte da qui, il ramo $B$ con le sue due foglie: è **l'albero di una partita nuova**, in cui a ciascuno manca un punto, cioè proprio lo stato $(1, 1)$.
+
+**Passo 4: perché il ramo $B$ vale $V(1, 1)$.** Dopo che $B$ ha vinto la manche, la probabilità che $A$ vinca la partita è quella di una partita che comincia da $(1, 1)$, perché per l'indipendenza il passato non conta: quel valore è $V(1, 1)$. La probabilità che la partita passi dal ramo $B$ e finisca con la vittoria di $A$ è allora la probabilità di arrivare al ramo ($\tfrac12$) per la probabilità di vincere da lì ($V(1, 1)$): è la regola del prodotto, $P(\text{ramo}) \cdot P(A \text{ vince} \mid \text{ramo})$. Sommando i due rami:
+
+$$
+V(1, 2) = \tfrac12\, V(0, 2) + \tfrac12\, V(1, 1).
+$$
+
+**Passo 5: lo stesso ragionamento vale per ogni $(a, b)$.** Se $a \ge 1$ e $b \ge 1$, giocando **una** manche si va in $(a-1, b)$ se vince $A$, oppure in $(a, b-1)$ se vince $B$, ciascuno con probabilità $\tfrac12$. Quindi
 
 $$
 V(a, b) = \tfrac12\, V(a-1,\, b) + \tfrac12\, V(a,\, b-1).
 $$
 
-È la regola del cammino applicata a un solo passo: o vince $A$ (e ci si sposta in $(a-1, b)$), o vince $B$ (e ci si sposta in $(a, b-1)$). Ripercorriamo i tre casi della lettera:
+In parole: la probabilità di vincere da uno stato è la media delle probabilità di vincere dai due stati che si possono raggiungere con una manche. La formula riduce ogni stato a due stati più piccoli, finché si arriva ai casi del Passo 2, che sono noti. Ripercorriamo i tre casi della lettera, tutti nel gioco a 3 punti con posta totale di 64 pistole. Per dividere la posta in modo giusto, ciascuno deve ricevere una parte proporzionale alla sua probabilità di vincere:
 
-* **Sul 2–1** ($a=1, b=2$): $V(1,2) = \tfrac12 V(0,2) + \tfrac12 V(1,1) = \tfrac12 \cdot 1 + \tfrac12 \cdot \tfrac12 = \tfrac34$, perché $V(1,1) = \tfrac12\cdot 1 + \tfrac12\cdot 0 = \tfrac12$. Su 64 pistole: **48** ad $A$.
-* **Sul 2–0** ($a=1, b=3$): $V(1,3) = \tfrac12 + \tfrac12\, V(1,2) = \tfrac12 + \tfrac38 = \tfrac78$, cioè **56** pistole ad $A$.
+* **Sul 2–1** ($a=1, b=2$): $V(1,2) = \tfrac12 V(0,2) + \tfrac12 V(1,1) = \tfrac12 \cdot 1 + \tfrac12 \cdot \tfrac12 = \tfrac34$, perché $V(1,1) = \tfrac12\cdot 1 + \tfrac12\cdot 0 = \tfrac12$. Con questa proporzione, volendo ripartire la posta in modo giusto, su 64 pistole ne spettano **48** ad $A$.
+* **Sul 2–0** ($a=1, b=3$): $V(1,3) = \tfrac12 + \tfrac12\, V(1,2) = \tfrac12 + \tfrac12\cdot\tfrac34 = \tfrac78$, cioè **56** pistole ad $A$.
 * **Sull'1–0** ($a=2, b=3$): $V(2,3) = \tfrac12\, V(1,3) + \tfrac12\, V(2,2) = \tfrac12\cdot\tfrac78 + \tfrac12\cdot\tfrac12 = \tfrac{11}{16}$, cioè **44** pistole ad $A$ e 20 a $B$.
 
 Sono esattamente i numeri 48, 56 e 44 che Pascal scrive a Fermat nella lettera. Continuando a riempire la tabella dal basso si arriva anche al caso $a=3$, $b=5$ (il gioco a 5 punti interrotto sul 2–0 di prima):
@@ -139,13 +163,15 @@ Sono esattamente i numeri 48, 56 e 44 che Pascal scrive a Fermat nella lettera. 
 | $a=2$ | $\tfrac14$ | $\tfrac12$ | $\tfrac{11}{16}$ | $\tfrac{13}{16}$ | $\tfrac{57}{64}$ |
 | $a=3$ | $\tfrac18$ | $\tfrac5{16}$ | $\tfrac12$ | $\tfrac{21}{32}$ | $\tfrac{99}{128}$ |
 
-L'ultima casella è il $\tfrac{99}{128}$ trovato sommando le 56 foglie, ottenuto con **15 calcoli** invece di 56 cammini: nell'albero lo stesso stato compare più volte (dopo $AB$ e dopo $BA$ ci si trova nello stesso stato), e Pascal lo calcola una volta sola. In Informatica lo riconosci: è **programmazione dinamica**, e infatti il calcolo di $V(a,b)$ si scrive come una funzione ricorsiva con memoria (lo vedi nello Script 1).
+L'ultima casella è il $\tfrac{99}{128}$ trovato prima sommando le foglie con $A$ vincente. Con la tecnica di Pascal lo si ottiene con **15 calcoli**, uno per casella, invece di sommare decine di cammini. Il motivo è che nell'albero lo stesso stato compare più volte (dopo $AB$ e dopo $BA$ ci si trova nello stesso stato), e Pascal lo calcola una volta sola. In Informatica lo riconosci: è **programmazione dinamica**, e infatti il calcolo di $V(a,b)$ si scrive come una funzione ricorsiva con memoria (lo vedi nello Script 1).
 
 ### Fermat: contare tutti i futuri {: #fermat }
 
-Il metodo di Fermat, che conosciamo dalla lettera di Pascal (la sua lettera originale è andata perduta), ha un'idea diversa: **non aspettare** che la partita finisca davvero. Se ad $A$ mancano $a$ punti e a $B$ ne mancano $b$, dopo $n = a+b-1$ manche la partita è certamente decisa: in quelle $n$ manche, o $A$ ne vince almeno $a$ oppure $B$ ne vince almeno $b$, mai tutte e due. Si immagina allora di giocare **comunque** tutte e $n$ le manche, anche quelle che nella realtà non si giocherebbero. Tutti i futuri hanno così la stessa lunghezza e la stessa probabilità $(\tfrac12)^n$, e basta **contare** quelli in cui $A$ vince almeno $a$ manche.
+Il metodo di Fermat, che conosciamo dalla lettera di Pascal (la sua lettera originale è andata perduta), parte da una difficoltà dell'albero reale: **non sappiamo quante manche si giocheranno**. A volte la partita finisce subito, a volte dopo molte manche, e le foglie hanno probabilità diverse tra loro. L'idea di Fermat è **non aspettare** che la partita finisca davvero: si immagina di giocare *comunque* un numero fisso di manche, anche quelle che nella realtà non si giocherebbero.
 
-Sul 2–1 ($a=1$, $b=2$) sono $n=2$ manche:
+**Quante manche bastano?** Se ad $A$ mancano $a$ punti e a $B$ ne mancano $b$, dopo $n = a + b - 1$ manche la partita è certamente decisa. Vediamolo prima su un caso piccolo: il gioco a **3 punti**, interrotto sul **2–1** per $A$ (ad $A$ manca 1 punto, a $B$ ne mancano 2, quindi $a=1$ e $b=2$). Qui $n = 1 + 2 - 1 = 2$. Infatti in 2 manche non è possibile che $A$ ne vinca *meno* di 1 e insieme $B$ ne vinca *meno* di 2: se $A$ non ne vince nessuna le vince tutte e due $B$, e $B$ arriva a 2. In generale, in $n = a + b - 1$ manche **o** $A$ ne vince almeno $a$, **oppure** $B$ ne vince almeno $b$, mai tutte e due.
+
+**Il caso piccolo: gioco a 3 punti, sul 2–1** ($a=1$, $b=2$, $n=2$). Giochiamo sempre 2 manche:
 
 ```
                           ┌─ A (1/2) ─▶ A A   A vince      [1/4]
@@ -157,21 +183,49 @@ Sul 2–1 ($a=1$, $b=2$) sono $n=2$ manche:
                           └─ B (1/2) ─▶ B B   B vince      [1/4]
 ```
 
-$A$ vince in tre futuri su quattro, $\tfrac34$, lo stesso risultato dell'albero reale. Il futuro $AA$ e il futuro $AB$ sono la foglia $A$ di prima spezzata in due: nella realtà, dopo che $A$ ha vinto la prima manche, la seconda non si giocherebbe, ed è **fittizia**. Non cambia nulla, perché l'esito dipende solo da chi raggiunge per primo il traguardo.
+Leggiamo l'albero. I futuri sono quattro, $AA$, $AB$, $BA$, $BB$, e hanno tutti la stessa probabilità $\tfrac14$. In tre di essi, $AA$, $AB$ e $BA$, $A$ vince almeno 1 manche e quindi vince la partita; solo in $BB$ vince $B$. Dunque $P(A \text{ vince}) = \tfrac34$, lo stesso risultato dell'albero reale.
 
-Il vantaggio si vede sul caso grande. Per $a=3$, $b=5$ si giocano $n=7$ manche fittizie, i futuri sono $2^7 = 128$, e $A$ vince quando ne vince **almeno 3**. Quanti sono? I futuri con esattamente $k$ vittorie di $A$ sono 1, 7, 21, 35, 35, 21, 7, 1 per $k = 0, \dots, 7$ (lo capiremo nell'Atto III), quindi
+Confrontiamo con l'albero reale, che aveva tre foglie: $A$ con probabilità $\tfrac12$, $BA$ con $\tfrac14$ e $BB$ con $\tfrac14$. Le foglie $BA$ e $BB$ ci sono anche qui, identiche. Cambia solo la foglia $A$, che qui diventa due futuri, $AA$ e $AB$, ciascuno di probabilità $\tfrac14$, e $\tfrac14 + \tfrac14 = \tfrac12$ è proprio la probabilità della foglia $A$ di prima. Perché si spezza in due? Nella realtà, dopo che $A$ ha vinto la prima manche, la partita è finita e la seconda manche **non si gioca**. Con Fermat la giochiamo comunque, solo per immaginazione: è una manche **fittizia**, perché non influisce sul risultato. Qualunque ne sia l'esito ($A$ oppure $B$), $A$ aveva già raggiunto il traguardo, e due esiti di probabilità $\tfrac12$ e $\tfrac12$ sommano a 1: la probabilità della foglia originale non cambia. Per questo aggiungere manche fittizie non modifica la probabilità che $A$ vinca, e permette di far arrivare tutti i futuri alla stessa lunghezza.
+
+**Perché basta contare.** Tutti i futuri hanno la stessa lunghezza $n$, e per l'indipendenza delle manche ognuno ha la stessa probabilità $(\tfrac12)^n$: è il prodotto di $n$ rami da $\tfrac12$. Quindi la probabilità che $A$ vinca è semplicemente
+
+$$
+P(A \text{ vince}) = \frac{\text{futuri in cui } A \text{ vince almeno } a \text{ manche}}{2^n},
+$$
+
+e il problema diventa un conteggio: sul 2–1 sono $3/2^2 = \tfrac34$. Nell'albero reale, invece, le foglie avevano probabilità diverse ($\tfrac12$, $\tfrac14$, $\tfrac14$) e bisognava pesarle una per una.
+
+**Un secondo caso: gioco a 3 punti, sull'1–0** ($a=2$, $b=3$, $n=4$). Si gioca ancora a 3 punti, ma ora il punteggio è 1–0 per $A$: ad $A$ mancano 2 punti e a $B$ ne mancano 3. Giochiamo sempre $n = 2 + 3 - 1 = 4$ manche, quindi i futuri sono $2^4 = 16$, tutti con probabilità $\tfrac1{16}$. $A$ vince quando ne vince **almeno 2**. Con soli 16 futuri possiamo scriverli tutti, come parole di 4 lettere (la $i$-esima lettera dice chi vince la $i$-esima manche) e raggrupparli per **quante manche vince $A$**, che chiamiamo $k$:
+
+| $k$ (vittorie di $A$) | futuri | quanti |
+|:--:|:--|:--:|
+| 0 | $BBBB$ | 1 |
+| 1 | $ABBB$, $BABB$, $BBAB$, $BBBA$ | 4 |
+| 2 | $AABB$, $ABAB$, $ABBA$, $BAAB$, $BABA$, $BBAA$ | 6 |
+| 3 | $AAAB$, $AABA$, $ABAA$, $BAAA$ | 4 |
+| 4 | $AAAA$ | 1 |
+
+Controllo: $1 + 4 + 6 + 4 + 1 = 16$, e cioè ci sono tutti. Nelle righe con $k = 2, 3, 4$ $A$ vince, quindi i futuri favorevoli sono $6 + 4 + 1 = 11$ e
+
+$$
+P(A \text{ vince}) = \frac{11}{16},
+$$
+
+lo stesso valore trovato con Pascal.
+
+**Il caso grande: gioco a 5 punti, sul 2–0** ($a=3$, $b=5$, $n=7$). È la partita di prima, quella con 56 foglie e la tabella di Pascal. Con Fermat si giocano sempre $n = 3 + 5 - 1 = 7$ manche, anche quelle che nella realtà non servirebbero: i futuri sono $2^7 = 128$, tutti con probabilità $\tfrac1{128}$, e $A$ vince quando ne vince **almeno 3**. Qui elencarli tutti sarebbe troppo lungo, ma il raggruppamento per $k$ è lo stesso della tabella di prima: i futuri con esattamente $k$ vittorie di $A$ sono 1, 7, 21, 35, 35, 21, 7, 1 per $k = 0, \dots, 7$ (come si contano senza elencarli lo capiremo nell'Atto III), quindi
 
 $$
 P(A \text{ vince}) = \frac{35 + 35 + 21 + 7 + 1}{128} = \frac{99}{128},
 $$
 
-lo stesso risultato di prima, senza costruire la tabella per righe e senza sapere nulla dei cammini che finiscono in anticipo. Un altro esempio: sull'1–0 ($a=2, b=3$) si giocano 4 manche fittizie, i futuri con $k$ vittorie di $A$ sono 1, 4, 6, 4, 1, e $P(A \text{ vince}) = \frac{6 + 4 + 1}{16} = \frac{11}{16}$, come con Pascal.
+lo stesso risultato di prima, senza costruire la tabella per righe e senza sapere nulla dei cammini che finiscono in anticipo.
 
 ### Quando conviene Fermat, quando Pascal {: #confronto }
 
 I due metodi calcolano lo stesso numero. Per **calcolare** con un programma, la ricorsione di Pascal è più economica: servono $a \cdot b$ stati, mentre elencare i futuri di Fermat significa passare in rassegna $2^n$ sequenze, che con $n=4$ sono 16, con 10 sono 1024, con 30 oltre un miliardo. È il limite che Pascal nota subito nella lettera del 29 luglio: *«the labor of combinations is excessive»* («la fatica delle combinazioni è eccessiva»).
 
-Ma il valore del metodo di Fermat non sta nell'elencare: **non serve elencare i futuri, serve sapere quanti sono** quelli in cui $A$ vince, e questo si scrive in una sola formula con i numeri $1, 7, 21, 35, \dots$. Fermat è il metodo che ci porta ai coefficienti binomiali, Pascal è il metodo che ci dà l'algoritmo. Sono lo stesso conto: nell'albero, il metodo di Pascal è il modo di sommare le foglie un livello alla volta, quello di Fermat è il modo di contarle tutte insieme. Imparare a contare senza elencare è l'argomento dell'Atto III.
+Ma il valore del metodo di Fermat non sta nell'elencare: **non serve elencare i futuri, serve sapere quanti sono** quelli in cui $A$ vince, e questo si scrive in una sola formula con i numeri $1, 7, 21, 35, \dots$. Fermat è il metodo che ci porta ai coefficienti binomiali, Pascal è il metodo che ci dà l'algoritmo. Sono lo stesso conto, e imparare a contare senza elencare è l'argomento dell'Atto III.
 
 ### Esplora tu stesso: i futuri del problema dei punti {: #widget-futuri }
 

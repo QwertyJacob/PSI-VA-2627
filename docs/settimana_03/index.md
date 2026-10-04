@@ -25,7 +25,7 @@ Nella [Settimana 1](../settimana_01/index.md#il-problema-della-partita-interrott
 
 Il problema è molto più vecchio del 1654. Nel 1494 Luca Pacioli, nella sua *Summa de arithmetica*, propone questo caso: due squadre giocano a palla fino a **60 punti** (ogni goal vale 10), la posta totale è di **10 ducati**, e il gioco si interrompe sul **50 a 20**. La sua regola è dividere **in proporzione ai punti già fatti**: $50 : 20 = 5 : 2$, cioè $\tfrac57$ della posta (circa 7,14 ducati) a una squadra e $\tfrac27$ (circa 2,86) all'altra. Lo presenta con sicurezza: gli altri pareri che ha incontrato, scrive, gli sembrano «incoerenti».
 
-Una regola così semplice ha però un difetto evidente, che nel 1556 Niccolò Tartaglia mise in luce con un caso estremo. Se una squadra ha 10 punti e l'altra zero, la regola assegna **tutta** la posta a chi ha i 10 punti, anche se mancano ancora 50 punti alla vittoria: per Tartaglia è «completely beyond reason» («del tutto fuori da ogni ragione», nella traduzione inglese). Il difetto è di principio: la regola di Pacioli guarda a **ciò che è già successo** e ignora quanto manca per finire. Tartaglia stesso, d'altra parte, concludeva che il problema si risolve *«rather judicial than through computation»* («più per via di giudizio che di calcolo»), e proponeva una regola alternativa basata sul vantaggio rispetto alla lunghezza del gioco. (Fonte dei passi di Pacioli e Tartaglia: la raccolta di testi tradotti di [Cantillo](https://mpra.ub.uni-muenchen.de/50831/1/MPRA_paper_50831.pdf), che riproduce le traduzioni di Pulskamp; la traduzione italiana è nostra.)
+Una regola così semplice ha però un difetto evidente, che nel 1556 Niccolò Tartaglia mise in luce con un caso estremo. Se una squadra ha 10 punti e l'altra zero, la regola assegna **tutta** la posta a chi ha i 10 punti, anche se mancano ancora 50 punti alla vittoria: per lui una conclusione del genere non aveva senso. Il difetto è di principio: la regola di Pacioli guarda a **ciò che è già successo** e ignora quanto manca per finire. Tartaglia stesso, d'altra parte, concludeva che il problema si risolve più per via di giudizio che di calcolo, e proponeva una regola alternativa basata sul vantaggio rispetto alla lunghezza del gioco.
 
 ### Il cavaliere e le sue due domande {: #de-mere }
 
@@ -33,13 +33,12 @@ In un secolo e mezzo nessuno trovò una risposta accettata. Poi, nel 1654, **Ant
 
 Pascal ne discute per lettera con **Pierre de Fermat (1601–1665)**, giurista e matematico a Tolosa. La prima lettera di Pascal è andata perduta; sopravvivono le altre, l'ultima datata 27 ottobre 1654, ristampate nelle *Œuvres de Fermat* (II, pp. 288–314, 1894). In quella del 29 luglio, Pascal scrive a Fermat di aver letto la sua soluzione e aggiunge, a proposito di de Méré: *«M. de Méré never could find the true value for the points nor a method to arrive to it»* («de Méré non riuscì mai a trovare il vero valore per i punti, né un metodo per arrivarci»). Nella stessa lettera compare una frase che racconta l'emozione dell'accordo: *«I see well that truth is the same in Toulouse as in Paris»* («vedo bene che la verità è la stessa a Tolosa e a Parigi»). Le citazioni sono dalla traduzione inglese delle lettere, la traduzione italiana è nostra.
 
-In quella lettera Pascal racconta il «grande scandalo» di de Méré, che pensava di aver trovato una contraddizione nell'aritmetica:
+In quella lettera Pascal racconta il «grande scandalo» di de Méré, che pensava di aver trovato una contraddizione nell'aritmetica. Due scommesse, entrambe del tipo «almeno uno»:
 
-* Scommettere di ottenere **almeno un sei** lanciando **un dado quattro volte** è vantaggioso: le probabilità sono $671$ contro $625$.
-* Scommettere di ottenere **almeno un doppio sei** lanciando **due dadi ventiquattro volte** è invece svantaggioso.
-* Eppure, ragionava de Méré, $24$ sta a $36$ (le facce di due dadi) come $4$ sta a $6$ (le facce di un dado): le due scommesse dovrebbero essere equivalenti.
+* **Scommessa A.** Si lancia **un dado quattro volte** e si punta che esca **almeno un sei**. De Méré la giocava da anni e *sapeva* che conviene: a lungo andare chi punta così vince. Con tre lanci invece non conviene: quattro è il minimo. Pascal la scrive così: le probabilità sono «**671 contro 625**». Significa che, tra tutte le possibili sequenze di quattro lanci (sono 1296), 671 contengono almeno un sei e 625 no; nell'Atto IV vedremo da dove nascono questi numeri.
+* **Scommessa B.** Si lanciano **due dadi ventiquattro volte** e si punta che esca **almeno un doppio sei**. De Méré ragionava per proporzione. Con un dado le facce sono 6 e bastano 4 lanci. Con due dadi le combinazioni possibili sono 36, cioè **6 volte tante**, e quindi dovrebbero servire **6 volte tanti lanci**: $4 \cdot 6 = 24$. In altre parole, $24$ sta a $36$ come $4$ sta a $6$. Ma giocando, de Méré vedeva che questa scommessa **non** conveniva.
 
-«L'aritmetica si contraddice», concludeva. Pascal risponde che la ragione si vede facilmente «dai principi di cui Fermat dispone». Lo vedremo anche noi, più avanti in questa settimana, con lo stesso trucco che useremo per i compleanni.
+Per lui era un paradosso: la stessa proporzione, due risultati opposti. «L'aritmetica si contraddice», concludeva. Pascal risponde che la ragione si vede facilmente «dai principi di cui Fermat dispone». Lo vedremo anche noi, più avanti in questa settimana, con lo stesso trucco che useremo per i compleanni.
 
 ### Quello che nasce da quelle lettere {: #eredita }
 
@@ -57,32 +56,51 @@ Pochi anni dopo, nel 1657, **Christiaan Huygens** pubblica *De ratiociniis in lu
 
 ## Atto II: Pesare i futuri possibili — i due metodi del 1654 {: #futuri }
 
-### Fermat: contare tutti i futuri {: #fermat }
+### L'albero delle manche {: #albero }
 
-Riprendiamo il caso della Settimana 1. Si gioca a **3 punti**, ciascuno ha puntato 32 pistole (posta totale: 64). Il giocatore $A$ ha 2 punti, $B$ ne ha 1: ad $A$ manca **un** punto, a $B$ ne mancano **due**. Ammettiamo, come nelle lettere, che i due siano ugualmente bravi: a ogni manche ciascuno vince con probabilità $\tfrac12$.
+Riprendiamo il caso della Settimana 1. Si gioca a **3 punti**, ciascuno ha puntato 32 pistole (la «pistola» era una moneta d'oro dell'epoca; posta totale: 64). Il giocatore $A$ ha 2 punti, $B$ ne ha 1: ad $A$ manca **un** punto, a $B$ ne mancano **due**. Ammettiamo, come nelle lettere, che i due siano ugualmente bravi: a ogni manche ciascuno vince con probabilità $\tfrac12$.
 
-L'idea di Fermat è di **non aspettare** che la partita finisca davvero. Si immagina di giocare comunque altre **due manche**: sono più che sufficienti, perché dopo due manche la partita è certamente decisa (ad $A$ ne basta una, a $B$ ne servono due). Gli esiti possibili sono quattro, e ognuno ha probabilità $\tfrac12\cdot\tfrac12 = \tfrac14$:
+Si gioca una manche alla volta e ci si ferma appena uno dei due raggiunge il traguardo. Se $A$ vince la prossima manche, la partita è finita; se la vince $B$, se ne gioca un'altra, e a quel punto basta che $A$ vinca per chiudere, altrimenti vince $B$:
 
 ```
-                          ┌─ A (1/2) ─▶ A A   A vince      [1/4]
-          ┌─ A (1/2) ─────┤
-          │               └─ B (1/2) ─▶ A B   A vince      [1/4]
-  Ω ──────┤
-          │               ┌─ A (1/2) ─▶ B A   A vince      [1/4]
-          └─ B (1/2) ─────┤
-                          └─ B (1/2) ─▶ B B   B vince      [1/4]
+                          ┌─ A (1/2) ─▶ A       A vince      [1/2]
+  Ω ──────────────────────┤
+                          │               ┌─ A (1/2) ─▶ B A   A vince   [1/4]
+                          └─ B (1/2) ─────┤
+                                          └─ B (1/2) ─▶ B B   B vince   [1/4]
 ```
 
-È l'albero della Settimana 2, con la stessa convenzione: le parentesi tonde sono le probabilità dei rami, le quadre quelle delle foglie. Ogni foglia è un **futuro possibile**, e $A$ vince in tre futuri su quattro: $P(A \text{ vince}) = \tfrac34$, $P(B \text{ vince}) = \tfrac14$. La posta si divide allo stesso modo: **48 pistole ad $A$ e 16 a $B$**.
+È l'albero della Settimana 2, con la stessa convenzione: le parentesi tonde sono le probabilità dei rami, le quadre quelle delle foglie, che si ottengono moltiplicando lungo il cammino. Ogni foglia è un **futuro possibile**, e $A$ vince in due di essi: $P(A \text{ vince}) = \tfrac12 + \tfrac14 = \tfrac34$, $P(B \text{ vince}) = \tfrac14$. Attenzione: $\tfrac12$ è la probabilità che $A$ vinca la *prossima* manche, ma $A$ può vincere la partita anche perdendo la prossima, e all' $\tfrac12$ va aggiunto il $\tfrac14$ del futuro $BA$. La posta si divide allo stesso modo: **48 pistole ad $A$ e 16 a $B$**.
 
-!!! note "Perché si possono giocare anche manche «inutili»"
-    Il futuro $AA$ comprende la partita in cui $A$ vince subito la manche decisiva: la seconda manche, che nella realtà non si giocherebbe, è puramente fittizia. Non cambia nulla, perché l'esito della partita dipende solo da quale giocatore raggiunge per primo il traguardo, e nei quattro futuri questo è già deciso. Aggiungere manche fittizie serve solo a far sì che **tutti i futuri abbiano la stessa lunghezza**, e quindi la stessa probabilità, così che si possano semplicemente contare.
+Il principio, da fissare, è questo: **la posta si divide secondo le probabilità di vittoria, e queste si ottengono sommando i futuri possibili, non guardando il passato**. Il passato conta solo perché decide *quanto manca* a ciascuno.
 
-Il principio, da fissare, è questo: **la posta si divide secondo le probabilità di vittoria, e queste si ottengono contando i futuri, non guardando il passato**. Il passato conta solo perché decide *quanto manca* a ciascuno.
+Con pochi punti mancanti l'albero si disegna a mano. Ma proviamo un caso più grande, cambiando le regole del gioco: si gioca a **5 punti**, e la partita viene interrotta sul **2 a 0** per $A$. Ad $A$ mancano allora $5 - 2 = 3$ manche, a $B$ ne mancano $5 - 0 = 5$. Ammettiamo ancora che a ogni manche ciascuno vinca con probabilità $\tfrac12$.
+
+Il 2–0 è già stato giocato e non si cambia: l'albero descrive solo le manche **che restano da giocare**. Quante possono essere?
+
+* **Al minimo 3 manche.** È il caso in cui $A$ vince di fila le 3 manche che gli mancano ($AAA$). Meno di 3 non si può: ad $A$ ne servono 3, e a $B$ ne servirebbero 5.
+* **Al massimo 7 manche.** Finché la partita non è decisa, tra le manche giocate dopo l'interruzione $A$ ne ha vinte al più 2 (con 3 avrebbe già raggiunto il traguardo) e $B$ al più 4 (con 5 avrebbe già finito). Dopo 6 manche si può quindi essere ancora indecisi, per esempio con $A$ a 2 vittorie e $B$ a 4. Ma la settima manche decide per forza: o $A$ arriva a 3 o $B$ arriva a 5. In generale, se a un certo punto della partita ad $A$ mancano $a$ manche per vincere e a $B$ ne mancano $b$, da quel punto in poi si giocano al più $a + b - 1$ manche. Qui $a + b - 1 = 3 + 5 - 1 = 7$, ed è lo stesso numero $n = a + b - 1$ che ritroveremo con Fermat.
+
+Le foglie dell'albero sono tutte le sequenze di manche che terminano **nel momento in cui uno dei due raggiunge il traguardo**, e sono **56**: 35 con $A$ vincente e 21 con $B$ vincente. Vediamo da dove vengono questi numeri, riga per riga.
+
+* **$A$ vince alla manche $d$** (con $d = 3, \dots, 7$) quando l'ultima manche è sua e nelle $d-1$ manche precedenti ne ha vinte esattamente 2 (e $B$ le altre, ma meno di 5). Per $d = 3$ c'è una sola sequenza, $AAA$. Per $d = 4$ l'ultima è di $A$, e nelle prime tre ci sono due $A$ e una $B$: la $B$ può stare in 3 posti ($BAA\,A$, $ABA\,A$, $AAB\,A$), quindi 3 sequenze. Per $d = 5$ nelle prime quattro ci sono due $A$ e due $B$, e le disposizioni sono 6. Continuando si trova 1, 3, 6, 10, 15, che sommati danno **35**. (Contare questi «posti» in modo sistematico è proprio il tema dell'Atto III.)
+* **$B$ vince alla manche $d$** (con $d = 5, 6, 7$) quando l'ultima manche è sua e nelle precedenti ne ha vinte 4, con $A$ ferma a meno di 3. Le sequenze sono 1, 5 e 15 rispettivamente, in totale **21**.
+
+Ogni foglia a profondità $d$ (cioè dopo $d$ manche giocate dall'interruzione) ha probabilità $(\tfrac12)^d$, perché è il prodotto di $d$ rami da $\tfrac12$. Le foglie con $A$ vincente sono così distribuite:
+
+| manche da giocare | foglie con $A$ vincente | probabilità di ciascuna | contributo |
+|:--:|:--:|:--:|:--:|
+| 3 | 1 | $\tfrac1{8}$ | $\tfrac{16}{128}$ |
+| 4 | 3 | $\tfrac1{16}$ | $\tfrac{24}{128}$ |
+| 5 | 6 | $\tfrac1{32}$ | $\tfrac{24}{128}$ |
+| 6 | 10 | $\tfrac1{64}$ | $\tfrac{20}{128}$ |
+| 7 | 15 | $\tfrac1{128}$ | $\tfrac{15}{128}$ |
+
+Sommando: $P(A \text{ vince}) = \tfrac{16+24+24+20+15}{128} = \tfrac{99}{128}$. Funziona, ma per costruire la tabella abbiamo dovuto sapere **quanti** cammini finiscono in ciascuna riga (1, 3, 6, 10, 15), e questo è già un problema di conteggio. Nel 1654 Pascal e Fermat propongono due modi per aggirarlo.
 
 ### Pascal: dedurre ogni caso dal successivo {: #pascal }
 
-Quando i punti che mancano crescono, i futuri diventano troppi da elencare. Pascal, nella lettera del 29 luglio 1654, usa un altro metodo, che chiama più «breve». Indichiamo con $V(a, b)$ la probabilità che $A$ vinca quando ad $A$ mancano $a$ punti e a $B$ ne mancano $b$. Due casi sono ovvi: se $a = 0$ ha già vinto, $V(0, b) = 1$; se $b = 0$ ha già perso, $V(a, 0) = 0$. In tutti gli altri casi si gioca **una** manche, e questa porta in uno di due stati:
+Pascal, nella lettera del 29 luglio 1654, usa un metodo che chiama più «breve». Indichiamo con $V(a, b)$ la probabilità che $A$ vinca quando ad $A$ mancano $a$ punti e a $B$ ne mancano $b$. Due casi sono ovvi: se $a = 0$ ha già vinto, $V(0, b) = 1$; se $b = 0$ ha già perso, $V(a, 0) = 0$. In tutti gli altri casi si gioca **una** manche, e questa porta in uno di due stati:
 
 $$
 V(a, b) = \tfrac12\, V(a-1,\, b) + \tfrac12\, V(a,\, b-1).
@@ -94,17 +112,47 @@ $$
 * **Sul 2–0** ($a=1, b=3$): $V(1,3) = \tfrac12 + \tfrac12\, V(1,2) = \tfrac12 + \tfrac38 = \tfrac78$, cioè **56** pistole ad $A$.
 * **Sull'1–0** ($a=2, b=3$): $V(2,3) = \tfrac12\, V(1,3) + \tfrac12\, V(2,2) = \tfrac12\cdot\tfrac78 + \tfrac12\cdot\tfrac12 = \tfrac{11}{16}$, cioè **44** pistole ad $A$ e 20 a $B$.
 
-Sono esattamente i numeri 48, 56 e 44 che Pascal scrive a Fermat nella lettera. Pascal procede *all'indietro*, dai casi finali verso quello di partenza; Fermat guarda *in avanti*, a tutti i futuri. Sono lo stesso conto: nell'albero, il metodo di Pascal è il modo di sommare le foglie un livello alla volta. In Informatica lo riconosci: è **programmazione dinamica**, e infatti il calcolo di $V(a,b)$ si scrive come una funzione ricorsiva con memoria (lo vedi nello Script 1).
+Sono esattamente i numeri 48, 56 e 44 che Pascal scrive a Fermat nella lettera. Continuando a riempire la tabella dal basso si arriva anche al caso $a=3$, $b=5$ (il gioco a 5 punti interrotto sul 2–0 di prima):
+
+| | $b=1$ | $b=2$ | $b=3$ | $b=4$ | $b=5$ |
+|:--:|:--:|:--:|:--:|:--:|:--:|
+| $a=1$ | $\tfrac12$ | $\tfrac34$ | $\tfrac78$ | $\tfrac{15}{16}$ | $\tfrac{31}{32}$ |
+| $a=2$ | $\tfrac14$ | $\tfrac12$ | $\tfrac{11}{16}$ | $\tfrac{13}{16}$ | $\tfrac{57}{64}$ |
+| $a=3$ | $\tfrac18$ | $\tfrac5{16}$ | $\tfrac12$ | $\tfrac{21}{32}$ | $\tfrac{99}{128}$ |
+
+L'ultima casella è il $\tfrac{99}{128}$ trovato sommando le 56 foglie, ottenuto con **15 calcoli** invece di 56 cammini: nell'albero lo stesso stato compare più volte (dopo $AB$ e dopo $BA$ ci si trova nello stesso stato), e Pascal lo calcola una volta sola. In Informatica lo riconosci: è **programmazione dinamica**, e infatti il calcolo di $V(a,b)$ si scrive come una funzione ricorsiva con memoria (lo vedi nello Script 1).
+
+### Fermat: contare tutti i futuri {: #fermat }
+
+Il metodo di Fermat, che conosciamo dalla lettera di Pascal (la sua lettera originale è andata perduta), ha un'idea diversa: **non aspettare** che la partita finisca davvero. Se ad $A$ mancano $a$ punti e a $B$ ne mancano $b$, dopo $n = a+b-1$ manche la partita è certamente decisa: in quelle $n$ manche, o $A$ ne vince almeno $a$ oppure $B$ ne vince almeno $b$, mai tutte e due. Si immagina allora di giocare **comunque** tutte e $n$ le manche, anche quelle che nella realtà non si giocherebbero. Tutti i futuri hanno così la stessa lunghezza e la stessa probabilità $(\tfrac12)^n$, e basta **contare** quelli in cui $A$ vince almeno $a$ manche.
+
+Sul 2–1 ($a=1$, $b=2$) sono $n=2$ manche:
+
+```
+                          ┌─ A (1/2) ─▶ A A   A vince      [1/4]
+          ┌─ A (1/2) ─────┤
+          │               └─ B (1/2) ─▶ A B   A vince      [1/4]
+  Ω ──────┤
+          │               ┌─ A (1/2) ─▶ B A   A vince      [1/4]
+          └─ B (1/2) ─────┤
+                          └─ B (1/2) ─▶ B B   B vince      [1/4]
+```
+
+$A$ vince in tre futuri su quattro, $\tfrac34$, lo stesso risultato dell'albero reale. Il futuro $AA$ e il futuro $AB$ sono la foglia $A$ di prima spezzata in due: nella realtà, dopo che $A$ ha vinto la prima manche, la seconda non si giocherebbe, ed è **fittizia**. Non cambia nulla, perché l'esito dipende solo da chi raggiunge per primo il traguardo.
+
+Il vantaggio si vede sul caso grande. Per $a=3$, $b=5$ si giocano $n=7$ manche fittizie, i futuri sono $2^7 = 128$, e $A$ vince quando ne vince **almeno 3**. Quanti sono? I futuri con esattamente $k$ vittorie di $A$ sono 1, 7, 21, 35, 35, 21, 7, 1 per $k = 0, \dots, 7$ (lo capiremo nell'Atto III), quindi
+
+$$
+P(A \text{ vince}) = \frac{35 + 35 + 21 + 7 + 1}{128} = \frac{99}{128},
+$$
+
+lo stesso risultato di prima, senza costruire la tabella per righe e senza sapere nulla dei cammini che finiscono in anticipo. Un altro esempio: sull'1–0 ($a=2, b=3$) si giocano 4 manche fittizie, i futuri con $k$ vittorie di $A$ sono 1, 4, 6, 4, 1, e $P(A \text{ vince}) = \frac{6 + 4 + 1}{16} = \frac{11}{16}$, come con Pascal.
 
 ### Quando conviene Fermat, quando Pascal {: #confronto }
 
-Pascal osserva subito il limite del metodo di Fermat, pur così «naturale»: a ogni manche in più i futuri raddoppiano. Con $a + b - 1 = 4$ manche fittizie sono 16, con 10 sono 1024, con 30 oltre un miliardo. Lo scrive a Fermat nella lettera del 29 luglio: *«the labor of combinations is excessive»* («la fatica delle combinazioni è eccessiva»). Ma **non serve elencare i futuri**: serve solo **sapere quanti sono** quelli in cui $A$ vince. Per esempio, sull'1–0 ($a=2, b=3$) si giocano 4 manche fittizie, e $A$ vince quando ne vince **almeno due** su quattro; i futuri con esattamente $k$ vittorie di $A$ sono 1, 4, 6, 4, 1 per $k = 0, \dots, 4$, e quindi
+I due metodi calcolano lo stesso numero. Per **calcolare** con un programma, la ricorsione di Pascal è più economica: servono $a \cdot b$ stati, mentre elencare i futuri di Fermat significa passare in rassegna $2^n$ sequenze, che con $n=4$ sono 16, con 10 sono 1024, con 30 oltre un miliardo. È il limite che Pascal nota subito nella lettera del 29 luglio: *«the labor of combinations is excessive»* («la fatica delle combinazioni è eccessiva»).
 
-$$
-P(A \text{ vince}) = \frac{6 + 4 + 1}{16} = \frac{11}{16},
-$$
-
-lo stesso risultato di prima. Quei numeri $1, 4, 6, 4, 1$ sono il tipo di conto che ci serve imparare a fare **senza** elencare: è l'argomento dell'Atto III.
+Ma il valore del metodo di Fermat non sta nell'elencare: **non serve elencare i futuri, serve sapere quanti sono** quelli in cui $A$ vince, e questo si scrive in una sola formula con i numeri $1, 7, 21, 35, \dots$. Fermat è il metodo che ci porta ai coefficienti binomiali, Pascal è il metodo che ci dà l'algoritmo. Sono lo stesso conto: nell'albero, il metodo di Pascal è il modo di sommare le foglie un livello alla volta, quello di Fermat è il modo di contarle tutte insieme. Imparare a contare senza elencare è l'argomento dell'Atto III.
 
 ### Esplora tu stesso: i futuri del problema dei punti {: #widget-futuri }
 
@@ -371,19 +419,48 @@ Atteso: $125$ sequenze, $60$ disposizioni e $10$ combinazioni; il triangolo fino
 
 ### La risposta a de Méré {: #de-mere-risposta }
 
-Torniamo allo «scandalo» dell'Atto I. Chiediamoci: qual è la probabilità di ottenere **almeno un** sei lanciando un dado quattro volte? Contare direttamente i casi (un sei, due sei, tre, quattro, e *quali* lanci) è un lavoro lungo. Molto più semplice è contare il caso opposto, **nessun sei**, e usare il complementare ([Settimana 1, §6B](../settimana_01/index.md#b-la-regola-del-complementare)). A ogni lancio la probabilità di non avere un sei è $\tfrac56$, e i lanci sono indipendenti, quindi
+Torniamo allo «scandalo» dell'Atto I e chiediamoci: qual è la probabilità di ottenere **almeno un** sei lanciando un dado quattro volte?
+
+**Quante sono le sequenze possibili?** Un lancio ha 6 esiti. Con due lanci, per ciascuno dei 6 esiti del primo ce ne sono 6 del secondo: sono $6 \cdot 6 = 36$ coppie, come nella tabella della Settimana 1. Ogni lancio in più **moltiplica per 6** il numero di sequenze (è lo stesso ragionamento dell'albero della Settimana 2: ogni foglia si ramifica in 6). Con quattro lanci:
 
 $$
-P(\text{almeno un sei in 4 lanci}) = 1 - \left(\tfrac56\right)^4 = 1 - \tfrac{625}{1296} = \tfrac{671}{1296} \approx 0{,}518.
+6 \cdot 6 \cdot 6 \cdot 6 = 1296 \text{ sequenze, tutte equiprobabili.}
 $$
 
-Sono i «671 contro 625» di Pascal. Con due dadi, la coppia $(6,6)$ è una delle 36 coppie equiprobabili, quindi a ogni lancio la probabilità di *non* ottenere un doppio sei è $\tfrac{35}{36}$:
+(Si scrive in breve $6^4$: «6 moltiplicato per sé stesso 4 volte».)
+
+**Quante hanno almeno un sei?** Contarle direttamente è lungo: un sei, due sei, tre, quattro, e per ognuno *in quali lanci*. Conviene contare il caso opposto, **nessun sei**, e usare il complementare ([Settimana 1, §6B](../settimana_01/index.md#b-la-regola-del-complementare)). Se non deve uscire il 6, a ogni lancio restano 5 esiti (1, 2, 3, 4, 5), quindi
 
 $$
-P(\text{almeno un doppio sei in 24 lanci}) = 1 - \left(\tfrac{35}{36}\right)^{24} \approx 0{,}491.
+5 \cdot 5 \cdot 5 \cdot 5 = 625 \text{ sequenze senza sei.}
 $$
 
-Quindi non c'è alcuna contraddizione: la prima scommessa è favorevole (51,8%), la seconda no (49,1%). L'errore di de Méré era credere che la probabilità di «almeno un successo» sia **proporzionale al numero di tentativi**: con 4 tentativi ciascuno di probabilità $\tfrac16$ si «somma» $4 \cdot \tfrac16 = \tfrac23$, con 24 tentativi di probabilità $\tfrac1{36}$ si «somma» $24 \cdot \tfrac1{36} = \tfrac23$, stesso valore. Ma sommare le probabilità funziona solo per eventi **disgiunti** ([Settimana 1, §6C](../settimana_01/index.md#c-la-conseguenza-regina-la-regola-dellunione-e-il-dramma-della-sovrapposizione)), mentre «sei al primo lancio» e «sei al secondo» possono verificarsi insieme. Per superare $\tfrac12$ con due dadi servono **25** lanci, non 24.
+Le altre hanno almeno un sei: $1296 - 625 = 671$. Sono i «671 contro 625» di Pascal: **671 sequenze vincenti contro 625 perdenti**. La probabilità è
+
+$$
+P(\text{almeno un sei in 4 lanci}) = \frac{671}{1296} = 1 - \left(\tfrac56\right)^4 \approx 0{,}518.
+$$
+
+**Con due dadi.** Un lancio ha 36 coppie, e il doppio sei è **una sola** di esse: la coppia $(6,6)$. Le altre 35 *non* sono un doppio sei, comprese quelle con un solo 6 come $(6,1)$ o $(2,6)$. In 24 lanci le sequenze possibili sono $36^{24}$ (36 moltiplicato per sé stesso 24 volte) e quelle senza alcun doppio sei sono $35^{24}$. I numeri sono enormi, ma conta il rapporto:
+
+$$
+P(\text{almeno un doppio sei in 24 lanci}) = 1 - \frac{35^{24}}{36^{24}} = 1 - \left(\tfrac{35}{36}\right)^{24} \approx 0{,}491.
+$$
+
+Quindi non c'è alcuna contraddizione: la prima scommessa è favorevole (51,8%), la seconda no (49,1%).
+
+**Dov'era l'errore di de Méré.** Ragionava per proporzione: 4 lanci su 6 facce, 24 lanci su 36 coppie, stesso rapporto $\tfrac23$. Equivale a «sommare» le probabilità: $4 \cdot \tfrac16 = \tfrac23$ e $24 \cdot \tfrac1{36} = \tfrac23$. Ma sommare funziona solo per eventi **disgiunti** ([Settimana 1, §6C](../settimana_01/index.md#c-la-conseguenza-regina-la-regola-dellunione-e-il-dramma-della-sovrapposizione)), mentre «sei al primo lancio» e «sei al secondo» possono verificarsi insieme, e quelle sequenze verrebbero contate più volte.
+
+**Quanti lanci servono davvero?** La scommessa conviene quando le sequenze senza successo sono **meno della metà** del totale.
+
+| lanci $n$ | un dado: $2\cdot 5^n$ contro $6^n$ | conviene? | due dadi: $2\cdot 35^n$ contro $36^n$ | conviene? |
+|---|---|---|---|---|
+| 3 | $250 > 216$ | no ($42{,}1\%$) | | |
+| 4 | $1250 < 1296$ | **sì** ($51{,}8\%$) | | |
+| 24 | | | $2 \cdot 35^{24} > 36^{24}$ | no ($49{,}1\%$) |
+| 25 | | | $2 \cdot 35^{25} < 36^{25}$ | **sì** ($50{,}6\%$) |
+
+Con un dado il minimo è 4 lanci, e de Méré lo sapeva per esperienza. Con due dadi la proporzione dà $4 \cdot 6 = 24$, ma il numero giusto è **25**: un lancio in più, ed è proprio quel lancio che lui non vedeva.
 
 !!! tip "Il trucco del complementare"
     Quando la domanda è «**almeno uno**…», calcola la probabilità di «**nessuno**…» (di solito un prodotto) e sottrai da 1. Lo useremo di nuovo adesso, e ancora per le tabelle hash.

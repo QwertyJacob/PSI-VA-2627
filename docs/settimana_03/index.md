@@ -969,8 +969,20 @@ def approssimata(n, N=365):
     return 1 - exp(-n * (n - 1) / (2 * N))
 
 def simula(n, N=365, prove=20_000, seme=3):
-    rng = random.Random(seme)
-    return sum(len({rng.randrange(N) for _ in range(n)}) < n for _ in range(prove)) / prove
+    """Stima la probabilità di coincidenza ripetendo l'esperimento `prove` volte."""
+    rng = random.Random(seme)           # generatore casuale con seme fisso: risultati riproducibili
+    con_coincidenza = 0                 # in quante prove almeno due persone hanno lo stesso giorno
+
+    for _ in range(prove):
+        # Una prova: assegniamo a ognuna delle n persone un giorno a caso tra 0 e N-1.
+        giorni = [rng.randrange(N) for _ in range(n)]
+
+        # Se tutti i giorni sono diversi, l'insieme (set) li tiene tutti: ha n elementi.
+        # Se ce n'è qualcuno ripetuto, l'insieme ne ha meno di n.
+        if len(set(giorni)) < n:
+            con_coincidenza += 1
+
+    return con_coincidenza / prove      # frequenza relativa = stima della probabilità
 
 print(" n   esatta  approx.  simulata")
 for n in (10, 20, 23, 30, 40, 50, 57, 70):

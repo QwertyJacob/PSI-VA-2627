@@ -891,7 +891,21 @@ La conseguenza è generale: **con $N$ possibilità equiprobabili, bastano circa 
 
 ### Esplora tu stesso: una sola curva per tutti gli N {: #widget-compleanni }
 
-Il grafico mostra la probabilità esatta di almeno una coincidenza in funzione di $x = n/\sqrt{N}$, cioè misurando $n$ in unità di $\sqrt{N}$. Muovi il cursore su valori di $N$ molto diversi: la curva non cambia quasi, perché è sempre vicina a $1 - e^{-x^2/2}$.
+Finora abbiamo ragionato su $N = 365$. Ma la regola della radice dice che il risultato vale per *qualsiasi* $N$: cambia solo la scala. Il seguente grafico lo fa vedere.
+
+- **Asse orizzontale:** invece del numero di persone $n$, usiamo $x = n/\sqrt{N}$, cioè contiamo le persone **in unità di $\sqrt{N}$**. Per $N = 365$ si ha $\sqrt{N} \approx 19$, quindi $n = 23$ persone corrispondono a $x \approx 1{,}2$; con $N = 1\,000\,000$ si ha $\sqrt{N} = 1000$, e $x = 1{,}2$ corrisponde a $n = 1200$ persone.
+- **Asse verticale:** la probabilità *esatta* (calcolata con il prodotto del Passo 1, senza approssimazioni) che ci sia almeno una coincidenza.
+- **Cursore:** sceglie $N$, da $10$ a $10$ milioni (scala logaritmica: ogni passo moltiplica $N$ per un fattore costante).
+
+**Cosa osservare.** Sposta il cursore da un $N$ piccolo a uno enorme: la curva **resta quasi identica**. Significa che, se misuriamo le persone in unità di $\sqrt{N}$, la probabilità dipende solo da $x$ e non dal valore di $N$.
+
+Questo è previsto dalla formula approssimata. Se nella stima $1 - e^{-n^2/(2N)}$ scriviamo $n = x\sqrt{N}$, otteniamo $n^2 = x^2 N$, e il $N$ al numeratore si semplifica con quello al denominatore:
+
+$$
+1 - e^{-\frac{x^2 N}{2N}} = 1 - e^{-x^2/2}.
+$$
+
+Il $N$ è sparito: ecco perché una sola curva (la linea tratteggiata) va bene per tutti. Infine, la curva passa per $\tfrac12$ quando $x \approx 1{,}18$, cioè $n \approx 1{,}18\sqrt{N}$: è la regola della radice trovata sopra.
 
 <div class="psi-widget" id="s03-widget-compleanni"></div>
 <script>

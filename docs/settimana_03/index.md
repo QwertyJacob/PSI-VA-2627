@@ -1019,6 +1019,38 @@ Atteso: la tabella con $0.5073$ per $n = 23$; soglie $23$, $119$, $1178$ per $N 
 
 Una **tabella hash** è un array di $m$ posizioni (*slot*). Per inserire una chiave si applica una **funzione hash** $h$ che la trasforma in un numero tra $0$ e $m-1$: la chiave va nello slot $h(\text{chiave})$. Se due chiavi diverse finiscono nello stesso slot si ha una **collisione**, e la struttura dati deve prevedere come gestirla (liste concatenate, indirizzamento aperto…).
 
+<figure markdown="0">
+<svg viewBox="0 0 560 250" role="img" aria-label="Quattro chiavi (ada, bob, eva, leo) passano per la funzione hash h e vanno negli slot 2, 0, 2, 4 di un array di 5 slot; ada ed eva finiscono nello stesso slot 2: collisione" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px">
+<defs><marker id="hk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+<g fill="currentColor" font-weight="bold" text-anchor="middle"><text x="50" y="16">chiavi</text><text x="215" y="16">funzione hash</text><text x="455" y="16">array di m = 5 slot</text></g>
+<g stroke="currentColor" stroke-width="1.5" fill="none" opacity=".7" marker-end="url(#hk)">
+<line x1="90" y1="65" x2="170" y2="110"/><line x1="90" y1="105" x2="170" y2="122"/><line x1="90" y1="145" x2="170" y2="134"/><line x1="90" y1="185" x2="170" y2="146"/>
+</g>
+<rect x="172" y="95" width="86" height="64" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="215" y="132" text-anchor="middle" fill="currentColor" font-style="italic" font-size="16">h(chiave)</text>
+<g stroke-width="1.5" fill="none" marker-end="url(#hk)">
+<line x1="260" y1="110" x2="392" y2="127" stroke="#4051b5"/>
+<line x1="260" y1="118" x2="392" y2="47" stroke="#e07a1f"/>
+<line x1="260" y1="134" x2="392" y2="127" stroke="#2e9e5b"/>
+<line x1="260" y1="142" x2="392" y2="207" stroke="#8a4fbf"/>
+</g>
+<g fill="#fff" text-anchor="middle">
+<rect x="14" y="50" width="72" height="30" rx="5" fill="#4051b5"/><text x="50" y="70">ada</text>
+<rect x="14" y="90" width="72" height="30" rx="5" fill="#e07a1f"/><text x="50" y="110">bob</text>
+<rect x="14" y="130" width="72" height="30" rx="5" fill="#2e9e5b"/><text x="50" y="150">eva</text>
+<rect x="14" y="170" width="72" height="30" rx="5" fill="#8a4fbf"/><text x="50" y="190">leo</text>
+</g>
+<g stroke="currentColor" stroke-width="1.5" fill="none" opacity=".8">
+<rect x="396" y="30" width="120" height="34"/><rect x="396" y="70" width="120" height="34"/><rect x="396" y="150" width="120" height="34"/><rect x="396" y="190" width="120" height="34"/>
+</g>
+<rect x="396" y="110" width="120" height="34" fill="none" stroke="#e03a3a" stroke-width="2.5"/>
+<g fill="currentColor" text-anchor="end" opacity=".8"><text x="534" y="52" text-anchor="start">0</text><text x="534" y="92" text-anchor="start">1</text><text x="534" y="132" text-anchor="start">2</text><text x="534" y="172" text-anchor="start">3</text><text x="534" y="212" text-anchor="start">4</text></g>
+<g text-anchor="middle" font-weight="bold"><text x="456" y="52" fill="#e07a1f">bob</text><text x="438" y="132" fill="#4051b5">ada</text><text x="474" y="132" fill="#2e9e5b">eva</text><text x="456" y="212" fill="#8a4fbf">leo</text></g>
+<text x="456" y="240" text-anchor="middle" fill="#e03a3a" font-weight="bold">h(ada) = h(eva) = 2: collisione</text>
+</svg>
+<figcaption>La funzione hash h trasforma ogni chiave in un indice tra 0 e m−1. Qui h(bob) = 0 e h(leo) = 4, mentre «ada» ed «eva» finiscono nello stesso slot.</figcaption>
+</figure>
+
 Una funzione hash ben progettata «mescola» le chiavi come se ogni chiave scegliesse il proprio slot **a caso, uniformemente e indipendentemente dalle altre**: nei testi di algoritmi è l'ipotesi di *simple uniform hashing* (per esempio nel cap. 11 di Cormen et al., *Introduction to Algorithms*). È un modello, non un fatto: una funzione hash reale approssima questo comportamento, e quando non lo fa le collisioni peggiorano. Ma sotto questa ipotesi il problema è **identico** al paradosso dei compleanni: gli slot sono i giorni, le chiavi sono le persone, $N = m$.
 
 Quindi, per $n$ chiavi in $m$ slot:
@@ -1027,9 +1059,45 @@ $$
 P(\text{almeno una collisione}) = 1 - \prod_{i=0}^{n-1}\left(1 - \frac{i}{m}\right) \;\ge\; 1 - e^{-\frac{n(n-1)}{2m}},
 $$
 
-e la collisione diventa **probabile** (oltre il 50%) quando $n \approx 1{,}18\sqrt{m}$. Con una tabella da **un milione di slot**, bastano circa **1180 chiavi**, cioè lo 0,12% della capienza, perché due chiavi condividano uno slot. Con 1000 chiavi la probabilità è già vicina al 40%. Una tabella quasi vuota *non* è una tabella senza collisioni.
+e la collisione diventa **probabile** (oltre il 50%) quando $n \approx 1{,}18\sqrt{m}$. Con una tabella da **un milione di slot**, bastano circa **1180 chiavi**, cioè lo 0,12% della capienza, perché due chiavi condividano uno slot. Con 1000 chiavi la probabilità di avere almeno una collisione è già vicina al 40%. Moralde della favola: una tabella quasi vuota *non* è una tabella senza collisioni.
 
-È una buona notizia travestita da cattiva: le collisioni non sono un difetto da eliminare, ma una certezza da gestire. Chi si aspetta che «con una buona funzione hash non succeda mai» sbaglia il modello; chi le prevede dimensiona le liste e il fattore di carico di conseguenza.
+In ogni caso, questo fatto è una buona notizia travestita da cattiva: le collisioni non sono un difetto da eliminare, ma una certezza da gestire. Chi si aspetta che «con una buona funzione hash non succeda mai» sbaglia il modello; chi le prevede dimensiona le liste e il fattore di carico di conseguenza.
+
+??? approfondimento "Perché è una buona notizia: collisioni frequenti, ma innocue"
+
+    Il paradosso dei compleanni ci dice che una collisione compare quasi subito. Ma a noi non interessa la collisione in sé: interessa se la tabella **continua a fare il suo lavoro bene**, cioè se cercare e inserire una chiave resta veloce. Qui «veloce» e «lenta» hanno un significato preciso, che si misura contando i **confronti tra chiavi**:
+
+    - Se la chiave cercata sta da sola nel suo slot, basta calcolare $h$ e fare un confronto. Sono pochi passi, sempre gli stessi, qualunque sia il numero $n$ di chiavi memorizzate.
+    - Se nello slot ci sono altre $k$ chiavi finite lì per collisione, bisogna scorrerle e confrontarle una per una: circa $k$ passi.
+    - Nel caso peggiore, tutte le $n$ chiavi finiscono nello stesso slot. La ricerca diventa una scansione di tutti gli elementi, come in una semplice lista: $O(n)$. Questa è una tabella davvero «lenta».
+
+    Quindi *«c'è almeno una collisione»* e *«la tabella è lenta»* sono affermazioni molto diverse. La prima riguarda l'**esistenza** delle collisioni, e il paradosso dei compleanni risponde: quasi subito sì. La seconda riguarda la **lunghezza** delle liste che si formano, perché è quella a determinare quanti confronti servono. Una collisione isolata, che aggiunge un confronto a una ricerca ogni tanto, è innocua; sono le liste lunghe a rovinare le prestazioni. Per capire quanto lunghe diventano, serve una grandezza che misuri quanto è piena la tabella.
+
+    Si definisce **fattore di carico** il rapporto
+
+    $$
+    \alpha = \frac{n}{m},
+    $$
+
+    cioè il numero medio di chiavi per slot. Con la risoluzione per **liste concatenate** (ogni slot contiene una lista delle chiavi che vi sono finite), sotto l'ipotesi di *simple uniform hashing* la lunghezza attesa di una lista è esattamente $\alpha$. Cercare una chiave costa quindi, in media, un calcolo di $h$ più la scansione di una lista di lunghezza media $\alpha$: un costo atteso $\Theta(1 + \alpha)$ (Cormen et al., cap. 11). **Non dipende da $n$**, ma solo dal rapporto tra $n$ ed $m$.
+
+    Rimettiamo insieme i numeri dell'esempio:
+
+    - $m = 10^6$ e $n = 1000$ chiavi: $\alpha = 0{,}001$. La collisione c'è con probabilità ~40%, ma il numero atteso di coppie in collisione è $\binom{n}{2}/m \approx 0{,}5$: **una mezza collisione in tutta la tabella**, e una ricerca tocca quasi sempre liste vuote o di un solo elemento.
+    - $n = m$, cioè la tabella *piena* ($\alpha = 1$): la frazione di slot che resta vuota è circa $1/e \approx 37\%$ e ci sono slot con più chiavi, ma la lista più lunga è di poche unità (cresce come $\ln n / \ln\ln n$, per un milione di chiavi dell'ordine di 8–10). Una ricerca costa in media circa una o due letture.
+
+    In altre parole: le collisioni **sono molte, ma corte**. Il loro costo si paga solo come piccola costante, ed è per questo che una tabella hash resta $O(1)$ in media anche se «in teoria» continua a collidere.
+
+    **E se non si usano le liste?** Con l'**indirizzamento aperto** (le chiavi stanno nell'array stesso e, in caso di collisione, si prova lo slot successivo secondo una regola fissata) il discorso è lo stesso ma più severo: serve $\alpha < 1$ e il costo atteso di una ricerca senza successo cresce come $\frac{1}{1-\alpha}$ (sotto l'ipotesi di *uniform hashing*). A $\alpha = 0{,}5$ sono circa 2 tentativi, a $\alpha = 0{,}9$ circa 10: la tabella degrada rapidamente quando si riempie.
+
+    **Cosa fanno le librerie, in pratica?** Tengono $\alpha$ sotto una soglia e, quando la superano, **ridimensionano** (*rehashing*): allocano una tabella più grande, di solito il doppio, e reinseriscono tutte le chiavi. Il costo del rehash è ammortizzato sulle inserzioni, quindi l'inserimento resta $O(1)$ ammortizzato. Alcuni esempi:
+
+    - `HashMap` di Java: liste concatenate (trasformate in alberi bilanciati se una lista diventa troppo lunga) e ridimensionamento a $\alpha = 0{,}75$ per default;
+    - `dict` di CPython: indirizzamento aperto e ridimensionamento intorno a $\alpha = 2/3$.
+
+    Le soglie sono scelte di implementazione: non vanno memorizzate, ma controllate nella documentazione della versione che si usa.
+
+    **La morale operativa.** Il progettista di una tabella hash non chiede alla funzione hash di *evitare* le collisioni (impossibile: il paradosso dei compleanni dice che sono quasi immediate) ma di *distribuire* le chiavi in modo che nessuno slot si carichi troppo, e poi governa $\alpha$ con il ridimensionamento. Il rischio vero compare quando la distribuzione **non** è uniforme, per esempio perché qualcuno **sceglie le chiavi apposta** per farle cadere nello stesso slot: in quel caso le liste diventano lunghe e le operazioni degenerano verso $O(n)$ (è la base degli attacchi di *hash flooding* contro i server web, che è il motivo per cui molti linguaggi usano funzioni hash con seme casuale). Nella sezione successiva vediamo l'altra faccia della medaglia: quando a cercare le collisioni è un attaccante e non il caso, lo stesso calcolo dei compleanni diventa un'arma.
 
 ### Esplora tu stesso: riempi la tabella {: #widget-hash }
 
@@ -1095,46 +1163,77 @@ Una funzione hash crittografica (SHA-256, per esempio) trasforma qualunque messa
 |:---:|:---:|:---:|:---:|:---:|:---:|
 | Messaggi per il 50% di collisione ($\approx 1{,}18 \cdot 2^{b/2}$) | $7{,}7\cdot 10^{4}$ | $5{,}1\cdot 10^{9}$ | $2{,}2\cdot 10^{19}$ | $1{,}4\cdot 10^{24}$ | $4{,}0\cdot 10^{38}$ |
 
-Si legge subito che un hash di 32 bit si rompe con una manciata di decine di migliaia di messaggi, che 64 bit sono alla portata di un calcolo serio, e che la sicurezza contro le collisioni è **la metà dei bit**: un hash da 256 bit offre «solo» 128 bit di resistenza, che è comunque enorme. Per questo i progettisti raddoppiano i bit rispetto al livello di sicurezza desiderato.
+Si legge subito che un hash di 32 bit si rompe con una manciata di decine di migliaia di messaggi, e che 64 bit sono alla portata di un calcolo serio. Ma la tabella nasconde una conseguenza più importante: **la sicurezza contro le collisioni è la metà dei bit dell'hash**. Vediamo perché, in tre passaggi.
 
-Due precisazioni di realtà. Primo: il birthday attack è il limite generale che vale per **qualunque** funzione hash, ma le funzioni difettose cedono molto prima. Per MD5 le prime collisioni pratiche sono state ottenute con attacchi crittanalitici nel 2004 (Wang e Yu, Eurocrypt 2005), e per SHA-1 nel 2017 il progetto *SHAttered* ha prodotto due PDF diversi con lo stesso hash, con circa nove miliardi di miliardi di calcoli SHA-1 (circa $2^{63}$, contro i circa $2^{80}$ del birthday attack puro). Secondo: lo stesso conto vale per qualunque identificatore **scelto a caso**. Un codice casuale di 32 bit (un link accorciato, per esempio) ha il 50% di probabilità di una collisione dopo circa 77.000 codici emessi. Un UUID versione 4 ha 122 bit casuali ([RFC 9562](https://www.rfc-editor.org/rfc/rfc9562.html), §5.4): servono circa $2{,}7 \cdot 10^{18}$ identificatori per il 50%, e già $10^{14}$ per scendere a una probabilità di collisione di una su un miliardo.
+1. **Due attacchi diversi.** Se l'attaccante deve trovare un messaggio con *uno specifico* hash (o con lo stesso hash di un messaggio dato), è come cercare chi compie gli anni *proprio oggi*: servono circa $2^b$ tentativi. Se invece gli basta trovare *una qualunque coppia* di messaggi con lo stesso hash, è il paradosso dei compleanni: bastano circa $\sqrt{2^b} = 2^{b/2}$ messaggi. La resistenza alle collisioni riguarda il secondo caso, quindi il costo dell'attacco è $2^{b/2}$ e non $2^b$.
+2. **Misurare la sicurezza in bit.** Si dice che un sistema ha «sicurezza a $k$ bit» quando rompere richiede circa $2^k$ operazioni. Un attacco da $2^{b/2}$ operazioni dà quindi $k = b/2$.
+3. **Il risultato.** SHA-256 produce $b = 256$ bit, ma contro le collisioni offre «solo» $k = 128$ bit di sicurezza: servono circa $2^{128}$ messaggi (la colonna 256 della tabella, $4{,}0 \cdot 10^{38}$). Sono comunque un numero fuori portata per qualunque computer.
+
+Per questo i progettisti ragionano al contrario: se si vuole una sicurezza a 128 bit contro le collisioni, l'hash deve avere **il doppio dei bit**, cioè 256.
+
+Una precisazione di realtà: il birthday attack è il limite generale che vale per **qualunque** funzione hash, ma le funzioni difettose cedono molto prima. Per MD5 le prime collisioni pratiche sono state ottenute con attacchi crittanalitici nel 2004 ([Wang e Yu, *How to Break MD5 and Other Hash Functions*, Eurocrypt 2005](https://doi.org/10.1007/11426639_2)), e per SHA-1 nel 2017 il progetto [*SHAttered*](https://security.googleblog.com/2017/02/announcing-first-sha1-collision.html) ha prodotto due PDF diversi con lo stesso hash, con circa nove miliardi di miliardi di calcoli SHA-1 (circa $2^{63}$, contro i circa $2^{80}$ del birthday attack puro).
 
 ### Script 5 — Il birthday attack su un hash troncato {: #lab-hash }
 
-Non possiamo rompere SHA-256, ma possiamo **troncarlo** a pochi bit e ripetere l'attacco. Lo script calcola l'SHA-256 di messaggi casuali, ne tiene i primi $b$ bit, e conta quanti messaggi servono prima della prima collisione. In media, il numero cresce come $\sqrt{N}$, come previsto (il valore medio teorico è circa $\sqrt{\pi N / 2} \approx 1{,}25\sqrt{N}$, che è più grande della soglia del 50%: la soglia è la *mediana*, questo è il valore *medio*).
+Non possiamo rompere SHA-256, ma possiamo verificare la regola della radice su una versione in miniatura: **troncare** l'hash ai suoi primi $b$ bit, con $b$ piccolo (12, 16, 20, 24). Così lo spazio dei valori è $N = 2^b$ e le collisioni arrivano abbastanza presto da poterle osservare.
+
+L'esperimento è lo stesso della tabella hash: si generano messaggi casuali, si calcola l'hash troncato di ciascuno, e ci si ferma alla prima volta che un valore si ripete. Il numero di messaggi hashati fino a quel momento è il risultato di **una prova**.
+
+Una sola prova dipende troppo dalla fortuna (a volte la collisione arriva dopo pochi messaggi, a volte dopo molti di più), quindi lo script ripete la prova molte volte per ogni $b$ e controlla due cose:
+
+1. **La mediana** dei risultati deve essere vicina a $1{,}18 \cdot 2^{b/2}$: è la regola della radice, cioè il numero di messaggi dopo cui la probabilità di collisione è il 50%. Perciò circa **metà delle prove** deve finire *prima* di questa soglia e metà *dopo*.
+2. **Ogni 2 bit in più, i messaggi necessari raddoppiano** (non quadruplicano): lo si vede dalla colonna della mediana, perché cresce come $\sqrt{N}$ e non come $N$.
 
 <div class="psi-exec" markdown="1">
 ```python
-# Script 5 — Birthday attack: prima collisione di un hash SHA-256 troncato a b bit
+# Script 5 — Birthday attack: prima collisione di un SHA-256 troncato
 import hashlib
 import random
-from math import sqrt, pi
+from statistics import median
+
 
 def prima_collisione(b, rng):
-    """Hash di messaggi casuali, troncato ai primi b bit, finché due messaggi hanno lo stesso valore."""
-    visti = set()
-    n = 0
+    """Hasha messaggi casuali, tenendo solo i primi b bit dell'hash,
+    finché due messaggi hanno lo stesso valore. Restituisce quanti ne
+    sono serviti."""
+    visti = set()   # hash troncati già incontrati (controllo veloce)
+    n = 0           # quanti messaggi abbiamo hashato finora
     while True:
+        # messaggio casuale di 8 byte (64 bit): quasi sempre nuovo
+        # ("big" = big-endian: byte più significativo per primo)
         msg = rng.getrandbits(64).to_bytes(8, "big")
-        h = int.from_bytes(hashlib.sha256(msg).digest(), "big") >> (256 - b)     # primi b bit
+        # SHA-256 dà 256 bit: ">> (256 - b)" tiene solo i primi b
+        # (lo shift a destra scarta gli ultimi 256 - b bit)
+        digest = hashlib.sha256(msg).digest()
+        h = int.from_bytes(digest, "big") >> (256 - b)
         n += 1
-        if h in visti:
+        if h in visti:  # stesso hash di un messaggio precedente
             return n
         visti.add(h)
 
-rng = random.Random(2026)
-print("bit   N=2^b        prove   media hash fino alla collisione   √(πN/2)   2^(b/2)")
+
+rng = random.Random(2026)   # seme fisso: risultati sempre uguali
+print("bit   prove   mediana   1,18·2^(b/2)   prove con n <= soglia")
+# per ogni b, quante prove ripetere (più b è grande, più ogni prova
+# costa, quindi meno prove)
 for b, prove in ((12, 400), (16, 300), (20, 100), (24, 30)):
-    N = 2**b
-    media = sum(prima_collisione(b, rng) for _ in range(prove)) / prove
-    teorica = sqrt(pi * N / 2)
-    print(f"{b:3d}  {N:>10,}  {prove:>6}   {media:>26.0f}   {teorica:>9.0f}   {2**(b/2):>7.0f}")
-    assert 0.7 * teorica < media < 1.3 * teorica
+    # numero di messaggi dopo cui la collisione ha il 50% di probabilità
+    soglia = 1.18 * 2 ** (b / 2)
+    # ripetiamo l'esperimento: un risultato per ogni prova
+    risultati = [prima_collisione(b, rng) for _ in range(prove)]
+    sotto = sum(n <= soglia for n in risultati)
+    percento = 100 * sotto / prove
+    print(f"{b:3d}  {prove:>6}  {median(risultati):>8.0f}  "
+          f"{soglia:>13.0f}  {percento:>20.0f}%")
+    # la mediana misurata deve stare entro il 30% della soglia teorica
+    assert 0.7 * soglia < median(risultati) < 1.3 * soglia
+    # e circa metà delle prove deve finire entro la soglia
+    assert 30 <= percento <= 70
 print("Script 5: tutti gli assert superati.")
 ```
 </div>
 
-Atteso: la media dei tentativi vicina a $\sqrt{\pi N/2}$ per ogni $b$ (per esempio circa 320 per $b = 16$ e circa 5100 per $b = 24$), e sempre dello stesso ordine di $2^{b/2}$.
+Atteso: la mediana vicina alla soglia $1{,}18 \cdot 2^{b/2}$ per ogni $b$ (per esempio circa 300 per $b = 16$ e circa 4800 per $b = 24$), con circa il 50% delle prove sotto la soglia. Passando da $b = 16$ a $b = 24$ ci sono 8 bit in più, cioè 4 raddoppi: la mediana cresce di circa $2^4 = 16$ volte.
 
 ---
 

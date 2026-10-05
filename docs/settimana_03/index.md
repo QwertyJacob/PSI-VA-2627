@@ -279,40 +279,41 @@ from functools import lru_cache
 from itertools import product
 import random
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=None)   # memoizzazione: ogni (a, b, p) viene calcolato una sola volta
 def pascal(a, b, p=0.5):
     """P(A vince) quando ad A mancano a punti, a B ne mancano b; A vince ogni manche con prob. p."""
-    if a == 0: return 1.0
-    if b == 0: return 0.0
+    if a == 0: return 1.0   # A non ha più punti da fare: ha già vinto
+    if b == 0: return 0.0   # B ha già vinto
     return p * pascal(a - 1, b, p) + (1 - p) * pascal(a, b - 1, p)   # un'altra manche: due futuri
 
 def fermat(a, b, p=0.5):
     """Si giocano comunque a+b-1 manche (bastano a decidere): si sommano i futuri in cui A ne vince >= a."""
-    n = a + b - 1
+    n = a + b - 1            # numero massimo di manche che servono a decidere
     tot = 0.0
-    for futuro in product("AB", repeat=n):
-        k = futuro.count("A")
-        if k >= a:
-            tot += p**k * (1 - p)**(n - k)
+    for futuro in product("AB", repeat=n):   # tutte le 2^n sequenze di vincitori, es. ("A","B","A")
+        k = futuro.count("A")                # manche vinte da A in questo futuro
+        if k >= a:                           # A raggiunge i punti che gli mancano: A vince
+            tot += p**k * (1 - p)**(n - k)   # probabilità di questa precisa sequenza
     return tot
 
 def montecarlo(a, b, p=0.5, prove=100_000, seme=1):
-    rng = random.Random(seme)
+    rng = random.Random(seme)   # generatore con seme fisso: risultato riproducibile
     vinte = 0
-    for _ in range(prove):
-        x, y = a, b
-        while x > 0 and y > 0:
-            if rng.random() < p: x -= 1
-            else: y -= 1
-        vinte += (x == 0)
-    return vinte / prove
+    for _ in range(prove):      # simula `prove` partite complete
+        x, y = a, b             # punti mancanti ad A e a B
+        while x > 0 and y > 0:  # si gioca finché nessuno ha vinto
+            if rng.random() < p: x -= 1   # A vince la manche
+            else: y -= 1                  # B vince la manche
+        vinte += (x == 0)       # A ha vinto la partita (True conta come 1)
+    return vinte / prove        # frequenza relativa = stima della probabilità
 
 POSTA = 64
 print("Gioco a 3 punti, posta 64 pistole")
 for nome, (a, b) in {"2–1": (1, 2), "2–0": (1, 3), "1–0": (2, 3)}.items():
-    P = pascal(a, b)
+    P = pascal(a, b)   # valore esatto, usato come riferimento
     print(f"  sul {nome}: Pascal {P:.4f} | Fermat {fermat(a, b):.4f} | Monte Carlo {montecarlo(a, b):.4f}"
           f"  →  A: {POSTA * P:.2f}, B: {POSTA * (1 - P):.2f}")
+    # controllo: Pascal = Fermat (esatto) e Monte Carlo vicino (tolleranza 0.01)
     assert abs(P - fermat(a, b)) < 1e-12 and abs(P - montecarlo(a, b)) < 0.01
 
 # I numeri della lettera di Pascal del 29 luglio 1654
@@ -335,7 +336,40 @@ Fermat elencava i futuri, e funzionava finché erano 4 o 16. Ma $2^{30}$ futuri 
 
 ### Prima idea: il principio della moltiplicazione {: #moltiplicazione }
 
-Se una scelta si può fare in $n_1$ modi e, **qualunque sia** stata, la scelta successiva si può fare in $n_2$ modi, le due scelte insieme si possono fare in $n_1 \cdot n_2$ modi. È l'albero della Settimana 2 senza le probabilità: ogni nodo ha lo stesso numero di rami, quindi le foglie sono il prodotto.
+Se una scelta si può fare in $n_1$ modi e, **qualunque sia** stata, la scelta successiva si può fare in $n_2$ modi, le due scelte insieme si possono fare in $n_1 \cdot n_2$ modi.
+
+Lo si vede con l'albero della Settimana 2, senza le probabilità. Ogni **foglia** è un percorso completo dalla radice, cioè una coppia di scelte. Dalla radice partono $n_1$ rami; da *ciascuno* dei nodi raggiunti ne partono altri $n_2$. Le foglie sono quindi $n_1$ gruppi da $n_2$ foglie ciascuno: in tutto $n_1 \cdot n_2$.
+
+<figure markdown="0">
+<svg viewBox="0 0 560 275" role="img" aria-label="Albero con 2 rami al primo livello e 3 rami da ciascun nodo del secondo: 6 foglie" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px">
+<g fill="currentColor"><text x="150" y="14" text-anchor="middle" font-weight="bold">1ª scelta: n₁ = 2 rami</text><text x="380" y="14" text-anchor="middle" font-weight="bold">2ª scelta: n₂ = 3 rami per ogni nodo</text></g>
+<g stroke="currentColor" stroke-width="1.5" fill="none" opacity=".7">
+<line x1="30" y1="125" x2="150" y2="50"/><line x1="30" y1="125" x2="150" y2="170"/>
+<line x1="150" y1="50" x2="340" y2="45"/>
+<line x1="150" y1="50" x2="340" y2="75"/>
+<line x1="150" y1="50" x2="340" y2="105"/>
+<line x1="150" y1="170" x2="340" y2="165"/>
+<line x1="150" y1="170" x2="340" y2="195"/>
+<line x1="150" y1="170" x2="340" y2="225"/>
+</g>
+<circle cx="30" cy="125" r="5" fill="currentColor"/>
+<circle cx="150" cy="50" r="13" fill="#4051b5"/><circle cx="150" cy="170" r="13" fill="#e07a1f"/>
+<g fill="#fff" text-anchor="middle"><text x="150" y="55">A</text><text x="150" y="175">B</text></g>
+<rect x="340" y="34" width="34" height="22" rx="4" fill="#4051b5"/><text x="357" y="50" text-anchor="middle" fill="#fff">A1</text>
+<rect x="340" y="64" width="34" height="22" rx="4" fill="#4051b5"/><text x="357" y="80" text-anchor="middle" fill="#fff">A2</text>
+<rect x="340" y="94" width="34" height="22" rx="4" fill="#4051b5"/><text x="357" y="110" text-anchor="middle" fill="#fff">A3</text>
+<rect x="340" y="154" width="34" height="22" rx="4" fill="#e07a1f"/><text x="357" y="170" text-anchor="middle" fill="#fff">B1</text>
+<rect x="340" y="184" width="34" height="22" rx="4" fill="#e07a1f"/><text x="357" y="200" text-anchor="middle" fill="#fff">B2</text>
+<rect x="340" y="214" width="34" height="22" rx="4" fill="#e07a1f"/><text x="357" y="230" text-anchor="middle" fill="#fff">B3</text>
+<g fill="currentColor"><text x="390" y="70">← 3 foglie</text><text x="390" y="190">← 3 foglie</text></g>
+<text x="280" y="268" text-anchor="middle" fill="currentColor" font-weight="bold">foglie totali = 2 · 3 = 6   (ogni foglia è un percorso completo: una coppia di scelte)</text>
+</svg>
+<figcaption>Due scelte: 2 modi per la prima (A o B), poi 3 modi per la seconda, qualunque sia stata la prima. Il numero di foglie è il prodotto del numero di rami dei due livelli.</figcaption>
+</figure>
+
+Con più scelte si prosegue allo stesso modo: il numero di foglie è il prodotto dei rami di ogni livello, $n_1 \cdot n_2 \cdots n_k$. Se tutti i livelli hanno $b$ rami, diventa $b^k$ (da qui le sequenze con ripetizione qui sotto).
+
+Il punto cruciale è questo: il numero di rami può **cambiare da un livello al successivo** ($n_1 \ne n_2$), ma al **livello successivo deve essere lo stesso per ogni nodo**, cioè non deve dipendere da quale ramo è stato preso prima. Se dipendesse dal percorso (per esempio 3 rami dopo A ma solo 2 dopo B), il prodotto non vale più: bisogna contare le foglie di ogni sottoalbero e **sommarle** ($3 + 2 = 5$, non $2 \cdot 3$).
 
 Per esempio, una password di 8 caratteri scelti tra 62 simboli (26 minuscole, 26 maiuscole, 10 cifre) si può scrivere in $62^8 \approx 2{,}2 \cdot 10^{14}$ modi. In generale, **sequenze di lunghezza $k$ su $n$ simboli, con ripetizione, sono $n^k$**: tre manche con due esiti ciascuna danno $2^3 = 8$ futuri, quindici bit danno $2^{15}$ stringhe.
 

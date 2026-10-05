@@ -8,7 +8,7 @@
  *            <script src="js/...scene della settimana..."></script>
  *            <script>PSIDeck.start({ onReady: function (deck) { ... } });</script>
  *
- * Carica reveal.js, KaTeX e GSAP dalla copia locale in assets/vendor
+ * Carica reveal.js, KaTeX, GSAP e QRious (i QR dei sondaggi) dalla copia locale in assets/vendor
  * (npm run vendor, esclusa da git), così le slide funzionano senza rete;
  * dove la copia manca, come sul sito pubblicato, ogni file ripiega sulla
  * stessa versione dal CDN. Le versioni stanno solo qui: lo script
@@ -30,7 +30,8 @@
     'reveal.js@5.1.0/dist/reveal.js',
     'katex@0.18.9/dist/katex.min.js',
     'katex@0.18.9/dist/contrib/auto-render.min.js',
-    'gsap@3.15.0/dist/gsap.min.js'
+    'gsap@3.15.0/dist/gsap.min.js',
+    'qrious@4.0.2/dist/qrious.min.js'
   ];
 
   // I fogli di stile vanno subito dopo questo script, prima degli stili della

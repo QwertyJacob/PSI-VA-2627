@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>PSI 26/27 — Settimana 3: prova del sondaggio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../assets/slides/deck.js"></script>
+  <style>
+    :root {
+      --r-main-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --r-heading-font: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --r-heading-text-transform: none;
+      --r-main-font-size: 30px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.65em;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      background: #e53e3e;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Sondaggio 1: la partita interrotta. Non si svela: si riprende all'albero (30–48).
+           Le opzioni sono numerate e non A–D, perché "A" è già un giocatore.
+           Voti dal telefono (QR); R mostra/nasconde i risultati. -->
+      <section id="sondaggio-1" class="sondaggio" data-poll="s03-1">
+        <p class="badge">Sondaggio 1</p>
+        <div class="sondaggio-grid">
+          <div>
+            <p class="sondaggio-q">Si gioca a <b>3 punti</b>, posta <b>64 pistole</b>, giocatori ugualmente bravi.
+              Sul <b>2–0 per A</b> la partita si interrompe.<br>Quante pistole ad A?</p>
+            <ol class="sondaggio-opts">
+              <li><span>1</span>64</li>
+              <li><span>2</span>circa 56</li>
+              <li><span>3</span>48</li>
+              <li><span>4</span>circa 43</li>
+            </ol>
+            <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono</p>
+          </div>
+          <div class="sondaggio-join"></div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+  <script src="../../assets/slides/scene.js"></script>
+  <script src="../../assets/sondaggi.js"></script>
+  <script src="../../assets/slides/sondaggio.js"></script>
+  <script>PSIDeck.start({ onReady: function (deck) { PSISondaggio.bind(deck); } });</script>
+</body>
+</html>

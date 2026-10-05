@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>PSI · Sondaggio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <!--
+    Pagina di voto degli studenti, aperta dal QR delle slide (assets/slides/sondaggio.js):
+      vota/?p=<id sondaggio>&o=<opzione 1>~<opzione 2>~...
+    Il voto finisce nella tabella votes del progetto Supabase (assets/sondaggi.js).
+    Regole del database: chiunque può solo aggiungere un voto (scelta 1–8, uno per
+    telefono e sondaggio); nessuno può leggere, cambiare o cancellare le righe;
+    le slide leggono solo i totali con la funzione poll_counts.
+    Non si salva nessun dato personale: solo la scelta e un identificativo casuale
+    tenuto nel telefono, che serve a impedire il doppio voto.
+  -->
+  <style>
+    :root {
+      --bg: #f7f8fa;
+      --card: #ffffff;
+      --text: #1a202c;
+      --muted: #64748b;
+      --line: #d9dee7;
+      --accent: #0284c7;
+      --ok: #15803d;
+      --bad: #b91c1c;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111418;
+        --card: #1b2027;
+        --text: #edf2f7;
+        --muted: #a0aec0;
+        --line: #2d3540;
+        --accent: #38bdf8;
+        --ok: #38ef7d;
+        --bad: #fc8181;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font: 18px/1.4 -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+      display: flex;
+      justify-content: center;
+    }
+    main {
+      width: 100%;
+      max-width: 480px;
+      padding: 28px 16px 40px;
+    }
+    .tag {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 6px;
+    }
+    h1 {
+      font-size: 24px;
+      margin: 0 0 22px;
+    }
+    .opts {
+      display: grid;
+      gap: 12px;
+    }
+    button {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      width: 100%;
+      padding: 18px 20px;
+      border-radius: 14px;
+      border: 2px solid var(--line);
+      background: var(--card);
+      color: var(--text);
+      font: inherit;
+      font-size: 22px;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+    }
+    button span {
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 600;
+    }
+    button:active { border-color: var(--accent); }
+    button:disabled { opacity: 0.45; cursor: default; }
+    button.chosen { opacity: 1; border-color: var(--accent); }
+    #msg {
+      margin: 22px 0 0;
+      font-size: 18px;
+      font-weight: 600;
+      min-height: 1.4em;
+    }
+    #msg.ok { color: var(--ok); }
+    #msg.bad { color: var(--bad); }
+    .foot {
+      margin-top: 28px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="tag">PSI 26/27 · sondaggio</p>
+    <h1>La domanda è alla lavagna</h1>
+    <div class="opts" id="opts"></div>
+    <p id="msg" role="status"></p>
+    <p class="foot">Voto anonimo: non si registra chi sei, solo la risposta. Un voto per telefono.</p>
+  </main>
+  <script src="../assets/sondaggi.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var CFG = window.PSI_SONDAGGI;
+      var q = new URLSearchParams(location.search);
+      var poll = q.get('p');
+      var opts = (q.get('o') || '').split('~').filter(Boolean);
+      var box = document.getElementById('opts');
+      var msg = document.getElementById('msg');
+
+      function say(text, cls) {
+        msg.textContent = text;
+        msg.className = cls || '';
+      }
+
+      // Lo storage può mancare (navigazione privata): allora si vota lo stesso,
+      // e il doppio voto lo blocca solo il database finché la pagina resta aperta.
+      function store(key, value) {
+        try {
+          if (value === undefined) return localStorage.getItem(key);
+          localStorage.setItem(key, value);
+        } catch (e) { return null; }
+      }
+
+      function uuid() {
+        if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+          var r = Math.random() * 16 | 0;
+          return (c === 'x' ? r : (r & 3 | 8)).toString(16);
+        });
+      }
+
+      var device = store('psi-device');
+      if (!device) {
+        device = uuid();
+        store('psi-device', device);
+      }
+
+      if (!poll || opts.length < 2 || opts.length > 8) {
+        say('Link non valido: inquadra di nuovo il QR alla lavagna.', 'bad');
+        return;
+      }
+
+      var buttons = opts.map(function (text, i) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        var n = document.createElement('span');
+        n.textContent = i + 1;
+        b.appendChild(n);
+        b.appendChild(document.createTextNode(text));
+        b.addEventListener('click', function () { vote(i + 1); });
+        box.appendChild(b);
+        return b;
+      });
+
+      function lock(choice) {
+        buttons.forEach(function (b, i) {
+          b.disabled = true;
+          b.classList.toggle('chosen', i + 1 === choice);
+        });
+      }
+
+      var done = store('psi-voto-' + poll);
+      if (done) {
+        lock(Number(done));
+        say('Hai già votato. Guarda la lavagna.', 'ok');
+        return;
+      }
+
+      function vote(choice) {
+        lock(choice);
+        say('Invio…');
+        fetch(CFG.api + '/rest/v1/votes', {
+          method: 'POST',
+          headers: { apikey: CFG.key, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+          body: JSON.stringify({ poll: poll, choice: choice, device: device })
+        }).then(function (r) {
+          if (r.ok || r.status === 409) {
+            store('psi-voto-' + poll, String(choice));
+            say(r.ok ? 'Voto registrato. Guarda la lavagna.' : 'Hai già votato. Guarda la lavagna.', 'ok');
+          } else {
+            throw new Error(r.status);
+          }
+        }).catch(function () {
+          buttons.forEach(function (b) { b.disabled = false; b.classList.remove('chosen'); });
+          say('Il voto non è partito (rete?). Riprova.', 'bad');
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

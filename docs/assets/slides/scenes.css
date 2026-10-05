@@ -217,3 +217,108 @@
   stroke-width: 6px;
   stroke-linejoin: round;
 }
+
+/* ── Sondaggi dal vivo (sondaggio.js) ── */
+.reveal section.sondaggio {
+  text-align: left;
+}
+.reveal .sondaggio-grid {
+  display: grid;
+  grid-template-columns: 1fr 330px;
+  gap: 48px;
+  align-items: center;
+}
+.reveal .sondaggio-q {
+  font-size: 1.05em;
+  line-height: 1.4;
+  margin: 0 0 26px;
+  color: var(--psi-text);
+}
+.reveal .sondaggio-q b {
+  color: var(--psi-b);
+}
+.reveal .sondaggio-opts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.reveal .sondaggio-opts li {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin: 0;
+  padding: 16px 22px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 1.15em;
+  font-weight: 700;
+}
+.reveal .sondaggio-opts li span {
+  color: var(--psi-muted);
+  font-size: 0.7em;
+  font-weight: 600;
+}
+/* Barra e numero esistono sempre ma si vedono solo con R (classe .svelato). */
+.reveal .sondaggio-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: rgba(56, 189, 248, 0.28);
+  opacity: 0;
+  transition: width 0.6s ease, opacity 0.3s;
+  z-index: -1;
+}
+.reveal .sondaggio-n {
+  margin-left: auto;
+  color: var(--psi-a);
+  font-variant-numeric: tabular-nums;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.reveal section.svelato .sondaggio-bar,
+.reveal section.svelato .sondaggio-n {
+  opacity: 1;
+}
+.reveal .sondaggio-opts li {
+  isolation: isolate;
+}
+.reveal .sondaggio-hint {
+  margin: 22px 0 0;
+  font-size: 0.55em;
+  color: var(--psi-muted);
+}
+.reveal .sondaggio-join {
+  text-align: center;
+}
+.reveal .sondaggio-qr {
+  display: block;
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px;
+  line-height: 0;
+}
+.reveal .sondaggio-qr canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  image-rendering: pixelated;
+}
+.reveal .sondaggio-count {
+  margin: 16px 0 0;
+  font-size: 1.1em;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.reveal .sondaggio-count.off {
+  font-size: 0.5em;
+  font-weight: 600;
+  color: var(--psi-muted);
+}

@@ -405,39 +405,98 @@ Una situazione che ci servirà tra poco: $k$ chiavi vanno in una tabella con $m$
 Spesso però $AB$ e $BA$ devono valere come un solo risultato: scegliamo 3 server su 10 per un rilascio sperimentale, e non ci interessa *in che ordine* li abbiamo nominati, conta solo *quali* sono. Partiamo da ciò che sappiamo contare, le sequenze, dove l'ordine distingue: $D(10, 3) = 720$. Ma ogni gruppo di 3 server compare in $3! = 6$ ordini diversi, e li abbiamo contati tutti e sei. Per contare i **gruppi** dobbiamo dividere per 6. In generale, un sottoinsieme di $k$ elementi compare $k!$ volte tra le sequenze, quindi:
 
 !!! note "Coefficiente binomiale"
+
     $$
     \binom{n}{k} = \frac{D(n,k)}{k!} = \frac{n!}{k!\,(n-k)!}
     $$
+    
     è il numero di modi di **scegliere un sottoinsieme di $k$ elementi** da un insieme di $n$, **ignorando l'ordine**. Si legge «$n$ su $k$».
 
 Con i server: $\binom{10}{3} = \frac{720}{6} = 120$. Due proprietà si vedono subito dalla definizione: $\binom{n}{k} = \binom{n}{n-k}$ (scegliere chi *entra* o chi *resta fuori* è lo stesso), e il caso $k = 2$, $\binom{n}{2} = \frac{n(n-1)}{2}$, è il **numero di coppie** in un gruppo di $n$ persone. Quest'ultima ci tornerà utilissima nell'Atto IV.
 
 ### Il triangolo di Pascal e i futuri di Fermat {: #triangolo }
 
-I coefficienti binomiali si calcolano senza fattoriali, con una regola che si vede ragionando su un elemento particolare $x$ dell'insieme. I sottoinsiemi di $k$ elementi sono di due tipi: quelli che **contengono** $x$ (restano da scegliere $k-1$ elementi tra gli altri $n-1$) e quelli che **non** lo contengono ($k$ elementi tra gli altri $n-1$). Dunque
+Finora abbiamo calcolato $\binom{n}{k}$ con i fattoriali, che diventano enormi in fretta. Esiste un modo più economico: costruire ogni coefficiente a partire da quelli più piccoli, usando solo somme. Per scoprire come, partiamo da un esempio che si può elencare a mano.
+
+Abbiamo 4 server, $\{A, B, C, D\}$, e ne scegliamo 2. Sappiamo già che i gruppi sono $\binom{4}{2} = \frac{4 \cdot 3}{2} = 6$. Eccoli:
+
+$$
+AB,\; AC,\; AD,\; BC,\; BD,\; CD.
+$$
+
+Ora fissiamo l'attenzione su un server in particolare, $A$, e dividiamo i gruppi in due famiglie, a seconda che $A$ ci sia o no:
+
+- **con $A$**: $AB,\; AC,\; AD$. Sono 3. Una volta messo $A$ nel gruppo, ne manca ancora 1 da scegliere tra gli altri 3 server ($B, C, D$): $\binom{3}{1} = 3$.
+- **senza $A$**: $BC,\; BD,\; CD$. Sono 3. Qui $A$ è escluso, quindi i 2 posti si riempiono scegliendo tra gli stessi 3 server: $\binom{3}{2} = 3$.
+
+Ogni gruppo sta in una famiglia e in una sola, perché $A$ o c'è o non c'è. Quindi $\binom{4}{2} = \binom{3}{1} + \binom{3}{2} = 3 + 3 = 6$.
+
+Il ragionamento non dipende dai numeri. Prendiamo un insieme di $n$ elementi, ne fissiamo uno, $x$, e contiamo i sottoinsiemi di $k$ elementi in due famiglie:
+
+- quelli che **contengono** $x$: ne restano da scegliere $k-1$ tra gli altri $n-1$, quindi sono $\binom{n-1}{k-1}$;
+- quelli che **non** contengono $x$: tutti i $k$ elementi vanno scelti tra gli altri $n-1$, quindi sono $\binom{n-1}{k}$.
+
+Sommando le due famiglie si ottengono tutti i sottoinsiemi:
 
 $$
 \binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}.
 $$
 
-Scrivendo i valori riga per riga, con $\binom{n}{0} = \binom{n}{n} = 1$ ai bordi, si ottiene il **triangolo di Pascal**, in cui ogni numero è la somma dei due sopra di lui:
+Nell'esempio era $n=4$, $k=2$, $x=A$. La formula dice che un coefficiente della riga $n$ si ottiene sommando due coefficienti della riga $n-1$, la riga precedente. Mettiamo i valori in fila, riga per riga, e la regola diventa visibile.
 
-```
- n=0                    1
- n=1                  1   1
- n=2                1   2   1
- n=3              1   3   3   1
- n=4            1   4   6   4   1
- n=5          1   5  10  10   5   1
-```
+Scrivendo i valori riga per riga, con $\binom{n}{0} = \binom{n}{n} = 1$ ai bordi, si ottiene il **triangolo di Pascal**. In ogni casella sono scritti il coefficiente binomiale (nella forma C(n,k), cioè «$n$ su $k$») e il suo valore. La regola dice che ogni valore è la somma dei due che stanno sopra di lui, a sinistra e a destra. Nella figura è evidenziato il caso dell'esempio dei server: $\binom{4}{2} = \binom{3}{1} + \binom{3}{2} = 3 + 3 = 6$.
 
-Pascal vi dedicò un trattato scritto in quegli anni, pubblicato dopo la sua morte; il triangolo era però già noto in altre tradizioni matematiche, e il nome è una convenzione. Ciò che conta per noi è il **legame con il Problema dei punti**: la riga $n=4$ è proprio la sequenza $1, 4, 6, 4, 1$ dell'Atto II. Una sequenza di $n$ manche in cui $A$ ne vince esattamente $k$ si identifica con la scelta delle $k$ posizioni in cui ha vinto $A$, quindi i futuri con $k$ vittorie sono $\binom{n}{k}$. La probabilità che $A$ vinca, quando gliene mancano $a$ su $n = a + b - 1$ manche fittizie, è
+<figure markdown="0">
+<svg viewBox="0 0 560 380" role="img" aria-label="Triangolo di Pascal fino alla riga 4, con C(n,k) e valore in ogni casella; C(4,2)=6 è la somma di C(3,1)=3 e C(3,2)=3" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif">
+<text x="10" y="45" fill="currentColor" font-size="13">n=0</text><text x="10" y="119" fill="currentColor" font-size="13">n=1</text><text x="10" y="193" fill="currentColor" font-size="13">n=2</text><text x="10" y="267" fill="currentColor" font-size="13">n=3</text><text x="10" y="341" fill="currentColor" font-size="13">n=4</text>
+<defs><marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e07a1f"/></marker></defs><g stroke="#e07a1f" stroke-width="2" fill="none" marker-end="url(#pa)"><line x1="240.0" y1="288" x2="266.0" y2="309"/><line x1="320.0" y1="288" x2="294.0" y2="309"/></g>
+<rect x="236" y="16" width="88" height="48" rx="6" fill="none" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5"/><g fill="currentColor" text-anchor="middle"><text x="280" y="35" font-size="12">C(0,0)</text><text x="280" y="56" font-weight="bold" font-size="16">1</text></g>
+<rect x="186" y="90" width="88" height="48" rx="6" fill="none" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5"/><g fill="currentColor" text-anchor="middle"><text x="230" y="109" font-size="12">C(1,0)</text><text x="230" y="130" font-weight="bold" font-size="16">1</text></g>
+<rect x="286" y="90" width="88" height="48" rx="6" fill="none" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5"/><g fill="currentColor" text-anchor="middle"><text x="330" y="109" font-size="12">C(1,1)</text><text x="330" y="130" font-weight="bold" font-size="16">1</text></g>
+<rect x="136" y="164" width="88" height="48" rx="6" fill="none" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5"/><g fill="currentColor" text-anchor="middle"><text x="180" y="183" font-size="12">C(2,0)</text><text x="180" y="204" font-weight="bold" font-size="16">1</text></g>
+<rect x="236" y="164" width="88" height="48" rx="6" fill="none" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5"/><g fill="currentColor" text-anchor="middle"><text x="280" y="183" font-size="12">C(2,1)</text><text x="280" y="204" font-weight="bold" font-size="16">2</text></g>
+<rect x="336" y="164" width="88" height="48" rx="6" fill="none" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5"/><g fill="currentColor" text-anchor="middle"><text x="380" y="183" font-size="12">C(2,2)</text><text x="380" y="204" font-weight="bold" font-size="16">1</text></g>
+<rect x="86" y="238" width="88" height="48" rx="6" fill="none" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5"/><g fill="currentColor" text-anchor="middle"><text x="130" y="257" font-size="12">C(3,0)</text><text x="130" y="278" font-weight="bold" font-size="16">1</text></g>
+<rect x="186" y="238" width="88" height="48" rx="6" fill="#4051b5"/><g fill="#fff" text-anchor="middle"><text x="230" y="257" font-size="12">C(3,1)</text><text x="230" y="278" font-weight="bold" font-size="16">3</text></g>
+<rect x="286" y="238" width="88" height="48" rx="6" fill="#4051b5"/><g fill="#fff" text-anchor="middle"><text x="330" y="257" font-size="12">C(3,2)</text><text x="330" y="278" font-weight="bold" font-size="16">3</text></g>
+<rect x="386" y="238" width="88" height="48" rx="6" fill="none" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5"/><g fill="currentColor" text-anchor="middle"><text x="430" y="257" font-size="12">C(3,3)</text><text x="430" y="278" font-weight="bold" font-size="16">1</text></g>
+<rect x="36" y="312" width="88" height="48" rx="6" fill="none" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5"/><g fill="currentColor" text-anchor="middle"><text x="80" y="331" font-size="12">C(4,0)</text><text x="80" y="352" font-weight="bold" font-size="16">1</text></g>
+<rect x="136" y="312" width="88" height="48" rx="6" fill="none" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5"/><g fill="currentColor" text-anchor="middle"><text x="180" y="331" font-size="12">C(4,1)</text><text x="180" y="352" font-weight="bold" font-size="16">4</text></g>
+<rect x="236" y="312" width="88" height="48" rx="6" fill="#e07a1f"/><g fill="#fff" text-anchor="middle"><text x="280" y="331" font-size="12">C(4,2)</text><text x="280" y="352" font-weight="bold" font-size="16">6</text></g>
+<rect x="336" y="312" width="88" height="48" rx="6" fill="none" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5"/><g fill="currentColor" text-anchor="middle"><text x="380" y="331" font-size="12">C(4,3)</text><text x="380" y="352" font-weight="bold" font-size="16">4</text></g>
+<rect x="436" y="312" width="88" height="48" rx="6" fill="none" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5"/><g fill="currentColor" text-anchor="middle"><text x="480" y="331" font-size="12">C(4,4)</text><text x="480" y="352" font-weight="bold" font-size="16">1</text></g>
+<text x="340.0" y="334" fill="currentColor" font-size="13">← 3 + 3 = 6</text>
+</svg>
+<figcaption>Il triangolo di Pascal fino a n = 4. Ogni casella contiene il coefficiente binomiale C(n,k) («n su k») e il suo valore. Le due caselle blu, sopra a sinistra e a destra, si sommano nella casella arancione sotto di loro. Ai bordi c'è sempre 1.</figcaption>
+</figure>
+
+Continuando con la stessa regola si ottengono le righe successive: $1, 5, 10, 10, 5, 1$ per $n=5$, e così via.
+
+Pascal vi dedicò un trattato scritto in quegli anni, pubblicato dopo la sua morte; il triangolo era però già noto in altre tradizioni matematiche, e il nome è una convenzione. Ciò che conta per noi è che questi numeri li abbiamo già incontrati.
+
+**Ricordiamo il Problema dei punti.** Due giocatori, $A$ e $B$, giocano una partita a manche; la partita si interrompe e bisogna dividere la posta in proporzione alle probabilità di vittoria. Con il metodo di Fermat si fanno giocare comunque $n = a + b - 1$ manche, dove $a$ e $b$ sono i punti che mancano ad $A$ e a $B$. Ognuno dei $2^n$ futuri possibili, scritto come parola di $n$ lettere $A$ e $B$, ha la stessa probabilità $\tfrac1{2^n}$, e $A$ vince la partita quando in quel futuro vince **almeno $a$ manche**.
+
+Nel secondo caso dell'Atto II, il gioco a 3 punti sull'1–0, era $a = 2$, $b = 3$, $n = 4$. Avevamo raggruppato i 16 futuri per numero $k$ di manche vinte da $A$ e li avevamo contati a mano: 1, 4, 6, 4, 1 per $k = 0, 1, 2, 3, 4$. Sono i numeri della riga $n=4$ del triangolo, e non per caso. Un futuro in cui $A$ vince esattamente $k$ manche si può descrivere dicendo **quali** sono le $k$ manche vinte da $A$, tra le $n$ in programma, e le altre le vince $B$. Per esempio $BABA$ è il futuro in cui $A$ vince la 2ª e la 4ª manche. Scegliere un futuro con $k$ vittorie di $A$ equivale quindi a scegliere un sottoinsieme di $k$ posizioni tra $n$, e di sottoinsiemi così ce ne sono $\binom{n}{k}$. Con $n=4$ e $k=2$ si ottiene $\binom42 = 6$, esattamente le 6 parole della riga $k=2$ della tabella.
+
+Questo ci permette di scrivere la probabilità di Fermat senza più elencare i futuri. Si sommano i $\binom{n}{k}$ per tutti i $k$ che fanno vincere $A$, cioè da $k=a$ fino a $k=n$, e si divide per il numero totale di futuri:
 
 $$
 P(A \text{ vince}) = \frac{1}{2^n} \sum_{k=a}^{n} \binom{n}{k}.
 $$
 
-Sommando tutti i numeri di una riga si ottengono *tutti* i futuri: $\sum_k \binom{n}{k} = 2^n$, che è anche il numero di sottoinsiemi di un insieme di $n$ elementi (ogni elemento «dentro» o «fuori»).
+Controllo sul caso di prima ($a=2$, $n=4$): $\frac{1}{16}\left(\binom42 + \binom43 + \binom44\right) = \frac{6+4+1}{16} = \frac{11}{16}$. Sul gioco a 5 punti ($a=3$, $n=7$) lo stesso calcolo dà $\frac{35+35+21+7+1}{128} = \frac{99}{128}$, senza scrivere i 128 futuri: ecco il conteggio che nell'Atto II avevamo rimandato a questo punto.
+
+Si noti che, sommando tutti i numeri di una riga, si ottengono *tutti* i futuri possibili: $\sum_k \binom{n}{k} = 2^n$. Si noti anche che $2^n$ coincide con il numero di sottoinsiemi di un insieme di $n$ elementi (cioè la cardinalità dell'*insieme delle parti*).
+
+**Perché i sottoinsiemi sono $2^n$.** Per contare tutti i sottoinsiemi di un insieme di $n$ elementi, vediamo in quanti modi se ne può *costruire* uno. Prendiamo gli elementi uno alla volta. Il primo può essere incluso o escluso dal sottoinsieme: due possibilità. Anche il secondo può essere incluso o escluso, e questa scelta non dipende dalla precedente, quindi le possibilità si **raddoppiano**. Lo stesso vale per il terzo, il quarto, fino all'$n$-esimo. Le scelte possibili sono quindi
+
+$$
+\overbrace{2 \cdot 2 \cdot 2 \cdots 2}^{n \text{ volte}} = 2^n.
+$$
+
+Con $n=3$ si ha $2 \cdot 2 \cdot 2 = 8$, e infatti i sottoinsiemi di $\{a,b,c\}$ sono otto: $\varnothing$, $\{a\}$, $\{b\}$, $\{c\}$, $\{a,b\}$, $\{a,c\}$, $\{b,c\}$, $\{a,b,c\}$. Aggiungere un solo elemento raddoppia il numero di sottoinsiemi: gli 8 di prima restano tali, e se ne aggiungono altri 8 uguali con il nuovo elemento dentro.
+
+Lo stesso conteggio, fatto raggruppando i sottoinsiemi per numero $k$ di elementi (ce ne sono $\binom{n}{k}$ per ogni $k$), dà $\sum_k \binom{n}{k}$. Poiché i due modi di contare riguardano gli stessi oggetti, i risultati coincidono: è la formula $\sum_k \binom{n}{k} = 2^n$ scritta sopra.
 
 ### La probabilità classica, e il suo limite nascosto {: #classica }
 
@@ -449,7 +508,7 @@ $$
 
 Tutto il lavoro sta nel contare numeratore e denominatore con gli strumenti di sopra. Per esempio, la probabilità di ottenere esattamente 5 teste in 10 lanci di una moneta onesta è $\binom{10}{5} / 2^{10} = 252/1024 \approx 0{,}246$.
 
-L'ipotesi «equiprobabili» però non è un dettaglio, e sbagliare **che cosa** contare è l'errore classico. Se lanci due monete, gli esiti per numero di teste sono tre ($0$, $1$, $2$), ma **non** sono equiprobabili: le sequenze ordinate sono quattro ($TT$, $TC$, $CT$, $CC$), ciascuna con probabilità $\tfrac14$, e «una testa» ne raccoglie due. Un errore di questo tipo, sulla probabilità di ottenere almeno una testa, viene attribuito a d'Alembert (1754). Lo stesso succede con la somma di due dadi: le 11 somme possibili ($2, \dots, 12$) non sono equiprobabili, mentre le 36 coppie ordinate sì. La regola pratica: **per usare «casi favorevoli su casi possibili» bisogna contare oggetti che si presentino davvero con la stessa probabilità**, e per questo conviene quasi sempre distinguere gli esiti (due monete *distinguibili*, due dadi *distinguibili*).
+L'ipotesi «equiprobabili» però non è un dettaglio, e sbagliare **che cosa** contare è l'errore classico. Se lanci due monete, gli esiti possibili, in termini di «numero di teste», sono tre ($0$, $1$, $2$), ma **non** sono equiprobabili: le sequenze ordinate sono quattro ($TT$, $TC$, $CT$, $CC$), ciascuna con probabilità $\tfrac14$, e «una testa» ne raccoglie due. Un errore di questo tipo, sulla probabilità di ottenere almeno una testa, viene attribuito a d'Alembert (1754). Lo stesso succede con la somma di due dadi: le 11 somme possibili ($2, \dots, 12$) non sono equiprobabili, mentre le 36 coppie ordinate sì. La regola pratica: **per usare «casi favorevoli su casi possibili» bisogna contare oggetti che si presentino davvero con la stessa probabilità**, e per questo conviene quasi sempre distinguere gli esiti (due monete *distinguibili*, due dadi *distinguibili*).
 
 Questa regola avrà un volto concreto tra due sezioni: una funzione hash ben progettata è, per definizione, un meccanismo che rende equiprobabili gli slot in cui finiscono le chiavi.
 

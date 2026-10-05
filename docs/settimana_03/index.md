@@ -364,30 +364,45 @@ Lo si vede con l'albero della Settimana 2, senza le probabilità. Ogni **foglia*
 <g fill="currentColor"><text x="390" y="70">← 3 foglie</text><text x="390" y="190">← 3 foglie</text></g>
 <text x="280" y="268" text-anchor="middle" fill="currentColor" font-weight="bold">foglie totali = 2 · 3 = 6   (ogni foglia è un percorso completo: una coppia di scelte)</text>
 </svg>
-<figcaption>Due scelte: 2 modi per la prima (A o B), poi 3 modi per la seconda, qualunque sia stata la prima. Il numero di foglie è il prodotto del numero di rami dei due livelli.</figcaption>
+<figcaption>Due scelte: 2 modi per la prima (A o B), poi 3 modi per la seconda, qualunque sia stata la prima. Il numero di foglie è il prodotto del numero di rami di ciascun livello.</figcaption>
 </figure>
 
-Con più scelte si prosegue allo stesso modo: il numero di foglie è il prodotto dei rami di ogni livello, $n_1 \cdot n_2 \cdots n_k$. Se tutti i livelli hanno $b$ rami, diventa $b^k$ (da qui le sequenze con ripetizione qui sotto).
-
-Il punto cruciale è questo: il numero di rami può **cambiare da un livello al successivo** ($n_1 \ne n_2$), ma al **livello successivo deve essere lo stesso per ogni nodo**, cioè non deve dipendere da quale ramo è stato preso prima. Se dipendesse dal percorso (per esempio 3 rami dopo A ma solo 2 dopo B), il prodotto non vale più: bisogna contare le foglie di ogni sottoalbero e **sommarle** ($3 + 2 = 5$, non $2 \cdot 3$).
+Con più scelte si prosegue allo stesso modo: il numero di foglie è il prodotto dei rami di ogni livello, $n_1 \cdot n_2 \cdots n_k$. Se tutti i livelli hanno $b$ rami, diventa $b^k$.
 
 Per esempio, una password di 8 caratteri scelti tra 62 simboli (26 minuscole, 26 maiuscole, 10 cifre) si può scrivere in $62^8 \approx 2{,}2 \cdot 10^{14}$ modi. In generale, **sequenze di lunghezza $k$ su $n$ simboli, con ripetizione, sono $n^k$**: tre manche con due esiti ciascuna danno $2^3 = 8$ futuri, quindici bit danno $2^{15}$ stringhe.
 
+> Nota bene: il numero di rami può **cambiare da un livello al successivo** ($n_1 \ne n_2$), ma al **livello successivo deve essere lo stesso per ogni nodo**, cioè non deve dipendere da quale ramo è stato preso prima. Se dipendesse dal percorso (per esempio 3 rami dopo A ma solo 2 dopo B), il prodotto non vale più: bisogna contare le foglie di ogni sottoalbero e **sommarle** ($3 + 2 = 5$, non $2 \cdot 3$).
+
+
+
 ### Seconda idea: le disposizioni e il fattoriale {: #disposizioni }
 
-Ora vietiamo la ripetizione: scegliamo $k$ oggetti **tutti diversi** tra $n$, e l'ordine conta. Il primo si sceglie in $n$ modi, il secondo in $n-1$ (uno è già preso), il terzo in $n-2$, e così via fino al $k$-esimo, che si sceglie in $n-k+1$ modi. Per la moltiplicazione:
+Nella prima idea ogni livello dell'albero offriva sempre gli stessi $n$ simboli: una password può ripetere un carattere. Ma a volte la ripetizione è vietata: se assegniamo 3 server diversi a 3 compiti, un server già usato non può essere scelto di nuovo. Vediamo che cosa cambia nell'albero, con un esempio minuscolo: scegliamo 2 lettere **diverse** tra $\{A, B, C\}$, una dopo l'altra.
+
+- Al primo livello i rami sono 3: $A$, $B$ o $C$.
+- Al secondo livello, da ciascun nodo, i rami sono 2: la lettera appena scelta non si può ripetere, restano le altre due.
+
+Attenzione a un dettaglio che riguarda la nota di prima. Le lettere offerte *dipendono* dal ramo scelto (dopo $A$ restano $B, C$; dopo $B$ restano $A, C$), ma il loro **numero** no: è sempre 2. La nota chiedeva proprio questo, quindi il prodotto vale ancora: $3 \cdot 2 = 6$ foglie, cioè
+
+$$
+AB,\; AC,\; BA,\; BC,\; CA,\; CB.
+$$
+
+Guarda questa lista: $AB$ e $BA$ usano le stesse due lettere, ma sono **due foglie diverse**, perché sono due percorsi diversi nell'albero (prima $A$ poi $B$, oppure prima $B$ poi $A$). Quando diciamo che «l'ordine conta» intendiamo esattamente questo: **due sequenze che contengono gli stessi oggetti in ordine diverso sono contate come due risultati distinti**. È una conseguenza naturale di come abbiamo costruito l'albero (una foglia = un percorso), non una regola in più. Lo scopo di questa idea è contare *tutte* le sequenze, ordine compreso; nella prossima vedremo come si fa se invece vogliamo che $AB$ e $BA$ valgano come un unico risultato.
+
+Generalizziamo: scegliamo $k$ oggetti **tutti diversi** tra $n$, formando una sequenza. Il primo si sceglie in $n$ modi, il secondo in $n-1$ (uno è già preso), il terzo in $n-2$, e così via fino al $k$-esimo, che si sceglie in $n-k+1$ modi. Per la moltiplicazione:
 
 $$
 D(n, k) = n\,(n-1)\,(n-2)\cdots(n-k+1) = \frac{n!}{(n-k)!}.
 $$
 
-Qui $n! = n(n-1)\cdots 2 \cdot 1$ è il **fattoriale** ($0! = 1$ per convenzione). Il caso $k = n$ dà $n!$: i modi di **ordinare** $n$ oggetti distinti. Cresce in fretta: $20! \approx 2{,}4 \cdot 10^{18}$, e questo è il motivo per cui nessun algoritmo di ordinamento può fare a meno di circa $n \log n$ confronti: dovendo distinguere $n!$ ordinamenti con risposte sì/no servono almeno $\log_2(n!)$ domande (lo vedrai nel corso di Algoritmi).
+Qui $n! = n(n-1)\cdots 2 \cdot 1$ è il **fattoriale** ($0! = 1$ per convenzione). Il caso $k = n$ dà $n!$: i modi di **ordinare** $n$ oggetti distinti. Questo è il motivo per cui nessun algoritmo di ordinamento può fare a meno di circa $n \log n$ confronti: dovendo distinguere $n!$ ordinamenti con risposte sì/no servono almeno $\log_2(n!)$ domande (lo vedrai nel corso di Algoritmi).
 
 Una situazione che ci servirà tra poco: $k$ chiavi vanno in una tabella con $m$ slot, **ognuna in uno slot diverso**. La prima ha $m$ scelte, la seconda $m-1$, la terza $m-2$... Il numero di modi è proprio $D(m, k) = m(m-1)\cdots(m-k+1)$.
 
 ### Terza idea: le combinazioni {: #combinazioni }
 
-Spesso l'ordine non importa: scegliamo 3 server su 10 per un rilascio sperimentale, e non ci interessa *in che ordine* li abbiamo nominati. Contiamo prima le sequenze ordinate: $D(10, 3) = 720$. Ma ogni gruppo di 3 server compare in $3! = 6$ ordini diversi, e li abbiamo contati tutti e sei. Per contare i **gruppi** dobbiamo dividere per 6. In generale, un sottoinsieme di $k$ elementi compare $k!$ volte tra le sequenze, quindi:
+Spesso però $AB$ e $BA$ devono valere come un solo risultato: scegliamo 3 server su 10 per un rilascio sperimentale, e non ci interessa *in che ordine* li abbiamo nominati, conta solo *quali* sono. Partiamo da ciò che sappiamo contare, le sequenze, dove l'ordine distingue: $D(10, 3) = 720$. Ma ogni gruppo di 3 server compare in $3! = 6$ ordini diversi, e li abbiamo contati tutti e sei. Per contare i **gruppi** dobbiamo dividere per 6. In generale, un sottoinsieme di $k$ elementi compare $k!$ volte tra le sequenze, quindi:
 
 !!! note "Coefficiente binomiale"
     $$

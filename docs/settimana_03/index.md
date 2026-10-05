@@ -1241,10 +1241,8 @@ Atteso: la mediana vicina alla soglia $1{,}18 \cdot 2^{b/2}$ per ogni $b$ (per e
 
 1. **Le collisioni sono attese, non eccezionali.** Una tabella hash con $m$ slot ha una collisione già dopo circa $\sqrt{m}$ inserimenti. Per questo ogni implementazione seria ha una strategia di risoluzione, e i costi si ragionano in termini di *fattore di carico* $n/m$, non di «evitare le collisioni».
 2. **Con la sicurezza, i bit contano a metà.** Un hash o un identificatore di $b$ bit regge fino a circa $2^{b/2}$ elementi, non $2^b$. Un ID di 32 bit scelto a caso è pericoloso già con centomila elementi.
-3. **Quando la domanda è «almeno uno», calcola «nessuno».** Il trucco del complementare vale per ogni sistema con molti componenti ciascuno con una piccola probabilità di fallire, in modo indipendente: la probabilità che *almeno uno* fallisca non è la somma, e cresce più in fretta di quanto si pensi. È l'errore di de Méré, trasportato in produzione.
+3. **Quando la domanda è «almeno uno», calcola «nessuno».** Il trucco del complementare vale per ogni sistema con molti componenti ciascuno con una piccola probabilità di fallire, in modo indipendente: la probabilità che *almeno uno* fallisca non è la somma delle probabilità dei singoli componenti, perché i casi in cui ne falliscono più d'uno verrebbero contati più volte (la somma è solo un limite superiore). Si può invece sommare le probabilità di «esattamente 1», «esattamente 2», … fallimenti, che sono eventi disgiunti, ma è più comodo calcolare $1 - \prod_i (1 - p_i)$. La probabilità cresce più in fretta di quanto si pensi. È l'errore di de Méré, trasportato in produzione.
 4. **Il numero di coppie cresce come $n^2$.** In un sistema con $n$ componenti che possono interferire a due a due, le interazioni possibili sono $\binom{n}{2}$. È questa la ragione per cui i sistemi grandi producono incidenti «improbabili» con regolarità.
-
-Il filtro di Bloom, che incontreremo nella Settimana 5, sfrutta la stessa matematica in senso opposto: accetta le collisioni e ne controlla la frequenza.
 
 ---
 

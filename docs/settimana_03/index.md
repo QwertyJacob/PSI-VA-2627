@@ -746,14 +746,30 @@ while almeno_un_successo(1 / 36, n) <= 0.5:
 print(f"Con 24 lanci: {doppio_sei:.4f}; servono {n} lanci per arrivare a {almeno_un_successo(1/36, n):.4f}")
 assert n == 25
 
-# Verifica Monte Carlo
-rng = np.random.default_rng(2024)
-T = 100_000
+# Verifica Monte Carlo: simuliamo T giocate complete e contiamo la frazione "vincente"
+rng = np.random.default_rng(2024)   # seed fisso: risultati riproducibili
+T = 100_000                         # numero di giocate simulate
+# Gioco 1: ogni riga è una giocata da 4 lanci di un dado (valori 1..6)
 d1 = rng.integers(1, 7, size=(T, 4), dtype=np.int8)
+# any(axis=1): la giocata vince se ALMENO un lancio è 6; mean() = frequenza relativa
 mc1 = (d1 == 6).any(axis=1).mean()
+# Gioco 2: T giocate x 24 lanci x 2 dadi (ultimo asse = i due dadi del lancio)
 d2 = rng.integers(1, 7, size=(T, 24, 2), dtype=np.int8)
-mc2 = ((d2[:, :, 0] == 6) & (d2[:, :, 1] == 6)).any(axis=1).mean()
+# d2[g, l, k] = esito del dado k (0 o 1) nel lancio l della giocata g
+# Passo 1: il primo dado è 6? Matrice di True/False di forma (T, 24)
+primo_e_sei = (d2[:, :, 0] == 6)
+# Passo 2: il secondo dado è 6? Stessa forma (T, 24)
+secondo_e_sei = (d2[:, :, 1] == 6)
+# Passo 3: "doppio 6" = entrambi 6 nello stesso lancio (& agisce elemento per elemento)
+doppio_sei_lancio = primo_e_sei & secondo_e_sei      # forma (T, 24)
+# Passo 4: la giocata vince se ALMENO un lancio dei 24 è doppio 6.
+# any(axis=1) collassa l'asse dei lanci: da (T, 24) a (T,), un True/False per giocata
+giocata_vinta = doppio_sei_lancio.any(axis=1)
+# Passo 5: la media di valori booleani è la frazione di True (True=1, False=0),
+# cioè la frequenza relativa delle giocate vinte: la stima Monte Carlo
+mc2 = giocata_vinta.mean()
 print(f"Monte Carlo ({T} giocate): un 6 in 4 lanci {mc1:.4f}, doppio 6 in 24 lanci {mc2:.4f}")
+# Le frequenze simulate devono avvicinarsi alle probabilità esatte (tolleranza 0.01)
 assert abs(mc1 - un_sei) < 0.01 and abs(mc2 - doppio_sei) < 0.01
 print("Script 3: tutti gli assert superati.")
 ```
@@ -761,15 +777,43 @@ print("Script 3: tutti gli assert superati.")
 
 ### Il paradosso dei compleanni {: #paradosso }
 
-Ecco una domanda che sembra innocua. **Quante persone servono in una stanza perché sia più probabile che no che due di loro compiano gli anni lo stesso giorno?** Chiunque risponde con un numero grande (183? 100?). La risposta è **23**.
+Ecco una domanda che sembra innocua. **Quante persone devono essere presenti in una stanza perché la probabilità che almeno due compiano gli anni lo stesso giorno superi il 50%?** Chiunque risponde con un numero grande (183? 100?). La risposta è **23**.
 
-Modelliamo il problema con ipotesi esplicite: $n$ persone, 365 giorni possibili (ignoriamo il 29 febbraio), ogni persona nata in un giorno scelto uniformemente e indipendentemente dalle altre. Lo spazio campionario è l'insieme delle sequenze di $n$ giorni, e **per la moltiplicazione** ha $365^n$ elementi tutti equiprobabili. Applichiamo il trucco del complementare: contiamo le sequenze con **tutti i giorni diversi**. Sono le disposizioni semplici (Atto III): $365 \cdot 364 \cdots (365 - n + 1)$. Quindi
+Modelliamo il problema con ipotesi esplicite: $n$ persone, 365 giorni possibili (ignoriamo il 29 febbraio), ogni persona nata in un giorno scelto uniformemente e indipendentemente dalle altre (anche questa è un'assunzione semplificatrice). Lo spazio campionario è l'insieme delle sequenze di $n$ giorni, e **per la moltiplicazione** ha $365^n$ elementi tutti equiprobabili. Applichiamo il trucco del complementare: invece di contare i casi con *almeno una* coincidenza, contiamo quelli con **tutti i compleanni diversi**, che sono più facili da descrivere.
+
+**Un esempio con $n = 3$ persone.** Assegniamo i compleanni uno alla volta:
+
+- la prima persona può avere qualunque giorno: $365$ scelte;
+- la seconda deve evitare il giorno della prima: $364$ scelte;
+- la terza deve evitare i due giorni già occupati: $363$ scelte.
+
+Per la regola della moltiplicazione le sequenze con tutti i giorni diversi sono $365 \cdot 364 \cdot 363$, su un totale di $365^3$ sequenze possibili. Quindi
 
 $$
-P(\text{nessuna coincidenza}) = \frac{365 \cdot 364 \cdots (365-n+1)}{365^n} = \prod_{i=0}^{n-1}\left(1 - \frac{i}{365}\right).
+P(\text{nessuna coincidenza}) = \frac{365 \cdot 364 \cdot 363}{365^3}.
 $$
 
-Il prodotto si legge anche con la regola del prodotto: la seconda persona evita il compleanno della prima con probabilità $\tfrac{364}{365}$, la terza evita i due già presi con probabilità $\tfrac{363}{365}$, e così via. La probabilità di **almeno una coincidenza** è $1 - \prod_{i=0}^{n-1}(1 - i/365)$:
+**Con $n$ persone** il ragionamento è identico: al numeratore ci sono $n$ fattori che scendono di uno alla volta, a partire da $365$ (sono le disposizioni semplici dell'Atto III); al denominatore c'è $365^n$:
+
+$$
+P(\text{nessuna coincidenza}) = \frac{365 \cdot 364 \cdots (365-n+1)}{365^n}.
+$$
+
+**Una forma più comoda.** Il denominatore $365^n$ è $365$ moltiplicato per sé stesso $n$ volte: possiamo assegnare un $365$ a ciascun fattore del numeratore.
+
+$$
+\frac{365}{365} \cdot \frac{364}{365} \cdot \frac{363}{365} \cdots \frac{365-n+1}{365}
+$$
+
+Ogni frazione si riscrive come $\frac{365 - i}{365} = 1 - \frac{i}{365}$, dove $i$ vale $0, 1, 2, \dots, n-1$. Il simbolo $\prod$ è solo la scrittura compatta di «moltiplica tutti questi fattori», come $\sum$ lo è per la somma:
+
+$$
+P(\text{nessuna coincidenza}) = \prod_{i=0}^{n-1}\left(1 - \frac{i}{365}\right).
+$$
+
+Per $n = 3$ i fattori sono $1 \cdot \left(1 - \tfrac{1}{365}\right) \cdot \left(1 - \tfrac{2}{365}\right) = \tfrac{365}{365}\cdot\tfrac{364}{365}\cdot\tfrac{363}{365}$, cioè la stessa espressione di prima.
+
+Questo prodotto si legge anche con la regola del prodotto: la seconda persona evita il compleanno della prima con probabilità $\tfrac{364}{365}$, la terza evita i due già presi con probabilità $\tfrac{363}{365}$, e così via. La probabilità di **almeno una coincidenza** è $1 - \prod_{i=0}^{n-1}(1 - i/365)$:
 
 | $n$ | 10 | 20 | **23** | 30 | 40 | 50 | 57 | 70 |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
@@ -777,29 +821,73 @@ Il prodotto si legge anche con la regola del prodotto: la seconda persona evita 
 
 ### Perché è così sorprendente? {: #perche-sorprendente }
 
-La nostra intuizione confronta **la mia data** con quelle degli altri: 22 persone hanno circa il 6% di probabilità di condividere *il mio* compleanno ($1 - (364/365)^{22} \approx 5{,}9\%$). Ma il paradosso chiede se **qualunque coppia** coincide, e le coppie sono molte di più delle persone: in una stanza di $n$ persone ci sono $\binom{n}{2} = \frac{n(n-1)}{2}$ coppie, cioè **253** per $n = 23$. Ogni coppia coincide con probabilità $\tfrac1{365}$, e in media troviamo circa $\tfrac{253}{365} \approx 0{,}69$ coppie coincidenti (la «media» la studieremo bene nella Settimana 4). Il numero di coppie cresce come $n^2$, non come $n$: è questo che l'intuizione sottovaluta.
+La nostra intuizione confronta **la mia data** con quelle degli altri: 22 persone hanno circa il 6% di probabilità di condividere *il mio* compleanno ($1 - (364/365)^{22} \approx 5{,}9\%$). Ma il paradosso chiede se **qualunque coppia** coincide, e le coppie sono molte di più delle persone: in una stanza di $n$ persone ci sono $\binom{n}{2} = \frac{n(n-1)}{2}$ coppie, cioè **253** per $n = 23$. Ognuna di queste coppie ha una probabilità $\tfrac1{365}$ di coincidere, e ogni coppia è un'occasione in più per trovare una coincidenza. Il numero di coppie cresce come $n^2$, non come $n$: è questo che l'intuizione sottovaluta.
 
 ### L'approssimazione esponenziale e la regola della radice {: #approssimazione }
 
-La formula esatta richiede un prodotto lungo. Possiamo ricavarne una molto più maneggevole con un solo fatto: per ogni $x$ vale $1 - x \le e^{-x}$, con quasi uguaglianza se $x$ è piccolo. Applichiamolo ai fattori, con $N$ al posto di 365 (così il ragionamento vale per qualunque numero di «giorni»):
+La formula esatta è un prodotto di $n$ fattori: per $n = 23$ sono 23 moltiplicazioni, e non si vede a colpo d'occhio come il risultato dipenda da $n$. Vogliamo una formula corta, anche a costo di essere un po' approssimata. Lavoriamo con $N$ al posto di 365, così il ragionamento vale per qualunque numero di «giorni».
+
+**Passo 1: un fatto sull'esponenziale.** Per ogni $x$ vale
 
 $$
-\prod_{i=0}^{n-1}\left(1 - \frac{i}{N}\right) \;\le\; \prod_{i=0}^{n-1} e^{-i/N} = e^{-\frac{1}{N}\sum_{i=0}^{n-1} i} = e^{-\frac{n(n-1)}{2N}},
+1 - x \;\le\; e^{-x},
 $$
 
-dove abbiamo usato $\sum_{i=0}^{n-1} i = \frac{n(n-1)}{2}$. In definitiva
+e le due quantità sono molto vicine quando $x$ è piccolo. Un controllo con qualche numero:
+
+| $x$ | 0,01 | 0,1 | 0,5 |
+|:---:|:---:|:---:|:---:|
+| $1 - x$ | 0,99 | 0,9 | 0,5 |
+| $e^{-x}$ | 0,9900 | 0,9048 | 0,6065 |
+
+Per $x = 0{,}01$ la differenza si vede alla quarta cifra decimale; per $x = 0{,}5$ no. Geometricamente, $y = 1 - x$ è la retta tangente alla curva $y = e^{-x}$ nel punto $x = 0$, e la curva sta sempre sopra la sua tangente.
+
+**Passo 2: applichiamolo a ogni fattore.** I fattori del prodotto hanno la forma $1 - x$ con $x = \frac{i}{N}$, che è piccolo finché $i$ è piccolo rispetto a $N$. Sostituiamo ciascun fattore con il suo $e^{-i/N}$, che è un po' più grande (e anche positivo, quindi moltiplicare le disuguaglianze è lecito):
 
 $$
-P(\text{almeno una coincidenza}) \;\ge\; 1 - e^{-\frac{n(n-1)}{2N}} \;\approx\; 1 - e^{-\frac{n^2}{2N}},
+\prod_{i=0}^{n-1}\left(1 - \frac{i}{N}\right) \;\le\; \prod_{i=0}^{n-1} e^{-i/N}.
 $$
 
-una stima **per difetto**, accurata finché $n$ è molto più piccolo di $N$. Con $N = 365$ e $n = 23$ dà esattamente $1 - e^{-0{,}69} = 0{,}500$, contro il valore vero $0{,}507$. Da qui otteniamo la **regola della radice**: l'esponente $\frac{n^2}{2N}$ vale $\ln 2$ per
+**Passo 3: trasformiamo il prodotto in una somma.** L'esponenziale ha la proprietà $e^{a} \cdot e^{b} = e^{a+b}$: moltiplicare esponenziali equivale a sommare gli esponenti. Quindi
 
 $$
-n \approx \sqrt{2 \ln 2 \cdot N} \approx 1{,}18\,\sqrt{N}.
+\prod_{i=0}^{n-1} e^{-i/N} = e^{-\frac{0}{N}} \cdot e^{-\frac{1}{N}} \cdots e^{-\frac{n-1}{N}} = e^{-\frac{1}{N}\,(0 + 1 + 2 + \cdots + (n-1))}.
 $$
 
-Per $N = 365$ questo dà $22{,}5$, cioè $23$. La conseguenza è generale: **con $N$ possibilità equiprobabili, bastano circa $\sqrt{N}$ estrazioni perché una ripetizione diventi probabile**, non $N$. Per 365 giorni è 23, per un milione di «giorni» sono circa 1180.
+**Passo 4: sommiamo gli interi.** La somma $0 + 1 + \cdots + (n-1)$ si calcola come faceva Gauss: si scrive due volte, una in avanti e una all'indietro, e si sommano le colonne.
+
+$$
+\begin{array}{ccccccc}
+0 & + & 1 & + & \cdots & + & (n-1)\\
+(n-1) & + & (n-2) & + & \cdots & + & 0
+\end{array}
+$$
+
+Ogni colonna somma $n-1$, e le colonne sono $n$. Il doppio della somma è quindi $n(n-1)$, e la somma vale $\frac{n(n-1)}{2}$. In conclusione
+
+$$
+\prod_{i=0}^{n-1}\left(1 - \frac{i}{N}\right) \;\le\; e^{-\frac{n(n-1)}{2N}}.
+$$
+
+**Passo 5: passiamo alla probabilità di coincidenza.** Il prodotto è la probabilità di *nessuna* coincidenza, e la probabilità cercata è $1$ meno questa. Sottraendo da $1$ la disuguaglianza si **capovolge**:
+
+$$
+P(\text{almeno una coincidenza}) \;\ge\; 1 - e^{-\frac{n(n-1)}{2N}} \;\approx\; 1 - e^{-\frac{n^2}{2N}}.
+$$
+
+L'ultimo passaggio sostituisce $n(n-1)$ con $n^2$, che è ragionevole quando $n$ è grande. Siccome la stima è un minimo, è una stima **per difetto**: la probabilità vera è almeno questa. È accurata finché $n$ è molto più piccolo di $N$ (perché serve che gli $x = i/N$ siano piccoli).
+
+**Controllo con $N = 365$ e $n = 23$.** Qui $n(n-1) = 23 \cdot 22 = 506$, quindi l'esponente è $\frac{506}{2 \cdot 365} = \frac{506}{730} \approx 0{,}69$. La stima vale $1 - e^{-0{,}69} \approx 0{,}500$, contro il valore vero $0{,}507$: sbaglia di meno di un punto percentuale.
+
+**La regola della radice.** Chiediamoci a che $n$ la stima raggiunge $\tfrac12$:
+
+$$
+1 - e^{-\frac{n^2}{2N}} = \tfrac12 \iff e^{-\frac{n^2}{2N}} = \tfrac12 \iff \frac{n^2}{2N} = \ln 2 \iff n = \sqrt{2 \ln 2 \cdot N} \approx 1{,}18\,\sqrt{N}.
+$$
+
+(Passiamo da $e^{-y} = \tfrac12$ a $y = \ln 2$ prendendo il logaritmo naturale di entrambi i lati.) Per $N = 365$ otteniamo $1{,}18 \cdot 19{,}1 \approx 22{,}5$, cioè $23$.
+
+La conseguenza è generale: **con $N$ possibilità equiprobabili, bastano circa $\sqrt{N}$ estrazioni perché una ripetizione diventi probabile**, non $N$. Per 365 giorni è 23, per un milione di «giorni» sono circa 1180.
 
 ### Esplora tu stesso: una sola curva per tutti gli N {: #widget-compleanni }
 

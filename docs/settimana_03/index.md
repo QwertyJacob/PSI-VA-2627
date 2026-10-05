@@ -17,6 +17,35 @@ Questa settimana si **conta** molto, ma gli strumenti che servono sono pochi e g
 
 ---
 
+## Prima una trappola: due monete {: #due-monete }
+
+Prima di qualsiasi storia, un esperimento di trenta secondi. **Lanci una moneta onesta due volte. Qual è la probabilità di ottenere almeno una testa?** Fermati e scrivi la tua risposta prima di leggere oltre.
+
+Ecco un ragionamento che sembra impeccabile. Si lancia la prima volta: se esce testa ($T$) si è già vinto, e il secondo lancio non serve. Se esce croce ($C$), si lancia la seconda volta, e può uscire testa o croce. Gli esiti da distinguere sono tre:
+
+$$
+T, \qquad CT, \qquad CC,
+$$
+
+e due su tre contengono una testa. Risposta: $\tfrac23$.
+
+È il ragionamento che **Jean Le Rond d'Alembert**, uno dei maggiori matematici del suo tempo, pubblicò nell'ottobre del 1754 nella voce *Croix ou pile* dell'*Encyclopédie* (vol. IV, pp. 512–513). Nel testo riconosce che la risposta che si trova «in tutti gli autori» è quella delle quattro combinazioni, cioè «3 contro 1», ma la mette in dubbio: «il secondo lancio non conta per nulla», quindi le combinazioni vere sarebbero tre e le probabilità «2 contro 1». Estende anche il ragionamento a tre lanci (testa; croce, testa; croce, croce, testa; croce, croce, croce), e ne ricava «3 contro 1» al posto del «7 contro 1» standard, convinto che la cosa meriti «l'attenzione dei calcolatori». La risposta giusta è $\tfrac34$ per due lanci (e $\tfrac78$ per tre), e se hai risposto $\tfrac23$ hai fatto il suo stesso ragionamento.
+
+**Dov'è l'errore?** I tre esiti non hanno la stessa probabilità. Il caso «$T$» vale $\tfrac12$ da solo, mentre $CT$ e $CC$ valgono $\tfrac14$ ciascuno. Dire «due su tre» equivale a trattarli come se valessero tutti $\tfrac13$. Il ragionamento si ripara in un modo solo: **si lanciano comunque entrambe le monete**, anche quando il secondo lancio, nella realtà, non servirebbe. Le sequenze diventano quattro,
+
+$$
+TT, \quad TC, \quad CT, \quad CC,
+$$
+
+tutte con probabilità $\tfrac14$, e tre di esse contengono almeno una testa: $\tfrac34$. Il caso «$T$» di prima era in realtà due sequenze fuse insieme, $TT$ e $TC$.
+
+Tieni a mente questa trappola, perché è il filo di tutta la settimana.
+
+!!! note "Una cautela storica"
+    L'episodio è citato in moltissimi manuali come esempio tipico dell'errore sull'equiprobabilità. Non fu però una svista: d'Alembert conosceva la risposta standard e la contestò di proposito, nello stesso articolo in cui solleva anche il paradosso di San Pietroburgo. Il suo modello assegna probabilità uguali a casi *osservabili* (il gioco finisce con la prima testa), e questo è il punto in cui diverge dalla pratica corrente. Fu criticato più volte, per esempio da Laplace nell'*Essai philosophique*. Qui ci interessa l'errore in sé, che è istruttivo comunque.
+
+---
+
 ## Atto I: Il dramma storico — l'estate del 1654 {: #dramma }
 
 ### Un problema che aspettava da 160 anni {: #problema-antico }
@@ -508,7 +537,7 @@ $$
 
 Tutto il lavoro sta nel contare numeratore e denominatore con gli strumenti di sopra. Per esempio, la probabilità di ottenere esattamente 5 teste in 10 lanci di una moneta onesta è $\binom{10}{5} / 2^{10} = 252/1024 \approx 0{,}246$.
 
-L'ipotesi «equiprobabili» però non è un dettaglio, e sbagliare **che cosa** contare è l'errore classico. Se lanci due monete, gli esiti possibili, in termini di «numero di teste», sono tre ($0$, $1$, $2$), ma **non** sono equiprobabili: le sequenze ordinate sono quattro ($TT$, $TC$, $CT$, $CC$), ciascuna con probabilità $\tfrac14$, e «una testa» ne raccoglie due. Un errore di questo tipo, sulla probabilità di ottenere almeno una testa, viene attribuito a d'Alembert (1754). Lo stesso succede con la somma di due dadi: le 11 somme possibili ($2, \dots, 12$) non sono equiprobabili, mentre le 36 coppie ordinate sì. La regola pratica: **per usare «casi favorevoli su casi possibili» bisogna contare oggetti che si presentino davvero con la stessa probabilità**, e per questo conviene quasi sempre distinguere gli esiti (due monete *distinguibili*, due dadi *distinguibili*).
+L'ipotesi «equiprobabili» però non è un dettaglio, e sbagliare **che cosa** contare è l'errore classico, e ci siamo già cascati all'inizio della settimana con le due monete di d'Alembert: contare tre esiti ($T$, $CT$, $CC$) invece delle quattro sequenze ordinate, tutte di probabilità $\tfrac14$. Anche se si ragiona in termini di «numero di teste», gli esiti possibili sono tre ($0$, $1$, $2$) ma **non** sono equiprobabili: «una testa» raccoglie due sequenze, $TC$ e $CT$. Lo stesso succede con la somma di due dadi: le 11 somme possibili ($2, \dots, 12$) non sono equiprobabili, mentre le 36 coppie ordinate sì. La regola pratica: **per usare «casi favorevoli su casi possibili» bisogna contare oggetti che si presentino davvero con la stessa probabilità**, e per questo conviene quasi sempre distinguere gli esiti (due monete *distinguibili*, due dadi *distinguibili*).
 
 Questa regola avrà un volto concreto tra due sezioni: una funzione hash ben progettata è, per definizione, un meccanismo che rende equiprobabili gli slot in cui finiscono le chiavi.
 
@@ -550,7 +579,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 ### Script 2 — Le formule contro l'enumerazione {: #lab-combinatoria }
 
-Prima di fidarci delle formule le confrontiamo con l'enumerazione esplicita su casi piccoli, costruiamo il triangolo con la regola della somma, e verifichiamo con una simulazione la probabilità classica dei 5 teste su 10 lanci.
+Prima di fidarci delle formule le confrontiamo con l'enumerazione esplicita su casi piccoli, costruiamo il triangolo di Pascal con la regola della somma ($\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$), e verifichiamo con una simulazione la probabilità classica dei 5 teste su 10 lanci.
 
 <div class="psi-exec" markdown="1">
 ```python
@@ -563,19 +592,32 @@ import random
 n, k = 5, 3
 assert len(list(product(range(n), repeat=k))) == n**k                       # moltiplicazione: n·n·n
 assert len(list(permutations(range(n), k))) == factorial(n) // factorial(n - k) == perm(n, k)   # disposizioni
-assert len(list(combinations(range(n), k))) == comb(n, k)                   # combinazioni
-assert perm(n, k) == comb(n, k) * factorial(k)                              # ogni sottoinsieme conta k! volte
+assert len(list(combinations(range(n), k))) == factorial(n) // (factorial(k) * factorial(n - k)) == comb(n, k)   # combinazioni
+assert len(list(permutations(range(n), k))) == len(list(combinations(range(n), k))) * factorial(k)   # ogni sottoinsieme conta k! volte
 print(f"n={n}, k={k}: sequenze con ripetizione {n**k}, disposizioni {perm(n, k)}, combinazioni {comb(n, k)}")
 
 # (b) Il triangolo di Pascal con la regola C(n,k) = C(n-1,k-1) + C(n-1,k)
-righe = [[1]]
-for _ in range(10):
-    r = righe[-1]
-    righe.append([1] + [r[i] + r[i + 1] for i in range(len(r) - 1)] + [1])
-for r in righe[:7]:
-    print(" ".join(f"{x:3d}" for x in r).center(40))
-assert all(righe[i][j] == comb(i, j) for i in range(11) for j in range(i + 1))
-assert all(sum(righe[i]) == 2**i for i in range(11))                        # i sottoinsiemi di un n-insieme sono 2^n
+riga_precedente = [1]                           # la riga 0 contiene solo un 1
+righe = [riga_precedente]                       # qui conserviamo tutte le righe
+for _ in range(10):                             # costruiamo le righe da 1 a 10
+    riga_nuova = [1]                            # ogni riga comincia con 1
+    for j in range(1, len(riga_precedente)):    # ogni valore interno è la somma dei due valori sopra di lui
+        riga_nuova.append(riga_precedente[j - 1] + riga_precedente[j])
+    riga_nuova.append(1)                        # e finisce con 1
+    righe.append(riga_nuova)
+    riga_precedente = riga_nuova                # la riga appena costruita diventa la precedente del prossimo giro
+
+for riga in righe[:7]:              # stampiamo le righe da 0 a 6
+    testo = ""
+    for valore in riga:
+        testo = testo + f"{valore:3d} "
+    print(testo.center(40))
+
+# Controlli: ogni casella è C(n,k) = n! / (k! (n-k)!), e ogni riga somma a 2^n
+for n in range(11):
+    for k in range(n + 1):
+        assert righe[n][k] == factorial(n) // (factorial(k) * factorial(n - k))
+    assert sum(righe[n]) == 2**n    # i sottoinsiemi di un n-insieme sono 2^n
 
 # (c) Probabilità classica: k teste in n lanci = C(n,k) / 2^n. Esatta contro simulazione
 n, k = 10, 5
@@ -592,7 +634,38 @@ print("Script 2: tutti gli assert superati.")
 ```
 </div>
 
-Atteso: $125$ sequenze, $60$ disposizioni e $10$ combinazioni; il triangolo fino alla riga 6; $0.2461$ esatto e circa $0.246$ simulato; $\log_2(100!) \approx 524{,}8$.
+Atteso: $125$ sequenze, $60$ disposizioni e $10$ combinazioni; il triangolo di Pascal stampato fino alla riga 6 (1, 6, 15, 20, 15, 6, 1); $0.2461$ esatto e circa $0.246$ simulato; $\log_2(100!) \approx 524{,}8$.
+
+??? note "Come si legge la riga `len(list(product(range(n), repeat=k)))`, un pezzo alla volta"
+    La riga sembra fitta, ma sono quattro idee semplici, una dentro l'altra. Leggiamola **da dentro verso fuori**, con $n = 5$ e $k = 3$.
+
+    **1. `range(n)`: le scelte possibili per un posto.**
+    `range(5)` produce i numeri $0, 1, 2, 3, 4$. Pensali come le 5 chiavi (o i 5 slot) tra cui scegliere.
+
+    **2. `product(range(n), repeat=k)`: tutte le sequenze di lunghezza $k$.**
+    `repeat=3` significa «ripeti questa scelta per 3 posti». È come scrivere `product(range(5), range(5), range(5))`: per il primo posto si pesca da $0..4$, per il secondo di nuovo da $0..4$, per il terzo ancora da $0..4$, **ogni volta liberamente**, anche ripetendo lo stesso valore. I risultati sono terne ordinate:
+
+    ```
+    (0, 0, 0)
+    (0, 0, 1)
+    (0, 0, 2)
+    ...
+    (4, 4, 3)
+    (4, 4, 4)
+    ```
+
+    Si procede come un contachilometri: l'ultimo posto cambia più in fretta, poi scatta quello prima, e così via.
+
+    **3. `list(...)`: metti tutte le terne in una lista.**
+    `product` non le costruisce subito tutte: le produce una alla volta, quando qualcuno le chiede. `list(...)` le chiede **tutte** e le raccoglie in una lista.
+
+    **4. `len(...)`: quante sono.**
+    `len` conta gli elementi della lista. Il risultato è $125$.
+
+    **Perché 125?** Per la regola della moltiplicazione: 5 scelte per il primo posto, 5 per il secondo, 5 per il terzo, quindi $5 \cdot 5 \cdot 5 = 5^3 = 125$. L'`assert` controlla che **contare a mano** con la formula `n**k` e **elencare davvero** tutte le terne diano lo stesso numero.
+
+    Per riprodurre l'idea in piccolo, con $n = 2$ e $k = 2$:
+    `list(product(range(2), repeat=2))` dà `[(0, 0), (0, 1), (1, 0), (1, 1)]`, cioè le $2^2 = 4$ sequenze ordinate di due monete, le stesse quattro di d'Alembert.
 
 ---
 
@@ -993,7 +1066,8 @@ Il filtro di Bloom, che incontreremo nella Settimana 5, sfrutta la stessa matema
 * **Christiaan Huygens (1657)** — *De ratiociniis in ludo aleae*. [Internet Archive](https://archive.org/details/DeRatiociniisInLudoAleae).
 * **Jacob Bernoulli (1713)** — *Ars conjectandi*, Basilea. [Internet Archive](https://archive.org/details/jacobibernoulli00bern).
 * **Il triangolo aritmetico** — storia del triangolo di Pascal e dei suoi predecessori in India, Persia e Cina: [Wikipedia, *Pascal's triangle*](https://en.wikipedia.org/wiki/Pascal%27s_triangle).
-* **Jean Le Rond d'Alembert (1754)** — voce «Croix ou pile» dell'*Encyclopédie*, e il commento di [Publimath](https://publimath.fr/CR017).
+* **Jean Le Rond d'Alembert (1754)** — voce «Croix ou pile», *Encyclopédie*, vol. IV, pp. 512–513 (ottobre 1754); [traduzione inglese di R. J. Pulskamp](https://www.probabilityandfinance.com/pulskamp/Dalembert/croix_ou_pile.pdf) (la nostra traduzione italiana delle citazioni è da questa), e il commento di [Publimath](https://publimath.fr/CR017).
+* **Pierre-Simon Laplace** — *Essai philosophique sur les probabilités*, sezione «Principes généraux du calcul des probabilités», secondo principio: [testo su Wikisource](https://fr.wikisource.org/wiki/Essai_philosophique_sur_les_probabilit%C3%A9s/Texte_entier).
 
 **Storia della probabilità**
 

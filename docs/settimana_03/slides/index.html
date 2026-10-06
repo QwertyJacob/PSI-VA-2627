@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>PSI 26/27 — Settimana 3: pesare i futuri</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../assets/slides/deck.js"></script>
+  <link rel="stylesheet" href="../../settimana_01/slides/css/settimana.css">
+  <link rel="stylesheet" href="../../settimana_02/slides/css/settimana.css">
+  <link rel="stylesheet" href="css/settimana.css">
+</head>
+<body>
+  <div class="reveal"><div class="slides">
+    <!-- RECUPERO: 00–15. Estratti dai mazzi delle settimane 1 e 2. -->
+<section id="assiomi">
+        <h2 class="scene-title">Gli assiomi di Kolmogorov (1933)</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="600" height="440" viewBox="0 0 600 440" role="img" aria-label="La probabilità come area nel quadrato Omega"></svg>
+          <div class="scene-panel">
+            <p class="scene-lead">Una <strong>misura di probabilità</strong> $P: \mathcal{F} \to \mathbb{R}$ rispetta tre soli assiomi. Pensala come un'area:</p>
+            <ol class="scene-steps">
+              <li><strong>Non negatività:</strong> $P(A) \ge 0$</li>
+              <li><strong>Normalizzazione:</strong> $P(\Omega) = 1$</li>
+              <li><strong>$\sigma$-additività:</strong> per $A_1, A_2, \dots$ a due a due disgiunti, $P\big(\bigcup_i A_i\big) = \sum_i P(A_i)$</li>
+            </ol>
+            <p class="scene-note as-sum">$\tfrac12 + \tfrac14 + \tfrac18 + \tfrac1{16} + \cdots = 1$</p>
+            <div class="scene-def as-triple">La terna $(\Omega, \mathcal{F}, P)$ è uno <strong>spazio di probabilità</strong>.</div>
+          </div>
+        </div>
+      </section>
+
+<section id="complementare">
+          <h2 class="scene-title">La regola del complementare</h2>
+          <div class="scene-grid">
+            <svg class="scene-svg" width="600" height="440" viewBox="0 0 600 440" role="img" aria-label="Omega diviso tra A e il suo complementare"></svg>
+            <div class="scene-panel">
+              <ol class="scene-steps">
+                <li>$A$ e $A^c$ sono disgiunti e insieme coprono tutto $\Omega$.</li>
+                <li>Additività e normalizzazione: $P(A) + P(A^c) = P(\Omega) = 1$.</li>
+                <li>Antivirus: protetto con probabilità $0.70$, vulnerabile con $1 - 0.70 = 0.30$.</li>
+                <li>Modulo pulito con probabilità $0.45$: <strong>almeno un bug</strong> con $1 - 0.45 = 0.55$.</li>
+              </ol>
+              <div class="scene-def">$$P(A^c) = 1 - P(A)$$</div>
+            </div>
+          </div>
+        </section>
+
+<section id="prodotto">
+        <h2 class="scene-title">La regola del prodotto</h2>
+        <p class="scene-lead pr-top">Dalla definizione di condizionata: $\;P(A \cap B) = P(B)\,P(A \mid B) = P(A)\,P(B \mid A)$</p>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="640" height="440" viewBox="0 0 640 440" role="img" aria-label="Albero delle due estrazioni senza reimmissione, con le probabilità condizionate sui rami"></svg>
+          <div class="scene-panel">
+            <p class="scene-lead">Due carte di fila, senza reimmissione. $A_i$ = «la carta $i$ è un asso».</p>
+            <ol class="scene-steps">
+              <li>Primo ramo: $P(A_1) = 4/52$.</li>
+              <li>Secondo livello: sui rami ci sono probabilità <strong>condizionate</strong>. Dentro $A_1$ restano 51 carte e 3 assi, quindi $P(A_2 \mid A_1) = 3/51$.</li>
+              <li>Lungo un percorso le probabilità si <strong>moltiplicano</strong>:</li>
+              <li>Le quattro foglie sono una partizione di $\Omega$.</li>
+            </ol>
+            <div class="scene-def pr-calc">
+              <p class="pr-line">$P(A_1 \cap A_2) = P(A_1) \cdot P(A_2 \mid A_1)$</p>
+              <p class="pr-line">$\qquad = \dfrac{4}{52} \cdot \dfrac{3}{51} = \dfrac{1}{13} \cdot \dfrac{1}{17}$</p>
+              <p class="pr-line">$\qquad = \dfrac{1}{221} \approx 0.0045$</p>
+            </div>
+            <p class="scene-note">Le foglie sommano a 1: $\frac{1 + 16 + 16 + 188}{221} = 1$.</p>
+          </div>
+        </div>
+      </section>
+
+<section id="trabocchetto">
+        <h2 class="scene-title">Il trabocchetto: disgiunti non vuol dire indipendenti</h2>
+        <div class="scene-grid">
+          <svg class="scene-svg" width="620" height="440" viewBox="0 0 620 440" role="img" aria-label="Due eventi A e B; B si può trascinare"></svg>
+          <div class="scene-panel">
+            <div class="tb-meter">
+              <p class="tb-row"><span>$P(A \cap B)$</span><span class="tb-bar"><i class="tb-fill tb-ab"></i></span><b class="tb-v tb-vab">0.050</b></p>
+              <p class="tb-row"><span>$P(A)\,P(B)$</span><span class="tb-bar"><i class="tb-fill tb-prod"></i></span><b class="tb-v">0.050</b></p>
+              <p class="tb-row"><span>$P(B \mid A)$</span><span class="tb-bar"><i class="tb-fill tb-cond"></i></span><b class="tb-v tb-vcond">0.200</b></p>
+              <p class="tb-row"><span>$P(B)$</span><span class="tb-bar"><i class="tb-fill tb-pb"></i></span><b class="tb-v">0.200</b></p>
+            </div>
+            <p class="tb-badge">indipendenti</p>
+            <p class="scene-note">Se so che è successo $A$, so con certezza che $B$ non è successo: $P(B \mid A) = 0$. Due eventi disgiunti con probabilità positiva non sono <strong>mai</strong> indipendenti.</p>
+            <p class="tb-hint">Trascina $B$ con il mouse.</p>
+          </div>
+        </div>
+      </section>
+
+<section id="albero">
+        <div class="badge">Atto II • Alberi</div>
+        <h2 class="scene-title">L'albero è un rettangolo tagliato</h2>
+        <svg class="scene-svg" width="1180" height="450" viewBox="0 0 1180 450" role="img" aria-label="Un albero di probabilità a due livelli e lo stesso albero come tagli del quadrato Omega"></svg>
+        <p class="tm-rule">nodi = eventi &nbsp;·&nbsp; rami = condizionate &nbsp;·&nbsp; <b>foglia = prodotto del cammino</b></p>
+      </section>
+
+<section id="ribalta">
+        <div class="badge">Atto III • Il ribaltamento</div>
+        <h2 class="scene-title">Bayes = ribaltare l'albero</h2>
+        <svg class="scene-svg" width="1180" height="430" viewBox="0 0 1180 430" role="img" aria-label="L'albero causale attacco-allarme e lo stesso albero ribaltato: le foglie, ad area proporzionale, sono le stesse"></svg>
+        <div class="rb-ctrl">
+          <label class="rb-sl"><span>$P(H)$</span><input type="range" data-k="lp" min="-4" max="-0.3" step="0.01"><b data-v="lp"></b></label>
+          <label class="rb-sl"><span>sens.</span><input type="range" data-k="sens" min="0.975" max="0.999" step="0.001"><b data-v="sens"></b></label>
+          <label class="rb-sl"><span>spec.</span><input type="range" data-k="spec" min="0.975" max="0.999" step="0.001"><b data-v="spec"></b></label>
+          <button class="psi-btn ghost rb-scale" type="button">aree: log</button>
+          <button class="psi-btn rb-flip" type="button">⇄ Ribalta</button>
+        </div>
+      </section>
+
+<section id="vocabolario">
+          <h2 class="scene-title">Ogni pezzo ha un nome</h2>
+          <div class="vc-formula">$$\color{#38ef7d}P(H \mid E) \color{#edf2f7} = \frac{\color{#fbbf24}P(E \mid H)\,\color{#edf2f7}\cdot\,\color{#f87171}P(H)}{\color{#c084fc}P(E)}$$</div>
+          <div class="vc-names">
+            <span class="fragment vc-name" style="color: #f87171;">prior<small>prima dei dati</small></span>
+            <span class="fragment vc-name" style="color: #fbbf24;">verosimiglianza<small>quanto H spiega E</small></span>
+            <span class="fragment vc-name" style="color: #c084fc;">evidenza<small>tutte le cause</small></span>
+            <span class="fragment vc-name" style="color: #38ef7d;">posterior<small>dopo i dati</small></span>
+          </div>
+          <p class="vc-prop fragment">posterior $\;\propto\;$ verosimiglianza $\times$ prior</p>
+        </section>
+
+    <!-- 15–18: stesso sondaggio della prova e della regia. Nessuno spoiler. -->
+    <section id="sondaggio-1" class="sondaggio" data-poll="s03-1">
+      <p class="badge">15′ · La partita interrotta</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Si gioca a <b>3 punti</b>, posta <b>64 pistole</b>, giocatori ugualmente bravi.
+            Sul <b>2–1 per A</b> la partita si interrompe.<br>Quante pistole ad A?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>64</li>
+            <li><span>2</span>circa 56</li>
+            <li><span>3</span>48</li>
+            <li><span>4</span>circa 43</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">15–18. R mostra/nasconde la distribuzione: lasciarla nascosta. Il medesimo sondaggio ricompare automaticamente, dopo il calcolo, nella scena dell'albero reale.</aside>
+    </section>
+
+    <section id="dalembert" class="history">
+      <div class="history-grid">
+        <div class="person">
+          <p class="date">1754</p>
+          <img src="img/dalembert.jpg" alt="Jean Le Rond d’Alembert, ritratto di Maurice Quentin de La Tour">
+          <h2>d’Alembert</h2>
+          <p class="lifespan">1717–1783</p>
+          <a class="source" href="https://probabilityandfinance.com/pulskamp/Dalembert/croix_ou_pile.pdf" target="_blank" rel="noopener">Encyclopédie · «Croix ou pile»</a>
+        </div>
+        <div class="stage">
+          <h2 class="scene-title">Due lanci. Almeno una testa?</h2>
+          <svg class="scene-svg" width="880" height="360" viewBox="0 0 880 360" role="img" aria-label="Il ragionamento di d’Alembert: T, CT, CC; due esiti favorevoli su tre, ma non equiprobabili"></svg>
+          <div class="da-claim equation">$P(\text{almeno una T})\;\overset{?}{=}\;\dfrac{2}{3}$</div>
+          <p class="da-question punch">Tre casi. Ma hanno lo stesso peso?</p>
+        </div>
+      </div>
+      <aside class="notes">18′. Anticipazione del 1754, poi torniamo al 1494. Il secondo lancio non serve quando il primo è T: questo non rende equiprobabili T, CT, CC. Lascia aperta la domanda: la correzione torna dopo il sondaggio. D’Alembert conosceva e contestava la risposta standard, non ignorava le quattro sequenze.</aside>
+    </section>
+
+    <section id="pacioli" class="history">
+      <div class="history-grid">
+        <div class="person">
+          <p class="date">1494</p>
+          <img class="pacioli-photo" src="img/pacioli.jpg" alt="Luca Pacioli a sinistra, con un allievo; ritratto attribuito a Jacopo de’ Barbari">
+          <h2>Luca Pacioli</h2>
+          <p class="lifespan">circa 1445–1517</p>
+          <a class="source" href="https://mpra.ub.uni-muenchen.de/50831/1/MPRA_paper_50831.pdf#page=2" target="_blank" rel="noopener">Summa · trad. Pulskamp in Cantillo</a>
+        </div>
+        <div class="stage">
+          <h2 class="scene-title">Un gioco a palla. Una posta da dividere.</h2>
+          <svg class="scene-svg" width="880" height="345" viewBox="0 0 880 345" role="img" aria-label="Gioco a palla fino a 60 punti, 10 per goal, interrotto sul 50 a 20; posta di 10 ducati"></svg>
+          <div class="pa-rule equation">$50:20=5:2$</div>
+          <div class="pa-share equation">$\color{#38bdf8}{\dfrac57}\;:\;\color{#fbbf24}{\dfrac27}$ <span class="short-label">della posta</span></div>
+        </div>
+      </div>
+      <aside class="notes">La regola proporzionale guarda ai punti già segnati. Numeri del gioco verificati nel passo tradotto da Pulskamp e riprodotto da Cantillo, p. 2: 60 punti, 10 per goal, 50–20, 10 ducati totali. Le frazioni esprimono la regola discussa qui; non una divisione equa.</aside>
+    </section>
+
+    <section id="tartaglia" class="history">
+      <div class="history-grid">
+        <div class="person">
+          <p class="date">1556</p>
+          <img src="img/tartaglia.jpg" alt="Ritratto inciso di Niccolò Tartaglia">
+          <h2>Niccolò Tartaglia</h2>
+          <p class="lifespan">circa 1499–1557</p>
+          <a class="source" href="https://mpra.ub.uni-muenchen.de/50831/1/MPRA_paper_50831.pdf#page=6" target="_blank" rel="noopener">General trattato · I, XVI, §206</a>
+        </div>
+        <div class="stage">
+          <h2 class="scene-title">Il caso estremo</h2>
+          <svg class="scene-svg" width="880" height="345" viewBox="0 0 880 345" role="img" aria-label="Sul 10 a 0, in un gioco a 60, la regola proporzionale assegna tutta la posta ad A, ma B può ancora vincere"></svg>
+          <div class="ta-rule equation">$\dfrac{10}{10+0}=1$ <span class="short-label">Tutto ad A?</span></div>
+          <p class="ta-objection punch">B può ancora vincere.</p>
+        </div>
+      </div>
+      <aside class="notes">Nel passo storico si gioca a 60: dopo il 10–0 ad A mancano ancora 50 punti. Se si usa a voce il traguardo 1000, presentarlo come variante didattica moderna, non come citazione di Tartaglia.</aside>
+    </section>
+
+    <section id="de-mere" class="history">
+      <div class="history-grid">
+        <div class="person">
+          <p class="date">1654</p>
+          <img src="img/pascal.jpg" alt="Blaise Pascal, ritratto anonimo da François II Quesnel">
+          <h2>Blaise Pascal</h2>
+          <p class="lifespan">racconta de Méré</p>
+          <a class="source" href="https://probabilityandfinance.com/pulskamp/Pascal/Sources/pasfer.pdf#page=4" target="_blank" rel="noopener">Lettera a Fermat · 29 luglio 1654</a>
+        </div>
+        <div class="stage">
+          <h2 class="scene-title">Parti des dés</h2>
+          <p class="history-subtitle">Antoine Gombaud, cavaliere de Méré · 1607–1684</p>
+          <svg class="scene-svg" width="880" height="430" viewBox="0 0 880 430" role="img" aria-label="Un sei in quattro lanci e un doppio sei in ventiquattro: la proporzione 4 su 6 uguale 24 su 36 induce una falsa uguaglianza delle probabilità"></svg>
+        </div>
+      </div>
+      <aside class="notes">Prima scommessa: almeno un sei in 4 lanci. Seconda: almeno un doppio sei in 24 lanci. Fai accettare la proporzione; poi barra l'inferenza sulle probabilità, non l'identità aritmetica 4/6=24/36. Le prove possono riuscire più volte, quindi gli eventi non sono disgiunti. Non sviluppare ancora il calcolo col complementare. Il ritratto è di Pascal, testimone del racconto: non attribuirlo a de Méré.</aside>
+    </section>
+
+    <section id="partis">
+      <p class="badge">30′ · 1654</p>
+      <h2 class="scene-title">Parti des parties</h2>
+      <div class="match-facts">
+        <div><b>3</b><span>punti per vincere</span></div>
+        <div><b><span class="a">2</span>–<span class="b">1</span></b><span>punteggio attuale</span></div>
+        <div><b>64</b><span>pistole · 32 + 32</span></div>
+      </div>
+      <div class="model-assumptions">
+        <p class="model-fair">$P(A)=P(B)=\tfrac12$ <span class="model-caption">in ogni manche</span></p>
+        <p class="model-independent">Manche <strong>indipendenti</strong></p>
+      </div>
+      <svg class="scene-svg" width="1180" height="145" viewBox="0 0 1180 145" role="img" aria-label="Due storie, AAB e ABA, portano allo stesso punteggio 2 a 1 e alle stesse probabilità future"></svg>
+      <div class="markov"><span class="markov-word">Markovianità</span><small>Il futuro dipende dallo stato attuale.</small></div>
+      <aside class="notes">Ipotesi del modello: stessa abilità, manche indipendenti, termine al primo che raggiunge 3. A e B nella formula indicano il vincitore della singola manche. La proprietà di Markov è del processo dei punteggi: l'indipendenza delle manche la implica, ma i punteggi successivi non sono indipendenti. AAB e ABA sono due storie alternative che portano al 2–1 del sondaggio.</aside>
+    </section>
+
+    <section id="albero-reale" class="sondaggio" data-poll="s03-1">
+      <h2 class="scene-title">Si gioca a 3. Si riparte dal 2–1.</h2>
+      <div class="real-stage">
+        <div class="tree-layer">
+          <svg class="scene-svg" width="1180" height="405" viewBox="0 0 1180 405" role="img" aria-label="Albero reale a due livelli dal 2 a 1, con i tre finali A, BA, BB di probabilità 1/2, 1/4, 1/4"></svg>
+          <div class="real-calc equation">$P(A\text{ vince})=\color{#38bdf8}{\dfrac12+\dfrac14}=\dfrac34$</div>
+          <div class="real-money equation">$\color{#38bdf8}{A:48}\qquad\color{#fbbf24}{B:16}$ <span class="short-label">pistole</span></div>
+          <p class="real-warning punch">Le foglie non sono equiprobabili.</p>
+        </div>
+        <div class="result-layer" aria-hidden="true">
+          <h3>Il vostro voto</h3>
+          <div class="sondaggio-grid">
+            <div>
+              <!-- Opzioni copiate dal sondaggio iniziale prima dell'avvio. -->
+              <ol class="sondaggio-opts"></ol>
+              <p class="result-correct">$\dfrac34\cdot64=\color{#38ef7d}{48}$ pistole ad A</p>
+            </div>
+            <div class="sondaggio-join"></div>
+          </div>
+        </div>
+        <div class="dalembert-return" aria-hidden="true">
+          <div class="crossed-portrait">
+            <img src="img/dalembert.jpg" alt="d’Alembert: il conteggio equiprobabile viene confutato">
+            <svg viewBox="0 0 220 250" role="img" aria-label="Croce rossa sul ritratto"><path d="M 12 15 L 208 235 M 208 15 L 12 235"/></svg>
+          </div>
+          <p>1754 · d’Alembert</p>
+          <p>Due lanci: almeno una T</p>
+          <p>$\color{#ff6b6b}{\cancel{2/3}}\;\to\;\color{#38ef7d}{3/4}$</p>
+        </div>
+      </div>
+      <aside class="notes">Click: 1 primo livello; 2 secondo e ultimo; 3 somma 3/4; 4 divisione 48:16; 5 risultato del sondaggio live; 6 torna all'albero e confronta i pesi; 7 ritratto barrato e correzione delle due monete. Il secondo sondaggio legge s03-1, non crea né invia voti. Le barre del sondaggio si mostrano solo nello step 5.</aside>
+    </section>
+
+    <section id="albero-grande">
+      <p class="badge">Un caso più grande: dal 2–0.</p>
+      <h2 class="scene-title">Ora si gioca a <span class="a">5</span> punti.</h2>
+      <div class="big-header"><span>Ad A mancano <b class="a">3</b></span><span>A B mancano <b class="b">5</b></span><span class="big-depth">Manche future: <b>0</b></span></div>
+      <svg class="scene-svg" width="1180" height="420" viewBox="0 0 1180 420" role="img" aria-label="Albero reale della partita a 5 dal 2 a 0: crescita per livelli, arresto alla vittoria, 56 foglie di pesi diversi"></svg>
+      <div class="big-summary"><span><b>56</b> foglie</span><span class="a"><b>35</b> vittorie di A</span><span class="b"><b>21</b> vittorie di B</span><span>$P(A\text{ vince})\ne\dfrac{35}{56}$</span></div>
+      <p class="big-question punch">Come pesare tutti questi futuri?</p>
+      <aside class="notes">Il 2–0 è già avvenuto. Ogni click aggiunge una manche futura; i rami si arrestano a 5 punti. Minimo 3, massimo 7 manche. 56 foglie: 35 per A e 21 per B, non equiprobabili. Il conto corretto sarebbe 99/128: riservarlo al blocco successivo. Qui non introdurre ricorsione, tabella di Pascal o completamento di Fermat.</aside>
+    </section>
+
+    <!-- 30–48 (segue): contare le foglie dell'albero grande. Scene: js/metodi.js -->
+    <section id="sequenze">
+      <h2 class="scene-title">Le 35 foglie in cui vince <span class="a">A</span></h2>
+      <p class="sq-rule">A vince alla manche $d$ &nbsp;⇔&nbsp; l'ultima è sua <span class="sq-last">A</span> &nbsp;e prima ne ha vinte <b>esattamente 2</b></p>
+      <svg class="scene-svg" width="1180" height="470" viewBox="0 0 1180 470" role="img" aria-label="Le sequenze con A vincente, raggruppate per numero di manche giocate dall'interruzione: 1, 3, 6, 10, 15"></svg>
+      <p class="sq-sum">$1+3+6+10+15=\color{#38bdf8}{35}$ <span class="sq-b">&nbsp;·&nbsp; per <span class="b">B</span>: $1+5+15=\color{#fbbf24}{21}$ &nbsp;→&nbsp; 56 foglie</span></p>
+      <aside class="notes">Un click per colonna (3, 4, 5, 6, 7 manche dopo l'interruzione). L'ultima lettera, incorniciata, è sempre la A che chiude la partita; prima ci sono esattamente 2 A. Fino a 5 manche si possono leggere ad alta voce; per 6 e 7 far notare che elencare diventa lungo: è già un problema di conteggio (Atto III). Ultimo click: le 21 foglie di B, per ritrovare le 56 della slide precedente.</aside>
+    </section>
+
+    <section id="tabella-foglie">
+      <h2 class="scene-title">Ogni foglia pesa $(\tfrac12)^d$</h2>
+      <table class="lv-table">
+        <thead><tr><th>manche dall'interruzione $d$</th><th>foglie con <span class="a">A</span> vincente</th><th>probabilità di ciascuna</th><th>contributo</th></tr></thead>
+        <tbody>
+          <tr><td>3</td><td class="lv-c1">1</td><td class="lv-c2">$\tfrac1{8}$</td><td class="lv-c3">$\tfrac{16}{128}$</td></tr>
+          <tr><td>4</td><td class="lv-c1">3</td><td class="lv-c2">$\tfrac1{16}$</td><td class="lv-c3">$\tfrac{24}{128}$</td></tr>
+          <tr><td>5</td><td class="lv-c1">6</td><td class="lv-c2">$\tfrac1{32}$</td><td class="lv-c3">$\tfrac{24}{128}$</td></tr>
+          <tr><td>6</td><td class="lv-c1">10</td><td class="lv-c2">$\tfrac1{64}$</td><td class="lv-c3">$\tfrac{20}{128}$</td></tr>
+          <tr><td>7</td><td class="lv-c1">15</td><td class="lv-c2">$\tfrac1{128}$</td><td class="lv-c3">$\tfrac{15}{128}$</td></tr>
+        </tbody>
+      </table>
+      <div class="lv-sum equation">$P(A\text{ vince})=\dfrac{16+24+24+20+15}{128}=\color{#38ef7d}{\dfrac{99}{128}}\approx 0.773$</div>
+      <p class="lv-wrong">$\color{#ff6b6b}{\cancel{\tfrac{35}{56}\approx 0.625}}$ &nbsp;<span class="short-label">foglie contate come se fossero equiprobabili</span></p>
+      <aside class="notes">Click: 1 quante foglie (dalla slide precedente); 2 probabilità di ciascuna, prodotto di d rami da ½; 3 contributo = foglie × probabilità; 4 somma 99/128; 5 confronto con 35/56, l'errore di contare le foglie come uguali (errore tipico n. 4). Chiudere con: funziona, ma abbiamo dovuto sapere quanti cammini ci sono per riga. Nel 1654 Pascal e Fermat aggirano il problema in due modi diversi.</aside>
+    </section>
+
+    <!-- Pascal, il metodo nei 5 passi lenti -->
+    <section id="pascal-1" class="history">
+      <div class="history-grid">
+        <div class="person">
+          <p class="date">1654</p>
+          <img src="img/pascal.jpg" alt="Blaise Pascal, ritratto anonimo da François II Quesnel">
+          <h2>Blaise Pascal</h2>
+          <p class="lifespan">1623–1662</p>
+          <a class="source" href="https://probabilityandfinance.com/pulskamp/Pascal/Sources/pasfer.pdf#page=2" target="_blank" rel="noopener">Lettera a Fermat · 29 luglio 1654</a>
+        </div>
+        <div class="stage">
+          <h2 class="scene-title">Pascal: dedurre ogni caso dal successivo</h2>
+          <p class="history-subtitle">Passi 1–2 · un nome per «quanto manca» e i casi senza calcoli</p>
+          <p class="p1-def">$V(a,b)$ = probabilità che vinca <span class="a">A</span> quando ad <span class="a">A</span> mancano $a$ manche e a <span class="b">B</span> ne mancano $b$. <b>Una tabella</b>, non un numero.</p>
+          <svg class="scene-svg" width="880" height="310" viewBox="0 0 880 310" role="img" aria-label="La tabella degli stati V(a,b), con V(1,2)=3/4 e V(3,5)=99/128 già noti; prima riga 1, prima colonna 0"></svg>
+          <p class="p1-cases">$\color{#38ef7d}{V(0,b)=1}$ <span class="short-label">A ha già vinto</span> &emsp; $\color{#ff6b6b}{V(a,0)=0}$ <span class="short-label">ha già vinto B</span></p>
+        </div>
+      </div>
+      <aside class="notes">Click: 1 la definizione di V(a,b), da dire ad alta voce prima di mostrare la tabella; 2 la tabella con le due caselle già note; 3 i casi semplici. Passo 1: V(a,b) è una tabella di valori. Due caselle le conosciamo già: V(1,2)=3/4 (gioco a 3, sul 2–1, l'albero piccolo) e V(3,5)=99/128 (gioco a 5, sul 2–0, le 56 foglie). Lo stesso V per entrambi i giochi: conta solo quanto manca, non a quanti punti si gioca. Passo 2: i casi semplici.</aside>
+    </section>
+
+    <section id="pascal-2" class="history">
+      <div class="history-grid">
+        <div class="person">
+          <p class="date">1654</p>
+          <img src="img/pascal.jpg" alt="Blaise Pascal, ritratto anonimo da François II Quesnel">
+          <h2>Blaise Pascal</h2>
+          <p class="lifespan">1623–1662</p>
+        </div>
+        <div class="stage">
+          <h2 class="scene-title">Una sola manche dal 2–1</h2>
+          <p class="history-subtitle">Passi 3–4 · il ramo B è l'albero di una partita nuova</p>
+          <svg class="scene-svg" width="880" height="385" viewBox="0 0 880 385" role="img" aria-label="Dallo stato (1,2) una manche porta in (0,2) o in (1,1); il sottoalbero da (1,1) è una partita nuova che vale V(1,1)"></svg>
+          <p class="p2-ind"><b>Indipendenza:</b> arrivati in $(1,1)$ il passato non conta.</p>
+          <div class="p2-formula equation">$V(1,2)=\tfrac12\,V(0,2)+\tfrac12\,V(1,1)=\tfrac12\cdot1+\tfrac12\cdot\tfrac12=\color{#38ef7d}{\tfrac34}$</div>
+        </div>
+      </div>
+      <aside class="notes">Click: 1 la prossima manche, due esiti; 2 il sottoalbero dopo B; 3 è l'albero di una partita che parte da (1,1); 4 perché vale V(1,1): qui serve l'indipendenza delle manche; 5 regola del prodotto sui due rami e somma: ritroviamo 3/4.</aside>
+    </section>
+
+    <section id="pascal-3" class="history">
+      <div class="history-grid">
+        <div class="person">
+          <p class="date">1654</p>
+          <img src="img/pascal.jpg" alt="Blaise Pascal, ritratto anonimo da François II Quesnel">
+          <h2>Blaise Pascal</h2>
+          <p class="lifespan">1623–1662</p>
+        </div>
+        <div class="stage">
+          <h2 class="scene-title">La regola per ogni casella</h2>
+          <p class="history-subtitle">Passo 5 · la media dei due stati raggiungibili con una manche</p>
+          <svg class="scene-svg" width="880" height="320" viewBox="0 0 880 320" role="img" aria-label="Ogni casella V(a,b) dipende da quella sopra, V(a-1,b), e da quella a sinistra, V(a,b-1)"></svg>
+          <div class="p3-formula equation">$V(a,b)=\tfrac12\,\color{#38bdf8}{V(a-1,\,b)}\color{#edf2f7}{}+\tfrac12\,\color{#fbbf24}{V(a,\,b-1)}$</div>
+          <p class="p3-note">Si parte dai casi noti e si scende: ogni casella usa quella <span class="a">sopra</span> e quella <span class="b">a sinistra</span>.</p>
+        </div>
+      </div>
+      <aside class="notes">Click: 1 una manche da (a,b): se vince A si sale di una riga, se vince B si va a sinistra; 2 la formula generale; 3 l'ordine di riempimento. Non riempire la tabella: la riempiono i gruppi nell'Esercizio 1.</aside>
+    </section>
+
+    <!-- 48–58: Esercizio 1 -->
+    <section id="esercizio-1">
+      <p class="badge">48′ · Esercizio 1 · gruppi di 3–4</p>
+      <h2 class="scene-title">La tabella di Pascal</h2>
+      <div class="ex-grid ex-with-cat">
+        <div class="ex-text">
+          <p>$V(0,b)=1 \qquad V(a,0)=0$</p>
+          <p>$V(a,b)=\tfrac12\,V(a-1,b)+\tfrac12\,V(a,b-1)$</p>
+          <ol>
+            <li>Riempite la tabella per $a,b\in\{1,2,3\}$.</li>
+            <li>Quale casella è il 2–1 del sondaggio?</li>
+            <li>Perché sulla diagonale viene sempre $\tfrac12$?</li>
+          </ol>
+          <p class="ex-time">6′ in gruppo · 4′ insieme alla lavagna</p>
+        </div>
+        <table class="ex-table">
+          <thead><tr><th>$a \backslash b$</th><th>0</th><th>1</th><th>2</th><th>3</th></tr></thead>
+          <tbody>
+            <tr><th>0</th><td class="ex-k">—</td><td class="ex-k one">1</td><td class="ex-k one">1</td><td class="ex-k one">1</td></tr>
+            <tr><th>1</th><td class="ex-k zero">0</td><td></td><td></td><td></td></tr>
+            <tr><th>2</th><td class="ex-k zero">0</td><td></td><td></td><td></td></tr>
+            <tr><th>3</th><td class="ex-k zero">0</td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+        <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+      </div>
+      <aside class="notes">Click: entra il gatto, a lato; testo e tabella restano visibili. A chi è bloccato un solo suggerimento: «partite dalle caselle vicine ai casi semplici». Le prime soluzioni alla lavagna insieme. Soluzione: riga 1: 1/2, 3/4, 7/8; riga 2: 1/4, 1/2, 11/16; riga 3: 1/8, 5/16, 1/2. (a) Il 2–1 a 3 punti è V(1,2)=3/4. (b) Stessa distanza dal traguardo: i due giocatori sono intercambiabili. Lasciare V(2,3)=11/16 alla lavagna: Fermat lo ritrova. Errori attesi: riempire riga per riga senza partire dai casi semplici; scambiare a e b (V(1,3) viene 1/8 invece di 7/8).</aside>
+    </section>
+
+    <!-- 58–68: perché Pascal conviene, poi Fermat -->
+    <section id="pascal-risparmio">
+      <p class="badge">58′ · Quanto lavoro risparmia Pascal?</p>
+      <h2 class="scene-title">Lo stesso stato, mille cammini</h2>
+      <svg class="scene-svg" width="1180" height="400" viewBox="0 0 1180 400" role="img" aria-label="L'albero dal 2 a 0 fino alla terza manche ripete gli stati 2,4; 1,4; 2,3; la tabella li contiene una volta sola"></svg>
+      <p class="rs-counts">Albero completo: <b>111</b> nodi, <b>56</b> foglie da pesare &emsp;·&emsp; Tabella di Pascal: $3\times5=$ <b class="highlight">15</b> caselle</p>
+      <div class="rs-words">
+        <p class="rs-word"><b>divide et impera</b><small>ogni stato si riduce a due stati più piccoli</small></p>
+        <p class="rs-word"><b>programmazione dinamica</b><small>gli stati ripetuti si calcolano una volta sola, e si ricordano</small></p>
+      </div>
+      <aside class="notes">Albero dal 2–0 della partita a 5, solo le prime 3 manche. Click: 1 gli stati ripetuti (AB e BA portano entrambi in 2,4; tre cammini in 1,4 e tre in 2,3); 2 la tabella: ogni stato una volta sola; 3 i conti: 111 nodi contro 15 caselle; 4 le due parole. «Programmazione dinamica» anticipa Algoritmi: se la classe non l'ha vista, «ricorsione con memoria».</aside>
+    </section>
+
+    <section id="fermat-n" class="history">
+      <div class="history-grid">
+        <div class="person">
+          <p class="date">1654</p>
+          <img src="img/fermat.jpg" alt="Pierre de Fermat, ritratto anonimo del XVII secolo">
+          <h2>Pierre de Fermat</h2>
+          <p class="lifespan">1601–1665</p>
+          <a class="source" href="https://probabilityandfinance.com/pulskamp/Pascal/Sources/pasfer.pdf" target="_blank" rel="noopener">Lettere Pascal–Fermat · 1654</a>
+        </div>
+        <div class="stage">
+          <h2 class="scene-title">Quante manche bastano per decidere?</h2>
+          <p class="history-subtitle">Gioco a 5 sul 2–0: ad <span class="a">A</span> mancano 3 manche, a <span class="b">B</span> 5</p>
+          <svg class="scene-svg" width="880" height="320" viewBox="0 0 880 320" role="img" aria-label="Nel caso più lungo A ne vince 2 e B 4 in 6 manche; la settima decide per forza"></svg>
+          <div class="fn-formula equation">$n=(a-1)+(b-1)+1=\color{#38ef7d}{a+b-1}=3+5-1=7$</div>
+        </div>
+      </div>
+      <aside class="notes">Idea di Fermat: non aspettare la fine vera, giocare comunque un numero fisso di manche. Quante? Click: 1 il caso più lungo: ciascuno resta a una vittoria dal traguardo, (a−1)+(b−1)=6 manche e ancora nessuno ha vinto; 2 la settima decide per forza; 3 la formula. Il metodo di Fermat lo conosciamo dalla lettera di Pascal: la lettera di Fermat è perduta.</aside>
+    </section>
+
+    <section>
+      <section id="albero-fittizio">
+        <h2 class="scene-title">Manche fittizie: tutti i futuri pesano uguale</h2>
+        <p class="af-lead">Gioco a 3 sul 2–1: $a=1,\ b=2,\ n=2$</p>
+        <svg class="scene-svg" width="1180" height="400" viewBox="0 0 1180 400" role="img" aria-label="L'albero reale del 2 a 1 e la manche fittizia dopo A: quattro futuri AA, AB, BA, BB, tutti di probabilità un quarto; A vince in tre"></svg>
+        <p class="af-equal punch">4 futuri, tutti $\tfrac14$: <b>basta contare</b>.</p>
+        <div class="af-formula equation">$P(A\text{ vince})=\dfrac{\text{futuri in cui A vince almeno } a \text{ manche}}{2^n}=\dfrac{3}{2^2}=\color{#38ef7d}{\dfrac34}$</div>
+        <aside class="notes">Click: 1 dopo A la partita è finita, ma giochiamo comunque la seconda manche: la foglia ½ si spezza in AA e AB, ¼ + ¼; la probabilità che A vinca non cambia; 2 ora tutte le foglie hanno la stessa lunghezza e lo stesso peso; 3 si contano: 3 su 4; 4 la formula generale. Vantaggio: niente pesi diversi da calcolare. Freccia in basso: il secondo caso (1–0), opzionale.</aside>
+      </section>
+
+      <section id="fermat-1-0">
+        <p class="badge">Opzionale · gioco a 3 sull'1–0</p>
+        <h2 class="scene-title">$a=2,\ b=3$: si giocano $n=4$ manche, $2^4=16$ futuri</h2>
+        <table class="f10-table">
+          <thead><tr><th>$k$ <span class="short-label">vittorie di A</span></th><th>futuri</th><th>quanti</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td class="f10-w"></td><td class="f10-n"></td></tr>
+            <tr><td>1</td><td class="f10-w"></td><td class="f10-n"></td></tr>
+            <tr><td>2</td><td class="f10-w"></td><td class="f10-n"></td></tr>
+            <tr><td>3</td><td class="f10-w"></td><td class="f10-n"></td></tr>
+            <tr><td>4</td><td class="f10-w"></td><td class="f10-n"></td></tr>
+          </tbody>
+        </table>
+        <div class="f10-result equation">$A$ vince se $k\ge2$: $\dfrac{6+4+1}{16}=\color{#38ef7d}{\dfrac{11}{16}}=V(2,3)$ <span class="short-label">dell'Esercizio 1</span></div>
+        <aside class="notes">Un click per riga, k = 0..4. Ultimo click: le righe in cui vince A e il confronto con V(2,3)=11/16 trovato dai gruppi con la tabella di Pascal. Far notare 1, 4, 6, 4, 1: tornerà nel triangolo.</aside>
+      </section>
+    </section>
+
+    <section id="widget-futuri">
+      <h2 class="scene-title">Esplora: i futuri di Fermat</h2>
+      <div class="wf-box" id="wf-box" data-prevent-swipe>
+        <div class="wf-ctrl">
+          <span>Mancano ad <b class="a">A</b>: <button class="psi-btn ghost" type="button" data-k="a" data-d="-1">−</button> <b class="wf-v" data-v="a">3</b> <button class="psi-btn ghost" type="button" data-k="a" data-d="1">+</button></span>
+          <span>Mancano a <b class="b">B</b>: <button class="psi-btn ghost" type="button" data-k="b" data-d="-1">−</button> <b class="wf-v" data-v="b">3</b> <button class="psi-btn ghost" type="button" data-k="b" data-d="1">+</button></span>
+        </div>
+        <div class="wf-chips"></div>
+        <div class="wf-ks"></div>
+        <p class="wf-out"></p>
+      </div>
+      <aside class="notes">Si parte da a=3, b=3 (32 futuri, metà ciascuno). Provare a=1, b=2 (il 2–1: 3 su 4), a=2, b=3 (11/16), a=3, b=5 (128 futuri: 99/128). I futuri sono ordinati per numero di vittorie di A; i conteggi per k sono una riga del triangolo di Pascal. Oltre 7 manche i futuri sono solo puntini.</aside>
+    </section>
+
+    <section id="fermat-5">
+      <h2 class="scene-title">Gioco a 5 sul 2–0, con Fermat</h2>
+      <p class="f5-head">$a=3,\ b=5 \;\Rightarrow\; n=7$ manche &emsp;·&emsp; $2^7=128$ futuri, ognuno $\tfrac1{128}$</p>
+      <svg class="scene-svg" width="1180" height="360" viewBox="0 0 1180 360" role="img" aria-label="I 128 futuri raggruppati per vittorie di A: 1, 7, 21, 35, 35, 21, 7, 1; A vince se k è almeno 3"></svg>
+      <div class="f5-sum equation">$P(A\text{ vince})=\dfrac{35+35+21+7+1}{128}=\color{#38ef7d}{\dfrac{99}{128}}$</div>
+      <p class="f5-check">= le 56 foglie pesate &nbsp;= la tabella di Pascal &emsp;·&emsp; <span class="short-label">1, 7, 21, 35… come si contano senza elencarli?</span></p>
+      <aside class="notes">Click: 1 i 128 futuri per numero di vittorie di A; 2 A vince se ne vince almeno 3; 3 la somma: 99/128; 4 lo stesso numero delle 56 foglie e di Pascal, senza sapere nulla dei cammini che finiscono prima. Come si ottengono 1, 7, 21, 35 senza elencare: Atto III.</aside>
+    </section>
+
+    <!-- 68–72: perché serve la combinatoria -->
+    <section id="pascal-fermat">
+      <p class="badge">68′ · Due metodi, lo stesso numero</p>
+      <h2 class="scene-title">Pascal vs Fermat</h2>
+      <div class="pf-grid">
+        <div class="pf-col">
+          <img src="img/pascal.jpg" alt="Blaise Pascal">
+          <h3>Pascal</h3>
+          <ul>
+            <li class="fragment" data-fragment-index="1"><b>Ricorsione</b> sugli stati $(a,b)$</li>
+            <li class="fragment" data-fragment-index="2">Futuri con probabilità <b>diverse</b>: si pesano</li>
+            <li class="fragment" data-fragment-index="3">$a\cdot b$ caselle da riempire</li>
+            <li class="fragment pf-key" data-fragment-index="4">→ un <b>algoritmo</b></li>
+          </ul>
+        </div>
+        <div class="pf-mid">$\dfrac{99}{128}$</div>
+        <div class="pf-col">
+          <img src="img/fermat.jpg" alt="Pierre de Fermat">
+          <h3>Fermat</h3>
+          <ul>
+            <li class="fragment" data-fragment-index="1">Manche fittizie: sempre $n=a+b-1$</li>
+            <li class="fragment" data-fragment-index="2">Futuri <b>equiprobabili</b>: si contano</li>
+            <li class="fragment" data-fragment-index="3">$2^n$ futuri: con $n=30$, oltre un miliardo</li>
+            <li class="fragment pf-key" data-fragment-index="4">→ <b>combinatoria</b> <span class="pf-q">?</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="pf-quote fragment" data-fragment-index="5">«the labor of combinations is excessive» <span class="short-label">· Pascal a Fermat, 29 luglio 1654</span></p>
+      <aside class="notes">Una riga per click, i due metodi affiancati. Il punto interrogativo: non serve elencare i 2^n futuri, serve sapere quanti sono quelli con k vittorie di A, senza elencarli. È il calcolo combinatorio, tra poco. Domanda alla classe: «quanti finali con k vittorie, senza elencarli?».</aside>
+    </section>
+
+    <section id="hands-on">
+      <p class="badge">Script 1</p>
+      <h2 class="scene-title">Hands-on: Pascal, Fermat and Monte Carlo sampling</h2>
+      <div class="ho-cards">
+        <div><code>pascal(a, b)</code><span class="ho-desc">ricorsione con memoria</span></div>
+        <div><code>fermat(a, b)</code><span class="ho-desc">tutti i $2^n$ futuri</span></div>
+        <div><code>montecarlo(a, b)</code><span class="ho-desc">100 000 partite simulate</span></div>
+      </div>
+      <p class="ho-exp">Sul 2–1, 2–0 e 1–0: <b>0.7500 · 0.8750 · 0.6875</b> con tutti e tre i metodi</p>
+      <a class="psi-btn" href="../#lab-partis" target="_blank" rel="noopener">💻 Apri lo Script 1 ↗</a>
+      <aside class="notes">In aula solo l'output (se si è in ritardo, a casa). L'ultima riga dello script cambia p: il metodo funziona anche con giocatori non ugualmente bravi.</aside>
+    </section>
+
+    <!-- 72–86: le tre idee di conteggio. Scene: js/combinatoria.js -->
+    <section id="moltiplicazione">
+      <p class="badge">72′ · Atto III · Contare senza elencare</p>
+      <h2 class="scene-title">Prima idea: si moltiplicano i rami</h2>
+      <svg class="scene-svg" width="1180" height="420" viewBox="0 0 1180 420" role="img" aria-label="Albero con 2 rami al primo livello e 3 da ciascun nodo al secondo: 6 foglie; se dopo B i rami fossero 2, le foglie sarebbero 3 + 2 = 5"></svg>
+      <p class="ml-rule">$n_1$ rami, poi $n_2$ da <b>ogni</b> nodo, … &nbsp;⇒&nbsp; foglie $=n_1\cdot n_2\cdots n_k$</p>
+      <aside class="notes">Click: 1 prima scelta, 2 rami; 2 seconda scelta, 3 rami da ciascun nodo, qualunque sia stata la prima; 3 il prodotto e la regola; 4 la condizione: se dopo B i rami fossero solo 2, il numero dipenderebbe dal cammino e si somma (3 + 2 = 5), non si moltiplica. È l'albero della Settimana 2 senza le probabilità: ogni foglia è un cammino completo.</aside>
+    </section>
+
+    <section id="password">
+      <h2 class="scene-title">Sempre gli stessi $n$ simboli</h2>
+      <svg class="scene-svg" width="1180" height="250" viewBox="0 0 1180 250" role="img" aria-label="Una password di 8 caratteri: ogni posto ha 62 simboli possibili"></svg>
+      <div class="pw-eq equation">$62\cdot62\cdot62\cdot62\cdot62\cdot62\cdot62\cdot62=62^8\approx 2.2\cdot10^{14}$</div>
+      <div class="pw-rule"><p>$k$ posti, $n$ simboli per posto, ripetizioni ammesse: &nbsp;<b>$n^k$</b></p><span class="pw-sub">3 manche con 2 esiti: $2^3=8$ futuri &emsp;·&emsp; 15 bit: $2^{15}$ stringhe</span></div>
+      <aside class="notes">Click: 1 gli 8 posti si riempiono, 62 simboli per ciascuno (26 minuscole, 26 maiuscole, 10 cifre); 2 il prodotto, 62^8 ≈ 2,2·10^14; 3 la regola n^k, con i futuri di Fermat come caso particolare (2^n). Ogni livello dell'albero offre sempre gli stessi simboli: un carattere si può ripetere.</aside>
+    </section>
+
+    <section id="server-albero">
+      <h2 class="scene-title">Seconda idea: un server usato non torna disponibile</h2>
+      <p class="sv-lead">3 server $\{A,B,C\}$, 2 compiti, un server per compito</p>
+      <svg class="scene-svg" width="1180" height="430" viewBox="0 0 1180 430" role="img" aria-label="Albero senza reinserimento: 3 scelte per il primo compito, 2 per il secondo; 6 foglie AB, AC, BA, BC, CA, CB"></svg>
+      <aside class="notes">Click: 1 primo compito, 3 server liberi; 2 dopo A il server A è occupato: restano 2 rami; 3 lo stesso dopo B e dopo C. Le lettere disponibili cambiano da ramo a ramo, ma il loro numero è sempre 2: la regola del prodotto vale ancora; 4 le 6 foglie, 3 · 2 = 6.</aside>
+    </section>
+
+    <section id="ordine-conta">
+      <h2 class="scene-title">Una foglia = un cammino: l'ordine conta</h2>
+      <svg class="scene-svg" width="1180" height="430" viewBox="0 0 1180 430" role="img" aria-label="Nell'albero dei server, AB e BA usano gli stessi due server ma sono due cammini diversi: 6 foglie sono 3 gruppi per 2 ordini"></svg>
+      <p class="oc-note">$AB\neq BA$: stessi server, compiti scambiati &emsp;·&emsp; <b>6 foglie = 3 gruppi × 2 ordini</b></p>
+      <aside class="notes">Click: 1 i cammini A→B e B→A: stessi due server, ma due foglie diverse, perché sono due cammini diversi (A al primo compito oppure B); 2 le tre coppie di foglie con gli stessi server; 3 il conto: 3 gruppi × 2 ordini. «L'ordine conta» non è una regola in più: viene da come è fatto l'albero. Prepara la divisione delle combinazioni.</aside>
+    </section>
+
+    <section id="disposizioni">
+      <h2 class="scene-title">Disposizioni: $k$ posti, $n$ oggetti, niente ripetizioni</h2>
+      <svg class="scene-svg dp-top" width="1180" height="190" viewBox="0 0 1180 190" role="img" aria-label="10 server per 3 compiti: 10 per il primo, 9 per il secondo, 8 per il terzo; 720 modi"></svg>
+      <div class="dp-formula equation">$D(n,k)=n\,(n-1)\cdots(n-k+1)=\dfrac{n!}{(n-k)!}$ <span class="short-label">&emsp;$n!=n\,(n-1)\cdots2\cdot1,\quad 0!=1$</span></div>
+      <svg class="scene-svg dp-perm" width="1180" height="150" viewBox="0 0 1180 150" role="img" aria-label="Caso k uguale a n: 3 server in 3 posti, 3 per 2 per 1 = 6 ordini: ABC, ACB, BAC, BCA, CAB, CBA"></svg>
+      <p class="dp-box">Caso $k=n$: &nbsp;$D(n,n)=n!$ &nbsp;<b>permutazioni</b> <span class="short-label">· i modi di ordinare $n$ oggetti</span></p>
+      <aside class="notes">Click: 1 10 server, 3 compiti: 10, poi 9, poi 8 → D(10,3) = 720; 2 la formula generale e il fattoriale; 3 il caso speciale k = n: 3 server in 3 posti, 3·2·1; 4 i 6 ordini e il nome «permutazioni». Ponte facoltativo con Algoritmi (log2 n!): è il primo da tagliare.</aside>
+    </section>
+
+    <section id="combinazioni">
+      <h2 class="scene-title">Terza idea: quando l'ordine non conta</h2>
+      <p class="sv-lead">4 server $\{A,B,C,D\}$: ne scegliamo 3 per un rilascio sperimentale. Conta solo <b>quali</b>.</p>
+      <svg class="scene-svg" width="1180" height="340" viewBox="0 0 1180 340" role="img" aria-label="Le 24 disposizioni di 3 server su 4, raggruppate per terna: ogni terna compare in 6 ordini; dividendo per 6 restano 4 gruppi"></svg>
+      <div class="cb-eq equation">$\dbinom43=\dfrac{D(4,3)}{3!}=\dfrac{24}{6}=\color{#38ef7d}{4}$</div>
+      <p class="cb-gen">$\dbinom nk=\dfrac{D(n,k)}{k!}$ &emsp;·&emsp; 10 server, 3 per il rilascio: $\dfrac{720}{6}=120$</p>
+      <aside class="notes">Click: 1 le 24 sequenze, D(4,3) = 4·3·2, in ordine alfabetico; 2 colore per terna: la stessa terna compare più volte; 3 si raggruppano: ogni terna compare in 3! = 6 ordini (le permutazioni della slide prima); 4 ogni colonna diventa un gruppo solo: 24/6 = 4; 5 la regola generale e l'esempio della pagina, 720/6 = 120. Errore tipico n. 5: chiedere «{Rossi, Bianchi, Verdi} e {Verdi, Rossi, Bianchi} sono due rilasci diversi?».</aside>
+    </section>
+
+    <section id="coeff-binomiale">
+      <h2 class="scene-title">Il coefficiente binomiale</h2>
+      <div class="bn-def">$$\binom{n}{k}=\frac{D(n,k)}{k!}=\frac{n!}{k!\,(n-k)!}$$<p>«$n$ su $k$» · i sottoinsiemi di $k$ elementi presi da $n$</p></div>
+      <div class="bn-props">
+        <div class="fragment bn-prop">
+          <p class="bn-f">$\dbinom{n}{k}=\dbinom{n}{n-k}$</p>
+          <svg class="scene-svg" width="260" height="74" viewBox="0 0 260 74" role="img" aria-label="5 server: 2 dentro e 3 fuori">
+            <circle cx="30" cy="26" r="16" fill="#38ef7d"/><circle cx="80" cy="26" r="16" fill="#38ef7d"/>
+            <circle cx="130" cy="26" r="16" fill="none" stroke="#a0aec0" stroke-width="3"/><circle cx="180" cy="26" r="16" fill="none" stroke="#a0aec0" stroke-width="3"/><circle cx="230" cy="26" r="16" fill="none" stroke="#a0aec0" stroke-width="3"/>
+            <text x="55" y="68" text-anchor="middle" class="s03-tiny">dentro 2</text><text x="180" y="68" text-anchor="middle" class="s03-tiny">fuori 3</text>
+          </svg>
+          <span class="bn-note">scegliere chi entra = scegliere chi resta fuori</span>
+        </div>
+        <div class="fragment bn-prop">
+          <p class="bn-f">$\dbinom{n}{0}=\dbinom{n}{n}=1$</p>
+          <span class="bn-note">nessuno, oppure tutti: un modo solo</span>
+        </div>
+        <div class="fragment bn-prop">
+          <p class="bn-f">$\dbinom{n}{2}=\dfrac{n\,(n-1)}{2}$</p>
+          <span class="bn-note">le <b>coppie</b> in un gruppo di $n$ · 4 server: 6 coppie</span>
+        </div>
+      </div>
+      <aside class="notes">Una proprietà per click. La terza tornerà venerdì (compleanni, coppie di chiavi in una tabella hash): non anticipare la domanda d'uscita.</aside>
+    </section>
+
+    <!-- 86–94: regola dentro/fuori, triangolo, Esercizio 2 -->
+    <section id="dentro-fuori">
+      <p class="badge">86′ · Dentro o fuori</p>
+      <h2 class="scene-title">Da dove viene il triangolo di Pascal</h2>
+      <p class="sv-lead">4 server, ne scegliamo 2: $\binom42=6$ coppie</p>
+      <svg class="scene-svg" width="1180" height="310" viewBox="0 0 1180 310" role="img" aria-label="Le 6 coppie di 4 server divise in due famiglie: 3 contengono A, 3 no"></svg>
+      <div class="df-eqs">
+        <div class="df-swap"><p class="df-num">1 da scegliere tra $B,C,D$: $\dbinom31=3$</p><p class="df-gen">$k-1$ tra gli altri $n-1$: $\dbinom{n-1}{k-1}$</p></div>
+        <div class="df-swap"><p class="df-num">2 da scegliere tra $B,C,D$: $\dbinom32=3$</p><p class="df-gen">$k$ tra gli altri $n-1$: $\dbinom{n-1}{k}$</p></div>
+      </div>
+      <div class="df-swap df-total equation"><p class="df-num">$\dbinom42=\dbinom31+\dbinom32=3+3=6$</p><p class="df-gen">$\color{#38ef7d}{\dbinom nk=\dbinom{n-1}{k-1}+\dbinom{n-1}{k}}$</p></div>
+      <aside class="notes">Click: 1 le 6 coppie; 2 fissiamo un server, A; 3 due famiglie: con A e senza A, ogni coppia sta in una sola; 4 quanti in ciascuna famiglia; 5 la somma con i numeri; 6 la stessa cosa con x al posto di A e n, k al posto di 4, 2. Ogni valore è la somma di due valori della riga precedente: è la regola del triangolo.</aside>
+    </section>
+
+    <section id="triangolo">
+      <p class="badge">86′ · Esercizio 2 · gruppi di 3–4</p>
+      <h2 class="scene-title">Il triangolo di Pascal</h2>
+      <div class="tr-grid">
+        <svg class="scene-svg" width="760" height="480" viewBox="0 0 760 480" role="img" aria-label="Triangolo di Pascal fino alla riga 5; ogni casella è la somma delle due sopra; nella riga 4, 6 + 4 + 1 = 11 futuri su 16 danno V(2,3) = 11/16"></svg>
+        <div class="tr-panel">
+          <ol class="tr-ex">
+            <li>Completate il triangolo fino alla riga 5 con la regola «dentro/fuori».</li>
+            <li>Su 4 manche, in quanti futuri <span class="a">A</span> vince esattamente 2 manche? <span class="tr-sol">$\binom42=6$</span></li>
+            <li>Ad <span class="a">A</span> mancano 2 manche, a <span class="b">B</span> 3. Con le manche fittizie, in quanti futuri vince <span class="a">A</span>? Ritrovate $V(2,3)$. <span class="tr-sol tr-sol-c">$6+4+1=11$ su $16$</span></li>
+            <li>Quanto fa la somma della riga $n$? Perché? <span class="tr-sol">$2^n$: tutti i futuri di $n$ manche</span></li>
+          </ol>
+          <p class="ex-time">5′ in gruppo · 3′ insieme</p>
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+        </div>
+      </div>
+      <aside class="notes">Click: 1 righe 0–2 insieme alla classe (1 + 1 = 2); 2 riga 3, ogni valore è la somma dei due sopra; 3 entrano gatto ed esercizio; 4 soluzioni: righe 4 e 5, con 3 + 3 = 6 evidenziato come nella pagina, e le somme delle righe (2^n); 5 la riga 4: A vince con almeno 2 vittorie su 4, 6 + 4 + 1 = 11 futuri su 16 = V(2,3), lo stesso valore della tabella di Pascal dell'Esercizio 1. Errori attesi in (c): contare solo «esattamente 2» (6/16); usare n = a + b = 5 invece di 4.</aside>
+    </section>
+
+    <!-- 94–104: i futuri di Fermat sono coefficienti binomiali; Esercizio 3 -->
+    <section id="futuri-binomiali">
+      <p class="badge">94′ · Fermat senza elencare</p>
+      <h2 class="scene-title">I futuri di Fermat sono coefficienti binomiali</h2>
+      <svg class="scene-svg" width="1180" height="330" viewBox="0 0 1180 330" role="img" aria-label="I conteggi dei futuri nei tre casi studiati sono le righe 2, 4 e 7 del triangolo; il futuro BABA corrisponde alla scelta delle manche 2 e 4 vinte da A"></svg>
+      <p class="bf-rule">$k$ vittorie di <span class="a">A</span> su $n$ manche &nbsp;⟶&nbsp; $\dbinom nk$ futuri</p>
+      <div class="bf-formula equation">$P(A\text{ vince})=\dfrac{1}{2^n}\displaystyle\sum_{k=a}^{n}\binom{n}{k}$</div>
+      <p class="bf-check">1–0 a 3 punti: $\dfrac{6+4+1}{16}=\dfrac{11}{16}$ &emsp;·&emsp; 2–0 a 5 punti: $\dfrac{35+35+21+7+1}{128}=\dfrac{99}{128}$</p>
+      <aside class="notes">Click: 1 i conteggi dei tre casi studiati (in blu i futuri in cui vince A); 2 sono le righe 2, 4 e 7 del triangolo; 3 perché: un futuro con k vittorie di A è la scelta di quali k manche vince A tra le n (BABA: manche 2 e 4); 4 la regola; 5 la formula di Fermat senza elenco; 6 controlli sui due casi già fatti.</aside>
+    </section>
+
+    <section id="esercizio-3">
+      <p class="badge">96′ · Esercizio 3 · gruppi di 3–4</p>
+      <h2 class="scene-title">Che cosa stiamo contando?</h2>
+      <div class="e3-grid">
+        <div class="ex-text e3-text">
+          <ol>
+            <li>Due dadi. Marco: «le somme possibili sono 11, quindi $P(\text{somma}=7)=\tfrac1{11}$». Giulia: «$\tfrac6{36}$». Chi ha ragione?</li>
+            <li>Tre monete. Probabilità di <b>esattamente 2 teste</b>? «Gli esiti sono 0, 1, 2 o 3 teste: $\tfrac14$». Giusto?</li>
+            <li>Gioco a 4 punti, <span class="a">A</span> conduce 1–0. Con la formula: $P(A\text{ vince})$?</li>
+            <li>Quando funziona «casi favorevoli su casi possibili»?</li>
+          </ol>
+          <p class="ex-time">4′ in gruppo · 4′ insieme</p>
+        </div>
+        <div class="e3-stage">
+          <svg class="scene-svg" width="600" height="480" viewBox="0 0 600 480" role="img" aria-label="Soluzioni: 6 coppie su 36 danno somma 7; 3 sequenze su 8 hanno due teste; riga 6 del triangolo, 42 futuri su 64; i casi devono essere equiprobabili"></svg>
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+        </div>
+      </div>
+      <aside class="notes">Click: 1 il gatto; poi una soluzione per click. (a) Giulia: le 36 coppie ordinate sono equiprobabili, le 11 somme no; il 7 ha 6 coppie → 1/6. Domanda se sono bloccati: «se dipingo i due dadi dello stesso colore, cambia qualcosa?». (b) 8 sequenze equiprobabili, 3 con due teste → 3/8; «0, 1, 2, 3 teste» è l'errore di d'Alembert con tre monete. (c) a = 3, b = 4, n = 6: (20+15+6+1)/64 = 42/64 = 21/32 ≈ 0.656 (stesso valore con la ricorsione di Pascal, V(3,4)). (d) I casi devono essere equiprobabili: è ciò che una funzione hash cerca di ottenere per gli slot, da qui parte venerdì.</aside>
+    </section>
+
+    <section id="hands-on-2">
+      <p class="badge">Script 2 · a casa</p>
+      <h2 class="scene-title">Hands-on 2: I don't trust formulas <span class="highlight">(homework!)</span></h2>
+      <div class="ho-cards">
+        <div><code>product · permutations · combinations</code><span class="ho-desc">elencare davvero contro $n^k$, $D(n,k)$, $\binom nk$</span></div>
+        <div><code>triangolo</code><span class="ho-desc">regola dentro/fuori fino alla riga 10</span></div>
+        <div><code>random</code><span class="ho-desc">5 teste su 10 lanci: formula contro simulazione</span></div>
+      </div>
+      <p class="ho-exp">Atteso: <b>125 · 60 · 10</b> &emsp;·&emsp; riga 6: <b>1 6 15 20 15 6 1</b> &emsp;·&emsp; <b>0.2461</b></p>
+      <a class="psi-btn" href="../#lab-combinatoria" target="_blank" rel="noopener">💻 Apri lo Script 2 ↗</a>
+      <aside class="notes">Non si esegue in aula: è il compito per casa. Chi lo apre vede che le formule e l'enumerazione esplicita danno gli stessi numeri.</aside>
+    </section>
+
+    <!-- 104–105: Script 2 a casa e domanda d'uscita -->
+    <section id="uscita">
+      <p class="badge">104′ · Domanda d'uscita</p>
+      <p class="ux-q">In una stanza ci sono <b class="highlight">23</b> persone.</p>
+      <p class="ux-q">Quante <b>coppie</b> ci sono?</p>
+      <p class="ux-hint">Su un foglio, senza elencarle.</p>
+      <aside class="notes">Risposta: C(23,2) = 23·22/2 = 253. Non dirla: si raccoglie venerdì all'inizio del riepilogo e si lascia scritta alla lavagna, perché lancia il paradosso dei compleanni.</aside>
+    </section>
+  </div></div>
+  <script src="../../assets/slides/scene.js"></script>
+  <script src="../../assets/sondaggi.js"></script>
+  <script src="../../assets/slides/sondaggio.js"></script>
+  <script src="js/recupero.js"></script>
+  <script src="js/storia.js"></script>
+  <script src="js/partite.js"></script>
+  <script src="js/metodi.js"></script>
+  <script src="js/futuri.js"></script>
+  <script src="js/combinatoria.js"></script>
+  <script>
+    document.querySelector('#albero-reale .sondaggio-opts').innerHTML =
+      document.querySelector('#sondaggio-1 .sondaggio-opts').innerHTML;
+    PSIDeck.start({ onReady: function (deck) { PSISondaggio.bind(deck); } });
+  </script>
+</body>
+</html>

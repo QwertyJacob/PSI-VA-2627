@@ -92,9 +92,10 @@ Riprendiamo il caso della Settimana 1. Si gioca a **3 punti**, ciascuno ha punta
 1. **Uguale bravura.** In ogni manche $A$ vince con probabilità $\tfrac12$ e $B$ con probabilità $\tfrac12$.
 2. **Indipendenza delle manche.** L'esito di una manche non cambia le probabilità delle manche successive. Se $A$ ha appena vinto, la manche dopo è ancora $\tfrac12$ a $\tfrac12$: niente «serie fortunata», niente stanchezza, niente rivincita.
 
-La seconda ipotesi è ciò che ci permette di scrivere $\tfrac12$ su **ogni** ramo dell'albero, anche dopo che qualcosa è già successo, e di moltiplicare lungo i cammini: è la regola del prodotto della Settimana 1, con $P(B \mid A) = P(B)$. Ha anche una conseguenza che useremo più avanti: **per sapere come andrà a finire la partita conta solo quanto manca a ciascuno, non la storia che ci ha portato fin lì.** Due partite in cui ad $A$ mancano 2 punti e a $B$ ne mancano 3 hanno lo stesso futuro, anche se una è arrivata a quel punto dopo $AAB$ e l'altra dopo $ABA$.
-
 Sono ipotesi del modello, non fatti: in un gioco reale potrebbero essere false. Pascal e Fermat le ammettono, e noi con loro.
+
+In ogni caso, la seconda ipotesi è ciò che ci permette di scrivere $\tfrac12$ su **ogni** ramo dell'albero, anche dopo che qualcosa è già successo, e di moltiplicare lungo i cammini: è la regola del prodotto della Settimana 1, con $P(B \mid A) = P(B)$. Ha anche una conseguenza che useremo più avanti: **per calcolare le probabilità di vittoria conta solo quanti punti mancano a ciascuno, non l’ordine dei punti già giocati.** Per esempio, le sequenze $AAB$ e $ABA$ indicano due ordini diversi in cui $A$ ha vinto due manche e $B$ una: in entrambi i casi ad $A$ manca un punto e a $B$ ne mancano due per vincere la partita. Poiché le manche sono indipendenti, i risultati precedenti non cambiano le probabilità delle prossime manche: $A$ ha quindi la stessa probabilità di vincere la partita nei due casi, e così $B$.
+
 
 Si gioca una manche alla volta e ci si ferma appena uno dei due raggiunge il traguardo. Se $A$ vince la prossima manche, la partita è finita; se la vince $B$, se ne gioca un'altra, e a quel punto basta che $A$ vinca per chiudere, altrimenti vince $B$:
 
@@ -361,7 +362,7 @@ Atteso: 0.7500, 0.8750, 0.6875 con tutti e tre i metodi (il Monte Carlo a meno d
 
 ## Atto III: Contare senza elencare — la combinatoria minima {: #combinatoria }
 
-Fermat elencava i futuri, e funzionava finché erano 4 o 16. Ma $2^{30}$ futuri non si elencano: bisogna imparare a **contarli**. La combinatoria che ci serve è poca, e la costruiamo con tre idee, ciascuna conseguenza della precedente. Niente urne, biglie o anagrammi: ci fermiamo non appena ne abbiamo abbastanza per capire il coefficiente binomiale e per arrivare alle tabelle hash.
+Fermat elencava i futuri, e funzionava finché erano 4 o 16. Ma $2^{30}$ futuri non si elencano: bisogna imparare a **contarli**. Ora costruiamo qualche formula del calcolo  combinatorio con tre idee, ciascuna conseguenza della precedente. 
 
 ### Prima idea: il principio della moltiplicazione {: #moltiplicazione }
 
@@ -425,7 +426,35 @@ $$
 D(n, k) = n\,(n-1)\,(n-2)\cdots(n-k+1) = \frac{n!}{(n-k)!}.
 $$
 
-Qui $n! = n(n-1)\cdots 2 \cdot 1$ è il **fattoriale** ($0! = 1$ per convenzione). Il caso $k = n$ dà $n!$: i modi di **ordinare** $n$ oggetti distinti. Questo è il motivo per cui nessun algoritmo di ordinamento può fare a meno di circa $n \log n$ confronti: dovendo distinguere $n!$ ordinamenti con risposte sì/no servono almeno $\log_2(n!)$ domande (lo vedrai nel corso di Algoritmi).
+Qui $n! = n(n-1)\cdots 2 \cdot 1$ è il **fattoriale** ($0! = 1$ per convenzione). Il caso $k = n$ dà $n!$: i modi di **ordinare** $n$ oggetti distinti.
+
+??? approfondimento "Che cosa c'entra il fattoriale con gli algoritmi di ordinamento?"
+
+    Con **3 oggetti distinti**, per esempio $A$, $B$ e $C$, puoi creare **6 ordini diversi**:
+
+    $$
+    ABC,\; ACB,\; BAC,\; BCA,\; CAB,\; CBA.
+    $$
+
+    Sono $3! = 3 \cdot 2 \cdot 1 = 6$: scegli il primo oggetto in 3 modi, il secondo in 2 e l'ultimo in 1.
+
+    Ora pensa a un algoritmo che ordina numeri distinti facendo domande come **«$A$ è minore di $B$?»**. Ogni domanda ha due possibili risposte: sì oppure no. L'algoritmo deve scoprire quale dei 6 ordini è quello crescente.
+
+    - Con 1 domanda puoi distinguere al massimo 2 possibilità.
+    - Con 2 domande puoi distinguere al massimo 4 possibilità.
+    - Con 3 domande puoi distinguere al massimo 8 possibilità.
+
+    Per riconoscere quale dei 6 ordini è quello corretto, quindi, **nel caso peggiore servono almeno 3 confronti**: due non bastano. È ancora un albero di scelte: ogni confronto ha al massimo due rami, e ogni ordine possibile deve arrivare a una foglia diversa.
+
+    Con $n$ oggetti distinti, gli ordini possibili sono $n!$. Se fai al massimo $q$ confronti, puoi distinguere al massimo $2^q$ possibilità. Devi quindi avere:
+
+    $$
+    2^q \ge n!
+    \qquad\Longrightarrow\qquad
+    q \ge \log_2(n!).
+    $$
+
+    Per $n$ grande, $\log_2(n!)$ cresce come $n\log_2 n$: da qui il riferimento a circa $n\log n$ confronti. Questo limite vale **nel caso peggiore per gli algoritmi che ordinano tramite confronti**. Lo approfondirai nel corso di Algoritmi.
 
 Una situazione che ci servirà tra poco: $k$ chiavi vanno in una tabella con $m$ slot, **ognuna in uno slot diverso**. La prima ha $m$ scelte, la seconda $m-1$, la terza $m-2$... Il numero di modi è proprio $D(m, k) = m(m-1)\cdots(m-k+1)$.
 

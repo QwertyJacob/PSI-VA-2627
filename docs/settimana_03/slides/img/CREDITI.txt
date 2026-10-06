@@ -1,0 +1,43 @@
+Ritratti delle slide della Settimana 3
+Scaricati da Wikimedia Commons il 6 ottobre 2026; riproduzioni di opere
+storiche indicate come pubblico dominio nelle rispettive schede.
+Le immagini sono conservate localmente per l'uso in aula senza rete.
+
+dalembert.jpg
+Jean Le Rond d'Alembert, Maurice Quentin de La Tour, 1753.
+https://commons.wikimedia.org/wiki/File:Maurice_Quentin_de_La_Tour_-_Portrait_de_Jean_Le_Rond_d%27Alembert.jpg
+
+pacioli.jpg
+Ritratto di Luca Pacioli con un allievo, attribuito a Jacopo de' Barbari,
+1495; Museo di Capodimonte. Pacioli è la figura a sinistra.
+https://commons.wikimedia.org/wiki/File:Pacioli.jpg
+
+tartaglia.jpg
+Niccolò Tartaglia, ritratto inciso; autore non indicato nella scheda.
+Provenienza registrata nello storico del file: Smithsonian Libraries.
+https://commons.wikimedia.org/wiki/File:Niccol%C3%B2_Tartaglia.jpg
+
+pascal.jpg
+Blaise Pascal, dipinto anonimo, copia da François II Quesnel, circa 1690;
+Versailles, MV 5527 / RF 1479.
+https://commons.wikimedia.org/wiki/File:Blaise_Pascal_Versailles.JPG
+Il ritratto è di Pascal, autore della lettera del 29 luglio 1654 che
+riferisce le scommesse del cavaliere de Méré. Non raffigura de Méré.
+
+Fonti dei passaggi storici (link anche nelle slide)
+d'Alembert: Encyclopédie, IV (1754), «Croix ou pile», pp. 512–513;
+traduzione inglese di Richard J. Pulskamp:
+https://probabilityandfinance.com/pulskamp/Dalembert/croix_ou_pile.pdf
+Pacioli e Tartaglia: passi tradotti da Pulskamp, riprodotti in Cantillo,
+The Problem of Points, pp. 2 e 6:
+https://mpra.ub.uni-muenchen.de/50831/1/MPRA_paper_50831.pdf
+Pascal a Fermat, 29 luglio 1654, traduzione in Pascal and Fermat on
+Probability, pp. 2–4 (punti e dadi):
+https://probabilityandfinance.com/pulskamp/Pascal/Sources/pasfer.pdf
+
+fermat.jpg
+Pierre de Fermat, ritratto anonimo del XVII secolo; pubblico dominio.
+https://commons.wikimedia.org/wiki/File:Pierre_de_Fermat.jpg
+
+esercizi_time.jpg
+Immagine del docente (res/imgs/esercizi_time.jpeg), ridotta a 1600 px.

@@ -42,10 +42,10 @@ Il percorso è articolato in 4 moduli tematici distribuiti su **12 settimane**, 
 
 | Settimana | Argomenti |
 |---|---|
-| **Settimana 7** *(in arrivo)* | **Distribuzioni congiunte e correlazione:** variabili aleatorie congiunte e distribuzioni marginali, covarianza, coefficiente di correlazione e retta di regressione. |
+| **Settimana 7** *(in arrivo)* | **Distribuzioni congiunte e correlazione:** variabili aleatorie congiunte e distribuzioni marginali, covarianza, coefficiente di correlazione (e perché correlazione non implica causazione). |
 | **Settimana 8** *(in arrivo)* | **Disuguaglianze e Legge dei Grandi Numeri:** somma di variabili aleatorie indipendenti, disuguaglianze di Markov e Čebyšëv, convergenza in probabilità e Legge Debole dei Grandi Numeri. |
-| **Settimana 9** *(in arrivo)* | **Il Teorema del Limite Centrale:** enunciato, cosa garantisce e cosa no, approssimazione normale della binomiale, errore standard e intervalli di confidenza. |
-| **Settimana 10** *(in arrivo)* | **Campionamento e introduzione all'inferenza:** campionamento statistico, stimatori puntuali e loro proprietà, intervalli di confidenza e Bootstrap computazionale. |
+| **Settimana 9** *(in arrivo)* | **Il Teorema del Limite Centrale:** enunciato, cosa garantisce e cosa no, comportamento asintotico della media campionaria. |
+| **Settimana 10** *(in arrivo)* | **Campionamento e introduzione all'inferenza:** campionamento statistico, stimatori puntuali e loro proprietà, errore standard, intervalli di confidenza e Bootstrap computazionale. |
 
 ### Modulo IV — Inferenza e Machine Learning (Settimane 11–12)
 

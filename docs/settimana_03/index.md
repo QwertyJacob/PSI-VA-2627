@@ -113,6 +113,10 @@ Il principio, da fissare, è questo: **la posta si divide secondo le probabilit�
 
 Con pochi punti mancanti l'albero si disegna a mano. Ma proviamo un caso più grande, cambiando le regole del gioco: si gioca a **5 punti**, e la partita viene interrotta sul **2 a 0** per $A$. Ad $A$ mancano allora $5 - 2 = 3$ manche, a $B$ ne mancano $5 - 0 = 5$. Ammettiamo ancora che a ogni manche ciascuno vinca con probabilità $\tfrac12$.
 
+!!! note "Approfondimento facoltativo per lo studio individuale"
+    Questo esempio con 56 foglie mostra come la complessità esploda rapidamente quando la partita si allunga. In aula il concetto chiave viene consolidato sul caso a 3 punti ($2\text{--}1$); questo sviluppo a 5 punti è lasciato come lettura facoltativa per apprezzare il passaggio dal conteggio esplicito alla ricorsione di Pascal e alla combinatoria di Fermat.
+
+
 Il 2–0 è già stato giocato e non si cambia: l'albero descrive solo le manche **che restano da giocare**. Quante possono essere?
 
 * **Al minimo 3 manche.** È il caso in cui $A$ vince di fila le 3 manche che gli mancano ($AAA$). Meno di 3 non si può: ad $A$ ne servono 3, e a $B$ ne servirebbero 5.

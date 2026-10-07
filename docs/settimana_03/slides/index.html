@@ -264,7 +264,7 @@
     </section>
 
     <section id="albero-grande">
-      <p class="badge">Un caso più grande: dal 2–0.</p>
+      <p class="badge">Facoltativo · Un caso più grande: dal 2–0</p>
       <h2 class="scene-title">Ora si gioca a <span class="a">5</span> punti.</h2>
       <div class="big-header"><span>Ad A mancano <b class="a">3</b></span><span>A B mancano <b class="b">5</b></span><span class="big-depth">Manche future: <b>0</b></span></div>
       <svg class="scene-svg" width="1180" height="420" viewBox="0 0 1180 420" role="img" aria-label="Albero reale della partita a 5 dal 2 a 0: crescita per livelli, arresto alla vittoria, 56 foglie di pesi diversi"></svg>
@@ -462,6 +462,7 @@
     </section>
 
     <section id="fermat-5">
+      <p class="badge">Facoltativo · Gioco a 5 sul 2–0, con Fermat</p>
       <h2 class="scene-title">Gioco a 5 sul 2–0, con Fermat</h2>
       <p class="f5-head">$a=3,\ b=5 \;\Rightarrow\; n=7$ manche &emsp;·&emsp; $2^7=128$ futuri, ognuno $\tfrac1{128}$</p>
       <svg class="scene-svg" width="1180" height="360" viewBox="0 0 1180 360" role="img" aria-label="I 128 futuri raggruppati per vittorie di A: 1, 7, 21, 35, 35, 21, 7, 1; A vince se k è almeno 3"></svg>
@@ -563,6 +564,23 @@
       <aside class="notes">Click: 1 le 24 sequenze, D(4,3) = 4·3·2, in ordine alfabetico; 2 colore per terna: la stessa terna compare più volte; 3 si raggruppano: ogni terna compare in 3! = 6 ordini (le permutazioni della slide prima); 4 ogni colonna diventa un gruppo solo: 24/6 = 4; 5 la regola generale e l'esempio della pagina, 720/6 = 120. Errore tipico n. 5: chiedere «{Rossi, Bianchi, Verdi} e {Verdi, Rossi, Bianchi} sono due rilasci diversi?».</aside>
     </section>
 
+    <section id="sondaggio-c1" class="sondaggio" data-poll="s03-c1">
+      <p class="badge">Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q"><b>Combinazioni come $D(n,k)/k!$:</b><br>come ti senti su questo passaggio?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto. Rivelazione immediata (tasto R per mostrare i voti). Serve per verificare se la divisione per k! (eliminare l'ordine) è chiara prima dell'esercizio.</aside>
+    </section>
+
     <section id="coeff-binomiale">
       <h2 class="scene-title">Il coefficiente binomiale</h2>
       <div class="bn-def">$$\binom{n}{k}=\frac{D(n,k)}{k!}=\frac{n!}{k!\,(n-k)!}$$<p>«$n$ su $k$» · i sottoinsiemi di $k$ elementi presi da $n$</p></div>
@@ -630,6 +648,23 @@
       <div class="bf-formula equation">$P(A\text{ vince})=\dfrac{1}{2^n}\displaystyle\sum_{k=a}^{n}\binom{n}{k}$</div>
       <p class="bf-check">1–0 a 3 punti: $\dfrac{6+4+1}{16}=\dfrac{11}{16}$ &emsp;·&emsp; 2–0 a 5 punti: $\dfrac{35+35+21+7+1}{128}=\dfrac{99}{128}$</p>
       <aside class="notes">Click: 1 i conteggi dei tre casi studiati (in blu i futuri in cui vince A); 2 sono le righe 2, 4 e 7 del triangolo; 3 perché: un futuro con k vittorie di A è la scelta di quali k manche vince A tra le n (BABA: manche 2 e 4); 4 la regola; 5 la formula di Fermat senza elenco; 6 controlli sui due casi già fatti.</aside>
+    </section>
+
+    <section id="sondaggio-c2" class="sondaggio" data-poll="s03-c2">
+      <p class="badge">Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q"><b>Triangolo dentro/fuori e formula di Fermat:</b><br>come ti senti su questo ponte?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto. Rivelazione immediata (tasto R per mostrare la distribuzione). Verificare se la corrispondenza tra k vittorie di A e i sottoinsiemi binomiali C(n,k) è chiara prima dell'esercizio.</aside>
     </section>
 
     <section id="esercizio-3">

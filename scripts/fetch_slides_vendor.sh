@@ -27,14 +27,17 @@ for spec in $specs; do
   name=${spec%@*}
   version=${spec##*@}
   out="$DEST/$spec"
-  if [[ -d "$out/dist" ]]; then
+  if [[ -d "$out/dist" && ( "$name" != reveal.js || -f "$out/plugin/notes/notes.js" ) ]]; then
     echo "ok   $spec (già presente)"
     continue
   fi
   echo "get  $spec"
   mkdir -p "$out"
+  # reveal.js: anche il plugin delle note, per la vista del relatore (tasto S).
+  extract=(package/dist)
+  [[ "$name" == reveal.js ]] && extract+=(package/plugin/notes)
   if ! curl -fsSL "https://registry.npmjs.org/$name/-/$name-$version.tgz" \
-       | tar -xz -C "$out" --strip-components=1 package/dist; then
+       | tar -xz -C "$out" --strip-components=1 "${extract[@]}"; then
     rm -rf "$out"
     echo "Download di $spec fallito." >&2
     exit 1

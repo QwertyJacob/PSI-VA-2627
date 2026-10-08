@@ -182,9 +182,9 @@
     svg('rect', { x: c.x - 61, y: c.y - 31, width: 122, height: 62, rx: 6, fill: '#38ef7d1c', stroke: G, 'stroke-width': 3 }, focus);
     label(focus, c.x, c.y + 8, 'V(a, b)', 's03-label');
     var moves = svg('g', {}, root);
-    svg('line', { x1: c.x + 22, y1: c.y - 31, x2: up.x + 22, y2: up.y + 24, stroke: A, 'stroke-width': 4, 'marker-end': 'url(#p3-a)' }, moves);
+    svg('line', { x1: up.x + 22, y1: up.y + 24, x2: c.x + 22, y2: c.y - 31, stroke: A, 'stroke-width': 4, 'marker-end': 'url(#p3-a)' }, moves);
     label(moves, c.x + 30, c.y - 40, 'A · ½', 's03-small halo', { 'text-anchor': 'start', style: 'fill:' + A });
-    svg('line', { x1: c.x - 61, y1: c.y + 14, x2: left.x + 36, y2: left.y + 14, stroke: B, 'stroke-width': 4, 'marker-end': 'url(#p3-b)' }, moves);
+    svg('line', { x1: left.x + 36, y1: left.y + 14, x2: c.x - 61, y2: c.y + 14, stroke: B, 'stroke-width': 4, 'marker-end': 'url(#p3-b)' }, moves);
     label(moves, (c.x + left.x) / 2 + 6, c.y + 2, 'B · ½', 's03-small halo', { style: 'fill:' + B });
     label(moves, up.x, up.y - 2, 'V(a−1, b)', 's03-small');
     label(moves, left.x, left.y - 4, 'V(a, b−1)', 's03-small');

@@ -18,7 +18,7 @@
  * sondaggio da zero basta cambiare data-poll (es. s03-1b).
  *
  * Mentre la slide è aperta si vede solo quanti hanno votato; la distribuzione
- * compare sulle opzioni stesse quando il docente preme R, e sparisce con R.
+ * compare sulle opzioni stesse quando il docente preme V, e sparisce con V.
  */
 (function () {
   'use strict';
@@ -106,9 +106,9 @@
     var sections = document.querySelectorAll('.reveal section.sondaggio');
     if (!sections.length) return;
     sections.forEach(build);
-    deck.addKeyBinding({ keyCode: 82, key: 'R', description: 'Mostra/nascondi i risultati del sondaggio' }, function () {
+    deck.addKeyBinding({ keyCode: 86, key: 'V', description: 'Mostra/nascondi i risultati del sondaggio' }, function () {
       var s = deck.getCurrentSlide();
-      if (s.classList.contains('sondaggio')) s.classList.toggle('svelato');
+      if (!deck.isOverview() && s.classList.contains('sondaggio')) s.classList.toggle('svelato');
     });
     deck.on('slidechanged', function (e) {
       // Uscendo dalla slide i risultati si richiudono.

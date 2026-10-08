@@ -31,7 +31,8 @@
     'katex@0.18.9/dist/katex.min.js',
     'katex@0.18.9/dist/contrib/auto-render.min.js',
     'gsap@3.15.0/dist/gsap.min.js',
-    'qrious@4.0.2/dist/qrious.min.js'
+    'qrious@4.0.2/dist/qrious.min.js',
+    'reveal.js@5.1.0/plugin/notes/notes.js' // vista del relatore: tasto S
   ];
 
   // I fogli di stile vanno subito dopo questo script, prima degli stili della
@@ -90,11 +91,16 @@
         progress: true,
         center: true,
         hash: true,
+        plugins: window.RevealNotes ? [RevealNotes] : [],
         // Nell'export PDF ogni scena animata è una pagina sola, nello stato finale.
         pdfSeparateFragments: false
       }, options.reveal));
       Reveal.on('ready', function () {
         PSI.bindScenes(Reveal);
+        // Come Esc, ma anche con R: panoramica e salto con un clic sulla slide.
+        Reveal.addKeyBinding({ keyCode: 82, key: 'R', description: 'Apri/chiudi la panoramica delle slide' }, function () {
+          Reveal.toggleOverview();
+        });
         if (options.onReady) options.onReady(Reveal);
       });
     });

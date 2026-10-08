@@ -40,6 +40,10 @@ package.json               dipendenze Node.js per Playwright
 
 ## Sviluppo in locale
 
+Nei mazzi di slide, **R** oppure **Esc** apre e chiude la panoramica di Reveal.js:
+seleziona un'anteprima con il mouse per saltare alla slide. Le frecce permettono
+di scorrere le anteprime. Nelle slide dei sondaggi, **V** mostra e nasconde i voti.
+
 ### 1. Prerequisiti Python (MkDocs)
 
 ```bash

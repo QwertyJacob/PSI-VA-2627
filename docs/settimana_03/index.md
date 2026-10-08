@@ -504,9 +504,9 @@ $$
 \binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}.
 $$
 
-Nell'esempio era $n=4$, $k=2$, $x=A$. La formula dice che un coefficiente della riga $n$ si ottiene sommando due coefficienti della riga $n-1$, la riga precedente. Mettiamo i valori in fila, riga per riga, e la regola diventa visibile.
+Nell'esempio era $n=4$, $k=2$, $x=A$. Per vedere la formula all'opera conviene disporre i coefficienti in una tabella. Mettiamo in cima $\binom00$. Sotto, su una nuova linea, scriviamo $\binom10$ e $\binom11$. Sotto ancora, $\binom20$, $\binom21$, $\binom22$. E così via: ogni linea della tabella è una **riga**, e la riga numero $n$ contiene gli $n+1$ coefficienti $\binom{n}{0}, \binom{n}{1}, \dots, \binom{n}{n}$, da sinistra a destra. Le righe si allargano di una casella alla volta e la tabella prende la forma di un triangolo: è il **triangolo di Pascal**. Ai due bordi c'è sempre 1, perché $\binom{n}{0} = \binom{n}{n} = 1$.
 
-Scrivendo i valori riga per riga, con $\binom{n}{0} = \binom{n}{n} = 1$ ai bordi, si ottiene il **triangolo di Pascal**. In ogni casella sono scritti il coefficiente binomiale (nella forma C(n,k), cioè «$n$ su $k$») e il suo valore. La regola dice che ogni valore è la somma dei due che stanno sopra di lui, a sinistra e a destra. Nella figura è evidenziato il caso dell'esempio dei server: $\binom{4}{2} = \binom{3}{1} + \binom{3}{2} = 3 + 3 = 6$.
+In ogni casella della figura sono scritti il coefficiente binomiale (nella forma C(n,k), cioè «$n$ su $k$») e il suo valore.
 
 <figure markdown="0">
 <svg viewBox="0 0 560 380" role="img" aria-label="Triangolo di Pascal fino alla riga 4, con C(n,k) e valore in ogni casella; C(4,2)=6 è la somma di C(3,1)=3 e C(3,2)=3" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif">
@@ -531,6 +531,8 @@ Scrivendo i valori riga per riga, con $\binom{n}{0} = \binom{n}{n} = 1$ ai bordi
 </svg>
 <figcaption>Il triangolo di Pascal fino a n = 4. Ogni casella contiene il coefficiente binomiale C(n,k) («n su k») e il suo valore. Le due caselle blu, sopra a sinistra e a destra, si sommano nella casella arancione sotto di loro. Ai bordi c'è sempre 1.</figcaption>
 </figure>
+
+Ora la formula $\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$ si legge sulla figura. I due termini a destra appartengono alla riga $n-1$, cioè la riga appena sopra, e stanno uno in alto a sinistra e uno in alto a destra della casella $\binom{n}{k}$. Quindi **ogni valore è la somma dei due che gli stanno sopra**. Nella figura è evidenziato il caso dell'esempio dei server: $\binom{4}{2} = \binom{3}{1} + \binom{3}{2} = 3 + 3 = 6$.
 
 Continuando con la stessa regola si ottengono le righe successive: $1, 5, 10, 10, 5, 1$ per $n=5$, e così via.
 

@@ -135,7 +135,7 @@
         </div>
         <div class="sondaggio-join"></div>
       </div>
-      <aside class="notes">15–18. R mostra/nasconde la distribuzione: lasciarla nascosta. Il medesimo sondaggio ricompare automaticamente, dopo il calcolo, nella scena dell'albero reale.</aside>
+      <aside class="notes">15–18. V mostra/nasconde la distribuzione: lasciarla nascosta. Il medesimo sondaggio ricompare automaticamente, dopo il calcolo, nella scena dell'albero reale.</aside>
     </section>
 
     <section id="dalembert" class="history">
@@ -355,7 +355,7 @@
           <p class="p3-note">Si parte dai casi noti e si scende: ogni casella usa quella <span class="a">sopra</span> e quella <span class="b">a sinistra</span>.</p>
         </div>
       </div>
-      <aside class="notes">Click: 1 una manche da (a,b): se vince A si sale di una riga, se vince B si va a sinistra; 2 la formula generale; 3 l'ordine di riempimento. Non riempire la tabella: la riempiono i gruppi nell'Esercizio 1.</aside>
+      <aside class="notes">Click: 1 le frecce portano i valori già noti dalla casella sopra e da quella a sinistra verso V(a,b), la casella da riempire; 2 la formula generale; 3 l'ordine di riempimento. Non riempire la tabella: la riempiono i gruppi nell'Esercizio 1.</aside>
     </section>
 
     <!-- 48–58: Esercizio 1 -->
@@ -385,6 +385,24 @@
         <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
       </div>
       <aside class="notes">Click: entra il gatto, a lato; testo e tabella restano visibili. A chi è bloccato un solo suggerimento: «partite dalle caselle vicine ai casi semplici». Le prime soluzioni alla lavagna insieme. Soluzione: riga 1: 1/2, 3/4, 7/8; riga 2: 1/4, 1/2, 11/16; riga 3: 1/8, 5/16, 1/2. (a) Il 2–1 a 3 punti è V(1,2)=3/4. (b) Stessa distanza dal traguardo: i due giocatori sono intercambiabili. Lasciare V(2,3)=11/16 alla lavagna: Fermat lo ritrova. Errori attesi: riempire riga per riga senza partire dai casi semplici; scambiare a e b (V(1,3) viene 1/8 invece di 7/8).</aside>
+    </section>
+
+    <section id="pascal-tabella-completa">
+      <p class="badge">Esercizio 1 · soluzione ed estensione</p>
+      <h2 class="scene-title">La tabella di Pascal, riempita</h2>
+      <p class="pascal-table-lead">$V(a,b)$: probabilità che vinca <span class="a">A</span>, se ad A mancano $a$ manche e a B ne mancano $b$.</p>
+      <table class="ex-table pascal-table" aria-label="Tabella delle probabilità V(a,b), da a uguale 0 a 3 e da b uguale 0 a 5">
+        <thead><tr><th scope="col">$a \backslash b$</th><th scope="col">0</th><th scope="col">1</th><th scope="col">2</th><th scope="col">3</th><th scope="col">4</th><th scope="col">5</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">0</th><td class="ex-k">—</td><td class="ex-k one">1</td><td class="ex-k one">1</td><td class="ex-k one">1</td><td class="ex-k one">1</td><td class="ex-k one">1</td></tr>
+          <tr><th scope="row">1</th><td class="ex-k zero">0</td><td class="pascal-diagonal">$\tfrac12$</td><td>$\tfrac34$</td><td>$\tfrac78$</td><td>$\tfrac{15}{16}$</td><td>$\tfrac{31}{32}$</td></tr>
+          <tr><th scope="row">2</th><td class="ex-k zero">0</td><td>$\tfrac14$</td><td class="pascal-diagonal">$\tfrac12$</td><td>$\tfrac{11}{16}$</td><td>$\tfrac{13}{16}$</td><td>$\tfrac{57}{64}$</td></tr>
+          <tr><th scope="row">3</th><td class="ex-k zero">0</td><td>$\tfrac18$</td><td>$\tfrac{5}{16}$</td><td class="pascal-diagonal">$\tfrac12$</td><td>$\tfrac{21}{32}$</td><td class="pascal-target">$\tfrac{99}{128}$</td></tr>
+        </tbody>
+      </table>
+      <p class="pascal-table-rule">Ogni casella interna è la <b>media</b> di quella sopra e di quella a sinistra.</p>
+      <div class="equation">$V(3,5)=\tfrac12\left(\tfrac{57}{64}+\tfrac{21}{32}\right)=\color{#38ef7d}{\tfrac{99}{128}}\approx77{,}34\%$</div>
+      <aside class="notes">Soluzione della tabella dell'Esercizio 1, estesa fino ad a=3 e b=5. Il 2–1 del sondaggio è V(1,2)=3/4; sulla diagonale V(a,a)=1/2 per simmetria. Prima riga: A ha già vinto; prima colonna: B ha già vinto. Lo stato (0,0) non è raggiungibile nel gioco: la casella resta vuota. Nell'ultima casella si ritrova V(3,5)=99/128, lo stesso valore dell'albero grande. Si calcola facendo la media di V(2,5)=57/64 e V(3,4)=21/32.</aside>
     </section>
 
     <!-- 58–68: perché Pascal conviene, poi Fermat -->
@@ -524,35 +542,37 @@
       <aside class="notes">Click: 1 prima scelta, 2 rami; 2 seconda scelta, 3 rami da ciascun nodo, qualunque sia stata la prima; 3 il prodotto e la regola; 4 la condizione: se dopo B i rami fossero solo 2, il numero dipenderebbe dal cammino e si somma (3 + 2 = 5), non si moltiplica. È l'albero della Settimana 2 senza le probabilità: ogni foglia è un cammino completo.</aside>
     </section>
 
-    <section id="password">
-      <h2 class="scene-title">Sempre gli stessi $n$ simboli</h2>
-      <svg class="scene-svg" width="1180" height="250" viewBox="0 0 1180 250" role="img" aria-label="Una password di 8 caratteri: ogni posto ha 62 simboli possibili"></svg>
-      <div class="pw-eq equation">$62\cdot62\cdot62\cdot62\cdot62\cdot62\cdot62\cdot62=62^8\approx 2.2\cdot10^{14}$</div>
-      <div class="pw-rule"><p>$k$ posti, $n$ simboli per posto, ripetizioni ammesse: &nbsp;<b>$n^k$</b></p><span class="pw-sub">3 manche con 2 esiti: $2^3=8$ futuri &emsp;·&emsp; 15 bit: $2^{15}$ stringhe</span></div>
-      <aside class="notes">Click: 1 gli 8 posti si riempiono, 62 simboli per ciascuno (26 minuscole, 26 maiuscole, 10 cifre); 2 il prodotto, 62^8 ≈ 2,2·10^14; 3 la regola n^k, con i futuri di Fermat come caso particolare (2^n). Ogni livello dell'albero offre sempre gli stessi simboli: un carattere si può ripetere.</aside>
-    </section>
+    
 
     <section id="server-albero">
-      <h2 class="scene-title">Seconda idea: un server usato non torna disponibile</h2>
-      <p class="sv-lead">3 server $\{A,B,C\}$, 2 compiti, un server per compito</p>
+      <h2 class="scene-title">3 server $\{A,B,C\}$, 2 compiti, un server per compito</h2>
+      <p class="sv-lead">Seconda idea: un server usato non torna disponibile</p>
       <svg class="scene-svg" width="1180" height="430" viewBox="0 0 1180 430" role="img" aria-label="Albero senza reinserimento: 3 scelte per il primo compito, 2 per il secondo; 6 foglie AB, AC, BA, BC, CA, CB"></svg>
       <aside class="notes">Click: 1 primo compito, 3 server liberi; 2 dopo A il server A è occupato: restano 2 rami; 3 lo stesso dopo B e dopo C. Le lettere disponibili cambiano da ramo a ramo, ma il loro numero è sempre 2: la regola del prodotto vale ancora; 4 le 6 foglie, 3 · 2 = 6.</aside>
     </section>
 
     <section id="ordine-conta">
-      <h2 class="scene-title">Una foglia = un cammino: l'ordine conta</h2>
+      <h2 class="scene-title">Disposizioni: quando l'ordine conta.</h2>
       <svg class="scene-svg" width="1180" height="430" viewBox="0 0 1180 430" role="img" aria-label="Nell'albero dei server, AB e BA usano gli stessi due server ma sono due cammini diversi: 6 foglie sono 3 gruppi per 2 ordini"></svg>
       <p class="oc-note">$AB\neq BA$: stessi server, compiti scambiati &emsp;·&emsp; <b>6 foglie = 3 gruppi × 2 ordini</b></p>
       <aside class="notes">Click: 1 i cammini A→B e B→A: stessi due server, ma due foglie diverse, perché sono due cammini diversi (A al primo compito oppure B); 2 le tre coppie di foglie con gli stessi server; 3 il conto: 3 gruppi × 2 ordini. «L'ordine conta» non è una regola in più: viene da come è fatto l'albero. Prepara la divisione delle combinazioni.</aside>
     </section>
 
     <section id="disposizioni">
-      <h2 class="scene-title">Disposizioni: $k$ posti, $n$ oggetti, niente ripetizioni</h2>
+      <h2 class="scene-title">Disposizioni "semplici": $k$ posti, $n$ oggetti, niente ripetizioni</h2>
       <svg class="scene-svg dp-top" width="1180" height="190" viewBox="0 0 1180 190" role="img" aria-label="10 server per 3 compiti: 10 per il primo, 9 per il secondo, 8 per il terzo; 720 modi"></svg>
       <div class="dp-formula equation">$D(n,k)=n\,(n-1)\cdots(n-k+1)=\dfrac{n!}{(n-k)!}$ <span class="short-label">&emsp;$n!=n\,(n-1)\cdots2\cdot1,\quad 0!=1$</span></div>
       <svg class="scene-svg dp-perm" width="1180" height="150" viewBox="0 0 1180 150" role="img" aria-label="Caso k uguale a n: 3 server in 3 posti, 3 per 2 per 1 = 6 ordini: ABC, ACB, BAC, BCA, CAB, CBA"></svg>
       <p class="dp-box">Caso $k=n$: &nbsp;$D(n,n)=n!$ &nbsp;<b>permutazioni</b> <span class="short-label">· i modi di ordinare $n$ oggetti</span></p>
       <aside class="notes">Click: 1 10 server, 3 compiti: 10, poi 9, poi 8 → D(10,3) = 720; 2 la formula generale e il fattoriale; 3 il caso speciale k = n: 3 server in 3 posti, 3·2·1; 4 i 6 ordini e il nome «permutazioni». Ponte facoltativo con Algoritmi (log2 n!): è il primo da tagliare.</aside>
+    </section>
+
+    <section id="password">
+      <h2 class="scene-title">Disposizioni "con ripetizione": Sempre gli stessi $n$ simboli</h2>
+      <svg class="scene-svg" width="1180" height="250" viewBox="0 0 1180 250" role="img" aria-label="Una password di 8 caratteri: ogni posto ha 62 simboli possibili"></svg>
+      <div class="pw-eq equation">$62\cdot62\cdot62\cdot62\cdot62\cdot62\cdot62\cdot62=62^8\approx 2.2\cdot10^{14}$</div>
+      <div class="pw-rule"><p>$k$ posti, $n$ simboli per posto, ripetizioni ammesse: &nbsp;<b>$n^k$</b></p><span class="pw-sub">3 manche con 2 esiti: $2^3=8$ futuri &emsp;·&emsp; 15 bit: $2^{15}$ stringhe</span></div>
+      <aside class="notes">Click: 1 gli 8 posti si riempiono, 62 simboli per ciascuno (26 minuscole, 26 maiuscole, 10 cifre); 2 il prodotto, 62^8 ≈ 2,2·10^14; 3 la regola n^k, con i futuri di Fermat come caso particolare (2^n). Ogni livello dell'albero offre sempre gli stessi simboli: un carattere si può ripetere.</aside>
     </section>
 
     <section id="combinazioni">
@@ -563,6 +583,26 @@
       <p class="cb-gen">$\dbinom nk=\dfrac{D(n,k)}{k!}$ &emsp;·&emsp; 10 server, 3 per il rilascio: $\dfrac{720}{6}=120$</p>
       <aside class="notes">Click: 1 le 24 sequenze, D(4,3) = 4·3·2, in ordine alfabetico; 2 colore per terna: la stessa terna compare più volte; 3 si raggruppano: ogni terna compare in 3! = 6 ordini (le permutazioni della slide prima); 4 ogni colonna diventa un gruppo solo: 24/6 = 4; 5 la regola generale e l'esempio della pagina, 720/6 = 120. Errore tipico n. 5: chiedere «{Rossi, Bianchi, Verdi} e {Verdi, Rossi, Bianchi} sono due rilasci diversi?».</aside>
     </section>
+
+    <section id="coeff-binomiale">
+      <h2 class="scene-title">Il coefficiente binomiale</h2>
+      <div class="bn-def">$$\binom{n}{k}=\frac{D(n,k)}{k!}=D(n,k)\cdot\frac{1}{k!}=\frac{n!}{(n-k)!}\cdot\frac{1}{k!}=\frac{n!}{k!\,(n-k)!}$$<p>«$n$ su $k$» · i sottoinsiemi di $k$ elementi presi da $n$</p></div>
+      <div class="bn-props">
+        <div class="bn-prop">
+          <p class="bn-f">1 · liste ordinate</p>
+          <p class="bn-f">$D(n,k)=n\,(n-1)\cdots(n-k+1)$</p>
+          <span class="bn-note">$k$ fattori: $n$ scelte per il primo posto, $n-1$ per il secondo, &hellip;</span>
+        </div>
+        <div class="bn-prop">
+          <p class="bn-f">2 · stesso gruppo, $k!$ ordini</p>
+          <p class="bn-f">$\dfrac{D(n,k)}{k!}$</p>
+          <span class="bn-note">ogni gruppo compare $k!$ volte: dividendo si cancella l'ordine</span>
+        </div>
+        
+      </div>
+      <aside class="notes">Nessuna animazione: la formula si legge da sinistra a destra, un passaggio per riquadro. 1 le disposizioni (liste ordinate); 2 si divide per k! perché ogni gruppo compare k! volte; 3 si riscrive il prodotto con i fattoriali. Le proprietà del coefficiente binomiale sono nella slide successiva.</aside>
+    </section>
+
 
     <section id="sondaggio-c1" class="sondaggio" data-poll="s03-c1">
       <p class="badge">Controllo comprensione · 1′</p>
@@ -578,10 +618,31 @@
         </div>
         <div class="sondaggio-join"></div>
       </div>
-      <aside class="notes">1 minuto. Rivelazione immediata (tasto R per mostrare i voti). Serve per verificare se la divisione per k! (eliminare l'ordine) è chiara prima dell'esercizio.</aside>
+      <aside class="notes">1 minuto. Rivelazione immediata (tasto V per mostrare i voti). Serve per verificare se la divisione per k! (eliminare l'ordine) è chiara prima dell'esercizio.</aside>
     </section>
 
-    <section id="coeff-binomiale">
+    <section id="esercizio-3">
+      <p class="badge">96′ · Esercizio 3 · gruppi di 3–4</p>
+      <h2 class="scene-title">Che cosa stiamo contando?</h2>
+      <div class="e3-grid">
+        <div class="ex-text e3-text">
+          <ol>
+            <li>Due dadi. Marco: «le somme possibili sono 11, quindi $P(\text{somma}=7)=\tfrac1{11}$». Giulia: «$\tfrac6{36}$». Chi ha ragione?</li>
+            <li>Tre monete. Probabilità di <b>esattamente 2 teste</b>? «Gli esiti sono 0, 1, 2 o 3 teste: $\tfrac14$». Giusto?</li>
+            <li>Gioco a 4 punti, <span class="a">A</span> conduce 1–0. Con la formula: $P(A\text{ vince})$?</li>
+            <li>Quando funziona «casi favorevoli su casi possibili»?</li>
+          </ol>
+          <p class="ex-time">4′ in gruppo · 4′ insieme</p>
+        </div>
+        <div class="e3-stage">
+          <svg class="scene-svg" width="600" height="480" viewBox="0 0 600 480" role="img" aria-label="Soluzioni: 6 coppie su 36 danno somma 7; 3 sequenze su 8 hanno due teste; riga 6 del triangolo, 42 futuri su 64; i casi devono essere equiprobabili"></svg>
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+        </div>
+      </div>
+      <aside class="notes">Click: 1 il gatto; poi una soluzione per click. (a) Giulia: le 36 coppie ordinate sono equiprobabili, le 11 somme no; il 7 ha 6 coppie → 1/6. Domanda se sono bloccati: «se dipingo i due dadi dello stesso colore, cambia qualcosa?». (b) 8 sequenze equiprobabili, 3 con due teste → 3/8; «0, 1, 2, 3 teste» è l'errore di d'Alembert con tre monete. (c) a = 3, b = 4, n = 6: (20+15+6+1)/64 = 42/64 = 21/32 ≈ 0.656 (stesso valore con la ricorsione di Pascal, V(3,4)). (d) I casi devono essere equiprobabili: è ciò che una funzione hash cerca di ottenere per gli slot, da qui parte venerdì.</aside>
+    </section>
+
+    <section id="coeff-binomiale-2">
       <h2 class="scene-title">Il coefficiente binomiale</h2>
       <div class="bn-def">$$\binom{n}{k}=\frac{D(n,k)}{k!}=\frac{n!}{k!\,(n-k)!}$$<p>«$n$ su $k$» · i sottoinsiemi di $k$ elementi presi da $n$</p></div>
       <div class="bn-props">
@@ -609,7 +670,7 @@
     <!-- 86–94: regola dentro/fuori, triangolo, Esercizio 2 -->
     <section id="dentro-fuori">
       <p class="badge">86′ · Dentro o fuori</p>
-      <h2 class="scene-title">Da dove viene il triangolo di Pascal</h2>
+      <h2 class="scene-title">Pascal 2.0</h2>
       <p class="sv-lead">4 server, ne scegliamo 2: $\binom42=6$ coppie</p>
       <svg class="scene-svg" width="1180" height="310" viewBox="0 0 1180 310" role="img" aria-label="Le 6 coppie di 4 server divise in due famiglie: 3 contengono A, 3 no"></svg>
       <div class="df-eqs">
@@ -620,24 +681,7 @@
       <aside class="notes">Click: 1 le 6 coppie; 2 fissiamo un server, A; 3 due famiglie: con A e senza A, ogni coppia sta in una sola; 4 quanti in ciascuna famiglia; 5 la somma con i numeri; 6 la stessa cosa con x al posto di A e n, k al posto di 4, 2. Ogni valore è la somma di due valori della riga precedente: è la regola del triangolo.</aside>
     </section>
 
-    <section id="triangolo">
-      <p class="badge">86′ · Esercizio 2 · gruppi di 3–4</p>
-      <h2 class="scene-title">Il triangolo di Pascal</h2>
-      <div class="tr-grid">
-        <svg class="scene-svg" width="760" height="480" viewBox="0 0 760 480" role="img" aria-label="Triangolo di Pascal fino alla riga 5; ogni casella è la somma delle due sopra; nella riga 4, 6 + 4 + 1 = 11 futuri su 16 danno V(2,3) = 11/16"></svg>
-        <div class="tr-panel">
-          <ol class="tr-ex">
-            <li>Completate il triangolo fino alla riga 5 con la regola «dentro/fuori».</li>
-            <li>Su 4 manche, in quanti futuri <span class="a">A</span> vince esattamente 2 manche? <span class="tr-sol">$\binom42=6$</span></li>
-            <li>Ad <span class="a">A</span> mancano 2 manche, a <span class="b">B</span> 3. Con le manche fittizie, in quanti futuri vince <span class="a">A</span>? Ritrovate $V(2,3)$. <span class="tr-sol tr-sol-c">$6+4+1=11$ su $16$</span></li>
-            <li>Quanto fa la somma della riga $n$? Perché? <span class="tr-sol">$2^n$: tutti i futuri di $n$ manche</span></li>
-          </ol>
-          <p class="ex-time">5′ in gruppo · 3′ insieme</p>
-          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
-        </div>
-      </div>
-      <aside class="notes">Click: 1 righe 0–2 insieme alla classe (1 + 1 = 2); 2 riga 3, ogni valore è la somma dei due sopra; 3 entrano gatto ed esercizio; 4 soluzioni: righe 4 e 5, con 3 + 3 = 6 evidenziato come nella pagina, e le somme delle righe (2^n); 5 la riga 4: A vince con almeno 2 vittorie su 4, 6 + 4 + 1 = 11 futuri su 16 = V(2,3), lo stesso valore della tabella di Pascal dell'Esercizio 1. Errori attesi in (c): contare solo «esattamente 2» (6/16); usare n = a + b = 5 invece di 4.</aside>
-    </section>
+    
 
     <!-- 94–104: i futuri di Fermat sono coefficienti binomiali; Esercizio 3 -->
     <section id="futuri-binomiali">
@@ -664,28 +708,26 @@
         </div>
         <div class="sondaggio-join"></div>
       </div>
-      <aside class="notes">1 minuto. Rivelazione immediata (tasto R per mostrare la distribuzione). Verificare se la corrispondenza tra k vittorie di A e i sottoinsiemi binomiali C(n,k) è chiara prima dell'esercizio.</aside>
+      <aside class="notes">1 minuto. Rivelazione immediata (tasto V per mostrare la distribuzione). Verificare se la corrispondenza tra k vittorie di A e i sottoinsiemi binomiali C(n,k) è chiara prima dell'esercizio.</aside>
     </section>
 
-    <section id="esercizio-3">
-      <p class="badge">96′ · Esercizio 3 · gruppi di 3–4</p>
-      <h2 class="scene-title">Che cosa stiamo contando?</h2>
-      <div class="e3-grid">
-        <div class="ex-text e3-text">
-          <ol>
-            <li>Due dadi. Marco: «le somme possibili sono 11, quindi $P(\text{somma}=7)=\tfrac1{11}$». Giulia: «$\tfrac6{36}$». Chi ha ragione?</li>
-            <li>Tre monete. Probabilità di <b>esattamente 2 teste</b>? «Gli esiti sono 0, 1, 2 o 3 teste: $\tfrac14$». Giusto?</li>
-            <li>Gioco a 4 punti, <span class="a">A</span> conduce 1–0. Con la formula: $P(A\text{ vince})$?</li>
-            <li>Quando funziona «casi favorevoli su casi possibili»?</li>
+    <section id="triangolo">
+      <p class="badge">86′ · Esercizio 2 · gruppi di 3–4</p>
+      <h2 class="scene-title">Il triangolo di Pascal</h2>
+      <div class="tr-grid">
+        <svg class="scene-svg" width="760" height="480" viewBox="0 0 760 480" role="img" aria-label="Triangolo di Pascal fino alla riga 5; ogni casella è la somma delle due sopra; nella riga 4, 6 + 4 + 1 = 11 futuri su 16 danno V(2,3) = 11/16"></svg>
+        <div class="tr-panel">
+          <ol class="tr-ex">
+            <li>Completate il triangolo fino alla riga 5 con la regola «dentro/fuori».</li>
+            <li>Su 4 manche, in quanti futuri <span class="a">A</span> vince esattamente 2 manche? <span class="tr-sol">$\binom42=6$</span></li>
+            <li>Ad <span class="a">A</span> mancano 2 manche, a <span class="b">B</span> 3. Con le manche fittizie, in quanti futuri vince <span class="a">A</span>? Ritrovate $V(2,3)$. <span class="tr-sol tr-sol-c">$6+4+1=11$ su $16$</span></li>
+            <li>Quanto fa la somma della riga $n$? Perché? <span class="tr-sol">$2^n$: tutti i futuri di $n$ manche</span></li>
           </ol>
-          <p class="ex-time">4′ in gruppo · 4′ insieme</p>
-        </div>
-        <div class="e3-stage">
-          <svg class="scene-svg" width="600" height="480" viewBox="0 0 600 480" role="img" aria-label="Soluzioni: 6 coppie su 36 danno somma 7; 3 sequenze su 8 hanno due teste; riga 6 del triangolo, 42 futuri su 64; i casi devono essere equiprobabili"></svg>
+          <p class="ex-time">5′ in gruppo · 3′ insieme</p>
           <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
         </div>
       </div>
-      <aside class="notes">Click: 1 il gatto; poi una soluzione per click. (a) Giulia: le 36 coppie ordinate sono equiprobabili, le 11 somme no; il 7 ha 6 coppie → 1/6. Domanda se sono bloccati: «se dipingo i due dadi dello stesso colore, cambia qualcosa?». (b) 8 sequenze equiprobabili, 3 con due teste → 3/8; «0, 1, 2, 3 teste» è l'errore di d'Alembert con tre monete. (c) a = 3, b = 4, n = 6: (20+15+6+1)/64 = 42/64 = 21/32 ≈ 0.656 (stesso valore con la ricorsione di Pascal, V(3,4)). (d) I casi devono essere equiprobabili: è ciò che una funzione hash cerca di ottenere per gli slot, da qui parte venerdì.</aside>
+      <aside class="notes">Click: 1 righe 0–2 insieme alla classe (1 + 1 = 2); 2 riga 3, ogni valore è la somma dei due sopra; 3 entrano gatto ed esercizio; 4 soluzioni: righe 4 e 5, con 3 + 3 = 6 evidenziato come nella pagina, e le somme delle righe (2^n); 5 la riga 4: A vince con almeno 2 vittorie su 4, 6 + 4 + 1 = 11 futuri su 16 = V(2,3), lo stesso valore della tabella di Pascal dell'Esercizio 1. Errori attesi in (c): contare solo «esattamente 2» (6/16); usare n = a + b = 5 invece di 4.</aside>
     </section>
 
     <section id="hands-on-2">
@@ -709,385 +751,6 @@
       <p class="ux-hint">Su un foglio, senza elencarle.</p>
       <aside class="notes">Risposta: C(23,2) = 23·22/2 = 253. Non dirla: si raccoglie venerdì all'inizio del riepilogo e si lascia scritta alla lavagna, perché lancia il paradosso dei compleanni.</aside>
     </section>
-
-    <!-- ═════════════ LEZIONE 2 · venerdì (105 min). Scene: js/complementare.js, js/compleanni.js, js/hash.js ═════════════ -->
-    <section id="lezione-2" class="l2-cover">
-      <p class="badge">Lezione 2 · venerdì</p>
-      <h2 class="l2-cover-title">Contare al contrario</h2>
-      <p class="l2-cover-sub">«almeno uno» = 1 − «nessuno»</p>
-      <div class="l2-cover-acts">
-        <span>de Méré</span><span>i compleanni</span><span>le tabelle hash</span><span>il birthday attack</span>
-      </div>
-      <aside class="notes">Apertura della Lezione 2. Si passa subito al riepilogo: la domanda d'uscita di mercoledì.</aside>
-    </section>
-
-    <!-- 00–10: riepilogo, partendo dalle 253 coppie -->
-    <section id="coppie-253">
-      <p class="badge">0′ · Riepilogo · la domanda d'uscita</p>
-      <h2 class="scene-title">23 persone: quante coppie?</h2>
-      <div class="scene-grid">
-        <svg class="scene-svg" width="520" height="470" viewBox="0 0 520 470" role="img" aria-label="23 persone su un cerchio; ogni corda è una coppia: 22 dalla prima persona, 253 in tutto"></svg>
-        <div class="scene-panel">
-          <ol class="scene-steps">
-            <li>La persona 1 fa coppia con le altre <b>22</b>.</li>
-            <li>La 2 con <b>21</b> nuove, la 3 con 20, …: $\;22+21+\cdots+1$</li>
-            <li>È scegliere <b>2</b> persone su 23, l'ordine non conta:</li>
-          </ol>
-          <div class="scene-def">$$\binom{23}{2}=\frac{23\cdot22}{2}=\color{#38ef7d}{253}$$</div>
-          <p class="scene-note c2-keep">Il numero resta alla lavagna: ci torniamo alle 30′.</p>
-        </div>
-      </div>
-      <aside class="notes">Raccogli prima le risposte scritte sul foglio, poi i click. 1 le 22 corde dalla prima persona; 2 tutte le altre, il contatore arriva a 253; 3 la formula delle combinazioni. Lascia 253 scritto alla lavagna: torna nel paradosso dei compleanni.</aside>
-    </section>
-
-    <section id="riepilogo-2">
-      <h2 class="scene-title">Tre domande da mercoledì</h2>
-      <div class="l2-quiz">
-        <div class="l2-q">
-          <p class="l2-ask"><span>1</span>Sul 2–1, quante pistole ad <span class="a">A</span>? Perché non 43?</p>
-          <p class="l2-ans fragment"><b>48</b>: i finali $A$, $BA$, $BB$ pesano $\tfrac12,\tfrac14,\tfrac14$. Contarli uguali ($\tfrac23$) è l'errore di d'Alembert.</p>
-        </div>
-        <div class="l2-q">
-          <p class="l2-ask"><span>2</span>Qual è il trucco di Fermat?</p>
-          <p class="l2-ans fragment">Manche <b>fittizie</b>: tutti i futuri hanno la stessa lunghezza, quindi sono equiprobabili e si contano.</p>
-        </div>
-        <div class="l2-q">
-          <p class="l2-ask"><span>3</span>Quando si divide per $k!$?</p>
-          <p class="l2-ans fragment">Quando l'ordine <b>non conta</b>: $\binom nk=D(n,k)/k!$</p>
-        </div>
-      </div>
-      <p class="l2-close fragment">Oggi contiamo al contrario: non i casi in cui succede qualcosa, ma quelli in cui <b>non succede niente</b>.</p>
-      <aside class="notes">Tre domande a voce: prima rispondono gli studenti, poi il click mostra la risposta. Ultimo click: la frase di chiusura del riepilogo.</aside>
-    </section>
-
-    <!-- 10–15: Sondaggio 2. Nessuno spoiler: 23 si rivela alle 30–46. -->
-    <section id="sondaggio-2" class="sondaggio" data-poll="s03-2">
-      <p class="badge">10′ · Compleanni</p>
-      <div class="sondaggio-grid">
-        <div>
-          <p class="sondaggio-q">Quante persone servono in una stanza perché sia <b>più probabile di no</b> che due compiano gli anni <b>lo stesso giorno</b>?</p>
-          <ol class="sondaggio-opts l2-opts5">
-            <li><span>1</span>≤ 10</li>
-            <li><span>2</span>11–30</li>
-            <li><span>3</span>31–100</li>
-            <li><span>4</span>101–183</li>
-            <li><span>5</span>&gt; 183</li>
-          </ol>
-          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · poi scrivi il tuo giorno di nascita su un foglietto</p>
-        </div>
-        <div class="sondaggio-join"></div>
-      </div>
-      <aside class="notes">10–15. Non premere R: la distribuzione compare da sola nella slide della curva dei compleanni. Probabilmente vincerà 101–183 (risponde a «qualcuno è nato il mio giorno»). Poi ogni studente scrive giorno e mese su un foglietto; tu li leggi e li segni alla lavagna, colonna a sinistra. Non svelare nulla.</aside>
-    </section>
-
-    <!-- 15–20: de Méré, impostazione. Scene: js/complementare.js -->
-    <section id="de-mere-somma">
-      <p class="badge">15′ · Atto IV · La risposta a de Méré</p>
-      <h2 class="scene-title">Il ragionamento di de Méré: sommare</h2>
-      <svg class="scene-svg" width="1180" height="390" viewBox="0 0 1180 390" role="img" aria-label="De Méré somma le probabilità: 4 per un sesto e 24 per un trentaseiesimo fanno due terzi; ma con 6 lanci la somma dà 1 e con 7 supera 1"></svg>
-      <div class="l2-trick">
-        <p><b>almeno un</b> 6 &nbsp;⟷&nbsp; <b>nessun</b> 6</p>
-        <p class="l2-trick-f">$P(\text{almeno uno})=1-P(\text{nessuno})$</p>
-      </div>
-      <aside class="notes">All'ingresso la somma di de Méré sui due giochi. Click: 1 stessa somma per più lanci: con 6 lanci verrebbe 1, cioè la certezza; 2 con 7 lanci più di 1: impossibile (errore tipico n. 1, è la domanda da fare alla classe prima del click); 3 perché: un 6 al primo lancio e un 6 al secondo possono capitare insieme, la somma conta due volte quelle sequenze; 4 il trucco: contare il contrario. Niente conti: li fanno i gruppi.</aside>
-    </section>
-
-    <!-- 20–30: Esercizio 1 -->
-    <section id="l2-esercizio-1">
-      <p class="badge">20′ · Esercizio 1 · gruppi di 3–4</p>
-      <h2 class="scene-title">Le scommesse di de Méré</h2>
-      <div class="e3-grid">
-        <div class="ex-text e3-text">
-          <ol>
-            <li>Probabilità di <b>almeno un 6</b> in 4 lanci di un dado.</li>
-            <li>Probabilità di <b>almeno un doppio 6</b> in 24 lanci di due dadi.</li>
-            <li>De Méré: $4\cdot\tfrac16=24\cdot\tfrac1{36}=\tfrac23$. Dov'è l'errore?</li>
-            <li>Quanti lanci servono perché la seconda scommessa diventi favorevole?</li>
-          </ol>
-          <p class="ex-time">6′ in gruppo, con calcolatrice · 4′ insieme</p>
-        </div>
-        <div class="e3-stage">
-          <svg class="scene-svg" width="600" height="480" viewBox="0 0 600 480" role="img" aria-label="Soluzioni: 671 su 1296, circa 0.518; circa 0.491; la retta n per p sta sopra la curva vera; con 25 lanci 0.506"></svg>
-          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
-        </div>
-      </div>
-      <aside class="notes">Click: 1 il gatto; poi una soluzione per click. Suggerimento unico: «qual è la probabilità di nessun 6?». (a) 1 − (5/6)^4 = 671/1296 ≈ 0.518. (b) 1 − (35/36)^24 ≈ 0.491. (c) Ha sommato probabilità di eventi che si sovrappongono; con 6 lanci la somma darebbe 1, con 7 più di 1. (d) 25 lanci: 1 − (35/36)^25 ≈ 0.506. Errore atteso in (b): 1 − (1/36)^24, il complementare di «tutti doppi 6» invece di «nessun doppio 6».</aside>
-    </section>
-
-    <section id="hands-on-3">
-      <p class="badge">Script 3 · dal vivo</p>
-      <h2 class="scene-title">Hands-on 3: de Méré, esatto e simulato</h2>
-      <div class="ho-cards">
-        <div><code>almeno_un_successo(p, n)</code><span class="ho-desc">$1-(1-p)^n$: il complementare</span></div>
-        <div><code>while … &lt;= 0.5</code><span class="ho-desc">quanti lanci per superare ½</span></div>
-        <div><code>rng.integers(…).any(axis=1)</code><span class="ho-desc">100 000 giocate simulate</span></div>
-      </div>
-      <p class="ho-exp">Atteso: <b>0.5177 · 0.4914</b> &emsp;·&emsp; servono <b>25</b> lanci → <b>0.5055</b> &emsp;·&emsp; Monte Carlo entro 0.01</p>
-      <a class="psi-btn" href="../#lab-de-mere" target="_blank" rel="noopener">💻 Apri lo Script 3 ↗</a>
-      <aside class="notes">È veloce: si esegue in aula. Se sei in ritardo, solo l'output.</aside>
-    </section>
-
-    <!-- 30–46: compleanni. Scene: js/compleanni.js -->
-    <section id="compleanni-modello">
-      <p class="badge">30′ · Il paradosso dei compleanni</p>
-      <h2 class="scene-title">Contare il contrario: tutti i compleanni diversi</h2>
-      <div class="scene-grid">
-        <svg class="scene-svg" width="600" height="450" viewBox="0 0 600 450" role="img" aria-label="Un calendario di 365 giorni: ogni nuova persona deve evitare i giorni già presi"></svg>
-        <div class="scene-panel">
-          <p class="scene-lead cm-model">365 giorni <b>equiprobabili</b> · compleanni <b>indipendenti</b> · niente 29 febbraio</p>
-          <ol class="scene-steps">
-            <li>La 1ª persona: qualunque giorno, $\tfrac{365}{365}$</li>
-            <li>La 2ª evita quel giorno: $\tfrac{364}{365}$</li>
-            <li>La 3ª evita i due giorni presi: $\tfrac{363}{365}$</li>
-            <li>Con $n$ persone: $n$ fattori che scendono di uno</li>
-          </ol>
-          <div class="scene-def">$$P(\text{nessuna coincidenza})=\prod_{i=0}^{n-1}\Bigl(1-\frac{i}{365}\Bigr)$$</div>
-          <p class="scene-note">$P(\text{almeno una coincidenza})=1-\prod$ &nbsp;· il trucco di de Méré</p>
-        </div>
-      </div>
-      <aside class="notes">Prima le ipotesi del modello, a voce. Click: 1–3 le prime tre persone (il numeratore è una disposizione: 365·364·363); 4 si va avanti fino a 10 persone, ogni fattore un giorno in meno; 5 il prodotto; 6 il complementare. Il simbolo ∏ è solo «moltiplica tutti questi fattori», come Σ per la somma.</aside>
-    </section>
-
-    <section id="compleanni-curva" class="sondaggio" data-poll="s03-2">
-      <h2 class="scene-title">Quante persone servono?</h2>
-      <div class="real-stage">
-        <div class="tree-layer cc-layer">
-          <svg class="scene-svg" width="1180" height="430" viewBox="0 0 1180 430" role="img" aria-label="La probabilità di almeno una coincidenza in funzione del numero di persone: supera il 50% a 23 persone"></svg>
-          <p class="cc-check">Con <b>40</b> persone: 89% &emsp;·&emsp; con <b>50</b>: 97% &emsp;·&emsp; e nella nostra aula?</p>
-        </div>
-        <div class="result-layer" aria-hidden="true">
-          <h3>Il vostro voto</h3>
-          <div class="sondaggio-grid">
-            <div>
-              <!-- Opzioni copiate dal Sondaggio 2 prima dell'avvio. -->
-              <ol class="sondaggio-opts l2-opts5"></ol>
-              <p class="result-correct">Bastano <b class="highlight">23</b> persone: $50.7\%$</p>
-            </div>
-            <div class="sondaggio-join"></div>
-          </div>
-        </div>
-      </div>
-      <aside class="notes">Click: 1 la curva cresce fino a 22 persone (47.6%); 2 a 23 supera il 50%: 50.7%; 3 il resto della curva e i valori della tabella; 4 il risultato del Sondaggio 2 (legge s03-2, non crea voti); 5 torna alla curva: controlla le date raccolte alla lavagna. Se in aula non c'è nessuna coincidenza non è un fallimento: con 40 persone succede l'11% delle volte, con 50 il 3%.</aside>
-    </section>
-
-    <section id="mio-compleanno">
-      <h2 class="scene-title">Il <span class="b">mio</span> compleanno o <span class="a">una coppia qualunque</span>?</h2>
-      <svg class="scene-svg" width="1180" height="420" viewBox="0 0 1180 420" role="img" aria-label="A sinistra le 22 coppie che mi contengono, a destra tutte le 253 coppie fra 23 persone"></svg>
-      <div class="mc-foot">
-        <p class="mc-pairs">253 coppie, ognuna coincide con probabilità $\tfrac1{365}$ &emsp;·&emsp; le coppie crescono come $n^2$, non come $n$</p>
-        <p class="mc-q">Quante <b>altre</b> persone servono perché qualcuno abbia <b>il mio</b> compleanno, al 50%? <span class="mc-a">&nbsp;→ <b class="highlight">253</b></span></p>
-      </div>
-      <aside class="notes">Click: 1 a sinistra le 22 coppie che contengono me: 1 − (364/365)^22 ≈ 5.9%; 2 a destra tutte le 253 coppie: 50.7%; 3 il conto delle coppie (la domanda d'uscita di mercoledì) e la crescita come n²; 4 la domanda sulla confusione «il mio compleanno» (errore tipico n. 3): lascia rispondere; 5 la risposta, 253, da ln 2 / ln(365/364) ≈ 252.7. Non anticipare la media: arriva nella Settimana 4.</aside>
-    </section>
-
-    <!-- 46–56: la regola della radice -->
-    <section>
-      <section id="approssimazione">
-        <p class="badge">46′ · La regola della radice</p>
-        <h2 class="scene-title">Dal prodotto all'esponenziale</h2>
-        <div class="scene-grid">
-          <svg class="scene-svg" width="560" height="440" viewBox="0 0 560 440" role="img" aria-label="La retta 1 − x è tangente in 0 alla curva e alla meno x e le sta sotto; per x piccolo le due quasi coincidono"></svg>
-          <div class="scene-panel">
-            <ol class="scene-steps">
-              <li>$1-x\le e^{-x}$, quasi uguali se $x$ è piccolo</li>
-              <li>Su ogni fattore: $1-\tfrac iN\le e^{-i/N}$</li>
-              <li>Il prodotto diventa una somma: $e^{-\frac1N(0+1+\cdots+(n-1))}$</li>
-              <li>Gauss: $0+1+\cdots+(n-1)=\tfrac{n(n-1)}2$</li>
-            </ol>
-            <div class="scene-def">$$P(\text{coincidenza})\;\ge\;1-e^{-\frac{n(n-1)}{2N}}$$</div>
-            <p class="scene-note">$N=365,\ n=23$: $\;1-e^{-506/730}\approx0.500$, contro $0.507$ vero</p>
-          </div>
-        </div>
-        <aside class="notes">Click: 1 la curva e la sua tangente in 0, e tre valori di x (0.01, 0.1, 0.5): lo scarto si vede solo per x grande; 2 la sostituzione su ogni fattore (sono tutti positivi: moltiplicare le disuguaglianze è lecito); 3 e^a·e^b = e^(a+b); 4 la somma di Gauss; 5 sottraendo da 1 la disuguaglianza si capovolge: stima per difetto; 6 il controllo con 23 persone. La dimostrazione di 1 − x ≤ e^(−x) è nella slide sotto (freccia in basso): solo se c'è tempo.</aside>
-      </section>
-
-      <section id="approssimazione-prova">
-        <p class="badge">Facoltativo · Approfondimenti A e B</p>
-        <h2 class="scene-title">Perché $1-x\le e^{-x}$, e perché $\sqrt N$ è l'ordine giusto</h2>
-        <div class="ap-cols">
-          <div class="ap-col">
-            <h3>A · la tangente sta sotto</h3>
-            <p>$g(x)=e^{-x}-1+x,\qquad g(0)=0$</p>
-            <p>$g'(x)=1-e^{-x}$: negativa per $x<0$, positiva per $x>0$</p>
-            <p>minimo in $0$ $\Rightarrow$ $g(x)\ge0$ per ogni $x$</p>
-            <p class="ap-note">Fattori $1-\tfrac iN\ge0$ (finché $n\le N$): si possono moltiplicare membro a membro.</p>
-          </div>
-          <div class="ap-col">
-            <h3>B · dall'altro lato</h3>
-            <p>$P(\text{coincidenza})\le\dbinom n2\dfrac1N=\dfrac{n(n-1)}{2N}$</p>
-            <p>per superare $\tfrac12$ serve $n(n-1)\ge N$: $\;n>\sqrt N$</p>
-            <p class="ap-range">soglia vera $\in\bigl[\sqrt N,\ 1.18\sqrt N+\tfrac12\bigr]$</p>
-            <p class="ap-note">La differenza tra 1 e 1.18 sono le sovrapposizioni: le stesse che de Méré trascura.</p>
-          </div>
-        </div>
-        <aside class="notes">Facoltativa. A: la dimostrazione con g. B: il bound dell'unione, P(unione) ≤ somma, dà la soglia dall'altro lato; quindi l'ordine √N è quello giusto. Soglia esatta: n(n−1)/2N = ln 2 dà n = ½(1 + √(1 + 8N ln 2)) ≈ 1.1774·√N + ½; per N = 365 viene 22.9999…: 23 supera ½ per un soffio.</aside>
-      </section>
-    </section>
-
-    <section id="regola-radice">
-      <h2 class="scene-title">Quando si arriva a ½?</h2>
-      <div class="rr-chain equation">$1-e^{-\frac{n^2}{2N}}=\tfrac12\iff\dfrac{n^2}{2N}=\ln2\iff n=\sqrt{2\ln2\cdot N}\approx\color{#38ef7d}{1.18\sqrt N}$</div>
-      <table class="lv-table rr-table">
-        <thead><tr><th>possibilità $N$</th><th>$\sqrt N$</th><th>$1.18\sqrt N$</th><th>primo $n$ con $P\ge\tfrac12$</th><th>quota di $N$</th></tr></thead>
-        <tbody>
-          <tr><td>365 giorni</td><td>19.1</td><td>22.5</td><td class="highlight">23</td><td>6%</td></tr>
-          <tr><td>10 000</td><td>100</td><td>117.7</td><td class="highlight">119</td><td>1.2%</td></tr>
-          <tr><td>1 000 000</td><td>1000</td><td>1177</td><td class="highlight">1178</td><td>0.12%</td></tr>
-        </tbody>
-      </table>
-      <p class="rr-punch punch">Con $N$ possibilità equiprobabili, una ripetizione è probabile dopo circa $\sqrt N$ estrazioni, <b>non</b> $N$.</p>
-      <aside class="notes">Click: 1 si risolve la stima per ½ prendendo il logaritmo; 2–4 una riga della tabella per click (prima colonna esatta da Script 4); 5 la regola. Ultima colonna: quanto è «piena» la stanza o la tabella al 50%: sempre meno, al crescere di N.</aside>
-    </section>
-
-    <section id="curva-universale">
-      <h2 class="scene-title">Esplora: una sola curva per tutti gli $N$</h2>
-      <div class="cu-box" id="cu-box" data-prevent-swipe>
-        <div class="cu-ctrl">
-          <label>$N$ <input type="range" min="1" max="7" step="0.0001" value="2.5623" data-k="logN"></label>
-          <button class="psi-btn ghost" type="button" data-n="365">365</button>
-          <button class="psi-btn ghost" type="button" data-n="10000">10⁴</button>
-          <button class="psi-btn ghost" type="button" data-n="1000000">10⁶</button>
-        </div>
-        <svg class="scene-svg" width="1000" height="380" viewBox="0 0 1000 380" role="img" aria-label="Probabilità esatta di coincidenza in funzione di x = n / radice di N, per N scelto, e la curva limite 1 − e^(−x²/2)"></svg>
-        <p class="cu-out"></p>
-      </div>
-      <aside class="notes">Sull'asse orizzontale x = n/√N: le persone contate in unità di √N. Sposta N da 10 a 10 milioni: la curva esatta resta quasi la stessa, e passa per ½ a x ≈ 1.18. Il motivo: con n = x√N la stima diventa 1 − e^(−x²/2), e N sparisce.</aside>
-    </section>
-
-    <section id="hands-on-4">
-      <p class="badge">Script 4 · solo l'output</p>
-      <h2 class="scene-title">Hands-on 4: compleanni, esatto, approssimato, simulato</h2>
-      <div class="ho-cards">
-        <div><code>p_coincidenza(n, N)</code><span class="ho-desc">$1-\prod(1-i/N)$, esatta</span></div>
-        <div><code>approssimata(n, N)</code><span class="ho-desc">$1-e^{-n(n-1)/2N}$, per difetto</span></div>
-        <div><code>simula(n, N)</code><span class="ho-desc">20 000 stanze, <code>len(set(giorni)) &lt; n</code></span></div>
-      </div>
-      <p class="ho-exp">Atteso: <b>0.5073</b> per $n=23$ &emsp;·&emsp; soglie <b>23 · 119 · 1178</b> &emsp;·&emsp; il mio compleanno: <b>0.0586</b></p>
-      <a class="psi-btn" href="../#lab-compleanni" target="_blank" rel="noopener">💻 Apri lo Script 4 ↗</a>
-      <aside class="notes">Solo l'output in aula (circa 2 secondi di esecuzione).</aside>
-    </section>
-
-    <!-- 56–66: Esercizio 2. Scene: js/hash.js -->
-    <section id="l2-esercizio-2">
-      <p class="badge">56′ · Esercizio 2 · prima da soli, poi in gruppo</p>
-      <h2 class="scene-title">La tabella quasi vuota</h2>
-      <div class="e2-grid">
-        <div class="ex-text e2-text">
-          <p class="e2-q"><b>1 000 000</b> di slot, <b>1000</b> chiavi: la tabella è piena allo 0.1%. Probabilità di <b>almeno una collisione</b>?</p>
-          <div class="e2-votes"><span>&lt; 1%</span><span>circa 10%</span><span class="e2-right">circa 40%</span><span>&gt; 90%</span></div>
-          <ol class="e2-tasks">
-            <li>Quante coppie di chiavi ci sono? <span class="tr-sol">$\binom{1000}{2}=499\,500$</span></li>
-            <li>Stimate con $1-e^{-n(n-1)/2N}$. <span class="tr-sol">$1-e^{-0.4995}\approx39.3\%$</span></li>
-            <li>Quante chiavi per il 50%? Quanto è piena la tabella? <span class="tr-sol">$1.18\sqrt{10^6}\approx1177$ chiavi: piena allo 0.12%</span></li>
-          </ol>
-          <p class="ex-time">1′ voto a mano alzata · 6′ in gruppo · 3′ insieme</p>
-        </div>
-        <div class="e3-stage e2-stage">
-          <svg class="scene-svg" width="460" height="480" viewBox="0 0 460 480" role="img" aria-label="Un milione di slot come un quadrato 1000 per 1000: le 1000 chiavi sono puntini quasi invisibili"></svg>
-          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
-        </div>
-      </div>
-      <aside class="notes">Prima il voto individuale a mano alzata sulle quattro fasce (scrivi i numeri): probabilmente vince «&lt; 1%». Click: 1 domande di gruppo e gatto; 2–4 una soluzione per click; con (b) si accende la fascia giusta. Errore atteso: 1000/10^6 = 0.1% è la probabilità che una chiave trovi uno slot già occupato, non che esista una coppia che collide. Il prodotto esatto dà lo stesso valore alla terza cifra.</aside>
-    </section>
-
-    <!-- 66–72: tabelle hash dal vivo -->
-    <section id="hash-compleanni">
-      <p class="badge">66′ · Atto V · Tabelle hash</p>
-      <h2 class="scene-title">Una tabella hash è un tavolo da compleanni</h2>
-      <svg class="scene-svg" width="1180" height="350" viewBox="0 0 1180 350" role="img" aria-label="Quattro chiavi passano per la funzione hash e finiscono negli slot 2, 0, 4, 2 di un array di 5 slot: ada ed eva collidono nello slot 2"></svg>
-      <div class="hc-map">
-        <span>slot ↔ giorni</span><span>chiavi ↔ persone</span><span>$m$ ↔ $N=365$</span>
-      </div>
-      <p class="hc-formula">$P(\text{collisione})\ge1-e^{-\frac{n(n-1)}{2m}}$ &emsp;·&emsp; 50% a $n\approx1.18\sqrt m$ <span class="short-label">&emsp;se $h$ sparpaglia le chiavi in modo uniforme e indipendente</span></p>
-      <aside class="notes">Click: 1–4 le chiavi una alla volta: bob → 0, ada → 2, leo → 4, eva → 2: collisione; 5 la corrispondenza con i compleanni; 6 la formula. «Simple uniform hashing» (Cormen, cap. 11) è un'ipotesi, non un fatto: una funzione hash reale la approssima. Se c'è una domanda: le collisioni non rendono lenta la tabella finché le liste restano corte (fattore di carico n/m).</aside>
-    </section>
-
-    <section id="widget-hash">
-      <h2 class="scene-title">Dal vivo: riempi la tabella</h2>
-      <div class="wh-box" id="wh-box" data-prevent-swipe>
-        <div class="wh-ctrl">
-          <label>slot $m$ <input type="range" min="16" max="400" step="1" value="100" data-k="m"> <b data-v="m">100</b></label>
-          <button class="psi-btn" type="button" data-add="1">+1 chiave</button>
-          <button class="psi-btn ghost" type="button" data-add="10">+10 chiavi</button>
-          <button class="psi-btn ghost" type="button" data-reset>Nuova prova</button>
-        </div>
-        <div class="wh-grid"></div>
-        <p class="wh-out"></p>
-        <p class="wh-log"></p>
-      </div>
-      <aside class="notes">m = 100. Tre prove: «+1 chiave» finché compare la prima collisione (slot arancione), poi «Nuova prova». Le prime collisioni restano registrate in basso: annotale anche alla lavagna e confrontale con 1.18·√100 ≈ 11.8. Le chiavi sono casuali: ogni prova è diversa.</aside>
-    </section>
-
-    <!-- 72–80: birthday attack -->
-    <section id="birthday-attack">
-      <p class="badge">72′ · Birthday attack</p>
-      <h2 class="scene-title">L'attaccante deve colpire un valore dato, o <span class="a">una coppia qualunque</span>?</h2>
-      <div class="ba-cards">
-        <div class="ba-card ba-target"><h3>Un valore dato</h3><p>un messaggio con <b>quell'hash</b></p><p class="ba-cost">$\approx2^b$ tentativi</p><small>chi compie gli anni <b>oggi</b>?</small></div>
-        <div class="ba-card ba-pair"><h3>Una coppia qualunque</h3><p>due messaggi con <b>lo stesso</b> hash</p><p class="ba-cost">$\approx1.18\cdot2^{b/2}$</p><small>il paradosso dei compleanni</small></div>
-      </div>
-      <svg class="scene-svg" width="1180" height="230" viewBox="0 0 1180 230" role="img" aria-label="Per hash di 32, 64, 128 e 256 bit, il costo dell'attacco al valore dato e quello del birthday attack in scala di bit: il secondo è sempre la metà"></svg>
-      <p class="ba-rule">Sicurezza contro le collisioni: <b>$b/2$ bit</b> &emsp;·&emsp; SHA-256 → <b class="highlight">128 bit</b> <span class="short-label">&emsp;le funzioni difettose cedono anche prima</span></p>
-      <aside class="notes">Fai prima la domanda del titolo (errore tipico n. 3 con parole nuove). Click: 1 le due carte; 2 i costi in bit, una riga per b: la barra arancione è 2^b, quella blu 2^(b/2), con i messaggi per il 50%; 3 la regola: sicurezza a k bit = circa 2^k operazioni, quindi b/2. Su MD5 e SHA-1 non dare cifre finché non sono verificate.</aside>
-    </section>
-
-    <section id="hands-on-5">
-      <p class="badge">Script 5 · dal vivo fino a $b=20$</p>
-      <h2 class="scene-title">Hands-on 5: birthday attack su uno SHA-256 troncato</h2>
-      <div class="ho-cards">
-        <div><code>sha256(msg) &gt;&gt; (256 - b)</code><span class="ho-desc">solo i primi $b$ bit: $N=2^b$</span></div>
-        <div><code>prima_collisione(b)</code><span class="ho-desc">messaggi casuali finché un hash si ripete</span></div>
-        <div><code>median(risultati)</code><span class="ho-desc">la <b>mediana</b>, non la media</span></div>
-      </div>
-      <p class="ho-exp">Soglia $1.18\cdot2^{b/2}$: <b>76 · 302 · 1208</b> per $b=12,16,20$ &emsp;·&emsp; mediana vicina, <b>≈ 50%</b> delle prove sotto</p>
-      <a class="psi-btn" href="../#lab-hash" target="_blank" rel="noopener">💻 Apri lo Script 5 ↗</a>
-      <aside class="notes">Dal vivo solo fino a b = 20 (b = 24 è più lento). Due cose da guardare: la mediana sta vicino alla soglia, e circa metà delle prove finisce prima, che è la definizione stessa di «50%». Ogni 2 bit in più, i messaggi raddoppiano: crescono come √N.</aside>
-    </section>
-
-    <!-- 80–96: Esercizio 3 -->
-    <section id="l2-esercizio-3">
-      <p class="badge">80′ · Esercizio 3 · gruppi di 3–4</p>
-      <h2 class="scene-title">Gli ID a 24 bit</h2>
-      <div class="e3-grid">
-        <div class="ex-text e3-text">
-          <p class="e3-lead">Ogni richiesta riceve un ID casuale a 24 bit, $N=2^{24}\approx1.68\cdot10^7$, uniforme e indipendente.</p>
-          <ol>
-            <li>Dopo quante richieste una collisione supera il 50%?</li>
-            <li>Con 1000 richieste, quanto vale?</li>
-            <li>Il responsabile: «Mille su sedici milioni è lo 0.006%: non succederà». Che cosa gli rispondete?</li>
-            <li>Quanti bit servono perché 1000 richieste collidano con probabilità sotto $10^{-6}$?</li>
-          </ol>
-          <p class="ex-time">2′ a istinto, su foglio · 8′ in gruppo · 6′ alla lavagna</p>
-        </div>
-        <div class="e3-stage">
-          <svg class="scene-svg" width="600" height="480" viewBox="0 0 600 480" role="img" aria-label="Soluzioni: circa 4823 richieste; 499 500 coppie, circa 2.93%; lo 0.006% è una sola coppia; 39 bit"></svg>
-          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
-        </div>
-      </div>
-      <aside class="notes">Prima 2 minuti di stima a istinto per (a) e (b). Click: 1 il gatto; poi una soluzione per click. Suggerimento unico: «quante coppie di richieste ci sono?». (a) 1.1774·2^12 ≈ 4823. (b) 499 500/N ≈ 0.0298, 1 − e^(−0.0298) ≈ 2.93%. (c) 0.006% è 1000/N, una data richiesta contro un'altra data; le occasioni sono 499 500 coppie. (d) C(1000,2)/N ≤ 10^−6 richiede N ≥ 5·10^11, b ≥ 38.9: 39 bit (9.1·10^−7). Errori attesi: 1000/N invece di C(1000,2)/N; «N/2 richieste» in (a); in (d) b ≈ 20 dimenticando il 10^−6. Se sei in ritardo, salta (d). Per chi finisce prima: Script 4 con N = 2^24.</aside>
-    </section>
-
-    <!-- 96–102: takeaway -->
-    <section id="takeaway-l2">
-      <p class="badge">96′ · Takeaway</p>
-      <h2 class="scene-title">Per l'ingegnere del software</h2>
-      <div class="tk-grid">
-        <div class="tk-card"><b>1</b><h3>Le collisioni sono attese</h3><p>$m$ slot: la prima dopo circa $\sqrt m$ chiavi. Si gestiscono col fattore di carico $n/m$.</p></div>
-        <div class="tk-card"><b>2</b><h3>I bit contano a metà</h3><p>$b$ bit reggono circa $2^{b/2}$ elementi. Un ID casuale di 32 bit è a rischio già con centomila.</p></div>
-        <div class="tk-card"><b>3</b><h3>«Almeno uno»? Calcola «nessuno»</h3><p>$1-\prod_i(1-p_i)$, non $\sum_i p_i$: l'errore di de Méré, in produzione.</p></div>
-        <div class="tk-card"><b>4</b><h3>Le coppie crescono come $n^2$</h3><p>$\binom n2$ interazioni: i sistemi grandi producono incidenti «improbabili» con regolarità.</p></div>
-      </div>
-      <aside class="notes">Leggi i quattro punti una sola volta, senza commentarli.</aside>
-    </section>
-
-    <!-- 102–105: domanda d'uscita -->
-    <section id="uscita-2">
-      <p class="badge">102′ · Domanda d'uscita</p>
-      <p class="ux-q">Il vostro sistema genera <b class="highlight">10 000</b> ID casuali a <b class="highlight">32 bit</b>.</p>
-      <p class="ux-q">Collisioni: sì, no, o forse?</p>
-      <p class="ux-hint">Su un foglio, con un numero.</p>
-      <aside class="notes">Risposta: n(n−1)/2N = 49 995 000 / 2^32 ≈ 0.0116, cioè circa 1.2%. È ben sotto i 77 000 ID della soglia del 50%, ma non è zero: serve il calcolo, non l'impressione dei «16 bit di margine».</aside>
-    </section>
   </div></div>
   <script src="../../assets/slides/scene.js"></script>
   <script src="../../assets/sondaggi.js"></script>
@@ -1098,14 +761,9 @@
   <script src="js/metodi.js"></script>
   <script src="js/futuri.js"></script>
   <script src="js/combinatoria.js"></script>
-  <script src="js/complementare.js"></script>
-  <script src="js/compleanni.js"></script>
-  <script src="js/hash.js"></script>
   <script>
     document.querySelector('#albero-reale .sondaggio-opts').innerHTML =
       document.querySelector('#sondaggio-1 .sondaggio-opts').innerHTML;
-    document.querySelector('#compleanni-curva .sondaggio-opts').innerHTML =
-      document.querySelector('#sondaggio-2 .sondaggio-opts').innerHTML;
     PSIDeck.start({ onReady: function (deck) { PSISondaggio.bind(deck); } });
   </script>
 </body>

@@ -419,24 +419,59 @@
       .to(solC, { opacity: 1, duration: .4 }).addLabel('s5');
   });
 
-  // I conteggi dei tre casi studiati sono righe del triangolo; BABA = scegliere le manche 2 e 4.
-  PSI.scene('futuri-binomiali', function (el, tl) {
-    var q = PSI.q(el), root = q.one('svg');
-    var CASES = [['a 3 punti · sul 2–1 · a = 1, n = 2', 2, 1], ['a 3 punti · sull’1–0 · a = 2, n = 4', 4, 2], ['a 5 punti · sul 2–0 · a = 3, n = 7', 7, 3]];
-    var rows = [], tags = [];
-    CASES.forEach(function (c, i) {
-      var g = svg('g', {}, root), y = 70 + i * 105;
-      label(g, 40, y - 34, c[0], 's03-small', { 'text-anchor': 'start' });
-      for (var k = 0; k <= c[1]; k++) {
-        var x = 68 + k * 64, win = k >= c[2];
-        svg('rect', { x: x - 28, y: y - 20, width: 56, height: 40, rx: 6, fill: (win ? A : B) + '33', stroke: win ? A : B, 'stroke-width': 2 }, g);
-        label(g, x, y + 8, String(binom(c[1], k)), 's03-label');
-      }
-      rows.push(g);
-      tags.push(label(root, 600, y + 8, '= riga ' + c[1], 's03-label s03-green', { 'text-anchor': 'start' }));
+  // Futuri raggruppati per numero di A; i puntini abbreviano le righe lunghe.
+  ['futuri-binomiali', 'futuri-binomiali-4', 'futuri-binomiali-7'].forEach(function (id) {
+    PSI.scene(id, function (el, tl) {
+      var q = PSI.q(el), n = Number(el.dataset.n), a = Number(el.dataset.a);
+      var rows = q.all('.bf-row'), boxes = [], colors = [];
+      rows.forEach(function (row) {
+        var k = Number(row.dataset.k), root = row.querySelector('svg');
+        var sequences = [];
+        for (var mask = 0; mask < Math.pow(2, n); mask++) {
+          var sequence = '';
+          for (var bit = n - 1; bit >= 0; bit--) sequence += mask & (1 << bit) ? 'A' : 'B';
+          if (sequence.split('A').length - 1 === k) sequences.push(sequence);
+        }
+        var dense = n === 7, pitch = dense ? 122 : n === 4 ? 100 : 160;
+        var w = dense ? 110 : n === 4 ? 86 : 140, h = dense ? 40 : 54;
+        var omitted = sequences.length > 7 ? sequences.length - 6 : 0;
+        var shown = omitted ? sequences.slice(0, 3).concat([null], sequences.slice(-3)) : sequences;
+        shown.forEach(function (sequence, i) {
+          var x = 2 + i * pitch;
+          if (sequence === null) {
+            var gap = svg('g', { 'data-omitted': omitted }, root);
+            label(gap, x + w / 2, 21, '⋯', 's03-label');
+            label(gap, x + w / 2, 39, omitted + ' omessi', 's03-tiny');
+            return;
+          }
+          var tile = svg('g', { 'data-sequence': sequence }, root);
+          var box = svg('rect', { x: x, y: 2, width: w, height: h, rx: dense ? 3 : 7,
+            fill: '#ffffff0a', stroke: '#ffffff40', 'stroke-width': 1.5 }, tile);
+          var lines = [sequence];
+          lines.forEach(function (value, j) {
+            label(tile, x + w / 2, dense ? 28 : 36, value, 'bf-sequence',
+              { style: 'font-size:' + (dense ? 17 : 22) + 'px' });
+          });
+          boxes.push(box); colors.push(k < a ? B : A);
+        });
+      });
+      var counts = q.all('.bf-count'), legend = q.one('.bf-legend'), result = q.one('.bf-result');
+      gsap.set([counts, legend, result], { opacity: 0 });
+      tl.addLabel('s0');
+      tl.to(counts, { opacity: 1, duration: .35, stagger: .08 }).addLabel('s1');
+      boxes.forEach(function (box, i) {
+        tl.to(box, { attr: { fill: colors[i] + '44', stroke: colors[i] }, duration: .4 }, 'colors');
+      });
+      tl.to(legend, { opacity: 1, duration: .3 }).addLabel('s2');
+      tl.to(result, { opacity: 1, duration: .4 }).addLabel('s3');
     });
-    var map = svg('g', {}, root), rings = svg('g', {}, root), x0 = 765;
-    label(map, 925, 26, 'perché? un futuro con k = 2, n = 4', 's03-small');
+  });
+
+  // BABA = scegliere le manche 2 e 4; dal conteggio alla formula.
+  PSI.scene('futuri-binomiali-formula', function (el, tl) {
+    var q = PSI.q(el), root = q.one('svg');
+    var map = svg('g', {}, root), rings = svg('g', {}, root), x0 = 210;
+    label(map, 370, 26, 'perché? un futuro con k = 2, n = 4', 's03-small');
     'BABA'.split('').forEach(function (c, i) {
       var x = x0 + i * 107;
       svg('rect', { x: x - 38, y: 50, width: 76, height: 76, rx: 10, fill: (c === 'A' ? A : B) + '22', stroke: c === 'A' ? A : B, 'stroke-width': 2 }, map);
@@ -444,18 +479,16 @@
       label(map, x, 152, 'manche ' + (i + 1), 's03-tiny');
       if (c === 'A') svg('rect', { x: x - 46, y: 42, width: 92, height: 92, rx: 14, fill: 'none', stroke: G, 'stroke-width': 4 }, rings);
     });
-    var pick = [label(root, 925, 205, 'A vince le manche {2, 4}', 's03-label'),
-      label(root, 925, 240, 'scegliere quali 2 manche tra 4', 's03-small'),
-      label(root, 925, 290, '→ C(4, 2) = 6 futuri', 's03-label s03-green')];
+    var pick = [label(root, 880, 110, 'A vince le manche {2, 4}', 's03-label'),
+      label(root, 880, 165, 'scegliere quali 2 manche tra 4', 's03-small'),
+      label(root, 880, 225, '→ C(4, 2) = 6 futuri', 's03-label s03-green')];
     var rule = q.one('.bf-rule'), formula = q.one('.bf-formula'), check = q.one('.bf-check');
-    gsap.set([rows, tags, map, rings, pick, rule, formula, check], { opacity: 0 });
+    gsap.set([rings, pick, rule, formula, check], { opacity: 0 });
     tl.addLabel('s0');
-    tl.to(rows, { opacity: 1, duration: .4, stagger: .3 }).addLabel('s1');
-    tl.to(tags, { opacity: 1, duration: .4, stagger: .2 }).addLabel('s2');
-    tl.to(map, { opacity: 1, duration: .4 }).to(rings, { opacity: 1, duration: .4 }).to(pick, { opacity: 1, duration: .4, stagger: .35 }).addLabel('s3');
-    tl.to(rule, { opacity: 1, duration: .5 }).addLabel('s4');
-    tl.to(formula, { opacity: 1, duration: .6 }).addLabel('s5');
-    tl.to(check, { opacity: 1, duration: .5 }).addLabel('s6');
+    tl.to(rings, { opacity: 1, duration: .4 }).to(pick, { opacity: 1, duration: .4, stagger: .2 }).addLabel('s1');
+    tl.to(rule, { opacity: 1, duration: .4 }).addLabel('s2');
+    tl.to(formula, { opacity: 1, duration: .4 }).addLabel('s3');
+    tl.to(check, { opacity: 1, duration: .4 }).addLabel('s4');
   });
 
   // Esercizio 3: il gatto, poi una soluzione per click nei quattro quadranti.

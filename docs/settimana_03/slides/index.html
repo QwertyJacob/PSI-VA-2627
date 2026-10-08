@@ -684,14 +684,127 @@
     
 
     <!-- 94–104: i futuri di Fermat sono coefficienti binomiali; Esercizio 3 -->
-    <section id="futuri-binomiali">
-      <p class="badge">94′ · Fermat senza elencare</p>
-      <h2 class="scene-title">I futuri di Fermat sono coefficienti binomiali</h2>
-      <svg class="scene-svg" width="1180" height="330" viewBox="0 0 1180 330" role="img" aria-label="I conteggi dei futuri nei tre casi studiati sono le righe 2, 4 e 7 del triangolo; il futuro BABA corrisponde alla scelta delle manche 2 e 4 vinte da A"></svg>
+    <section id="futuri-binomiali" class="bf-case" data-n="2" data-a="1">
+      <p class="badge">94′ · I futuri di Fermat · caso 1/3</p>
+      <h2 class="scene-title">2–1 a 3 punti: tutti i $4$ futuri</h2>
+      <p class="bf-intro">Ad A manca $1$ vittoria, a B $2$: $n=1+2-1=2$ manche, incluse quelle fittizie.</p>
+      <div class="bf-rows">
+        <div class="bf-row" data-k="0">
+          <span class="bf-k">0 A</span>
+          <span class="bf-count">$\binom{2}{0}=1$</span>
+          <svg class="scene-svg" width="990" height="64" viewBox="0 0 990 64" role="img" aria-label="1 sequenze con 0 vittorie di A"></svg>
+        </div>
+        <div class="bf-row" data-k="1">
+          <span class="bf-k">1 A</span>
+          <span class="bf-count">$\binom{2}{1}=2$</span>
+          <svg class="scene-svg" width="990" height="64" viewBox="0 0 990 64" role="img" aria-label="2 sequenze con 1 vittorie di A"></svg>
+        </div>
+        <div class="bf-row" data-k="2">
+          <span class="bf-k">2 A</span>
+          <span class="bf-count">$\binom{2}{2}=1$</span>
+          <svg class="scene-svg" width="990" height="64" viewBox="0 0 990 64" role="img" aria-label="1 sequenze con 2 vittorie di A"></svg>
+        </div>
+      </div>
+      <p class="bf-legend"><span class="bf-losing">Giallo: meno di 1 A, vince B.</span> <span class="a">Azzurro: almeno 1 A, vince A.</span></p>
+      <p class="bf-result">$P(A\text{ vince})=\dfrac{2+1}{4}=\dfrac{3}{4}$</p>
+      <aside class="notes">Tutti i futuri hanno la stessa lunghezza, anche se la partita termina prima. Click 1: il coefficiente binomiale di ogni riga conta i futuri di quel gruppo. Click 2: in giallo le righe con k &lt; 1, in cui A non raggiunge il traguardo; in azzurro le altre. Click 3: sommiamo le righe azzurre e dividiamo per 4.</aside>
+    </section>
+
+    <section id="futuri-binomiali-4" class="bf-case" data-n="4" data-a="2">
+      <p class="badge">94′ · I futuri di Fermat · caso 2/3</p>
+      <h2 class="scene-title">1–0 a 3 punti: tutti i $16$ futuri</h2>
+      <p class="bf-intro">Ad A mancano $2$ vittorie, a B $3$: $n=2+3-1=4$ manche, incluse quelle fittizie.</p>
+      <div class="bf-rows">
+        <div class="bf-row" data-k="0">
+          <span class="bf-k">0 A</span>
+          <span class="bf-count">$\binom{4}{0}=1$</span>
+          <svg class="scene-svg" width="990" height="64" viewBox="0 0 990 64" role="img" aria-label="1 sequenze con 0 vittorie di A"></svg>
+        </div>
+        <div class="bf-row" data-k="1">
+          <span class="bf-k">1 A</span>
+          <span class="bf-count">$\binom{4}{1}=4$</span>
+          <svg class="scene-svg" width="990" height="64" viewBox="0 0 990 64" role="img" aria-label="4 sequenze con 1 vittorie di A"></svg>
+        </div>
+        <div class="bf-row" data-k="2">
+          <span class="bf-k">2 A</span>
+          <span class="bf-count">$\binom{4}{2}=6$</span>
+          <svg class="scene-svg" width="990" height="64" viewBox="0 0 990 64" role="img" aria-label="6 sequenze con 2 vittorie di A"></svg>
+        </div>
+        <div class="bf-row" data-k="3">
+          <span class="bf-k">3 A</span>
+          <span class="bf-count">$\binom{4}{3}=4$</span>
+          <svg class="scene-svg" width="990" height="64" viewBox="0 0 990 64" role="img" aria-label="4 sequenze con 3 vittorie di A"></svg>
+        </div>
+        <div class="bf-row" data-k="4">
+          <span class="bf-k">4 A</span>
+          <span class="bf-count">$\binom{4}{4}=1$</span>
+          <svg class="scene-svg" width="990" height="64" viewBox="0 0 990 64" role="img" aria-label="1 sequenze con 4 vittorie di A"></svg>
+        </div>
+      </div>
+      <p class="bf-legend"><span class="bf-losing">Giallo: meno di 2 A, vince B.</span> <span class="a">Azzurro: almeno 2 A, vince A.</span></p>
+      <p class="bf-result">$P(A\text{ vince})=\dfrac{6+4+1}{16}=\dfrac{11}{16}$</p>
+      <aside class="notes">Tutti i futuri hanno la stessa lunghezza, anche se la partita termina prima. Click 1: il coefficiente binomiale di ogni riga conta i futuri di quel gruppo. Click 2: in giallo le righe con k &lt; 2, in cui A non raggiunge il traguardo; in azzurro le altre. Click 3: sommiamo le righe azzurre e dividiamo per 16.</aside>
+    </section>
+
+    <section id="futuri-binomiali-7" class="bf-case" data-n="7" data-a="3">
+      <p class="badge">94′ · I futuri di Fermat · caso 3/3</p>
+      <h2 class="scene-title">2–0 a 5 punti: $128$ futuri raggruppati</h2>
+      <p class="bf-intro">Ad A mancano $3$ vittorie, a B $5$: $n=3+5-1=7$ manche, incluse quelle fittizie.</p>
+      <div class="bf-rows">
+        <div class="bf-row" data-k="0">
+          <span class="bf-k">0 A</span>
+          <span class="bf-count">$\binom{7}{0}=1$</span>
+          <svg class="scene-svg" width="990" height="44" viewBox="0 0 990 44" role="img" aria-label="1 sequenze con 0 vittorie di A"></svg>
+        </div>
+        <div class="bf-row" data-k="1">
+          <span class="bf-k">1 A</span>
+          <span class="bf-count">$\binom{7}{1}=7$</span>
+          <svg class="scene-svg" width="990" height="44" viewBox="0 0 990 44" role="img" aria-label="7 sequenze con 1 vittorie di A"></svg>
+        </div>
+        <div class="bf-row" data-k="2">
+          <span class="bf-k">2 A</span>
+          <span class="bf-count">$\binom{7}{2}=21$</span>
+          <svg class="scene-svg" width="990" height="44" viewBox="0 0 990 44" role="img" aria-label="21 sequenze con 2 vittorie di A"></svg>
+        </div>
+        <div class="bf-row" data-k="3">
+          <span class="bf-k">3 A</span>
+          <span class="bf-count">$\binom{7}{3}=35$</span>
+          <svg class="scene-svg" width="990" height="44" viewBox="0 0 990 44" role="img" aria-label="35 sequenze con 3 vittorie di A"></svg>
+        </div>
+        <div class="bf-row" data-k="4">
+          <span class="bf-k">4 A</span>
+          <span class="bf-count">$\binom{7}{4}=35$</span>
+          <svg class="scene-svg" width="990" height="44" viewBox="0 0 990 44" role="img" aria-label="35 sequenze con 4 vittorie di A"></svg>
+        </div>
+        <div class="bf-row" data-k="5">
+          <span class="bf-k">5 A</span>
+          <span class="bf-count">$\binom{7}{5}=21$</span>
+          <svg class="scene-svg" width="990" height="44" viewBox="0 0 990 44" role="img" aria-label="21 sequenze con 5 vittorie di A"></svg>
+        </div>
+        <div class="bf-row" data-k="6">
+          <span class="bf-k">6 A</span>
+          <span class="bf-count">$\binom{7}{6}=7$</span>
+          <svg class="scene-svg" width="990" height="44" viewBox="0 0 990 44" role="img" aria-label="7 sequenze con 6 vittorie di A"></svg>
+        </div>
+        <div class="bf-row" data-k="7">
+          <span class="bf-k">7 A</span>
+          <span class="bf-count">$\binom{7}{7}=1$</span>
+          <svg class="scene-svg" width="990" height="44" viewBox="0 0 990 44" role="img" aria-label="1 sequenze con 7 vittorie di A"></svg>
+        </div>
+      </div>
+      <p class="bf-legend"><span class="bf-losing">Giallo: meno di 3 A, vince B.</span> <span class="a">Azzurro: almeno 3 A, vince A.</span> · I puntini abbreviano le righe lunghe.</p>
+      <p class="bf-result">$P(A\text{ vince})=\dfrac{35+35+21+7+1}{128}=\dfrac{99}{128}$</p>
+      <aside class="notes">Tutti i futuri hanno la stessa lunghezza, anche se la partita termina prima. Click 1: il coefficiente binomiale di ogni riga conta i futuri di quel gruppo. Click 2: in giallo le righe con k &lt; 3, in cui A non raggiunge il traguardo; in azzurro le altre. Click 3: sommiamo le righe azzurre e dividiamo per 128. Le righe lunghe mostrano tre sequenze iniziali, tre finali e i puntini con il numero di futuri omessi: il coefficiente conta la riga completa.</aside>
+    </section>
+
+    <section id="futuri-binomiali-formula">
+      <p class="badge">Fermat senza elencare</p>
+      <h2 class="scene-title">Un futuro è una scelta di manche</h2>
+      <svg class="scene-svg" width="1180" height="250" viewBox="0 0 1180 250" role="img" aria-label="Il futuro BABA corrisponde alla scelta delle manche 2 e 4 vinte da A: ci sono sei scelte di due manche tra quattro"></svg>
       <p class="bf-rule">$k$ vittorie di <span class="a">A</span> su $n$ manche &nbsp;⟶&nbsp; $\dbinom nk$ futuri</p>
       <div class="bf-formula equation">$P(A\text{ vince})=\dfrac{1}{2^n}\displaystyle\sum_{k=a}^{n}\binom{n}{k}$</div>
       <p class="bf-check">1–0 a 3 punti: $\dfrac{6+4+1}{16}=\dfrac{11}{16}$ &emsp;·&emsp; 2–0 a 5 punti: $\dfrac{35+35+21+7+1}{128}=\dfrac{99}{128}$</p>
-      <aside class="notes">Click: 1 i conteggi dei tre casi studiati (in blu i futuri in cui vince A); 2 sono le righe 2, 4 e 7 del triangolo; 3 perché: un futuro con k vittorie di A è la scelta di quali k manche vince A tra le n (BABA: manche 2 e 4); 4 la regola; 5 la formula di Fermat senza elenco; 6 controlli sui due casi già fatti.</aside>
+      <aside class="notes">BABA: A vince le manche 2 e 4. Click 1: evidenziamo quelle manche e contiamo le scelte. Click 2: la regola generale. Click 3: la formula, dove a è il numero di vittorie mancanti ad A e n = a + b − 1. Click 4: controlli sui due casi già contati.</aside>
     </section>
 
     <section id="sondaggio-c2" class="sondaggio" data-poll="s03-c2">

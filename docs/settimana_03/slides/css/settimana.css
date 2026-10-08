@@ -224,3 +224,18 @@
   .reveal .person img { print-color-adjust: exact; }
   .reveal .source { color: #a0aec0; }
 }
+
+/* Tutti i futuri, una riga per il numero di vittorie di A. */
+.reveal .bf-case .badge { margin-bottom: 10px; }
+.reveal .bf-case .scene-title { margin-bottom: 10px; }
+.reveal .bf-intro { font-size: .7em; margin: 0 0 12px; }
+.reveal .bf-rows { width: 1240px; margin: auto; }
+.reveal .bf-row { display: grid; grid-template-columns: 70px 160px 990px; gap: 10px; align-items: center; text-align: left; margin: 4px 0; }
+.reveal .bf-k { font-size: .65em; color: var(--psi-muted); }
+.reveal .bf-count { font-size: .8em; }
+.reveal .bf-row .scene-svg { display: block; margin: 0; max-height: none; }
+.reveal .scene-svg .bf-sequence { font-family: 'JetBrains Mono', 'Fira Mono', monospace; font-weight: 700; fill: var(--psi-text); }
+.reveal .bf-legend { font-size: .54em; margin: 12px 0 6px; }
+.reveal .bf-losing { color: var(--psi-b); margin-right: 16px; }
+.reveal .bf-result { font-size: .95em; margin: 8px 0 0; }
+.reveal #futuri-binomiali-formula > svg { display: block; margin: auto; }

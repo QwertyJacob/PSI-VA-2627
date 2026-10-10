@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>PSI 26/27 — Settimana 4: il valore atteso</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../assets/slides/deck.js"></script>
+  <link rel="stylesheet" href="css/settimana.css">
+</head>
+<body>
+  <div class="reveal"><div class="slides">
+
+    <!-- ═════════════ LEZIONE 1 · mercoledì 9:00–10:45. Scene: js/lezione1.js ═════════════ -->
+    <section id="lezione-1">
+      <p class="badge">Settimana 4 · Lezione 1 · mercoledì</p>
+      <h2 class="cover-title">Quanto vale ciò che<br>non è ancora successo?</h2>
+      <p class="cover-sub">dagli esiti ai numeri · dai numeri ai pesi · dai pesi alla media</p>
+      <div class="cover-acts"><span>la variabile</span><span>la PMF</span><span>il valore atteso</span></div>
+      <aside class="notes">Apertura. Si passa subito al riepilogo: la domanda d'uscita della settimana scorsa, le 253 coppie.</aside>
+    </section>
+
+    <!-- L1-01 · 0–8: riepilogo, le 253 coppie (scena ripresa dal parcheggio S3) -->
+    <section id="coppie-253">
+      <p class="badge">0′ · Riepilogo · la domanda d'uscita</p>
+      <h2 class="scene-title">23 persone: quante coppie?</h2>
+      <div class="scene-grid">
+        <svg class="scene-svg" width="520" height="470" viewBox="0 0 520 470" role="img" aria-label="23 persone su un cerchio; ogni corda è una coppia: 22 dalla prima persona, 253 in tutto"></svg>
+        <div class="scene-panel">
+          <ol class="scene-steps">
+            <li>La persona 1 fa coppia con le altre <b>22</b>.</li>
+            <li>La 2 con <b>21</b> nuove, la 3 con 20, …: $\;22+21+\cdots+1$</li>
+            <li>Scegliere <b>2</b> persone su 23, l'ordine non conta:</li>
+          </ol>
+          <div class="scene-def">$$\binom{23}{2}=\frac{23\cdot22}{2}=\color{#38ef7d}{253}$$</div>
+          <p class="scene-note keep-note">253 resta alla lavagna.</p>
+        </div>
+      </div>
+      <aside class="notes">Prima le risposte scritte, poi i click. Domande: «L'ordine conta in una coppia? Perché dividiamo per 2? Che cosa significa collisione? 253 conta possibilità o collisioni avvenute?». Click: 1 le 22 corde dalla prima persona; 2 tutte, il contatore arriva a 253; 3 la formula. Lascia 253 alla lavagna, senza calcolare la curva dei compleanni.</aside>
+    </section>
+
+    <!-- L1-02 · 8–15: la collisione hash; 253 coppie possibili ≠ coppie che collidono -->
+    <section id="hash">
+      <p class="badge">8′ · Riepilogo · le tabelle hash</p>
+      <h2 class="scene-title">Due chiavi, la stessa casella</h2>
+      <svg class="scene-svg" width="1180" height="330" viewBox="0 0 1180 330" role="img" aria-label="Quattro chiavi passano per la funzione hash: ada ed eva finiscono nella stessa casella, una collisione"></svg>
+      <div class="hs-cards">
+        <div class="hs-card hs-det"><small>23 chiavi · coppie da controllare</small><b>253</b><small>un numero fisso: si conta</small></div>
+        <div class="hs-card hs-rand"><small>coppie che <b style="display:inline;font-size:1em">collidono</b></small><b>?</b><small>dipende da dove cadono le chiavi</small></div>
+      </div>
+      <aside class="notes">Click: 1 le quattro chiavi passano per h; eva finisce dove c'era già ada: collisione. Chiedi «che cosa vogliamo contare?». 2 le due quantità: 253 è deterministico; il numero di coppie in collisione è incerto. Lascia aperta la domanda: per parlarne servono gli strumenti di oggi. Non riprendere compleanni né birthday attack.</aside>
+    </section>
+
+    <!-- L1-03 · 15–32: la mappa esiti → valori -->
+    <section id="mappa">
+      <p class="badge">15′ · Atto II · Dagli esiti ai numeri</p>
+      <h2 class="scene-title">Due lanci. Quante teste?</h2>
+      <svg class="scene-svg" width="900" height="330" viewBox="0 0 900 330" role="img" aria-label="La variabile X associa TT a 2, TC e CT a 1, CC a 0: due esiti diversi confluiscono nello stesso valore"></svg>
+      <div class="mp-def">
+        <p>$X:\Omega\longrightarrow\mathbb{R}\qquad X(TC)=1$</p>
+        <p class="mp-sub">variabile aleatoria = una regola che legge l'esito e restituisce un numero</p>
+      </div>
+      <aside class="notes">All'ingresso solo gli esiti a sinistra e i valori a destra. Click: 1 TT → 2 e CC → 0; chiedi: dove vanno TC e CT? Fai prevedere. 2 TC e CT confluiscono nello stesso valore 1: la regola dimentica l'ordine. 3 la definizione. X maiuscola = la regola, x minuscola = un valore. L'aleatorietà sta nell'esito, non nella regola. 29–32 (S, tagliabile): secondo esempio alla lavagna, per esempio il massimo di due dadi. Controllo c1 al 32.</aside>
+    </section>
+
+    <!-- L1-04 · 32: controllo c1 -->
+    <section id="sondaggio-c1" class="sondaggio" data-poll="s04-c1">
+      <p class="badge">32′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>variabile aleatoria</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Raccogli i dubbi. Se prevalgono 2/3, ripeti la mappa con un esempio e usa il margine S.</aside>
+    </section>
+
+    <!-- L1-05 · 33–50: l'evento X=1 e la PMF -->
+    <section id="pesi">
+      <p class="badge">33′ · La funzione di massa</p>
+      <h2 class="scene-title">Prima unisci gli esiti, poi somma i pesi</h2>
+      <svg class="scene-svg" width="1000" height="380" viewBox="0 0 1000 380" role="img" aria-label="Quattro esiti di peso un quarto cadono sui valori 0, 1, 2: TC e CT si impilano su 1, che pesa un mezzo"></svg>
+      <div class="pm-foot">
+        <div class="pm-box pm-def">
+          <p>$p_X(x)=P(X=x)\qquad p_X(x)\ge0\qquad \sum_x p_X(x)=1$</p>
+        </div>
+        <div class="pm-box pm-set">
+          <p>$P(X\ge1)=p_X(1)+p_X(2)=\tfrac12+\tfrac14=\tfrac34$</p>
+        </div>
+      </div>
+      <aside class="notes">All'ingresso i quattro esiti, ciascuno con peso 1/4. Click: 1 l'evento X=1 = {TC, CT}: si accende; 2 gli esiti cadono sui loro valori; TC e CT si impilano su 1: P(X=1)=1/4+1/4=1/2; 3 la tabella dei pesi è la PMF, con i due vincoli; 4 una domanda su più valori: «almeno una testa». Il numero 1 conta teste; il numero 1/2 è una probabilità: tienili su righe diverse alla lavagna. Controllo c2 al 50.</aside>
+    </section>
+
+    <!-- L1-06 · 50: controllo c2 -->
+    <section id="sondaggio-c2" class="sondaggio" data-poll="s04-c2">
+      <p class="badge">50′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>PMF</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Verifica prima dei gruppi: se prevalgono 2/3, rifai l'impilamento di TC e CT.</aside>
+    </section>
+
+    <!-- L1-07 · 51–66: Esercizio 1 -->
+    <section id="esercizio-1">
+      <p class="badge">51′ · Esercizio 1 · gruppi di 3–4</p>
+      <h2 class="scene-title">Due lanci, due modi di leggere</h2>
+      <div class="e3-grid">
+        <div class="ex-text">
+          <p class="ex-lead">Due lanci indipendenti di una moneta onesta. $X$ = numero di teste.</p>
+          <ol>
+            <li>Scrivi gli <b>esiti</b> su una riga e i <b>valori</b> di $X$ sulla riga sotto.</li>
+            <li>Scrivi la PMF di $X$.</li>
+            <li>Il valore $X=1$ corrisponde a un solo esito?</li>
+          </ol>
+          <p class="ex-time">8′ in gruppo · 3′ confronto · 4′ correzione</p>
+        </div>
+        <div class="e3-stage">
+          <svg class="scene-svg" width="600" height="480" viewBox="0 0 600 480" role="img" aria-label="Soluzione: esiti TT, TC, CT, CC con valori 2, 1, 1, 0; PMF un quarto, un mezzo, un quarto"></svg>
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+        </div>
+      </div>
+      <aside class="notes">Sostituisce una seconda costruzione frontale della PMF. Click: 1 il gatto; 2 esiti e valori su due righe; 3 la PMF. Fai confrontare prima la probabilità del valore 1. Risultati: pesi 1/4, 1/2, 1/4. Errore atteso: valori 0, 1, 2 equiprobabili (1/3 ciascuno). Non anticipare la correzione durante il lavoro. La media (= 1) si riprende dopo il blocco successivo.</aside>
+    </section>
+
+    <!-- L1-08 · 66–69: sondaggio s04-1, il prezzo (Huygens) -->
+    <section id="sondaggio-1" class="sondaggio" data-poll="s04-1">
+      <p class="badge">66′ · Atto I · Huygens, 1657 · quanto vale un biglietto?</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Un biglietto paga <b>0</b> oppure <b>8 euro</b>.<br>Il premio arriva con probabilità <b>1/4</b>.<br>Pagamento medio?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>4 euro</li>
+            <li><span>2</span>2 euro</li>
+            <li><span>3</span>8 euro</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">66–69. Huygens, De ratiociniis in ludo aleae (1657): quanto vale una possibilità di guadagno, per esempio il posto di un giocatore da vendere. Non premere V adesso: lascia il dubbio sui pesi; si rivela alle 69, dopo la slide della media. Risposta 2. L'opzione 1 ignora i pesi; la 3 guarda soltanto il premio.</aside>
+    </section>
+
+    <!-- L1-09 · 69–75: la media pesata -->
+    <section id="media">
+      <p class="badge">69′ · Atto III · Il valore atteso</p>
+      <h2 class="scene-title">Ogni valore per il suo peso</h2>
+      <svg class="scene-svg" width="1100" height="300" viewBox="0 0 1100 300" role="img" aria-label="La media semplice di 0 e 8 dà 4, sbagliata; la lista ideale 0, 0, 0, 8 dà 2; raccogliendo gli zeri, 0 per tre quarti più 8 per un quarto"></svg>
+      <div class="md-def">$$\mathbb{E}[X]=\sum_x x\;p_X(x)$$</div>
+      <p class="md-coin">Due lanci: $\;\mathbb{E}[X]=0\cdot\tfrac14+1\cdot\tfrac12+2\cdot\tfrac14=\color{#38ef7d}{1}$ testa</p>
+      <aside class="notes">Click: 1 la media semplice (0+8)/2=4, barrata: tratta 0 e 8 come equiprobabili; 2 la lista ideale con le proporzioni del modello: 0, 0, 0, 8, media 2 (non è una previsione di quattro partite); 3 si raccolgono i tre zeri: 0·3/4+8·1/4; 4 la definizione e il conto delle teste, che chiude l'Esercizio 1. Ora rivela s04-1 (torna indietro di una slide e premi V). Scrivi i prodotti valore × peso. Controllo c3 al 75.</aside>
+    </section>
+
+    <!-- L1-10 · 75: controllo c3 -->
+    <section id="sondaggio-c3" class="sondaggio" data-poll="s04-c3">
+      <p class="badge">75′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>media</b> $\mathbb{E}[X]$?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Correggi prima del widget. Se prevalgono 2/3, salta il widget e rifai un conto pesato alla lavagna.</aside>
+    </section>
+
+    <!-- L1-11 · 76–84 (S): il baricentro, widget -->
+    <section id="baricentro">
+      <p class="badge">76′ · Facoltativo · Il baricentro</p>
+      <h2 class="scene-title">Sposta il peso: dove si equilibra?</h2>
+      <div class="wd-box" id="bc-box" data-prevent-swipe>
+        <div class="wd-ctrl">
+          <label>$p$ <input type="range" min="0" max="1" step="0.05" value="0.25" data-k="p"> <b data-v="p">0.25</b></label>
+          <label>premio <input type="range" min="2" max="12" step="1" value="8" data-k="w"> <b data-v="w">8 €</b></label>
+        </div>
+        <svg class="scene-svg" width="1100" height="330" viewBox="0 0 1100 330" role="img" aria-label="Una barra con una massa 1 meno p in zero e una massa p sul premio; il fulcro sta nella media"></svg>
+        <p class="wd-out"></p>
+        <p class="wd-try">Prova: <button class="psi-btn ghost" type="button" data-p="0.25" data-w="8">p = 0.25</button><button class="psi-btn ghost" type="button" data-p="0.75" data-w="8">p = 0.75</button><button class="psi-btn ghost" type="button" data-p="0.25" data-w="12">premio 12</button></p>
+      </div>
+      <aside class="notes">Sacrificabile (76–84). Prima di muovere il cursore chiedi una previsione: con p = 0.25 il fulcro va a 2; con p = 0.75 va a 6. Poi cambia il premio a 12 con p = 0.25: la probabilità non cambia, la media sì (3). La media è il punto d'equilibrio, non una terza barra. I pulsanti «Prova» impostano i casi da confrontare.</aside>
+    </section>
+
+    <!-- L1-12 · 84–96: Esercizio 2 -->
+    <section id="esercizio-2">
+      <p class="badge">84′ · Esercizio 2 · gruppi di 3–4</p>
+      <h2 class="scene-title">Il dado e un costo fisso</h2>
+      <div class="e3-grid">
+        <div class="ex-text">
+          <p class="ex-lead">Un dado onesto. Il <b>pagamento</b> $X$, in euro, è il numero uscito.</p>
+          <ol>
+            <li>Calcola $\mathbb{E}[X]$.</li>
+            <li>Puoi ricevere quel pagamento in una partita?</li>
+            <li>Partecipare <b>costa 4 euro</b>. Guadagno netto medio?</li>
+          </ol>
+          <p class="ex-time">6′ in gruppo · 2′ confronto · 4′ correzione</p>
+        </div>
+        <div class="e3-stage">
+          <svg class="scene-svg" width="600" height="480" viewBox="0 0 600 480" role="img" aria-label="Le sei facce del dado con il guadagno netto di ciascuna: da meno 3 a più 2; media del pagamento 3,5, guadagno medio meno 0,5"></svg>
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+        </div>
+      </div>
+      <aside class="notes">Sostituisce il calcolo frontale della media del dado. Click: 1 il gatto; 2 E[X]=21/6=3,5: nessuna faccia; 3 i sei guadagni netti (−3 … +2), pesati 1/6 ciascuno: somma −3/6 = −0,5 euro. Correggi sommando direttamente i sei guadagni pesati, senza il teorema di linearità (arriva venerdì). Errore atteso: scambiare il pagamento medio (3,5) per guadagno.</aside>
+    </section>
+
+    <!-- L1-13 · 96–105 (S): cuscinetto e domanda d'uscita -->
+    <section id="uscita-1">
+      <p class="badge">96′ · Domanda d'uscita</p>
+      <svg class="scene-svg" width="1000" height="260" viewBox="0 0 1000 260" role="img" aria-label="Le sei facce del dado, pesi uguali; il punto di equilibrio è 3,5, dove non c'è nessuna faccia"></svg>
+      <p class="ux-q">Quali informazioni servono per fare una media?</p>
+      <p class="ux-q">Può essere un valore <span class="b">impossibile</span>?</p>
+      <aside class="notes">Cuscinetto: domande e rallentamenti, nessun concetto nuovo. Click: 1 il fulcro a 3,5 e la domanda «su quale faccia?». Risposte attese: valori e pesi (la PMF); sì, la media è un baricentro, non un risultato.</aside>
+    </section>
+
+    <!-- ═════════════ LEZIONE 2 · venerdì 11:00–12:45. Scene: js/lezione2.js ═════════════ -->
+    <section id="lezione-2">
+      <p class="badge">Settimana 4 · Lezione 2 · venerdì</p>
+      <h2 class="cover-title">Contare con i bit</h2>
+      <p class="cover-sub">la media di una somma è la somma delle medie</p>
+      <div class="cover-acts"><span>la linearità</span><span>le indicatrici</span><span>la Binomiale</span></div>
+      <aside class="notes">Apertura della Lezione 2. Si passa subito al riepilogo.</aside>
+    </section>
+
+    <!-- L2-01 · 0–10: ripresa -->
+    <section id="ripresa">
+      <p class="badge">0′ · Riepilogo</p>
+      <h2 class="scene-title">Quattro domande da mercoledì</h2>
+      <div class="rq-grid">
+        <table class="s04-table">
+          <thead><tr><th>$x$</th><th>0</th><th>1</th><th>2</th></tr></thead>
+          <tbody><tr><td class="rowhead">$p_X(x)$</td><td>$\tfrac14$</td><td>$\tfrac12$</td><td>$\tfrac14$</td></tr></tbody>
+        </table>
+        <div class="rq-list">
+          <p class="rq"><span>1</span>Che differenza c'è tra $X$ e $x$?</p>
+          <p class="rq"><span>2</span>Come controlli che una PMF sia valida?</p>
+          <p class="rq"><span>3</span>Quali prodotti sommi per fare la media?</p>
+          <p class="rq"><span>4</span>Il dado può mostrare 3,5?</p>
+        </div>
+      </div>
+      <aside class="notes">Statica. Le risposte le danno gli studenti; fai riscrivere a uno studente il conto piccolo: E[X] = 0·1/4 + 1·1/2 + 2·1/4 = 1. (1) X è la regola, x un valore; (2) pesi ≥ 0 e somma 1; (3) valore × peso; (4) no: 3,5 è un baricentro. Niente seconda introduzione storica.</aside>
+    </section>
+
+    <!-- L2-02 · 10–13: sondaggio s04-2 -->
+    <section id="sondaggio-2" class="sondaggio" data-poll="s04-2">
+      <p class="badge">10′ · Atto IV · Il bivio</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">$X+Y=1$ sempre, e $X$, $Y$ sono <b>dipendenti</b>.<br>Posso calcolare $\mathbb{E}[X+Y]$ sommando le medie?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Sì</li>
+            <li><span>2</span>No</li>
+            <li><span>3</span>Soltanto se indipendenti</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">10–13. Chiedi dove, finora, è servita l'indipendenza (prodotto delle probabilità). Non premere V: si rivela alla fine della slide successiva. Risposta 1. Le opzioni 2 e 3 trasferiscono alla media un requisito del prodotto di probabilità.</aside>
+    </section>
+
+    <!-- L2-03 · 13–27: la tabella X+Y=1 e la linearità -->
+    <section id="somma">
+      <p class="badge">13′ · La linearità</p>
+      <h2 class="scene-title">Una moneta, due variabili</h2>
+      <table class="s04-table sm-table">
+        <thead><tr><th>esito</th><th>$P$</th><th class="sm-x">$X$</th><th class="sm-y">$Y$</th><th class="sm-s">$X+Y$</th></tr></thead>
+        <tbody>
+          <tr><td>Testa</td><td>$\tfrac12$</td><td class="sm-x a">1</td><td class="sm-y b">0</td><td class="sm-s highlight">1</td></tr>
+          <tr><td>Croce</td><td>$\tfrac12$</td><td class="sm-x a">0</td><td class="sm-y b">1</td><td class="sm-s highlight">1</td></tr>
+          <tr class="sm-mean"><td class="rowhead">media</td><td></td><td class="a">$\tfrac12$</td><td class="b">$\tfrac12$</td><td class="highlight">$1$</td></tr>
+        </tbody>
+      </table>
+      <p class="sm-dep">$X=1\;\Rightarrow\;Y=0$: <b>dipendenti</b>. Eppure $\;\tfrac12+\tfrac12=1$.</p>
+      <div class="sm-lines">
+        <div class="sm-proof">
+          <p>$\mathbb{E}[X+Y]=\sum_\omega \bigl(X(\omega)+Y(\omega)\bigr)\textcolor{#c084fc}{P(\{\omega\})}$</p>
+          <p>$\phantom{\mathbb{E}[X+Y]}=\sum_\omega X(\omega)\textcolor{#c084fc}{P(\{\omega\})}+\sum_\omega Y(\omega)\textcolor{#c084fc}{P(\{\omega\})}$</p>
+        </div>
+        <div class="sm-thm">$$\mathbb{E}[aX+bY+c]=a\,\mathbb{E}[X]+b\,\mathbb{E}[Y]+c$$<p>nessuna ipotesi di indipendenza</p></div>
+      </div>
+      <aside class="notes">Click: 1 le colonne X e Y: sapere X dice tutto di Y, sono dipendenti; 2 la colonna X+Y vale sempre 1, e le medie 1/2 + 1/2 = 1; 3 il perché: per ogni esito il peso è lo stesso per i due addendi (in viola), la somma si separa; nessun prodotto di probabilità di eventi diversi; 4 il teorema, per somme finite e medie finite. Ora rivela s04-2 (torna indietro e premi V). Controllo c4 al 27.</aside>
+    </section>
+
+    <!-- L2-04 · 27: controllo c4 -->
+    <section id="sondaggio-c4" class="sondaggio" data-poll="s04-c4">
+      <p class="badge">27′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>linearità</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V).</aside>
+    </section>
+
+    <!-- L2-05 · 28–45: indicatrici e Bernoulli -->
+    <section id="bit">
+      <p class="badge">28′ · Le indicatrici</p>
+      <h2 class="scene-title">Una domanda diventa un bit</h2>
+      <div class="bt-grid">
+        <svg class="scene-svg" width="540" height="430" viewBox="0 0 540 430" role="img" aria-label="Un interruttore: 1 se la richiesta fallisce, 0 altrimenti; sotto, le due barre della Bernoulli, 1 meno p su 0 e p su 1"></svg>
+        <div class="bt-panel">
+          <div class="bt-def">$I_A(\omega)=\begin{cases}1 & \omega\in A\\ 0 & \omega\notin A\end{cases}$</div>
+          <div class="bt-pmf">$P(I_A=1)=p\qquad P(I_A=0)=1-p$<br><span class="muted" style="font-size:.85em">$I_A\sim\operatorname{Bernoulli}(p)$</span></div>
+          <div class="bt-key">$$\mathbb{E}[I_A]=0\cdot(1-p)+1\cdot p=p=P(A)$$<p>contare in media = sommare probabilità</p></div>
+        </div>
+      </div>
+      <aside class="notes">A = «la richiesta fallisce». Click: 1 l'interruttore scatta: 1 se A accade, 0 altrimenti; la definizione. Fai leggere 0 e 1 come valori, non come vero/falso. 2 la PMF: due sole barre, Bernoulli(p). «Successo» è una convenzione: qui un successo è un guasto. 3 la media del bit: il termine con 0 sparisce, resta p. Controllo c5 al 45.</aside>
+    </section>
+
+    <!-- L2-06 · 45: controllo c5 -->
+    <section id="sondaggio-c5" class="sondaggio" data-poll="s04-c5">
+      <p class="badge">45′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con le <b>indicatrici</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V).</aside>
+    </section>
+
+    <!-- L2-07 · 46–61: Esercizio 3 -->
+    <section id="esercizio-3">
+      <p class="badge">46′ · Esercizio 3 · gruppi di 3–4</p>
+      <h2 class="scene-title">Tre chiavi, due caselle</h2>
+      <div class="e3-grid">
+        <div class="ex-text">
+          <p class="ex-lead">Chiavi $a$, $b$, $c$: indici indipendenti e uniformi tra <b>2 caselle</b>.</p>
+          <ol>
+            <li>Definisci i tre bit delle coppie.</li>
+            <li>Numero medio di coppie in collisione?</li>
+            <li>Quel numero è una probabilità?</li>
+            <li>Se due bit valgono 1, che cosa sai del terzo?</li>
+          </ol>
+          <p class="ex-time">8′ in gruppo · 3′ confronto · 4′ correzione</p>
+        </div>
+        <div class="e3-stage">
+          <svg class="scene-svg" width="600" height="480" viewBox="0 0 600 480" role="img" aria-label="Due caselle vuote; poi le otto assegnazioni delle tre chiavi: sei con una coppia in collisione, due con tre coppie; media 1,5"></svg>
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+        </div>
+      </div>
+      <aside class="notes">Sostituisce il calcolo frontale delle tre collisioni. Disegna due caselle vuote alla lavagna e lascia ai gruppi la definizione dei bit. Click: 1 il gatto; 2 la correzione: E[C] = 1/2 + 1/2 + 1/2 = 1,5 coppie (non una probabilità; almeno una collisione è certa); 3 le otto assegnazioni: C vale 1 oppure 3, mai 2: se ab e ac collidono, collide anche bc. I bit non sono indipendenti, e la linearità non lo chiede. Errori attesi: 1,5 letto come probabilità; una sola coppia per casella. Correzione visiva, senza distribuzioni congiunte.</aside>
+    </section>
+
+    <!-- L2-08 · 61–72: n bit, somma, np -->
+    <section id="conteggio">
+      <p class="badge">61′ · Atto V · La Binomiale</p>
+      <h2 class="scene-title">Un conteggio è una somma di bit</h2>
+      <svg class="scene-svg" width="1100" height="190" viewBox="0 0 1100 190" role="img" aria-label="Quattro operazioni, ciascuna con il suo bit di fallimento; la somma dei bit è il numero di fallimenti"></svg>
+      <div class="bn-hyp"><span>$n$ prove</span><span>stesso $p$</span><span>indipendenti</span><span>$\Rightarrow\;X\sim\operatorname{Binomiale}(n,p)$</span></div>
+      <div class="bn-chain">$$\mathbb{E}[X]=\mathbb{E}\Bigl[\sum_{i=1}^n I_i\Bigr]=\sum_{i=1}^n\mathbb{E}[I_i]=\sum_{i=1}^n p=\color{#38ef7d}{np}$$</div>
+      <p class="bn-where">L'indipendenza serve al <b>nome</b> e alla PMF, <b class="highlight">non alla media</b>. &emsp; $4\cdot0{,}2=0{,}8$ fallimenti</p>
+      <aside class="notes">Quattro operazioni, p = 0,2. Click: 1 i bit di un'esecuzione e la loro somma X; chiedi: quali ipotesi servono perché sia Binomiale? Scrivile; 2 la catena: rappresentazione per bit, poi linearità, poi media del bit; 3 dove è servita l'indipendenza. La PMF binomiale resta in lettura (C, 0 minuti). Controllo c6 al 72.</aside>
+    </section>
+
+    <!-- L2-09 · 72: controllo c6 -->
+    <section id="sondaggio-c6" class="sondaggio" data-poll="s04-c6">
+      <p class="badge">72′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>media binomiale</b> $np$?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2/3, salta il widget e rifai la catena di uguaglianze.</aside>
+    </section>
+
+    <!-- L2-10 · 73–79 (S): widget Binomiale -->
+    <section id="distribuzione">
+      <p class="badge">73′ · Facoltativo · Stessa media, distribuzioni diverse</p>
+      <h2 class="scene-title">Prevedi $np$, poi muovi il cursore</h2>
+      <div class="wd-box" id="bn-box" data-prevent-swipe>
+        <div class="wd-ctrl">
+          <label>$n$ <input type="range" min="1" max="20" step="1" value="4" data-k="n"> <b data-v="n">4</b></label>
+          <label>$p$ <input type="range" min="0" max="1" step="0.05" value="0.2" data-k="p"> <b data-v="p">0.20</b></label>
+        </div>
+        <svg class="scene-svg" width="1100" height="360" viewBox="0 0 1100 360" role="img" aria-label="Le barre della PMF binomiale per k da 0 a 20, con il fulcro nella media np"></svg>
+        <p class="wd-out"></p>
+        <p class="wd-try">Prova: <button class="psi-btn ghost" type="button" data-n="4" data-p="0.2">4 · 0.2</button><button class="psi-btn ghost" type="button" data-n="8" data-p="0.1">8 · 0.1</button><button class="psi-btn ghost" type="button" data-n="16" data-p="0.05">16 · 0.05</button></p>
+      </div>
+      <aside class="notes">Sacrificabile (73–79). Da n = 4, p = 0,2 a n = 8, p = 0,1: np resta 0,8, le barre cambiano. Il triangolo verde è il baricentro: fai prevedere dove andrà prima di cliccare. Le barre oltre n sono zero; l'asse resta fisso.</aside>
+    </section>
+
+    <!-- L2-11 · 79–91: Esercizio 4 -->
+    <section id="esercizio-4">
+      <p class="badge">79′ · Esercizio 4 · gruppi di 3–4</p>
+      <h2 class="scene-title">Quattro operazioni</h2>
+      <div class="e3-grid">
+        <div class="ex-text">
+          <p class="ex-lead">Ognuna fallisce con probabilità $0{,}2$.</p>
+          <ol>
+            <li><b>Indipendenti:</b> scrivi il numero $X$ di fallimenti con i bit. Media?</li>
+            <li><b>Guasto comune:</b> con probabilità $0{,}2$ falliscono tutte insieme. Media?</li>
+            <li>Che cosa resta uguale? Che cosa cambia?</li>
+          </ol>
+          <p class="ex-time">6′ in gruppo · 2′ confronto · 4′ correzione</p>
+        </div>
+        <div class="e3-stage">
+          <svg class="scene-svg" width="600" height="480" viewBox="0 0 600 480" role="img" aria-label="A sinistra quattro bit con quattro decisioni separate; a destra quattro bit collegati a un solo guasto comune; media 0,8 in entrambi, valori da 0 a 4 contro soltanto 0 e 4"></svg>
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+        </div>
+      </div>
+      <aside class="notes">Sostituisce una seconda derivazione frontale di np e del caso dipendente. Click: 1 il gatto; 2 media 0,8 in entrambi: ogni bit vale 1 con probabilità 0,2; 3 i valori possibili: 0–4 nel primo modello, soltanto 0 e 4 nel secondo. Errore atteso: dedurre la stessa distribuzione dalla stessa media. Il quesito sulla PMF (P(X=2)=0,1536) è lettura (C). Non introdurre la varianza.</aside>
+    </section>
+
+    <!-- L2-12 · 91–105 (S): cuscinetto e domanda d'uscita -->
+    <section id="uscita-2">
+      <p class="badge">91′ · Domanda d'uscita</p>
+      <svg class="scene-svg" width="1100" height="330" viewBox="0 0 1100 330" role="img" aria-label="Due grafici a barre: la Binomiale 4, 0,2 e il guasto comune; stesso baricentro 0,8, barre molto diverse"></svg>
+      <p class="ux-q">Perché la media resta $np$ con un guasto comune,<br>ma la distribuzione cambia?</p>
+      <div class="ux-links">
+        <a class="psi-btn" href="../#lab-hash" target="_blank" rel="noopener">💻 Laboratorio: coppie ed esperimenti ↗</a>
+        <a class="psi-btn ghost" href="../#lab-binomiale" target="_blank" rel="noopener">💻 Laboratorio: indipendenza e dipendenza ↗</a>
+      </div>
+      <aside class="notes">Cuscinetto: domande, nessun concetto nuovo. Click: 1 i due fulcri sullo stesso punto 0,8. Risposta attesa: la media usa solo le probabilità dei singoli bit (linearità); la distribuzione dipende da come i bit sono legati. I due laboratori sono per casa: la simulazione illustra, non sostituisce il conto. Varianza, giochi equi e Ipergeometrica restano in lettura.</aside>
+    </section>
+
+  </div></div>
+  <script src="../../assets/slides/scene.js"></script>
+  <script src="../../assets/sondaggi.js"></script>
+  <script src="../../assets/slides/sondaggio.js"></script>
+  <script src="js/lezione1.js"></script>
+  <script src="js/lezione2.js"></script>
+  <script>PSIDeck.start({ onReady: function (deck) { PSISondaggio.bind(deck); } });</script>
+</body>
+</html>

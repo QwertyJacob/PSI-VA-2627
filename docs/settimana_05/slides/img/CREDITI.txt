@@ -1,0 +1,3 @@
+esercizi_time.jpg: immagine del docente, copia di settimana_04/slides/img.
+bortkiewicz.jpg: Ladislaus von Bortkiewicz, circa 1910, autore ignoto. Pubblico dominio.
+  Wikimedia Commons, File:Ladislaus_Bortkiewicz.jpg (da MacTutor History of Mathematics).

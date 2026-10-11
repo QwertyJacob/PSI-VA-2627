@@ -10,7 +10,7 @@
 
 *Quanto bisogna aspettare? E quante volte succede una cosa rara? Dai numeri ritardatari del Lotto ai registri dell'esercito prussiano, fino alle richieste che arrivano a un server.*
 
-Le slide di questa settimana saranno aggiunte in seguito.
+[:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" }
 
 ## Prima di cominciare: che cosa ci portiamo dalla Settimana 4 {: #prima-di-cominciare }
 

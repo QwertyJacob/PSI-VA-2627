@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>PSI 26/27 — Settimana 5: Geometrica e Poisson</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../assets/slides/deck.js"></script>
+  <link rel="stylesheet" href="css/settimana.css">
+</head>
+<body>
+  <div class="reveal"><div class="slides">
+
+    <!-- ═════════════ LEZIONE 1 · mercoledì 21/10, 9:00–10:45. Scene: js/lezione1.js ═════════════ -->
+
+    <!-- L1-00 · copertina -->
+    <section id="lezione-1">
+      <p class="cover-week">Settimana 5</p>
+      <h2 class="cover-title">Quanto bisogna aspettare?</h2>
+      <div class="cover-acts"><span>Geometrica e Poisson</span><span>Lezione 1</span><span>mercoledì 21 ottobre</span></div>
+      <aside class="notes">Resta proiettata durante l'ingresso. Si passa subito al riepilogo della Settimana 4.</aside>
+    </section>
+
+    <!-- L1-01 · 0–15: riepilogo S4 -->
+    <section id="riepilogo-s4">
+      <p class="badge">0′ · Riepilogo · Settimana 4</p>
+      <h2 class="scene-title">Quattro domande da venerdì</h2>
+      <div class="rq-grid">
+        <div class="rq-list">
+          <p class="rq fragment"><span>1</span>$\mathbb{E}[X]$: che cosa misura?</p>
+          <p class="rq fragment"><span>2</span>Il dado dà 3,5?</p>
+          <p class="rq fragment"><span>3</span>$\mathbb{E}[X+Y]$ senza indipendenza?</p>
+          <p class="rq fragment"><span>4</span>Binomiale: ipotesi e media?</p>
+        </div>
+        <div class="rq-board">risposte alla lavagna</div>
+      </div>
+      <p class="rq-bridge fragment">Oggi: niente $n$ fissato. Ci fermiamo al primo successo.</p>
+      <aside class="notes">Una domanda per click: chiedi, attendi una risposta dalla classe, poi la scrivi alla lavagna. Risposte: (1) il baricentro dei valori pesati dalla PMF; (2) no, la media può essere un valore impossibile; (3) sì, la linearità non chiede indipendenza; (4) n prove, stesso p, indipendenti; media np. Niente varianza: la riprende la L2. Click 5: la frase ponte.</aside>
+    </section>
+
+    <!-- L1-02 · 15: il 53 di Venezia -->
+    <section id="contatore-53">
+      <p class="badge">15′ · Atto I · Il 53 che non usciva</p>
+      <svg class="scene-svg" width="1100" height="520" viewBox="0 0 1100 520" role="img" aria-label="La pallina del 53, ruota di Venezia 2003–2005; un contatore di assenze consecutive sale da 0 a 182"></svg>
+      <aside class="notes">Click: 1 il contatore sale fino a 182; 2 «182 estrazioni senza il 53»; 3 la domanda. Racconta in un minuto i giocatori che aumentavano le puntate a ogni estrazione e il dibattito in Parlamento. Niente cifre su vittime o date non verificate (guida §3). Poi 5/90 alla lavagna.</aside>
+    </section>
+
+    <!-- L1-03 · 17: una probabilità per estrazione -->
+    <section id="urna-90">
+      <p class="badge">17′ · Atto I · Una probabilità per estrazione</p>
+      <h2 class="scene-title">90 numeri, 5 estratti</h2>
+      <div class="scene-grid">
+        <svg class="scene-svg" width="560" height="480" viewBox="0 0 560 480" role="img" aria-label="90 palline in una griglia 10 per 9; si mescolano e le prime 5 finiscono nelle caselle degli estratti"></svg>
+        <div class="scene-panel ur-panel">
+          <div class="s05-box ur-formula">$$P(53\ \text{estratto})=\frac{5}{90}=\color{#38ef7d}{\frac{1}{18}}$$</div>
+          <p class="ur-again">a ogni estrazione, da capo</p>
+        </div>
+      </div>
+      <aside class="notes">Prima chiedi «quanto vale?». Click: 1 le 90 palline si mescolano e le prime 5 della fila finiscono negli estratti; argomento «5 posizioni su 90»; 2 la formula; 3 «da capo»: le palline tornano nell'urna, estrazioni indipendenti. Lancia subito s05-1 (slide successiva).</aside>
+    </section>
+
+    <!-- L1-04 · 19: sondaggio s05-1 (lancio) -->
+    <section id="sondaggio-1" class="sondaggio" data-poll="s05-1">
+      <p class="badge">19′ · Sondaggio · la risposta arriva a fine lezione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Il 53 manca da <b>100 estrazioni</b>.<br>Alla prossima esce con probabilità…</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>più di 1/18</li>
+            <li><span>2</span>esattamente 1/18</li>
+            <li><span>3</span>meno di 1/18</li>
+            <li><span>4</span>dipende da quante volte è uscito prima</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">«Votate ora, la risposta arriva a fine lezione.» NON premere V: si rivela all'86′ sul duplicato dopo «I 100 fallimenti spariscono». Risposta 2. L'1 è la fallacia del giocatore; il 3 la stessa fallacia rovesciata («numero sfortunato»); il 4 confonde le frequenze passate con la probabilità del meccanismo.</aside>
+    </section>
+
+    <!-- L1-05 · 21: fino alla prima testa -->
+    <section id="prima-testa">
+      <p class="badge">21′ · Atto II · Il modello</p>
+      <h2 class="scene-title">Lancia finché esce testa</h2>
+      <svg class="scene-svg" width="900" height="400" viewBox="0 0 900 400" role="img" aria-label="Tre righe di monete: T dà X uguale a 1; C T dà 2; C C T dà 3; poi 1, 2, 3 e così via, senza tetto"></svg>
+      <aside class="notes">X = numero del lancio in cui esce la prima testa. Prima di ogni click chiedi il valore di X. Click 1–3: le tre righe; 4: «1, 2, 3, … senza tetto»: infiniti valori, ma elencabili, quindi X resta discreta. Ipotesi: stesso p, prove indipendenti, come la Binomiale; cambia che cosa contiamo. Convenzione del corso: X conta anche la prova riuscita (parte da 1).</aside>
+    </section>
+
+    <!-- L1-06 · 24: la fila -->
+    <section id="fila">
+      <p class="badge">24′ · Atto II · La PMF</p>
+      <h2 class="scene-title">$X=4$: una sola storia</h2>
+      <svg class="scene-svg" width="900" height="200" viewBox="0 0 900 200" role="img" aria-label="Quattro prove in fila: tre falliscono, ciascuna con probabilità 1 meno p, la quarta riesce con probabilità p"></svg>
+      <div class="fl-prod">$$P(X=4)=(1-p)(1-p)(1-p)\,\color{#38ef7d}{p}=(1-p)^3\color{#38ef7d}{p}$$</div>
+      <div class="fl-formula"><div class="s05-box">$$P(X=k)=(1-p)^{\,\color{#fb923c}{k-1}}\,\color{#38ef7d}{p}\qquad k=1,2,3,\dots$$</div></div>
+      <p class="fl-note"><b class="model">$k-1$ fallimenti</b>, <b class="highlight">1 successo</b></p>
+      <aside class="notes">Click 1–3: le tre caselle «fallisce» con il loro 1 − p; 4: la casella verde con p; 5: il prodotto, per indipendenza; 6: la formula generale. Prima del click 6 fai dire alla classe l'esponente: k − 1, non k. Controllo: k = 1 dà p. Click 7: la nota. La fila resta alla lavagna per tutta la lezione.</aside>
+    </section>
+
+    <!-- L1-07 · 29–33 (S): il primo è il più probabile -->
+    <section id="primo-probabile">
+      <p class="badge">29′ · Facoltativo · Il valore più probabile</p>
+      <h2 class="scene-title">Il Lotto: $P(X=k)$ con $p=1/18$</h2>
+      <svg class="scene-svg" width="1100" height="440" viewBox="0 0 1100 440" role="img" aria-label="Barre della Geometrica con p uguale a 1 su 18, per k da 1 a 30: la prima barra è la più alta, ogni barra è la precedente per 17 su 18"></svg>
+      <aside class="notes">Sacrificabile (29–33). Chiedi «qual è il singolo valore più probabile?». Click: 1 la prima barra: 1/18 ≈ 0,056; 2 ogni barra è la precedente × 17/18. Anche quando il successo è raro, il primo tentativo ha più peso di ogni altro singolo valore; il peso totale si distribuisce su una coda lunga. Controllo c1 al 32.</aside>
+    </section>
+
+    <!-- L1-08 · 32: controllo c1 -->
+    <section id="sondaggio-c1" class="sondaggio" data-poll="s05-c1">
+      <p class="badge">32′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>PMF geometrica</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, rifai la fila con p = 1/2 (P(X = 4) = 1/16).</aside>
+    </section>
+
+    <!-- L1-09 · 33–48: Esercizio 1 -->
+    <section id="esercizio-1">
+      <p class="badge">33′ · Esercizio 1 · gruppi di 3–4</p>
+      <h2 class="scene-title">Tentativi</h2>
+      <div class="e5-grid">
+        <div class="ex-text">
+          <p class="ex-lead">Ogni tentativo riesce con $p=0{,}2$, indipendentemente dagli altri.</p>
+          <ol>
+            <li>$P(X=1)$, $\;P(X=2)$, $\;P(X=3)$?</li>
+            <li>$P(\text{non bastano 3 tentativi})$?</li>
+            <li>E per $k$ tentativi?</li>
+          </ol>
+          <p class="ex-time">8′ in gruppo · 3′ confronto · 4′ correzione</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="8" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" aria-hidden="true"></span>
+      <aside class="notes">Click 1: parte il timer di 8′ (clic sul timer: pausa; doppio clic: azzera). Sostituisce la derivazione frontale della coda. Giri tra i gruppi; ai bloccati sull'ultima domanda: «che cosa devono fare i primi 3 tentativi?». Soluzione alla lavagna, non sulla slide: 0,2; 0,16; 0,128; P(X > 3) = 0,8³ = 0,512 = 1 − 0,488; in generale 0,8^k. Errori attesi: 0,8³·0,2 per «non bastano 3» (è «esattamente al quarto»); sommare invece di moltiplicare.</aside>
+    </section>
+
+    <!-- L1-10 · 48: due casi alla prima prova (denso) -->
+    <section id="ricomincia">
+      <p class="badge">48′ · Atto II · La media</p>
+      <h2 class="scene-title">Dopo un fallimento si ricomincia</h2>
+      <div class="scene-grid">
+        <svg class="scene-svg" width="640" height="430" viewBox="0 0 640 430" role="img" aria-label="Albero della prima prova: riesce con probabilità p e si ferma a 1 prova; fallisce con probabilità 1 meno p e costa 1 più un albero identico, di nuovo da capo"></svg>
+        <div class="scene-panel rc-eqs">
+          <div class="rc-e1">$$\mu=\color{#38ef7d}{p\cdot1}+\color{#fb923c}{(1-p)(1+\mu)}$$</div>
+          <div class="rc-e2">$$\mu=1+(1-p)\,\mu$$</div>
+          <div class="rc-e3">$$p\,\mu=1$$</div>
+          <div class="rc-e4 s05-box">$$\mathbb{E}[X]=\frac{1}{p}$$</div>
+        </div>
+      </div>
+      <aside class="notes">Prima «p = 1/5: quanti tentativi in media?» → 5. «Perché?». Click: 1 ramo alto, riesce: 1 prova; 2 ramo basso, fallisce: speso 1; 3 dentro il nodo compare lo stesso albero: di nuovo al punto di partenza. Prima del click 4 chiedi «quanto vale in media il ramo basso?» (1 + μ). 4 l'equazione: probabilità totale della S2 applicata alle medie; 5–6 fai dire ogni passo (p + 1 − p = 1; μ − (1 − p)μ = pμ); 7 E[X] = 1/p. Controlli a voce: p = 1/2 → 2; p = 1/18 → 18. Si assume μ finito (lo conferma il laboratorio).</aside>
+    </section>
+
+    <!-- L1-11 · 58: la media non è una scadenza -->
+    <section id="media-scadenza">
+      <p class="badge">58′ · Atto II · Attenzione</p>
+      <h2 class="scene-title">La media non è una scadenza</h2>
+      <div class="md-two">
+        <div class="md-num fragment"><b class="model">18</b><small>estrazioni in media</small></div>
+        <div class="md-num focus fragment"><b>35,7%</b><small>delle volte se ne aspettano di più</small><span class="md-formula">$P(X>18)=\left(\tfrac{17}{18}\right)^{18}$</span></div>
+      </div>
+      <aside class="notes">Click: 1 la media, 18; 2 la probabilità di superarla: (17/18)^18 ≈ 0,357. «Più di una volta su tre si aspetta più della media.» La coda (1 − p)^k è uscita dall'esercizio 1: qui la usiamo. Controllo c2 al 61.</aside>
+    </section>
+
+    <!-- L1-12 · 61: controllo c2 -->
+    <section id="sondaggio-c2" class="sondaggio" data-poll="s05-c2">
+      <p class="badge">61′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>media</b> $1/p$?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2 e 3, ripercorri i due rami con p = 1/2 usando i minuti del widget (S).</aside>
+    </section>
+
+    <!-- L1-13 · 62–66 (S): widget geometrico -->
+    <section id="widget-geometrica">
+      <p class="badge">62′ · Facoltativo · La forma di un'attesa</p>
+      <h2 class="scene-title">Prevedi la media, poi muovi $p$</h2>
+      <div class="wd-box" id="geo-box" data-prevent-swipe>
+        <div class="wd-ctrl">
+          <label>$p$ <input type="range" min="0.02" max="0.6" step="0.002" value="0.2" data-k="p"> <b data-v="p">0,200</b></label>
+        </div>
+        <svg class="scene-svg" width="1100" height="370" viewBox="0 0 1100 370" role="img" aria-label="Barre della Geometrica per k da 1 a 30, con il baricentro in 1 su p e la curva tratteggiata del Lotto"></svg>
+        <p class="wd-out"></p>
+        <p class="wd-try">Prova: <button class="psi-btn ghost" type="button" data-p="0.5">p = 0,5</button><button class="psi-btn ghost" type="button" data-p="0.0556">Lotto · 1/18</button><button class="psi-btn" type="button" data-p="0.2">reset · 0,2</button></p>
+      </div>
+      <aside class="notes">Sacrificabile (62–66). Stato iniziale p = 0,2: media 5. Prima di ogni movimento fai prevedere la media: p = 0,5 → 2; Lotto (≈ 0,056) → 18, le barre si abbassano e la coda esce dal grafico. La barra più alta è sempre la prima. Il triangolo verde è il baricentro 1/p; il tratteggio è il Lotto.</aside>
+    </section>
+
+    <!-- L1-14 · 66–80: Esercizio 2 -->
+    <section id="esercizio-2">
+      <p class="badge">66′ · Esercizio 2 · gruppi di 3–4</p>
+      <h2 class="scene-title">Il tempo medio di un retry</h2>
+      <div class="e5-grid">
+        <div class="ex-text">
+          <p class="ex-lead">Ogni tentativo: <b>300 ms</b>, timeout compreso; riesce con $p=0{,}2$.</p>
+          <ol>
+            <li>Tentativi medi?</li>
+            <li>Tempo medio totale?</li>
+            <li>E con $p=0{,}5$?</li>
+          </ol>
+          <p class="ex-time">6′ in gruppo · 3′ confronto · 5′ correzione</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="6" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" aria-hidden="true"></span>
+      <aside class="notes">Click 1: timer di 6′. Sostituisce l'applicazione frontale al retry. In correzione scrivi T = 0,3·X e richiama la linearità della S4. Soluzione: 5 tentativi, 1,5 s; con p = 0,5: 2 tentativi, 0,6 s (meno della metà). Errori attesi: 0,3/0,2 senza passare dal numero di tentativi; credere che il tempo dimezzi esattamente.</aside>
+    </section>
+
+    <!-- L1-15 · 80: i 100 fallimenti spariscono -->
+    <section id="memoria">
+      <p class="badge">80′ · Atto II · L'assenza di memoria</p>
+      <h2 class="scene-title">I fallimenti già visti spariscono</h2>
+      <svg class="scene-svg" width="1100" height="215" viewBox="0 0 1100 215" role="img" aria-label="Due righe: da subito, tre prove future; dopo 5 fallimenti, le stesse tre prove future. In entrambe la probabilità che falliscano tutte è 1 meno p alla terza"></svg>
+      <div class="mm-chain">
+        <div class="mm-line">
+          <span class="mm-s4">$P(X>118\mid X>100)=\dfrac{P(X>118)}{P(X>100)}$</span>
+          <span class="mm-s5">$=\dfrac{(17/18)^{118}}{(17/18)^{100}}$</span>
+        </div>
+        <div class="mm-line">
+          <span class="mm-s6">$=$
+            <span class="mm-frac">
+              <span class="mm-num"><span class="mm-cut">$(17/18)^{100}$<i></i></span>$\cdot\,(17/18)^{18}$</span>
+              <span class="mm-bar"></span>
+              <span class="mm-den"><span class="mm-cut">$(17/18)^{100}$<i></i></span></span>
+            </span>
+          </span>
+          <span class="mm-s6b">$=\left(\tfrac{17}{18}\right)^{18}$</span>
+          <span class="mm-s7 s05-box mm-end">$=P(X>18)$</span>
+        </div>
+      </div>
+      <aside class="notes">Click: 1 riga «da subito»: tre prove future; 2 riga «dopo 5 fallimenti»: le stesse tre prove; 3 (1 − p)³ in entrambe. 4 la condizionata: al click 4 chiedi perché l'intersezione è solo {X > 118} (se supera 118, supera anche 100). 5 la coda sopra e sotto; 6 le parti comuni si cancellano: resta (17/18)^18; 7 è P(X > 18), l'attesa da zero. I 100 fallimenti sono scomparsi dal conto. Ora rivela s05-1 (slide successiva, tasto V).</aside>
+    </section>
+
+    <!-- L1-16 · 86: rivelazione s05-1 (stesso ID) -->
+    <section id="sondaggio-1-rivela" class="sondaggio" data-poll="s05-1">
+      <p class="badge">86′ · Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Il 53 manca da <b>100 estrazioni</b>.<br>Alla prossima esce con probabilità…</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>più di 1/18</li>
+            <li><span>2</span>esattamente 1/18</li>
+            <li><span>3</span>meno di 1/18</li>
+            <li><span>4</span>dipende da quante volte è uscito prima</li>
+          </ol>
+          <p class="sondaggio-hint">Stesso sondaggio dell'inizio: i voti sono già qui</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Premi V. Risposta 2: esattamente 1/18, l'urna non ricorda. Commenta ogni opzione: 1 fallacia del giocatore; 3 la stessa fallacia rovesciata; 4 frequenze passate al posto della probabilità del meccanismo. Stesso ID dell'inizio: non è un secondo sondaggio.</aside>
+    </section>
+
+    <!-- L1-17 · 88: domanda A, domanda B -->
+    <section id="domande-ab">
+      <p class="badge">88′ · Atto II · La fallacia del giocatore</p>
+      <h2 class="scene-title">Due domande diverse</h2>
+      <div class="ab-grid">
+        <div class="ab-col ab-a fragment">
+          <h3>DOMANDA A · da zero</h3>
+          <p>118 assenze di fila?</p>
+          <b>0,0012</b>
+          <small>$(17/18)^{118}$</small>
+        </div>
+        <div class="ab-arrow fragment">
+          <svg width="200" height="40" viewBox="0 0 200 40"><path d="M6 20 H180" stroke="#ff6b6b" stroke-width="5" fill="none"/><path d="M176 6 L196 20 L176 34 Z" fill="#ff6b6b"/></svg>
+          il giocatore usa<br>questo numero<br>per quella domanda
+        </div>
+        <div class="ab-col ab-b fragment">
+          <h3>DOMANDA B · dopo 100 assenze</h3>
+          <p>altre 18 assenze?</p>
+          <b>0,357</b>
+          <small>$(17/18)^{18}$</small>
+        </div>
+      </div>
+      <p class="ab-spent fragment">La rarità di A è già stata spesa: i 100 fallimenti sono accaduti.</p>
+      <aside class="notes">Click: 1 colonna A (rarissima); 2 colonna B (per niente rara); 3 la freccia rossa: il giocatore decide su B con il numero di A; 4 «la rarità di A è già stata spesa». Controllo c3 al 92. S (93–96): «il numero più in ritardo d'Italia» è scelto tra centinaia di attese in corso: come i compleanni della S3, qualche coincidenza estrema è attesa.</aside>
+    </section>
+
+    <!-- L1-18 · 92: controllo c3 -->
+    <section id="sondaggio-c3" class="sondaggio" data-poll="s05-c3">
+      <p class="badge">92′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con l'<b>assenza di memoria</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2 e 3, rifai le due righe con s = 5 e t = 3 al posto di 100 e 18.</aside>
+    </section>
+
+    <!-- L1-19 · 96–105 (S): domanda d'uscita -->
+    <section id="uscita-1">
+      <p class="badge">96′ · Domanda d'uscita</p>
+      <svg class="scene-svg" width="1000" height="300" viewBox="0 0 1000 300" role="img" aria-label="La pallina del 53, ferma a 182 assenze; poi compare 1 su 18"></svg>
+      <p class="ux-q">Il 53 «deve» uscire? Rispondi con un numero.</p>
+      <aside class="notes">Cuscinetto: nessun concetto nuovo. Raccogli due risposte a voce. Click 1, solo a fine discussione: 1/18. Chiude l'arco aperto dal contatore. Opzionale: esercizio 3 della dispensa (il ritardatario). A casa: script 1 e letture.</aside>
+    </section>
+
+    <!-- ═════════════ LEZIONE 2 · venerdì 23/10, 9:00–10:45. Scene: js/lezione2.js ═════════════ -->
+
+    <!-- L2-00 · copertina -->
+    <section id="lezione-2">
+      <p class="cover-week">Settimana 5</p>
+      <h2 class="cover-title">Quante volte succede<br>una cosa rara?</h2>
+      <div class="cover-acts"><span>Lezione 2</span><span>venerdì 23 ottobre</span></div>
+      <aside class="notes">Apertura della Lezione 2. Alle 10:45 si chiude la S5: dopo la pausa parte la Settimana 6.</aside>
+    </section>
+
+    <!-- L2-01 · 0–10: riepilogo L1 -->
+    <section id="riepilogo-l1">
+      <p class="badge">0′ · Riepilogo · mercoledì</p>
+      <h2 class="scene-title">Quattro domande da mercoledì</h2>
+      <div class="rq-grid">
+        <div class="rq-list">
+          <p class="rq fragment"><span>1</span>Geometrica: $P(X=3)$?</p>
+          <p class="rq fragment"><span>2</span>Perché dopo un fallimento si ricomincia?</p>
+          <p class="rq fragment"><span>3</span>Media per $p=1/18$?</p>
+          <p class="rq fragment"><span>4</span>Assenza di memoria in una frase?</p>
+        </div>
+        <div class="rq-board with-fila">
+          <svg class="scene-svg rq-fila" width="340" height="70" viewBox="0 0 340 70" role="img" aria-label="La fila: due fallimenti e un successo"></svg>
+          <span>scrivila alla lavagna</span>
+        </div>
+      </div>
+      <aside class="notes">Una domanda per click; nessuna risposta sulla slide. Fai scrivere la fila a uno studente. Risposte: (1) (1 − p)²p; (2) le prove successive sono indipendenti e identiche: la situazione è quella di partenza; (3) 18; (4) un passato di fallimenti non cambia la distribuzione dell'attesa che resta.</aside>
+    </section>
+
+    <!-- L2-02 · 10: il registro di Bortkiewicz -->
+    <section id="registro">
+      <p class="badge">10′ · Atto III · I calci di cavallo</p>
+      <div class="rg-grid">
+        <figure class="rg-portrait">
+          <img src="img/bortkiewicz.jpg" alt="Ritratto di Ladislaus von Bortkiewicz, circa 1910">
+          <figcaption>Ladislaus von Bortkiewicz<br>(1868–1931)</figcaption>
+        </figure>
+        <div>
+          <p class="rg-book">Das Gesetz der kleinen Zahlen, Lipsia 1898</p>
+          <svg class="scene-svg" width="830" height="390" viewBox="0 0 830 390" role="img" aria-label="Registro: 10 corpi d'armata per 20 anni, dal 1875 al 1894; in ogni casella i militari uccisi da un calcio di cavallo; 200 corpi-anno, 122 morti"></svg>
+          <div class="rg-foot">
+            <span class="rg-tot">200 corpi-anno, <b>122 morti</b></span>
+            <span class="rg-mean">media <b>0,61</b> per corpo-anno</span>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">Click: 1 il titolo del libro; 2 la griglia si riempie casella per casella (un puntino = un militare ucciso); 3 i totali; 4 la media 0,61. Racconta: 14 corpi d'armata, 20 anni di statistiche ufficiali prussiane; Bortkiewicz ne tiene 10. Minuti 24–28 (S): la Guardia e i corpi I, VI e XI sono esclusi perché di composizione diversa (fino a 40 squadroni contro i 20 normali; nota a p. 24): un modello vale per unità simili. La tabella riassuntiva NON si mostra prima del sondaggio. Fonti: ritratto, pubblico dominio (Wikimedia Commons, da MacTutor, circa 1910); griglia per corpo e anno dal dataset prussian del pacchetto R pscl, trascritto da Bortkiewicz p. 24: riproduce esattamente 109/65/22/3/1 e 122 morti (da riscontrare sulla scansione).</aside>
+    </section>
+
+    <!-- L2-03 · 20: sondaggio s05-2 (lancio) -->
+    <section id="sondaggio-2" class="sondaggio" data-poll="s05-2">
+      <p class="badge">20′ · Sondaggio · prima di vedere la tabella</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">In media <b>0,61 morti</b> per corpo-anno.<br>Su <b>200</b> corpi-anno, quanti senza morti?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>circa 20</li>
+            <li><span>2</span>circa 80</li>
+            <li><span>3</span>circa 110</li>
+            <li><span>4</span>circa 160</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">«Votate prima di vedere la tabella.» NON premere V: si rivela al 55′, dopo il 108,7. Risposta 3 (108,7; osservati 109). Il 2 legge 0,61 come probabilità di almeno un morto (200·0,39 = 78); il 4 «eventi rari, quasi sempre zero»; l'1 confonde media e probabilità di zero.</aside>
+    </section>
+
+    <!-- L2-04 · 22: n e p ignoti -->
+    <section id="np-ignoti">
+      <p class="badge">22′ · Atto III · Una domanda con un solo numero</p>
+      <h2 class="scene-title">Una Binomiale senza $n$ né $p$</h2>
+      <svg class="scene-svg" width="1100" height="380" viewBox="0 0 1100 380" role="img" aria-label="Binomiale di n e p: n sono migliaia di occasioni, p è quasi zero; nessuno dei due è noto, si conosce solo np uguale a 0,61"></svg>
+      <p class="np-foot">Serve una legge che dipenda solo da 0,61.</p>
+      <aside class="notes">Chiedi «quante occasioni di incidente in un anno?» e lascia emergere che nessuno lo sa. Click: 1 n: migliaia di occasioni; 2 p: ognuna quasi impossibile; 3 n e p si coprono di «?»; 4 resta noto solo np = 0,61; 5 serve una legge che dipenda solo dalla media. Poi l'esercizio 3.</aside>
+    </section>
+
+    <!-- L2-05 · 28–43: Esercizio 3 -->
+    <section id="esercizio-3">
+      <p class="badge">28′ · Esercizio 3 · un valore di n per gruppo</p>
+      <h2 class="scene-title">Pezzetti di anno</h2>
+      <svg class="scene-svg" width="1000" height="150" viewBox="0 0 1000 150" role="img" aria-label="Un corpo-anno diviso in 10 pezzetti; in ciascuno un morto con probabilità 0,61 su n, oppure niente"></svg>
+      <p class="ex-formula">Nessun morto in nessun pezzetto: $\;\left(1-\dfrac{0{,}61}{n}\right)^{n}$</p>
+      <table class="s05-table e3-table">
+        <thead><tr><th>$n$</th><th>1</th><th>2</th><th>10</th><th>100</th><th>365</th></tr></thead>
+        <tbody><tr><td class="rowhead">$P(\text{0 morti})$</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr></tbody>
+      </table>
+      <p class="ex-time" style="margin-top:16px">7′ in gruppo · 4′ raccolta · 4′ commento &emsp; <span class="ex-timer" data-min="7" title="clic: avvia/pausa · doppio clic: azzera" style="font-size:1.2em"></span></p>
+      <aside class="notes">Testo alla lavagna: «un corpo-anno diviso in n pezzetti; in ciascuno un morto con probabilità 0,61/n, indipendentemente. Probabilità di nessun morto?». Ogni gruppo un valore di n; tabella comune alla lavagna. Timer: clic per avviare. Soluzione: 0,3900; 0,4830; 0,5329; 0,5423; 0,5431. Errore atteso: (1 − 0,61)^n invece di (1 − 0,61/n)^n. Chi ha votato «circa 80» ritrova il suo 0,39 con n = 1. Sostituisce la tabella frontale del blocco successivo.</aside>
+    </section>
+
+    <!-- L2-06 · 43: pezzetti sempre più fini (denso) -->
+    <section id="pezzetti">
+      <p class="badge">43′ · Atto IV · Il numero e</p>
+      <h2 class="scene-title">Pezzetti sempre più fini</h2>
+      <svg class="scene-svg" width="1100" height="430" viewBox="0 0 1100 430" role="img" aria-label="La barra dell'anno si divide in 1, 2, 10, 100, 365 pezzetti; la probabilità di zero morti sale da 0,39 e si stabilizza su 0,5434, cioè e alla meno 0,61"></svg>
+      <div class="pz-formula"><div class="s05-box">$$\left(1-\frac{\lambda}{n}\right)^{n}\;\longrightarrow\;\color{#fb923c}{e^{-\lambda}}\qquad e\approx2{,}718$$</div></div>
+      <aside class="notes">Prima la tabella dei gruppi: «che cosa notate?». Click 1–5: la barra si divide in 1, 2, 10, 100, 365 pezzetti e compare il punto: confronta con i valori dei gruppi. 6 la linea a 0,5434 = e^(−0,61) (calcolatrice). 7 il limite: tende a e^(−λ), e ≈ 2,718. Il numero e è ciò che resta quando una piccola probabilità si ripete moltissime volte.</aside>
+    </section>
+
+    <!-- L2-07 · 52: 108,7 -->
+    <section id="previsione">
+      <p class="badge">52′ · Atto IV · La previsione</p>
+      <h2 class="scene-title">Quanti corpi-anno senza morti?</h2>
+      <p class="ct-calc fragment">$200\times0{,}5434=$</p>
+      <p class="ct-big fragment">108,7</p>
+      <p class="ct-sub fragment">con un solo numero: 0,61</p>
+      <aside class="notes">Click: 1 il calcolo; 2 il numero; 3 la nota. «Perché si moltiplica per 200?»: un'indicatrice per corpo-anno, media P(0 morti); somma di 200 indicatrici, linearità della S4 (una frase). Ora rivela s05-2 (slide successiva, tasto V).</aside>
+    </section>
+
+    <!-- L2-08 · 55: rivelazione s05-2 (stesso ID) -->
+    <section id="sondaggio-2-rivela" class="sondaggio" data-poll="s05-2">
+      <p class="badge">55′ · Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">In media <b>0,61 morti</b> per corpo-anno.<br>Su <b>200</b> corpi-anno, quanti senza morti?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>circa 20</li>
+            <li><span>2</span>circa 80</li>
+            <li><span>3</span>circa 110</li>
+            <li><span>4</span>circa 160</li>
+          </ol>
+          <p class="sondaggio-hint">Stesso sondaggio di prima: i voti sono già qui</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Premi V. Risposta 3: 108,7. Commenta l'opzione 2 (circa 80) con il valore n = 1 dell'esercizio 3: 200·0,39 = 78 tratta l'anno come un solo pezzetto. Poi il dato osservato (slide successiva).</aside>
+    </section>
+
+    <!-- L2-09 · 56: 109 -->
+    <section id="centonove">
+      <p class="badge">56′ · Atto IV · I dati del 1898</p>
+      <h2 class="scene-title">Corpi-anno con zero morti</h2>
+      <table class="s05-table cn-table">
+        <thead><tr><th>osservati (1898)</th><th>attesi (Poisson)</th></tr></thead>
+        <tbody><tr><td class="cn-obs"><span class="fragment" data-fragment-index="2">109</span></td><td class="cn-exp"><span class="fragment" data-fragment-index="1">108,7</span></td></tr></tbody>
+      </table>
+      <p class="cn-quote fragment" data-fragment-index="3">«… nichts zu wünschen übrig.»<small>Bortkiewicz 1898, p. 25</small></p>
+      <aside class="notes">Click: 1 l'atteso 108,7; 2 l'osservato 109, in blu. Silenzio di qualche secondo: un numero ha previsto un dato del 1898. 3 la citazione: l'accordo tra teoria ed esperienza «non lascia nulla a desiderare» (traduzione dal tedesco). Controllo c4 al 58.</aside>
+    </section>
+
+    <!-- L2-10 · 58: controllo c4 -->
+    <section id="sondaggio-c4" class="sondaggio" data-poll="s05-c4">
+      <p class="badge">58′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con $e^{-\lambda}$?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2 e 3, riprendi la tabella dei gruppi: che cosa succede ai valori quando n cresce?</aside>
+    </section>
+
+    <!-- L2-11 · 61: da zero a un evento, la PMF -->
+    <section id="un-evento">
+      <p class="badge">61′ · Atto IV · La PMF di Poisson</p>
+      <h2 class="scene-title">Da zero a un evento</h2>
+      <svg class="scene-svg" width="1000" height="120" viewBox="0 0 1000 120" role="img" aria-label="Dieci pezzetti; un solo pezzetto pieno scorre nelle dieci posizioni: n modi"></svg>
+      <div class="ue-grid">
+        <div class="ue-steps">
+          <div class="ue-s2">$$P(1)=\color{#fb923c}{n}\cdot\frac{\lambda}{n}\cdot\left(1-\frac{\lambda}{n}\right)^{n-1}$$</div>
+          <div class="ue-s3">$$\phantom{P(1)}=\lambda\left(1-\frac{\lambda}{n}\right)^{n-1}$$</div>
+          <div class="ue-s4">$$\phantom{P(1)}\longrightarrow\;\lambda\,e^{-\lambda}$$</div>
+        </div>
+        <div class="ue-pmf s05-box">
+          <div class="row">$P(X=k)=$
+            <span class="ue-frac">
+              <span class="num"><span class="ue-part">$\lambda^{k}$<i class="up left">quanti eventi</i></span><span class="ue-part">$e^{-\lambda}$<i class="up right">nessun altro</i></span></span>
+              <span class="bar"></span>
+              <span class="den"><span class="ue-part">$k!$<i class="down">ordine irrilevante</i></span></span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="ue-ladder">
+        <span class="p">0,5434</span><span class="x">× 0,61 →</span><span class="p">0,3314</span><span class="x">× 0,61/2 = 0,305 →</span><span class="p">0,1011</span><span class="x">× 0,61/3 →</span><span class="q">?</span>
+      </div>
+      <aside class="notes">Click: 1 il pezzetto pieno scorre: n modi di scegliere dove cade l'unico evento; 2 n modi × λ/n × gli altri n − 1 vuoti; 3 la n si semplifica; 4 togliere un fattore non cambia il limite: λe^(−λ); 5 la PMF di Poisson (con più eventi il conto è lo stesso, più lungo: Lettura B per chi vuole il conto completo); 6 le tre etichette. Nessun passaggio con k generico in aula. Click 7 (68′): la scala ×λ/k; fai calcolare il gradino successivo: 0,1011 × 0,61/3 ≈ 0,0206, ponte all'esercizio 4. Controllo c5 al 70.</aside>
+    </section>
+
+    <!-- L2-12 · 70: controllo c5 -->
+    <section id="sondaggio-c5" class="sondaggio" data-poll="s05-c5">
+      <p class="badge">70′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>PMF di Poisson</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2 e 3, rifai un gradino della scala ×λ/k e salta il widget.</aside>
+    </section>
+
+    <!-- L2-13 · 71–75: media e varianza -->
+    <section id="media-varianza">
+      <p class="badge">71′ · Atto IV · Il segno di riconoscimento</p>
+      <h2 class="scene-title">Media e varianza</h2>
+      <table class="s05-table mv-table">
+        <thead><tr><th></th><th class="mv-b">Binomiale$(n,\lambda/n)$</th><th class="mv-p">Poisson$(\lambda)$</th></tr></thead>
+        <tbody>
+          <tr><td class="rowhead">media</td><td><span class="fragment" data-fragment-index="1">$n\cdot\dfrac{\lambda}{n}=\lambda$</span></td><td><span class="fragment" data-fragment-index="1">$\lambda$</span></td></tr>
+          <tr><td class="rowhead">varianza</td><td><span class="fragment" data-fragment-index="2">$n\cdot\dfrac{\lambda}{n}\left(1-\dfrac{\lambda}{n}\right)$<span class="mv-ref">Var: S4, Lettura A</span></span></td><td><span class="fragment" data-fragment-index="3">$\longrightarrow\lambda$</span></td></tr>
+        </tbody>
+      </table>
+      <div class="mv-foot">
+        <div class="s05-box fragment" data-fragment-index="4">$$\mathbb{E}[X]=\operatorname{Var}(X)=\lambda$$</div>
+        <p class="mv-data fragment" data-fragment-index="5">Bortkiewicz: media <b>0,61</b>,<br>varianza dei dati <b>0,608</b></p>
+      </div>
+      <aside class="notes">Cinque minuti. Click: 1 la media resta λ a ogni n; 2 la varianza binomiale np(1 − p) con p = λ/n: una frase («quanto i conteggi oscillano»), niente definizione alla lavagna; 3 la parentesi tende a 1: varianza λ; 4 il riquadro; 5 il controllo sui dati. Se si è in ritardo mostra solo 4 e 5. Il conto 0,98 − 0,61² resta all'esercizio 6 per casa.</aside>
+    </section>
+
+    <!-- L2-14 · 75–79 (S): widget Poisson -->
+    <section id="widget-poisson">
+      <p class="badge">75′ · Facoltativo · Un solo parametro</p>
+      <h2 class="scene-title">Un cursore governa tutto</h2>
+      <div class="wd-box" id="poi-box" data-prevent-swipe>
+        <div class="wd-ctrl">
+          <label>$\lambda$ <input type="range" min="0.1" max="10" step="0.01" value="0.61" data-k="lam"> <b data-v="lam">0,61</b></label>
+        </div>
+        <svg class="scene-svg" width="1100" height="360" viewBox="0 0 1100 360" role="img" aria-label="Barre della Poisson per k da 0 a 15, con la curva tratteggiata di Bortkiewicz a lambda 0,61"></svg>
+        <p class="wd-out"></p>
+        <p class="wd-try">Prova: <button class="psi-btn ghost" type="button" data-lam="1">λ = 1</button><button class="psi-btn ghost" type="button" data-lam="3">λ = 3</button><button class="psi-btn ghost" type="button" data-lam="8">λ = 8</button><button class="psi-btn" type="button" data-lam="0.61">reset · 0,61</button></p>
+      </div>
+      <aside class="notes">Sacrificabile (75–79). Stato iniziale λ = 0,61: la barra più alta è lo zero. Domanda: «per quale λ lo zero scende sotto il 5%?» (≈ 3: e^(−3) ≈ 0,050). Con λ = 8 la massa si sposta a destra e si allarga. Il tratteggio è la Poisson di Bortkiewicz.</aside>
+    </section>
+
+    <!-- L2-15 · 79–93: Esercizio 4 -->
+    <section id="esercizio-4">
+      <p class="badge">79′ · Esercizio 4 · un k per gruppo</p>
+      <h2 class="scene-title">Completare la tabella</h2>
+      <div class="e4-wrap">
+        <div>
+          <p class="e4-lead">$P(X=k)=P(X=k-1)\cdot\dfrac{0{,}61}{k}$, &ensp;poi $\times\,200$</p>
+          <table class="s05-table e4-table">
+            <thead><tr><th>morti $k$</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>≥ 5</th></tr></thead>
+            <tbody>
+              <tr><td class="rowhead">osservati</td><td class="obs">109</td><td class="obs">65</td><td class="obs">22</td><td class="obs">3</td><td class="obs">1</td><td class="obs">0</td></tr>
+              <tr><td class="rowhead">attesi</td><td class="exp">108,7</td><td class="exp slot"><span class="fragment" data-fragment-index="2">66,3</span></td><td class="exp slot"><span class="fragment" data-fragment-index="2">20,2</span></td><td class="exp slot"><span class="fragment" data-fragment-index="2">4,1</span></td><td class="exp"><span class="fragment" data-fragment-index="2">0,6</span></td><td class="exp"><span class="fragment" data-fragment-index="2">0,1</span></td></tr>
+            </tbody>
+          </table>
+          <p class="ex-time">6′ in gruppo · 4′ tabella comune · 4′ confronto</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="6" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">Un k per gruppo (1, 2, 3). Click 1: timer di 6′. Click 2, a fine correzione: gli attesi 66,3; 20,2; 4,1; 0,6; 0,1. Confronto con 65/22/3: scarti piccoli e di segno diverso, come ci si aspetta da un campione finito. Errori attesi: dimenticare il fattore 1/k; non moltiplicare per 200.</aside>
+    </section>
+
+    <!-- L2-16 · 93–105 (S): domanda d'uscita -->
+    <section id="uscita-2">
+      <p class="badge">93′ · Domanda d'uscita</p>
+      <svg class="scene-svg" width="1100" height="250" viewBox="0 0 1100 250" role="img" aria-label="A sinistra la fila di prove fino al primo successo: quanto aspetto? A destra un intervallo a pezzetti con due eventi: quanti eventi?"></svg>
+      <div class="ux-names"><span class="geo fragment">Geometrica</span><span class="poi fragment">Poisson</span></div>
+      <p class="ux-home fragment">A casa: esercizi 6 e 7 della dispensa · script 2 e 3</p>
+      <aside class="notes">Chiedi la domanda d'uscita prima dei click: «Geometrica o Poisson: quale domanda fa ciascuna?»; due risposte a voce. Click: 1 Geometrica (quanto aspetto il primo successo); 2 Poisson (quanti eventi in un intervallo); 3 i compiti: esercizio 6 (varianza dei dati, 0,608) ed esercizio 7 («Quale modello?»). Si chiude entro le 10:45: nessuna formula nuova. Bloom e traffico del server restano in pagina.</aside>
+    </section>
+
+  </div></div>
+  <script src="../../assets/slides/scene.js"></script>
+  <script src="../../assets/sondaggi.js"></script>
+  <script src="../../assets/slides/sondaggio.js"></script>
+  <script src="js/comuni.js"></script>
+  <script src="js/lezione1.js"></script>
+  <script src="js/lezione2.js"></script>
+  <script>PSIDeck.start({ onReady: function (deck) { PSISondaggio.bind(deck); S05.timers(deck); } });</script>
+</body>
+</html>

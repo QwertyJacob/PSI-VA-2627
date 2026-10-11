@@ -36,7 +36,7 @@ Il percorso è articolato in 4 moduli tematici distribuiti su **12 settimane**, 
 |---|---|
 | **[4. Huygens e il prezzo equo](settimana_04/index.md)** *(bozza completa)* | **Variabili aleatorie discrete e valore atteso:** variabili aleatorie discrete, funzione di massa di probabilità (PMF), valore atteso e linearità del valore atteso, distribuzione di Bernoulli e Binomiale, varianza; analisi del caso medio negli algoritmi. |
 | **[5. Bortkiewicz e i calci di cavallo](settimana_05/index.md)** *(bozza completa)* | **Distribuzioni discrete notevoli:** distribuzione Geometrica (tempo di attesa e assenza di memoria), distribuzione di Poisson (eventi rari e limite della binomiale); applicazioni ai sistemi distribuiti. |
-| **Settimana 6** *(in arrivo)* | **Variabili aleatorie continue e distribuzione Normale:** densità di probabilità (PDF) e funzione di ripartizione (CDF), distribuzione uniforme ed esponenziale, distribuzione Normale (Gaussiana) e standardizzazione. |
+| **[6. Bertrand, Gauss e l'asteroide Cerere](settimana_06/index.md)** *(bozza completa)* | **Variabili aleatorie continue e distribuzione Normale:** densità di probabilità (PDF) e funzione di ripartizione (CDF), distribuzione esponenziale (e uniforme in lettura), distribuzione Normale (Gaussiana), standardizzazione e regola 68–95–99,7. |
 
 ### Modulo III — Distribuzioni congiunte, teoremi limite e campionamento (Settimane 7–10)
 

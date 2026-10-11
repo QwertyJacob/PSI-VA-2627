@@ -1,0 +1,209 @@
+/*
+ * Settimana 6: il continuo, l'Esponenziale e la Normale. Scene: js/continuo.js.
+ * Le regole comuni (badge, copertine, riepiloghi, esercizi, timer, widget,
+ * uscite) sono riprese dal mazzo della Settimana 5, così questo mazzo non
+ * dipende dai fogli delle altre settimane.
+ *
+ * Colori della settimana: azzurro = dati e aree, arancio = modello,
+ * verde = successo / valore cercato, viola = terza fascia, rosso = errore.
+ */
+:root {
+  --r-main-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --r-heading-font: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --r-heading-text-transform: none;
+  --r-main-font-size: 30px;
+  --s06-data: var(--psi-a);
+  --s06-model: #fb923c;
+  --s06-ok: var(--psi-sel);
+  --s06-third: var(--psi-c);
+  --s06-red: #ff6b6b;
+}
+.reveal .slides section { text-align: center; }
+.reveal .slides section.sondaggio { text-align: left; }
+.reveal .badge { display: inline-block; margin: 0 0 20px; padding: 6px 16px; border-radius: 20px; font-size: .6em; font-weight: 700; letter-spacing: 1px; background: #16675f; color: #fff; }
+.reveal .data { color: var(--s06-data); }
+.reveal .model { color: var(--s06-model); }
+.reveal .highlight { color: var(--s06-ok); }
+.reveal .third { color: var(--s06-third); }
+.reveal .red { color: var(--s06-red); }
+.reveal .muted { color: var(--psi-muted); }
+.reveal .scene-svg { margin: auto; }
+
+/* ── Testi dentro gli SVG ── */
+.reveal .scene-svg .s06-label { font: 24px var(--r-main-font); fill: var(--psi-text); }
+.reveal .scene-svg .s06-small { font: 19px var(--r-main-font); fill: var(--psi-muted); }
+.reveal .scene-svg .s06-tiny { font: 15px var(--r-main-font); fill: var(--psi-muted); }
+.reveal .scene-svg .s06-big { font: 700 44px var(--r-main-font); fill: var(--psi-text); }
+.reveal .scene-svg .s06-huge { font: 800 72px var(--r-main-font); fill: var(--psi-text); }
+.reveal .scene-svg .s06-math { font: 30px KaTeX_Main, serif; fill: var(--psi-text); }
+.reveal .scene-svg .s06-mono { font: 700 64px 'JetBrains Mono', 'Fira Mono', monospace; fill: var(--psi-text); }
+.reveal .scene-svg .s06-data { fill: var(--s06-data); }
+.reveal .scene-svg .s06-model { fill: var(--s06-model); }
+.reveal .scene-svg .s06-ok { fill: var(--s06-ok); }
+.reveal .scene-svg .s06-third { fill: var(--s06-third); }
+.reveal .scene-svg .s06-red { fill: var(--s06-red); }
+.reveal .scene-svg .s06-white { fill: var(--psi-text); }
+.reveal .scene-svg .s06-bold { font-weight: 700; }
+
+/* ── Copertine ── */
+.reveal .cover-week { font-size: .9em; color: var(--psi-muted); margin: 0; letter-spacing: 2px; text-transform: uppercase; }
+.reveal .cover-title { font-size: 2.5em; font-weight: 800; letter-spacing: -.02em; margin: 14px 0 26px; }
+.reveal .cover-acts { display: flex; justify-content: center; gap: 18px; }
+.reveal .cover-acts > span { padding: 8px 22px; border-radius: 20px; font-size: .8em; border: 1px solid #ffffff30; background: #ffffff0a; color: var(--psi-muted); }
+
+/* ── Riepiloghi ── */
+.reveal .rq-grid { display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: center; max-width: 1180px; margin: 0 auto; text-align: left; }
+.reveal .rq-list { display: flex; flex-direction: column; gap: 16px; }
+.reveal .rq { margin: 0; padding: 14px 22px; border-radius: 12px; background: #ffffff08; border: 1px solid #ffffff1f; font-size: .85em; font-weight: 600; }
+.reveal .rq > span:first-child { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; margin-right: 14px; border-radius: 50%; font-size: .85em; color: var(--psi-b); background: #fbbf2429; }
+.reveal .rq-board { height: 330px; border: 2px dashed #ffffff22; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 0 0 12px; color: #ffffff40; font-size: .55em; }
+.reveal .rq-board svg { margin: 14px auto auto; }
+.reveal .rq-bridge { margin: 26px 0 0; font-size: .9em; font-weight: 700; color: var(--s06-ok); text-align: center; }
+
+/* ── Tabelle ── */
+.reveal .s06-table { border-collapse: collapse; margin: 0 auto; font-size: .82em; }
+.reveal .s06-table th { color: var(--psi-muted); font-weight: 600; padding: 8px 22px; border: none; border-bottom: 2px solid #ffffff30; text-align: center; }
+.reveal .s06-table td { text-align: center; padding: 10px 24px; border: none; border-bottom: 1px solid #ffffff18; }
+.reveal .s06-table .rowhead { color: var(--psi-muted); text-align: left; }
+
+/* ── Ritratti ── */
+.reveal .s06-portrait { margin: 0; text-align: center; }
+.reveal .s06-portrait img { display: block; width: 250px; max-width: none; max-height: none; margin: 0 auto 10px; border-radius: 10px; filter: grayscale(1) contrast(1.05); box-shadow: 0 10px 30px #000a; }
+.reveal .s06-portrait figcaption { font-size: .5em; color: var(--psi-muted); line-height: 1.35; }
+.reveal .s06-portrait.color img { filter: none; }
+
+/* ── Esercizi ── */
+.reveal .e6-grid { display: grid; grid-template-columns: 540px 1fr; gap: 40px; align-items: center; text-align: left; }
+.reveal .ex-text { font-size: .78em; }
+.reveal .ex-text ol { margin: 14px 0 0 1.2em; }
+.reveal .ex-text li { margin: 0 0 12px; }
+.reveal .ex-lead { margin: 0 0 6px; }
+.reveal .ex-small { font-size: .78em; color: var(--psi-muted); margin: 6px 0 0; }
+.reveal .ex-foot { display: flex; align-items: center; gap: 24px; margin-top: 16px; }
+.reveal .ex-time { color: var(--psi-muted); font-size: .8em; margin: 0; }
+.reveal .ex-timer { font: 800 1.9em 'JetBrains Mono', 'Fira Mono', monospace; font-variant-numeric: tabular-nums; padding: 4px 26px; border-radius: 14px; border: 2px solid #ffffff30; background: #ffffff08; cursor: pointer; user-select: none; }
+.reveal .ex-timer.running { border-color: var(--s06-ok); color: var(--s06-ok); }
+.reveal .ex-timer.done { border-color: var(--s06-red); color: var(--s06-red); animation: s06-blink 1s steps(2) infinite; }
+@keyframes s06-blink { 50% { opacity: .35; } }
+
+/* ── Widget (L1-17, L2-07) ── */
+.reveal .wd-box { font-size: .62em; }
+.reveal .wd-ctrl { display: flex; justify-content: center; align-items: center; gap: 44px; margin: 0 0 8px; }
+.reveal .wd-ctrl label { display: flex; align-items: center; gap: 12px; font-size: 1.1em; }
+.reveal .wd-ctrl input[type=range] { width: 380px; accent-color: var(--s06-ok); }
+.reveal .wd-ctrl b { display: inline-block; min-width: 3.4em; text-align: left; }
+.reveal .wd-out { margin: 8px 0 0; font-size: 1.2em; }
+.reveal .wd-out b { color: var(--s06-ok); }
+.reveal .wd-out .sep { color: #ffffff40; margin: 0 14px; }
+.reveal .wd-try { margin: 6px 0 0; font-size: 1em; color: var(--psi-muted); }
+.reveal .wd-try button { margin: 0 6px; }
+
+/* ── Uscite ── */
+.reveal .ux-q { font-size: 1.25em; font-weight: 700; margin: 10px 0; }
+.reveal .ux-a { font-size: 1.1em; font-weight: 800; color: var(--s06-ok); margin: 6px 0 0; }
+.reveal .ux-home { margin: 22px 0 0; font-size: .7em; color: var(--psi-muted); }
+
+/* ── Riquadri delle formule chiave ── */
+.reveal .s06-box { display: inline-block; padding: 0 30px; border-radius: 14px; border: 3px solid var(--s06-ok); background: #38ef7d10; }
+.reveal .s06-box .katex-display { margin: .35em 0; }
+.reveal .s06-code { font: 600 .7em 'JetBrains Mono', 'Fira Mono', monospace; color: var(--psi-muted); background: #ffffff0a; border: 1px solid #ffffff20; border-radius: 8px; padding: 4px 14px; }
+
+/* ── Sondaggi: varianti di questa settimana ── */
+/* Rivelazione: il QR non serve più, resta il contatore; a destra c'è spazio per altro. */
+.reveal section.rivela .sondaggio-qr { display: none; }
+.reveal section.rivela .sondaggio-grid { grid-template-columns: 1fr 300px; gap: 36px; }
+.reveal section.rivela .sondaggio-q { font-size: .9em; margin: 0 0 18px; }
+.reveal section.rivela .sondaggio-opts li { font-size: .9em; padding: 10px 18px; }
+.reveal section.rivela .sondaggio-count { font-size: 1.6em; margin: 0; }
+.reveal section.rivela .sondaggio-grid.rv-wide { grid-template-columns: 1fr 440px; }
+.reveal .rv-side { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.reveal .rv-foot { margin: 22px 0 0; text-align: center; }
+/* Opzioni lunghe (s06-1, s06-2, s06-3, s06-4). */
+.reveal .sondaggio-opts.long { grid-template-columns: 1fr; gap: 10px; }
+.reveal .sondaggio-opts.long li { font-size: .82em; font-weight: 600; line-height: 1.3; padding: 10px 20px; align-items: center; }
+
+/* ── L1-02 corda ── */
+.reveal .cd-grid { display: grid; grid-template-columns: 280px 1fr; gap: 40px; align-items: center; }
+
+/* ── L1-05 «mal posée» ── */
+.reveal .bq-quote { margin: 0; font-size: .95em; font-style: italic; color: var(--psi-text); line-height: 1.4; }
+.reveal .bq-quote small { display: block; font-style: normal; font-size: .62em; color: var(--psi-muted); margin-top: 8px; }
+
+/* ── L1-06 numero e quadrato ── */
+.reveal .nq-quote { margin: 4px 0 0; font-size: .85em; font-style: italic; color: #cbd5e0; }
+.reveal .nq-quote small { font-style: normal; color: var(--psi-muted); font-size: .7em; }
+
+/* ── L1-07 cifre ── */
+.reveal .cf-punch { margin: 10px 0 0; font-size: 1.05em; font-weight: 700; }
+
+/* ── L1-09 area ── */
+.reveal .ar-formula { display: flex; justify-content: center; align-items: center; gap: 26px; margin: 0; }
+.reveal .ar-formula .s06-box .katex-display { margin: .25em 0; }
+.reveal .ar-formula .ar-eq { font-size: 1.1em; font-weight: 800; color: var(--s06-data); }
+
+/* ── L1-13 attesa ── */
+.reveal .at-foot { display: grid; grid-template-columns: 1fr auto; gap: 30px; align-items: center; max-width: 1150px; margin: 6px auto 0; text-align: left; }
+.reveal .at-lines p { margin: 0 0 8px; font-size: .9em; }
+.reveal .at-lines b { color: var(--s06-ok); }
+.reveal .at-box { font-size: .95em; }
+
+/* ── L1-14 coda e media ── */
+.reveal .cm-grid { display: grid; grid-template-columns: 470px 1fr; gap: 50px; align-items: center; text-align: left; }
+.reveal .cm-table td, .reveal .cm-table th { padding: 12px 22px; font-size: 1.05em; white-space: nowrap; }
+.reveal .cm-table td.v { color: var(--s06-data); font-weight: 700; }
+.reveal .cm-right { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.reveal .cm-geo { font-size: .66em; color: var(--psi-muted); margin: 0; }
+.reveal .cm-mean { font-size: 1.5em; font-weight: 800; margin: 6px 0 0; }
+.reveal .cm-mean .katex { font-size: 1.15em; }
+.reveal .cm-small { font-size: .7em; color: var(--psi-muted); margin: 0; }
+
+/* ── L1-19 memoria ── */
+.reveal .mm-box { font-size: .9em; }
+.reveal .mm-note { margin: 10px 0 0; font-size: .8em; font-weight: 700; color: var(--s06-model); }
+
+/* ── L2-02 Cerere ── */
+.reveal .ce-grid { display: grid; grid-template-columns: 250px 1fr; gap: 30px; align-items: center; }
+.reveal .ce-grid .scene-svg { border-radius: 16px; }
+
+/* ── L2-03 sagome delle opzioni ── */
+.reveal .sondaggio-opts li svg.sg-shape { flex: none; align-self: center; }
+
+/* ── L2-04 Gauss ── */
+.reveal .gs-grid { display: grid; grid-template-columns: 290px 1fr; gap: 44px; align-items: center; text-align: left; }
+.reveal .gs-right p { margin: 0 0 12px; font-size: .85em; }
+.reveal .gs-right b { color: var(--s06-model); }
+.reveal .gs-quote { margin: 14px 0 6px; padding-left: 16px; border-left: 4px solid var(--s06-model); font-size: .9em; font-style: italic; color: #e2e8f0; line-height: 1.4; }
+.reveal .gs-quote small { display: block; font-style: normal; font-size: .6em; color: var(--psi-muted); margin-top: 6px; }
+
+/* ── L2-06 formula a pezzi ── */
+.reveal .fp-stack { position: relative; font-size: 1.5em; height: 160px; }
+.reveal .fp-stack .katex-display { margin: 0; }
+.reveal .fp-stack > div { position: absolute; left: 0; right: 0; top: 0; }
+.reveal .fp-cap { position: relative; height: 46px; margin: 0 0 6px; }
+.reveal .fp-cap > p { position: absolute; left: 0; right: 0; top: 0; margin: 0; font-size: .95em; font-weight: 700; }
+
+/* ── L2-09 monete ── */
+.reveal .mo-head { margin: 0 0 6px; font-size: .8em; color: var(--psi-muted); }
+
+/* ── L2-11 righelli ── */
+.reveal .rh-formula { margin: 4px 0 0; }
+
+/* ── L2-12 Φ ── */
+.reveal .ph-table { font-size: .62em; margin: 0 auto 4px; }
+.reveal .ph-table th, .reveal .ph-table td { padding: 6px 12px; }
+.reveal .ph-table td { font-variant-numeric: tabular-nums; }
+.reveal .ph-cards { position: relative; height: 54px; margin: 2px 0 0; }
+.reveal .ph-cards > p { position: absolute; left: 0; right: 0; top: 0; margin: 0; font-size: .8em; }
+.reveal .ph-code { margin: 6px 0 0; }
+
+/* ── L2-14 esercizio 4: tabella di Φ in piccolo (almeno 24 px) ── */
+.reveal .e4-phi { font-size: .8em; margin: 8px auto 0; }
+.reveal .e4-phi th, .reveal .e4-phi td { padding: 4px 10px; }
+
+/* ── L2-16 / L2-17 latenze ── */
+.reveal .lt-top { display: block; margin: 0 auto 8px; }
+.reveal .ht-lines { display: flex; justify-content: center; gap: 40px; margin: 4px 0 0; font-size: .75em; font-weight: 700; }
+
+/* ── L2-19 p99 ── */
+.reveal .pq-lines { display: flex; justify-content: center; align-items: center; gap: 30px; margin: 6px 0 0; }
+.reveal .pq-lines p { margin: 0; font-size: .85em; }

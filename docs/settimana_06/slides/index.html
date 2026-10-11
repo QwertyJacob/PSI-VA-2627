@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>PSI 26/27 — Settimana 6: il continuo, l'Esponenziale e la Normale</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../assets/slides/deck.js"></script>
+  <link rel="stylesheet" href="css/settimana.css">
+</head>
+<body>
+  <div class="reveal"><div class="slides">
+
+    <!-- ═════════════ LEZIONE 1 · venerdì 23/10, 11:00–12:45. Scene: js/continuo.js ═════════════ -->
+
+    <!-- L1-00 · copertina -->
+    <section id="lezione-1">
+      <p class="cover-week">Settimana 6</p>
+      <h2 class="cover-title">Che cosa vuol dire «a caso»?</h2>
+      <div class="cover-acts"><span>Il continuo, l'Esponenziale e la Normale</span><span>Lezione 1</span><span>venerdì 23 ottobre, 11:00</span></div>
+      <aside class="notes">Resta proiettata durante la pausa. La classe arriva dalla L2 della Settimana 5: si riparte con un riepilogo di 10 minuti, non 15. Mai sforare le 12:45: è il quarto blocco orario.</aside>
+    </section>
+
+    <!-- L1-01 · 0–10: ripresa -->
+    <section id="ripresa">
+      <p class="badge">0′ · Ripresa · dopo la pausa</p>
+      <h2 class="scene-title">Tre domande dalla Settimana 5</h2>
+      <div class="rq-grid">
+        <div class="rq-list">
+          <p class="rq fragment"><span>1</span>$P(\text{zero eventi})$ con media $\lambda$?</p>
+          <p class="rq fragment"><span>2</span>3 al secondo: quanti, in media, in 0,5 s?</p>
+          <p class="rq fragment"><span>3</span>Geometrica o Poisson: quale domanda fa ciascuna?</p>
+        </div>
+        <div class="rq-board">risposte alla lavagna</div>
+      </div>
+      <p class="rq-bridge fragment">Oggi: quanto si aspetta, con il tempo vero.</p>
+      <aside class="notes">Una domanda per click; risposte dalla classe, alla lavagna: (1) e^(−λ); (2) 3 × 0,5 = 1,5; (3) Geometrica: quanto aspetto il primo successo; Poisson: quanti eventi in un intervallo. Niente teoria nuova. Click 4: la frase ponte.</aside>
+    </section>
+
+    <!-- L1-02 · 10: la corda -->
+    <section id="corda">
+      <p class="badge">10′ · Atto I · Bertrand, 1889</p>
+      <div class="cd-grid">
+        <figure class="s06-portrait">
+          <img src="img/bertrand.jpg" alt="Ritratto di Joseph Bertrand">
+          <figcaption>J. Bertrand,<br><i>Calcul des probabilités</i>, 1889</figcaption>
+        </figure>
+        <svg class="scene-svg" width="700" height="540" viewBox="0 0 700 540" role="img" aria-label="Un cerchio con il triangolo equilatero inscritto tratteggiato; una corda blu tracciata a caso; la domanda: più lunga del lato?"></svg>
+      </div>
+      <aside class="notes">Leggi la domanda originale: «Si traccia a caso una corda in un cerchio. Qual è la probabilità che sia più piccola del lato del triangolo equilatero inscritto?» (cap. I, § 5, p. 4). Noi guardiamo il caso opposto, «più lunga». Click: 1 una corda «a caso»; 2 la domanda; 3 il lato del triangolo in arancio, per il confronto. Chiedi «che cosa vuol dire a caso?» e NON rispondere. Lancia subito s06-1.</aside>
+    </section>
+
+    <!-- L1-03 · 12: sondaggio s06-1 (lancio) -->
+    <section id="sondaggio-1" class="sondaggio" data-poll="s06-1">
+      <p class="badge">12′ · Sondaggio · la risposta arriva al 20′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Si traccia <b>a caso</b> una corda in un cerchio.<br>Probabilità che sia più lunga del lato del triangolo inscritto?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>1/4</li>
+            <li><span>2</span>1/3</li>
+            <li><span>3</span>1/2</li>
+            <li><span>4</span>dipende da come si sceglie la corda</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono · votate d'istinto</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">«Votate d'istinto.» NON premere V: si rivela al 20′ sul duplicato, dopo i tre metodi. Risposta 4. Le opzioni 1, 2, 3 sono ciascuna giusta per un metodo: chi le sceglie ha in mente, senza dirlo, una procedura.</aside>
+    </section>
+
+    <!-- L1-04 · 14–20: tre modi, tre nuvole -->
+    <section id="corde">
+      <p class="badge">14′ · Atto I · Tre modi di scegliere</p>
+      <h2 class="scene-title">Tre modi, tre nuvole di corde</h2>
+      <svg class="scene-svg" width="1180" height="500" viewBox="0 0 1180 500" role="img" aria-label="Tre cerchi con il triangolo inscritto: estremi a caso dà 1/3, distanza a caso 1/2, punto medio a caso 1/4; poi 300 corde per metodo, con trame visibilmente diverse, e le frequenze 0,343, 0,507, 0,240"></svg>
+      <aside class="notes">Un minuto per metodo. Click: 1 estremi a caso: fissato un estremo, la corda è lunga se l'altro cade nell'arco opposto, 60° su 180°: 1/3. 2 distanza dal centro a caso: lunga se il punto medio sta nella metà del raggio vicina al centro: 1/2. 3 punto medio a caso nel disco: lungo se cade nel disco di raggio metà, un quarto dell'area: 1/4. 4 trecento corde per metodo (seme fisso): «stessa parola, tre macchine diverse»; il metodo 3 lascia il centro quasi vuoto. 5 le frequenze accanto alla teoria. I conti completi sono nella Lettura B (fuori dal nucleo d'esame).</aside>
+    </section>
+
+    <!-- L1-05 · 20: rivelazione s06-1 (stesso ID) e «mal posée» -->
+    <section id="sondaggio-1-rivela" class="sondaggio rivela" data-poll="s06-1">
+      <p class="badge">20′ · Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Si traccia <b>a caso</b> una corda in un cerchio.<br>Probabilità che sia più lunga del lato del triangolo inscritto?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>1/4</li>
+            <li><span>2</span>1/3</li>
+            <li><span>3</span>1/2</li>
+            <li><span>4</span>dipende da come si sceglie la corda</li>
+          </ol>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <div class="rv-foot fragment">
+        <p class="bq-quote">«Aucune des trois n'est fausse, aucune n'est exacte, la question est mal posée.»<small>«Nessuna delle tre è falsa, nessuna è esatta: la domanda è mal posta.» — J. Bertrand, 1889, p. 5</small></p>
+      </div>
+      <aside class="notes">Premi V. Risposta 4. Commenta ogni opzione con il suo metodo: 1/4 punto medio a caso, 1/3 estremi a caso, 1/2 distanza a caso. Click 1: la citazione. Conclusione: «nel continuo bisogna dire come si sceglie». Stesso ID dell'inizio: non è un secondo sondaggio.</aside>
+    </section>
+
+    <!-- L1-06 · 20–24 (S): il numero e il suo quadrato -->
+    <section id="quadrato">
+      <p class="badge">20′ · Facoltativo · Il numero e il suo quadrato</p>
+      <h2 class="scene-title">Un numero «a caso» tra 0 e 100: supera 50?</h2>
+      <svg class="scene-svg" width="1100" height="400" viewBox="0 0 1100 400" role="img" aria-label="Due righelli: sopra da 0 a 100, la metà oltre 50 colorata, probabilità un mezzo; sotto il quadrato da 0 a 10 000, i tre quarti oltre 2500 colorati, probabilità tre quarti; linee sottili collegano ogni numero al suo quadrato"></svg>
+      <p class="nq-quote">«Gli enunciati mancano di precisione.» <small>— J. Bertrand, 1889, p. 4</small></p>
+      <aside class="notes">Sacrificabile (20–24): se sei in ritardo, salta. Click: 1 uniforme sul numero: oltre 50 c'è metà del righello, 1/2. 2 uniforme sul quadrato: il numero supera 50 quando il quadrato supera 2500, e oltre 2500 ci sono i tre quarti del righello, 3/4. Le linee collegano x a x². 3 la frase di Bertrand. Domanda: «uniforme su che cosa?».</aside>
+    </section>
+
+    <!-- L1-07 · 24: esattamente 0,3 -->
+    <section id="cifre">
+      <p class="badge">24′ · Atto II · Un punto esatto</p>
+      <h2 class="scene-title">Il server risponde in esattamente 0,3 s?</h2>
+      <svg class="scene-svg" width="1100" height="390" viewBox="0 0 1100 390" role="img" aria-label="Un cronometro che mostra 0,3 con sempre più cifre; accanto le caselle possibili, 10, 100, un milione, e la probabilità che scende a zero"></svg>
+      <p class="cf-punch">$P(T=0{,}3)=0$, ma 0,3 <span class="highlight">non è impossibile</span></p>
+      <aside class="notes">Tempo tra 0 e 1 s, nessuna zona privilegiata. Prima di ogni click chiedi la riga successiva. Click: 1 una cifra: 10 caselle, 1/10; 2 due cifre: 100 caselle, 1/100; 3 sei cifre: un milione di caselle; 4 le cifre continuano: la probabilità è più piccola di qualunque numero positivo, quindi 0; 5 la frase: la probabilità non sta nei punti, sta negli intervalli.</aside>
+    </section>
+
+    <!-- L1-08 · 28: barre sempre più strette -->
+    <section id="istogrammi">
+      <p class="badge">28′ · Atto II · Istogrammi sempre più fini</p>
+      <h2 class="scene-title">L'attesa del server, a barre</h2>
+      <svg class="scene-svg" width="1180" height="510" viewBox="0 0 1180 510" role="img" aria-label="Istogramma dell'attesa del server tra 0 e 1,2 secondi. Dimezzando le barre le frazioni si dimezzano; usando come altezza la frazione divisa per la larghezza il profilo resta e si avvicina alla curva arancione 3 e alla meno 3t, la densità"></svg>
+      <aside class="notes">Blocco denso. Valori esatti da 1 − e^(−3t). Click: 1 barre da 0,2 s con altezza = frazione: si abbassano della metà; chiedi «che cosa succede se continuiamo?» → spariscono. 2 il trucco della densità di popolazione: altezza = frazione ÷ larghezza (abitanti per km²): le barre si alzano. 3 di nuovo 0,2 s: ora il profilo resta. 4 0,1 s. 5 0,05 s. 6 la curva arancione. 7 il suo nome: densità f(t).</aside>
+    </section>
+
+    <!-- L1-09 · 33: la probabilità è un'area -->
+    <section id="area">
+      <p class="badge">33′ · Atto II · La densità</p>
+      <h2 class="scene-title">La probabilità è un'area</h2>
+      <svg class="scene-svg" width="1180" height="400" viewBox="0 0 1180 400" role="img" aria-label="La curva 3 e alla meno 3t; l'area tra 0,1 e 0,5 colorata vale circa 0,518; avvicinando i due estremi fino a 0,3 l'area si annulla; l'area totale vale 1"></svg>
+      <div class="ar-formula">
+        <div class="s06-box">$$P(a\lt T\lt b)=\int_a^b f(t)\,dt$$</div>
+        <span class="ar-eq">= area</span>
+      </div>
+      <aside class="notes">Click: 1 l'area tra 0,1 e 0,5 si riempie; 2 il numero: e^(−0,3) − e^(−1,5) ≈ 0,518; 3 la formula: «∫ è una S lunga: somma di barre sottilissime; oggi è solo un nome». Nessun integrale da calcolare in tutta la settimana. 4 gli estremi si avvicinano a 0,3: l'area si assottiglia fino a 0: un punto ha area 0 (e quindi i bordi non contano). 5 l'area totale: 1, come «i pesi sommano a 1».</aside>
+    </section>
+
+    <!-- L1-10 · 37: f(0) = 3? -->
+    <section id="densita-3">
+      <p class="badge">37′ · Atto II · Densità ≠ probabilità</p>
+      <svg class="scene-svg" width="1180" height="520" viewBox="0 0 1180 520" role="img" aria-label="La curva della densità parte da altezza 3, cerchiata in rosso: una probabilità vale 3? Un rettangolino largo 0,01 sotto il punto ha area 3 per 0,01 uguale 0,03"></svg>
+      <aside class="notes">Fai rispondere alla domanda prima del click 1. Click: 1 il rettangolino largo 0,01 s: 3 × 0,01 = 0,03, un numero ragionevole; f è una probabilità per secondo. 2 una riga sulla CDF, solo enunciata: il resto lo fa l'esercizio 1. Quota S (40–42), a voce: «Uniforme su mezzo secondo: altezza 2». Controllo c1 al 39.</aside>
+    </section>
+
+    <!-- L1-11 · 39: controllo c1 -->
+    <section id="sondaggio-c1" class="sondaggio" data-poll="s06-c1">
+      <p class="badge">39′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>probabilità come area</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, rifai il rettangolino della slide precedente con la quota S. Senza connessione: mano alzata.</aside>
+    </section>
+
+    <!-- L1-12 · 42–56: Esercizio 1 -->
+    <section id="esercizio-1">
+      <p class="badge">42′ · Esercizio 1 · gruppi di 3–4</p>
+      <h2 class="scene-title">Aree a gradini</h2>
+      <div class="e6-grid">
+        <svg class="scene-svg" width="540" height="420" viewBox="0 0 540 420" role="img" aria-label="Densità a gradini del tempo di risposta: 0,75 tra 0 e 1 secondo, 0,25 tra 1 e 2 secondi"></svg>
+        <div class="ex-text">
+          <p class="ex-lead">Il tempo di risposta $T$, in secondi, ha la densità a sinistra.</p>
+          <ol>
+            <li>È una densità?</li>
+            <li>$P(T\le1)$? $\;P(0{,}5\lt T\lt 1{,}5)$? $\;P(T=1)$?</li>
+            <li>$f(0{,}2)=0{,}75$ è una probabilità?</li>
+            <li>Disegna la CDF.</li>
+          </ol>
+          <div class="ex-foot">
+            <div class="ex-timer" data-min="8" title="clic: avvia/pausa · doppio clic: azzera"></div>
+            <p class="ex-time">8′ in gruppo · 3′ confronto · 3′ correzione</p>
+          </div>
+          <span class="fragment ex-go"></span>
+        </div>
+      </div>
+      <aside class="notes">Click 1: parte il timer di 8′ (clic sul timer: pausa; doppio clic: azzera). Sostituisce il calcolo frontale di aree, il ritorno su P(T = c) = 0 e la costruzione della CDF. Ai bloccati: «spezza dove cambia l'altezza». Soluzione alla lavagna, non sulla slide: area 1; 0,75; 0,375 + 0,125 = 0,5; 0; (c) no, 0,0075 per un centesimo di secondo; CDF a due rampe (0 → 0,75 in [0, 1], poi → 1 in [1, 2]). Errori attesi: P(0,5 < T < 1,5) = 0,75 «perché l'intervallo è largo 1»; f(0,2) = 0,75 letto come probabilità.</aside>
+    </section>
+
+    <!-- L1-13 · 56: zero arrivi = attesa lunga -->
+    <section id="attesa">
+      <p class="badge">56′ · Atto III · Il tempo di attesa</p>
+      <h2 class="scene-title">Zero arrivi = attesa lunga</h2>
+      <svg class="scene-svg" width="1180" height="270" viewBox="0 0 1180 270" role="img" aria-label="Una linea del tempo con gli arrivi del server, 3 al secondo in media; la striscia verde tra 0 e 0,5 secondi è vuota: il primo arrivo cade dopo"></svg>
+      <div class="at-foot">
+        <div class="at-lines">
+          <p class="at-l1">$T>0{,}5\iff$ <b>zero arrivi</b> in 0,5 s</p>
+          <p class="at-l2">arrivi in 0,5 s: Poisson con media $3\cdot0{,}5=1{,}5$</p>
+          <p class="at-l3">$P(T>0{,}5)=e^{-1{,}5}\approx\color{#38ef7d}{0{,}223}$</p>
+        </div>
+        <div class="s06-box at-box">$$P(T>t)=e^{-\lambda t}$$</div>
+      </div>
+      <aside class="notes">λ = 3 richieste al secondo, come nella S5. T = tempo da adesso al primo arrivo. Click: 1 gli arrivi scorrono (seme fisso); 2 la striscia [0; 0,5] vuota e il primo arrivo dopo; 3 «T > 0,5» e «zero arrivi in 0,5 s» sono lo stesso evento; 4 la media della Poisson; prima del click 5 chiedi «quale formula della settimana scorsa?»; 5 e^(−1,5) ≈ 0,223; 6 la striscia diventa lunga t: in t secondi la media è λt, coda dell'Esponenziale.</aside>
+    </section>
+
+    <!-- L1-14 · 63: coda, media, forma -->
+    <section id="coda-media">
+      <p class="badge">63′ · Atto III · Coda e media</p>
+      <h2 class="scene-title">Il server con $\lambda=3$ al secondo</h2>
+      <div class="cm-grid">
+        <table class="s06-table cm-table">
+          <thead><tr><th>$t$</th><th>conto</th><th>$P(T>t)$</th></tr></thead>
+          <tbody>
+            <tr class="fragment"><td>0,1 s</td><td>$e^{-0{,}3}$</td><td class="v">0,741</td></tr>
+            <tr class="fragment"><td>0,5 s</td><td>$e^{-1{,}5}$</td><td class="v">0,223</td></tr>
+            <tr class="fragment"><td>1 s</td><td>$e^{-3}$</td><td class="v">0,050</td></tr>
+          </tbody>
+        </table>
+        <div class="cm-right">
+          <div class="fragment">
+            <svg class="scene-svg" width="620" height="130" viewBox="0 0 620 130" role="img" aria-label="Un secondo diviso in pezzetti di durata 1 su n: i primi otto vuoti, il nono con il primo arrivo"></svg>
+            <p class="cm-geo">pezzetti da $1/n$ s; arrivo con prob. $\lambda/n$: Geometrica, media $n/\lambda$ pezzetti</p>
+          </div>
+          <p class="cm-mean fragment">$\mathbb{E}[T]=\dfrac{n}{\lambda}\cdot\dfrac1n=\dfrac1\lambda=\color{#38ef7d}{0{,}333}$ s</p>
+          <p class="cm-small fragment">ma $P(T>\text{media})=e^{-1}\approx0{,}37$: la media non è una scadenza</p>
+        </div>
+      </div>
+      <aside class="notes">Click 1–3: le righe. Sulla riga 1 s: «è l'esercizio 4 della S5». 4 i pezzetti della S5: il numero di pezzetti da aspettare è Geometrico di parametro λ/n, media n/λ; ogni pezzetto dura 1/n s. 5 E[T] = 1/λ, in una frase, senza algebra. 6 aspettare più della media capita più di una volta su tre. Controllo c2 al 69, poi subito s06-2.</aside>
+    </section>
+
+    <!-- L1-15 · 69: controllo c2 -->
+    <section id="sondaggio-c2" class="sondaggio" data-poll="s06-c2">
+      <p class="badge">69′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>coda</b> $e^{-\lambda t}$?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2 e 3, rifai la linea del tempo con t = 1: media 3, e^(−3) = 0,050.</aside>
+    </section>
+
+    <!-- L1-16 · 70: sondaggio s06-2 (lancio) -->
+    <section id="sondaggio-2" class="sondaggio" data-poll="s06-2">
+      <p class="badge">70′ · Sondaggio · lo calcolerete nei gruppi</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Il server <b>tace da 2 secondi</b> ($\lambda=3$ al secondo).<br>Probabilità che taccia ancora per almeno mezzo secondo?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>più di 0,223</li>
+            <li><span>2</span>esattamente 0,223</li>
+            <li><span>3</span>meno di 0,223</li>
+            <li><span>4</span>circa 0,0025</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">«Votate adesso: lo calcolerete nei gruppi.» NON premere V: si rivela all'88′ sul duplicato. Risposta 2. 1: «il silenzio tende a continuare» (pensa a un guasto: modello diverso); 3: «ormai una richiesta è imminente», fallacia del giocatore; 4: confonde con P(T > 2).</aside>
+    </section>
+
+    <!-- L1-17 · 71–74 (S): widget Esponenziale -->
+    <section id="widget-esponenziale">
+      <p class="badge">71′ · Facoltativo · La forma di un'attesa</p>
+      <h2 class="scene-title">Prevedi, poi muovi $\lambda$</h2>
+      <div class="wd-box" id="ex-box" data-prevent-swipe>
+        <div class="wd-ctrl">
+          <label>$\lambda$ <input type="range" min="0.5" max="8" step="0.1" value="3" data-k="lam"> <b data-v="lam">3,0</b></label>
+        </div>
+        <svg class="scene-svg" width="1100" height="360" viewBox="0 0 1100 360" role="img" aria-label="La densità lambda e alla meno lambda t tra 0 e 2 secondi, con la curva tratteggiata del server, lambda uguale a 3"></svg>
+        <p class="wd-out"></p>
+        <p class="wd-try">Prova: <button class="psi-btn ghost" type="button" data-lam="3">λ = 3</button><button class="psi-btn ghost" type="button" data-lam="6">λ = 6</button><button class="psi-btn ghost" type="button" data-lam="1">λ = 1</button></p>
+      </div>
+      <aside class="notes">Sacrificabile (71–74). Prima di muovere: «se il traffico raddoppia, che cosa fanno l'altezza iniziale e la media?». λ = 6: altezza 6, media 0,167 s; λ = 1: media 1 s. L'area resta 1 (la parte colorata). L'ultima lettura resta 0,368 per ogni λ: cambia solo la scala del tempo.</aside>
+    </section>
+
+    <!-- L1-18 · 74–88: Esercizio 2 -->
+    <section id="esercizio-2">
+      <p class="badge">74′ · Esercizio 2 · gruppi di 3–4</p>
+      <h2 class="scene-title">Il server in silenzio</h2>
+      <div class="e6-grid">
+        <svg class="scene-svg" width="540" height="300" viewBox="0 0 540 300" role="img" aria-label="Linea del tempo: 2 secondi di silenzio già passati, in grigio, e mezzo secondo davanti, tratteggiato"></svg>
+        <div class="ex-text">
+          <p class="ex-lead">$\lambda=3$ richieste al secondo.</p>
+          <ol>
+            <li>$P(T>2)$?</li>
+            <li>Già 2 s di silenzio: probabilità di altri 0,5 s?</li>
+            <li>Confronta con $P(T>0{,}5)$.</li>
+            <li>«Dopo 2 s una richiesta è imminente»: che cosa rispondi?</li>
+          </ol>
+          <p class="ex-small">$P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}\qquad \dfrac{e^a}{e^b}=e^{a-b}$</p>
+          <div class="ex-foot">
+            <div class="ex-timer" data-min="8" title="clic: avvia/pausa · doppio clic: azzera"></div>
+            <p class="ex-time">8′ in gruppo · 3′ confronto · 3′ correzione</p>
+          </div>
+          <span class="fragment ex-go"></span>
+        </div>
+      </div>
+      <aside class="notes">Click 1: timer di 8′. Sostituisce la derivazione frontale dell'assenza di memoria. Prima del lavoro scrivi P(A | B) e e^a/e^b = e^(a−b). Giri tra i gruppi; soluzione alla lavagna: e^(−6) ≈ 0,0025; e^(−7,5)/e^(−6) = e^(−1,5) ≈ 0,223 = P(T > 0,5). Errori attesi: e^(−7,5) senza condizione; «la richiesta è imminente». Sul punto 4 valorizza: «silenzio sospetto = possibile guasto», cioè il modello potrebbe non valere più.</aside>
+    </section>
+
+    <!-- L1-19 · 88: rivelazione s06-2 (stesso ID) e la formula -->
+    <section id="sondaggio-2-rivela" class="sondaggio rivela" data-poll="s06-2">
+      <p class="badge">88′ · Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Il server <b>tace da 2 secondi</b> ($\lambda=3$ al secondo).<br>Probabilità che taccia ancora per almeno mezzo secondo?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>più di 0,223</li>
+            <li><span>2</span>esattamente 0,223</li>
+            <li><span>3</span>meno di 0,223</li>
+            <li><span>4</span>circa 0,0025</li>
+          </ol>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <div class="rv-foot">
+        <div class="s06-box mm-box fragment">$$P(T>s+t\mid T>s)=e^{-\lambda t}=P(T>t)$$</div>
+        <p class="mm-note fragment">come la Geometrica, con pezzetti infinitamente fitti</p>
+      </div>
+      <aside class="notes">Premi V. Risposta 2. Commenta: 1 «il silenzio continua»: pensa a un guasto, cioè a un modello diverso; 3 fallacia del giocatore; 4 è P(T > 2), senza condizione. Click 1: la formula generale; 2 «la Geometrica vista al microscopio». Controllo c3 al 92.</aside>
+    </section>
+
+    <!-- L1-20 · 92: controllo c3 -->
+    <section id="sondaggio-c3" class="sondaggio" data-poll="s06-c3">
+      <p class="badge">92′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con l'<b>assenza di memoria</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2 e 3, nel cuscinetto rifai il conto con s = 1, t = 1: e^(−6)/e^(−3) = e^(−3).</aside>
+    </section>
+
+    <!-- L1-21 · 93–105 (S): uscita -->
+    <section id="uscita-1">
+      <p class="badge">93′ · Domanda d'uscita</p>
+      <svg class="scene-svg" width="1100" height="430" viewBox="0 0 1100 430" role="img" aria-label="La densità del server con il punto di altezza 3 cerchiato; in basso, sfumata, una campana: mercoledì, un asteroide perduto"></svg>
+      <aside class="notes">Cuscinetto (S): nessun concetto nuovo. Due risposte a voce, poi click 1: «probabilità per secondo»: moltiplicata per una durata piccola dà una probabilità (3 × 0,01 = 0,03). A casa: esercizi 5, 6, 7; letture A, B, C; script 1 e 3 (il 2 si mostra se avanza tempo). Opzionale in aula: esercizio 5 (la stampante; attenzione: 5 min = 1/12 h). Chiudi entro le 12:45.</aside>
+    </section>
+
+    <!-- ═════════════ LEZIONE 2 · mercoledì 28/10, 9:00–10:45. Scene: js/continuo.js ═════════════ -->
+
+    <!-- L2-00 · copertina -->
+    <section id="lezione-2">
+      <p class="cover-week">Settimana 6</p>
+      <h2 class="cover-title">Dove cercare un asteroide perduto?</h2>
+      <div class="cover-acts"><span>La curva degli errori e la Normale</span><span>Lezione 2</span><span>mercoledì 28 ottobre</span></div>
+      <aside class="notes">Data della L2 assunta dal ritmo mer/ven: da confermare. Si passa subito al riepilogo.</aside>
+    </section>
+
+    <!-- L2-01 · 0–15: riepilogo L1 -->
+    <section id="riepilogo-l1">
+      <p class="badge">0′ · Riepilogo · venerdì</p>
+      <h2 class="scene-title">Quattro domande da venerdì</h2>
+      <div class="rq-grid">
+        <div class="rq-list">
+          <p class="rq fragment"><span>1</span>$P(T=0{,}3)$?</p>
+          <p class="rq fragment"><span>2</span>Dove sta la probabilità?</p>
+          <p class="rq fragment"><span>3</span>$f(0)=3$ è possibile?</p>
+          <p class="rq fragment"><span>4</span>$P(T>t)$ e media dell'Esponenziale?</p>
+        </div>
+        <div class="rq-board">
+          <svg class="scene-svg" width="340" height="190" viewBox="0 0 340 190" role="img" aria-label="La curva esponenziale con un'area colorata"></svg>
+          risposte alla lavagna
+        </div>
+      </div>
+      <aside class="notes">Una domanda per click; risposte dalla classe: (1) 0; (2) negli intervalli: è un'area; (3) sì, f è una probabilità per unità di tempo; (4) e^(−λt), 1/λ. Fai disegnare a uno studente l'area tra 0,1 e 0,5. «Il server tace da 2 s: cambia qualcosa?» → no. Controlla l'esercizio 5: 5 minuti = 1/12 di ora.</aside>
+    </section>
+
+    <!-- L2-02 · 15: Palermo, 1801 -->
+    <section id="cerere">
+      <p class="badge">15′ · Atto IV · Palermo, 1801</p>
+      <div class="ce-grid">
+        <figure class="s06-portrait">
+          <img src="img/piazzi.jpg" alt="Ritratto di Giuseppe Piazzi">
+          <figcaption>Giuseppe Piazzi<br>incisione di F. Bordiga, 1808</figcaption>
+        </figure>
+        <svg class="scene-svg" width="880" height="560" viewBox="0 0 880 560" role="img" aria-label="Schema, non una mappa celeste reale: tra le stelle un puntino traccia un breve arco in 41 giorni, 3 gradi; poi il Sole entra da destra e il puntino sparisce nel bagliore"></svg>
+      </div>
+      <aside class="notes">Racconto in 3 minuti. Arco schematico, NON una mappa celeste reale. 1 gennaio 1801: Piazzi nota un puntino che non è nei cataloghi e si sposta. Click: 1 l'arco di 41 notti; 2 «41 giorni, 3 gradi»; 3 Cerere si avvicina alla direzione del Sole e il bagliore la nasconde. Domanda: «dove sarà tra un anno?». Ogni misura ha un piccolo errore: telescopio, orologio, aria, occhio. Lancia s06-3.</aside>
+    </section>
+
+    <!-- L2-03 · 17: sondaggio s06-3 (lancio) -->
+    <section id="sondaggio-3" class="sondaggio" data-poll="s06-3">
+      <p class="badge">17′ · Sondaggio · la risposta arriva al 24′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Misuri <b>100 volte</b> la stessa distanza con uno strumento buono.<br>Come si distribuiscono gli errori?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span><svg class="sg-shape" width="64" height="40" viewBox="0 0 64 40" aria-hidden="true"><path d="M4 36 H14 V10 H50 V36 H60" fill="none" stroke="#a0aec0" stroke-width="3"/></svg>tutti ugualmente probabili, entro un limite</li>
+            <li><span>2</span><svg class="sg-shape" width="64" height="40" viewBox="0 0 64 40" aria-hidden="true"><path d="M4 36 C20 36 24 6 32 6 C40 6 44 36 60 36" fill="none" stroke="#a0aec0" stroke-width="3"/></svg>molti piccoli, pochi grandi, simmetrici</li>
+            <li><span>3</span><svg class="sg-shape" width="64" height="40" viewBox="0 0 64 40" aria-hidden="true"><path d="M6 6 C12 34 22 36 32 36 C42 36 52 34 58 6" fill="none" stroke="#a0aec0" stroke-width="3"/></svg>soprattutto grandi, in eccesso o in difetto</li>
+            <li><span>4</span><svg class="sg-shape" width="64" height="40" viewBox="0 0 64 40" aria-hidden="true"><path d="M4 36 H10 V6 C22 26 38 34 60 36" fill="none" stroke="#a0aec0" stroke-width="3"/></svg>piccoli in un solo verso, mai negativi</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · pensate al vostro righello</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">«Pensate al vostro righello: 100 misure dello stesso banco.» NON premere V: si rivela al 24′. Risposta 2. 1: l'Uniforme (un singolo errore di arrotondamento lo è); 3: forma a U, solo per uno strumento difettoso; 4: confonde l'errore con la sua grandezza assoluta, o con un tempo di attesa (Esponenziale). Le sagome hanno tutte lo stesso colore: non suggeriscono la risposta.</aside>
+    </section>
+
+    <!-- L2-04 · 19: Gauss e l'assioma della media -->
+    <section id="gauss">
+      <p class="badge">19′ · Atto IV · La curva degli errori</p>
+      <div class="gs-grid">
+        <figure class="s06-portrait color">
+          <img src="img/gauss.jpg" alt="Ritratto di Carl Friedrich Gauss giovane">
+          <figcaption>C. F. Gauss nel 1803<br>pastello di J. C. A. Schwartz</figcaption>
+        </figure>
+        <div class="gs-right">
+          <p class="fragment"><b>ottobre 1801</b> · Gauss, 24 anni, calcola l'orbita</p>
+          <p class="fragment"><b>7 dicembre 1801</b> · von Zach la ritrova</p>
+          <p class="gs-quote fragment">«la media aritmetica […] fornisce il valore più probabile»<small>Gauss, <i>Theoria motus</i>, 1809, art. 177</small></p>
+          <svg class="scene-svg fragment" width="560" height="190" viewBox="0 0 560 190" role="img" aria-label="Una campana arancione: la curva degli errori, proporzionale a e alla meno h quadro x quadro"></svg>
+        </div>
+      </div>
+      <aside class="notes">Click: 1 l'orbita, ottobre 1801, con un metodo nuovo per mettere d'accordo molte osservazioni imprecise; 2 la ricerca di von Zach: cita solo la nota di Gauss (7 dicembre 1801), non «al primo colpo»; 3 l'assioma: tutti gli astronomi prendevano la media; quale curva degli errori rende la media sempre il valore più probabile? 4 la risposta è una sola: e^(−h²x²). «Gauss non misura la forma: la deduce da un'abitudine.» Poi rivela s06-3.</aside>
+    </section>
+
+    <!-- L2-05 · 24: rivelazione s06-3 (stesso ID) -->
+    <section id="sondaggio-3-rivela" class="sondaggio rivela" data-poll="s06-3">
+      <p class="badge">24′ · Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid rv-wide">
+        <div>
+          <p class="sondaggio-q">Misuri <b>100 volte</b> la stessa distanza con uno strumento buono.<br>Come si distribuiscono gli errori?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span><svg class="sg-shape" width="64" height="40" viewBox="0 0 64 40" aria-hidden="true"><path d="M4 36 H14 V10 H50 V36 H60" fill="none" stroke="#a0aec0" stroke-width="3"/></svg>tutti ugualmente probabili, entro un limite</li>
+            <li><span>2</span><svg class="sg-shape" width="64" height="40" viewBox="0 0 64 40" aria-hidden="true"><path d="M4 36 C20 36 24 6 32 6 C40 6 44 36 60 36" fill="none" stroke="#a0aec0" stroke-width="3"/></svg>molti piccoli, pochi grandi, simmetrici</li>
+            <li><span>3</span><svg class="sg-shape" width="64" height="40" viewBox="0 0 64 40" aria-hidden="true"><path d="M6 6 C12 34 22 36 32 36 C42 36 52 34 58 6" fill="none" stroke="#a0aec0" stroke-width="3"/></svg>soprattutto grandi, in eccesso o in difetto</li>
+            <li><span>4</span><svg class="sg-shape" width="64" height="40" viewBox="0 0 64 40" aria-hidden="true"><path d="M4 36 H10 V6 C22 26 38 34 60 36" fill="none" stroke="#a0aec0" stroke-width="3"/></svg>piccoli in un solo verso, mai negativi</li>
+          </ol>
+        </div>
+        <div class="rv-side">
+          <div class="sondaggio-join"></div>
+          <svg class="scene-svg" width="440" height="300" viewBox="0 0 440 300" role="img" aria-label="Istogramma di 20 000 errori, ciascuno somma di 50 piccoli errori uniformi, con la campana sovrapposta"></svg>
+        </div>
+      </div>
+      <aside class="notes">Premi V. Risposta 2. Click 1: l'istogramma dello script 3 (rifatto qui in JavaScript, stesso esperimento): ogni misura = 50 piccoli errori uniformi tra −0,1 e +0,1; 20 000 misure; la campana con la stessa media e σ. Commenta l'opzione 1: un singolo errore di arrotondamento è uniforme, ma la somma di 50 no.</aside>
+    </section>
+
+    <!-- L2-06 · 26: la formula a pezzi -->
+    <section id="formula">
+      <p class="badge">26′ · Atto V · La densità Normale</p>
+      <h2 class="scene-title">La formula, un pezzo alla volta</h2>
+      <div class="fp-stack">
+        <div>$$f(x)=\frac{1}{\sigma\sqrt{2\pi}}\;e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$</div>
+        <div>$$f(x)=\frac{1}{\sigma\sqrt{2\pi}}\;e^{-\frac{\underline{\color{#38ef7d}{(x-\mu)}}^2}{2\sigma^2}}$$</div>
+        <div>$$f(x)=\frac{1}{\sigma\sqrt{2\pi}}\;e^{-\frac{\underline{\color{#38ef7d}{(x-\mu)^2}}}{2\sigma^2}}$$</div>
+        <div>$$f(x)=\frac{1}{\sigma\sqrt{2\pi}}\;e^{\underline{\color{#38ef7d}{\,-\,}}\frac{(x-\mu)^2}{2\sigma^2}}$$</div>
+        <div>$$f(x)=\frac{1}{\sigma\sqrt{2\pi}}\;e^{-\frac{(x-\mu)^2}{\underline{\color{#fb923c}{2\sigma^2}}}}$$</div>
+        <div>$$f(x)=\underline{\color{#a0aec0}{\frac{1}{\sigma\sqrt{2\pi}}}}\;e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$</div>
+      </div>
+      <div class="fp-cap">
+        <p class="muted">si legge dal centro</p>
+        <p class="highlight">$(x-\mu)$: la distanza dal centro</p>
+        <p class="highlight">al quadrato: destra e sinistra uguali, la curva è simmetrica</p>
+        <p class="highlight">il meno: più lontano, più piccolo</p>
+        <p class="model">$2\sigma^2$: la scala, misura le distanze in unità di $\sigma$</p>
+        <p class="muted">la costante: solo per avere area 1</p>
+      </div>
+      <svg class="scene-svg" width="900" height="240" viewBox="0 0 900 240" role="img" aria-label="Una campana che reagisce a ogni pezzo della formula: distanza dal centro, simmetria, discesa ai lati, scala sigma, area 1"></svg>
+      <aside class="notes">Una frase per click, nessuna derivazione. 1 (x − μ) distanza dal centro; 2 il quadrato: stessa distanza a destra e a sinistra, stessa altezza; 3 il meno: la curva ha il massimo in μ e scende, in fretta perché c'è il quadrato; 4 2σ² stabilisce la scala; 5 la costante serve solo a dare area 1. Le parti evidenziate sono anche sottolineate (leggibili in bianco e nero).</aside>
+    </section>
+
+    <!-- L2-07 · 27–30: widget Normale -->
+    <section id="widget-normale">
+      <p class="badge">27′ · Atto V · Che cosa misurano μ e σ</p>
+      <h2 class="scene-title">Prevedi, poi muovi $\mu$ e $\sigma$</h2>
+      <div class="wd-box" id="nm-box" data-prevent-swipe>
+        <div class="wd-ctrl">
+          <label>$\mu$ <input type="range" min="150" max="250" step="1" value="200" data-k="mu"> <b data-v="mu">200</b></label>
+          <label>$\sigma$ <input type="range" min="10" max="40" step="1" value="20" data-k="sigma"> <b data-v="sigma">20</b></label>
+        </div>
+        <svg class="scene-svg" width="1100" height="340" viewBox="0 0 1100 340" role="img" aria-label="La campana del tempo di risposta tra 100 e 300 ms, con la curva tratteggiata del servizio, mu 200 e sigma 20"></svg>
+        <p class="wd-out"></p>
+        <p class="wd-try">Prova: <button class="psi-btn ghost" type="button" data-mu="200" data-sigma="20">200 · 20</button><button class="psi-btn ghost" type="button" data-mu="230" data-sigma="20">μ = 230</button><button class="psi-btn ghost" type="button" data-mu="200" data-sigma="40">σ = 40</button></p>
+      </div>
+      <aside class="notes">Scrivi σ = √Var alla lavagna: σ si misura in ms, la varianza in ms². Fai prevedere prima di ogni movimento. μ = 230: la campana scivola, picco e 0,683 fermi. σ = 40: si allarga e si abbassa a metà (asse y fisso), 0,683 resta, P(X ≤ 240) scende da 0,977 a 0,841: 240 ora dista una σ sola. Le linee tratteggiate verticali sono μ ± σ (i «gomiti»). Notazione N(200, 20²): il secondo numero è la varianza.</aside>
+    </section>
+
+    <!-- L2-08 · 30: controllo c4 -->
+    <section id="sondaggio-c4" class="sondaggio" data-poll="s06-c4">
+      <p class="badge">30′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con <b>μ e σ</b> della campana?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2 e 3, rifai i due movimenti del widget (μ = 230, σ = 40).</aside>
+    </section>
+
+    <!-- L2-09 · 31–33 (S): De Moivre e le monete -->
+    <section id="monete">
+      <p class="badge">31′ · Facoltativo · De Moivre, 12 novembre 1733</p>
+      <h2 class="scene-title">La stessa curva, dalle monete</h2>
+      <svg class="scene-svg" width="1100" height="440" viewBox="0 0 1100 440" role="img" aria-label="Istogramma della Binomiale con p un mezzo, standardizzato, per n uguale a 10, 50 e 200; poi la campana sovrapposta"></svg>
+      <aside class="notes">Sacrificabile (31–33). De Moivre cercava di approssimare le probabilità binomiali per moltissimi lanci. Click 1–3: n = 10, 50, 200 lanci di una moneta onesta; le barre sono standardizzate (centro 0, una σ = 1), come faremo tra poco con la campana. 4 la campana sovrapposta. «Due strade, una curva: perché, lo vedremo in Settimana 9.»</aside>
+    </section>
+
+    <!-- L2-10 · 33–47: Esercizio 3 -->
+    <section id="esercizio-3">
+      <p class="badge">33′ · Esercizio 3 · gruppi di 3–4</p>
+      <h2 class="scene-title">Quante deviazioni standard?</h2>
+      <div class="e6-grid">
+        <svg class="scene-svg" width="540" height="400" viewBox="0 0 540 400" role="img" aria-label="Due campane della stessa forma su scale diverse: servizio A, media 200 e sigma 20; servizio B, media 50 e sigma 5"></svg>
+        <div class="ex-text">
+          <ol>
+            <li>Servizio A: di quante $\sigma$ dalla media stanno 240, 180, 200 ms?</li>
+            <li>250 ms su A o 65 ms su B: quale è <b>più anomala</b>?</li>
+            <li>Chi finisce prima: $P(X>250)$ su A e $P(Y>65)$ su B, con la tabella.</li>
+          </ol>
+          <div class="ex-foot">
+            <div class="ex-timer" data-min="8" title="clic: avvia/pausa · doppio clic: azzera"></div>
+            <p class="ex-time">8′ in gruppo · 3′ confronto · 3′ correzione</p>
+          </div>
+          <span class="fragment ex-go"></span>
+        </div>
+      </div>
+      <aside class="notes">Click 1: timer di 8′. NON scrivere la formula di z: «di quante σ supera la media?». Sostituisce l'introduzione frontale di z; il blocco successivo parte dai risultati dei gruppi. Soluzione: (1) 2, −1, 0; (2) A: 2,5; B: 3 → più anomala B; (3) 0,0062 e 0,0013. Errori attesi: «A è più anomala perché 50 > 15»; dividere per la media invece che per σ.</aside>
+    </section>
+
+    <!-- L2-11 · 47: due righelli -->
+    <section id="righelli">
+      <p class="badge">47′ · Atto V · Standardizzare</p>
+      <h2 class="scene-title">Stessa curva, due righelli</h2>
+      <svg class="scene-svg" width="1180" height="400" viewBox="0 0 1180 400" role="img" aria-label="La campana del servizio sul righello in millisecondi; togliendo 200 il centro va a 0; dividendo per 20 il righello diventa in deviazioni standard; 240 ms corrisponde a z uguale a 2"></svg>
+      <div class="rh-formula"><div class="s06-box">$$z=\frac{x-\mu}{\sigma}\qquad Z=\frac{X-\mu}{\sigma}\sim\mathcal{N}(0,1)$$</div></div>
+      <aside class="notes">Blocco denso. Parti dall'esercizio 3: conta la distanza in σ. Click: 1 «− μ»: ogni lettura del righello perde 200, il centro diventa 0 (linearità della S4: E[X − μ] = 0); la curva non si muove. 2 «÷ σ»: cambio di unità, come da ms a secondi: il righello conta in σ; la forma non cambia. 3 i due righelli insieme, allineati. 4 240 ms ↔ z = 2. 5 la formula e Z ~ N(0, 1). A chi divide per σ²: «in che unità è σ²?».</aside>
+    </section>
+
+    <!-- L2-12 · 53: Φ, la tabella e la simmetria -->
+    <section id="phi">
+      <p class="badge">53′ · Atto V · Una tabella sola</p>
+      <table class="s06-table ph-table">
+        <thead><tr><th>$z$</th><th>0</th><th>0,5</th><th>1</th><th>1,5</th><th>1,645</th><th>1,96</th><th>2</th><th>2,326</th><th>2,5</th><th>3</th></tr></thead>
+        <tbody><tr><td class="rowhead">$\Phi(z)$</td><td>0,5000</td><td>0,6915</td><td>0,8413</td><td>0,9332</td><td>0,9500</td><td>0,9750</td><td>0,9772</td><td>0,9900</td><td>0,9938</td><td>0,9987</td></tr></tbody>
+      </table>
+      <svg class="scene-svg" width="1100" height="330" viewBox="0 0 1100 330" role="img" aria-label="La campana standard: area a sinistra di 2; le due code uguali oltre meno 1 e oltre 1; l'area tra meno 1 e 1,5"></svg>
+      <div class="ph-cards">
+        <p>$\Phi(z)=P(Z\le z)=$ area a sinistra di $z$</p>
+        <p>$P(X\le240)=\Phi(2)\approx\color{#38ef7d}{0{,}977}$</p>
+        <p>$\Phi(-1)=1-\Phi(1)=1-0{,}8413=\color{#38ef7d}{0{,}1587}$</p>
+        <p>$P(180\lt X\lt 230)=\Phi(1{,}5)-\Phi(-1)=0{,}9332-0{,}1587=\color{#38ef7d}{0{,}7745}$</p>
+      </div>
+      <p class="ph-code"><span class="s06-code">NormalDist(200, 20).cdf(240)</span></p>
+      <aside class="notes">I tre passi a voce: standardizza, leggi, sottrai. Click: 1 240 ms → z = 2 → Φ(2) ≈ 0,977 (colonna evidenziata); 2 le due code uguali: Φ(−1) = 1 − Φ(1); 3 180–230 ms → z da −1 a 1,5 → 0,7745; 4 lo stesso conto in Python: NormalDist vuole σ, non σ². Controllo c5 al 62. S (63–65): NormalDist dal vivo.</aside>
+    </section>
+
+    <!-- L2-13 · 62: controllo c5 -->
+    <section id="sondaggio-c5" class="sondaggio" data-poll="s06-c5">
+      <p class="badge">62′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con <b>standardizzare e leggere Φ</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2 e 3, usa la quota S per rifare P(X ≤ 220) = Φ(1) = 0,8413 con NormalDist dal vivo.</aside>
+    </section>
+
+    <!-- L2-14 · 65–79: Esercizio 4 -->
+    <section id="esercizio-4">
+      <p class="badge">65′ · Esercizio 4 · un k per gruppo</p>
+      <h2 class="scene-title">La regola 68–95–99,7</h2>
+      <div class="e6-grid">
+        <div>
+          <svg class="scene-svg" width="540" height="250" viewBox="0 0 540 250" role="img" aria-label="La campana standard con le tacche da meno 3 a 3"></svg>
+          <table class="s06-table e4-phi">
+            <thead><tr><th>$z$</th><th>1</th><th>1,5</th><th>2</th><th>2,5</th><th>3</th></tr></thead>
+            <tbody><tr><td class="rowhead">$\Phi$</td><td>0,8413</td><td>0,9332</td><td>0,9772</td><td>0,9938</td><td>0,9987</td></tr></tbody>
+          </table>
+        </div>
+        <div class="ex-text">
+          <ol>
+            <li>$P(-1\lt Z\lt 1)$? $\;P(-2\lt Z\lt 2)$?<br>$P(-3\lt Z\lt 3)$?</li>
+            <li>Servizio A: $P(160\lt X\lt 240)$?</li>
+            <li>Su 10.000 richieste, quante oltre 260 ms?</li>
+          </ol>
+          <p class="ex-small">$\Phi(-z)=1-\Phi(z)$</p>
+          <div class="ex-foot">
+            <div class="ex-timer" data-min="7" title="clic: avvia/pausa · doppio clic: azzera"></div>
+            <p class="ex-time">7′ lavoro · 4′ raccolta · 3′ correzione</p>
+          </div>
+          <span class="fragment ex-go"></span>
+        </div>
+      </div>
+      <aside class="notes">Click 1: timer di 7′. Un k per gruppo nel punto 1, poi tutti; raccogli i tre numeri alla lavagna. Sostituisce la derivazione frontale della regola. Soluzione: 0,6826; 0,9544; 0,9974 con la tabella (0,6827, 0,9545, 0,9973 con più cifre); (2) ≈ 0,954; (3) 10.000 · 0,00135 ≈ 13,5. Errori attesi: Φ(1) − Φ(−1) = Φ(1) − Φ(1) = 0; dimenticare la coda sinistra (rispondere 0,8413).</aside>
+    </section>
+
+    <!-- L2-15 · 79: 68, 95, 99,7 -->
+    <section id="regola">
+      <p class="badge">79′ · Atto V · La regola al lavoro</p>
+      <h2 class="scene-title">Quanta area a 1, 2, 3 σ dal centro</h2>
+      <svg class="scene-svg" width="1100" height="480" viewBox="0 0 1100 480" role="img" aria-label="La campana con tre fasce: 68 per cento entro una sigma, 95 entro due, 99,7 entro tre; per il servizio: 180–220, 160–240, 140–260 ms"></svg>
+      <aside class="notes">Collega ogni fascia al numero trovato dai gruppi. Click: 1 68% (blu); 2 95% (arancio); 3 99,7% (viola); 4 il righello del servizio: due richieste su tre tra 180 e 220 ms, il 95% tra 160 e 240, quasi tutte tra 140 e 260. Vale per ogni Normale perché dipende solo dalla distanza in σ. Lancia subito s06-4.</aside>
+    </section>
+
+    <!-- L2-16 · 80: sondaggio s06-4 (lancio) -->
+    <section id="sondaggio-4" class="sondaggio" data-poll="s06-4">
+      <p class="badge">80′ · Sondaggio · senza calcolatrice</p>
+      <svg class="scene-svg lt-top" width="1000" height="150" viewBox="0 0 1000 150" role="img" aria-label="La campana del servizio con la fascia a tre sigma; un pallino rosso isolato a 300 ms, molto oltre la coda"></svg>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Latenza Normale, $\mu=200$ ms, $\sigma=20$ ms. Arriva una richiesta da <b>300 ms</b>. Che cosa pensi?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>normale amministrazione</li>
+            <li><span>2</span>insolita, capita circa una volta su cento</li>
+            <li><span>3</span>con questo modello quasi impossibile: forse il modello è sbagliato</li>
+            <li><span>4</span>impossibile, è un errore di misura</li>
+          </ol>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">«Votate senza calcolatrice.» NON premere V: si rivela all'85′ sul duplicato. Risposta 3 (z = 5). 1 guarda i 100 ms, non le σ; 2 stima a occhio senza standardizzare; 4 «impossibile» è troppo: in una Normale nessun valore lo è, e i dati veri hanno code pesanti.</aside>
+    </section>
+
+    <!-- L2-17 · 85: rivelazione s06-4 (stesso ID) e le code pesanti -->
+    <section id="sondaggio-4-rivela" class="sondaggio rivela" data-poll="s06-4">
+      <p class="badge">85′ · Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">$\mu=200$, $\sigma=20$: una richiesta da <b>300 ms</b>?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>normale amministrazione</li>
+            <li><span>2</span>insolita, circa una volta su cento</li>
+            <li><span>3</span>quasi impossibile: forse il modello è sbagliato</li>
+            <li><span>4</span>impossibile, è un errore di misura</li>
+          </ol>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <svg class="scene-svg" width="1180" height="220" viewBox="0 0 1180 220" role="img" aria-label="La Normale del servizio, bianca, e una curva illustrativa a coda pesante, arancione, con lo stesso centro; nella lente sulla coda le latenze lente, in rosso, cadono sotto la curva arancione e fuori dalla bianca"></svg>
+      <div class="ht-lines"><span class="ht-1">$z=5$: circa 3 su 10 milioni</span><span class="ht-3 highlight">guarda i percentili dei dati</span></div>
+      <aside class="notes">Premi V. Risposta 3. Click: 1 z = (300 − 200)/20 = 5: con la Normale circa 3 su 10 milioni. 2 la curva a coda pesante, ILLUSTRATIVA (95% Normale più 5% di attese lunghe, non un dataset reale): nella lente × 50 si vede che le latenze lente stanno sotto la coda arancione e fuori dalla bianca (GC, disco lento, ritrasmissioni). 3 in produzione si guardano i percentili osservati (p50, p95, p99). Due minuti, nessuna nuova formula. Controllo c6 all'89.</aside>
+    </section>
+
+    <!-- L2-18 · 89: controllo c6 -->
+    <section id="sondaggio-c6" class="sondaggio" data-poll="s06-c6">
+      <p class="badge">89′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>regola 68–95–99,7</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2 e 3, salta il p99 e rifai la regola con il righello in ms (due slide indietro).</aside>
+    </section>
+
+    <!-- L2-19 · 90–96 (S): il p99 -->
+    <section id="p99">
+      <p class="badge">90′ · Facoltativo · Il problema inverso</p>
+      <h2 class="scene-title">Quale soglia supera solo una richiesta su cento?</h2>
+      <svg class="scene-svg" width="1100" height="400" viewBox="0 0 1100 400" role="img" aria-label="La campana del servizio; una linea verde scorre da 280 verso sinistra finché l'area a destra vale l'1 per cento, a 246,5 ms"></svg>
+      <div class="pq-lines">
+        <p class="pq-2">$z=2{,}326\;\Rightarrow\;x=200+2{,}326\cdot20\approx\color{#38ef7d}{246{,}5}$ ms</p>
+        <p class="pq-3"><span class="s06-code">NormalDist(200, 20).inv_cdf(0.99)</span></p>
+      </div>
+      <aside class="notes">Sacrificabile (90–96). Gli stessi tre passi all'indietro. Click: 1 la linea scorre finché l'area a destra è l'1%; 2 dalla tabella z = 2,326, poi x = μ + zσ; 3 in Python, inv_cdf. Si chiama p99. «Chi promette tempi di risposta fa questo conto, o lo misura.» Con code pesanti il conto sottostima: si misura sui dati.</aside>
+    </section>
+
+    <!-- L2-20 · 96–105 (S): uscita -->
+    <section id="uscita-2">
+      <p class="badge">96′ · Domanda d'uscita</p>
+      <p class="ux-q">Un benchmark: media 120 ms, $\sigma=3$ ms.<br>Oggi: <span class="red">135 ms</span>. Che cosa scrivi nel ticket?</p>
+      <p class="ux-a fragment">$z=(135-120)/3=5$: cerca la causa, non è «sfortuna»</p>
+      <p class="ux-home">A casa: esercizi 6 e 7 · letture A, B, C · script 1 e 3<br>Cerere ritorna: la media di Gauss in Settimana 8</p>
+      <aside class="notes">Cuscinetto (S). Due risposte a voce, poi click 1: z = 5, oltre ogni fascia: un evento rarissimo o, più spesso, qualcosa è cambiato. Assegna esercizi 6 e 7 e le letture (fuori dal nucleo d'esame). Opzionale in aula: esercizio 6 (soglia all'1%: 246,5 ms; allo 0,1%: 261,8 ms). Chiudi entro le 10:45.</aside>
+    </section>
+
+  </div></div>
+  <script src="../../assets/slides/scene.js"></script>
+  <script src="../../assets/sondaggi.js"></script>
+  <script src="../../assets/slides/sondaggio.js"></script>
+  <script src="js/continuo.js"></script>
+  <script>PSIDeck.start({ onReady: function (deck) { PSISondaggio.bind(deck); S06.timers(deck); } });</script>
+</body>
+</html>

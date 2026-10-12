@@ -373,7 +373,32 @@ Leggiamo la tabella prima per righe, poi per colonne. In ciascuna riga il totale
 
 Consideriamo ora le variabili separatamente. $X$ vale 1 con probabilità $1/2$ e 0 con probabilità $1/2$, quindi la sua media è $1/2$. Lo stesso vale per $Y$. Otteniamo dunque lo stesso risultato attraverso due percorsi: la media del totale è 1, e la somma delle due medie è $1/2+1/2=1$.
 
-Le due variabili sono **dipendenti**: sapere che $X=1$ ci dice con certezza che $Y=0$. Eppure il conto funziona. Questo è il punto da ricordare della **linearità del valore atteso**. Se $a$, $b$ e $c$ sono numeri fissati, e $\mathbb{E}[|X|]<\infty$ e $\mathbb{E}[|Y|]<\infty$ (ipotesi automaticamente soddisfatte quando ciascuna variabile ha un numero finito di valori):
+Le due variabili sono **dipendenti**: sapere che $X=1$ ci dice con certezza che $Y=0$. Eppure il conto funziona.
+
+**Non serve che $X+Y=1$, né che la somma sia costante.** Abbiamo scelto così il primo esempio soltanto per rendere immediato il conto. Cambiamo i valori assegnati agli esiti della stessa moneta onesta:
+
+| Esito | Probabilità | $X$ | $Y$ | $X+Y$ |
+|---|---|---|---|---|
+| Testa | $1/2$ | 2 | 4 | 6 |
+| Croce | $1/2$ | 0 | 2 | 2 |
+
+Ora il totale cambia con l'esito: vale 6 oppure 2. Calcolando direttamente la sua media otteniamo:
+
+$$
+\mathbb{E}[X+Y]=6\cdot\frac12+2\cdot\frac12=4.
+$$
+
+Calcolando invece le medie separatamente:
+
+$$
+\mathbb{E}[X]=2\cdot\frac12+0\cdot\frac12=1,
+\qquad
+\mathbb{E}[Y]=4\cdot\frac12+2\cdot\frac12=3.
+$$
+
+La loro somma è ancora $1+3=4$. Anche qui le variabili sono dipendenti: conoscere $X$ determina $Y$. **A sommare a 1 devono essere le probabilità degli esiti, non i valori di $X$ e $Y$.**
+
+Questa proprietà si chiama **linearità del valore atteso**. Se $a$, $b$ e $c$ sono numeri fissati, e $\mathbb{E}[|X|]<\infty$ e $\mathbb{E}[|Y|]<\infty$ (ipotesi automaticamente soddisfatte quando ciascuna variabile ha un numero finito di valori):
 
 $$
 \boxed{\mathbb{E}[aX+bY+c]

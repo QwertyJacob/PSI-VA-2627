@@ -1,0 +1,320 @@
+/*
+ * PSILavagna — Lavagna Real-Time & Remote Control da iPad
+ * Stili per il canvas overlay, la modalità lavagna e la toolbar iPad.
+ */
+
+/* ── Canvas Overlay su .reveal .slides ── */
+.reveal .slides .psi-lavagna-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1280px;
+  height: 720px;
+  z-index: 45;
+  pointer-events: none;
+  background: transparent;
+  display: block;
+}
+
+/* Modalità Speaker (iPad): abilita disegno, disabilita scroll e previene categoricamente selezione testo */
+html.psi-lavagna-pen-mode,
+html.psi-lavagna-pen-mode body,
+.psi-lavagna-pen-mode .reveal,
+.psi-lavagna-pen-mode .reveal .slides,
+.psi-lavagna-pen-mode .reveal .slides * {
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+.psi-lavagna-pen-mode .reveal .slides .psi-lavagna-canvas {
+  pointer-events: auto;
+  touch-action: none;
+  cursor: crosshair;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* ── Overlay Lavagna Scura (Blackboard Mode) ── */
+.reveal .slides .psi-lavagna-board-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1280px;
+  height: 720px;
+  z-index: 44;
+  background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+  border-radius: 8px;
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.6);
+}
+
+.reveal .slides.psi-board-active .psi-lavagna-board-overlay {
+  opacity: 0.97;
+  pointer-events: auto;
+}
+
+/* Indicatore leggero "Lavagna" in alto a sinistra quando attiva */
+.reveal .slides.psi-board-active .psi-lavagna-board-overlay::before {
+  content: 'LAVAGNA A MANO LIBERA';
+  position: absolute;
+  top: 18px;
+  left: 24px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.25);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ── Toolbar Fluttuante per iPad (Modalità Speaker) ── */
+.psi-lavagna-toolbar {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.3);
+  color: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.psi-lavagna-toolbar.psi-collapsed {
+  padding: 6px;
+  gap: 0;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  justify-content: center;
+}
+
+.psi-lavagna-toolbar.psi-collapsed .psi-tb-item {
+  display: none !important;
+}
+
+.psi-lavagna-toolbar.psi-collapsed .psi-tb-collapse-btn {
+  display: flex !important;
+  width: 36px;
+  height: 36px;
+}
+
+/* Raggruppamenti nella toolbar */
+.psi-tb-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.psi-tb-divider {
+  width: 1px;
+  height: 26px;
+  background: rgba(255, 255, 255, 0.16);
+  margin: 0 3px;
+}
+
+/* Pulsanti comuni */
+.psi-tb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 8px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  color: #f1f5f9;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.psi-tb-btn:active {
+  transform: scale(0.92);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.psi-tb-btn.psi-active {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: #38bdf8;
+  color: #38bdf8;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+}
+
+/* Indicatore di connessione */
+.psi-tb-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 6px 0 2px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.psi-tb-status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ef4444; /* Default offline */
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.psi-tb-status.psi-connected .psi-tb-status-dot {
+  background: #22c55e;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.85);
+}
+
+.psi-tb-status-text {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.psi-tb-status.psi-connected .psi-tb-status-text {
+  color: #86efac;
+}
+
+/* Telecomando Slide (Navigazione) */
+.psi-tb-nav-btn {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.psi-tb-slide-info {
+  font-size: 13px;
+  font-weight: 700;
+  color: #e2e8f0;
+  min-width: 50px;
+  text-align: center;
+  padding: 0 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Palette Colori */
+.psi-tb-color-btn {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  padding: 0;
+  position: relative;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.psi-tb-color-btn::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--btn-color);
+}
+
+.psi-tb-color-btn.psi-active {
+  transform: scale(1.18);
+  border-color: #ffffff;
+  box-shadow: 0 0 12px var(--btn-color), 0 0 4px rgba(255, 255, 255, 0.8);
+}
+
+/* Selettore Spessore */
+.psi-tb-size-btn {
+  min-width: 36px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.psi-tb-size-dot {
+  display: block;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Pulsante Collassa */
+.psi-tb-collapse-btn {
+  background: transparent;
+  border: none;
+  min-width: 32px;
+  height: 32px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.psi-tb-collapse-btn:hover,
+.psi-tb-collapse-btn:active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ── Toast Notifiche Leggere (opzionale) ── */
+.psi-lavagna-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #f8fafc;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  z-index: 100000;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.psi-lavagna-toast.psi-toast-show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Puntatore Laser Sincronizzato ── */
+.psi-laser-dot {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2147483647;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  background: radial-gradient(circle, #fff 0 15%, #ff3030 35%, #e00000 70%);
+  box-shadow: 0 0 10px 4px rgba(255, 40, 40, 0.9), 0 0 32px 14px rgba(255, 0, 0, 0.5);
+}
+
+.psi-laser-dot.on {
+  opacity: 1;
+  transition: opacity 0.04s ease;
+}

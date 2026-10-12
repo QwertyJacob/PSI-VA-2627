@@ -497,7 +497,7 @@ $$
 C=I_{ab}+I_{ac}+I_{bc}.
 $$
 
-Non è una formula probabilistica: è un'identità che vale per ogni assegnazione concreta. Se tutte le chiavi hanno indici diversi, il totale è 0. Se $a$ e $b$ condividono l'indice e $c$ no, è 1. Se tutte e tre finiscono nella stessa casella, è 3: ci sono tre coppie, anche se la casella occupata è una sola.
+Per contare le coppie in collisione, sommiamo i tre bit: ogni coppia aggiunge 1 se le sue chiavi finiscono nella stessa casella, e 0 altrimenti. Se tutte le chiavi hanno indici diversi, il totale è 0. Se $a$ e $b$ condividono l'indice e $c$ no, è 1. Se tutte e tre finiscono nella stessa casella, è 3: ci sono tre coppie, anche se la casella occupata è una sola.
 
 **Specifichiamo il modello.** La tabella ha $m$ caselle, con $m$ intero positivo. Per le chiavi considerate, gli indici sono indipendenti e ciascuno è uniforme tra le $m$ caselle. La probabilità che una coppia condivida l'indice è $1/m$: fissato l'indice della prima chiave, soltanto una delle $m$ possibilità per la seconda coincide con esso.
 

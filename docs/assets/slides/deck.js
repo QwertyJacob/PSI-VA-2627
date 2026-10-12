@@ -32,6 +32,7 @@
     'katex@0.18.9/dist/contrib/auto-render.min.js',
     'gsap@3.15.0/dist/gsap.min.js',
     'qrious@4.0.2/dist/qrious.min.js',
+    '@supabase/supabase-js@2.48.1/dist/umd/supabase.js',
     'reveal.js@5.1.0/plugin/notes/notes.js' // vista del relatore: tasto S
   ];
 
@@ -48,6 +49,7 @@
   }
   CSS.forEach(function (path) { sheet(VENDOR + path, CDN + path); });
   sheet(ASSETS + 'slides/scenes.css');
+  sheet(ASSETS + 'slides/lavagna.css');
 
   function script(src) {
     return new Promise(function (resolve, reject) {
@@ -62,9 +64,28 @@
   function load(paths) {
     return paths.reduce(function (chain, path) {
       return chain.then(function () {
-        return script(VENDOR + path).catch(function () { return script(CDN + path); });
+        return script(VENDOR + path).catch(function () {
+          return script(CDN + path).catch(function (err) {
+            if (path.indexOf('supabase') !== -1) {
+              console.warn('PSI: Supabase offline/non raggiungibile:', err);
+              return;
+            }
+            throw err;
+          });
+        });
       });
     }, Promise.resolve());
+  }
+
+  function ensureLavagna() {
+    var p = Promise.resolve();
+    if (!window.PSI_SONDAGGI) {
+      p = p.then(function () { return script(ASSETS + 'sondaggi.js').catch(function () {}); });
+    }
+    if (!window.PSILavagna) {
+      p = p.then(function () { return script(ASSETS + 'slides/lavagna.js').catch(function () {}); });
+    }
+    return p;
   }
 
   // Puntatore laser: un punto rosso luminoso segue il mouse al posto della
@@ -107,7 +128,7 @@
   // options.onReady(deck): codice del mazzo da eseguire quando reveal è pronto.
   function start(options) {
     options = options || {};
-    return load(JS).then(function () {
+    return load(JS).then(ensureLavagna).then(function () {
       renderMathInElement(document.querySelector('.reveal .slides'), {
         delimiters: [
           { left: '$$', right: '$$', display: true },
@@ -139,6 +160,9 @@
         var toggleLaser = laser();
         if (toggleLaser) {
           Reveal.addKeyBinding({ keyCode: 76, key: 'L', description: 'Attiva/disattiva il puntatore laser' }, toggleLaser);
+        }
+        if (window.PSILavagna) {
+          window.PSILavagna.bind(Reveal, options);
         }
         if (options.onReady) options.onReady(Reveal);
       });

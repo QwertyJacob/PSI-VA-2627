@@ -135,6 +135,10 @@ $$
 P(X\in D)=\sum_{x\in D}p_X(x).
 $$
 
+Perché possiamo sommare queste probabilità? Una variabile aleatoria è una funzione: può assegnare lo stesso numero a esiti diversi, ma assegna **un solo numero a ciascun esito**. Perciò, se $x\ne y$, gli eventi $\{X=x\}$ e $\{X=y\}$ sono **incompatibili**: nessun esito può appartenere a entrambi. Gli eventi corrispondenti ai singoli valori di $X$ sono quindi a due a due disgiunti.
+
+Dire $X\in D$ significa che **$X$ assume uno dei valori contenuti in $D$**. Per esempio, se $D=\{1,2\}$, l'evento $\{X\in D\}$ significa «$X=1$ oppure $X=2$»: si verifica quando si verifica uno di questi due eventi. Poiché sono incompatibili, la sua probabilità è $P(X=1)+P(X=2)$. Lo stesso ragionamento vale per un insieme $D$ qualsiasi: sommiamo le probabilità dei singoli valori contenuti in $D$.
+
 Non stiamo introducendo una nuova regola della probabilità: stiamo riscrivendo l'additività per eventi disgiunti nel linguaggio dei numeri.
 
 **Fermiamoci un momento.** L'esperimento produce un esito. La variabile legge quell'esito e produce un numero. La PMF dice quanto peso probabilistico riceve ciascun numero. Sono tre oggetti diversi, e ciascuno svolge un compito preciso.

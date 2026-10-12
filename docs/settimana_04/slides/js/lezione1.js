@@ -194,24 +194,23 @@
     var q = PSI.q(el), root = q.one('.scene-svg'), img = q.one('.ex-cat');
     var rows = svg('g', {}, root);
     label(rows, 70, 90, 'esito', 's04-small', { 'text-anchor': 'start' });
-    label(rows, 70, 160, 'X', 's04-small', { 'text-anchor': 'start' });
+    label(rows, 70, 160, 'Y', 's04-small', { 'text-anchor': 'start' });
     ['TT', 'TC', 'CT', 'CC'].forEach(function (o, i) {
-      var x = 210 + i * 100, v = [2, 1, 1, 0][i];
+      var x = 210 + i * 100, v = [0, 1, 1, 0][i];
       label(rows, x, 90, o, 's04-mono');
       label(rows, x, 162, String(v), 's04-big', { style: 'font-size:38px;fill:' + (v === 1 ? G : A) });
     });
-    label(rows, 300, 210, 'X = 1: due esiti, TC e CT', 's04-small s04-green');
+    label(rows, 300, 210, 'Y = 1: il risultato cambia', 's04-small s04-green');
     var pmf = svg('g', {}, root);
-    var BASE = 440, X0 = 190;
+    var BASE = 440, X0 = 250;
     line(pmf, 120, BASE, 520, BASE, '#8292a8', 2);
-    [[0, .25], [1, .5], [2, .25]].forEach(function (d) {
-      var x = X0 + d[0] * 110, h = d[1] * 360;
+    [[0, .5], [1, .5]].forEach(function (d) {
+      var x = X0 + d[0] * 110, h = d[1] * 300;
       svg('rect', { x: x - 34, y: BASE - h, width: 68, height: h, rx: 4, fill: d[0] === 1 ? G : A }, pmf);
       label(pmf, x, BASE - h - 10, d[1] === .5 ? '1/2' : '1/4', 's04-label');
       label(pmf, x, BASE + 26, String(d[0]), 's04-small');
     });
-    label(pmf, 525, 330, 'non 1/3', 's04-label s04-red');
-    label(pmf, 525, 360, 'ciascuno', 's04-small s04-red');
+    label(pmf, 300, 235, 'Y = 0: TT e CC · Y = 1: TC e CT', 's04-small');
     gsap.set([rows, pmf], { opacity: 0 });
     tl.addLabel('s0');
     cat(tl, img).addLabel('s1');

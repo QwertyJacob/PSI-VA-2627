@@ -190,6 +190,15 @@ $$
 
 I due modi di fare il conto hanno la stessa struttura: pagamenti e teste sono numeri ai quali assegniamo pesi probabilistici.
 
+**Un'altra lettura degli stessi lanci.** Nell'[esercizio 1](#esercizio-1), $Y$ conta i cambi tra il primo e il secondo risultato. $TT$ e $CC$ danno zero cambi, $TC$ e $CT$ un cambio: quindi $P(Y=0)=P(Y=1)=1/2$ e
+
+$$
+\mathbb{E}[Y]=0\cdot\frac12+1\cdot\frac12=\frac12.
+$$
+
+Non significa che un singolo esperimento produca mezzo cambio: in due lanci osserviamo zero oppure un cambio. Gli stessi esiti possono dunque dare medie diverse quando cambia la variabile che li legge.
+
+
 ### 5. Il baricentro può cadere tra i risultati {: #baricentro }
 
 Lanci un dado onesto e chiami $X$ il numero sulla faccia superiore. Tutti i valori da 1 a 6 pesano $1/6$:
@@ -842,12 +851,23 @@ Con $n=2$, $K=2$, $N=5$, otteniamo $2\cdot2/5=0{,}8$, come prima. La dipendenza 
 
 ## Esercizi: prima prova, poi apri la soluzione {: #esercizi }
 
-### Esercizio 1 — Due lanci, due modi di leggere {: #esercizio-1 }
+### Esercizio 1 — Stessi lanci, una nuova variabile {: #esercizio-1 }
 
-Lanciamo due volte una moneta onesta, in modo indipendente. Scrivi gli esiti completi, la tabella della variabile $X$ che conta le teste, la sua PMF e la sua media. Il valore $X=1$ corrisponde a un solo esito?
+Lanciamo due volte una moneta onesta, in modo indipendente. Abbiamo già studiato $X$, il numero di teste. Ora definiamo $Y$ come il **numero di cambi tra il primo e il secondo lancio**: un cambio avviene quando il secondo risultato è diverso dal primo.
+
+Scrivi gli esiti completi, la tabella di $Y$ e la sua PMF. Quali esiti danno $Y=1$? Perché $TT$ e $CC$ hanno lo stesso valore di $Y$, ma valori diversi di $X$? Dopo aver studiato il valore atteso, calcola anche la media di $Y$.
 
 ??? esempio-svolto "Soluzione ragionata"
-    Gli esiti sono $TT$, $TC$, $CT$, $CC$, ciascuno con probabilità $1/4$. I valori di $X$ sono rispettivamente 2, 1, 1, 0. L'evento $X=1$ comprende due esiti disgiunti, quindi pesa $1/2$. La PMF è $p_X(0)=1/4$, $p_X(1)=1/2$, $p_X(2)=1/4$ e la media è $0/4+1/2+2/4=1$. Non fare la media dei valori distinti attribuendo loro automaticamente lo stesso peso.
+    Gli esiti sono $TT$, $TC$, $CT$, $CC$, ciascuno con probabilità $1/4$. Nei due lanci c'è una sola transizione: può esserci zero oppure un cambio.
+
+    | Esito | $TT$ | $TC$ | $CT$ | $CC$ |
+    |---|---|---|---|---|
+    | Numero di teste $X$ | 2 | 1 | 1 | 0 |
+    | Numero di cambi $Y$ | 0 | 1 | 1 | 0 |
+
+    L'evento $Y=0$ comprende $TT$ e $CC$; l'evento $Y=1$ comprende $TC$ e $CT$. Quindi $p_Y(0)=1/2$ e $p_Y(1)=1/2$. La media è $\mathbb{E}[Y]=0\cdot1/2+1\cdot1/2=1/2$.
+
+    $TT$ e $CC$ hanno entrambi zero cambi, ma rispettivamente due e zero teste. Lo spazio campionario è lo stesso: cambia la regola con cui leggiamo gli esiti.
 
 ### Esercizio 2 — Il dado e un costo fisso {: #esercizio-2 }
 

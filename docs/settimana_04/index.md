@@ -149,19 +149,27 @@ Non stiamo introducendo una nuova regola della probabilità: stiamo riscrivendo 
 
 Consideriamo un pagamento $X$ che vale 0 euro con probabilità $3/4$ e 8 euro con probabilità $1/4$. Fare $(0+8)/2=4$ tratterebbe i due pagamenti come equiprobabili. Non lo sono: lo zero ha un peso tre volte maggiore.
 
-Per vedere il conto, immaginiamo una lista ideale di quattro pagamenti con le proporzioni del modello: 0, 0, 0, 8. La sua media è:
+Per capire da dove vengono i pesi, immaginiamo di giocare 100 partite indipendenti, tutte con queste stesse probabilità, e di annotare la successione dei pagamenti: $0, 8, 0, 0, 0, 8,\ldots$. Supponiamo che, in questa successione, abbiamo osservato 73 pagamenti da 0 euro e 27 da 8 euro. La **media osservata** si ottiene sommando i 100 pagamenti e dividendo per 100:
 
 $$
-\frac{0+0+0+8}{4}=2.
+\frac{73\cdot0+27\cdot8}{100}=2{,}16\text{ euro}.
 $$
 
-Possiamo raccogliere insieme i tre zeri e riscrivere lo stesso conto:
+Riscriviamo lo stesso conto mettendo in evidenza le frequenze relative dei due pagamenti:
 
 $$
-0\cdot\frac34+8\cdot\frac14=2.
+0\cdot\frac{73}{100}+8\cdot\frac{27}{100}=2{,}16\text{ euro}.
 $$
 
-La lista è un aiuto per capire i pesi, **non la previsione di ciò che accadrà in quattro partite**. Quattro partite vere potrebbero dare quattro zeri o due premi. Il modello non promette di rispettare le proporzioni in ogni piccolo gruppo di prove.
+Ecco come compaiono i pesi: nella media osservata, ogni pagamento è moltiplicato per **la frazione di partite in cui è comparso**. Qui i pesi sono $0{,}73$ e $0{,}27$, vicini alle probabilità $0{,}75$ e $0{,}25$ del modello. I conteggi 73 e 27 sono un esempio possibile, non un risultato garantito: un'altra successione di 100 partite potrebbe dare conteggi diversi.
+
+Le frequenze osservate ci aiutano a capire il ruolo delle probabilità nel modello: un pagamento più frequente contribuisce di più alla media. Per calcolare la media prevista dal modello, sostituiamo alle frequenze osservate $73/100$ e $27/100$ le probabilità $3/4$ e $1/4$:
+
+$$
+0\cdot\frac34+8\cdot\frac14=2\text{ euro}.
+$$
+
+Questo è il passaggio dalla **media osservata**, che usa le frequenze di una successione di esiti, al **valore atteso**, che usa le probabilità del modello.
 
 Definiamo ora il **valore atteso**, chiamato anche **media** o **aspettazione**, di una variabile discreta:
 

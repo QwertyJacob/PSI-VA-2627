@@ -219,7 +219,7 @@
     tl.to(pmf, { opacity: 1, duration: .5 }).addLabel('s3');
   });
 
-  // L1-09 · media semplice barrata, lista ideale 0 0 0 8, raccolta dei pesi, definizione.
+  // L1-09 · media semplice barrata, 100 pagamenti osservati, probabilità del modello, definizione.
   PSI.scene('media', function (el, tl) {
     var q = PSI.q(el), root = q.one('.scene-svg');
     var c1 = svg('g', {}, root);
@@ -228,18 +228,21 @@
     var strike = line(c1, 70, 140, 290, 140, RED, 4);
     label(c1, 180, 210, '0 e 8 non pesano uguale', 's04-small s04-red');
     var c2 = svg('g', {}, root);
-    label(c2, 550, 40, 'lista ideale: 4 biglietti', 's04-small');
-    [0, 0, 0, 8].forEach(function (v, i) {
-      var x = 430 + i * 64;
-      svg('rect', { x: x, y: 70, width: 52, height: 72, rx: 8, fill: v ? '#fbbf2433' : '#38bdf826', stroke: v ? B : A, 'stroke-width': 2 }, c2);
-      label(c2, x + 26, 118, String(v), 's04-big', { style: 'font-size:32px;fill:' + (v ? B : A) });
-    });
-    label(c2, 550, 190, '(0 + 0 + 0 + 8) / 4 = 2', 's04-math');
+    label(c2, 550, 32, '100 partite: un esempio osservato', 's04-small');
+    for (var i = 0; i < 100; i++) {
+      var premio = (i * 37 % 100) < 27;
+      svg('rect', { x: 425 + (i % 10) * 25, y: 48 + Math.floor(i / 10) * 12,
+        width: 20, height: 8, rx: 2, fill: premio ? B : A }, c2);
+    }
+    label(c2, 550, 190, '73 zeri · 27 premi da 8 €', 's04-small');
+    label(c2, 550, 225, '0 · 73/100 + 8 · 27/100', 's04-math', { style: 'font-size:24px' });
+    label(c2, 550, 260, '= 2,16 € · media osservata', 's04-small s04-green');
+    label(c2, 550, 292, 'I conteggi possono cambiare.', 's04-tiny');
     var c3 = svg('g', {}, root);
-    label(c3, 920, 40, 'raccogli gli zeri', 's04-small');
+    label(c3, 920, 40, 'usiamo le probabilità', 's04-small');
     label(c3, 920, 130, '0 · 3/4 + 8 · 1/4', 's04-math');
     label(c3, 920, 190, '= 2 euro', 's04-big s04-green', { style: 'font-size:40px' });
-    label(c3, 920, 240, 'valore × peso', 's04-small');
+    label(c3, 920, 240, 'pesi del modello', 's04-small');
     var def = q.one('.md-def'), coin = q.one('.md-coin');
     gsap.set([c1, c2, c3, def, coin], { opacity: 0 });
     tl.addLabel('s0');

@@ -171,15 +171,15 @@ $$
 
 Questo è il passaggio dalla **media osservata**, che usa le frequenze di una successione di esiti, al **valore atteso**, che usa le probabilità del modello.
 
-Definiamo ora il **valore atteso**, chiamato anche **media** o **aspettazione**, di una variabile discreta:
+Definiamo ora il **valore atteso**, chiamato anche **media** o **speranza matematica**, di una variabile discreta:
 
 $$
 \boxed{\mathbb{E}[X]=\sum_x x\,p_X(x).}
 $$
 
-La lettera $\mathbb{E}$ indica l'operazione di aspettazione. Per ogni valore $x$, moltiplichiamo **il valore** per **la sua probabilità**, poi sommiamo tutti i contributi. Se $X$ misura euro, $\mathbb{E}[X]$ misura euro; se conta confronti, la media è espressa in confronti.
+La lettera $\mathbb{E}$ indica il valore atteso. Per ogni valore $x$, moltiplichiamo **il valore** per **la sua probabilità**, poi sommiamo tutti i contributi. Se $X$ misura euro, $\mathbb{E}[X]$ misura euro; se conta confronti, la media è espressa in confronti.
 
-Per una lista finita il conto è sempre ben definito. Per liste infinite occorre controllare la convergenza: tutte le proprietà che useremo per variabili con segno valgono quando $\sum_x |x|p_X(x)<\infty$, cioè quando il valore atteso assoluto è finito. Questa cautela non crea difficoltà negli esempi finiti della settimana.
+Per una lista finita il conto è sempre ben definito. Per liste infinite occorre controllare la convergenza: tutte le proprietà che useremo per variabili con segno valgono quando $\sum_x |x|p_X(x)<\infty$, cioè quando il valore atteso assoluto è finito.
 
 Riprendiamo il numero di teste nei due lanci:
 
@@ -233,36 +233,109 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-### 6. Laboratorio: un conto esatto prima della simulazione {: #lab-pmf }
+### 6. Laboratorio: calcolare il valore atteso passo per passo {: #lab-pmf }
 
-Il primo script prende una PMF come lista di coppie: ogni coppia contiene un valore e il suo peso. Usa frazioni esatte per distinguere la matematica del modello dagli arrotondamenti del computer. Non simula partite: calcola direttamente la media.
+Portiamo in Python il conto che abbiamo appena fatto a mano. Consideriamo ancora il gioco che paga **0 euro con probabilità $3/4$** e **8 euro con probabilità $1/4$**. Vogliamo ottenere:
+
+$$
+\mathbb{E}[X]=0\cdot\frac34+8\cdot\frac14=2\text{ euro}.
+$$
+
+Il programma deve conoscere due cose: **quali valori sono possibili** e **con quale probabilità si presenta ciascuno**. Vediamo come scrivere questi dati e come usarli nel calcolo.
+
+#### Passo 1 — Scrivere la tabella delle probabilità in Python
+
+La tabella del gioco è questa:
+
+| Pagamento (euro) | Probabilità |
+|---|---|
+| 0 | $3/4$ |
+| 8 | $1/4$ |
+
+Nel codice rappresentiamo ogni riga con una coppia nella forma `(valore, probabilita)`. Per esempio, `(8, Fraction(1, 4))` significa «il pagamento è 8 euro con probabilità $1/4$». Le parentesi quadre raccolgono le due coppie in una **lista**, che chiamiamo `pagamenti`.
+
+`Fraction(1, 4)` rappresenta esattamente la frazione $1/4$. Per usare `Fraction`, dobbiamo prima importarla dal modulo Python `fractions`. In questo modo anche i controlli sulle probabilità usano frazioni esatte, senza errori di arrotondamento.
+
+Questa lista rappresenta la **distribuzione di probabilità** del pagamento: è la stessa informazione della tabella, scritta in una forma che Python può leggere.
+
+#### Passo 2 — Leggere una coppia alla volta e sommare i contributi
+
+Definiamo una funzione chiamata `media`, così potremo ripetere lo stesso procedimento con distribuzioni diverse. Il suo parametro `distribuzione` riceve la lista su cui lavorare: quando scriviamo `media(pagamenti)`, la funzione usa le coppie contenute in `pagamenti`.
+
+Il ciclo `for valore, probabilita in distribuzione` legge una coppia a ogni passaggio e assegna i suoi due elementi ai nomi `valore` e `probabilita`. Nel nostro gioco:
+
+| Passaggio | `valore` | `probabilita` | Prodotto | Somma dei prodotti fin qui |
+|---|---|---|---|---|
+| Primo | 0 | $3/4$ | $0\cdot3/4=0$ | 0 |
+| Secondo | 8 | $1/4$ | $8\cdot1/4=2$ | 2 |
+
+La funzione tiene aggiornate due somme: `totale_probabilita`, per verificare che i pesi sommino a 1, e `valore_atteso`, per sommare i prodotti. Prima del ciclo entrambe valgono zero.
+
+#### Passo 3 — Eseguire il codice completo
 
 <div class="psi-exec" markdown="1">
 ```python
 from fractions import Fraction
 
+# Ogni coppia contiene (pagamento in euro, probabilità).
 pagamenti = [(0, Fraction(3, 4)), (8, Fraction(1, 4))]
-teste = [(0, Fraction(1, 4)), (1, Fraction(1, 2)),
-         (2, Fraction(1, 4))]
 
 
-def media(pmf):
-    # Una PMF deve distribuire tutta la probabilità, senza pesi negativi.
-    assert all(peso >= 0 for _, peso in pmf)
-    assert sum(peso for _, peso in pmf) == 1
-    return sum(valore * peso for valore, peso in pmf)
+def media(distribuzione):
+    # Partiamo da zero: non abbiamo ancora letto nessuna coppia.
+    totale_probabilita = Fraction(0, 1)
+    valore_atteso = Fraction(0, 1)
+
+    for valore, probabilita in distribuzione:
+        # assert ferma l'esecuzione se la condizione è falsa.
+        assert probabilita >= 0, "Una probabilità non può essere negativa"
+
+        # Aggiungiamo la probabilità corrente a quelle già lette.
+        totale_probabilita = totale_probabilita + probabilita
+
+        # Il contributo alla media è il valore moltiplicato per il suo peso.
+        contributo = valore * probabilita
+        valore_atteso = valore_atteso + contributo
+
+    # Finito il ciclo, controlliamo di avere tutta la probabilità.
+    assert totale_probabilita == 1, "Le probabilità devono sommare a 1"
+
+    # Restituiamo a chi ha chiamato la funzione la media calcolata.
+    return valore_atteso
 
 
+# La funzione riceve la lista pagamenti; print mostra il risultato.
 print("Pagamento medio:", media(pagamenti), "euro")
+
+# Usiamo la stessa funzione per il numero di teste in due lanci indipendenti
+# di una moneta onesta: cambiano i dati, ma il procedimento resta uguale.
+teste = [(0, Fraction(1, 4)),
+         (1, Fraction(1, 2)),
+         (2, Fraction(1, 4))]
 print("Numero medio di teste:", media(teste))
-assert media(pagamenti) == 2
-assert media(teste) == 1
 ```
 </div>
 
-Il risultato è 2 euro e 1 testa. Prova a sostituire il premio 8 con 12: la probabilità non cambia, ma cambia la quantità che essa pesa. Poi prova a cambiare i pesi in $1/2$ e $1/2$. Se assegni pesi la cui somma non è 1, il controllo interrompe l'esecuzione: prima di fare una media, dobbiamo avere una distribuzione valida.
+Il programma mostra:
 
-**Che cosa abbiamo costruito?** Una PMF racconta tutto il modello discreto della variabile. Il valore atteso ne conserva un solo numero: il centro pesato. È utile proprio perché semplifica; quella semplificazione, però, perde informazioni.
+```text
+Pagamento medio: 2 euro
+Numero medio di teste: 1
+```
+
+Per il secondo esempio, il conto eseguito dalla funzione è $0\cdot1/4+1\cdot1/2+2\cdot1/4=1$. Non abbiamo dovuto scrivere una nuova funzione: abbiamo passato a `media` una nuova lista di valori e probabilità.
+
+**Che cosa significa il risultato?** Il valore atteso del pagamento è 2 euro, ma in una singola partita si ricevono soltanto 0 oppure 8 euro. Il programma calcola la media prevista dalle probabilità del modello. Per una simulazione, invece, dovremmo generare esiti casuali e fare la media dei pagamenti osservati: lo faremo più avanti.
+
+#### Passo 4 — Modificare i dati e prevedere il risultato
+
+Prima di eseguire ogni modifica, prova a rifare il conto a mano. Lavora sempre a partire dai dati originali di `pagamenti`.
+
+1. **Cambia soltanto il premio da 8 a 12 euro.** La media diventa $0\cdot3/4+12\cdot1/4=3$ euro: cambiano i valori, mentre le probabilità restano uguali.
+2. **Mantieni il premio di 8 euro e cambia entrambe le probabilità in $1/2$.** La media diventa $0\cdot1/2+8\cdot1/2=4$ euro: cambiano i pesi assegnati ai valori.
+3. **Assegna probabilità $3/4$ a entrambi i pagamenti.** La somma è $3/2$, quindi il programma si ferma con un messaggio di errore. Quei dati non rappresentano una distribuzione di probabilità valida perché non sommano 1. 
+
+Il procedimento da ricordare è: **per ogni valore, calcola valore × probabilità; poi somma tutti i contributi**. La distribuzione descrive i valori possibili e i loro pesi; il valore atteso riassume queste informazioni in un solo numero.
 
 ## Atto IV — La linearità: scomporre un conto difficile {: #linearita }
 

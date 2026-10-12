@@ -149,7 +149,32 @@
     tl.to(where, { opacity: 1, duration: .5 }).addLabel('s3');
   });
 
-  // L2-10 · widget Binomiale: barre della PMF per k = 0..20 e fulcro in np.
+  // PMF binomiale: peso di una sequenza, posizioni, somma, generalizzazione.
+  PSI.scene('pmf-binomiale', function (el, tl) {
+    var q = PSI.q(el), root = q.one('.scene-svg');
+    var steps = q.all('.pmfb-step'), general = q.one('.pmfb-general');
+    label(root, 275, 28, '1 = fallimento   ·   0 = riuscita', 's04-small');
+    var other = svg('g', {}, root);
+    ['1100', '1010', '1001', '0110', '0101', '0011'].forEach(function (seq, i) {
+      var parent = i === 0 ? root : other;
+      var x = 35 + (i % 2) * 270, y = 62 + Math.floor(i / 2) * 82;
+      seq.split('').forEach(function (bit, j) {
+        var color = bit === '1' ? B : A;
+        svg('rect', { x: x + j * 52, y: y, width: 44, height: 48,
+          rx: 8, fill: bit === '1' ? '#fbbf2426' : '#38bdf826', stroke: color, 'stroke-width': 2 }, parent);
+        label(parent, x + j * 52 + 22, y + 33, bit, 's04-label', { style: 'fill:' + color + ';font-weight:700' });
+      });
+    });
+    var total = label(root, 275, 320, '6 sequenze distinte, stessa probabilità', 's04-small');
+    gsap.set([other, total, general].concat(Array.from(steps)), { opacity: 0 });
+    tl.addLabel('s0');
+    tl.to(steps[0], { opacity: 1, duration: .4 }).addLabel('s1');
+    tl.to([other, total, steps[1]], { opacity: 1, duration: .5 }).addLabel('s2');
+    tl.to(steps[2], { opacity: 1, duration: .4 }).addLabel('s3');
+    tl.to(general, { opacity: 1, duration: .5 }).addLabel('s4');
+  });
+
+  // Widget opzionale · Binomiale: barre della PMF per k = 0..20 e fulcro in np.
   (function () {
     var box = document.getElementById('bn-box');
     if (!box) return;

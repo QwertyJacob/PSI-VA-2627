@@ -158,10 +158,10 @@
     <section id="media">
       <p class="badge">69′ · Atto III · Il valore atteso</p>
       <h2 class="scene-title">Ogni valore per il suo peso</h2>
-      <svg class="scene-svg" width="1100" height="300" viewBox="0 0 1100 300" role="img" aria-label="La media semplice di 0 e 8 dà 4, sbagliata; la lista ideale 0, 0, 0, 8 dà 2; raccogliendo gli zeri, 0 per tre quarti più 8 per un quarto"></svg>
+      <svg class="scene-svg" width="1100" height="300" viewBox="0 0 1100 300" role="img" aria-label="La media semplice di 0 e 8 dà 4, sbagliata; 100 partite con 73 zeri e 27 premi danno una media osservata di 2,16 euro; con le probabilità del modello il valore atteso è 2 euro"></svg>
       <div class="md-def">$$\mathbb{E}[X]=\sum_x x\;p_X(x)$$</div>
       <p class="md-coin">Due lanci: $\;\mathbb{E}[X]=0\cdot\tfrac14+1\cdot\tfrac12+2\cdot\tfrac14=\color{#38ef7d}{1}$ testa</p>
-      <aside class="notes">Click: 1 la media semplice (0+8)/2=4, barrata: tratta 0 e 8 come equiprobabili; 2 la lista ideale con le proporzioni del modello: 0, 0, 0, 8, media 2 (non è una previsione di quattro partite); 3 si raccolgono i tre zeri: 0·3/4+8·1/4; 4 la definizione e il conto delle teste, che chiude l'Esercizio 1. Ora rivela s04-1 (torna indietro di una slide e premi V). Scrivi i prodotti valore × peso. Controllo c3 al 75.</aside>
+      <aside class="notes">Click: 1 la media semplice (0+8)/2=4, barrata: tratta 0 e 8 come equiprobabili; 2 una successione di 100 pagamenti: 73 zeri e 27 premi, media osservata 2,16 euro. Ogni casella è una partita: azzurro = 0, ambra = 8. I conteggi sono un esempio possibile. Le frequenze 73/100 e 27/100 pesano la media osservata; 3 sostituiamo le frequenze con le probabilità del modello: 0·3/4+8·1/4=2 euro; 4 la definizione e il conto delle teste, che chiude l'Esercizio 1. Ora rivela s04-1 (torna indietro di una slide e premi V). Scrivi i prodotti valore × peso. Controllo c3 al 75.</aside>
     </section>
 
     <!-- L1-10 · 75: controllo c3 -->
@@ -380,7 +380,7 @@
       <div class="bn-hyp"><span>$n$ prove</span><span>stesso $p$</span><span>indipendenti</span><span>$\Rightarrow\;X\sim\operatorname{Binomiale}(n,p)$</span></div>
       <div class="bn-chain">$$\mathbb{E}[X]=\mathbb{E}\Bigl[\sum_{i=1}^n I_i\Bigr]=\sum_{i=1}^n\mathbb{E}[I_i]=\sum_{i=1}^n p=\color{#38ef7d}{np}$$</div>
       <p class="bn-where">L'indipendenza serve al <b>nome</b> e alla PMF, <b class="highlight">non alla media</b>. &emsp; $4\cdot0{,}2=0{,}8$ fallimenti</p>
-      <aside class="notes">Quattro operazioni, p = 0,2. Click: 1 i bit di un'esecuzione e la loro somma X; chiedi: quali ipotesi servono perché sia Binomiale? Scrivile; 2 la catena: rappresentazione per bit, poi linearità, poi media del bit; 3 dove è servita l'indipendenza. La PMF binomiale resta in lettura (C, 0 minuti). Controllo c6 al 72.</aside>
+      <aside class="notes">Quattro operazioni, p = 0,2. Click: 1 i bit di un'esecuzione e la loro somma X; chiedi: quali ipotesi servono perché sia Binomiale? Scrivile; 2 la catena: rappresentazione per bit, poi linearità, poi media del bit; 3 dove è servita l'indipendenza. La slide successiva deriva la PMF binomiale: è parte del nucleo d’aula. Controllo c6 al 72.</aside>
     </section>
 
     <!-- L2-09 · 72: controllo c6 -->
@@ -401,31 +401,33 @@
       <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2/3, salta il widget e rifai la catena di uguaglianze.</aside>
     </section>
 
-    <!-- L2-10 · 73–79 (S): widget Binomiale -->
-    <section id="distribuzione">
-      <p class="badge">73′ · Facoltativo · Stessa media, distribuzioni diverse</p>
-      <h2 class="scene-title">Prevedi $np$, poi muovi il cursore</h2>
-      <div class="wd-box" id="bn-box" data-prevent-swipe>
-        <div class="wd-ctrl">
-          <label>$n$ <input type="range" min="1" max="20" step="1" value="4" data-k="n"> <b data-v="n">4</b></label>
-          <label>$p$ <input type="range" min="0" max="1" step="0.05" value="0.2" data-k="p"> <b data-v="p">0.20</b></label>
+    <!-- L2-10 · 73–83: derivazione della PMF binomiale -->
+    <section id="pmf-binomiale">
+      <p class="badge">73′ · Atto V · Probabilità di un conteggio</p>
+      <h2 class="scene-title">Esattamente due fallimenti: come si conta?</h2>
+      <p class="pmfb-intro">4 operazioni indipendenti · ciascuna fallisce con probabilità $p$</p>
+      <div class="pmfb-grid">
+        <svg class="scene-svg" width="550" height="240" viewBox="0 0 550 330" role="img" aria-label="Le sei sequenze con due fallimenti: 1100, 1010, 1001, 0110, 0101, 0011. Ogni sequenza ha due 1 e due 0."></svg>
+        <div class="pmfb-panel">
+          <div class="pmfb-step">Una sequenza: $1100$<br>$p\cdot p\cdot(1-p)\cdot(1-p)=p^2(1-p)^2$</div>
+          <div class="pmfb-step">Scegliamo le posizioni dei due 1:<br>$\binom42=6$ sequenze, tutte con lo stesso peso.</div>
+          <div class="pmfb-step">Le sequenze sono disgiunte: sommiamo.<br>$P(X=2)=6p^2(1-p)^2$<br>Con $p=0{,}2$: $6\cdot0{,}04\cdot0{,}64=\color{#38ef7d}{0{,}1536}$</div>
         </div>
-        <svg class="scene-svg" width="1100" height="360" viewBox="0 0 1100 360" role="img" aria-label="Le barre della PMF binomiale per k da 0 a 20, con il fulcro nella media np"></svg>
-        <p class="wd-out"></p>
-        <p class="wd-try">Prova: <button class="psi-btn ghost" type="button" data-n="4" data-p="0.2">4 · 0.2</button><button class="psi-btn ghost" type="button" data-n="8" data-p="0.1">8 · 0.1</button><button class="psi-btn ghost" type="button" data-n="16" data-p="0.05">16 · 0.05</button></p>
       </div>
-      <aside class="notes">Sacrificabile (73–79). Da n = 4, p = 0,2 a n = 8, p = 0,1: np resta 0,8, le barre cambiano. Il triangolo verde è il baricentro: fai prevedere dove andrà prima di cliccare. Le barre oltre n sono zero; l'asse resta fisso.</aside>
+      <div class="pmfb-general">$$P(X=k)=\underbrace{\binom nk}_{\text{posizioni}}\;\underbrace{p^k}_{k\text{ successi}}\;\underbrace{(1-p)^{n-k}}_{n-k\text{ insuccessi}}$$<p>$k=0,1,\ldots,n$ · indipendenza e stesso $p$ in tutte le prove</p></div>
+      <aside class="notes">10 minuti obbligatori. X conta i fallimenti: qui «successo» significa l’evento che stiamo contando. Stato iniziale: 1100 e legenda, chiedi quanto pesa questa sequenza. Click 1: prodotto delle quattro probabilità; l’indipendenza giustifica il prodotto. Click 2: tutte le sei sequenze, scegli due posizioni tra quattro; stesso p significa stesso peso. Click 3: eventi disgiunti, quindi somma e risultato 0,1536. Click 4: formula generale per n prove e k successi. Chiedi che cosa conta il coefficiente binomiale e perché non basta p²(1−p)². Per p=0 o p=1 leggi direttamente il modello: X è rispettivamente 0 o n. L’esercizio successivo applica la formula.</aside>
     </section>
 
-    <!-- L2-11 · 79–91: Esercizio 4 -->
+    <!-- L2-11 · 83–95: Esercizio 4 -->
     <section id="esercizio-4">
-      <p class="badge">79′ · Esercizio 4 · gruppi di 3–4</p>
+      <p class="badge">83′ · Esercizio 4 · gruppi di 3–4</p>
       <h2 class="scene-title">Quattro operazioni</h2>
       <div class="e3-grid">
         <div class="ex-text">
           <p class="ex-lead">Ognuna fallisce con probabilità $0{,}2$.</p>
           <ol>
             <li><b>Indipendenti:</b> scrivi il numero $X$ di fallimenti con i bit. Media?</li>
+            <li><b>Indipendenti:</b> probabilità di esattamente due fallimenti?</li>
             <li><b>Guasto comune:</b> con probabilità $0{,}2$ falliscono tutte insieme. Media?</li>
             <li>Che cosa resta uguale? Che cosa cambia?</li>
           </ol>
@@ -436,12 +438,28 @@
           <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
         </div>
       </div>
-      <aside class="notes">Sostituisce una seconda derivazione frontale di np e del caso dipendente. Click: 1 il gatto; 2 media 0,8 in entrambi: ogni bit vale 1 con probabilità 0,2; 3 i valori possibili: 0–4 nel primo modello, soltanto 0 e 4 nel secondo. Errore atteso: dedurre la stessa distribuzione dalla stessa media. Il quesito sulla PMF (P(X=2)=0,1536) è lettura (C). Non introdurre la varianza.</aside>
+      <aside class="notes">Sostituisce una seconda derivazione frontale di np e del caso dipendente. Click: 1 il gatto; 2 media 0,8 in entrambi: ogni bit vale 1 con probabilità 0,2; 3 i valori possibili: 0–4 nel primo modello, soltanto 0 e 4 nel secondo. Errore atteso: dedurre la stessa distribuzione dalla stessa media. Correggi anche la PMF: P(X=2)=6·0,2²·0,8²=0,1536. Con guasto comune P(X=2)=0. Se manca tempo, assegna il confronto con il guasto comune a casa. Non introdurre la varianza.</aside>
     </section>
 
-    <!-- L2-12 · 91–105 (S): cuscinetto e domanda d'uscita -->
+    <!-- Widget opzionale nel cuscinetto 95–105 -->
+    <section id="distribuzione">
+      <p class="badge">95′ · Facoltativo · Stessa media, distribuzioni diverse</p>
+      <h2 class="scene-title">Prevedi $np$, poi muovi il cursore</h2>
+      <div class="wd-box" id="bn-box" data-prevent-swipe>
+        <div class="wd-ctrl">
+          <label>$n$ <input type="range" min="1" max="20" step="1" value="4" data-k="n"> <b data-v="n">4</b></label>
+          <label>$p$ <input type="range" min="0" max="1" step="0.05" value="0.2" data-k="p"> <b data-v="p">0.20</b></label>
+        </div>
+        <svg class="scene-svg" width="1100" height="360" viewBox="0 0 1100 360" role="img" aria-label="Le barre della PMF binomiale per k da 0 a 20, con il fulcro nella media np"></svg>
+        <p class="wd-out"></p>
+        <p class="wd-try">Prova: <button class="psi-btn ghost" type="button" data-n="4" data-p="0.2">4 · 0.2</button><button class="psi-btn ghost" type="button" data-n="8" data-p="0.1">8 · 0.1</button><button class="psi-btn ghost" type="button" data-n="16" data-p="0.05">16 · 0.05</button></p>
+      </div>
+      <aside class="notes">Opzionale nel cuscinetto 95–105, dopo l’esercizio. Da n = 4, p = 0,2 a n = 8, p = 0,1: np resta 0,8, le barre cambiano. Il triangolo verde è il baricentro: fai prevedere dove andrà prima di cliccare. Le barre oltre n sono zero; l'asse resta fisso.</aside>
+    </section>
+
+    <!-- L2-12 · 95–105 (S): cuscinetto e domanda d'uscita -->
     <section id="uscita-2">
-      <p class="badge">91′ · Domanda d'uscita</p>
+      <p class="badge">95′ · Domanda d'uscita</p>
       <svg class="scene-svg" width="1100" height="330" viewBox="0 0 1100 330" role="img" aria-label="Due grafici a barre: la Binomiale 4, 0,2 e il guasto comune; stesso baricentro 0,8, barre molto diverse"></svg>
       <p class="ux-q">Perché la media resta $np$ con un guasto comune,<br>ma la distribuzione cambia?</p>
       <div class="ux-links">

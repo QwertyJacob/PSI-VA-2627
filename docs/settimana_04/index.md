@@ -24,7 +24,7 @@ $$
 \binom{23}{2}=\frac{23\cdot22}{2}=253.
 $$
 
-Ora immagina 23 chiavi distinte da inserire in una tabella hash. Una funzione hash assegna a ogni chiave un indice di casella. Due chiavi diverse possono ricevere lo stesso indice: questa è una **collisione**, già descritta nella [Settimana 3, sezione sulle tabelle hash](../settimana_03/index.md#hash). Anche qui le coppie da controllare sono 253.
+Ora immagina di dover inserire **23 chiavi distinte** in una tabella hash. Tra queste chiavi esistono $\binom{23}{2}=253$ coppie possibili. Una funzione hash assegna a ogni chiave un indice di casella: per ciascuna coppia possiamo quindi verificare se le due chiavi ricevono lo stesso indice, producendo una **collisione**, già descritta nella [Settimana 3, sezione sulle tabelle hash](../settimana_03/index.md#hash).
 
 Per ora fermiamoci al conteggio. Sapere quante coppie esistono non dice quante finiranno nella stessa casella. Dobbiamo distinguere una quantità deterministica, **il numero di coppie possibili**, da una quantità incerta, **il numero di coppie che collidono**. È proprio per parlare della seconda che costruiremo gli strumenti di questa settimana.
 
@@ -35,7 +35,15 @@ Per ora fermiamoci al conteggio. Sapere quante coppie esistono non dice quante f
 
 Nella partita interrotta della settimana scorsa, un giocatore non possiede ancora la posta: possiede una possibilità di vincerla. Se volesse cedere il proprio posto a un'altra persona, quale prezzo dovrebbe chiedere?
 
-**Christiaan Huygens**, nel *De ratiociniis in ludo aleae*, pubblicato in latino nel **1657**, tratta proprio il valore di una possibilità di guadagno. L'introduzione considera anche la vendita del posto di un giocatore. La Proposizione I assegna a due premi equiprobabili la metà della loro somma; la Proposizione III passa a casi con pesi diversi. La [traduzione inglese del 1714, disponibile a Dartmouth](https://math.dartmouth.edu/~doyle/docs/huygens/huygens/), permette di leggere questi passaggi. Qui li esprimeremo con il linguaggio moderno delle variabili aleatorie: non è la notazione usata da Huygens.
+Chiamiamo **valore equo** di questa possibilità il prezzo che coincide con il pagamento medio previsto dal modello. Se qualcuno acquista la possibilità a quel prezzo, il suo guadagno netto medio — pagamento ricevuto meno prezzo pagato — è zero. «Equo» ha quindi un significato matematico: non garantisce che in una singola partita chi compra riceva proprio quella somma.
+
+**Christiaan Huygens**, nel *De ratiociniis in ludo aleae*, pubblicato in latino nel **1657**, tratta proprio il valore di una possibilità di guadagno. L'introduzione considera anche la vendita del posto di un giocatore. La Proposizione I afferma che, se un gioco assegna con uguale probabilità uno di due premi, il valore equo del gioco è la media dei due premi. Se i premi sono $a$ e $b$, tale valore è
+
+$$
+\frac{a+b}{2}.
+$$
+
+Per esempio, una possibilità equiprobabile di ricevere 10 euro oppure 30 euro ha valore equo 20 euro. La Proposizione III passa a casi nei quali i risultati hanno probabilità diverse. La [traduzione inglese del 1714, disponibile a Dartmouth](https://math.dartmouth.edu/~doyle/docs/huygens/huygens/), permette di leggere questi passaggi. Qui li esprimeremo con il linguaggio moderno delle variabili aleatorie: non è la notazione usata da Huygens.
 
 Partiamo da un gioco inventato per questa dispensa. Una moneta onesta decide il pagamento: **0 euro** se esce croce, **10 euro** se esce testa. Non paghiamo ancora un biglietto; stiamo considerando soltanto quanto si riceve alla fine.
 

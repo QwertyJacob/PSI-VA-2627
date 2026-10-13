@@ -76,6 +76,7 @@
 
       // Gestione disegno attivo
       var activeStroke = null;
+      var activePointerId = null;
       var lastLocalPoint = null;
       var batchBuffer = [];
       var batchTimer = null;
@@ -84,6 +85,13 @@
 
       if (isSpeaker) {
         document.documentElement.classList.add('psi-lavagna-pen-mode');
+        // Previene double-tap zoom e gesture delay nativi di Safari su iPad
+        try {
+          var vp = document.querySelector('meta[name="viewport"]');
+          if (vp) {
+            vp.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+          }
+        } catch (_) {}
       }
 
       function getSlideKey(indices) {
@@ -183,6 +191,16 @@
         };
         batchBuffer = [];
         sendBroadcast('stroke', payload);
+      }
+
+      function finalizeActiveStroke() {
+        if (!activeStroke) return;
+        flushBatch(true);
+        if (!strokesBySlide[currentSlideKey]) strokesBySlide[currentSlideKey] = [];
+        strokesBySlide[currentSlideKey].push(activeStroke);
+        activeStroke = null;
+        lastLocalPoint = null;
+        batchBuffer = [];
       }
 
       // ── Ricezione Remota (Proiettore) ──
@@ -324,19 +342,26 @@
         // Disabilita categoricamente qualsiasi tentativo di selezione testo dal canvas
         canvas.addEventListener('selectstart', function (e) { e.preventDefault(); });
         canvas.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+        window.addEventListener('contextmenu', function (e) {
+          if (!e.target.closest('.psi-tb-item')) {
+            e.preventDefault();
+          }
+        });
         document.addEventListener('selectstart', function (e) {
           if (!e.target.closest('.psi-tb-item')) {
             e.preventDefault();
           }
         });
 
+        // Previene gesti touch nativi di iOS e Reveal.js sul canvas
+        ['touchstart', 'touchmove', 'touchend', 'touchcancel'].forEach(function (evtName) {
+          canvas.addEventListener(evtName, function (e) {
+            e.preventDefault();
+          }, { passive: false });
+        });
+
         canvas.addEventListener('pointerdown', function (e) {
-          // Previene categoricamente menu contestuali, magnifier e selezione iOS
           e.preventDefault();
-          if (window.getSelection) {
-            var sel = window.getSelection();
-            if (sel && sel.rangeCount > 0) sel.removeAllRanges();
-          }
 
           if (currentMode === 'laser') {
             var ptLaser = getCoords(e);
@@ -353,17 +378,33 @@
             return;
           }
 
+          // Se un tratto precedente non è stato chiuso (es. sequenza rapidissima o pen lift volante),
+          // finalizzalo immediatamente prima di iniziare quello nuovo!
+          if (activeStroke) {
+            finalizeActiveStroke();
+          }
+
           var pt = getCoords(e);
           var strokeId = 's_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+          activePointerId = e.pointerId;
           activeStroke = {
             id: strokeId,
             color: currentColor,
             width: currentWidth,
             mode: currentMode,
-            points: [pt]
+            points: [pt],
+            pointerId: e.pointerId
           };
           lastLocalPoint = pt;
           batchBuffer = [pt];
+
+          // Cattura esplicita del puntatore per garantire che tutti gli eventi ad alta velocità
+          // appartengano a questo tratto e non vengano intercettati dal browser
+          try {
+            if (canvas.setPointerCapture && e.pointerId != null) {
+              canvas.setPointerCapture(e.pointerId);
+            }
+          } catch (_) {}
 
           // Disegna subito punto iniziale
           drawSegment(ctx, pt, { x: pt.x + 0.1, y: pt.y + 0.1, p: pt.p }, currentColor, currentWidth, currentMode);
@@ -386,11 +427,24 @@
           if (e.pointerType === 'touch') return;
           if (!activeStroke) return;
 
-          var pt = getCoords(e);
-          drawSegment(ctx, lastLocalPoint, pt, currentColor, currentWidth, currentMode);
-          lastLocalPoint = pt;
-          activeStroke.points.push(pt);
-          batchBuffer.push(pt);
+          // Se l'evento non appartiene al puntatore attivo di disegno, ignoralo (evita interferenze da palmo)
+          if (activePointerId !== null && e.pointerId !== undefined && e.pointerId !== activePointerId) {
+            return;
+          }
+
+          // Supporto eventi coalesced per Apple Pencil ad alta frequenza (120/240Hz)
+          var events = (e.getCoalescedEvents && e.getCoalescedEvents().length > 0)
+            ? e.getCoalescedEvents()
+            : [e];
+
+          for (var i = 0; i < events.length; i++) {
+            var ev = events[i];
+            var pt = getCoords(ev);
+            drawSegment(ctx, lastLocalPoint, pt, currentColor, currentWidth, currentMode);
+            lastLocalPoint = pt;
+            activeStroke.points.push(pt);
+            batchBuffer.push(pt);
+          }
 
           if (!batchTimer) {
             batchTimer = setTimeout(function () { flushBatch(false); }, 35);
@@ -398,7 +452,7 @@
         });
 
         function endStroke(e) {
-          e.preventDefault();
+          if (e && e.preventDefault) e.preventDefault();
 
           if (currentMode === 'laser') {
             laserDot.classList.remove('on');
@@ -406,7 +460,7 @@
             return;
           }
 
-          if (e.pointerType === 'touch') {
+          if (e && e.pointerType === 'touch') {
             // Rilevamento swipe orizzontale con le dita per girare le slide
             var dx = e.clientX - touchStartX;
             var dy = e.clientY - touchStartY;
@@ -417,20 +471,28 @@
             return;
           }
 
-          if (!activeStroke) return;
+          // Se l'evento proviene da un pointer diverso da quello attivo che disegna, ignoralo
+          if (activePointerId !== null && e && e.pointerId !== undefined && e.pointerId !== activePointerId) {
+            return;
+          }
 
-          flushBatch(true);
+          // Rilascio esplicito del pointer capture
+          if (activePointerId !== null) {
+            try {
+              if (canvas.releasePointerCapture && canvas.hasPointerCapture && canvas.hasPointerCapture(activePointerId)) {
+                canvas.releasePointerCapture(activePointerId);
+              }
+            } catch (_) {}
+            activePointerId = null;
+          }
 
-          if (!strokesBySlide[currentSlideKey]) strokesBySlide[currentSlideKey] = [];
-          strokesBySlide[currentSlideKey].push(activeStroke);
-
-          activeStroke = null;
-          lastLocalPoint = null;
-          batchBuffer = [];
+          finalizeActiveStroke();
         }
 
         canvas.addEventListener('pointerup', endStroke);
         canvas.addEventListener('pointercancel', endStroke);
+        window.addEventListener('pointerup', endStroke);
+        window.addEventListener('pointercancel', endStroke);
       }
 
       // ── Sincronizzazione Navigazione & Animazioni Frammenti ──

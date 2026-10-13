@@ -16,7 +16,7 @@
   display: block;
 }
 
-/* Modalità Speaker (iPad): abilita disegno, disabilita scroll e previene categoricamente selezione testo */
+/* Modalità Speaker (iPad): abilita disegno, disabilita scroll e previene categoricamente selezione testo e gesti zoom */
 html.psi-lavagna-pen-mode,
 html.psi-lavagna-pen-mode body,
 .psi-lavagna-pen-mode .reveal,
@@ -27,9 +27,16 @@ html.psi-lavagna-pen-mode body,
   -webkit-touch-callout: none !important;
 }
 
+html.psi-lavagna-pen-mode,
+html.psi-lavagna-pen-mode body,
+.psi-lavagna-pen-mode .reveal,
+.psi-lavagna-pen-mode .reveal .slides,
+.psi-lavagna-pen-mode .reveal .slides .psi-lavagna-canvas {
+  touch-action: none !important;
+}
+
 .psi-lavagna-pen-mode .reveal .slides .psi-lavagna-canvas {
   pointer-events: auto;
-  touch-action: none;
   cursor: crosshair;
   -webkit-user-select: none;
   user-select: none;

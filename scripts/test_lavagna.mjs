@@ -214,7 +214,8 @@ async function run() {
       if (!laserActive) throw new Error('Puntatore laser non visibile sul proiettore!');
     }
 
-    // 7. Test Palm Rejection (tocco con dita non deve disegnare)
+    // 7. Test Palm Rejection (tocco con dita non deve disegnare in modalità penna)
+    await speakerPage.click('.psi-tb-btn[title="Penna / Annotazioni"]');
     await speakerPage.click('.psi-tb-btn[title="Pulisci slide"]');
     await speakerPage.waitForTimeout(100);
 
@@ -252,6 +253,80 @@ async function run() {
     });
     console.log('10. Palm rejection: tocco dito ignorato (canvas vuoto):', !isTouchDrawn);
     if (isTouchDrawn) throw new Error('Palm rejection fallita: il tocco dito ha disegnato!');
+
+    // 8. Test Tratti Consecutivi Rapidi (due stroke ravvicinati con Apple Pencil non devono perdersi)
+    await speakerPage.click('.psi-tb-btn[title="Penna / Annotazioni"]');
+    await speakerPage.click('.psi-tb-btn[title="Pulisci slide"]');
+    await speakerPage.waitForTimeout(100);
+
+    const rapidStrokesResult = await speakerPage.evaluate(() => {
+      const c = document.querySelector('.reveal .slides .psi-lavagna-canvas');
+      const rect = c.getBoundingClientRect();
+
+      // Stroke 1 (tratto penna veloce)
+      c.dispatchEvent(new PointerEvent('pointerdown', {
+        clientX: rect.left + 100,
+        clientY: rect.top + 100,
+        pointerId: 10,
+        pointerType: 'pen',
+        pressure: 0.7,
+        bubbles: true
+      }));
+      c.dispatchEvent(new PointerEvent('pointermove', {
+        clientX: rect.left + 100,
+        clientY: rect.top + 150,
+        pointerId: 10,
+        pointerType: 'pen',
+        pressure: 0.7,
+        bubbles: true
+      }));
+      window.dispatchEvent(new PointerEvent('pointerup', {
+        clientX: rect.left + 100,
+        clientY: rect.top + 150,
+        pointerId: 10,
+        pointerType: 'pen',
+        bubbles: true
+      }));
+
+      // Stroke 2 immediato (es. trattino veloce successivo con pointerId diverso)
+      c.dispatchEvent(new PointerEvent('pointerdown', {
+        clientX: rect.left + 80,
+        clientY: rect.top + 120,
+        pointerId: 11,
+        pointerType: 'pen',
+        pressure: 0.6,
+        bubbles: true
+      }));
+      c.dispatchEvent(new PointerEvent('pointermove', {
+        clientX: rect.left + 120,
+        clientY: rect.top + 120,
+        pointerId: 11,
+        pointerType: 'pen',
+        pressure: 0.6,
+        bubbles: true
+      }));
+      window.dispatchEvent(new PointerEvent('pointerup', {
+        clientX: rect.left + 120,
+        clientY: rect.top + 120,
+        pointerId: 11,
+        pointerType: 'pen',
+        bubbles: true
+      }));
+
+      // Verifica pixel disegnati sul canvas
+      const ctx = c.getContext('2d');
+      const totalPixels = ctx.getImageData(0, 0, c.width, c.height).data;
+      let nonZeroCount = 0;
+      for (let i = 3; i < totalPixels.length; i += 4) {
+        if (totalPixels[i] > 0) nonZeroCount++;
+      }
+      return { nonZeroCount };
+    });
+
+    console.log('11. Tratti consecutivi rapidi (pixel disegnati > 0):', rapidStrokesResult.nonZeroCount > 0);
+    if (rapidStrokesResult.nonZeroCount === 0) {
+      throw new Error('I tratti rapidi sono stati ignorati! Nessun pixel disegnato.');
+    }
 
     console.log('\n--- TUTTI I TEST AUTOMATICI SUPERATI CON SUCCESSO! ---');
   } finally {

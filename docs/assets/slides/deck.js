@@ -32,6 +32,7 @@
     'katex@0.18.9/dist/contrib/auto-render.min.js',
     'gsap@3.15.0/dist/gsap.min.js',
     'qrious@4.0.2/dist/qrious.min.js',
+    '@supabase/supabase-js@2.48.1/dist/umd/supabase.js',
     'reveal.js@5.1.0/plugin/notes/notes.js' // vista del relatore: tasto S
   ];
 
@@ -48,6 +49,7 @@
   }
   CSS.forEach(function (path) { sheet(VENDOR + path, CDN + path); });
   sheet(ASSETS + 'slides/scenes.css');
+  sheet(ASSETS + 'slides/lavagna.css');
 
   function script(src) {
     return new Promise(function (resolve, reject) {
@@ -62,9 +64,63 @@
   function load(paths) {
     return paths.reduce(function (chain, path) {
       return chain.then(function () {
-        return script(VENDOR + path).catch(function () { return script(CDN + path); });
+        return script(VENDOR + path).catch(function () {
+          return script(CDN + path).catch(function (err) {
+            if (path.indexOf('supabase') !== -1) {
+              console.warn('PSI: Supabase offline/non raggiungibile:', err);
+              return;
+            }
+            throw err;
+          });
+        });
       });
     }, Promise.resolve());
+  }
+
+  function ensureLavagna() {
+    var p = Promise.resolve();
+    if (!window.PSI_SONDAGGI) {
+      p = p.then(function () { return script(ASSETS + 'sondaggi.js').catch(function () {}); });
+    }
+    if (!window.PSILavagna) {
+      p = p.then(function () { return script(ASSETS + 'slides/lavagna.js').catch(function () {}); });
+    }
+    return p;
+  }
+
+  // Puntatore laser: un punto rosso luminoso segue il mouse al posto della
+  // freccia e sparisce dopo un paio di secondi di immobilità. Tasto L: on/off.
+  function laser() {
+    if (/print-pdf/.test(location.search)) return;
+    var style = document.createElement('style');
+    style.textContent =
+      'html.psi-laser, html.psi-laser * { cursor: none !important; }' +
+      '.psi-laser-dot { position: fixed; left: 0; top: 0; z-index: 2147483647;' +
+      ' width: 24px; height: 24px; margin: -12px 0 0 -12px; border-radius: 50%;' +
+      ' pointer-events: none; opacity: 0; transition: opacity .3s;' +
+      ' background: radial-gradient(circle, #fff 0 15%, #ff3030 35%, #e00000 70%);' +
+      ' box-shadow: 0 0 8px 4px rgba(255,40,40,.9), 0 0 28px 14px rgba(255,0,0,.45); }' +
+      '.psi-laser-dot.on { opacity: 1; transition: opacity .05s; }';
+    document.head.appendChild(style);
+    var dot = document.createElement('div');
+    dot.className = 'psi-laser-dot';
+    document.body.appendChild(dot);
+
+    var enabled = true, timer;
+    document.documentElement.classList.add('psi-laser');
+    document.addEventListener('mousemove', function (e) {
+      if (!enabled) return;
+      dot.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px)';
+      dot.classList.add('on');
+      clearTimeout(timer);
+      timer = setTimeout(function () { dot.classList.remove('on'); }, 2000);
+    });
+    document.documentElement.addEventListener('mouseleave', function () { dot.classList.remove('on'); });
+    return function toggle() {
+      enabled = !enabled;
+      document.documentElement.classList.toggle('psi-laser', enabled);
+      if (!enabled) dot.classList.remove('on');
+    };
   }
 
   // Carica le librerie, rende le formule, costruisce le scene e avvia reveal.js.
@@ -72,7 +128,7 @@
   // options.onReady(deck): codice del mazzo da eseguire quando reveal è pronto.
   function start(options) {
     options = options || {};
-    return load(JS).then(function () {
+    return load(JS).then(ensureLavagna).then(function () {
       renderMathInElement(document.querySelector('.reveal .slides'), {
         delimiters: [
           { left: '$$', right: '$$', display: true },
@@ -101,6 +157,13 @@
         Reveal.addKeyBinding({ keyCode: 82, key: 'R', description: 'Apri/chiudi la panoramica delle slide' }, function () {
           Reveal.toggleOverview();
         });
+        var toggleLaser = laser();
+        if (toggleLaser) {
+          Reveal.addKeyBinding({ keyCode: 76, key: 'L', description: 'Attiva/disattiva il puntatore laser' }, toggleLaser);
+        }
+        if (window.PSILavagna) {
+          window.PSILavagna.bind(Reveal, options);
+        }
         if (options.onReady) options.onReady(Reveal);
       });
     });

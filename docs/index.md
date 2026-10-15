@@ -18,6 +18,16 @@ Il materiale contiene adattamenti di testi classici e di testi contemporanei, in
 - **Codice eseguibile**: i blocchi di codice con il pulsante "▶ Esegui" girano Python nel tuo browser (nessuna installazione richiesta). Puoi modificare il codice prima di eseguirlo.
 - **Stampa**: ogni pagina è pensata per essere stampata singolarmente (Ctrl/Cmd+P o pulsante "Scarica il PDF") — i controlli interattivi vengono nascosti automaticamente e sostituiti da un'istantanea statica dell'ultimo grafico esplorato. In fondo al menu trovi anche un'opzione per stampare l'intero corso (quando ci sarà) in un unico documento.
 
+## Come studiare per l’esame {: #esame }
+
+Gli argomenti indicati nelle dispense come **richiesti all’esame** vanno compresi e applicati anche quando sono affidati allo studio individuale. «Da leggere a casa» non significa «facoltativo»: per ogni parte trovi indicato che cosa devi saper spiegare o calcolare. Gli approfondimenti indicati come **facoltativi e non richiesti all’esame** restano disponibili per chi vuole esplorare il tema.
+
+Il formulario fornito dal docente accompagna il calcolo: occorre saper scegliere la formula, spiegare i simboli e controllarne le ipotesi. Le dimostrazioni e i ragionamenti da ricostruire all’orale sono segnalati esplicitamente nelle singole dispense.
+
+Script e widget servono a esplorare e verificare i concetti. **Non è richiesta la riproduzione del codice Python**; restano richiesti i ragionamenti probabilistici indicati nel percorso d’esame. Le fonti bibliografiche e i documenti storici sono letture facoltative: non occorre memorizzare date, citazioni o dettagli biografici.
+
+Per ogni settimana, consulta le indicazioni in apertura delle dispense: [Settimana 1](settimana_01/index.md#esame), [Settimana 2](settimana_02/index.md#esame), [Settimana 3](settimana_03/index.md#esame).
+
 ## Il percorso in breve
 
 Il percorso è articolato in 4 moduli tematici distribuiti su **12 settimane**, con lezioni dedicate ai fondamenti teorici, all'interazione con i widget e al laboratorio computazionale.
@@ -34,9 +44,9 @@ Il percorso è articolato in 4 moduli tematici distribuiti su **12 settimane**, 
 
 | Settimana | Argomenti |
 |---|---|
-| **[4. Huygens e il prezzo equo](settimana_04/index.md)** *(Settimana 4)* | **Variabili aleatorie discrete e valore atteso:** variabili aleatorie discrete, funzione di massa di probabilità (PMF), valore atteso e linearità del valore atteso, distribuzione di Bernoulli e Binomiale, varianza; analisi del caso medio negli algoritmi. |
-| **Settimana 5** *(in arrivo)* | **Distribuzioni discrete notevoli:** distribuzione Geometrica (tempo di attesa e assenza di memoria), distribuzione di Poisson (eventi rari e limite della binomiale); applicazioni ai sistemi distribuiti. |
-| **Settimana 6** *(in arrivo)* | **Variabili aleatorie continue e distribuzione Normale:** densità di probabilità (PDF) e funzione di ripartizione (CDF), distribuzione uniforme ed esponenziale, distribuzione Normale (Gaussiana) e standardizzazione. |
+| **[4. Huygens e il prezzo equo](settimana_04/index.md)** *(Settimana 4)* | **Variabili aleatorie discrete e valore atteso:** variabili aleatorie discrete, funzione di massa di probabilità (PMF), valore atteso e linearità del valore atteso, distribuzione di Bernoulli e Binomiale; analisi del caso medio negli algoritmi. |
+| **Settimana 5** *(in arrivo)* | **Varianza e distribuzioni discrete notevoli:** significato, definizione e calcolo della varianza; distribuzione Geometrica (tempo di attesa e assenza di memoria), distribuzione di Poisson (eventi rari e limite della binomiale); applicazioni ai sistemi distribuiti. |
+| **Settimana 6** *(in arrivo)* | **Variabili aleatorie continue e distribuzione Normale:** densità di probabilità (PDF) e funzione di ripartizione (CDF), distribuzione esponenziale (e uniforme in lettura), distribuzione Normale (Gaussiana), standardizzazione e regola 68–95–99,7. |
 
 ### Modulo III — Distribuzioni congiunte, teoremi limite e campionamento (Settimane 7–10)
 

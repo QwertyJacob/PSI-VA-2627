@@ -22,7 +22,7 @@ Dalla Settimana 5 ci portiamo tre strumenti, che oggi useremo subito.
 2. Il **tasso**: $\lambda$ è sempre riferito a un intervallo. Se un server riceve in media 3 richieste al secondo, in $t$ secondi ne riceve in media $3t$ ([Settimana 5, §17](../settimana_05/index.md#tasso)).
 3. L'**assenza di memoria** della Geometrica: dopo una lunga serie di fallimenti, il futuro riparte da capo ([Settimana 5, §5](../settimana_05/index.md#assenza-memoria)).
 
-Dalla Settimana 4 riprendiamo il **valore atteso** come baricentro ([Settimana 4, §5](../settimana_04/index.md#baricentro)) e la **varianza** come misura della dispersione ([Settimana 4, Lettura A](../settimana_04/index.md#varianza)).
+Dalla Settimana 4 riprendiamo il **valore atteso** come baricentro ([Settimana 4, §5](../settimana_04/index.md#baricentro)) e dalla Settimana 5 la **varianza** come misura della dispersione ([sezione iniziale](../settimana_05/index.md#varianza)).
 
 Questa settimana facciamo un salto. Molte grandezze che interessano a un informatico non si contano, si **misurano**: il tempo che una richiesta impiega a ricevere risposta, il tempo tra due guasti, l'errore di un sensore. Una misura può cadere in un punto qualsiasi di un intervallo, con tutte le cifre decimali che vogliamo. Questi valori **non si possono elencare**. Servono idee nuove.
 
@@ -537,7 +537,7 @@ Il fattore $e^{-x^2/2}$ di De Moivre e l'$e^{-h^2x^2}$ di Gauss sono la stessa c
 I due parametri hanno un significato geometrico preciso, e coincidono con due quantità che conosciamo.
 
 * **$\mu$ è il centro.** È il punto più alto della campana e, per la simmetria, il baricentro della distribuzione: $\mathbb{E}[X]=\mu$. Cambiare $\mu$ **trasla** la curva a destra o a sinistra, senza deformarla.
-* **$\sigma$ è la larghezza.** È la **deviazione standard**, la radice quadrata della varianza: $\sigma=\sqrt{\operatorname{Var}(X)}$, quindi $\operatorname{Var}(X)=\sigma^2$. A differenza della varianza, che si misura in unità al quadrato ([Settimana 4, §16](../settimana_04/index.md#definizione-varianza)), $\sigma$ si misura nelle stesse unità di $X$: millisecondi, metri, euro. Per questo è la misura di dispersione che si usa per leggere un grafico.
+* **$\sigma$ è la larghezza.** È la **deviazione standard**, la radice quadrata della varianza: $\sigma=\sqrt{\operatorname{Var}(X)}$, quindi $\operatorname{Var}(X)=\sigma^2$. A differenza della varianza, che si misura in unità al quadrato ([Settimana 5, definizione della varianza](../settimana_05/index.md#definizione-varianza)), $\sigma$ si misura nelle stesse unità di $X$: millisecondi, metri, euro. Per questo è la misura di dispersione che si usa per leggere un grafico.
 
 C'è anche un segno visibile di $\sigma$: nei punti $\mu-\sigma$ e $\mu+\sigma$ la campana smette di curvarsi verso il basso e comincia a curvarsi verso l'alto (sono i **punti di flesso**). A occhio, $\sigma$ è la distanza dal centro dei due «gomiti» della campana.
 

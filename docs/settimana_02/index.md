@@ -3,6 +3,17 @@
 # Settimana 2 — Dall'effetto alla causa: alberi di probabilità e Teorema di Bayes
 *Come si torna indietro da ciò che vediamo (un allarme, un test positivo, un crash) a ciò che non vediamo (un attacco, una malattia, un bug), e perché quasi tutti, medici compresi, sbagliano questo conto.*
 
+## Che cosa è richiesto all’esame {: #esame }
+
+- **Definizioni e calcoli:** costruire e leggere alberi di probabilità; riconoscere partizioni; moltiplicare lungo un cammino e sommare casi disgiunti; applicare probabilità totale e Bayes, anche con più ipotesi. Devi riconoscere prior, verosimiglianza, evidenza e posterior e distinguere $P(E \mid H)$ da $P(H \mid E)$.
+- **Comprensione:** spiegare l’effetto del tasso di base (la probabilità iniziale dell’ipotesi) sul risultato. Gli esempi medico, IDS e debugging illustrano lo stesso ragionamento: non devi memorizzarne i valori numerici.
+- **Ragionamenti da ricostruire:** probabilità totale mediante decomposizione in casi disgiunti e Bayes dalla regola del prodotto.
+- **Aggiornamento sequenziale:** comprendere che il posterior può diventare il nuovo prior e che la stessa evidenza non va contata due volte. La formalizzazione dell’indipendenza condizionata è rinviata alla Settimana 12, nell’applicazione a Naive Bayes.
+
+**Facoltativi e non richiesti all’esame:** sensibilità, specificità e metriche di valutazione dei classificatori (argomenti del corso di Machine Learning); dimostrazione formale del lemma sulle partizioni, verifica completa degli assiomi per la probabilità condizionata, induzione sulla regola del cammino e ricostruzione del tavolo storico di Bayes. Nei problemi d’esame le probabilità necessarie saranno espresse direttamente come $P(E \mid H)$, $P(E \mid H^c)$, ecc., oppure in parole, senza richiedere il lessico delle metriche.
+
+Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
+
 ---
 
 ## Prima di cominciare: che cosa ci serve dalla Settimana 1
@@ -229,6 +240,9 @@ Quindi la regola «sui rami ci sono probabilità condizionate» vale per **tutti
 
 ### Albero 1: il test medico
 
+!!! info "Per l’esame"
+    Sensibilità e specificità sono concetti facoltativi, trattati nel corso di Machine Learning. Qui puoi seguire l’albero usando direttamente le probabilità condizionate esplicitate sotto. All’esame è richiesto il ragionamento probabilistico, senza dover conoscere questi nomi.
+
 Una malattia colpisce l'1% della popolazione. Esiste un test con queste caratteristiche:
 
 * **sensibilità** del 95%: se una persona è malata, il test risulta positivo nel 95% dei casi. La sensibilità misura quanto il test è bravo a *trovare* i malati;
@@ -451,7 +465,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 Abbiamo visto il Teorema di Bayes all'opera su un albero e su una tabella. Ora lo scriviamo in modo preciso e lo dimostriamo usando **solo** gli assiomi di Kolmogorov e la definizione di probabilità condizionata. L'obiettivo non è imparare formule a memoria, ma vedere che ogni passaggio è una conseguenza inevitabile di cose che già sappiamo.
 
-Le dimostrazioni più tecniche sono in riquadri che puoi aprire e chiudere: leggile almeno una volta, ma se ti blocchi puoi proseguire e tornarci dopo.
+Per l’esame sono richiesti i ragionamenti che conducono alla probabilità totale (§4) e a Bayes (§5). Le dimostrazioni nei riquadri richiudibili dei §1–3 sono approfondimenti facoltativi e non sono richieste all’esame; restano richiesti il significato e l’uso di partizioni e regola del cammino. Del §2 è richiesta soltanto l’idea del condizionamento come nuova assegnazione di probabilità dopo l’osservazione, non la verifica formale degli assiomi.
 
 ### 1. Partizioni: dividere $\Omega$ in casi
 
@@ -755,6 +769,9 @@ Circa un errore ogni centomila connessioni legittime. Ecco, in numeri, la conclu
     Il Teorema di Bayes ha anche una forma ancora più compatta, che usa le **quote** degli scommettitori (*odds*, «3 contro 1») e il **rapporto di verosimiglianza** $P(E \mid H) / P(E \mid H^c)$. In quella forma ogni nuova evidenza **moltiplica** le quote per un fattore fisso, e in scala logaritmica le evidenze **si sommano**. La vedremo nella Settimana 12, quando servirà per il classificatore Naive Bayes.
 
 ### 7. Il posterior di oggi è il prior di domani
+
+!!! info "Per l’esame"
+    È richiesta l’idea del posterior come nuovo prior e del divieto di contare due volte la stessa evidenza. La definizione formale dell’indipendenza condizionata sarà introdotta nella Settimana 12 per Naive Bayes; qui i dettagli formali e il laboratorio sono facoltativi.
 
 Torniamo alle tre di notte. Dopo il primo allarme, la probabilità di attacco è salita dall'1% al 50%. Ora scatta un **secondo** allarme, da un altro rilevatore installato sul server (non sulla rete). Come aggiorniamo?
 
@@ -1180,6 +1197,9 @@ Il nome operativo del fenomeno è **alert fatigue**, «stanchezza da allarmi»: 
 3. **incrociare rilevatori condizionatamente indipendenti**: due allarmi indipendenti dato lo stato del sistema si possono usare uno dopo l'altro, e ognuno alza il posterior. Ma due rilevatori che leggono gli stessi log **non** lo sono.
 
 ### 2. Il dizionario del machine learning
+
+!!! info "Approfondimento facoltativo — fuori dall’esame"
+    Sensibilità, specificità, matrice di confusione e metriche dei classificatori sono approfondimenti del corso di Machine Learning e non sono richiesti all’esame di questo corso.
 
 La tabella delle frequenze naturali è la **matrice di confusione** che si usa per valutare qualunque classificatore. Ogni metrica del machine learning è una delle probabilità di questa settimana, con un altro nome:
 

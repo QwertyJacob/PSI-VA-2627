@@ -3,6 +3,17 @@
 # Settimana 3 — L'estate del 1654: contare i futuri possibili
 *Come due lettere tra Parigi e Tolosa hanno insegnato a pesare ciò che non è ancora accaduto, e perché lo stesso conteggio spiega le collisioni nelle tabelle hash.*
 
+## Che cosa è richiesto all’esame {: #esame }
+
+- **Problema dei punti:** risolvere casi piccoli con l’albero, il ragionamento di Pascal o i finali equiprobabili di Fermat; spiegare perché foglie di lunghezza diversa non hanno necessariamente lo stesso peso.
+- **Combinatoria minima:** principio di moltiplicazione, fattoriale, disposizioni e combinazioni. Devi scegliere il conteggio corretto in base a ordine e ripetizione e spiegare perché, per passare dalle disposizioni alle combinazioni, si divide per $k!$.
+- **Probabilità:** usare «casi favorevoli su casi possibili» soltanto sotto equiprobabilità; impostare semplici problemi «almeno uno» mediante il complementare, anche sul modello di de Méré.
+- **Lettura individuale richiesta solo in queste parti:** nei compleanni e nelle tabelle hash, comprendere il modello uniforme e indipendente, contare le coppie e impostare la probabilità di almeno una coincidenza tramite il complementare. È richiesto l’uso della formula esatta fornita e l’interpretazione del risultato.
+
+**Facoltativi e non richiesti all’esame:** caso a 56 foglie e tabulazione estesa di Pascal; costruzione del triangolo e ricorrenza «dentro/fuori»; derivazione dell’approssimazione esponenziale; significato e uso della scala $\sqrt{N}$, costante 1,18 e traduzione in $2^{b/2}$; birthday attack; limiti sugli algoritmi di ordinamento e analisi delle prestazioni delle tabelle hash. Non sono richieste dimostrazioni ulteriori rispetto ai ragionamenti elementari elencati sopra.
+
+Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
+
 ---
 
 ## Prima di cominciare: che cosa ci serve dalle Settimane 1 e 2 {: #prima-di-cominciare }
@@ -114,7 +125,7 @@ Il principio, da fissare, è questo: **la posta si divide secondo le probabilit�
 Con pochi punti mancanti l'albero si disegna a mano. Ma proviamo un caso più grande, cambiando le regole del gioco: si gioca a **5 punti**, e la partita viene interrotta sul **2 a 0** per $A$. Ad $A$ mancano allora $5 - 2 = 3$ manche, a $B$ ne mancano $5 - 0 = 5$. Ammettiamo ancora che a ogni manche ciascuno vinca con probabilità $\tfrac12$.
 
 !!! note "Approfondimento facoltativo per lo studio individuale"
-    Questo esempio con 56 foglie mostra come la complessità esploda rapidamente quando la partita si allunga. In aula il concetto chiave viene consolidato sul caso a 3 punti ($2\text{--}1$); questo sviluppo a 5 punti è lasciato come lettura facoltativa per apprezzare il passaggio dal conteggio esplicito alla ricorsione di Pascal e alla combinatoria di Fermat.
+    Questo esempio non è richiesto all’esame. Con 56 foglie mostra come la complessità esploda rapidamente quando la partita si allunga. In aula il concetto chiave viene consolidato sul caso a 3 punti ($2\text{--}1$); questo sviluppo a 5 punti è lasciato come lettura facoltativa per apprezzare il passaggio dal conteggio esplicito alla ricorsione di Pascal e alla combinatoria di Fermat.
 
 
 Il 2–0 è già stato giocato e non si cambia: l'albero descrive solo le manche **che restano da giocare**. Quante possono essere?
@@ -159,6 +170,9 @@ Si noti che ogni foglia a profondità $d$ (cioè dopo $d$ manche giocate dall'in
 Sommando: $P(A \text{ vince}) = \tfrac{16+24+24+20+15}{128} = \tfrac{99}{128}$. Funziona, ma per costruire la tabella abbiamo dovuto sapere **quanti** cammini finiscono in ciascuna riga (1, 3, 6, 10, 15), e questo è già un problema di conteggio. Nel 1654 Pascal e Fermat propongono due modi per aggirarlo.
 
 ### Pascal: dedurre ogni caso dal successivo {: #pascal }
+
+!!! info "Per l’esame"
+    È richiesto il ragionamento su casi piccoli, a partire dalla prossima manche. La tabulazione estesa fino al gioco a 5 punti e l’implementazione con memoria sono facoltative e non richieste all’esame.
 
 Pascal, nella lettera del 29 luglio 1654, usa un metodo che chiama più «breve». Lo seguiamo un passo alla volta.
 
@@ -432,7 +446,7 @@ $$
 
 Qui $n! = n(n-1)\cdots 2 \cdot 1$ è il **fattoriale** ($0! = 1$ per convenzione). Il caso $k = n$ dà $n!$: i modi di **ordinare** $n$ oggetti distinti.
 
-??? approfondimento "Che cosa c'entra il fattoriale con gli algoritmi di ordinamento?"
+??? approfondimento "Facoltativo, fuori dall’esame — Che cosa c'entra il fattoriale con gli algoritmi di ordinamento?"
 
     Con **3 oggetti distinti**, per esempio $A$, $B$ e $C$, puoi creare **6 ordini diversi**:
 
@@ -477,6 +491,9 @@ Spesso però $AB$ e $BA$ devono valere come un solo risultato: scegliamo 3 serve
 Con i server: $\binom{10}{3} = \frac{720}{6} = 120$. Due proprietà si vedono subito dalla definizione: $\binom{n}{k} = \binom{n}{n-k}$ (scegliere chi *entra* o chi *resta fuori* è lo stesso), e il caso $k = 2$, $\binom{n}{2} = \frac{n(n-1)}{2}$, è il **numero di coppie** in un gruppo di $n$ persone. Quest'ultima ci tornerà utilissima nell'Atto IV.
 
 ### Il triangolo di Pascal e i futuri di Fermat {: #triangolo }
+
+!!! info "Approfondimento facoltativo — fuori dall’esame"
+    La costruzione del triangolo e la ricorrenza «dentro/fuori» non sono richieste all’esame. Restano richiesti il coefficiente binomiale e il conteggio di finali equiprobabili nei casi piccoli.
 
 Finora abbiamo calcolato $\binom{n}{k}$ con i fattoriali, che diventano enormi in fretta. Esiste un modo più economico: costruire ogni coefficiente a partire da quelli più piccoli, usando solo somme. Per scoprire come, partiamo da un esempio che si può elencare a mano.
 
@@ -812,6 +829,9 @@ print("Script 3: tutti gli assert superati.")
 
 ### Il paradosso dei compleanni {: #paradosso }
 
+!!! info "Per l’esame"
+    Lettura individuale richiesta per il modello uniforme e indipendente, il conteggio delle coppie e il calcolo con il complementare. Devi saper impostare e usare la formula esatta fornita; non devi memorizzare le probabilità della tabella.
+
 Ecco una domanda che sembra innocua. **Quante persone devono essere presenti in una stanza perché la probabilità che almeno due compiano gli anni lo stesso giorno superi il 50%?** Chiunque risponde con un numero grande (183? 100?). La risposta è **23**.
 
 Modelliamo il problema con ipotesi esplicite: $n$ persone, 365 giorni possibili (ignoriamo il 29 febbraio), ogni persona nata in un giorno scelto uniformemente e indipendentemente dalle altre (anche questa è un'assunzione semplificatrice). Lo spazio campionario è l'insieme delle sequenze di $n$ giorni, e **per la moltiplicazione** ha $365^n$ elementi tutti equiprobabili. Applichiamo il trucco del complementare: invece di contare i casi con *almeno una* coincidenza, contiamo quelli con **tutti i compleanni diversi**, che sono più facili da descrivere.
@@ -859,6 +879,9 @@ Questo prodotto si legge anche con la regola del prodotto: la seconda persona ev
 La nostra intuizione confronta **la mia data** con quelle degli altri: 22 persone hanno circa il 6% di probabilità di condividere *il mio* compleanno ($1 - (364/365)^{22} \approx 5{,}9\%$). Ma il paradosso chiede se **qualunque coppia** coincide, e le coppie sono molte di più delle persone: in una stanza di $n$ persone ci sono $\binom{n}{2} = \frac{n(n-1)}{2}$ coppie, cioè **253** per $n = 23$. Ognuna di queste coppie ha una probabilità $\tfrac1{365}$ di coincidere, e ogni coppia è un'occasione in più per trovare una coincidenza. Il numero di coppie cresce come $n^2$, non come $n$: è questo che l'intuizione sottovaluta.
 
 ### L'approssimazione esponenziale e la regola della radice {: #approssimazione }
+
+!!! info "Approfondimento facoltativo — fuori dall’esame"
+    Questa intera sezione, compresa la scala $\sqrt{N}$ e la costante 1,18, è facoltativa e non richiesta all’esame.
 
 La formula esatta è un prodotto di $n$ fattori: per $n = 23$ sono 23 moltiplicazioni, e non si vede a colpo d'occhio come il risultato dipenda da $n$. Vogliamo una formula corta, anche a costo di essere un po' approssimata. Lavoriamo con $N$ al posto di 365, così il ragionamento vale per qualunque numero di «giorni».
 
@@ -1052,6 +1075,9 @@ Atteso: la tabella con $0.5073$ per $n = 23$; soglie $23$, $119$, $1178$ per $N 
 
 ### Una tabella hash è un tavolo da compleanni {: #tabella-hash }
 
+!!! info "Per l’esame"
+    Sono richiesti il modello uniforme e indipendente, il conteggio delle coppie e l’impostazione con il complementare, usando la formula esatta fornita. Stima esponenziale, soglia $1{,}18\sqrt{m}$ e analisi delle prestazioni sono facoltative e non richieste all’esame.
+
 Una **tabella hash** è un array di $m$ posizioni (*slot*). Per inserire una chiave si applica una **funzione hash** $h$ che la trasforma in un numero tra $0$ e $m-1$: la chiave va nello slot $h(\text{chiave})$. Se due chiavi diverse finiscono nello stesso slot si ha una **collisione**, e la struttura dati deve prevedere come gestirla (liste concatenate, indirizzamento aperto…).
 
 <figure markdown="0">
@@ -1098,7 +1124,7 @@ e la collisione diventa **probabile** (oltre il 50%) quando $n \approx 1{,}18\sq
 
 In ogni caso, questo fatto è una buona notizia travestita da cattiva: le collisioni non sono un difetto da eliminare, ma una certezza da gestire. Chi si aspetta che «con una buona funzione hash non succeda mai» sbaglia il modello; chi le prevede dimensiona le liste e il fattore di carico di conseguenza.
 
-??? approfondimento "Perché è una buona notizia: collisioni frequenti, ma innocue"
+??? approfondimento "Facoltativo, fuori dall’esame — Perché è una buona notizia: collisioni frequenti, ma innocue"
 
     Il paradosso dei compleanni ci dice che una collisione compare quasi subito. Ma a noi non interessa la collisione in sé: interessa se la tabella **continua a fare il suo lavoro bene**, cioè se cercare e inserire una chiave resta veloce. Qui «veloce» e «lenta» hanno un significato preciso, che si misura contando i **confronti tra chiavi**:
 
@@ -1192,6 +1218,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 ### Il Birthday Attack {: #birthday-attack }
 
+!!! info "Approfondimento facoltativo — fuori dall’esame"
+    Questa sezione e il successivo laboratorio sono facoltativi e non richiesti all’esame, compresa la traduzione della scala delle collisioni in $2^{b/2}$.
+
 Una funzione hash crittografica (SHA-256, per esempio) trasforma qualunque messaggio in un valore di $b$ bit, quindi $N = 2^b$ possibili «giorni». Una proprietà richiesta è la **resistenza alle collisioni**: deve essere difficile trovare **due** messaggi diversi con lo stesso hash. L'attaccante non ha bisogno di colpire un valore prefissato (che costerebbe in media circa $2^b$ tentativi): gli basta trovare una qualunque coppia che coincide, e per la regola della radice servono circa $1{,}18 \cdot 2^{b/2}$ messaggi. Questo è il **birthday attack**.
 
 | Bit dell'hash $b$ | 32 | 64 | 128 | 160 | 256 |
@@ -1274,6 +1303,9 @@ Atteso: la mediana vicina alla soglia $1{,}18 \cdot 2^{b/2}$ per ogni $b$ (per e
 
 ## Il Takeaway per l'Ingegnere del Software {: #takeaway }
 
+!!! info "Per l’esame"
+    Questa sintesi comprende anche gli approfondimenti: scala $\sqrt{N}$, birthday attack, prestazioni hash e ricorrenza del triangolo restano fuori dall’esame. Il perimetro richiesto è quello indicato [in apertura](#esame).
+
 1. **Le collisioni sono attese, non eccezionali.** Una tabella hash con $m$ slot ha una collisione già dopo circa $\sqrt{m}$ inserimenti. Per questo ogni implementazione seria ha una strategia di risoluzione, e i costi si ragionano in termini di *fattore di carico* $n/m$, non di «evitare le collisioni».
 2. **Con la sicurezza, i bit contano a metà.** Un hash o un identificatore di $b$ bit regge fino a circa $2^{b/2}$ elementi, non $2^b$. Un ID di 32 bit scelto a caso è pericoloso già con centomila elementi.
 3. **Quando la domanda è «almeno uno», calcola «nessuno».** Il trucco del complementare vale per ogni sistema con molti componenti ciascuno con una piccola probabilità di fallire, in modo indipendente: la probabilità che *almeno uno* fallisca non è la somma delle probabilità dei singoli componenti, perché i casi in cui ne falliscono più d'uno verrebbero contati più volte (la somma è solo un limite superiore). Si può invece sommare le probabilità di «esattamente 1», «esattamente 2», … fallimenti, che sono eventi disgiunti, ma è più comodo calcolare $1 - \prod_i (1 - p_i)$. La probabilità cresce più in fretta di quanto si pensi. È l'errore di de Méré, trasportato in produzione.
@@ -1293,6 +1325,9 @@ Atteso: la mediana vicina alla soglia $1{,}18 \cdot 2^{b/2}$ per ogni $b$ (per e
 ---
 
 ## Riepilogo {: #riepilogo }
+
+!!! info "Per l’esame"
+    Questa sintesi comprende anche gli approfondimenti: scala $\sqrt{N}$, birthday attack, prestazioni hash e ricorrenza del triangolo restano fuori dall’esame. Il perimetro richiesto è quello indicato [in apertura](#esame).
 
 * Il **problema dei punti** (Pacioli 1494, Pascal e Fermat 1654) si risolve pesando i **futuri possibili**: Fermat li conta, Pascal li deduce uno dall'altro con la ricorsione $V(a,b) = \tfrac12 V(a-1,b) + \tfrac12 V(a,b-1)$.
 * Il **conteggio** minimo: moltiplicazione ($n^k$), disposizioni ($n!/(n-k)!$), combinazioni ($\binom{n}{k}$, ordine ignorato), con il triangolo di Pascal $\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$ e $\sum_k \binom{n}{k} = 2^n$.

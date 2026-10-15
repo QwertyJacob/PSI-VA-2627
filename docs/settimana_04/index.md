@@ -12,6 +12,22 @@
 
 [:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" }
 
+## Che cosa è richiesto all’esame {: #esame }
+
+- **Definizioni e calcoli:** definire una variabile aleatoria discreta, costruirne la PMF e calcolare e interpretare il valore atteso su esempi semplici. Devi distinguere il valore assunto dalla variabile dalla sua probabilità e spiegare perché il valore atteso può non essere un risultato possibile.
+- **Linearità e indicatrici:** usare la linearità del valore atteso anche con variabili dipendenti; definire l’indicatrice di un evento e usare $\mathbb{E}[I_A]=P(A)$; costruire un conteggio come somma di indicatrici prima di calcolarne la media.
+- **Binomiale:** riconoscere le ipotesi di un numero fissato di prove indipendenti con la stessa probabilità di successo; calcolare probabilità con la PMF e la media $np$. Devi distinguere ciò che richiede l’indipendenza da ciò che segue dalla sola linearità.
+- **Applicazioni:** impostare semplici conteggi di coppie in collisione e fallimenti, esplicitando il modello; distinguere un numero medio di eventi dalla probabilità che ne accada almeno uno. Gli esempi illustrano il metodo: non devi memorizzarne i valori numerici.
+- **Ragionamenti da ricostruire:** ricavare la media di un’indicatrice dalla definizione di valore atteso; spiegare perché la somma delle indicatrici conta gli oggetti richiesti; ricavare la media binomiale con la linearità e la PMF binomiale pesando una sequenza e contando le posizioni dei successi.
+
+**Facoltativi e non richiesti all’esame:** formalizzazione dei giochi equi (Lettura A); distribuzione Ipergeometrica, sua PMF, derivazione della media ed esercizio 5 (Lettura B); dettagli tecnici sulla scelta casuale delle funzioni hash. Restano richiesti il significato del valore atteso come prezzo di una possibilità, il modello uniforme e indipendente delle collisioni e il metodo delle indicatrici nelle applicazioni indicate sopra.
+
+**Varianza:** la trattazione è [all’inizio della Settimana 5](../settimana_05/index.md#varianza), dove sono precisate le parti richieste all’esame e quelle facoltative.
+
+Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
+
+---
+
 ## Prima di cominciare: dalle coppie ai numeri {: #prima-di-cominciare }
 
 La settimana scorsa abbiamo imparato a contare finali possibili. Questa settimana cambiamo domanda: non soltanto **«con quale probabilità succede?»**, ma anche **«quanto vale, in media, ciò che succede?»**.
@@ -29,7 +45,7 @@ Ora immagina di dover inserire **23 chiavi distinte** in una tabella hash. Tra q
 Per ora fermiamoci al conteggio. Sapere quante coppie esistono non dice quante finiranno nella stessa casella. Dobbiamo distinguere una quantità deterministica, **il numero di coppie possibili**, da una quantità incerta, **il numero di coppie che collidono**. È proprio per parlare della seconda che costruiremo gli strumenti di questa settimana.
 
 !!! info "Come leggere questa dispensa"
-    Gli Atti I–V formano il percorso principale: variabili aleatorie, valore atteso, indicatrici, linearità e Binomiale. Seguono tre letture: varianza, giochi equi e campionamento senza reinserimento. I giochi equi e l'Ipergeometrica sono approfondimenti fuori dal nucleo d'esame orale. La varianza qui introduce il linguaggio della dispersione; le sue applicazioni saranno riprese nelle prossime settimane.
+    Gli Atti I–V formano il percorso principale: variabili aleatorie, valore atteso, indicatrici, linearità e Binomiale. Seguono due letture facoltative: giochi equi e campionamento senza reinserimento. Le due letture sono facoltative e non richieste all’esame; il perimetro completo è indicato [in apertura](#esame). La varianza viene introdotta [all'inizio della Settimana 5](../settimana_05/index.md#varianza), con indicazioni precise su ciò che è richiesto all'esame.
 
 ## Atto I — Vendere una possibilità: la domanda di Huygens {: #huygens }
 
@@ -204,6 +220,49 @@ $$
 
 Non significa che un singolo esperimento produca mezzo cambio: in due lanci osserviamo zero oppure un cambio. Gli stessi esiti possono dunque dare medie diverse quando cambia la variabile che li legge.
 
+
+#### La media di una funzione: la regola LOTUS {: #lotus }
+
+Supponiamo di conoscere la distribuzione di $X$, ma di voler calcolare la media di una quantità ottenuta trasformando $X$, per esempio $X^2$. La trasformazione assegna a ogni esito un nuovo numero: $g(X)$ è quindi ancora una variabile aleatoria. Potremmo costruirne la distribuzione e poi applicare la definizione di valore atteso. La seguente regola permette di fare il conto direttamente dalla distribuzione di $X$.
+
+!!! important "Valore atteso di una funzione di una variabile discreta"
+
+    Se $X$ ha funzione di massa $p_X$, allora:
+
+    $$
+    \boxed{\mathbb{E}[g(X)]=\sum_x g(x)\,p_X(x).}
+    $$
+
+    La somma percorre i valori possibili di $X$: **trasformiamo ciascun valore e manteniamo il suo peso probabilistico**. Per un numero finito di valori il conto è sempre valido, purché $g$ sia definita e finita su quei valori; nel caso infinito, per ottenere una media finita richiediamo $\sum_x |g(x)|p_X(x)<\infty$.
+
+Questa proprietà è nota anche come **LOTUS**, dall'inglese *Law of the Unconscious Statistician* («legge dello statistico inconsapevole»): il nome scherzoso richiama la facilità con cui si usa questa regola senza accorgersi che merita una giustificazione.
+
+**Un esempio.** Se $X$ conta le teste in due lanci di una moneta onesta, i suoi valori sono 0, 1 e 2, con probabilità $1/4$, $1/2$ e $1/4$. Per trovare la media del quadrato applichiamo $g(x)=x^2$:
+
+$$
+\mathbb{E}[X^2]
+=0^2\cdot\frac14+1^2\cdot\frac12+2^2\cdot\frac14
+=0+\frac12+1=\frac32.
+$$
+
+Attenzione all'ordine: qui abbiamo **prima elevato al quadrato e poi fatto la media**. Invece $g(\mathbb{E}[X])=(\mathbb{E}[X])^2=1^2=1$. In generale, dunque, $\mathbb{E}[g(X)]$ e $g(\mathbb{E}[X])$ sono quantità diverse.
+
+**Perché funziona?** Chiamiamo $Y=g(X)$. Se più valori di $X$ producono lo stesso valore $y$, le loro probabilità si sommano:
+
+$$
+P(Y=y)=\sum_{x:\,g(x)=y}p_X(x).
+$$
+
+Nella definizione della media di $Y$ possiamo quindi sostituire questa somma e raccogliere il contributo di ciascun valore $x$:
+
+$$
+\mathbb{E}[Y]
+=\sum_y y\,P(Y=y)
+=\sum_y\sum_{x:\,g(x)=y}g(x)\,p_X(x)
+=\sum_x g(x)\,p_X(x).
+$$
+
+La regola funziona quindi anche quando $g$ manda valori diversi nello stesso risultato: cambia soltanto il modo di raggruppare gli stessi contributi.
 
 ### 5. Il baricentro può cadere tra i risultati {: #baricentro }
 
@@ -550,7 +609,9 @@ Per contare le coppie in collisione, sommiamo i tre bit: ogni coppia aggiunge 1 
 
 Calcoliamo ora la probabilità che due chiavi finiscano nella stessa casella. Supponiamo di conoscere la casella in cui è finita la prima chiave. Per avere una collisione, la seconda deve finire proprio in quella casella. Per l'indipendenza, conoscere l'indice della prima non cambia le probabilità della seconda: la probabilità che la seconda finisca in quella specifica casella resta $1/m$. Lo stesso ragionamento vale qualunque sia la casella della prima chiave. La probabilità di coincidenza è dunque $1/m$ anche prima di conoscere quell'indice.
 
-??? note "Una curiosità tecnica: da dove viene la casualità?"
+??? approfondimento "Facoltativo, fuori dall’esame — Da dove viene la casualità?"
+
+    I dettagli tecnici di questo riquadro non sono richiesti all’esame. Per i calcoli resta richiesto dichiarare il modello uniforme e indipendente.
 
     Nel calcolo appena fatto abbiamo immaginato che ogni chiave riceva un indice casuale, con le probabilità descritte sopra. È il modello ideale che useremo per proseguire la lezione.
 
@@ -613,11 +674,46 @@ Le due medie rispondono quindi alle due domande che abbiamo distinto: $\mathbb{E
 
 Possiamo anche mettere in relazione le due quantità. Per ogni gruppo vale $J\le C$: se non ci sono coppie sono entrambi zero; se ce n'è almeno una, $J$ vale 1 e $C$ vale almeno 1. Facendo la media, l'ordine si conserva, quindi $P(C\ge1)\le\mathbb{E}[C]$. La media delle coppie fornisce un **limite superiore** alla probabilità di almeno una coincidenza. In generale, però, conoscere quel limite non basta a trovare la probabilità esatta.
 
-Riprendiamo anche il caso di tre chiavi assegnate, indipendentemente e uniformemente, a due caselle. La formula della media dà $\mathbb{E}[C]=3/2=1{,}5$. Qui la distinzione è immediata: 1,5 può essere un numero medio di coppie, ma nessuna probabilità può superare 1.
+Consideriamo ora tre chiavi $a$, $b$ e $c$ assegnate, indipendentemente e uniformemente, a due caselle, etichettate 0 e 1. Calcoliamo il numero medio di coppie in collisione un passaggio alla volta.
+
+**1. Elenchiamo le coppie da contare.** Sono $(a,b)$, $(a,c)$ e $(b,c)$: in tutto tre. Per ciascuna, l'indicatrice vale 1 se le due chiavi occupano la stessa casella e 0 altrimenti. Il totale è quindi:
+
+$$
+C=I_{ab}+I_{ac}+I_{bc}.
+$$
+
+**2. Calcoliamo la media di una singola indicatrice.** Guardiamo, per esempio, la coppia $(a,b)$. Nella sezione precedente abbiamo già dimostrato che una coppia collide con probabilità $1/m$: qualunque sia la casella della prima chiave, la seconda deve scegliere proprio quella. Qui le caselle sono due, quindi $m=2$ e:
+
+$$
+P(I_{ab}=1)=\frac1m=\frac12.
+$$
+
+Con la probabilità restante $1-1/2=1/2$, le due chiavi occupano caselle diverse e l'indicatrice vale 0. Applicando la definizione di valore atteso otteniamo:
+
+$$
+\mathbb{E}[I_{ab}]
+=0\cdot\frac12+1\cdot\frac12
+=\frac12.
+$$
+
+Lo stesso conto vale per $(a,c)$ e $(b,c)$: anche le altre due indicatrici hanno media $1/2$.
+
+**3. Sommiamo le tre medie.** Per la linearità del valore atteso:
+
+$$
+\begin{aligned}
+\mathbb{E}[C]
+&=\mathbb{E}[I_{ab}]+\mathbb{E}[I_{ac}]+\mathbb{E}[I_{bc}]\\
+&=\frac12+\frac12+\frac12\\
+&=\frac32=1{,}5.
+\end{aligned}
+$$
+
+Qui la distinzione è immediata: 1,5 è un numero medio di coppie, ma nessuna probabilità può superare 1.
 
 Guardiamo i conteggi possibili. Almeno due delle tre chiavi devono condividere una casella, perché le caselle sono soltanto due. Se la terza chiave occupa l'altra casella, abbiamo una coppia in collisione. Se tutte e tre occupano la stessa casella, abbiamo tre coppie. Non possiamo averne esattamente due: se $a$ ha lo stesso indice di $b$ e di $c$, allora anche $b$ e $c$ hanno lo stesso indice. Il conteggio $C$ può quindi valere soltanto 1 oppure 3.
 
-Questo vincolo ci dice anche qualcosa sulle indicatrici. Sapere che due valgono 1 determina il valore della terza: **le indicatrici delle coppie non sono mutuamente indipendenti**, anche se gli indici delle chiavi lo sono. Per calcolare la media non abbiamo avuto bisogno di studiare tutte queste relazioni: è bastato applicare la linearità.
+Questo vincolo ci dice anche qualcosa sulle tre indicatrici di collisione appena definite, $I_{ab}$, $I_{ac}$ e $I_{bc}$. Sapere che due valgono 1 determina il valore della terza: **queste tre indicatrici di collisione non sono mutuamente indipendenti**, anche se gli indici delle chiavi lo sono. L'affermazione riguarda le collisioni di questo esempio: il fatto di associare indicatrici a coppie non implica, in generale, che siano dipendenti. In ogni caso, per calcolare la media non abbiamo avuto bisogno di studiare tutte queste relazioni: è bastato applicare la linearità.
 
 ### 11. Laboratorio: contare coppie e contare esperimenti {: #lab-hash }
 
@@ -685,7 +781,13 @@ Poi aumenta soltanto `prove`, lasciando fissi `n` e `m`. Stai osservando più vo
 
 Finora le indicatrici ci hanno permesso di trovare il numero medio di collisioni senza conoscere la probabilità di ogni possibile totale. Ora facciamo un passo diverso: cerchiamo un modello nel quale sia possibile descrivere anche **tutta la distribuzione del conteggio**. In particolare, vorremo rispondere a domande come «qual è la probabilità di osservare esattamente due fallimenti?».
 
-La distribuzione Binomiale risponde a questa esigenza quando le prove soddisfano alcune ipotesi precise. Partiamo da un esempio e individuiamole una alla volta.
+La distribuzione Binomiale risponde a questa esigenza quando le prove soddisfano alcune ipotesi precise.
+
+!!! note "Un cenno storico"
+
+    Il suo contesto storico è quello delle prove ripetute, come i lanci di una moneta: interessa contare i successi, senza distinguerne l'ordine. Il nome delle *prove di Bernoulli* ricorda **Jacob Bernoulli**, la cui *Ars Conjectandi* uscì postuma nel **1713**. «Binomiale», invece, richiama lo sviluppo della potenza di un binomio: i coefficienti del triangolo di Pascal, già incontrati nella Settimana 3, ricompaiono nelle probabilità di questi conteggi. Questo collegamento è presentato da Feller in *An Introduction to Probability Theory and Its Applications*, vol. I, cap. VI, §§ 1–2, pp. 104–106.
+
+Partiamo da un esempio e individuiamo le ipotesi una alla volta.
 
 Consideriamo un servizio che esegue quattro operazioni. Nel modello, ciascuna fallisce con probabilità $p=0{,}2$, e gli esiti delle quattro operazioni sono indipendenti. Chiamiamo $X$ il numero totale di fallimenti. Per costruirlo, definiamo $I_i$ come l'indicatrice del fallimento dell'operazione numero $i$, con $i$ da 1 a 4. Se, per esempio, falliscono soltanto la prima e la terza operazione, le indicatrici valgono $1,0,1,0$ e il loro totale è 2.
 
@@ -881,158 +983,21 @@ Dopo l'esecuzione, leggiamo prima le medie stampate: entrambe quelle simulate so
 
 Passiamo poi al grafico. Nel modello del guasto comune compaiono soltanto i totali 0 e 4: il servizio o funziona interamente oppure fallisce interamente. Nel modello binomiale hanno probabilità positiva anche i conteggi intermedi. Le due medie non mostrano questa differenza, mentre le barre la rendono visibile.
 
-Abbiamo così individuato una domanda che la sola media lascia aperta: **quanto sono dispersi i risultati attorno al loro centro?** La prossima lettura introduce una misura per cominciare a rispondere.
+Abbiamo così individuato una domanda che la sola media lascia aperta: **quanto sono dispersi i risultati attorno al loro centro?** La [sezione iniziale della Settimana 5](../settimana_05/index.md#varianza) introduce una misura per cominciare a rispondere.
 
 **Chiudiamo il percorso principale.** La Binomiale è un conteggio con ipotesi precise. La sua PMF usa combinatoria e indipendenza. La sua media usa indicatrici e linearità. Separare queste due derivazioni permette di capire sia ciò che il modello assume sia ciò che il risultato richiede davvero.
 
-## Lettura A — Stessa media, dispersione diversa: la varianza {: #varianza }
+<span id="varianza"></span>
+<span id="definizione-varianza"></span>
+<span id="formula-varianza"></span>
+<span id="varianza-binomiale"></span>
 
-### 16. Perché gli scarti vanno elevati al quadrato {: #definizione-varianza }
+La trattazione della **varianza** è ora [all'inizio della Settimana 5](../settimana_05/index.md#varianza), dove sono distinti i contenuti richiesti all'esame dagli approfondimenti facoltativi.
 
-Nel laboratorio precedente i due servizi avevano lo stesso numero medio di fallimenti, ma si comportavano diversamente nelle singole esecuzioni. Nel caso del guasto comune, tutti i risultati erano concentrati in 0 e 4; nel caso indipendente comparivano anche i valori intermedi.
+## Lettura A — Pagamento, costo e gioco equo {: #giochi-equi }
 
-La media ci ha dato un centro per ciascuna distribuzione. Ora vorremmo descrivere anche **quanto i risultati si allontanano da quel centro**. Per costruire questa nuova misura, partiamo da un esempio in cui le distanze dalla media si vedono subito.
-
-Confrontiamo due pagamenti. Il primo assegna sempre 5 euro: non c'è incertezza sull'importo che riceveremo. Il secondo assegna 0 oppure 10 euro, ciascuno con probabilità $1/2$: prima di giocare non sappiamo quale dei due importi riceveremo.
-
-Il pagamento certo ha media 5 perché ogni risultato vale 5. Anche il pagamento incerto ha media 5, dato che $0\cdot1/2+10\cdot1/2=5$. La differenza emerge quando confrontiamo ciascun pagamento con la propria media. Nel primo gioco la distanza è sempre zero; nel secondo è sempre di 5 euro, sia quando riceviamo 0 sia quando riceviamo 10.
-
-Cerchiamo una misura che conservi questa differenza. La chiamiamo **misura di dispersione**, perché deve descrivere quanto i valori sono dispersi attorno alla loro media.
-
-Indichiamo la media di $X$ con la lettera greca $\mu$, letta «mu»: $\mu=\mathbb{E}[X]$. Per ogni valore possibile $x$, la differenza $x-\mu$ è il suo **scarto dalla media**. Uno scarto negativo corrisponde a un valore sotto la media; uno positivo a un valore sopra la media.
-
-Proviamo prima a fare la media degli scarti. Nel pagamento incerto sono $0-5=-5$ e $10-5=5$, quindi la loro media pesata è $(-5)\cdot1/2+5\cdot1/2=0$. È lo stesso risultato che otterremmo nel pagamento certo, dove lo scarto è sempre zero. Abbiamo perso proprio la differenza che volevamo misurare: gli scarti negativi e quelli positivi si sono cancellati.
-
-La cancellazione avviene per qualunque variabile con media finita, non soltanto per questi due pagamenti. Infatti la linearità dà $\mathbb{E}[X-\mu]=\mathbb{E}[X]-\mu=0$, perché $\mu$ è la media stessa. La media degli scarti con segno non è quindi adatta a descrivere la dispersione.
-
-Per conservare l'informazione sulla distanza senza far cancellare i segni, eleviamo ogni scarto al quadrato. Sia $-5$ sia $5$ diventano 25, mentre zero rimane zero. Tutti i contributi sono ora non negativi.
-
-Il quadrato dà anche un peso maggiore agli scarti grandi: se una distanza raddoppia, il suo quadrato diventa quattro volte maggiore. Dopo questa trasformazione facciamo la media, usando le stesse probabilità dei pagamenti di partenza. La misura così ottenuta si chiama **varianza**.
-
-La **varianza** è:
-
-$$
-\boxed{\operatorname{Var}(X)=\mathbb{E}[(X-\mu)^2]
-=\sum_x (x-\mu)^2p_X(x).}
-$$
-
-Leggiamo la definizione dall'interno verso l'esterno. La differenza $X-\mu$ misura lo scarto; il quadrato ne elimina il segno; il valore atteso fa la media di tutti gli scarti al quadrato. Nella scrittura con la sommatoria vediamo gli stessi passaggi applicati a ciascun valore $x$, con il suo peso $p_X(x)$.
-
-Per il pagamento certo lo scarto è sempre zero, quindi anche la varianza è zero. Per il pagamento incerto, invece, entrambi gli scarti al quadrato valgono 25. Pesiamoli con le rispettive probabilità:
-
-$$
-\operatorname{Var}(X)=(-5)^2\cdot\frac12+5^2\cdot\frac12
-=\frac{25}{2}+\frac{25}{2}=25.
-$$
-
-La misura distingue ora i due giochi: stessa media, ma varianza 0 per il pagamento certo e 25 per quello incerto. Poiché ogni scarto al quadrato è non negativo, anche la loro media è sempre non negativa.
-
-Negli esempi finiti la varianza è zero esattamente quando tutti i valori con probabilità positiva coincidono con la media. Infatti, se anche un solo valore di probabilità positiva fosse diverso dalla media, il suo scarto al quadrato darebbe un contributo positivo alla somma.
-
-Prestiamo attenzione anche alle unità di misura. Sottrarre due importi in euro produce ancora un importo in euro; elevarlo al quadrato produce invece **euro al quadrato**. La varianza appena trovata è dunque 25 euro al quadrato. Leggerla come un pagamento di 25 euro cambierebbe il significato del risultato.
-
-Per tornare alle stesse unità di $X$, prendiamo la radice quadrata della varianza. Otteniamo la **deviazione standard**, che in questo esempio è $\sqrt{25}=5$ euro. Qui ritroviamo esattamente la distanza di ciascuno dei due pagamenti dalla media.
-
-Qui tutte le variabili hanno un numero finito di valori e la varianza è finita. Per variabili con infiniti valori occorre un controllo ulteriore: una media finita non garantisce una varianza finita. La formula equivalente che ricaveremo tra poco si usa senza ambiguità quando $\mathbb{E}[X^2]<\infty$.
-
-### 17. Un modo equivalente di fare il conto {: #formula-varianza }
-
-La definizione con gli scarti spiega il significato della varianza. Per fare i conti, però, è spesso comodo disporre di una formula che usi la media di $X$ e la media di $X^2$. Ricaviamola senza saltare i passaggi.
-
-Partiamo dallo scarto al quadrato che compare nella definizione. La quantità $\mu$ è la media di $X$: una volta fissato il modello, è un numero determinato. Il valore di $X$ cambia con l'esito dell'esperimento, mentre $\mu$ rimane lo stesso. Possiamo perciò trattare $\mu$ come una costante e applicare l'identità algebrica del quadrato di una differenza:
-
-$$
-(X-\mu)^2=X^2-2\mu X+\mu^2.
-$$
-
-Ora facciamo la media dei due lati. A sinistra troviamo, per definizione, la varianza. A destra usiamo la linearità per separare i tre termini: il coefficiente costante del termine centrale esce dal valore atteso, mentre l'ultimo termine, essendo costante, ha media uguale a sé stesso:
-
-$$
-\operatorname{Var}(X)=\mathbb{E}[X^2]-2\mu\mathbb{E}[X]+\mu^2.
-$$
-
-Poiché $\mathbb{E}[X]=\mu$, il secondo termine è $-2\mu^2$. Sommandolo all'ultimo resta $-\mu^2$:
-
-$$
-\boxed{\operatorname{Var}(X)=\mathbb{E}[X^2]-\mu^2.}
-$$
-
-La formula è spesso comoda nei calcoli, ma richiede attenzione all'ordine delle operazioni. $\mathbb{E}[X^2]$ significa: **prima eleva al quadrato ciascun risultato, poi fai la media**. Il termine $\mu^2=(\mathbb{E}[X])^2$ significa invece: **prima fai la media dei risultati, poi eleva al quadrato quel numero**.
-
-Le parentesi indicano dunque due procedimenti diversi. Non possiamo scambiarli: in generale producono numeri diversi, e la formula ci dice che la loro differenza è proprio la varianza.
-
-Per calcolare $\mathbb{E}[X^2]$ non serve ricostruire da zero la distribuzione del quadrato. Usiamo gli stessi pesi della PMF di $X$, applicandoli ai valori elevati al quadrato:
-
-$$
-\mathbb{E}[X^2]=\sum_x x^2p_X(x).
-$$
-
-Seguiamo entrambi i procedimenti nel pagamento che vale 0 oppure 10. Per trovare $\mathbb{E}[X^2]$, trasformiamo i pagamenti in $0^2=0$ e $10^2=100$, mantenendo probabilità $1/2$ e $1/2$. La media dei quadrati è quindi $\mathbb{E}[X^2]=0^2\cdot1/2+10^2\cdot1/2=50$.
-
-Per trovare il quadrato della media, partiamo invece dalla media dei pagamenti, che è 5, ed eleviamo quel numero al quadrato: otteniamo 25. Sottraendo troviamo $50-25=25$, lo stesso valore già ricavato con gli scarti. In particolare, nel primo conto abbiamo elevato al quadrato i **valori**, lasciando inalterati i loro pesi probabilistici.
-
-Applichiamo lo stesso procedimento a una Bernoulli $I$ di parametro $p$, perché ci servirà per il conteggio binomiale. La sua media è $p$, come per ogni indicatrice. Per usare la nuova formula dobbiamo trovare anche la media di $I^2$.
-
-Qui il quadrato è particolarmente semplice: i soli valori possibili sono 0 e 1, e valgono $0^2=0$ e $1^2=1$. Qualunque sia l'esito dell'esperimento, il quadrato del bit è dunque uguale al bit stesso: $I^2=I$. Di conseguenza, anche le loro medie coincidono: $\mathbb{E}[I^2]=\mathbb{E}[I]=p$.
-
-Sostituendo la media $p$ e la media del quadrato $p$ nella formula della varianza, otteniamo:
-
-$$
-\operatorname{Var}(I)=p-p^2=p(1-p).
-$$
-
-### 18. La varianza binomiale e l'ipotesi che la rende possibile {: #varianza-binomiale }
-
-Per trovare la media binomiale siamo partiti da una somma di indicatrici e abbiamo sommato le loro medie. Per trovare la varianza useremo ancora quella rappresentazione, ma la formula della sezione precedente ci chiede un'informazione ulteriore: la media di $X^2$.
-
-Dobbiamo quindi elevare al quadrato la somma dei bit. Questo passaggio produce sia i quadrati dei singoli addendi sia i prodotti tra addendi diversi. Per fare la media di questi prodotti dovremo sapere con quale probabilità due prove hanno successo **insieme**. È qui che l'indipendenza avrà un ruolo che non aveva nel calcolo della media.
-
-Per la Binomiale $X=\sum_{i=1}^n I_i$, espandere il quadrato produce i quadrati dei singoli bit e due copie di ogni prodotto tra bit diversi:
-
-$$
-X^2=\sum_{i=1}^n I_i^2+2\sum_{1\le i<j\le n}I_iI_j.
-$$
-
-Un esempio con due bit chiarisce il fattore 2: $(I_1+I_2)^2=I_1^2+I_1I_2+I_2I_1+I_2^2$. I due prodotti centrali sono uguali.
-
-Consideriamo separatamente i due tipi di termini. Per i quadrati sappiamo già che $I_i^2=I_i$, quindi ciascuno ha media $p$.
-
-Per i prodotti, fermiamoci sul significato di $I_iI_j$. Moltiplicando due bit otteniamo 1 soltanto se entrambi valgono 1; se almeno uno vale 0, il prodotto è 0. Il prodotto è quindi a sua volta un'indicatrice: segnala l'evento «hanno successo sia la prova $i$ sia la prova $j$».
-
-La sua media è la probabilità di quell'evento congiunto. **Ora usiamo l'indipendenza** per calcolarla come prodotto: $p\cdot p=p^2$. Conoscere soltanto le due probabilità singole $p$ non sarebbe sufficiente a giustificare questo passaggio.
-
-Ogni coppia distinta di indicatrici compare una volta nella somma con $i<j$, e le coppie sono $\binom n2$. Il fattore 2 davanti alla somma tiene conto dei due ordini in cui ogni prodotto compare nell'espansione del quadrato.
-
-Ora possiamo fare la media. I $n$ quadrati delle indicatrici contribuiscono ciascuno $p$; i $\binom n2$ prodotti contribuiscono ciascuno $p^2$, con il fattore 2 appena spiegato. Per linearità:
-
-$$
-\mathbb{E}[X^2]=np+2\binom n2p^2=np+n(n-1)p^2.
-$$
-
-Abbiamo così trovato la media del quadrato. Per ottenere la varianza dobbiamo sottrarre il quadrato della media, che conosciamo dalla sezione 14: $(np)^2=n^2p^2$.
-
-Nella semplificazione seguente, il termine $n(n-1)p^2$ è uguale a $n^2p^2-np^2$. Il suo contributo $n^2p^2$ si cancella quindi con quello che sottraiamo. Rimangono $np-np^2$, da cui raccogliamo $np$:
-
-$$
-\operatorname{Var}(X)
-=np+n(n-1)p^2-n^2p^2
-=np-np^2
-=\boxed{np(1-p)}.
-$$
-
-Torniamo ai due modelli del laboratorio. Per le quattro operazioni indipendenti possiamo applicare la formula binomiale: la varianza è $4\cdot0{,}2\cdot0{,}8=0{,}64$.
-
-Nel modello del guasto comune non possiamo applicare la formula binomiale, perché le quattro operazioni dipendono dallo stesso evento. Possiamo però tornare direttamente alla definizione di varianza. Il conteggio è $X=4I$, dove $I$ è una sola indicatrice di parametro $p=0{,}2$: quando il bit si accende, registra quattro fallimenti insieme.
-
-La media di $X$ è $4p$, quindi lo scarto è $X-4p=4(I-p)$. Elevando al quadrato, anche il fattore 4 va al quadrato e otteniamo $16(I-p)^2$. Facendo la media, il fattore 16 rimane fuori e la media di $(I-p)^2$ è la varianza del bit, cioè $p(1-p)$. Ne segue $\operatorname{Var}(X)=16p(1-p)=2{,}56$.
-
-Il secondo modello ha dunque varianza quattro volte maggiore, pur avendo la stessa media. Nel grafico questa differenza corrisponde al fatto che tutti i risultati del guasto comune sono concentrati negli estremi 0 e 4.
-
-Il confronto completa la lettura del grafico: i due modelli hanno la stessa media, ma quello del guasto comune ha maggiore dispersione. La varianza riesce a descrivere una differenza che la media da sola non mostrava.
-
-Teniamo fermo il punto della dimostrazione in cui è entrata l'indipendenza: il calcolo della probabilità di due successi insieme. **La linearità del valore atteso non si trasferisce automaticamente alla varianza.** Sommare le varianze dei bit senza controllare la loro dipendenza può dare un risultato sbagliato. Studieremo più avanti il comportamento delle somme; qui ci basta capire perché la formula binomiale richiede quel controllo.
-
-## Lettura B — Pagamento, costo e gioco equo {: #giochi-equi }
+!!! info "Approfondimento facoltativo — fuori dall’esame"
+    Questa lettura è facoltativa e non richiesta all’esame. Resta richiesto il significato del valore atteso come prezzo di una possibilità, introdotto nel percorso principale.
 
 Torniamo alla domanda iniziale sul prezzo di una possibilità di guadagno. Abbiamo ora gli strumenti per rispondere, ma dobbiamo precisare quale somma di denaro stiamo studiando. Il pagamento ricevuto alla fine della partita e il guadagno di chi partecipa sono due quantità diverse: il secondo tiene conto anche di quanto è stato speso per giocare.
 
@@ -1073,9 +1038,12 @@ Quando controlliamo se un gioco è equo, dobbiamo quindi pesare **sia gli import
 
 Questo equilibrio non garantisce di recuperare il denaro dopo un numero fissato di partite. Se giochiamo $r$ volte alle stesse condizioni, la linearità dà valore atteso zero per il guadagno totale, ma il saldo concretamente osservato può essere positivo o negativo. La media descrive il modello, mentre il risultato di una sequenza rimane incerto. Per decidere se partecipare possono contare anche la dispersione dei risultati e la capacità di sostenere una perdita: il prezzo equo risponde alla domanda sul guadagno medio.
 
-## Lettura C — Senza reinserimento: la distribuzione Ipergeometrica {: #ipergeometrica }
+## Lettura B — Senza reinserimento: la distribuzione Ipergeometrica {: #ipergeometrica }
 
-### 19. Le prove cambiano, ma i bit continuano a contare {: #modello-ipergeometrico }
+!!! info "Approfondimento facoltativo — fuori dall’esame"
+    Questa intera lettura, comprese la PMF e la derivazione della media dell’Ipergeometrica, è facoltativa e non richiesta all’esame. Resta richiesto il metodo delle indicatrici nelle applicazioni del percorso principale.
+
+### 16. Le prove cambiano, ma i bit continuano a contare {: #modello-ipergeometrico }
 
 Consideriamo un insieme di **5 moduli software**, dei quali **2 sono difettosi** e 3 sono sani. Vogliamo controllarne 2 e li scegliamo a caso, **senza reinserimento**. Questo significa che, dopo la prima scelta, il modulo selezionato viene tolto dall'insieme: la seconda scelta avverrà tra i quattro rimasti. I due moduli controllati saranno dunque distinti.
 
@@ -1095,7 +1063,7 @@ Per passare al modello generale, diamo un nome alle tre quantità che descrivono
 
 Supponiamo che tutti i sottoinsiemi di $n$ oggetti abbiano la stessa probabilità di essere scelti. Il numero $X$ di oggetti con la proprietà presenti nel campione segue allora la **distribuzione Ipergeometrica**. I parametri sono interi e devono rispettare $0\le K\le N$ e $1\le n\le N$: non possiamo avere più oggetti con la proprietà che oggetti totali, né scegliere più oggetti di quanti ne siano disponibili.
 
-### 20. La PMF: scegliere dentro due gruppi {: #pmf-ipergeometrica }
+### 17. La PMF: scegliere dentro due gruppi {: #pmf-ipergeometrica }
 
 Per trovare la PMF dobbiamo assegnare una probabilità a ciascun numero possibile di difettosi. Descriviamo un esito completo come il sottoinsieme dei due moduli selezionati. Scegliere prima un certo modulo e poi un altro produce lo stesso campione che sceglierli nell'ordine inverso: per il controllo conta quali moduli abbiamo, non quale sia arrivato prima.
 
@@ -1139,9 +1107,9 @@ $$
 
 Per gli interi in questo intervallo vale la formula; fuori dall'intervallo la probabilità è zero. Per esempio, se scegliamo 4 moduli tra 5 e 2 sono difettosi, non possiamo ottenere zero difettosi: i moduli sani sono soltanto 3.
 
-Questa formula è un'applicazione del principio di conteggio della settimana scorsa a due gruppi. L'approfondimento non richiede di memorizzarla per l'orale: l'obiettivo è capire come costruirla a partire dalle scelte che descrivono un campione.
+Questa formula è un'applicazione del principio di conteggio della settimana scorsa a due gruppi. Questa formula e la sua derivazione sono facoltative e non richieste all’esame: l’obiettivo della lettura è capire come costruirla a partire dalle scelte che descrivono un campione.
 
-### 21. La media senza la PMF {: #media-ipergeometrica }
+### 18. La media senza la PMF {: #media-ipergeometrica }
 
 Nell'esempio piccolo, la media letta dalla tabella è:
 
@@ -1290,6 +1258,9 @@ Considera ora un secondo modello: con probabilità 0,2 un guasto comune fa falli
 
 ### Esercizio 5 — Un campione senza reinserimento (lettura) {: #esercizio-5 }
 
+!!! info "Approfondimento facoltativo — fuori dall’esame"
+    Questo esercizio accompagna la Lettura B ed è facoltativo e non richiesto all’esame.
+
 Tra 10 moduli, 3 sono difettosi. Scegli un sottoinsieme di 4 moduli, dando la stessa probabilità a tutti i sottoinsiemi di quella dimensione. Qual è il numero medio di difettosi nel campione?
 
 Prima di usare la formula di una distribuzione, chiediti se questo conteggio soddisfa le ipotesi della Binomiale. Poi costruisci la probabilità di trovare esattamente un difettoso: quanti campioni hanno la composizione richiesta e quanti campioni sono possibili in tutto?
@@ -1331,10 +1302,12 @@ La tabella raccoglie alcune confusioni frequenti e una domanda con cui riconosce
 | Richiedere indipendenza per la linearità | Che cosa è accaduto nella tabella con $X+Y=1$? |
 | Chiamare Binomiale ogni somma di bit | Le prove sono indipendenti e hanno tutte lo stesso $p$? |
 | Contare caselle occupate invece di coppie | Tre chiavi nella stessa casella producono quante coppie? |
-| Scambiare $\mathbb{E}[X^2]$ con $(\mathbb{E}[X])^2$ | Hai elevato i valori al quadrato prima o dopo la media? |
 | Chiamare equo un gioco perché si vince metà delle volte | Hai pesato anche gli importi persi e ricevuti? |
 
 ## Riepilogo e takeaway per chi scrive software {: #riepilogo }
+
+!!! info "Per l’esame"
+    Questa sintesi comprende anche gli approfondimenti: giochi equi e Ipergeometrica restano facoltativi e non richiesti all’esame. Il perimetro richiesto è quello indicato [in apertura](#esame). La varianza è trattata nella [Settimana 5](../settimana_05/index.md#varianza), con indicazioni specifiche per l’esame.
 
 Il percorso della settimana parte da una distinzione fondamentale. L'esperimento produce un esito completo; la variabile aleatoria associa a quell'esito un numero che risponde alla nostra domanda. Possiamo contare teste, guasti, confronti o coppie in collisione, ma dobbiamo scegliere esplicitamente quale quantità vogliamo studiare.
 
@@ -1361,9 +1334,10 @@ $$
 
 Questo numero dipende dalle ipotesi appena dichiarate. Se la chiave può mancare, una ricerca senza successo visita tutta la lista e dobbiamo includere anche la probabilità di quel caso. Se alcune posizioni sono più probabili di altre, dobbiamo usare i loro pesi invece di $1/n$. Perciò un'affermazione sul costo medio di un algoritmo deve sempre specificare il modello degli input o della casualità interna.
 
-La media non descrive tutto. Un servizio con guasti indipendenti e uno con guasti comuni possono avere la stessa media dei fallimenti e comportamenti molto diversi. La varianza comincia a misurare quella differenza; le prossime settimane aggiungeranno altri strumenti.
+La media non descrive tutto. Un servizio con guasti indipendenti e uno con guasti comuni possono avere la stessa media dei fallimenti e comportamenti molto diversi. Nella [Settimana 5](../settimana_05/index.md#varianza) introdurremo la varianza per misurare quella differenza.
 
-!!! tip "Che cosa devi saper rifare"
+!!! info "Per l’esame"
+    I ragionamenti da saper ricostruire sono quelli indicati [in apertura](#esame).
     Dovresti saper partire da un esperimento semplice, definire la variabile che ti interessa e costruirne la PMF, spiegando quali esiti contribuiscono a ciascun valore. Da quella tabella dovresti saper calcolare il valore atteso e interpretarlo, anche quando non è un risultato possibile.
 
     Dovresti poi saper definire l'indicatrice di un evento e ricavare $\mathbb{E}[I_A]=P(A)$ dalla definizione di media. Per usare questo strumento su un conteggio, occorre spiegare perché la somma delle indicatrici conta esattamente gli oggetti richiesti, prima di applicare la linearità.

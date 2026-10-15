@@ -3,6 +3,17 @@
 # Settimana 1 — Che cos'è la probabilità?
 *Un viaggio attraverso la storia, la filosofia, i paradossi e il codice della disciplina che misura l'incertezza.*
 
+## Che cosa è richiesto all’esame {: #esame }
+
+- **Definizioni e calcoli:** esperimento, esito, spazio campionario, eventi e operazioni (comprese le leggi di De Morgan); assiomi di Kolmogorov; probabilità dell’evento impossibile, complementare e unione di due eventi; condizionamento con probabilità del condizionante positiva, regola del prodotto e indipendenza. Devi distinguere indipendenza e incompatibilità: due eventi disgiunti con probabilità positiva non sono indipendenti.
+- **Applicazioni:** semplici calcoli di affidabilità in serie e parallelo, esplicitando l’ipotesi d’indipendenza dei componenti.
+- **Comprensione concettuale:** significato essenziale delle interpretazioni classica, frequentista e soggettiva, distinzione epistemico/ontico e un esempio concreto. Devi spiegare perché gli assiomi regolano il calcolo senza scegliere l’interpretazione dei numeri.
+- **Ragionamenti da ricostruire:** complementare, unione di due eventi (perché si sottrae l’intersezione) e regola del prodotto dalla definizione di probabilità condizionata.
+
+**Facoltativi e non richiesti all’esame:** formalismo della σ-algebra e questioni di cardinalità oltre la distinzione intuitiva tra discreto e continuo; inclusione-esclusione a tre eventi; dettagli delle dispute filosofiche, Carnap, paradossi specialistici e parte quantistica; p-value, optional stopping e dettagli dell’A/B testing. Le altre dimostrazioni formali non sono richieste.
+
+Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
+
 ---
 
 ## Prologo: La moneta a mezz'aria e il supercomputer
@@ -166,6 +177,9 @@ $$
 
 ### 4. La Famiglia degli Eventi: La $\sigma$-algebra ($\mathcal{F}$)
 
+!!! info "Approfondimento facoltativo — fuori dall’esame"
+    Il formalismo di questa sezione è facoltativo e non richiesto all’esame. Per gli esercizi è richiesto riconoscere gli eventi e operare con essi.
+
 Quando parliamo di eventi, non sempre possiamo limitarci a prendere "qualsiasi" sottoinsieme. Quando lo spazio campionario è continuo (come la retta reale $\mathbb{R}$ o l'intervallo $[0, 1]$), considerare arbitrariamente tutti i possibili sottoinsiemi genera qualche difficoltà dal punto di vista matematico.
 
 Si richiede quindi che la collezione $\mathcal{F}$ degli eventi a cui possiamo sensatamente associare una probabilità sia una **$\sigma$-algebra** su $\Omega$, cioè una famiglia di sottoinsiemi di $\Omega$ chiusa rispetto alle operazioni logiche fondamentali:
@@ -280,6 +294,10 @@ P(L \cup M) = 0.70 + 0.50 - 0.35 = 0.85 \quad (85\%)
 $$
 
 #### Estensione a tre eventi (Inclusione-Esclusione)
+
+!!! info "Approfondimento facoltativo — fuori dall’esame"
+    Questa estensione non è richiesta all’esame. È richiesta la regola dell’unione di due eventi e il ragionamento sulla sovrapposizione.
+
 Se consideriamo tre eventi $A, B, C$:
 
 $$
@@ -737,6 +755,9 @@ Per la prima volta nella storia, l'incertezza del futuro veniva domata dal calco
 
 ## Atto III: Il regno epistemico — La mente che lotta con l'ignoranza
 
+!!! info "Per l’esame"
+    Sono richiesti il significato essenziale delle interpretazioni classica e soggettiva e un esempio. Carnap, i dettagli storici, i paradossi specialistici e la derivazione del Dutch book sono facoltativi e non richiesti all’esame.
+
 I pensatori del **Polo Epistemico** sostengono una tesi radicale: la probabilità non appartiene al mondo fisico esterno, ma è la misura del nostro **stato di informazione o credenza** di fronte a una realtà che non conosciamo completamente.
 
 ### Scena 1: Pierre-Simon Laplace e il Principio di Indifferenza (1814)
@@ -892,6 +913,9 @@ Quale valore di $\lambda$ deve scegliere la scienza? La logica sintattica tace. 
 
 ## Atto IV: Il regno ontico — La probabilità incisa nella materia
 
+!!! info "Per l’esame"
+    Sono richiesti il significato essenziale dell’interpretazione frequentista, un esempio e la distinzione epistemico/ontico. Il formalismo dei collettivi, la trattazione della propensione e i paradossi specialistici sono facoltativi e non richiesti all’esame.
+
 Delusi dalle ambiguità della mente, del linguaggio e delle scommesse soggettive, i pensatori del **Polo Ontico** decisero di espellere completamente l'osservatore umano dall'equazione, radicando la probabilità nella natura fisica oggettiva.
 
 ### Scena 1: John Venn e la nascita del frequentismo empirico (1866)
@@ -966,6 +990,9 @@ Poiché la matematica della probabilità può scorrere a ritroso come un filmato
 
 ## Atto V: Frequentisti contro Bayesiani — Il paradosso di Alice e Bob
 
+!!! info "Approfondimento facoltativo — fuori dall’esame"
+    Questa sezione è una lettura facoltativa e non è richiesta all’esame.
+
 Mentre i filosofi dibattevano, nei laboratori bisognava decidere se un farmaco funzionasse o una teoria fosse valida. Tra gli anni '20 e '30 nacque così la contesa tra **statistica frequentista** e **statistica bayesiana**.
 
 ### L'approccio classico: Fisher e il p-value
@@ -1014,6 +1041,9 @@ Avendo osservato entrambi 9 teste e 3 croci, Alice e Bob ottengono per un bayesi
 ---
 
 ## Atto VI: Uno sguardo all'abisso subatomico — Epistemico, Ontico e Non-Località
+
+!!! info "Approfondimento facoltativo — fuori dall’esame"
+    Questa sezione è una lettura facoltativa e non è richiesta all’esame.
 
 Proprio quando matematici e filosofi credevano di aver circoscritto ogni aspetto della disputa tra mente e mondo, la fisica quantistica del Novecento ha portato la contesa tra polo epistemico e polo ontico alle sue estreme conseguenze:
 
@@ -1101,6 +1131,9 @@ La probabilità non è un dogma di fede, ma un prisma concettuale che dobbiamo s
 * **Nella Cybersecurity, nell'affidabilità di sistemi critici e nel Machine Learning**, dove affrontiamo attacchi informatici inediti o decisioni mediche ad alto rischio in condizioni di scarsità di dati, l'approccio **bayesiano** è l'unico capace di guidare razionalmente l'aggiornamento della credenza.
 
 ### 2. Cos'è un A/B Test e il "Peeking Problem" moderno
+
+!!! info "Approfondimento facoltativo — fuori dall’esame"
+    Questa sezione è una lettura facoltativa e non è richiesta all’esame.
 
 #### Cos'è un A/B Test?
 Nell'ingegneria del software, nello sviluppo web e nei sistemi digitali ad alto traffico, un **A/B test** è un **esperimento controllato e randomizzato** (*Randomized Controlled Trial*) condotto direttamente in produzione su utenti reali.

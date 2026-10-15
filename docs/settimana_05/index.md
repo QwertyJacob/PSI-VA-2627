@@ -21,7 +21,7 @@ La settimana scorsa abbiamo costruito quattro strumenti. Li riprendiamo uno per 
 3. Il **valore atteso** $\mathbb{E}[X]=\sum_x x\,p_X(x)$ è il baricentro di quei pesi. Può cadere tra i valori possibili, come il 3,5 del dado.
 4. La **linearità**: $\mathbb{E}[aX+b]=a\,\mathbb{E}[X]+b$, e la media di una somma è la somma delle medie, anche con variabili dipendenti.
 
-Abbiamo poi incontrato un modello preciso: $n$ prove indipendenti, ciascuna con la stessa probabilità $p$ di «successo». Il numero di successi è una **Binomiale** con media $np$ ([Settimana 4, Atto V](../settimana_04/index.md#media-binomiale)). Nella lettura sulla varianza avevamo anche ricavato $\operatorname{Var}(X)=np(1-p)$ ([Settimana 4, Lettura A](../settimana_04/index.md#varianza-binomiale)).
+Abbiamo poi incontrato un modello preciso: $n$ prove indipendenti, ciascuna con la stessa probabilità $p$ di «successo». Il numero di successi è una **Binomiale** con media $np$ ([Settimana 4, Atto V](../settimana_04/index.md#media-binomiale)).
 
 La Binomiale risponde alla domanda **«quanti successi in $n$ prove?»**. Questa settimana cambiamo la domanda in due modi diversi:
 
@@ -31,7 +31,295 @@ La Binomiale risponde alla domanda **«quanti successi in $n$ prove?»**. Questa
 Alla prima domanda risponde la distribuzione **Geometrica**, alla seconda la distribuzione di **Poisson**. Entrambe nascono dalla stessa materia prima: prove indipendenti con due esiti.
 
 !!! info "Come leggere questa dispensa"
-    Gli Atti I–V formano il percorso principale: la Geometrica e l'assenza di memoria (Atti I–II), i dati di Bortkiewicz e la Poisson (Atti III–IV), le applicazioni ai sistemi (Atto V). Seguono due letture: il filtro di Bloom e la derivazione completa della Poisson come limite della Binomiale. **Il filtro di Bloom è fuori dal nucleo d'esame orale.** La derivazione completa è facoltativa: all'orale basta saper spiegare l'idea dei «pezzetti di tempo».
+    La sezione iniziale introduce la varianza: significato, definizione e calcolo su una semplice distribuzione discreta sono richiesti all’esame; identità del secondo momento, varianze di Bernoulli e Binomiale e relative derivazioni sono approfondimenti facoltativi. Nel §15 è richiesta la proprietà della Poisson $\operatorname{Var}(X)=\lambda$, non la sua derivazione. Gli Atti I–V formano il percorso principale: la Geometrica e l'assenza di memoria (Atti I–II), i dati di Bortkiewicz e la Poisson (Atti III–IV), le applicazioni ai sistemi (Atto V). Seguono due letture: il filtro di Bloom e la derivazione completa della Poisson come limite della Binomiale. **Il filtro di Bloom è fuori dal nucleo d'esame orale.** La derivazione completa è facoltativa: all'orale basta saper spiegare l'idea dei «pezzetti di tempo».
+
+## Prima di proseguire — Stessa media, dispersione diversa: la varianza {: #varianza }
+
+!!! info "Varianza: che cosa è richiesto all'esame"
+    **Sono richiesti:** il significato e la definizione della varianza come media degli scarti al quadrato; il calcolo su una semplice distribuzione discreta usando la definizione; la proprietà della Poisson $\operatorname{Var}(X)=\lambda$, con il significato del parametro $\lambda$, trattata nel [§15](#media-varianza-poisson).
+
+    **Sono approfondimenti facoltativi, non richiesti all'esame:** l'identità $\operatorname{Var}(X)=\mathbb{E}[X^2]-(\mathbb{E}[X])^2$, le formule della varianza di Bernoulli e Binomiale e la riproduzione delle relative derivazioni. Le due sezioni intitolate «Approfondimento facoltativo» possono essere saltate nel percorso di preparazione all'esame.
+
+### Significato e definizione: perché gli scarti vanno elevati al quadrato {: #definizione-varianza }
+
+Nel [laboratorio della Settimana 4](../settimana_04/index.md#lab-binomiale) i due servizi avevano lo stesso numero medio di fallimenti, ma si comportavano diversamente nelle singole esecuzioni. Nel caso del guasto comune, tutti i risultati erano concentrati in 0 e 4; nel caso indipendente comparivano anche i valori intermedi.
+
+La media ci ha dato un centro per ciascuna distribuzione. Ora vorremmo descrivere anche **quanto i risultati si allontanano da quel centro**. Per costruire questa nuova misura, partiamo da un esempio in cui le distanze dalla media si vedono subito.
+
+Confrontiamo due pagamenti. Il primo assegna sempre 5 euro: non c'è incertezza sull'importo che riceveremo. Il secondo assegna 0 oppure 10 euro, ciascuno con probabilità $1/2$: prima di giocare non sappiamo quale dei due importi riceveremo.
+
+Il pagamento certo ha media 5 perché ogni risultato vale 5. Anche il pagamento incerto ha media 5, dato che $0\cdot1/2+10\cdot1/2=5$. La differenza emerge quando confrontiamo ciascun pagamento con la propria media. Nel primo gioco la distanza è sempre zero; nel secondo è sempre di 5 euro, sia quando riceviamo 0 sia quando riceviamo 10.
+
+Cerchiamo una misura che conservi questa differenza. La chiamiamo **misura di dispersione**, perché deve descrivere quanto i valori sono dispersi attorno alla loro media.
+
+Indichiamo la media di $X$ con la lettera greca $\mu$, letta «mu»: $\mu=\mathbb{E}[X]$. Per ogni valore possibile $x$, la differenza $x-\mu$ è il suo **scarto dalla media**. Uno scarto negativo corrisponde a un valore sotto la media; uno positivo a un valore sopra la media.
+
+Proviamo prima a fare la media degli scarti. Nel pagamento incerto sono $0-5=-5$ e $10-5=5$, quindi la loro media pesata è $(-5)\cdot1/2+5\cdot1/2=0$. È lo stesso risultato che otterremmo nel pagamento certo, dove lo scarto è sempre zero. Abbiamo perso proprio la differenza che volevamo misurare: gli scarti negativi e quelli positivi si sono cancellati.
+
+La cancellazione avviene per qualunque variabile con media finita, non soltanto per questi due pagamenti. Infatti la linearità dà $\mathbb{E}[X-\mu]=\mathbb{E}[X]-\mu=0$, perché $\mu$ è la media stessa. La media degli scarti con segno non è quindi adatta a descrivere la dispersione.
+
+Per conservare l'informazione sulla distanza senza far cancellare i segni, eleviamo ogni scarto al quadrato. Sia $-5$ sia $5$ diventano 25, mentre zero rimane zero. Tutti i contributi sono ora non negativi.
+
+Il quadrato dà anche un peso maggiore agli scarti grandi: se una distanza raddoppia, il suo quadrato diventa quattro volte maggiore. Dopo questa trasformazione facciamo la media, usando le stesse probabilità dei pagamenti di partenza. La misura così ottenuta si chiama **varianza**.
+
+La **varianza** è:
+
+$$
+\boxed{\operatorname{Var}(X)=\mathbb{E}[(X-\mu)^2]
+=\sum_x (x-\mu)^2p_X(x).}
+$$
+
+Leggiamo la definizione dall'interno verso l'esterno. La differenza $X-\mu$ misura lo scarto; il quadrato ne elimina il segno; il valore atteso fa la media di tutti gli scarti al quadrato. Nella scrittura con la sommatoria vediamo gli stessi passaggi applicati a ciascun valore $x$, con il suo peso $p_X(x)$.
+
+Per il pagamento certo lo scarto è sempre zero, quindi anche la varianza è zero. Per il pagamento incerto, invece, entrambi gli scarti al quadrato valgono 25. Pesiamoli con le rispettive probabilità:
+
+$$
+\operatorname{Var}(X)=(-5)^2\cdot\frac12+5^2\cdot\frac12
+=\frac{25}{2}+\frac{25}{2}=25.
+$$
+
+La misura distingue ora i due giochi: stessa media, ma varianza 0 per il pagamento certo e 25 per quello incerto. Poiché ogni scarto al quadrato è non negativo, anche la loro media è sempre non negativa.
+
+Negli esempi finiti la varianza è zero esattamente quando tutti i valori con probabilità positiva coincidono con la media. Infatti, se anche un solo valore di probabilità positiva fosse diverso dalla media, il suo scarto al quadrato darebbe un contributo positivo alla somma.
+
+Prestiamo attenzione anche alle unità di misura. Sottrarre due importi in euro produce ancora un importo in euro; elevarlo al quadrato produce invece **euro al quadrato**. La varianza appena trovata è dunque 25 euro al quadrato. Leggerla come un pagamento di 25 euro cambierebbe il significato del risultato.
+
+Per tornare alle stesse unità di $X$, prendiamo la radice quadrata della varianza. Otteniamo la **deviazione standard**, che in questo esempio è $\sqrt{25}=5$ euro. Qui ritroviamo esattamente la distanza di ciascuno dei due pagamenti dalla media.
+
+Qui tutte le variabili hanno un numero finito di valori e la varianza è finita. Per variabili con infiniti valori occorre un controllo ulteriore: una media finita non garantisce una varianza finita. Nell'approfondimento facoltativo seguente ricaveremo una formula equivalente, che si usa senza ambiguità quando $\mathbb{E}[X^2]<\infty$.
+
+### Approfondimento facoltativo — Un modo equivalente di fare il conto {: #formula-varianza }
+
+La definizione con gli scarti spiega il significato della varianza. Per fare i conti, però, è spesso comodo disporre di una formula che usi la media di $X$ e la media di $X^2$. Ricaviamola senza saltare i passaggi.
+
+Partiamo dallo scarto al quadrato che compare nella definizione. La quantità $\mu$ è la media di $X$: una volta fissato il modello, è un numero determinato. Il valore di $X$ cambia con l'esito dell'esperimento, mentre $\mu$ rimane lo stesso. Possiamo perciò trattare $\mu$ come una costante e applicare l'identità algebrica del quadrato di una differenza:
+
+$$
+(X-\mu)^2=X^2-2\mu X+\mu^2.
+$$
+
+Ora facciamo la media dei due lati. A sinistra troviamo, per definizione, la varianza. A destra usiamo la linearità per separare i tre termini: il coefficiente costante del termine centrale esce dal valore atteso, mentre l'ultimo termine, essendo costante, ha media uguale a sé stesso:
+
+$$
+\operatorname{Var}(X)=\mathbb{E}[X^2]-2\mu\mathbb{E}[X]+\mu^2.
+$$
+
+Poiché $\mathbb{E}[X]=\mu$, il secondo termine è $-2\mu^2$. Sommandolo all'ultimo resta $-\mu^2$:
+
+$$
+\boxed{\operatorname{Var}(X)=\mathbb{E}[X^2]-\mu^2.}
+$$
+
+La formula è spesso comoda nei calcoli, ma richiede attenzione all'ordine delle operazioni. $\mathbb{E}[X^2]$ significa: **prima eleva al quadrato ciascun risultato, poi fai la media**. Il termine $\mu^2=(\mathbb{E}[X])^2$ significa invece: **prima fai la media dei risultati, poi eleva al quadrato quel numero**.
+
+Le parentesi indicano dunque due procedimenti diversi. Non possiamo scambiarli: in generale producono numeri diversi, e la formula ci dice che la loro differenza è proprio la varianza.
+
+Per calcolare $\mathbb{E}[X^2]$ applichiamo la [regola LOTUS](../settimana_04/index.md#lotus) con $g(x)=x^2$: non serve ricostruire da zero la distribuzione del quadrato. Usiamo gli stessi pesi della PMF di $X$, applicandoli ai valori elevati al quadrato:
+
+$$
+\mathbb{E}[X^2]=\sum_x x^2p_X(x).
+$$
+
+Seguiamo entrambi i procedimenti nel pagamento che vale 0 oppure 10. Per trovare $\mathbb{E}[X^2]$, trasformiamo i pagamenti in $0^2=0$ e $10^2=100$, mantenendo probabilità $1/2$ e $1/2$. La media dei quadrati è quindi $\mathbb{E}[X^2]=0^2\cdot1/2+10^2\cdot1/2=50$.
+
+Per trovare il quadrato della media, partiamo invece dalla media dei pagamenti, che è 5, ed eleviamo quel numero al quadrato: otteniamo 25. Sottraendo troviamo $50-25=25$, lo stesso valore già ricavato con gli scarti. In particolare, nel primo conto abbiamo elevato al quadrato i **valori**, lasciando inalterati i loro pesi probabilistici.
+
+Applichiamo lo stesso procedimento a una Bernoulli $I$ di parametro $p$, perché ci servirà per il conteggio binomiale. La sua media è $p$, come per ogni indicatrice. Per usare la nuova formula dobbiamo trovare anche la media di $I^2$.
+
+Qui il quadrato è particolarmente semplice: i soli valori possibili sono 0 e 1, e valgono $0^2=0$ e $1^2=1$. Qualunque sia l'esito dell'esperimento, il quadrato del bit è dunque uguale al bit stesso: $I^2=I$. Di conseguenza, anche le loro medie coincidono: $\mathbb{E}[I^2]=\mathbb{E}[I]=p$.
+
+Sostituendo la media $p$ e la media del quadrato $p$ nella formula della varianza, otteniamo:
+
+$$
+\operatorname{Var}(I)=p-p^2=p(1-p).
+$$
+
+### Approfondimento facoltativo — La varianza binomiale e l'ipotesi che la rende possibile {: #varianza-binomiale }
+
+Consideriamo $n$ prove indipendenti, ciascuna con probabilità di successo $p$. L'indicatrice $I_i$ vale 1 se la prova $i$ ha successo e 0 altrimenti. Il numero totale di successi è quindi:
+
+$$
+X=I_1+I_2+\cdots+I_n.
+$$
+
+Sappiamo già che $X$ è binomiale e ha media $\mathbb{E}[X]=np$. Ora vogliamo misurare quanto il conteggio si disperde attorno a questa media.
+
+Nella sezione precedente abbiamo trovato la formula:
+
+$$
+\operatorname{Var}(X)=\mathbb{E}[X^2]-(\mathbb{E}[X])^2.
+$$
+
+Il secondo termine è già noto: basta elevare al quadrato la media $np$. Il primo termine, invece, richiede un nuovo conto. Dobbiamo trovare **la media del quadrato del numero di successi**.
+
+#### Passo 1 — Capire che cosa compare nel quadrato
+
+Prima di usare le sommatorie, prendiamo soltanto tre indicatrici. Moltiplicare la somma per sé stessa significa moltiplicare ogni termine della prima parentesi per ogni termine della seconda:
+
+$$
+\begin{aligned}
+(I_1+I_2+I_3)^2
+&=(I_1+I_2+I_3)(I_1+I_2+I_3)\\
+&=I_1^2+I_1I_2+I_1I_3\\
+&\quad+I_2I_1+I_2^2+I_2I_3\\
+&\quad+I_3I_1+I_3I_2+I_3^2.
+\end{aligned}
+$$
+
+Ci sono tre quadrati, uno per ogni indicatrice. Gli altri termini si possono raccogliere a due a due: $I_1I_2=I_2I_1$, e lo stesso vale per le altre coppie. Otteniamo:
+
+$$
+(I_1+I_2+I_3)^2
+=I_1^2+I_2^2+I_3^2+2I_1I_2+2I_1I_3+2I_2I_3.
+$$
+
+Con $n$ indicatrici succede la stessa cosa: abbiamo $n$ quadrati e due copie del prodotto per ogni coppia distinta. La scrittura compatta è:
+
+$$
+X^2=\sum_{i=1}^n I_i^2+2\sum_{1\le i<j\le n}I_iI_j.
+$$
+
+Il vincolo $i<j$ elenca ogni coppia una volta sola; il fattore 2 tiene conto dei due prodotti che abbiamo raccolto. Per trovare la media di $X^2$ studieremo separatamente i quadrati e i prodotti.
+
+#### Passo 2 — Trovare la media di ciascun quadrato
+
+Un'indicatrice assume soltanto i valori 0 e 1. Elevandoli al quadrato otteniamo ancora 0 e 1: per ogni esito vale dunque $I_i^2=I_i$.
+
+Di conseguenza:
+
+$$
+\mathbb{E}[I_i^2]=\mathbb{E}[I_i]=p.
+$$
+
+Questo passaggio non richiede indipendenza: riguarda una sola indicatrice alla volta. Poiché i quadrati sono $n$ e ciascuno ha media $p$, il loro contributo complessivo sarà $np$.
+
+#### Passo 3 — Trovare la media di ciascun prodotto
+
+Prendiamo due prove diverse, $i$ e $j$. Che cosa registra il prodotto $I_iI_j$? Possiamo verificarlo su tutti i valori dei due bit:
+
+| $I_i$ | $I_j$ | $I_iI_j$ |
+|---|---|---|
+| 0 | 0 | 0 |
+| 0 | 1 | 0 |
+| 1 | 0 | 0 |
+| 1 | 1 | 1 |
+
+Il prodotto vale 1 soltanto quando **entrambe le prove hanno successo**. È quindi l'indicatrice di quell'evento, e la sua media è la probabilità dell'evento stesso:
+
+$$
+\mathbb{E}[I_iI_j]=P(I_i=1,\ I_j=1).
+$$
+
+**È ora che usiamo l'indipendenza.** Nel modello binomiale, conoscere il successo della prova $i$ non cambia la probabilità di successo della prova $j$. Possiamo quindi moltiplicare le due probabilità:
+
+$$
+\begin{aligned}
+P(I_i=1,\ I_j=1)
+&=P(I_i=1)\,P(I_j=1)\\
+&=p\cdot p\\
+&=p^2.
+\end{aligned}
+$$
+
+Abbiamo così trovato $\mathbb{E}[I_iI_j]=p^2$ per ogni coppia distinta. Sapere soltanto che ciascuna prova ha probabilità di successo $p$ non basterebbe: serve anche conoscere la probabilità dei due successi insieme.
+
+#### Passo 4 — Riunire i contributi e sottrarre il quadrato della media
+
+Torniamo all'espansione di $X^2$ e facciamo la media. La linearità permette di separare tutti gli addendi:
+
+$$
+\mathbb{E}[X^2]
+=\sum_{i=1}^n\mathbb{E}[I_i^2]
++2\sum_{1\le i<j\le n}\mathbb{E}[I_iI_j].
+$$
+
+Nella prima somma ci sono $n$ termini, tutti uguali a $p$. Nella seconda ci sono $\binom n2$ termini, tutti uguali a $p^2$. Sostituendo:
+
+$$
+\mathbb{E}[X^2]=np+2\binom n2p^2.
+$$
+
+Ora usiamo $\binom n2=n(n-1)/2$. Il fattore 2 davanti alla somma si semplifica con il denominatore 2:
+
+$$
+\mathbb{E}[X^2]
+=np+2\cdot\frac{n(n-1)}2\,p^2
+=np+n(n-1)p^2.
+$$
+
+Questo è il primo dei due termini necessari per la varianza. Per il secondo, eleviamo al quadrato la media:
+
+$$
+(\mathbb{E}[X])^2=(np)^2=n^2p^2.
+$$
+
+Sottraiamo e svolgiamo l'algebra una riga alla volta:
+
+$$
+\begin{aligned}
+\operatorname{Var}(X)
+&=\mathbb{E}[X^2]-(\mathbb{E}[X])^2\\
+&=np+n(n-1)p^2-n^2p^2\\
+&=np+(n^2-n)p^2-n^2p^2\\
+&=np+n^2p^2-np^2-n^2p^2\\
+&=np-np^2\\
+&=\boxed{np(1-p)}.
+\end{aligned}
+$$
+
+I due termini $n^2p^2$ si cancellano. Nei due termini rimasti raccogliamo $np$, ottenendo la formula finale. Poiché la varianza di ogni singolo bit è $p(1-p)$, il risultato è anche la somma delle $n$ varianze dei bit. Lo abbiamo però ricavato usando l'indipendenza: non possiamo applicare questa conclusione a qualunque somma di indicatrici.
+
+#### Passo 5 — Confrontare prove indipendenti e guasto comune
+
+Torniamo ai due modelli del laboratorio. In entrambi contiamo i fallimenti di quattro operazioni, ciascuna con probabilità di fallimento $p=0{,}2$. La media del conteggio è la stessa:
+
+$$
+\mathbb{E}[X]=4\cdot0{,}2=0{,}8.
+$$
+
+**Nel modello con operazioni indipendenti**, $X$ è binomiale. Possiamo usare la formula appena dimostrata. Prima calcoliamo $1-p=1-0{,}2=0{,}8$, poi moltiplichiamo:
+
+$$
+\begin{aligned}
+\operatorname{Var}(X)
+&=4\cdot0{,}2\cdot0{,}8\\
+&=0{,}8\cdot0{,}8\\
+&=0{,}64.
+\end{aligned}
+$$
+
+**Nel modello del guasto comune**, invece, tutte e quattro le operazioni falliscono insieme con probabilità $0{,}2$; altrimenti riescono tutte. Il conteggio può valere soltanto 0 oppure 4:
+
+| Fallimenti $x$ | 0 | 4 |
+|---|---|---|
+| $P(X=x)$ | $0{,}8$ | $0{,}2$ |
+
+Questo conteggio non è binomiale. Per trovarne la varianza torniamo alla definizione, usando la media $0{,}8$. Calcoliamo prima gli scarti e i loro quadrati:
+
+$$
+\begin{aligned}
+(0-0{,}8)^2&=(-0{,}8)^2=0{,}64,\\
+(4-0{,}8)^2&=(3{,}2)^2=10{,}24.
+\end{aligned}
+$$
+
+Ora pesiamo ciascuno scarto al quadrato con la probabilità del corrispondente conteggio:
+
+$$
+\begin{aligned}
+\operatorname{Var}(X)
+&=(0-0{,}8)^2\cdot0{,}8+(4-0{,}8)^2\cdot0{,}2\\
+&=0{,}64\cdot0{,}8+10{,}24\cdot0{,}2\\
+&=0{,}512+2{,}048\\
+&=2{,}56.
+\end{aligned}
+$$
+
+La varianza del guasto comune è quattro volte quella del modello indipendente: $2{,}56/0{,}64=4$. La media è rimasta $0{,}8$, ma nel guasto comune il conteggio salta direttamente da 0 a 4: mancano tutti i valori intermedi. Il grafico del [laboratorio della Settimana 4](../settimana_04/index.md#lab-binomiale) mostra proprio questa concentrazione agli estremi, e la varianza ne misura la maggiore dispersione attorno alla media.
+
+Possiamo anche individuare il passaggio della dimostrazione che qui cambia. Due operazioni fissate falliscono insieme con probabilità $0{,}2$, perché basta che avvenga il guasto comune. Nel modello indipendente, invece, la probabilità dei due fallimenti insieme è $0{,}2\cdot0{,}2=0{,}04$. Le probabilità singole coincidono, ma quelle congiunte sono diverse: cambiano quindi le medie dei prodotti $I_iI_j$ e, di conseguenza, la varianza del totale.
+
+**La linearità del valore atteso vale anche per variabili dipendenti; la somma delle varianze richiede ulteriori condizioni.** Per la Binomiale l'indipendenza giustifica il calcolo dei prodotti e porta a $np(1-p)$. Nel modello del guasto comune dobbiamo invece tenere conto del legame tra le operazioni.
 
 ## Atto I — Il 53 che non usciva {: #ritardatari }
 
@@ -544,34 +832,33 @@ $$
 \boxed{\mathbb{E}[X]=\lambda.}
 $$
 
-E la dispersione? Nella [Settimana 4, Lettura A](../settimana_04/index.md#varianza) abbiamo definito la **varianza** $\operatorname{Var}(X)=\mathbb{E}[(X-\mu)^2]$, la media dei quadrati degli scarti dalla media $\mu$, e abbiamo ricavato che una Binomiale ha varianza $np(1-p)$. Con $p=\lambda/n$:
-
-$$
-n\cdot\frac{\lambda}{n}\cdot\left(1-\frac{\lambda}{n}\right)=\lambda\left(1-\frac{\lambda}{n}\right).
-$$
-
-Quando $n$ cresce, la frazione $\lambda/n$ diventa trascurabile e la parentesi tende a 1. La varianza tende a $\lambda$:
+E la dispersione? Nella [sezione iniziale](#definizione-varianza) abbiamo definito la **varianza** come media degli scarti al quadrato dalla media $\mu$: $\operatorname{Var}(X)=\mathbb{E}[(X-\mu)^2]$. Per una Poisson di parametro $\lambda$ vale:
 
 $$
 \boxed{\operatorname{Var}(X)=\lambda.}
 $$
 
-Una dimostrazione diretta, che non passa dal limite, è nella [Lettura B](#media-varianza-diretta).
+**Questa proprietà e il suo significato sono richiesti all'esame; la sua derivazione è facoltativa.** Per esempio, se $X$ è Poisson con $\lambda=2$, la sua media è 2 e la sua varianza è 2.
+
+??? info "Approfondimento facoltativo — Dalla varianza binomiale a quella della Poisson"
+    Nell'[approfondimento iniziale](#varianza-binomiale) abbiamo ricavato che una Binomiale ha varianza $np(1-p)$. Con $p=\lambda/n$:
+
+    $$
+    n\cdot\frac{\lambda}{n}\cdot\left(1-\frac{\lambda}{n}\right)=\lambda\left(1-\frac{\lambda}{n}\right).
+    $$
+
+    Quando $n$ cresce, la frazione $\lambda/n$ diventa trascurabile e la parentesi tende a 1. La varianza tende a $\lambda$. Una dimostrazione diretta, che non passa dal limite, è nella [Lettura B](#media-varianza-diretta). Entrambe le derivazioni sono facoltative e non sono richieste all'esame.
 
 **Media e varianza coincidono.** È il segno di riconoscimento della Poisson, e ha una conseguenza pratica: **se un conteggio è Poisson, la sua varianza deve essere vicina alla sua media**. Si può controllare sui dati.
 
-Bortkiewicz fece esattamente questo controllo. Nel suo libro confronta la dispersione attesa dalla teoria con quella effettiva dei dati, e trova lo stesso valore, 0,61, per entrambe. Ripetiamo il conto con la tabella. La media è 0,61. La media dei **quadrati** dei conteggi è:
+Bortkiewicz fece esattamente questo controllo. Nel suo libro confronta la dispersione attesa dalla teoria con quella effettiva dei dati, e trova lo stesso valore, 0,61, per entrambe. Ripetiamo il conto con la tabella usando la definizione. La media è 0,61. Per ciascun conteggio sottraiamo la media, eleviamo lo scarto al quadrato e pesiamo con la frequenza relativa:
 
 $$
-\frac{0^2\cdot109+1^2\cdot65+2^2\cdot22+3^2\cdot3+4^2\cdot1}{200}
-=\frac{0+65+88+27+16}{200}=\frac{196}{200}=0{,}98.
+\frac{(0-0{,}61)^2\cdot109+(1-0{,}61)^2\cdot65+(2-0{,}61)^2\cdot22+(3-0{,}61)^2\cdot3+(4-0{,}61)^2\cdot1}{200}
+=0{,}6079\approx0{,}608.
 $$
 
-Usiamo l'identità della Settimana 4, $\operatorname{Var}=\mathbb{E}[X^2]-\mu^2$:
-
-$$
-0{,}98-0{,}61^2=0{,}98-0{,}3721\approx0{,}608.
-$$
+Qui descriviamo la dispersione dei 200 dati osservati: ciascuna frequenza divisa per 200 è il peso del relativo conteggio. Il procedimento è lo stesso usato per una distribuzione discreta: scarti, quadrati, media pesata.
 
 Varianza dei dati 0,608, media 0,61: il segno di riconoscimento c'è.
 
@@ -932,10 +1219,10 @@ Con $\lambda=0{,}61$ e $P(X=0)\approx0{,}5434$, calcola $P(X=1)$, $P(X=2)$ e $P(
 
 ### Esercizio 6 — La varianza dei dati {: #esercizio-6 }
 
-Dalla tabella osservata di Bortkiewicz calcola la media dei quadrati dei conteggi e la varianza. È vicina alla media 0,61? Che cosa diresti se avessi trovato una varianza di 2?
+Dalla tabella osservata di Bortkiewicz calcola la varianza usando la definizione come media degli scarti al quadrato. È vicina alla media 0,61? Che cosa diresti se avessi trovato una varianza di 2?
 
 ??? esempio-svolto "Soluzione ragionata"
-    $\mathbb{E}[X^2]=(65+4\cdot22+9\cdot3+16\cdot1)/200=196/200=0{,}98$. Varianza $0{,}98-0{,}61^2\approx0{,}608$: praticamente uguale alla media, come richiede la Poisson. Una varianza di 2, con media 0,61, sarebbe un segnale di sovradispersione: per esempio anni o corpi con rischi molto diversi, o incidenti che coinvolgono più persone insieme. La Poisson non sarebbe un buon modello.
+    La media è $\mu=0{,}61$. La definizione dà $\operatorname{Var}=[109(0-0{,}61)^2+65(1-0{,}61)^2+22(2-0{,}61)^2+3(3-0{,}61)^2+(4-0{,}61)^2]/200=0{,}6079\approx0{,}608$: praticamente uguale alla media, come richiede la Poisson. Come metodo alternativo **facoltativo**, l’identità del secondo momento dà $\mathbb{E}[X^2]=196/200=0{,}98$ e $0{,}98-0{,}61^2=0{,}6079$. Una varianza di 2, con media 0,61, sarebbe un segnale di sovradispersione: per esempio anni o corpi con rischi molto diversi, o incidenti che coinvolgono più persone insieme. La Poisson non sarebbe un buon modello.
 
 ### Esercizio 7 — Quale modello? {: #esercizio-7 }
 

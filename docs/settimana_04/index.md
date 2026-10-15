@@ -360,7 +360,7 @@ Supponiamo che un programma esegua due operazioni consecutive. La prima richiede
 
 Fin qui abbiamo descritto il costo di una singola esecuzione. Ora vogliamo conoscere il **costo medio** nel modello probabilistico degli input. Un procedimento possibile sarebbe costruire la distribuzione di $X+Y$ e applicare la definizione di valore atteso. Ma la distribuzione del totale può essere difficile da trovare, soprattutto se le due operazioni lavorano sugli stessi dati e i loro costi dipendono l'uno dall'altro.
 
-La proprietà che studiamo in questa sezione permette di procedere in un altro modo: calcolare separatamente le due medie e poi sommarle. Prima di enunciarla, vediamo perché la dipendenza non è un ostacolo.
+La proprietà che studiamo in questa sezione permette di procedere in un altro modo: calcolare separatamente le due medie e poi sommarle. Prima di enunciarla, vediamo perché la dipendenza tra $X$ e $Y$ non è un ostacolo.
 
 Prima vediamo un esempio minuscolo. Lanciamo una sola moneta onesta e associamo a questo esperimento due variabili aleatorie diverse, $X$ e $Y$. Se esce testa, assegniamo $X=1$ e $Y=0$; se esce croce, assegniamo $X=0$ e $Y=1$.
 
@@ -369,7 +369,19 @@ Prima vediamo un esempio minuscolo. Lanciamo una sola moneta onesta e associamo 
 | Testa | $1/2$ | 1 | 0 | 1 |
 | Croce | $1/2$ | 0 | 1 | 1 |
 
-Leggiamo la tabella prima per righe, poi per colonne. In ciascuna riga il totale è 1: qualunque sia l'esito della moneta, una delle due variabili vale 1 e l'altra vale 0. Perciò $X+Y$ è una variabile costante e il suo valore atteso è 1.
+Leggiamo la tabella prima per righe, poi per colonne. In ciascuna riga il totale è 1: qualunque sia l'esito della moneta, una delle due variabili vale 1 e l'altra vale 0. La somma $X+Y$ è ancora una **variabile aleatoria**, anche se in questo esempio assume sempre lo stesso valore. Per capire perché, fermiamoci sul significato di questa affermazione.
+
+Una variabile aleatoria è una funzione che associa un numero a ciascun esito dell'esperimento. Se trasformiamo quel numero mediante una regola deterministica, otteniamo ancora una funzione degli esiti, dunque una nuova variabile aleatoria. Per esempio, $2X$, $X^2$ e $X+1$ sono tutte variabili aleatorie. La regola di calcolo non deve essere casuale: è il valore a cui la applichiamo a provenire dall'esperimento aleatorio. **L'aleatorietà si eredita attraverso la trasformazione**, senza bisogno di introdurre un nuovo esperimento o una nuova fonte di casualità. Nel contesto discreto che stiamo studiando, questo vale per qualunque funzione dei valori della variabile.
+
+Lo stesso ragionamento vale per una funzione di più variabili aleatorie definite sullo stesso esperimento. Indichiamo un esito con la lettera greca $\omega$, letta «omega». La scrittura $X(\omega)$ indica il valore assegnato da $X$ a quell'esito. Nel caso della somma, a ogni esito $\omega$ associamo il numero
+
+$$
+(X+Y)(\omega)=X(\omega)+Y(\omega).
+$$
+
+Prima leggiamo i valori di $X$ e $Y$ corrispondenti a quell'esito, poi li sommiamo: anche questa è una regola che assegna un numero a ogni esito, quindi definisce una variabile aleatoria.
+
+**Essere una variabile aleatoria non significa necessariamente assumere valori diversi.** Una trasformazione può far coincidere i risultati di tutti gli esiti e produrre una **variabile aleatoria costante**. È proprio ciò che accade qui: $X$ e $Y$ cambiano con l'esito della moneta, ma la loro somma vale sempre 1. La trasformazione conserva la natura di variabile aleatoria, ma può eliminare ogni incertezza sul valore finale. Di conseguenza, anche il valore atteso di $X+Y$ è 1.
 
 Consideriamo ora le variabili separatamente. $X$ vale 1 con probabilità $1/2$ e 0 con probabilità $1/2$, quindi la sua media è $1/2$. Lo stesso vale per $Y$. Otteniamo dunque lo stesso risultato attraverso due percorsi: la media del totale è 1, e la somma delle due medie è $1/2+1/2=1$.
 
@@ -396,7 +408,40 @@ $$
 \mathbb{E}[Y]=4\cdot\frac12+2\cdot\frac12=3.
 $$
 
-La loro somma è ancora $1+3=4$. Anche qui le variabili sono dipendenti: conoscere $X$ determina $Y$. **A sommare a 1 devono essere le probabilità degli esiti, non i valori di $X$ e $Y$.**
+La loro somma è ancora $1+3=4$. Anche qui le variabili sono dipendenti: conoscere $X$ determina $Y$. **A sommare a 1 devono essere le probabilità degli esiti dell'esperimento, non i valori di $X$ e $Y$.** Qui gli esiti sono testa e croce, con probabilità $1/2+1/2=1$. Anche le probabilità dei distinti valori assunti da ciascuna variabile sommano a 1.
+
+**E se le variabili provengono da due esperimenti diversi?** Possiamo sommarle anche in quel caso, descrivendo i due esperimenti insieme. Lanciamo due monete oneste, indipendentemente. Ora chiamiamo $X$ la variabile che vale 1 se la prima dà testa e 0 altrimenti; chiamiamo $Y$ la variabile che vale 1 se la seconda dà testa e 0 altrimenti. La somma $X+Y$ conta il numero complessivo di teste.
+
+Un esito completo deve indicare che cosa accade **a entrambe le monete**. Scriviamo prima l'esito della prima e poi quello della seconda: $TC$ significa testa alla prima e croce alla seconda. Abbiamo quindi quattro esiti congiunti:
+
+| Esito congiunto | Probabilità | $X$ | $Y$ | $X+Y$ |
+|---|---|---|---|---|
+| $TT$ | $\frac12\cdot\frac12=\frac14$ | 1 | 1 | 2 |
+| $TC$ | $\frac12\cdot\frac12=\frac14$ | 1 | 0 | 1 |
+| $CT$ | $\frac12\cdot\frac12=\frac14$ | 0 | 1 | 1 |
+| $CC$ | $\frac12\cdot\frac12=\frac14$ | 0 | 0 | 0 |
+
+Perché moltiplichiamo? Ogni riga descrive l'intersezione di due eventi: per esempio, «testa alla prima **e** croce alla seconda». **È l'indipendenza a permettere di moltiplicare le loro probabilità.** Le quattro probabilità congiunte sommano a 1. Con monete truccate (e sempre indipendenti) che danno testa con probabilità rispettivamente $p$ e $q$, avremmo invece, nello stesso ordine, $pq$, $p(1-q)$, $(1-p)q$ e $(1-p)(1-q)$.
+
+Fermiamoci ora sulla colonna del totale: quattro esiti dell'esperimento producono soltanto tre valori distinti della somma. Il valore 1 compare in due righe. Per trovare la sua probabilità dobbiamo **sommare** le probabilità di quei due esiti incompatibili:
+
+$$
+P(X+Y=0)=\frac14,\qquad
+P(X+Y=1)=\frac14+\frac14=\frac12,\qquad
+P(X+Y=2)=\frac14.
+$$
+
+Anche le probabilità di questi tre valori sommano a 1. La media del totale è dunque
+
+$$
+\mathbb{E}[X+Y]=0\cdot\frac14+1\cdot\frac12+2\cdot\frac14=1.
+$$
+
+Separatamente, ciascuna variabile vale 1 con probabilità $1/2$, quindi $\mathbb{E}[X]=\mathbb{E}[Y]=1/2$. La media della somma coincide ancora con la somma delle medie.
+
+Confrontiamo questo risultato con il primo esempio. Lì $X$ e $Y$ erano legate alla stessa moneta e la somma era sempre 1; qui sono legate a due monete indipendenti e la somma può variare. **La media del totale è la stessa, ma la distribuzione è diversa.**
+
+Descrivendo i due esperimenti insieme, entrambe le variabili diventano funzioni di un unico esito congiunto. Possiamo farlo anche per esperimenti dipendenti: in quel caso dobbiamo usare le effettive probabilità congiunte, che in generale non sono il prodotto delle probabilità dei singoli esiti (dobbiamo utilizzare in questo caso la regola del prodotto). **L'indipendenza serve per calcolare le probabilità mediante quel prodotto; la regola per sommare le medie vale anche senza indipendenza.**
 
 Questa proprietà si chiama **linearità del valore atteso**. Se $a$, $b$ e $c$ sono numeri fissati, e $\mathbb{E}[|X|]<\infty$ e $\mathbb{E}[|Y|]<\infty$ (ipotesi automaticamente soddisfatte quando ciascuna variabile ha un numero finito di valori):
 
@@ -407,11 +452,11 @@ $$
 
 Non occorre che $X$ e $Y$ siano indipendenti. Ponendo $a=b=1$ e $c=0$ ritroviamo $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$. La stessa regola si applica a qualunque **somma finita** di variabili.
 
-L'esempio suggerisce la proprietà, ma non la dimostra per tutte le variabili. Per capire perché vale in generale, torniamo agli esiti completi dell'esperimento. Svolgiamo la dimostrazione su uno spazio campionario finito, così tutte le somme contengono un numero finito di termini.
+Gli esempi suggeriscono la proprietà, ma non la dimostrano per tutte le variabili. Per capire perché vale in generale, torniamo agli esiti completi dell'esperimento. Svolgiamo la dimostrazione su uno spazio campionario finito, così tutte le somme contengono un numero finito di termini.
 
-Indichiamo un esito con la lettera greca $\omega$, letta «omega». La scrittura $X(\omega)$ è il valore assegnato da $X$ a quell'esito; $P(\{\omega\})$ è la probabilità che si verifichi proprio quell'esito.
+Usiamo la notazione già introdotta: $X(\omega)$ è il valore assegnato da $X$ all'esito $\omega$. Indichiamo inoltre con $P(\{\omega\})$ la probabilità che si verifichi proprio quell'esito.
 
-Possiamo calcolare il valore atteso moltiplicando il valore di $X$ per la probabilità di ciascun esito e sommando. È lo stesso conto che abbiamo fatto con la PMF, soltanto organizzato diversamente. Nella PMF raccogliamo prima tutti gli esiti che danno lo stesso valore; qui li teniamo separati. Per esempio, nei due lanci di moneta, il contributo del valore 1 può essere scritto come $1\cdot P(X=1)$ oppure come $1\cdot P(\{TC\})+1\cdot P(\{CT\})$. Il risultato non cambia.
+Possiamo calcolare il valore atteso moltiplicando il valore di $X$ per la probabilità di ciascun esito e sommando. È lo stesso conto che abbiamo fatto con la PMF, soltanto organizzato diversamente. Nella PMF raccogliamo prima tutti gli esiti che danno lo stesso valore; qui li teniamo separati. Per esempio, nei due lanci di moneta, se $Z=X+Y$ conta le teste, il contributo del valore 1 può essere scritto come $1\cdot P(Z=1)$ oppure come $1\cdot P(\{TC\})+1\cdot P(\{CT\})$. Il risultato non cambia.
 
 Scriviamo dunque:
 

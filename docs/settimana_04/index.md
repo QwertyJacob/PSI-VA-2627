@@ -441,16 +441,18 @@ Separatamente, ciascuna variabile vale 1 con probabilità $1/2$, quindi $\mathbb
 
 Confrontiamo questo risultato con il primo esempio. Lì $X$ e $Y$ erano legate alla stessa moneta e la somma era sempre 1; qui sono legate a due monete indipendenti e la somma può variare. **La media del totale è la stessa, ma la distribuzione è diversa.**
 
-Descrivendo i due esperimenti insieme, entrambe le variabili diventano funzioni di un unico esito congiunto. Possiamo farlo anche per esperimenti dipendenti: in quel caso dobbiamo usare le effettive probabilità congiunte, che in generale non sono il prodotto delle probabilità dei singoli esiti (dobbiamo utilizzare in questo caso la regola del prodotto). **L'indipendenza serve per calcolare le probabilità mediante quel prodotto; la regola per sommare le medie vale anche senza indipendenza.**
+Descrivendo i due esperimenti insieme, entrambe le variabili diventano funzioni di un unico esito congiunto. Possiamo farlo anche per esperimenti dipendenti: in quel caso dobbiamo usare le effettive probabilità congiunte, che in generale non sono il prodotto delle probabilità dei singoli esiti (in questo caso usiamo la [regola del prodotto](../settimana_01/index.md#8-la-regola-del-prodotto-e-la-scomposizione-sequenziale), $P(A\cap B)=P(A)\,P(B\mid A)$). **L'indipendenza serve per calcolare le probabilità mediante quel prodotto; la regola per sommare le medie vale anche senza indipendenza.**
 
-Questa proprietà si chiama **linearità del valore atteso**. Se $a$, $b$ e $c$ sono numeri fissati, e $\mathbb{E}[|X|]<\infty$ e $\mathbb{E}[|Y|]<\infty$ (ipotesi automaticamente soddisfatte quando ciascuna variabile ha un numero finito di valori):
+!!! important "Linearità del valore atteso"
 
-$$
-\boxed{\mathbb{E}[aX+bY+c]
-=a\mathbb{E}[X]+b\mathbb{E}[Y]+c.}
-$$
+    Se $a$, $b$ e $c$ sono numeri fissati, e $\mathbb{E}[|X|]<\infty$ e $\mathbb{E}[|Y|]<\infty$ (ipotesi automaticamente soddisfatte quando ciascuna variabile ha un numero finito di valori):
 
-Non occorre che $X$ e $Y$ siano indipendenti. Ponendo $a=b=1$ e $c=0$ ritroviamo $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$. La stessa regola si applica a qualunque **somma finita** di variabili.
+    $$
+    \boxed{\mathbb{E}[aX+bY+c]
+    =a\mathbb{E}[X]+b\mathbb{E}[Y]+c.}
+    $$
+
+    Non occorre che $X$ e $Y$ siano indipendenti. Ponendo $a=b=1$ e $c=0$ ritroviamo $\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$. La stessa regola si applica a qualunque **somma finita** di variabili.
 
 Gli esempi suggeriscono la proprietà, ma non la dimostrano per tutte le variabili. Per capire perché vale in generale, torniamo agli esiti completi dell'esperimento. Svolgiamo la dimostrazione su uno spazio campionario finito, così tutte le somme contengono un numero finito di termini.
 

@@ -546,6 +546,132 @@
           </div>
         </section>
       </section>
+      
+      
+      <!-- Slide: Animazione della regola del prodotto -->
+      <section style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; min-height: 100vh; padding: 2rem; box-sizing: border-box;">
+    <h2 class="scene-title" style="font-family: 'Segoe UI', Roboto, sans-serif; color: #F8FAFC; margin-bottom: 24px; text-align: center;">La regola del prodotto</h2>
+    
+    <div class="scene-grid" style="display: flex; justify-content: center; align-items: center; width: 100%;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="auto" style="max-width: 800px; display: block;">
+  <!-- Sfondo dell'animazione -->
+  <rect width="100%" height="100%" fill="#191919" />
+
+  <!-- Stili CSS per l'animazione e il layout -->
+  <style>
+    .title { font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; font-size: 18px; fill: #A0A0A0; font-weight: 500; letter-spacing: 0.5px; }
+    .math-text { font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 36px; fill: #FFFFFF; font-style: italic; }
+    .math-op { font-style: normal; font-family: 'Cambria Math', 'Times New Roman', serif; }
+    .caption { font-family: 'Segoe UI', Roboto, sans-serif; font-size: 15px; fill: #38BDF8; font-weight: bold; }
+    
+    /* Gestione della visibilità dei titoli e dei box nelle diverse fasi */
+    .fade-in-init {
+      animation: fadeInOut 12s infinite;
+    }
+    .fade-in-final {
+      animation: fadeInFinal 12s infinite;
+    }
+    
+    @keyframes fadeInOut {
+      0%, 45% { opacity: 1; }
+      55%, 100% { opacity: 0.3; }
+    }
+    
+    @keyframes fadeInFinal {
+      0%, 45% { opacity: 0.2; }
+      55%, 100% { opacity: 1; }
+    }
+  </style>
+
+  <!-- Definizione dei marcatori (punta della freccia) -->
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38BDF8" />
+    </marker>
+  </defs>
+
+  <!-- ================= BLOCCO 1: Dalla definizione di condizionata ================= -->
+  <g transform="translate(50, 40)" class="fade-in-init">
+    <rect width="700" height="130" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,4" rx="8" />
+    <text x="30" y="35" class="title">Dalla definizione di condizionata:</text>
+  </g>
+
+  <!-- ================= BLOCCO 2: P(B) si sposta a sinistra ================= -->
+  <g transform="translate(50, 280)" class="fade-in-final">
+    <rect width="700" height="130" fill="none" stroke="#0EA5E9" stroke-width="2" rx="8" />
+    <text x="30" y="35" class="title" fill="#0EA5E9">P(B) si sposta a sinistra:</text>
+  </g>
+
+  <!-- ================= CORPO CENTRALE DELLE FORMULE CON ANIMAZIONE ================= -->
+  <g class="math-text">
+    
+    <!-- Elementi statici o a comparsa ritardata della formula finale (Riga inferiore) -->
+    <!-- Segno di moltiplicazione (·) -->
+    <text x="262" y="360" class="math-op" opacity="0">
+      .
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5;0.55;1" dur="12s" repeatCount="indefinite" />
+    </text>
+    
+    <!-- P(A|B) che compare nella riga inferiore -->
+    <text x="285" y="360" opacity="0">
+      P(A<tspan class="math-op">|</tspan>B)
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5;0.55;1" dur="12s" repeatCount="indefinite" />
+    </text>
+    
+    <!-- Segno Uguale (=) inferiore -->
+    <text x="410" y="360" class="math-op" opacity="0">
+      =
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5;0.55;1" dur="12s" repeatCount="indefinite" />
+    </text>
+    
+    <!-- P(A ∩ B) finale che si posiziona dopo l'uguale -->
+    <text x="460" y="360" opacity="0">
+      P(A <tspan class="math-op">∩</tspan> B)
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.5;0.55;1" dur="12s" repeatCount="indefinite" />
+    </text>
+
+    <!-- Elementi che appartengono alla formula superiore e che cambiano/spariscono -->
+    <!-- P(A|B) iniziale (Riga superiore) -->
+    <g>
+      <text x="250" y="125">P(A<tspan class="math-op">|</tspan>B)</text>
+      <!-- Uguale iniziale -->
+      <text x="365" y="125" class="math-op">=</text>
+      <!-- Linea di frazione iniziale -->
+      <line x1="410" y1="113" x2="550" y2="113" stroke="#FFFFFF" stroke-width="2" id="fraction-line" />
+      <!-- Numeratore iniziale P(A ∩ B) -->
+      <text x="425" y="100">P(A <tspan class="math-op">∩</tspan> B)</text>
+      
+      <!-- Opacità di questo blocco che si attenua quando l'animazione si sposta sotto -->
+      <animate attributeName="opacity" values="1;1;0.3;0.3" keyTimes="0;0.45;0.55;1" dur="12s" repeatCount="indefinite" />
+    </g>
+
+    <!-- L'ELEMENTO IN MOVIMENTO: P(B) -->
+    <g fill="#F43F5E">
+      <text x="0" y="0">
+        P(B)
+        <!-- Animazione del movimento spaziale lungo l'asse X e Y -->
+        <!-- Parte dal denominatore (460, 142) e va a sinistra in basso (185, 360) -->
+        <animate attributeName="x" values="460;460;185;185" keyTimes="0;0.2;0.45;1" dur="12s" repeatCount="indefinite" />
+        <animate attributeName="y" values="142;142;360;360" keyTimes="0;0.2;0.45;1" dur="12s" repeatCount="indefinite" />
+        <!-- Cambio di dimensione temporaneo per dare enfasi al movimento -->
+        <animate attributeName="font-size" values="36;36;40;36;36" keyTimes="0;0.2;0.32;0.45;1" dur="12s" repeatCount="indefinite" />
+      </text>
+    </g>
+  </g>
+
+  <!-- ================= ELEMENTI DI TRANSIZIONE (Freccia guidata e Testo) ================= -->
+  <!-- La freccia tratteggiata compare solo durante la fase di movimento (tra il secondo 2 e 5.4 del ciclo) -->
+  <g opacity="0">
+    <path d="M 485,160 C 485,220 220,220 210,310" fill="none" stroke="#38BDF8" stroke-width="2.5" stroke-dasharray="4,4" marker-end="url(#arrow)" />
+    <text x="400" y="230" class="caption" text-anchor="middle">Moltiplicando per P(B) a destra e sinistra</text>
+    
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.15;0.2;0.45;0.5;1" dur="12s" repeatCount="indefinite" />
+  </g>
+</svg>
+
+        </div>
+      </section>
+      
 
       <!-- Atto I • La regola del prodotto: l'albero (scena animata: js/atto1-condizionata.js) -->
       <section id="prodotto">

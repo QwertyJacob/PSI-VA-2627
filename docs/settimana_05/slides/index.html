@@ -57,9 +57,34 @@
       <aside class="notes">Il voto meritato è 24 (linea rossa). Ogni revisore è una variabile aleatoria: le barre sono la PMF del voto che darebbe. Click: 1 A, 2 B, 3 C. Prima del click 4 chiedi «quale revisore scegliete?» e fai motivare. C è da scartare: sbaglia in media (dà 21). Tra A e B quasi tutti scelgono B; il click 4 mostra i fulcri: A e B hanno media 24. 5 la frase: la media non distingue A da B. Che cosa le distingue? Quanto la massa è sparpagliata attorno al centro: la dispersione.</aside>
     </section>
 
-    <!-- V-03 · 13: due pagamenti, scarti e quadrati (denso) -->
+    <!-- V-02b · 13–15: il biglietto di Huygens (usa i 2′ della V-06) -->
+    <section id="huygens">
+      <p class="badge">13′ · Prologo · Il biglietto di Huygens</p>
+      <h2 class="scene-title">5 euro in mano, o il biglietto?</h2>
+      <p class="hy-recall">Venerdì, con Huygens (1657): un biglietto vale il suo <b>pagamento medio</b>.</p>
+      <div class="ab-grid hy-grid">
+        <div class="ab-col fragment" data-fragment-index="1">
+          <h3>A · IN MANO</h3>
+          <p>5 € certi</p>
+          <b>5 €</b>
+          <small>sempre</small>
+        </div>
+        <div class="hy-vs fragment" data-fragment-index="4">stesso<br>valore</div>
+        <div class="ab-col fragment" data-fragment-index="2">
+          <h3>B · IL BIGLIETTO</h3>
+          <p>testa 10 €, croce 0 €</p>
+          <div class="fragment" data-fragment-index="3"><b>5 €</b><small>metà 0 €, metà 10 €</small></div>
+        </div>
+      </div>
+      <p class="hy-ask fragment" data-fragment-index="5">Quale scegliete? Alzate la mano.</p>
+      <p class="hy-gap fragment" data-fragment-index="6">Il criterio di Huygens guarda il centro. Ma B non paga mai 5 €: <b>paga 0 o 10</b>.</p>
+      <p class="hy-next fragment" data-fragment-index="7">Quanto ci si allontana dal centro? Diamogli un numero.</p>
+      <aside class="notes">Due minuti. Aggancio alla S4: venerdì il biglietto di Huygens (0 o 8 €, premio con probabilità 1/4) valeva 2 €, il pagamento medio. Oggi lo stesso criterio su un biglietto più semplice. Click: 1 A, 5 € in mano. 2 B, il biglietto: prima del click 3 chiedi «quanto vale B per Huygens?» e fai fare il conto a voce. 3 il 5 € di B. 4 «stesso valore»: per Huygens A e B sono lo stesso affare. 5 alzata di mano: di solito la maggioranza sceglie A, qualcuno B; chiedi il perché a uno per parte. Non c'è risposta giusta: è una preferenza, e la matematica non la impone. 6 il punto: il valore equo vede solo il centro, ma B non paga mai 5 € (come il dado non dà mai 3,5). 7 la differenza tra A e B è quanto ci si allontana dal centro: la slide successiva le dà un numero, e scopriremo che per A vale 0. Se chiedono perché molti preferiscono A: lo studierà Daniel Bernoulli nel 1738 (l'utilità); fuori programma. Tempo: questa slide usa i 2′ della V-06 (tre PMF), che ora si mostra solo se sei in anticipo.</aside>
+    </section>
+
+    <!-- V-03 · 15: due pagamenti, scarti e quadrati (denso) -->
     <section id="pagamenti">
-      <p class="badge">13′ · Prologo · Misurare la dispersione</p>
+      <p class="badge">15′ · Prologo · Misurare la dispersione</p>
       <h2 class="scene-title">Due pagamenti con lo stesso centro</h2>
       <div class="scene-grid">
         <svg class="scene-svg" width="660" height="450" viewBox="0 0 660 450" role="img" aria-label="Pagamento A: sempre 5 euro. Pagamento B: 0 o 10 euro con probabilità un mezzo. Entrambi hanno media 5. Gli scarti di B sono meno 5 e più 5 e si cancellano; i loro quadrati sono due quadrati di area 25, la cui media è 25"></svg>
@@ -73,12 +98,12 @@
           </ol>
         </div>
       </div>
-      <aside class="notes">L'esempio della dispensa. Click: 1 i fulcri: media 5 per entrambi (μ, «mu»); 2 gli scarti di B: −5 e +5, il segno dice sotto o sopra il centro; 3 prima del click chiedi «e se facessimo la media degli scarti?»: si cancellano, fa 0. Vale sempre: E[X − μ] = μ − μ = 0 (linearità della S4). Anche A dà 0: la media degli scarti non distingue niente. 4 togliamo il segno elevando al quadrato: lo scarto diventa l'area di un quadrato di lato 5; raddoppiare la distanza quadruplica il contributo. 5 la media dei quadrati: 25. Per A ogni scarto è 0, quindi 0.</aside>
+      <aside class="notes">L'esempio della dispensa: A e B sono i due pagamenti della slide di Huygens. Click: 1 i fulcri: media 5 per entrambi (μ, «mu»), già visto con Huygens, quindi veloce; 2 gli scarti di B: −5 e +5, il segno dice sotto o sopra il centro; 3 prima del click chiedi «e se facessimo la media degli scarti?»: si cancellano, fa 0. Vale sempre: E[X − μ] = μ − μ = 0 (linearità della S4). Anche A dà 0: la media degli scarti non distingue niente. 4 togliamo il segno elevando al quadrato: lo scarto diventa l'area di un quadrato di lato 5; raddoppiare la distanza quadruplica il contributo. 5 la media dei quadrati: 25. Per A ogni scarto è 0, quindi 0.</aside>
     </section>
 
-    <!-- V-04 · 19: la definizione -->
+    <!-- V-04 · 21: la definizione -->
     <section id="definizione-varianza">
-      <p class="badge">19′ · Prologo · La definizione</p>
+      <p class="badge">21′ · Prologo · La definizione</p>
       <h2 class="scene-title">Varianza: la media degli scarti al quadrato</h2>
       <div class="s05-box vd-def">$$\operatorname{Var}(X)=\mathbb{E}\big[(X-\mu)^2\big]=\sum_x(x-\mu)^2\,p_X(x)$$</div>
       <div class="vd-grid">
@@ -101,9 +126,9 @@
       <aside class="notes">La definizione resta alla lavagna per tutta la settimana. Click 1–4: la procedura in quattro passi, falla dire alla classe usando B. 5 la tabella della dispensa. 6 l'errore tipico: (x − μ)·p² oppure x²·p senza togliere la media. Per chi conosce già E[X²] − μ²: è nella Lettura C, facoltativa; in aula si usa la definizione.</aside>
     </section>
 
-    <!-- V-05 · 22: unità e deviazione standard -->
+    <!-- V-05 · 24: unità e deviazione standard -->
     <section id="deviazione-standard">
-      <p class="badge">22′ · Prologo · Le unità</p>
+      <p class="badge">24′ · Prologo · Le unità</p>
       <h2 class="scene-title">Euro al quadrato?</h2>
       <p class="un-big">$\operatorname{Var}(B)=25\ \text{euro}^{\color{#ff6b6b}{2}}$</p>
       <div class="un-sd fragment"><div class="s05-box">$$\sigma_X=\sqrt{\operatorname{Var}(X)}\qquad\sigma_B=\sqrt{25}=\color{#38ef7d}{5\ \text{euro}}$$</div><p>deviazione standard: torna nelle unità di $X$</p></div>
@@ -115,12 +140,12 @@
       <aside class="notes">Chiedi «25 che cosa?»: gli scarti sono in euro, i quadrati in euro². 25 non è un pagamento di 25 euro. Click: 1 la deviazione standard, 5 euro: qui ogni pagamento dista proprio 5 dalla media; in generale σ è una scala della dispersione, non la media delle distanze. 2–3 le due proprietà. 4 la verifica della dispensa, a voce: media 2 (mai osservata), scarti ±1, Var = 1, σ = 1.</aside>
     </section>
 
-    <!-- V-06 · 24–26 (S): tre PMF, stessa media -->
+    <!-- V-06 · (S) solo in anticipo: tre PMF, stessa media; i suoi 2′ vanno alla V-02b -->
     <section id="tre-pmf">
-      <p class="badge">24′ · Facoltativo · Ordinare per dispersione</p>
+      <p class="badge">Facoltativo · solo se in anticipo · Ordinare per dispersione</p>
       <h2 class="scene-title">Stessa media, tre dispersioni</h2>
       <svg class="scene-svg" width="1100" height="450" viewBox="0 0 1100 450" role="img" aria-label="Tre PMF sui valori da 1 a 5, tutte con media 3: uniforme con varianza 2, a campana con varianza 1,2, stretta con varianza 0,4"></svg>
-      <aside class="notes">Sacrificabile (24–26). Click: 1 i fulcri: tutte e tre hanno media 3 (simmetriche). Prima del click 2 chiedi «quale ha la varianza più grande? E la più piccola?»: ordinano a occhio. 2 i valori: 2; 1,2; 0,4 (fai verificare la terza: 1·0,2 + 0 + 1·0,2 = 0,4). 3 le deviazioni standard. Più massa lontano dal centro, più varianza.</aside>
+      <aside class="notes">Sacrificabile: i suoi due minuti ora vanno alla slide di Huygens; mostrala solo se sei in anticipo. Click: 1 i fulcri: tutte e tre hanno media 3 (simmetriche). Prima del click 2 chiedi «quale ha la varianza più grande? E la più piccola?»: ordinano a occhio. 2 i valori: 2; 1,2; 0,4 (fai verificare la terza: 1·0,2 + 0 + 1·0,2 = 0,4). 3 le deviazioni standard. Più massa lontano dal centro, più varianza.</aside>
     </section>
 
     <!-- V-07 · 26: controllo c0 -->
@@ -480,9 +505,36 @@
       <aside class="notes">Una domanda per click; nessuna risposta sulla slide. Fai scrivere la fila a uno studente. Risposte: (1) (1 − p)²p; (2) le prove successive sono indipendenti e identiche: la situazione è quella di partenza; (3) 18; (4) un passato di fallimenti non cambia la distribuzione dell'attesa che resta.</aside>
     </section>
 
-    <!-- L2-02 · 10: il registro di Bortkiewicz -->
+    <!-- L2-02a · 10–13: una formula senza dati (Poisson, 1837) -->
+    <section id="poisson-1837">
+      <p class="badge">10′ · Atto III · Una formula senza dati</p>
+      <div class="rg-grid">
+        <figure class="rg-portrait">
+          <img src="img/poisson.jpg" alt="Ritratto di Siméon-Denis Poisson, litografia di Delpech">
+          <figcaption>Siméon-Denis Poisson<br>(1781–1840)</figcaption>
+        </figure>
+        <div>
+          <p class="rg-book">Recherches sur la probabilité des jugements, Parigi 1837</p>
+          <p class="ps-q">La domanda del libro: quanto è probabile che una giuria sbagli?</p>
+          <ol class="ps-steps">
+            <li class="fragment">Dentro, poche pagine su un caso speciale: <b class="model">moltissime prove</b>, ciascuna <b class="model">quasi impossibile</b>.</li>
+            <li class="fragment">Ne esce una formula. Per ora è solo un risultato di calcolo: nessun dato accanto.</li>
+            <li class="fragment">Nello stesso libro Poisson dà un nome a un’idea: la <b>legge dei grandi numeri</b>. Su moltissime prove, le frequenze si stabilizzano.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="ps-time fragment">
+        <span class="ps-end model">1837 · la formula</span>
+        <span class="ps-gap">61 anni</span>
+        <span class="ps-end data">1898 · i dati</span>
+      </div>
+      <p class="ps-next fragment">Il libro di Bortkiewicz si intitola <i>la legge dei <b>piccoli</b> numeri</i>: anche gli eventi rari hanno una regola.</p>
+      <aside class="notes">Tre minuti, solo racconto: nessuna formula in vista, la costruiamo oggi. Apri con la domanda del libro: Poisson studia quanto ci si può fidare del verdetto di una giuria. Click: 1 dentro il libro, quasi di passaggio, un caso speciale: tante prove, ognuna quasi impossibile. Chiedi «vi ricorda qualcosa?»: è il regime della Binomiale con n enorme e p minuscolo, quello di oggi. 2 ne esce una formula, ma resta un risultato di calcolo: nel libro non la confronta con dei conteggi. 3 il nome: «loi des grands nombres». In parole: lanciando una moneta moltissime volte, la frazione di teste si avvicina a 1/2 (l'idea frequentista della S1). Si studia nella Settimana 8: qui basta il nome. 4 la linea del tempo: la formula nel 1837, il confronto con dati reali di Bortkiewicz nel 1898. 5 il titolo «Das Gesetz der kleinen Zahlen» richiama quello di Poisson: grandi numeri → frequenze stabili; piccoli numeri (pochi eventi, rari) → anche loro seguono una regola. Lo vedremo con i suoi dati. Se qualcuno lo sa: de Moivre aveva già la stessa approssimazione nel 1711, e Poisson la considerava un risultato minore. Fonti: Poisson, Recherches (1837); per il titolo, Encyclopedia of Mathematics, voce «Bortkiewicz»: il titolo richiama, non contrappone, la legge di Poisson. La chiusura dell'arco è al 56′ (109 contro 108,7).</aside>
+    </section>
+
+    <!-- L2-02 · 13: il registro di Bortkiewicz -->
     <section id="registro">
-      <p class="badge">10′ · Atto III · I calci di cavallo</p>
+      <p class="badge">13′ · Atto III · I calci di cavallo</p>
       <div class="rg-grid">
         <figure class="rg-portrait">
           <img src="img/bortkiewicz.jpg" alt="Ritratto di Ladislaus von Bortkiewicz, circa 1910">
@@ -589,7 +641,7 @@
         <tbody><tr><td class="cn-obs"><span class="fragment" data-fragment-index="2">109</span></td><td class="cn-exp"><span class="fragment" data-fragment-index="1">108,7</span></td></tr></tbody>
       </table>
       <p class="cn-quote fragment" data-fragment-index="3">«… nichts zu wünschen übrig.»<small>Bortkiewicz 1898, p. 25</small></p>
-      <aside class="notes">Click: 1 l'atteso 108,7; 2 l'osservato 109, in blu. Silenzio di qualche secondo: un numero ha previsto un dato del 1898. 3 la citazione: l'accordo tra teoria ed esperienza «non lascia nulla a desiderare» (traduzione dal tedesco). Controllo c4 al 58.</aside>
+      <aside class="notes">Click: 1 l'atteso 108,7; 2 l'osservato 109, in blu. Silenzio di qualche secondo: un numero ha previsto un dato del 1898. Chiudi l'arco del 10′: la formula del 1837 incontra i dati del 1898. 3 la citazione: l'accordo tra teoria ed esperienza «non lascia nulla a desiderare» (traduzione dal tedesco). Controllo c4 al 58.</aside>
     </section>
 
     <!-- L2-10 · 58: controllo c4 -->

@@ -1,3 +1,5 @@
 esercizi_time.jpg: immagine del docente, copia di settimana_04/slides/img.
 bortkiewicz.jpg: Ladislaus von Bortkiewicz, circa 1910, autore ignoto. Pubblico dominio.
   Wikimedia Commons, File:Ladislaus_Bortkiewicz.jpg (da MacTutor History of Mathematics).
+poisson.jpg: Siméon-Denis Poisson, litografia di François-Séraphin Delpech da Nicolas Eustache Maurin, prima del 1840. Pubblico dominio.
+  Wikimedia Commons, File:Simeon_Poisson_crop.jpg (miniatura 500 px).

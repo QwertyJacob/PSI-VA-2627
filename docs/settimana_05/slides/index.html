@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <title>PSI 26/27 — Settimana 5: Geometrica e Poisson</title>
+  <title>PSI 26/27 — Settimana 5: Varianza, Geometrica e Poisson</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="../../assets/slides/deck.js"></script>
   <link rel="stylesheet" href="css/settimana.css">
@@ -16,11 +16,11 @@
     <section id="lezione-1">
       <p class="cover-week">Settimana 5</p>
       <h2 class="cover-title">Quanto bisogna aspettare?</h2>
-      <div class="cover-acts"><span>Geometrica e Poisson</span><span>Lezione 1</span><span>mercoledì 21 ottobre</span></div>
-      <aside class="notes">Resta proiettata durante l'ingresso. Si passa subito al riepilogo della Settimana 4.</aside>
+      <div class="cover-acts"><span>Varianza e Geometrica</span><span>Lezione 1</span><span>mercoledì 21 ottobre</span></div>
+      <aside class="notes">Resta proiettata durante l'ingresso. Si passa subito al riepilogo della Settimana 4. Con il prologo sulla varianza la lezione è piena: le slide facoltative (S) si saltano di norma.</aside>
     </section>
 
-    <!-- L1-01 · 0–15: riepilogo S4 -->
+    <!-- L1-01 · 0–8: riepilogo S4 -->
     <section id="riepilogo-s4">
       <p class="badge">0′ · Riepilogo · Settimana 4</p>
       <h2 class="scene-title">Quattro domande da venerdì</h2>
@@ -33,20 +33,147 @@
         </div>
         <div class="rq-board">risposte alla lavagna</div>
       </div>
-      <p class="rq-bridge fragment">Oggi: niente $n$ fissato. Ci fermiamo al primo successo.</p>
-      <aside class="notes">Una domanda per click: chiedi, attendi una risposta dalla classe, poi la scrivi alla lavagna. Risposte: (1) il baricentro dei valori pesati dalla PMF; (2) no, la media può essere un valore impossibile; (3) sì, la linearità non chiede indipendenza; (4) n prove, stesso p, indipendenti; media np. Niente varianza: la riprende la L2. Click 5: la frase ponte.</aside>
+      <p class="rq-bridge fragment">Due distribuzioni, stesso fulcro: che cosa le distingue?</p>
+      <aside class="notes">Una domanda per click: chiedi, attendi una risposta dalla classe, poi la scrivi alla lavagna. Risposte: (1) il baricentro dei valori pesati dalla PMF; (2) no, la media può essere un valore impossibile; (3) sì, la linearità non chiede indipendenza; (4) n prove, stesso p, indipendenti; media np. Otto minuti in tutto. Click 5: la frase ponte, che richiama i due fulcri sullo stesso punto 0,8 della S4; si apre il prologo sulla varianza.</aside>
     </section>
 
-    <!-- L1-02 · 15: il 53 di Venezia -->
+    <!-- ───── Prologo · la varianza (dispensa: «Prima di proseguire»). Scene: js/varianza.js ───── -->
+
+    <!-- V-01 · 8: Mark Twain -->
+    <section id="twain">
+      <p class="badge">8′ · Prologo · La media non basta</p>
+      <blockquote class="tw-quote">«Ci sono tre tipi di bugie: le bugie, le bugie maledette…<span class="fragment"> e le statistiche.»</span></blockquote>
+      <p class="tw-who">resa celebre da Mark Twain</p>
+      <p class="tw-moral fragment">Un solo numero può nascondere molto: anche la media.</p>
+      <aside class="notes">Trenta secondi. Click: 1 la chiusa della citazione; 2 la morale. Se chiedono l'autore: Twain la riporta nella sua autobiografia (1906–1907) attribuendola a Disraeli, ma non c'è prova che Disraeli l'abbia detta; le prime versioni sono del 1891–1895 (Mackay, Balfour, Courtney) e l'autore è ignoto (Quote Investigator, 2022). Aggancio alla S4: i due fulcri sullo stesso punto 0,8 con distribuzioni diverse. Oggi diamo un numero a quella differenza.</aside>
+    </section>
+
+    <!-- V-02 · 9: i tre revisori -->
+    <section id="revisori">
+      <p class="badge">9′ · Prologo · Quando la media ci tradisce</p>
+      <h2 class="scene-title">Chi corregge il tuo esame?</h2>
+      <svg class="scene-svg" width="1100" height="440" viewBox="0 0 1100 440" role="img" aria-label="Tre revisori A, B, C: la PMF del voto che darebbero, da 18 a 30, con il voto meritato 24 tratteggiato in rosso. A è larga attorno a 24, B stretta attorno a 24, C stretta attorno a 21. A e B hanno media 24, C ha media 21"></svg>
+      <p class="rv-cap">A e B hanno la <b class="highlight">stessa media</b>: con la sola media non sapresti scegliere.</p>
+      <aside class="notes">Il voto meritato è 24 (linea rossa). Ogni revisore è una variabile aleatoria: le barre sono la PMF del voto che darebbe. Click: 1 A, 2 B, 3 C. Prima del click 4 chiedi «quale revisore scegliete?» e fai motivare. C è da scartare: sbaglia in media (dà 21). Tra A e B quasi tutti scelgono B; il click 4 mostra i fulcri: A e B hanno media 24. 5 la frase: la media non distingue A da B. Che cosa le distingue? Quanto la massa è sparpagliata attorno al centro: la dispersione.</aside>
+    </section>
+
+    <!-- V-03 · 13: due pagamenti, scarti e quadrati (denso) -->
+    <section id="pagamenti">
+      <p class="badge">13′ · Prologo · Misurare la dispersione</p>
+      <h2 class="scene-title">Due pagamenti con lo stesso centro</h2>
+      <div class="scene-grid">
+        <svg class="scene-svg" width="660" height="450" viewBox="0 0 660 450" role="img" aria-label="Pagamento A: sempre 5 euro. Pagamento B: 0 o 10 euro con probabilità un mezzo. Entrambi hanno media 5. Gli scarti di B sono meno 5 e più 5 e si cancellano; i loro quadrati sono due quadrati di area 25, la cui media è 25"></svg>
+        <div class="scene-panel pg-panel">
+          <ol class="scene-steps">
+            <li>Stessa media: $\mu=5$ €</li>
+            <li>Scarto dalla media: $x-\mu$</li>
+            <li>Media degli scarti: <b class="red">sempre 0</b></li>
+            <li>Al quadrato: $(-5)^2=(+5)^2=25$</li>
+            <li>Media dei quadrati:<br>$\operatorname{Var}(B)=\color{#38ef7d}{25}$, $\;\operatorname{Var}(A)=0$</li>
+          </ol>
+        </div>
+      </div>
+      <aside class="notes">L'esempio della dispensa. Click: 1 i fulcri: media 5 per entrambi (μ, «mu»); 2 gli scarti di B: −5 e +5, il segno dice sotto o sopra il centro; 3 prima del click chiedi «e se facessimo la media degli scarti?»: si cancellano, fa 0. Vale sempre: E[X − μ] = μ − μ = 0 (linearità della S4). Anche A dà 0: la media degli scarti non distingue niente. 4 togliamo il segno elevando al quadrato: lo scarto diventa l'area di un quadrato di lato 5; raddoppiare la distanza quadruplica il contributo. 5 la media dei quadrati: 25. Per A ogni scarto è 0, quindi 0.</aside>
+    </section>
+
+    <!-- V-04 · 19: la definizione -->
+    <section id="definizione-varianza">
+      <p class="badge">19′ · Prologo · La definizione</p>
+      <h2 class="scene-title">Varianza: la media degli scarti al quadrato</h2>
+      <div class="s05-box vd-def">$$\operatorname{Var}(X)=\mathbb{E}\big[(X-\mu)^2\big]=\sum_x(x-\mu)^2\,p_X(x)$$</div>
+      <div class="vd-grid">
+        <ol class="vd-steps">
+          <li class="fragment">trova la media $\mu$</li>
+          <li class="fragment">sottraila a ogni valore</li>
+          <li class="fragment">eleva ogni scarto al quadrato</li>
+          <li class="fragment">pesa con le probabilità e somma</li>
+        </ol>
+        <table class="s05-table vd-table fragment">
+          <thead><tr><th>$x$</th><th>$p_B(x)$</th><th>$x-5$</th><th>$(x-5)^2$</th><th>contributo</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>$\tfrac12$</td><td>$-5$</td><td>25</td><td>$\tfrac{25}{2}$</td></tr>
+            <tr><td>10</td><td>$\tfrac12$</td><td>$+5$</td><td>25</td><td>$\tfrac{25}{2}$</td></tr>
+            <tr class="vd-tot"><td colspan="4" class="rowhead">somma</td><td>25</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="vd-warn fragment">Al quadrato vanno gli <b>scarti</b>, non le probabilità.</p>
+      <aside class="notes">La definizione resta alla lavagna per tutta la settimana. Click 1–4: la procedura in quattro passi, falla dire alla classe usando B. 5 la tabella della dispensa. 6 l'errore tipico: (x − μ)·p² oppure x²·p senza togliere la media. Per chi conosce già E[X²] − μ²: è nella Lettura C, facoltativa; in aula si usa la definizione.</aside>
+    </section>
+
+    <!-- V-05 · 22: unità e deviazione standard -->
+    <section id="deviazione-standard">
+      <p class="badge">22′ · Prologo · Le unità</p>
+      <h2 class="scene-title">Euro al quadrato?</h2>
+      <p class="un-big">$\operatorname{Var}(B)=25\ \text{euro}^{\color{#ff6b6b}{2}}$</p>
+      <div class="un-sd fragment"><div class="s05-box">$$\sigma_X=\sqrt{\operatorname{Var}(X)}\qquad\sigma_B=\sqrt{25}=\color{#38ef7d}{5\ \text{euro}}$$</div><p>deviazione standard: torna nelle unità di $X$</p></div>
+      <ul class="un-facts">
+        <li class="fragment">$\operatorname{Var}(X)\ge0$: è una media di quadrati</li>
+        <li class="fragment">$\operatorname{Var}(X)=0$ solo se $X$ è sempre uguale alla sua media (come $A$)</li>
+      </ul>
+      <p class="un-try fragment">Prova: $Y$ vale 1 o 3, con probabilità $\tfrac12$ ciascuno. Media? Varianza?</p>
+      <aside class="notes">Chiedi «25 che cosa?»: gli scarti sono in euro, i quadrati in euro². 25 non è un pagamento di 25 euro. Click: 1 la deviazione standard, 5 euro: qui ogni pagamento dista proprio 5 dalla media; in generale σ è una scala della dispersione, non la media delle distanze. 2–3 le due proprietà. 4 la verifica della dispensa, a voce: media 2 (mai osservata), scarti ±1, Var = 1, σ = 1.</aside>
+    </section>
+
+    <!-- V-06 · 24–26 (S): tre PMF, stessa media -->
+    <section id="tre-pmf">
+      <p class="badge">24′ · Facoltativo · Ordinare per dispersione</p>
+      <h2 class="scene-title">Stessa media, tre dispersioni</h2>
+      <svg class="scene-svg" width="1100" height="450" viewBox="0 0 1100 450" role="img" aria-label="Tre PMF sui valori da 1 a 5, tutte con media 3: uniforme con varianza 2, a campana con varianza 1,2, stretta con varianza 0,4"></svg>
+      <aside class="notes">Sacrificabile (24–26). Click: 1 i fulcri: tutte e tre hanno media 3 (simmetriche). Prima del click 2 chiedi «quale ha la varianza più grande? E la più piccola?»: ordinano a occhio. 2 i valori: 2; 1,2; 0,4 (fai verificare la terza: 1·0,2 + 0 + 1·0,2 = 0,4). 3 le deviazioni standard. Più massa lontano dal centro, più varianza.</aside>
+    </section>
+
+    <!-- V-07 · 26: controllo c0 -->
+    <section id="sondaggio-c0" class="sondaggio" data-poll="s05-c0">
+      <p class="badge">26′ · Controllo comprensione · 1′</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>varianza</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, rifai la tabella di B alla lavagna prima dell'esercizio.</aside>
+    </section>
+
+    <!-- V-08 · 27–33: Esercizio 0 -->
+    <section id="esercizio-0">
+      <p class="badge">27′ · Esercizio 0 · gruppi di 3–4</p>
+      <h2 class="scene-title">La varianza di un dado</h2>
+      <div class="e5-grid">
+        <div class="ex-text">
+          <p class="ex-lead">$X$ = faccia di un dado equo.</p>
+          <ol>
+            <li>$\mu=\mathbb{E}[X]$?</li>
+            <li>$\operatorname{Var}(X)$ con la tabella degli scarti</li>
+            <li>$\sigma_X$?</li>
+          </ol>
+          <p class="ex-time">4′ in gruppo · 2′ correzione</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" aria-hidden="true"></span>
+      <aside class="notes">Click 1: parte il timer di 4′. Suggerimento ai bloccati: scarti simmetrici, basta calcolarne tre. Soluzione alla lavagna: μ = 3,5 (dalla S4); scarti ±0,5, ±1,5, ±2,5; quadrati 0,25, 2,25, 6,25, ciascuno due volte; Var = 17,5/6 = 35/12 ≈ 2,92; σ ≈ 1,71. Chi conosce E[X²] − μ² (Lettura C) trova 91/6 − 49/4 = 35/12: stesso numero. Errori attesi: dimenticare il peso 1/6; elevare al quadrato i valori senza togliere la media; dare σ senza radice. Poi si parte con il 53.</aside>
+    </section>
+
+    <!-- L1-02 · 33: il 53 di Venezia -->
     <section id="contatore-53">
-      <p class="badge">15′ · Atto I · Il 53 che non usciva</p>
+      <p class="badge">33′ · Atto I · Il 53 che non usciva</p>
       <svg class="scene-svg" width="1100" height="520" viewBox="0 0 1100 520" role="img" aria-label="La pallina del 53, ruota di Venezia 2003–2005; un contatore di assenze consecutive sale da 0 a 182"></svg>
       <aside class="notes">Click: 1 il contatore sale fino a 182; 2 «182 estrazioni senza il 53»; 3 la domanda. Racconta in un minuto i giocatori che aumentavano le puntate a ogni estrazione e il dibattito in Parlamento. Niente cifre su vittime o date non verificate (guida §3). Poi 5/90 alla lavagna.</aside>
     </section>
 
-    <!-- L1-03 · 17: una probabilità per estrazione -->
+    <!-- L1-03 · 35: una probabilità per estrazione -->
     <section id="urna-90">
-      <p class="badge">17′ · Atto I · Una probabilità per estrazione</p>
+      <p class="badge">35′ · Atto I · Una probabilità per estrazione</p>
       <h2 class="scene-title">90 numeri, 5 estratti</h2>
       <div class="scene-grid">
         <svg class="scene-svg" width="560" height="480" viewBox="0 0 560 480" role="img" aria-label="90 palline in una griglia 10 per 9; si mescolano e le prime 5 finiscono nelle caselle degli estratti"></svg>
@@ -58,9 +185,9 @@
       <aside class="notes">Prima chiedi «quanto vale?». Click: 1 le 90 palline si mescolano e le prime 5 della fila finiscono negli estratti; argomento «5 posizioni su 90»; 2 la formula; 3 «da capo»: le palline tornano nell'urna, estrazioni indipendenti. Lancia subito s05-1 (slide successiva).</aside>
     </section>
 
-    <!-- L1-04 · 19: sondaggio s05-1 (lancio) -->
+    <!-- L1-04 · 37: sondaggio s05-1 (lancio) -->
     <section id="sondaggio-1" class="sondaggio" data-poll="s05-1">
-      <p class="badge">19′ · Sondaggio · la risposta arriva a fine lezione</p>
+      <p class="badge">37′ · Sondaggio · la risposta arriva a fine lezione</p>
       <div class="sondaggio-grid">
         <div>
           <p class="sondaggio-q">Il 53 manca da <b>100 estrazioni</b>.<br>Alla prossima esce con probabilità…</p>
@@ -74,20 +201,20 @@
         </div>
         <div class="sondaggio-join"></div>
       </div>
-      <aside class="notes">«Votate ora, la risposta arriva a fine lezione.» NON premere V: si rivela all'86′ sul duplicato dopo «I 100 fallimenti spariscono». Risposta 2. L'1 è la fallacia del giocatore; il 3 la stessa fallacia rovesciata («numero sfortunato»); il 4 confonde le frequenze passate con la probabilità del meccanismo.</aside>
+      <aside class="notes">«Votate ora, la risposta arriva a fine lezione.» NON premere V: si rivela all'104′ sul duplicato dopo «I 100 fallimenti spariscono». Risposta 2. L'1 è la fallacia del giocatore; il 3 la stessa fallacia rovesciata («numero sfortunato»); il 4 confonde le frequenze passate con la probabilità del meccanismo.</aside>
     </section>
 
-    <!-- L1-05 · 21: fino alla prima testa -->
+    <!-- L1-05 · 39: fino alla prima testa -->
     <section id="prima-testa">
-      <p class="badge">21′ · Atto II · Il modello</p>
+      <p class="badge">39′ · Atto II · Il modello</p>
       <h2 class="scene-title">Lancia finché esce testa</h2>
       <svg class="scene-svg" width="900" height="400" viewBox="0 0 900 400" role="img" aria-label="Tre righe di monete: T dà X uguale a 1; C T dà 2; C C T dà 3; poi 1, 2, 3 e così via, senza tetto"></svg>
       <aside class="notes">X = numero del lancio in cui esce la prima testa. Prima di ogni click chiedi il valore di X. Click 1–3: le tre righe; 4: «1, 2, 3, … senza tetto»: infiniti valori, ma elencabili, quindi X resta discreta. Ipotesi: stesso p, prove indipendenti, come la Binomiale; cambia che cosa contiamo. Convenzione del corso: X conta anche la prova riuscita (parte da 1).</aside>
     </section>
 
-    <!-- L1-06 · 24: la fila -->
+    <!-- L1-06 · 42: la fila -->
     <section id="fila">
-      <p class="badge">24′ · Atto II · La PMF</p>
+      <p class="badge">42′ · Atto II · La PMF</p>
       <h2 class="scene-title">$X=4$: una sola storia</h2>
       <svg class="scene-svg" width="900" height="200" viewBox="0 0 900 200" role="img" aria-label="Quattro prove in fila: tre falliscono, ciascuna con probabilità 1 meno p, la quarta riesce con probabilità p"></svg>
       <div class="fl-prod">$$P(X=4)=(1-p)(1-p)(1-p)\,\color{#38ef7d}{p}=(1-p)^3\color{#38ef7d}{p}$$</div>
@@ -96,17 +223,17 @@
       <aside class="notes">Click 1–3: le tre caselle «fallisce» con il loro 1 − p; 4: la casella verde con p; 5: il prodotto, per indipendenza; 6: la formula generale. Prima del click 6 fai dire alla classe l'esponente: k − 1, non k. Controllo: k = 1 dà p. Click 7: la nota. La fila resta alla lavagna per tutta la lezione.</aside>
     </section>
 
-    <!-- L1-07 · 29–33 (S): il primo è il più probabile -->
+    <!-- L1-07 · 47–51 (S): il primo è il più probabile -->
     <section id="primo-probabile">
-      <p class="badge">29′ · Facoltativo · Il valore più probabile</p>
+      <p class="badge">47′ · Facoltativo · Il valore più probabile</p>
       <h2 class="scene-title">Il Lotto: $P(X=k)$ con $p=1/18$</h2>
       <svg class="scene-svg" width="1100" height="440" viewBox="0 0 1100 440" role="img" aria-label="Barre della Geometrica con p uguale a 1 su 18, per k da 1 a 30: la prima barra è la più alta, ogni barra è la precedente per 17 su 18"></svg>
-      <aside class="notes">Sacrificabile (29–33). Chiedi «qual è il singolo valore più probabile?». Click: 1 la prima barra: 1/18 ≈ 0,056; 2 ogni barra è la precedente × 17/18. Anche quando il successo è raro, il primo tentativo ha più peso di ogni altro singolo valore; il peso totale si distribuisce su una coda lunga. Controllo c1 al 32.</aside>
+      <aside class="notes">Sacrificabile (47–51). Chiedi «qual è il singolo valore più probabile?». Click: 1 la prima barra: 1/18 ≈ 0,056; 2 ogni barra è la precedente × 17/18. Anche quando il successo è raro, il primo tentativo ha più peso di ogni altro singolo valore; il peso totale si distribuisce su una coda lunga. Controllo c1 al 50.</aside>
     </section>
 
-    <!-- L1-08 · 32: controllo c1 -->
+    <!-- L1-08 · 50: controllo c1 -->
     <section id="sondaggio-c1" class="sondaggio" data-poll="s05-c1">
-      <p class="badge">32′ · Controllo comprensione · 1′</p>
+      <p class="badge">50′ · Controllo comprensione · 1′</p>
       <div class="sondaggio-grid">
         <div>
           <p class="sondaggio-q">Come va con la <b>PMF geometrica</b>?</p>
@@ -122,9 +249,9 @@
       <aside class="notes">1 minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, rifai la fila con p = 1/2 (P(X = 4) = 1/16).</aside>
     </section>
 
-    <!-- L1-09 · 33–48: Esercizio 1 -->
+    <!-- L1-09 · 51–66: Esercizio 1 -->
     <section id="esercizio-1">
-      <p class="badge">33′ · Esercizio 1 · gruppi di 3–4</p>
+      <p class="badge">51′ · Esercizio 1 · gruppi di 3–4</p>
       <h2 class="scene-title">Tentativi</h2>
       <div class="e5-grid">
         <div class="ex-text">
@@ -145,9 +272,9 @@
       <aside class="notes">Click 1: parte il timer di 8′ (clic sul timer: pausa; doppio clic: azzera). Sostituisce la derivazione frontale della coda. Giri tra i gruppi; ai bloccati sull'ultima domanda: «che cosa devono fare i primi 3 tentativi?». Soluzione alla lavagna, non sulla slide: 0,2; 0,16; 0,128; P(X > 3) = 0,8³ = 0,512 = 1 − 0,488; in generale 0,8^k. Errori attesi: 0,8³·0,2 per «non bastano 3» (è «esattamente al quarto»); sommare invece di moltiplicare.</aside>
     </section>
 
-    <!-- L1-10 · 48: due casi alla prima prova (denso) -->
+    <!-- L1-10 · 66: due casi alla prima prova (denso) -->
     <section id="ricomincia">
-      <p class="badge">48′ · Atto II · La media</p>
+      <p class="badge">66′ · Atto II · La media</p>
       <h2 class="scene-title">Dopo un fallimento si ricomincia</h2>
       <div class="scene-grid">
         <svg class="scene-svg" width="640" height="430" viewBox="0 0 640 430" role="img" aria-label="Albero della prima prova: riesce con probabilità p e si ferma a 1 prova; fallisce con probabilità 1 meno p e costa 1 più un albero identico, di nuovo da capo"></svg>
@@ -161,20 +288,20 @@
       <aside class="notes">Prima «p = 1/5: quanti tentativi in media?» → 5. «Perché?». Click: 1 ramo alto, riesce: 1 prova; 2 ramo basso, fallisce: speso 1; 3 dentro il nodo compare lo stesso albero: di nuovo al punto di partenza. Prima del click 4 chiedi «quanto vale in media il ramo basso?» (1 + μ). 4 l'equazione: probabilità totale della S2 applicata alle medie; 5–6 fai dire ogni passo (p + 1 − p = 1; μ − (1 − p)μ = pμ); 7 E[X] = 1/p. Controlli a voce: p = 1/2 → 2; p = 1/18 → 18. Si assume μ finito (lo conferma il laboratorio).</aside>
     </section>
 
-    <!-- L1-11 · 58: la media non è una scadenza -->
+    <!-- L1-11 · 76: la media non è una scadenza -->
     <section id="media-scadenza">
-      <p class="badge">58′ · Atto II · Attenzione</p>
+      <p class="badge">76′ · Atto II · Attenzione</p>
       <h2 class="scene-title">La media non è una scadenza</h2>
       <div class="md-two">
         <div class="md-num fragment"><b class="model">18</b><small>estrazioni in media</small></div>
         <div class="md-num focus fragment"><b>35,7%</b><small>delle volte se ne aspettano di più</small><span class="md-formula">$P(X>18)=\left(\tfrac{17}{18}\right)^{18}$</span></div>
       </div>
-      <aside class="notes">Click: 1 la media, 18; 2 la probabilità di superarla: (17/18)^18 ≈ 0,357. «Più di una volta su tre si aspetta più della media.» La coda (1 − p)^k è uscita dall'esercizio 1: qui la usiamo. Controllo c2 al 61.</aside>
+      <aside class="notes">Click: 1 la media, 18; 2 la probabilità di superarla: (17/18)^18 ≈ 0,357. «Più di una volta su tre si aspetta più della media.» La coda (1 − p)^k è uscita dall'esercizio 1: qui la usiamo. Controllo c2 al 79.</aside>
     </section>
 
-    <!-- L1-12 · 61: controllo c2 -->
+    <!-- L1-12 · 79: controllo c2 -->
     <section id="sondaggio-c2" class="sondaggio" data-poll="s05-c2">
-      <p class="badge">61′ · Controllo comprensione · 1′</p>
+      <p class="badge">79′ · Controllo comprensione · 1′</p>
       <div class="sondaggio-grid">
         <div>
           <p class="sondaggio-q">Come va con la <b>media</b> $1/p$?</p>
@@ -190,9 +317,9 @@
       <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2 e 3, ripercorri i due rami con p = 1/2 usando i minuti del widget (S).</aside>
     </section>
 
-    <!-- L1-13 · 62–66 (S): widget geometrico -->
+    <!-- L1-13 · 80–84 (S): widget geometrico -->
     <section id="widget-geometrica">
-      <p class="badge">62′ · Facoltativo · La forma di un'attesa</p>
+      <p class="badge">80′ · Facoltativo · La forma di un'attesa</p>
       <h2 class="scene-title">Prevedi la media, poi muovi $p$</h2>
       <div class="wd-box" id="geo-box" data-prevent-swipe>
         <div class="wd-ctrl">
@@ -202,12 +329,12 @@
         <p class="wd-out"></p>
         <p class="wd-try">Prova: <button class="psi-btn ghost" type="button" data-p="0.5">p = 0,5</button><button class="psi-btn ghost" type="button" data-p="0.0556">Lotto · 1/18</button><button class="psi-btn" type="button" data-p="0.2">reset · 0,2</button></p>
       </div>
-      <aside class="notes">Sacrificabile (62–66). Stato iniziale p = 0,2: media 5. Prima di ogni movimento fai prevedere la media: p = 0,5 → 2; Lotto (≈ 0,056) → 18, le barre si abbassano e la coda esce dal grafico. La barra più alta è sempre la prima. Il triangolo verde è il baricentro 1/p; il tratteggio è il Lotto.</aside>
+      <aside class="notes">Sacrificabile (80–84). Stato iniziale p = 0,2: media 5. Prima di ogni movimento fai prevedere la media: p = 0,5 → 2; Lotto (≈ 0,056) → 18, le barre si abbassano e la coda esce dal grafico. La barra più alta è sempre la prima. Il triangolo verde è il baricentro 1/p; il tratteggio è il Lotto.</aside>
     </section>
 
-    <!-- L1-14 · 66–80: Esercizio 2 -->
+    <!-- L1-14 · 84–98: Esercizio 2 -->
     <section id="esercizio-2">
-      <p class="badge">66′ · Esercizio 2 · gruppi di 3–4</p>
+      <p class="badge">84′ · Esercizio 2 · gruppi di 3–4</p>
       <h2 class="scene-title">Il tempo medio di un retry</h2>
       <div class="e5-grid">
         <div class="ex-text">
@@ -228,9 +355,9 @@
       <aside class="notes">Click 1: timer di 6′. Sostituisce l'applicazione frontale al retry. In correzione scrivi T = 0,3·X e richiama la linearità della S4. Soluzione: 5 tentativi, 1,5 s; con p = 0,5: 2 tentativi, 0,6 s (meno della metà). Errori attesi: 0,3/0,2 senza passare dal numero di tentativi; credere che il tempo dimezzi esattamente.</aside>
     </section>
 
-    <!-- L1-15 · 80: i 100 fallimenti spariscono -->
+    <!-- L1-15 · 98: i 100 fallimenti spariscono -->
     <section id="memoria">
-      <p class="badge">80′ · Atto II · L'assenza di memoria</p>
+      <p class="badge">98′ · Atto II · L'assenza di memoria</p>
       <h2 class="scene-title">I fallimenti già visti spariscono</h2>
       <svg class="scene-svg" width="1100" height="215" viewBox="0 0 1100 215" role="img" aria-label="Due righe: da subito, tre prove future; dopo 5 fallimenti, le stesse tre prove future. In entrambe la probabilità che falliscano tutte è 1 meno p alla terza"></svg>
       <div class="mm-chain">
@@ -253,9 +380,9 @@
       <aside class="notes">Click: 1 riga «da subito»: tre prove future; 2 riga «dopo 5 fallimenti»: le stesse tre prove; 3 (1 − p)³ in entrambe. 4 la condizionata: al click 4 chiedi perché l'intersezione è solo {X > 118} (se supera 118, supera anche 100). 5 la coda sopra e sotto; 6 le parti comuni si cancellano: resta (17/18)^18; 7 è P(X > 18), l'attesa da zero. I 100 fallimenti sono scomparsi dal conto. Ora rivela s05-1 (slide successiva, tasto V).</aside>
     </section>
 
-    <!-- L1-16 · 86: rivelazione s05-1 (stesso ID) -->
+    <!-- L1-16 · 104: rivelazione s05-1 (stesso ID) -->
     <section id="sondaggio-1-rivela" class="sondaggio" data-poll="s05-1">
-      <p class="badge">86′ · Sondaggio · rivelazione (V)</p>
+      <p class="badge">104′ · Sondaggio · rivelazione (V)</p>
       <div class="sondaggio-grid">
         <div>
           <p class="sondaggio-q">Il 53 manca da <b>100 estrazioni</b>.<br>Alla prossima esce con probabilità…</p>
@@ -272,9 +399,9 @@
       <aside class="notes">Premi V. Risposta 2: esattamente 1/18, l'urna non ricorda. Commenta ogni opzione: 1 fallacia del giocatore; 3 la stessa fallacia rovesciata; 4 frequenze passate al posto della probabilità del meccanismo. Stesso ID dell'inizio: non è un secondo sondaggio.</aside>
     </section>
 
-    <!-- L1-17 · 88: domanda A, domanda B -->
+    <!-- L1-17 · 106: domanda A, domanda B -->
     <section id="domande-ab">
-      <p class="badge">88′ · Atto II · La fallacia del giocatore</p>
+      <p class="badge">106′ · Atto II · La fallacia del giocatore</p>
       <h2 class="scene-title">Due domande diverse</h2>
       <div class="ab-grid">
         <div class="ab-col ab-a fragment">
@@ -295,12 +422,12 @@
         </div>
       </div>
       <p class="ab-spent fragment">La rarità di A è già stata spesa: i 100 fallimenti sono accaduti.</p>
-      <aside class="notes">Click: 1 colonna A (rarissima); 2 colonna B (per niente rara); 3 la freccia rossa: il giocatore decide su B con il numero di A; 4 «la rarità di A è già stata spesa». Controllo c3 al 92. S (93–96): «il numero più in ritardo d'Italia» è scelto tra centinaia di attese in corso: come i compleanni della S3, qualche coincidenza estrema è attesa.</aside>
+      <aside class="notes">Click: 1 colonna A (rarissima); 2 colonna B (per niente rara); 3 la freccia rossa: il giocatore decide su B con il numero di A; 4 «la rarità di A è già stata spesa». Controllo c3 al 110. S (111–114): «il numero più in ritardo d'Italia» è scelto tra centinaia di attese in corso: come i compleanni della S3, qualche coincidenza estrema è attesa.</aside>
     </section>
 
-    <!-- L1-18 · 92: controllo c3 -->
+    <!-- L1-18 · 110: controllo c3 -->
     <section id="sondaggio-c3" class="sondaggio" data-poll="s05-c3">
-      <p class="badge">92′ · Controllo comprensione · 1′</p>
+      <p class="badge">110′ · Controllo comprensione · 1′</p>
       <div class="sondaggio-grid">
         <div>
           <p class="sondaggio-q">Come va con l'<b>assenza di memoria</b>?</p>
@@ -316,9 +443,9 @@
       <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2 e 3, rifai le due righe con s = 5 e t = 3 al posto di 100 e 18.</aside>
     </section>
 
-    <!-- L1-19 · 96–105 (S): domanda d'uscita -->
+    <!-- L1-19 · 114–123 (S): domanda d'uscita -->
     <section id="uscita-1">
-      <p class="badge">96′ · Domanda d'uscita</p>
+      <p class="badge">114′ · Domanda d'uscita</p>
       <svg class="scene-svg" width="1000" height="300" viewBox="0 0 1000 300" role="img" aria-label="La pallina del 53, ferma a 182 assenze; poi compare 1 su 18"></svg>
       <p class="ux-q">Il 53 «deve» uscire? Rispondi con un numero.</p>
       <aside class="notes">Cuscinetto: nessun concetto nuovo. Raccogli due risposte a voce. Click 1, solo a fine discussione: 1/18. Chiude l'arco aperto dal contatore. Opzionale: esercizio 3 della dispensa (il ritardatario). A casa: script 1 e letture.</aside>
@@ -536,14 +663,14 @@
         <thead><tr><th></th><th class="mv-b">Binomiale$(n,\lambda/n)$</th><th class="mv-p">Poisson$(\lambda)$</th></tr></thead>
         <tbody>
           <tr><td class="rowhead">media</td><td><span class="fragment" data-fragment-index="1">$n\cdot\dfrac{\lambda}{n}=\lambda$</span></td><td><span class="fragment" data-fragment-index="1">$\lambda$</span></td></tr>
-          <tr><td class="rowhead">varianza</td><td><span class="fragment" data-fragment-index="2">$n\cdot\dfrac{\lambda}{n}\left(1-\dfrac{\lambda}{n}\right)$<span class="mv-ref">Var: S4, Lettura A</span></span></td><td><span class="fragment" data-fragment-index="3">$\longrightarrow\lambda$</span></td></tr>
+          <tr><td class="rowhead">varianza</td><td><span class="fragment" data-fragment-index="2">$n\cdot\dfrac{\lambda}{n}\left(1-\dfrac{\lambda}{n}\right)$<span class="mv-ref">conto: Lettura C</span></span></td><td><span class="fragment" data-fragment-index="3">$\longrightarrow\lambda$</span></td></tr>
         </tbody>
       </table>
       <div class="mv-foot">
         <div class="s05-box fragment" data-fragment-index="4">$$\mathbb{E}[X]=\operatorname{Var}(X)=\lambda$$</div>
         <p class="mv-data fragment" data-fragment-index="5">Bortkiewicz: media <b>0,61</b>,<br>varianza dei dati <b>0,608</b></p>
       </div>
-      <aside class="notes">Cinque minuti. Click: 1 la media resta λ a ogni n; 2 la varianza binomiale np(1 − p) con p = λ/n: una frase («quanto i conteggi oscillano»), niente definizione alla lavagna; 3 la parentesi tende a 1: varianza λ; 4 il riquadro; 5 il controllo sui dati. Se si è in ritardo mostra solo 4 e 5. Il conto 0,98 − 0,61² resta all'esercizio 6 per casa.</aside>
+      <aside class="notes">Cinque minuti. Click: 1 la media resta λ a ogni n; 2 la varianza binomiale np(1 − p) con p = λ/n: richiama la definizione di mercoledì («media degli scarti al quadrato»); il conto è nella Lettura C, facoltativa; 3 la parentesi tende a 1: varianza λ; 4 il riquadro; 5 il controllo sui dati. Se si è in ritardo mostra solo 4 e 5. Il conto 0,98 − 0,61² resta all'esercizio 6 per casa.</aside>
     </section>
 
     <!-- L2-14 · 75–79 (S): widget Poisson -->
@@ -600,6 +727,7 @@
   <script src="../../assets/sondaggi.js"></script>
   <script src="../../assets/slides/sondaggio.js"></script>
   <script src="js/comuni.js"></script>
+  <script src="js/varianza.js"></script>
   <script src="js/lezione1.js"></script>
   <script src="js/lezione2.js"></script>
   <script>PSIDeck.start({ onReady: function (deck) { PSISondaggio.bind(deck); S05.timers(deck); } });</script>

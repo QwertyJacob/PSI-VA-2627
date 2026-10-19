@@ -1,5 +1,5 @@
 /*
- * Settimana 5: Geometrica e Poisson. Scene: js/comuni.js, js/lezione1.js, js/lezione2.js.
+ * Settimana 5: varianza, Geometrica e Poisson. Scene: js/comuni.js, js/varianza.js, js/lezione1.js, js/lezione2.js.
  * Le regole comuni (badge, copertine, riepiloghi, esercizi, widget, uscite)
  * sono riprese dal mazzo della Settimana 4, così questo mazzo non dipende dai
  * fogli delle altre settimane.
@@ -96,6 +96,29 @@
 /* ── Riquadri delle formule chiave ── */
 .reveal .s05-box { display: inline-block; padding: 0 30px; border-radius: 14px; border: 3px solid var(--s05-ok); background: #38ef7d10; }
 .reveal .s05-box .katex-display { margin: .35em 0; }
+
+/* ── Prologo: varianza (js/varianza.js) ── */
+.reveal .tw-quote { margin: 70px auto 0; max-width: 1000px; border: none; box-shadow: none; background: none; font-size: 1.5em; font-style: italic; line-height: 1.35; }
+.reveal .tw-who { margin: 22px 0 0; font-size: .7em; color: var(--psi-muted); }
+.reveal .tw-moral { margin: 60px 0 0; font-size: 1em; font-weight: 700; color: var(--s05-ok); }
+.reveal .rv-cap { margin: 4px 0 0; font-size: .8em; }
+.reveal .pg-panel { font-size: .7em; }
+.reveal .pg-panel .scene-steps li { margin-bottom: 22px; }
+.reveal .vd-def { margin: 0 0 18px; font-size: .9em; }
+.reveal .vd-grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; text-align: left; max-width: 1180px; margin: 0 auto; }
+.reveal .vd-steps { margin: 0 0 0 1.3em; font-size: .78em; }
+.reveal .vd-steps li { margin: 0 0 12px; }
+.reveal .vd-table { font-size: .68em; }
+.reveal .vd-table td, .reveal .vd-table th { padding: 8px 18px; }
+.reveal .vd-table .vd-tot td { font-weight: 800; color: var(--s05-ok); border-bottom: none; }
+.reveal .vd-warn { margin: 22px 0 0; font-size: .8em; color: var(--s05-red); }
+.reveal .vd-warn b { color: var(--psi-text); }
+.reveal .un-big { margin: 10px 0 14px; font-size: 1.5em; }
+.reveal .un-sd .s05-box { font-size: .95em; }
+.reveal .un-sd p { margin: 6px 0 0; font-size: .7em; color: var(--psi-muted); }
+.reveal .un-facts { list-style: none; margin: 22px 0 0; padding: 0; font-size: .75em; }
+.reveal .un-facts li { margin: 0 0 8px; }
+.reveal .un-try { margin: 20px 0 0; font-size: .75em; color: var(--psi-b); }
 
 /* ── L1-03 urna ── */
 .reveal .ur-panel { font-size: .8em; }

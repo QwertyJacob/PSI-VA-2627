@@ -137,7 +137,22 @@ Cominciamo da una domanda semplice. La media riassume una distribuzione con un s
 
 ### Due pagamenti con lo stesso centro {: #definizione-varianza }
 
-Immagina due pagamenti. Il primo vale sempre 5 euro. Il secondo vale 0 oppure 10 euro, con probabilità $1/2$ ciascuno.
+Ripartiamo da dove ci eravamo fermati nella [Settimana 4](../settimana_04/index.md#huygens). Con Christiaan Huygens abbiamo dato un prezzo a una possibilità di guadagno: una moneta onesta decide il pagamento, 10 euro se esce testa e 0 euro se esce croce. Il **valore equo** di questo biglietto è il pagamento medio:
+
+$$
+0\cdot\frac12+10\cdot\frac12=5\text{ euro}.
+$$
+
+Ora immagina che qualcuno ti offra una scelta:
+
+- **A**: 5 euro in mano, subito;
+- **B**: il biglietto di Huygens, cioè 10 euro con testa e 0 euro con croce.
+
+Quale sceglieresti? Prova a rispondere prima di proseguire.
+
+Per il criterio di Huygens le due offerte valgono lo stesso: 5 euro ciascuna. Eppure, messe davanti a questa scelta, le persone non sono indifferenti. Molte prendono i 5 euro sicuri; altre preferiscono tentare la sorte. Nessuna delle due scelte è un errore di calcolo: è una preferenza personale, e la probabilità non la impone. Lo avevamo già notato nella Settimana 4: chi teme di perdere denaro può preferire una somma certa.
+
+Fermiamoci su questo fatto. Se due offerte con lo stesso valore equo non sono indifferenti, devono differire in qualcosa che il valore equo non vede. Che cosa? Per scoprirlo, trattiamo le due offerte come due variabili aleatorie: $A$ vale sempre 5 euro; $B$ vale 0 oppure 10 euro, con probabilità $1/2$ ciascuno.
 
 | Pagamento | Valori e probabilità | Valore atteso |
 |---|---|---|
@@ -145,6 +160,8 @@ Immagina due pagamenti. Il primo vale sempre 5 euro. Il secondo vale 0 oppure 10
 | Incerto, $B$ | 0 e 10, ciascuno con probabilità $1/2$ | $0\cdot\frac12+10\cdot\frac12=5$ euro |
 
 Il centro è lo stesso. Eppure i pagamenti si comportano in modo molto diverso: $A$ coincide sempre con la propria media; $B$ se ne allontana sempre di 5 euro, ora in su e ora in giù. **La media, da sola, non descrive questa differenza.** Ci serve un secondo numero, che dica *quanto ci si allontana dal centro*.
+
+Ecco che cosa non vedeva il valore equo. Il prezzo di Huygens guarda soltanto il centro. Chi sceglie fra $A$ e $B$ guarda anche *quanto il pagamento può allontanarsi da quel centro*: $B$ non paga mai 5 euro, così come il dado della Settimana 4 non mostra mai 3,5. Nei prossimi passi daremo un numero proprio a questa distanza.
 
 ### Passo 1 — Misurare la distanza dalla media
 
@@ -1006,7 +1023,21 @@ Le pause crescenti fra retry, chiamate *exponential backoff*, possono essere uti
 
 **Dove siamo.** Cambiamo scenario. Con la Geometrica contavamo prove fino a un successo. Ora vogliamo descrivere un altro tipo di grandezza: il **numero di eventi** che capitano in un intervallo. Cominciamo, come nella buona statistica, guardando i dati *prima* di avere un modello.
 
-Nel 1898 Ladislaus von Bortkiewicz pubblicò *Das Gesetz der kleinen Zahlen*, «La legge dei piccoli numeri». Il quarto esempio del libro riguarda i militari dell’esercito prussiano morti per il calcio di un cavallo. È un caso particolarmente istruttivo, perché ci permette di confrontare una distribuzione teorica con dati registrati molto prima del nostro calcolo.
+#### Una formula che aspettava i dati
+
+Questa storia comincia sessant’anni prima dei dati, e lontano dalle caserme: in un tribunale.
+
+Nel 1837 il matematico francese **Siméon-Denis Poisson** pubblicò un libro dal titolo lungo: *Recherches sur la probabilité des jugements en matière criminelle et en matière civile*, cioè «Ricerche sulla probabilità dei giudizi in materia penale e civile». La domanda che lo muoveva era concreta: quanto è probabile che una giuria sbagli, condannando un innocente o assolvendo un colpevole?
+
+Dentro il libro, in poche pagine, Poisson studia un caso particolare della Binomiale: **moltissime prove, ciascuna con una probabilità di successo piccolissima**. In questo caso il conto esatto della Binomiale è scomodo, e Poisson ne ricava una formula più semplice, che dipende da un solo numero: la media $np$. È la formula che oggi porta il suo nome. Nel libro, però, resta un risultato di calcolo, un passaggio tecnico: non viene confrontata con conteggi osservati. Come accade spesso nella storia della scienza, l’idea non era del tutto nuova: Abraham de Moivre aveva ottenuto un’approssimazione simile già nel 1711.
+
+Poisson è ricordato anche per un nome. Negli stessi anni chiamò **legge dei grandi numeri** un’idea che studieremo nella Settimana 8: se ripetiamo una prova moltissime volte, la frequenza di un evento si stabilizza vicino alla sua probabilità. Ne abbiamo già visto un esempio nell’[Atto II](#fallacia-giocatore): su moltissime estrazioni la frequenza del 53 si avvicina a $1/18$, senza che l’urna «recuperi» nulla.
+
+Sessantuno anni dopo, nel 1898, l’economista e statistico Ladislaus von Bortkiewicz pubblicò *Das Gesetz der kleinen Zahlen*, «La legge dei piccoli numeri». Il titolo richiama la legge di Poisson. I «grandi numeri» sono le moltissime ripetizioni che rendono stabili le frequenze. I «piccoli numeri» sono i conteggi piccoli degli eventi rari: zero, uno, due incidenti in un anno. Anche questi conteggi, raccolti su molte unità, mostrano una regolarità, e nel libro Bortkiewicz li confronta proprio con la formula di Poisson.
+
+Il quarto esempio del libro riguarda i militari dell’esercito prussiano morti per il calcio di un cavallo. È un caso particolarmente istruttivo, perché ci permette di confrontare una distribuzione teorica con dati registrati molto prima del nostro calcolo.
+
+Seguiremo la stessa strada, ma in un ordine diverso da quello della storia. Prima guardiamo i dati, senza formule (§9 e §10). Poi costruiamo noi la formula di Poisson, un passo alla volta ([Atto IV](#poisson)). Infine la mettiamo alla prova sulla tabella di Bortkiewicz ([§14](#confronto-dati)), come fece lui.
 
 #### Che cosa è stato osservato
 
@@ -1349,7 +1380,7 @@ L’ultima colonna raggruppa tutti i valori da 5 in poi: si calcola come $200[1-
 <figcaption>Dati di Bortkiewicz (1898) e previsione Poisson con λ = 0,61: ogni coppia di barre quasi coincide.</figcaption>
 </figure>
 
-Questa è la tabella di confronto pubblicata da Bortkiewicz a pagina 25. Il risultato è notevole: **un solo parametro**, ricavato da una sola media, produce una forma vicina a quella osservata.
+Questa è la tabella di confronto pubblicata da Bortkiewicz a pagina 25. La formula che Poisson aveva lasciato come risultato di calcolo nel 1837 incontra qui, sessantuno anni dopo, dei dati reali. Il risultato è notevole: **un solo parametro**, ricavato da una sola media, produce una forma vicina a quella osservata.
 
 #### Come interpretare le differenze
 
@@ -2352,6 +2383,7 @@ Rileggiamo il percorso in poche righe, nell’ordine in cui l’abbiamo fatto.
 La costruzione della dispensa segue i testi disponibili nella bibliografia del corso. I rimandi alle sezioni permettono di ritrovare i passaggi anche in edizioni con una diversa numerazione delle pagine.
 
 - **Ladislaus von Bortkiewicz**, *Das Gesetz der kleinen Zahlen*, Teubner, 1898, cap. II, §12, pp. 23–25. È la fonte dei dati dei corpi d’armata e della tabella osservati–attesi. Copia di lavoro: `bibs/classics/Bortkiewicz_1898_Das_Gesetz_der_kleinen_Zahlen.pdf`; [scansione pubblica](https://archive.org/details/dasgesetzderklei00bortrich).
+- **Siméon-Denis Poisson**, *Recherches sur la probabilité des jugements en matière criminelle et en matière civile*, Bachelier, Parigi, 1837. È l’opera in cui compare l’approssimazione che oggi porta il suo nome; qui serve come motivazione storica. [Scansione pubblica](https://archive.org/details/recherchessurlap00pois). Che il titolo di Bortkiewicz richiami la legge dei grandi numeri di Poisson, senza contrapporvisi, è indicato nella voce [«Bortkiewicz, Ladislaus von»](https://encyclopediaofmath.org/wiki/Bortkiewicz,_Ladislaus_von) dell’*Encyclopedia of Mathematics*.
 - **Michael Baron**, *Probability and Statistics for Computer Scientists*, 2ª ed., CRC Press, 2014, §3.4.3, «Geometric distribution», e §3.4.5, «Poisson distribution»; per la varianza, §3.3.4. Copia di lavoro: `bibs/tech/baron2014probabilityforcs.pdf`. Il testo usa la convenzione geometrica che conta anche la prova riuscita.
 - **Chris Piech**, *Probability for Computer Scientists*, materiale del corso Stanford CS109, copia in `bibs/tech/Piech2023ProbabilityForCSs.pdf`: voci «Variance», «Geometric Random Variable», «Poisson Distribution» e «Binomial Approximation». La costruzione attraverso suddivisioni dell’intervallo è ripresa con spiegazioni autonome in questa dispensa. [Portale del testo](https://chrispiech.github.io/probabilityForComputerScientists/).
 - **Burton H. Bloom**, «Space/time trade-offs in hash coding with allowable errors», *Communications of the ACM*, 13(7), 1970, pp. 422–426. Riferimento originale dell’approfondimento sul filtro; [scheda dell’articolo](https://dl.acm.org/doi/10.1145/362686.362692).

@@ -831,6 +831,32 @@ Una precisazione per non fraintendere. L’«orologio del totale» continua a co
 
 Il caso $p=1$ richiede attenzione: dopo una prova non possiamo aver osservato un fallimento, quindi non ha senso condizionare su quell’evento impossibile.
 
+??? note "Approfondimento facoltativo — Dall’assenza di memoria alla proprietà di Markov"
+    L’assenza di memoria dice che il passato non conta: dopo $s$ fallimenti, il futuro dell’attesa è lo stesso dell’inizio. Molti fenomeni non sono così semplici, ma soddisfano una versione più debole e molto più utile della stessa idea: il passato conta, ma **solo attraverso il presente**.
+
+    **La proprietà di Markov.** Immaginiamo un sistema che a ogni passo $n$ si trova in uno *stato* $X_n$: il meteo di oggi, la casella di una pedina, la pagina web che stiamo guardando. Diciamo che il sistema è **markoviano** se, per prevedere il passo successivo, basta conoscere lo stato attuale:
+
+    $$
+    P(X_{n+1}=j\mid X_n=i,\,X_{n-1},\dots,X_0)=P(X_{n+1}=j\mid X_n=i).
+    $$
+
+    Il resto della storia si può dimenticare: ciò che serve del passato è già contenuto nello stato presente. Le prove ripetute della Geometrica sono un caso estremo. Finché aspettiamo, lo stato è sempre lo stesso, «non è ancora successo», e quindi il futuro non dipende nemmeno da quanto abbiamo già aspettato.
+
+    **Un esempio.** Un modello giocattolo del meteo: se oggi piove, domani pioverà con probabilità $0{,}6$; se oggi è sereno, con probabilità $0{,}2$. Il modello non chiede se ha piovuto anche ieri. È una semplificazione, ed è proprio questo il punto: con due soli numeri possiamo calcolare la probabilità di qualunque sequenza di giorni, moltiplicando una probabilità condizionata dopo l’altra, come negli alberi della Settimana 2. Se oggi piove, la probabilità che piova anche domani e dopodomani è $0{,}6\cdot0{,}6=0{,}36$.
+
+    **Perché è così importante.** Andrej Markov introdusse queste *catene* nel 1906; è lo stesso Markov della disuguaglianza della Settimana 8. L’idea si è diffusa ovunque perché trasforma un problema con una memoria lunghissima in uno in cui basta guardare un passo alla volta. Due esempi:
+
+    - **Simulazione.** I metodi *Monte Carlo a catena di Markov* (MCMC) costruiscono apposta una catena che, camminando a lungo, produce campioni da distribuzioni troppo complicate per essere calcolate direttamente.
+    - **Web.** Il PageRank di Google immagina un navigatore che salta a caso da un link all’altro. L’importanza di una pagina è la frazione di tempo che il navigatore, alla lunga, vi trascorre.
+
+    **E nell’intelligenza artificiale.**
+
+    - **Modelli del linguaggio.** Un modello linguistico genera un token alla volta, e la scelta del prossimo dipende solo dal contesto che ha davanti. Con una finestra di contesto finita è, formalmente, una catena di Markov il cui stato è l’intero contesto. Shannon, nel 1948, faceva lo stesso con uno stato di una sola parola.
+    - **Apprendimento per rinforzo.** Un agente che gioca o guida un robot si modella con un *processo decisionale di Markov*: stato attuale e azione scelta determinano le probabilità dello stato successivo.
+    - **Modelli di diffusione.** I generatori di immagini imparano a percorrere all’indietro una catena di Markov che aggiunge rumore passo dopo passo: partono da puro rumore e la risalgono fino a un’immagine nuova.
+
+    **La lezione per chi costruisce modelli.** La proprietà di Markov dipende da come **scegliamo lo stato**. Se il meteo di domani dipende da oggi e da ieri, basta prendere come stato la coppia (ieri, oggi); il prezzo è uno stato più grande. Se invece lo stato trascura qualcosa che conta, come un guasto persistente nei retry della §8, il modello sbaglia.
+
 ??? note "Approfondimento facoltativo — Il legame con la media $1/p$"
     Se hai letto l’approfondimento facoltativo della §4 sulla media, riconoscerai l’idea. Il ragionamento sul primo tentativo, «dopo un fallimento il problema ricomincia identico», era già un’applicazione dell’assenza di memoria. Qui la rendiamo esplicita e la formuliamo come proprietà della distribuzione.
 

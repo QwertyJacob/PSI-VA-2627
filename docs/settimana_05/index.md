@@ -1091,17 +1091,29 @@ $$
 =65+44+9+4=122.
 $$
 
-#### La media osservata
+#### Dai dati alla statistica descrittiva
 
-Dividendo il totale dei morti per il numero di osservazioni otteniamo la media:
+Finora abbiamo spesso seguito questa direzione: fissare un modello probabilistico e calcolare che cosa ci aspettiamo di osservare. Qui partiamo invece da registrazioni già disponibili. Prima di scegliere un modello, possiamo **organizzare e riassumere ciò che è stato osservato**: è il compito della **statistica descrittiva**. La tabella delle frequenze è già un esempio; la media sarà un altro.
+
+Nella Settimana 1 ci siamo chiesti che rapporto abbiano le probabilità con il mondo osservato. Qui quel problema prende una forma concreta: abbiamo 200 conteggi e vogliamo capire che cosa ci dicono. Descriverli è il primo passo; usarli per parlare di altri corpi o di altri anni richiederà anche ipotesi sul fenomeno e su come sono stati raccolti i dati.
+
+#### La media osservata è una media campionaria
+
+Chiamiamo **campione** l’insieme delle 200 osservazioni disponibili. La loro media si chiama **media campionaria**: sommiamo i valori osservati e dividiamo per quanti sono. La tabella ci permette di fare la somma usando le frequenze, senza riscrivere tutti i 200 valori:
 
 $$
 \overline{x}=\frac{122}{200}=0{,}61\text{ morti per corpo-anno}.
 $$
 
-Il simbolo $\overline{x}$ indica una **media dei dati**, da non confondere con la media teorica $\mathbb{E}[X]$ di una distribuzione: la prima si calcola da un campione osservato, la seconda da una PMF. Più avanti useremo la media dei dati per scegliere il parametro del modello.
+La media campionaria è un esempio di **_statistica_**: una quantità calcolata soltanto a partire dai dati del campione. Anche il massimo osservato o la frazione di corpi-anno senza morti, $109/200$, sono _statistiche_. Il termine al singolare indica dunque una sintesi dei dati; «la statistica» indica anche la disciplina che studia come raccoglierli, descriverli e usarli per trarre conclusioni.
 
-Nessun corpo-anno ha avuto 0,61 morti: ogni dato è un intero. La media riassume le 200 osservazioni ed è un numero di sintesi, non un risultato possibile.
+Nota bene: nessun corpo-anno ha avuto 0,61 morti: ogni dato è un intero. La media riassume le 200 osservazioni ed è un numero di sintesi, non un risultato possibile.
+
+#### Media dei dati e media del modello
+
+Il simbolo $\overline{x}$ indica la media del campione **che abbiamo osservato**; $\mathbb{E}[X]$ indica invece la media teorica, calcolata dai valori e dalle probabilità di un modello probabilistico. Per descrivere questi 200 dati, $0{,}61$ è il risultato esatto del calcolo. Se lo usiamo per approssimare una media teorica ignota, gli stiamo dando un compito ulteriore: diventa una **stima**. Un altro campione potrebbe dare una media diversa.
+
+Più avanti useremo proprio $\overline{x}=0{,}61$ per scegliere il parametro della Poisson. Questo passaggio dai dati al modello non garantisce che il modello sia adatto: dovremo ancora confrontarne le previsioni con le frequenze osservate. Nella Settimana 8 studieremo perché, sotto opportune ipotesi, la media campionaria si avvicina a quella teorica al crescere del campione; nella Settimana 10 affronteremo il rapporto fra campione, popolazione e incertezza delle stime.
 
 ### 10. Possiamo prevedere la forma del conteggio? {: #legge-piccoli-numeri }
 

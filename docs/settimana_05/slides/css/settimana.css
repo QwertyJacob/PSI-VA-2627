@@ -1,0 +1,280 @@
+/*
+ * Settimana 5: varianza, Geometrica e Poisson. Scene: js/comuni.js, js/varianza.js, js/lezione1.js, js/lezione2.js.
+ * Le regole comuni (badge, copertine, riepiloghi, esercizi, widget, uscite)
+ * sono riprese dal mazzo della Settimana 4, così questo mazzo non dipende dai
+ * fogli delle altre settimane.
+ *
+ * Colori della settimana: azzurro = dati osservati, arancio = modello,
+ * verde = successo / risultato, rosso = errore.
+ */
+:root {
+  --r-main-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --r-heading-font: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --r-heading-text-transform: none;
+  --r-main-font-size: 30px;
+  --s05-data: var(--psi-a);
+  --s05-model: #fb923c;
+  --s05-ok: var(--psi-sel);
+  --s05-red: #ff6b6b;
+}
+.reveal .slides section { text-align: center; }
+.reveal .slides section.sondaggio { text-align: left; }
+.reveal .badge { display: inline-block; margin: 0 0 20px; padding: 6px 16px; border-radius: 20px; font-size: 22px; font-weight: 700; letter-spacing: 1px; background: #16675f; color: #fff; }
+.reveal .data { color: var(--s05-data); }
+.reveal .model { color: var(--s05-model); }
+.reveal .highlight { color: var(--s05-ok); }
+.reveal .red { color: var(--s05-red); }
+.reveal .muted { color: var(--psi-muted); }
+.reveal .scene-svg { margin: auto; }
+
+/* Leggibilità in aula sul canvas Reveal 1280 × 720, anche nei testi annidati. */
+.reveal .scene-panel { font-size: 24px; }
+.reveal .scene-note, .reveal .scene-legend { font-size: 22px; }
+.reveal .sondaggio-hint, .reveal .sondaggio-count.off { font-size: 22px; }
+
+/* ── Testi dentro gli SVG ── */
+.reveal .scene-svg .s05-label { font: 26px var(--r-main-font); fill: var(--psi-text); }
+.reveal .scene-svg .s05-small { font: 24px var(--r-main-font); fill: var(--psi-muted); }
+.reveal .scene-svg .s05-tiny { font: 22px var(--r-main-font); fill: var(--psi-muted); }
+.reveal .scene-svg .s05-big { font: 700 46px var(--r-main-font); fill: var(--psi-text); }
+.reveal .scene-svg .s05-huge { font: 800 96px var(--r-main-font); fill: var(--psi-text); }
+.reveal .scene-svg .s05-math { font: 30px KaTeX_Main, serif; fill: var(--psi-text); }
+.reveal .scene-svg .s05-mono { font: 700 28px 'JetBrains Mono', 'Fira Mono', monospace; fill: var(--psi-text); }
+.reveal .scene-svg .s05-data { fill: var(--s05-data); }
+.reveal .scene-svg .s05-model { fill: var(--s05-model); }
+.reveal .scene-svg .s05-ok { fill: var(--s05-ok); }
+.reveal .scene-svg .s05-red { fill: var(--s05-red); }
+.reveal .scene-svg .s05-bold { font-weight: 700; }
+
+/* ── Copertine ── */
+.reveal .cover-week { font-size: .9em; color: var(--psi-muted); margin: 0; letter-spacing: 2px; text-transform: uppercase; }
+.reveal .cover-title { font-size: 2.6em; font-weight: 800; letter-spacing: -.02em; margin: 14px 0 26px; }
+.reveal .cover-sub { font-size: 1em; color: var(--s05-ok); margin: 0 0 36px; }
+.reveal .cover-acts { display: flex; justify-content: center; gap: 18px; }
+.reveal .cover-acts > span { padding: 8px 22px; border-radius: 20px; font-size: .8em; border: 1px solid #ffffff30; background: #ffffff0a; color: var(--psi-muted); }
+
+/* ── Riepiloghi ── */
+.reveal .rq-grid { display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: center; max-width: 1180px; margin: 0 auto; text-align: left; }
+.reveal .rq-list { display: flex; flex-direction: column; gap: 16px; }
+.reveal .rq { margin: 0; padding: 14px 22px; border-radius: 12px; background: #ffffff08; border: 1px solid #ffffff1f; font-size: .85em; font-weight: 600; }
+.reveal .rq > span:first-child { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; margin-right: 14px; border-radius: 50%; font-size: 22px; color: var(--psi-b); background: #fbbf2429; }
+.reveal .rq-board { height: 330px; border: 2px dashed #ffffff22; border-radius: 16px; display: flex; align-items: flex-end; justify-content: center; padding: 0 0 12px; color: #ffffff40; font-size: 22px; }
+.reveal .rq-board.with-fila { align-items: flex-start; flex-direction: column; justify-content: flex-start; gap: 10px; padding: 16px; }
+.reveal .rq-bridge { margin: 26px 0 0; font-size: .9em; font-weight: 700; color: var(--s05-ok); text-align: center; }
+
+/* ── Tabelle ── */
+.reveal .s05-table { border-collapse: collapse; margin: 0 auto; font-size: .82em; }
+.reveal .s05-table th { color: var(--psi-muted); font-weight: 600; padding: 8px 22px; border: none; border-bottom: 2px solid #ffffff30; text-align: center; }
+.reveal .s05-table td { text-align: center; padding: 10px 24px; border: none; border-bottom: 1px solid #ffffff18; }
+.reveal .s05-table .rowhead { color: var(--psi-muted); text-align: left; }
+
+/* ── Esercizi ── */
+.reveal .e5-grid { display: grid; grid-template-columns: 1fr 440px; gap: 40px; align-items: center; text-align: left; }
+.reveal .ex-text { font-size: .8em; }
+.reveal .ex-text ol { margin: 14px 0 0 1.2em; }
+.reveal .ex-text li { margin: 0 0 14px; }
+.reveal .ex-lead { margin: 0 0 6px; }
+.reveal .ex-time { color: var(--psi-muted); font-size: 22px; margin-top: 18px; }
+.reveal .ex-side { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.reveal .ex-cat { display: block; width: 420px; max-width: none; max-height: none; margin: 0; border-radius: 12px; box-shadow: 0 14px 40px #000b; }
+.reveal .ex-timer { font: 800 1.9em 'JetBrains Mono', 'Fira Mono', monospace; font-variant-numeric: tabular-nums; padding: 4px 26px; border-radius: 14px; border: 2px solid #ffffff30; background: #ffffff08; cursor: pointer; user-select: none; }
+.reveal .ex-timer.running { border-color: var(--s05-ok); color: var(--s05-ok); }
+.reveal .ex-timer.done { border-color: var(--s05-red); color: var(--s05-red); animation: s05-blink 1s steps(2) infinite; }
+@keyframes s05-blink { 50% { opacity: .35; } }
+.reveal .ex-formula { margin: 10px 0 14px; font-size: 1.05em; }
+
+/* ── Widget (L1-13, L2-14) ── */
+.reveal .wd-box { font-size: 24px; }
+.reveal .wd-ctrl { display: flex; justify-content: center; align-items: center; gap: 44px; margin: 0 0 8px; }
+.reveal .wd-ctrl label { display: flex; align-items: center; gap: 12px; font-size: 1.1em; }
+.reveal .wd-ctrl input[type=range] { width: 420px; accent-color: var(--s05-ok); }
+.reveal .wd-ctrl b { display: inline-block; min-width: 3.4em; text-align: left; }
+.reveal .wd-out { margin: 8px 0 0; font-size: 1.25em; }
+.reveal .wd-out b { color: var(--s05-ok); }
+.reveal .wd-out .sep { color: #ffffff40; margin: 0 14px; }
+.reveal .wd-try { margin: 6px 0 0; font-size: 1em; color: var(--psi-muted); }
+.reveal .wd-try button { margin: 0 6px; }
+.reveal .wd-try .psi-btn { font-size: 22px; }
+
+/* ── Uscite ── */
+.reveal .ux-q { font-size: 1.25em; font-weight: 700; margin: 10px 0; }
+
+/* ── Riquadri delle formule chiave ── */
+.reveal .s05-box { display: inline-block; padding: 0 30px; border-radius: 14px; border: 3px solid var(--s05-ok); background: #38ef7d10; }
+.reveal .s05-box .katex-display { margin: .35em 0; }
+
+/* ── Prologo: varianza (js/varianza.js) ── */
+.reveal .tw-quote { margin: 70px auto 0; max-width: 1000px; border: none; box-shadow: none; background: none; font-size: 1.5em; font-style: italic; line-height: 1.35; }
+.reveal .tw-who { margin: 22px 0 0; font-size: 22px; color: var(--psi-muted); }
+.reveal .tw-moral { margin: 60px 0 0; font-size: 1em; font-weight: 700; color: var(--s05-ok); }
+.reveal .rv-cap { margin: 4px 0 0; font-size: .8em; }
+.reveal .pg-panel { font-size: 24px; }
+.reveal .pg-panel .scene-steps li { margin-bottom: 22px; }
+.reveal .vd-def { margin: 0 0 18px; font-size: .9em; }
+.reveal .vd-grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; text-align: left; max-width: 1180px; margin: 0 auto; }
+.reveal .vd-steps { margin: 0 0 0 1.3em; font-size: .78em; }
+.reveal .vd-steps li { margin: 0 0 12px; }
+.reveal .vd-table { font-size: 24px; }
+.reveal .vd-table td, .reveal .vd-table th { padding: 8px 18px; }
+.reveal .vd-table .vd-tot td { font-weight: 800; color: var(--s05-ok); border-bottom: none; }
+.reveal .vd-warn { margin: 22px 0 0; font-size: .8em; color: var(--s05-red); }
+.reveal .vd-warn b { color: var(--psi-text); }
+.reveal .un-big { margin: 10px 0 14px; font-size: 1.5em; }
+.reveal .un-sd .s05-box { font-size: .95em; }
+.reveal .un-sd p { margin: 6px 0 0; font-size: 22px; color: var(--psi-muted); }
+.reveal .un-facts { list-style: none; margin: 22px 0 0; padding: 0; font-size: .75em; }
+.reveal .un-facts li { margin: 0 0 8px; }
+.reveal .un-try { margin: 20px 0 0; font-size: .75em; color: var(--psi-b); }
+
+/* ── V-02b Huygens ── */
+.reveal .hy-recall { margin: 0 0 4px; font-size: .78em; color: var(--psi-muted); }
+.reveal .hy-recall b { color: var(--psi-text); }
+.reveal .hy-grid { grid-template-columns: 1fr 160px 1fr; max-width: 980px; margin: 14px auto 0; }
+.reveal .hy-grid .ab-col b { color: var(--s05-ok); }
+.reveal .hy-vs { color: var(--psi-muted); font-size: 22px; font-weight: 700; line-height: 1.3; }
+.reveal .hy-ask { margin: 24px 0 0; font-size: .95em; font-weight: 700; color: var(--psi-b); }
+.reveal .hy-gap { margin: 12px 0 0; font-size: .8em; }
+.reveal .hy-gap b { color: var(--s05-red); }
+.reveal .hy-next { margin: 10px 0 0; font-size: .85em; font-weight: 700; color: var(--s05-ok); }
+
+/* ── L1-03 urna ── */
+.reveal .ur-panel { font-size: .8em; }
+.reveal .ur-panel .s05-box { margin: 0 0 22px; }
+.reveal .ur-again { font-size: 1.1em; font-weight: 700; color: var(--s05-ok); margin: 0; }
+
+/* ── L1-06 fila ── */
+.reveal .fl-prod, .reveal .fl-formula { margin: 6px 0 0; }
+.reveal .fl-prod .katex-display, .reveal .fl-formula .katex-display { margin: .25em 0; }
+.reveal .fl-note { margin: 10px 0 0; font-size: .8em; color: var(--psi-muted); }
+.reveal .fl-note b { color: var(--psi-text); }
+
+/* ── L1-10 ricomincia ── */
+.reveal .rc-eqs { font-size: .78em; }
+.reveal .rc-eqs > div { margin: 0 0 6px; }
+.reveal .rc-eqs .katex-display { margin: .2em 0; text-align: left; }
+.reveal .rc-eqs .katex-display > .katex { text-align: left; }
+.reveal .rc-eqs .s05-box { margin-top: 10px; }
+
+/* ── L1-11 media non è scadenza ── */
+.reveal .md-two { display: flex; justify-content: center; gap: 120px; align-items: flex-start; margin: 30px 0 0; }
+.reveal .md-num { display: flex; flex-direction: column; align-items: center; }
+.reveal .md-num b { font-size: 4.6em; font-weight: 800; line-height: 1.05; }
+.reveal .md-num small { font-size: 22px; color: var(--psi-muted); margin-top: 8px; }
+.reveal .md-num .md-formula { font-size: 22px; color: var(--psi-muted); margin-top: 6px; }
+.reveal .md-num.focus b { color: var(--s05-red); font-size: 5.4em; }
+
+/* ── L1-15 memoria ── */
+.reveal .mm-chain { display: flex; flex-direction: column; gap: 4px; align-items: center; font-size: .78em; margin-top: 6px; }
+.reveal .mm-line { display: flex; align-items: center; gap: 14px; }
+.reveal .mm-frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; }
+.reveal .mm-frac .mm-num, .reveal .mm-frac .mm-den { display: flex; align-items: center; gap: 2px; padding: 0 6px; }
+.reveal .mm-frac .mm-bar { align-self: stretch; height: 2px; background: var(--psi-text); margin: 4px 0; }
+.reveal .mm-cut { position: relative; display: inline-block; }
+.reveal .mm-cut > i { position: absolute; left: -4px; right: -4px; top: 50%; height: 4px; margin-top: -2px; background: var(--s05-red); border-radius: 2px; transform-origin: 0 50%; transform: scaleX(0) rotate(-14deg); }
+.reveal .mm-end { padding: 0 18px; }
+
+/* ── L1-17 domande A e B ── */
+.reveal .ab-grid { display: grid; grid-template-columns: 1fr 220px 1fr; align-items: center; gap: 10px; margin-top: 20px; }
+.reveal .ab-col { padding: 22px 26px; border-radius: 16px; border: 2px solid #ffffff25; background: #ffffff08; }
+.reveal .ab-col h3 { margin: 0 0 6px; font-size: 22px; color: var(--psi-muted); text-transform: none; letter-spacing: 1px; }
+.reveal .ab-col p { margin: 0 0 16px; font-size: .85em; font-weight: 600; }
+.reveal .ab-col b { display: block; font-size: 2.6em; font-weight: 800; }
+.reveal .ab-col small { display: block; color: var(--psi-muted); font-size: 22px; margin-top: 4px; }
+.reveal .ab-a b { color: var(--psi-text); }
+.reveal .ab-b b { color: var(--s05-ok); }
+.reveal .ab-arrow { display: flex; flex-direction: column; align-items: center; color: var(--s05-red); font-size: 22px; font-weight: 700; line-height: 1.3; }
+.reveal .ab-arrow svg { display: block; margin: 0 auto 8px; }
+.reveal .ab-spent { margin: 26px 0 0; font-size: .8em; color: var(--psi-muted); }
+
+/* ── L2-02 registro ── */
+.reveal .rg-grid { display: grid; grid-template-columns: 230px 1fr; gap: 34px; align-items: center; text-align: left; }
+.reveal .rg-portrait { margin: 0; text-align: center; }
+.reveal .rg-portrait img { display: block; width: 230px; max-width: none; max-height: none; margin: 0 0 8px; border-radius: 10px; filter: grayscale(1) contrast(1.05); box-shadow: 0 10px 30px #000a; }
+.reveal .rg-portrait figcaption { font-size: 22px; color: var(--psi-muted); line-height: 1.35; }
+.reveal .rg-book { margin: 0 0 6px; font-size: .78em; font-style: italic; color: var(--psi-text); }
+.reveal .rg-foot { display: flex; gap: 30px; align-items: baseline; margin: 8px 0 0; font-size: .8em; }
+.reveal .rg-foot b { color: var(--s05-data); }
+.reveal .rg-foot .rg-mean b { color: var(--s05-model); font-size: 1.2em; }
+
+/* ── L2-02a Poisson 1837 ── */
+.reveal .ps-q { margin: 0 0 18px; font-size: .75em; color: var(--psi-muted); }
+.reveal .ps-steps { margin: 0; padding-left: 1.2em; font-size: 24px; line-height: 1.4; }
+.reveal .ps-steps li { margin: 0 0 12px; }
+.reveal .ps-time { display: flex; justify-content: center; align-items: center; gap: 18px; margin: 22px 0 0; font-size: .8em; font-weight: 700; }
+.reveal .ps-time .ps-gap { width: 260px; padding-bottom: 4px; border-bottom: 3px dashed #ffffff40; font-size: 22px; font-weight: 600; color: var(--psi-muted); }
+.reveal .ps-next { margin: 18px 0 0; font-size: .8em; }
+.reveal .ps-next b { color: var(--s05-data); }
+
+/* ── L2-04 n e p ignoti ── */
+.reveal .np-foot { margin: 6px 0 0; font-size: .95em; font-weight: 700; color: var(--s05-model); }
+
+/* ── L2-05 esercizio 3 ── */
+.reveal .e3-table td { min-width: 110px; height: 40px; }
+.reveal .e3-table td.blank { background: #ffffff06; }
+
+/* ── L2-06 pezzetti ── */
+.reveal .pz-formula { margin: 0; }
+.reveal .pz-formula .s05-box .katex-display { margin: .25em 0; }
+
+/* ── L2-07 108,7 ── */
+.reveal .ct-calc { font-size: 1.5em; margin: 40px 0 0; }
+.reveal .ct-big { font-size: 7em; font-weight: 800; color: var(--s05-model); line-height: 1.05; margin: 0; }
+.reveal .ct-sub { font-size: 22px; color: var(--psi-muted); margin: 6px 0 0; }
+
+/* ── L2-09 109 ── */
+.reveal .cn-table { font-size: 1.1em; margin-top: 20px; }
+.reveal .cn-table td { font-size: 2.6em; font-weight: 800; padding: 10px 70px; }
+.reveal .cn-table td.cn-obs { color: var(--s05-data); }
+.reveal .cn-table td.cn-exp { color: var(--s05-model); }
+.reveal .cn-quote { margin: 30px 0 0; font-size: .75em; font-style: italic; color: #cbd5e0; }
+.reveal .cn-quote small { display: block; font-style: normal; font-size: 22px; color: var(--psi-muted); margin-top: 6px; }
+
+/* ── L2-11 un evento ── */
+.reveal .ue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; text-align: left; margin-top: 4px; }
+.reveal .ue-steps { font-size: 24px; }
+.reveal .ue-steps > div { margin: 0 0 4px; }
+.reveal .ue-steps .katex-display { margin: .2em 0; text-align: left; }
+.reveal .ue-steps .katex-display > .katex { text-align: left; }
+.reveal .ue-pmf { justify-self: center; font-size: .9em; padding: 34px 80px 38px 30px; }
+.reveal .ue-pmf .row { display: flex; align-items: center; gap: 14px; }
+.reveal .ue-frac { display: inline-flex; flex-direction: column; align-items: center; }
+.reveal .ue-frac .num, .reveal .ue-frac .den { display: flex; gap: 14px; align-items: center; padding: 0 8px; }
+.reveal .ue-frac .bar { align-self: stretch; height: 2px; background: var(--psi-text); margin: 4px 0; }
+.reveal .ue-part { position: relative; display: inline-block; }
+.reveal .ue-part > i { position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; font-style: normal; font-size: 22px; font-weight: 700; color: var(--s05-model); }
+.reveal .ue-part > i.up { bottom: 100%; margin-bottom: 4px; }
+.reveal .ue-part > i.left { transform: translateX(-85%); }
+.reveal .ue-part > i.right { transform: translateX(-15%); }
+.reveal .ue-part > i.down { top: 100%; margin-top: 4px; }
+.reveal .ue-ladder { display: flex; justify-content: center; align-items: center; gap: 12px; margin: 14px 0 0; font-size: 22px; }
+.reveal .ue-ladder .p { padding: 6px 16px; border-radius: 10px; border: 2px solid var(--s05-model); background: #fb923c14; font-weight: 700; }
+.reveal .ue-ladder .x { color: var(--psi-muted); font-size: 22px; }
+.reveal .ue-ladder .q { padding: 6px 16px; border-radius: 10px; border: 2px dashed #ffffff40; color: var(--psi-muted); font-weight: 700; }
+
+/* ── L2-13 media e varianza ── */
+.reveal .mv-table { font-size: .85em; margin-top: 10px; }
+.reveal .mv-table td { padding: 14px 30px; }
+.reveal .mv-table th { font-size: 1.05em; color: var(--psi-text); }
+.reveal .mv-table th.mv-b { color: var(--psi-muted); }
+.reveal .mv-table th.mv-p { color: var(--s05-model); }
+.reveal .mv-ref { display: block; font-size: 22px; color: var(--psi-muted); margin-top: 4px; }
+.reveal .mv-foot { display: flex; justify-content: center; align-items: center; gap: 40px; margin-top: 18px; }
+.reveal .mv-foot .s05-box { font-size: .95em; }
+.reveal .mv-data { font-size: .8em; }
+.reveal .mv-data b { color: var(--s05-data); }
+
+/* ── L2-15 esercizio 4 ── */
+.reveal .e4-table td, .reveal .e4-table th { min-width: 96px; padding: 10px 14px; }
+.reveal .e4-table td.obs { color: var(--s05-data); font-weight: 700; }
+.reveal .e4-table td.exp { color: var(--s05-model); font-weight: 700; }
+.reveal .e4-table td.slot { outline: 2px dashed var(--s05-model); outline-offset: -6px; background: #fb923c0d; }
+.reveal .e4-table td .fragment { display: inline-block; }
+.reveal .e4-wrap { display: grid; grid-template-columns: 1fr 260px; gap: 30px; align-items: center; }
+.reveal .e4-wrap .ex-side .ex-cat { width: 250px; }
+.reveal .e4-lead { font-size: .75em; margin: 0 0 18px; }
+
+/* ── L2-16 uscita ── */
+.reveal .ux-names { display: grid; grid-template-columns: 1fr 1fr; margin: 4px 0 0; font-size: 1.15em; font-weight: 800; }
+.reveal .ux-names .geo { color: var(--s05-ok); }
+.reveal .ux-names .poi { color: var(--s05-model); }
+.reveal .ux-home { margin: 26px 0 0; font-size: .8em; color: var(--psi-muted); }

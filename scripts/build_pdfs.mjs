@@ -8,14 +8,17 @@
  * Options:
  *   --site <dir>            built site directory            (default: site)
  *   --only <substring>      only chapters whose PDF path contains it (debugging)
+ *   --week <n>              only the chapter of week n (5 -> settimana_05;
+ *                           0 -> the introduction, 0-senso)
  *   --max-code-lines <n>    code blocks longer than this are replaced by a note
  *                           pointing at the online version (default: 30)
  *   --concurrency <n>       parallel browser tabs            (default: 3)
  *
  * For each chapter the page is loaded in a real browser (screen media, so the
  * widgets mount and take their print snapshots), then, once MathJax, fonts,
- * images and widget snapshots have settled, collapsed proofs are opened, long
- * code blocks are swapped for a placeholder, print media is switched on and
+ * images and widget snapshots have settled, optional sections are reduced to
+ * their heading, collapsed blocks are opened (the optional ones stay closed),
+ * long code blocks are swapped for a placeholder, print media is switched on and
  * the page is exported as A4 with a running header and page numbers.
  */
 import { chromium } from 'playwright';
@@ -35,6 +38,7 @@ function opt(name, fallback) {
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SITE_DIR = path.resolve(ROOT, opt('--site', 'site'));
 const ONLY = opt('--only', null);
+const WEEK = opt('--week', null);
 const MAX_CODE_LINES = Number(opt('--max-code-lines', MAX_CODE_LINES_DEFAULT));
 const CONCURRENCY = Number(opt('--concurrency', 3));
 
@@ -76,10 +80,70 @@ function startServer(rootDir) {
 
 // ------------------------------------------------------- in-page preparation
 // Runs inside the browser right before switching to print media.
-function preparePageForPdf({ maxCodeLines, onlineUrl }) {
-  // Collapsed blocks ("??? note" proofs, Manim sources) are unreachable on
-  // paper, so open them all.
-  document.querySelectorAll('details').forEach((d) => { d.open = true; });
+function preparePageForPdf({ maxCodeLines, onlineUrl, siteUrl }) {
+  // Links to other pages resolve to the local server that serves the build:
+  // point them at the published site. Same-page anchors stay internal.
+  if (siteUrl) {
+    const local = `${location.origin}/`;
+    document.querySelectorAll('a[href]').forEach((a) => {
+      if (a.getAttribute('href').startsWith('#')) return;
+      if (a.href.startsWith(local)) a.href = siteUrl + a.href.slice(local.length);
+    });
+  }
+
+  function onlineNote(text) {
+    const note = document.createElement('div');
+    note.className = 'psi-print-omitted';
+    const link = document.createElement('a');
+    link.href = onlineUrl;
+    link.textContent = 'versione online del capitolo';
+    note.append(text, link, '.');
+    return note;
+  }
+
+  // Fully optional sections (headings tagged `{: .psi-facoltativo }`) keep
+  // their heading; everything up to the next heading of the same or higher
+  // level is replaced by a pointer to the online version.
+  let sectionsOmitted = 0;
+  document.querySelectorAll('.md-typeset .psi-facoltativo').forEach((h) => {
+    if (!h.isConnected || !/^H[1-6]$/.test(h.tagName)) return;
+    const level = Number(h.tagName[1]);
+    const isBoundary = (el) => /^H[1-6]$/.test(el.tagName) && Number(el.tagName[1]) <= level;
+    let el = h.nextElementSibling;
+    while (el && !isBoundary(el)) {
+      const next = el.nextElementSibling;
+      el.remove();
+      el = next;
+    }
+    h.after(onlineNote('Sezione facoltativa, non richiesta all’esame: la trovi nella '));
+    sectionsOmitted++;
+  });
+  // Links into the removed sections now point to the online page.
+  document.querySelectorAll('.md-typeset a[href^="#"]').forEach((a) => {
+    const id = decodeURIComponent(a.getAttribute('href').slice(1));
+    if (id && !document.getElementById(id)) a.href = `${onlineUrl}#${id}`;
+  });
+
+  // Collapsed blocks (solutions, proofs, Manim sources) are unreachable on
+  // paper, so open them all, except the optional ones ("Approfondimento
+  // facoltativo", "Facoltativo, fuori dall’esame"): those stay closed, so the
+  // PDF shows only their title. Material reopens every <details> when the page
+  // switches to print media, so the optional ones are also tagged: a print
+  // rule hides their content, and they are closed again after the switch.
+  let optionalClosed = 0;
+  document.querySelectorAll('details').forEach((d) => {
+    const summary = d.querySelector(':scope > summary');
+    const optional = !!summary && /facoltativ/i.test(summary.textContent);
+    d.open = !optional;
+    if (optional) {
+      d.classList.add('psi-print-collapsed');
+      optionalClosed++;
+    }
+  });
+  const collapse = document.createElement('style');
+  collapse.textContent =
+    '@media print { details.psi-print-collapsed > :not(summary) { display: none !important; } }';
+  document.head.append(collapse);
 
   // Replace code blocks longer than the threshold with a short note. Short
   // blocks (the didactic ones) stay in the PDF untouched.
@@ -89,17 +153,10 @@ function preparePageForPdf({ maxCodeLines, onlineUrl }) {
     if (lines <= maxCodeLines) return;
     const wrapper = code.closest('.highlight') || code.closest('pre');
     const runnable = !!code.closest('.psi-exec');
-    const note = document.createElement('div');
-    note.className = 'psi-print-omitted';
-    const link = document.createElement('a');
-    link.href = onlineUrl;
-    link.textContent = 'versione online del capitolo';
-    note.append(
+    wrapper.replaceWith(onlineNote(
       `Blocco di codice di ${lines} righe omesso dalla versione PDF: lo trovi` +
       (runnable ? ', e puoi eseguirlo direttamente nel browser, ' : ' ') + 'nella ',
-      link, '.',
-    );
-    wrapper.replaceWith(note);
+    ));
     omitted++;
   });
 
@@ -109,7 +166,7 @@ function preparePageForPdf({ maxCodeLines, onlineUrl }) {
   document.querySelectorAll('.arithmatex').forEach((el) => {
     if (el.textContent.trim() && !el.querySelector('mjx-container')) unrenderedMath++;
   });
-  return { omitted, unrenderedMath };
+  return { omitted, unrenderedMath, optionalClosed, sectionsOmitted };
 }
 
 // ------------------------------------------------------------ PDF rendering
@@ -125,7 +182,8 @@ const HF_FOOTER = `font-family: ${HF_FONT}; font-size: 8.5px; color: #666666; ` 
                   'box-sizing: border-box; width: 100%; padding: 3px 15mm 0 15mm; ' +
                   'display: flex; justify-content: space-between;';
 
-async function renderChapter(context, baseUrl, siteName, entry) {
+async function renderChapter(context, baseUrl, manifest, entry) {
+  const siteName = manifest.site_name;
   const page = await context.newPage();
   const problems = [];
   page.on('pageerror', (err) => {
@@ -154,11 +212,17 @@ async function renderChapter(context, baseUrl, siteName, entry) {
     await page.evaluate(() => document.querySelectorAll('img[loading="lazy"]').forEach((i) => { i.loading = 'eager'; }));
     await page.waitForFunction(() => Array.from(document.images).every((i) => i.complete), null, { timeout: 30000 });
 
-    const stats = await page.evaluate(preparePageForPdf, { maxCodeLines: MAX_CODE_LINES, onlineUrl: entry.public_url });
+    const stats = await page.evaluate(preparePageForPdf, {
+      maxCodeLines: MAX_CODE_LINES, onlineUrl: entry.public_url, siteUrl: manifest.site_url,
+    });
     if (stats.unrenderedMath) problems.push(`${stats.unrenderedMath} formule non renderizzate`);
 
     await page.emulateMedia({ media: 'print' });
     await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+    await page.evaluate(() => {
+      document.querySelectorAll('details.psi-print-collapsed').forEach((d) => { d.open = false; });
+      return new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    });
 
     const outPath = path.join(SITE_DIR, entry.pdf);
     await fs.mkdir(path.dirname(outPath), { recursive: true });
@@ -177,10 +241,11 @@ async function renderChapter(context, baseUrl, siteName, entry) {
     await fs.mkdir(path.dirname(docsPath), { recursive: true });
     await fs.writeFile(docsPath, buffer);
     const pdfPages = (buffer.toString('latin1').match(/\/Type\s*\/Page[^s]/g) || []).length;
-    return { entry, ok: true, pdfPages, bytes: buffer.length, omitted: stats.omitted, problems };
+    return { entry, ok: true, pdfPages, bytes: buffer.length, omitted: stats.omitted,
+             optionalClosed: stats.optionalClosed, sectionsOmitted: stats.sectionsOmitted, problems };
   } catch (e) {
     problems.push(e.message.split('\n')[0].slice(0, 160));
-    return { entry, ok: false, pdfPages: 0, bytes: 0, omitted: 0, problems };
+    return { entry, ok: false, pdfPages: 0, bytes: 0, omitted: 0, optionalClosed: 0, sectionsOmitted: 0, problems };
   } finally {
     await page.close();
   }
@@ -195,6 +260,12 @@ async function renderChapter(context, baseUrl, siteName, entry) {
   }));
   let entries = manifest.pages;
   if (ONLY) entries = entries.filter((e) => e.pdf.includes(ONLY));
+  if (WEEK !== null) {
+    const n = Number(WEEK);
+    if (!Number.isInteger(n) || n < 0) { console.error(`--week vuole un numero intero: «${WEEK}»`); process.exit(2); }
+    const folder = `settimana_${String(n).padStart(2, '0')}/`;
+    entries = entries.filter((e) => e.src.startsWith(folder) || e.src.startsWith(`${n}-`));
+  }
   if (entries.length === 0) { console.error('Nessun capitolo da renderizzare.'); process.exit(2); }
 
   const { server, port } = await startServer(SITE_DIR);
@@ -210,11 +281,11 @@ async function renderChapter(context, baseUrl, siteName, entry) {
   const worker = async () => {
     while (queue.length) {
       const entry = queue.shift();
-      const r = await renderChapter(context, baseUrl, manifest.site_name, entry);
+      const r = await renderChapter(context, baseUrl, manifest, entry);
       results.push(r);
       const status = r.ok ? 'OK  ' : 'FAIL';
       const kb = (r.bytes / 1024).toFixed(0).padStart(5);
-      console.log(`${status} ${r.entry.pdf.padEnd(58)} ${String(r.pdfPages).padStart(3)} pag. ${kb} KB  codice omesso: ${r.omitted}` +
+      console.log(`${status} ${r.entry.pdf.padEnd(58)} ${String(r.pdfPages).padStart(3)} pag. ${kb} KB  codice omesso: ${r.omitted}  facoltativi chiusi: ${r.optionalClosed}  sezioni omesse: ${r.sectionsOmitted}` +
                   (r.problems.length ? `\n     ! ${r.problems.join(' | ')}` : ''));
     }
   };

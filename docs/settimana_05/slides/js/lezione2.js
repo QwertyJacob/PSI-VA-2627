@@ -226,7 +226,7 @@
     svg('polyline', { points: ref.join(' '), fill: 'none', stroke: C.text, 'stroke-width': 2, 'stroke-dasharray': '5 4', opacity: .7 }, root);
     PSI.text(root, X(1) + W / 2 + 10, Y(poisson(1, .61)) - 8, 'Bortkiewicz, λ = 0,61', 's05-tiny', { 'text-anchor': 'start', style: 'fill:' + C.text });
     var fc = svg('path', { fill: C.ok }, root);
-    var fl = label(root, 0, BASE + 66, '', 's05-label s05-ok', { style: 'font-weight:700' });
+    var fl = label(root, 0, BASE + 60, '', 's05-label s05-ok', { 'text-anchor': 'start', style: 'font-weight:700' });
     function render(lam) {
       box.querySelector('[data-v="lam"]').textContent = it(lam, 2);
       rects.forEach(function (r, k) {
@@ -237,7 +237,7 @@
       });
       var fx = X(Math.min(lam, 15));
       fc.setAttribute('d', 'M ' + fx + ' ' + (BASE + 32) + ' L ' + (fx - 13) + ' ' + (BASE + 52) + ' L ' + (fx + 13) + ' ' + (BASE + 52) + ' Z');
-      fl.setAttribute('x', fx);
+      fl.setAttribute('x', fx + 22);
       fl.textContent = 'λ = ' + it(lam, 2);
       var p0 = Math.exp(-lam);
       out.innerHTML = 'E[X] = Var(X) = <b>' + it(lam, 2) + '</b><span class="sep">·</span>P(X = 0) = e<sup>−λ</sup> = <b>' + it(p0, 4) +

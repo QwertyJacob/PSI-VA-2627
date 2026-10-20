@@ -45,7 +45,7 @@
     for (i = 0; i < 90; i++) {
       var p = pos(i), g = svg('g', {}, root), is53 = i === 52;
       svg('circle', { cx: p[0], cy: p[1], r: R, fill: '#e2e8f0', stroke: is53 ? C.model : 'none', 'stroke-width': 4 }, g);
-      PSI.text(g, p[0], p[1] + 5, String(i + 1), '', { 'text-anchor': 'middle', style: 'font:700 14px Inter, sans-serif;fill:#1a202c' });
+      PSI.text(g, p[0], p[1] + 6, String(i + 1), '', { 'text-anchor': 'middle', style: 'font:700 18px Inter, sans-serif;fill:#1a202c' });
       g.home = p;
       balls.push(g);
     }
@@ -133,10 +133,10 @@
       if (k === 1 || k % 5 === 0) label(root, x, BASE + 28, String(k), 's05-small');
     }
     label(root, X0 + 29 * DX + 25, BASE + 54, 'k = estrazione del primo 53', 's05-tiny', { 'text-anchor': 'end' });
-    var v1 = label(root, X0, BASE - p * U - 14, '0,056', 's05-label', { style: 'font-weight:700;fill:' + C.ok, opacity: 0 });
+    var v1 = label(root, X0, BASE - p * U - 62, '0,056', 's05-label', { style: 'font-weight:700;fill:' + C.ok, opacity: 0 });
     var v23 = [2, 3].map(function (k) {
       var v = Math.pow(1 - p, k - 1) * p;
-      return label(root, X0 + (k - 1) * DX + (k === 2 ? 6 : 26), BASE - v * U - 14, it(v, 3), 's05-small', { opacity: 0 });
+      return label(root, X0 + (k - 1) * DX, BASE - v * U - 14 - (3 - k) * 24, it(v, 3), 's05-small', { opacity: 0 });
     });
     var rule = label(root, 620, 70, 'ogni barra = la precedente × 17/18', 's05-label', { style: 'font-weight:700;fill:' + C.model, opacity: 0 });
     tl.addLabel('s0');
@@ -199,19 +199,20 @@
     function Y(v) { return BASE - v / YMAX * H; }
     function geo(k, p) { return Math.pow(1 - p, k - 1) * p; }
     line(root, X0 - 25, BASE, X(30) + 25, BASE, C.axis, 2);
-    var rects = [], vals = [];
+    var rects = [], vals = [], valueGuides = [];
     for (var k = 1; k <= 30; k++) {
       rects.push(svg('rect', { x: X(k) - W / 2, y: BASE, width: W, height: 0, rx: 3, fill: C.model }, root));
+      valueGuides.push(line(root, X(k), BASE, X(k), BASE, C.muted, 1, { opacity: 0 }));
       vals.push(label(root, X(k), BASE, '', 's05-tiny'));
       if (k === 1 || k % 5 === 0) label(root, X(k), BASE + 26, String(k), 's05-small');
     }
-    label(root, X(30) + 25, BASE + 70, 'k (prova del primo successo)', 's05-tiny', { 'text-anchor': 'end' });
+    label(root, X(30) + 25, 30, 'k (prova del primo successo)', 's05-tiny', { 'text-anchor': 'end' });
     var ref = [];
     for (k = 1; k <= 30; k++) ref.push((X(k) - W / 2) + ',' + Y(geo(k, 1 / 18)) + ' ' + (X(k) + W / 2) + ',' + Y(geo(k, 1 / 18)));
     svg('polyline', { points: ref.join(' '), fill: 'none', stroke: C.text, 'stroke-width': 2, 'stroke-dasharray': '5 4', opacity: .7 }, root);
     label(root, X(30) + 25, Y(geo(30, 1 / 18)) - 14, 'Lotto, p = 1/18', 's05-tiny', { 'text-anchor': 'end', style: 'fill:' + C.text });
     var fc = svg('path', { fill: C.ok }, root);
-    var fl = label(root, 0, BASE + 66, '', 's05-label s05-ok', { style: 'font-weight:700' });
+    var fl = label(root, 0, BASE + 60, '', 's05-label s05-ok', { style: 'font-weight:700' });
     function render(p) {
       box.querySelector('[data-v="p"]').textContent = it(p, 3);
       rects.forEach(function (r, i) {
@@ -220,10 +221,22 @@
         vals[i].setAttribute('y', BASE - h - 6);
         vals[i].textContent = i < 5 && v >= .01 ? it(v, 2) : '';
       });
+      // I valori in corpo 22 px hanno bisogno di spazio sopra le barre vicine.
+      var nextY = Infinity;
+      for (var i = 4; i >= 0; i--) {
+        var guide = valueGuides[i], naturalY = +vals[i].getAttribute('y');
+        if (!vals[i].textContent) { guide.setAttribute('opacity', 0); continue; }
+        var labelY = Math.min(naturalY, nextY - 28);
+        vals[i].setAttribute('y', labelY);
+        guide.setAttribute('y1', labelY + 5);
+        guide.setAttribute('y2', naturalY + 3);
+        guide.setAttribute('opacity', naturalY - labelY > 8 ? .6 : 0);
+        nextY = labelY;
+      }
       var mu = 1 / p, fx = X(Math.min(mu, 30.4));
       fc.setAttribute('d', 'M ' + fx + ' ' + (BASE + 32) + ' L ' + (fx - 13) + ' ' + (BASE + 52) + ' L ' + (fx + 13) + ' ' + (BASE + 52) + ' Z');
-      fl.setAttribute('x', fx);
-      fl.setAttribute('text-anchor', mu > 27 ? 'end' : 'middle');
+      fl.setAttribute('x', fx + (mu > 27 ? -22 : 22));
+      fl.setAttribute('text-anchor', mu > 27 ? 'end' : 'start');
       fl.textContent = '1/p = ' + it(mu, 1) + (mu > 30.4 ? ' →' : '');
       out.innerHTML = 'E[X] = 1/p = <b>' + it(mu, 2) + '</b><span class="sep">·</span>P(X &gt; 10) = (1 − p)<sup>10</sup> = <b>' + it(Math.pow(1 - p, 10), 3) + '</b>';
     }

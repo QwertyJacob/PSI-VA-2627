@@ -18,7 +18,7 @@ Fino a oggi tutte le nostre variabili aleatorie avevano valori che si possono **
 
 Dalla Settimana 5 ci portiamo tre strumenti, che oggi useremo subito.
 
-1. La **Poisson**: se gli eventi rari arrivano in media $\lambda$ volte in un intervallo, il numero di eventi in quell'intervallo ha PMF $P(X=k)=e^{-\lambda}\lambda^k/k!$. In particolare la probabilità di **zero eventi** è $e^{-\lambda}$ ([Settimana 5, §12](../settimana_05/index.md#numero-e)).
+1. La **distribuzione di Poisson**: se gli eventi rari arrivano in media $\lambda$ volte in un intervallo, il numero di eventi in quell'intervallo ha PMF $P(X=k)=e^{-\lambda}\lambda^k/k!$. In particolare la probabilità di **zero eventi** è $e^{-\lambda}$ ([Settimana 5, §12](../settimana_05/index.md#numero-e)).
 2. Il **tasso**: $\lambda$ è sempre riferito a un intervallo. Se un server riceve in media 3 richieste al secondo, in $t$ secondi ne riceve in media $3t$ ([Settimana 5, §17](../settimana_05/index.md#tasso)).
 3. L'**assenza di memoria** della Geometrica: dopo una lunga serie di fallimenti, il futuro riparte da capo ([Settimana 5, §5](../settimana_05/index.md#assenza-memoria)).
 
@@ -283,9 +283,9 @@ $$
 
 ## Atto III — Il tempo tra due eventi: l'Esponenziale {: #esponenziale }
 
-### 6. Dalla Poisson al tempo di attesa {: #coda-esponenziale }
+### 6. Dalla distribuzione di Poisson al tempo di attesa {: #coda-esponenziale }
 
-Torniamo al server della Settimana 5, che riceve in media $\lambda=3$ richieste al secondo, con richieste indipendenti l'una dall'altra. La Poisson ci diceva **quante** richieste arrivano in un intervallo. Ora facciamo la domanda complementare: **quanto bisogna aspettare** la prossima richiesta?
+Torniamo al server della Settimana 5, che riceve in media $\lambda=3$ richieste al secondo, con richieste indipendenti l'una dall'altra. La distribuzione di Poisson ci diceva **quante** richieste arrivano in un intervallo. Ora facciamo la domanda complementare: **quanto bisogna aspettare** la prossima richiesta?
 
 Chiamiamo $T$ il tempo, in secondi, da adesso fino al primo arrivo. $T$ è una variabile continua: può valere 0,2 s, 0,213 s, qualunque numero positivo.
 
@@ -306,12 +306,12 @@ Cominciamo da un caso concreto: qual è la probabilità di aspettare **più di m
 <text x="370" y="112" text-anchor="middle" fill="#e07a1f">primo arrivo</text>
 <path d="M60 135H370" stroke="#4051b5" stroke-width="2"/><line x1="60" y1="128" x2="60" y2="142" stroke="#4051b5" stroke-width="2"/><line x1="370" y1="128" x2="370" y2="142" stroke="#4051b5" stroke-width="2"/>
 <text x="215" y="155" text-anchor="middle" fill="#4051b5" font-weight="bold">T = tempo fino al primo arrivo</text>
-<text x="290" y="182" text-anchor="middle" fill="currentColor">Qui T &gt; t: la striscia verde è vuota. Gli arrivi in [0, t] sono Poisson con media λt.</text>
+<text x="290" y="182" text-anchor="middle" fill="currentColor">Arrivi in [0, t]: distribuzione di Poisson di media λt.</text>
 </svg>
-<figcaption>L’evento «T > t» coincide con «zero arrivi tra 0 e t». La probabilità di zero arrivi la conosciamo già dalla Poisson della Settimana 5.</figcaption>
+<figcaption>L’evento «T > t» coincide con «zero arrivi tra 0 e t». La probabilità di zero arrivi la conosciamo già dalla distribuzione di Poisson della Settimana 5.</figcaption>
 </figure>
 
-Il numero di richieste in mezzo secondo è una Poisson. La sua media è il tasso per la durata: $3\cdot0{,}5=1{,}5$. La probabilità di zero eventi la conosciamo:
+Il numero di richieste in mezzo secondo ha distribuzione di Poisson. La sua media è il tasso per la durata: $3\cdot0{,}5=1{,}5$. La probabilità di zero eventi la conosciamo:
 
 $$
 P(T>0{,}5)=P(\text{zero richieste in }0{,}5\text{ s})=e^{-1{,}5}\approx0{,}223.
@@ -323,7 +323,7 @@ $$
 \boxed{P(T>t)=e^{-\lambda t}\qquad\text{per } t\ge0.}
 $$
 
-Questa è la **coda** della distribuzione **Esponenziale di parametro $\lambda$**, e scriviamo $T\sim\operatorname{Esponenziale}(\lambda)$. Il parametro è lo stesso della Poisson: il **numero medio di eventi per unità di tempo**.
+Questa è la **coda** della distribuzione **Esponenziale di parametro $\lambda$**, e scriviamo $T\sim\operatorname{Esponenziale}(\lambda)$. Il parametro è lo stesso della distribuzione di Poisson: il **numero medio di eventi per unità di tempo**.
 
 Qualche valore con $\lambda=3$ al secondo:
 
@@ -421,7 +421,7 @@ $$
 
 È l'**assenza di memoria**: un'attesa già lunga non rende «più vicino» l'arrivo successivo. Il motivo è lo stesso della Geometrica: gli arrivi nei pezzetti di tempo futuri sono indipendenti da quelli passati. L'Esponenziale è l'**unica** distribuzione continua per tempi positivi con questa proprietà, come la Geometrica lo è tra le discrete.
 
-**Micro-riepilogo.** Poisson: quanti eventi in un intervallo. Esponenziale: quanto tempo fino al prossimo evento. Stesso $\lambda$, stesse ipotesi. Coda $e^{-\lambda t}$, media $1/\lambda$, nessuna memoria.
+**Micro-riepilogo.** Distribuzione di Poisson: quanti eventi in un intervallo. Esponenziale: quanto tempo fino al prossimo evento. Stesso $\lambda$, stesse ipotesi. Coda $e^{-\lambda t}$, media $1/\lambda$, nessuna memoria.
 
 ### 10. Laboratorio: tremila secondi di traffico {: #lab-esponenziale }
 
@@ -467,7 +467,7 @@ Con il seme fissato lo script trova circa 8.900 richieste, un'attesa media di ci
 
 L'Esponenziale compare ogni volta che si aspetta un evento che arriva «senza preavviso» e senza invecchiamento.
 
-* **Tempo tra due richieste** a un servizio con molti client indipendenti: è il complemento naturale della Poisson dell'Atto V della Settimana 5.
+* **Tempo tra due richieste** a un servizio con molti client indipendenti: è il complemento naturale della distribuzione di Poisson dell'Atto V della Settimana 5.
 * **Timeout.** Se un client aspetta una risposta e gli arrivi seguono l'Esponenziale con $\lambda=3$ al secondo, un timeout di 1 secondo scatta, a vuoto, con probabilità $e^{-3}\approx0{,}05$. Per scendere sotto l'1% serve $e^{-3t}<0{,}01$, cioè $t>\ln(100)/3\approx1{,}54$ secondi. Qui $\ln$ è il logaritmo naturale, l'operazione inversa di $e^x$.
 * **Tempo fino al guasto** di un componente che non si usura, come certi circuiti elettronici nella loro vita utile.
 
@@ -508,7 +508,7 @@ La stessa curva era già apparsa, quasi ottant'anni prima, in un contesto comple
 > «il problema più difficile che si possa proporre in materia di probabilità»
 > — A. De Moivre, *The Doctrine of Chances*, 3ª ed., 1756, p. 242 (tradotto dall'inglese)
 
-e la soluzione, stampata il 12 novembre 1733 e ripubblicata nel suo libro, contiene un fattore della forma $e^{-x^2/2}$. Gli istogrammi della Binomiale con $n$ grande, che hai visto nel [widget della Settimana 4](../settimana_04/index.md#widget-binomiale), hanno proprio questa forma a campana.
+e la soluzione, stampata il 12 novembre 1733 e ripubblicata nel suo libro, contiene un fattore della forma $e^{-x^2/2}$. Gli istogrammi della distribuzione binomiale con $n$ grande, che hai visto nel [widget della Settimana 4](../settimana_04/index.md#widget-binomiale), hanno proprio questa forma a campana.
 
 Due strade indipendenti, i **lanci di moneta** di De Moivre e gli **errori di misura** di Gauss, arrivano alla stessa curva. Non è un caso: in entrambe le situazioni il risultato è la **somma di tanti piccoli contributi indipendenti**. Perché la somma produca sempre una campana lo spiegherà il Teorema del Limite Centrale, nella Settimana 9. Oggi impariamo a usarla.
 
@@ -844,7 +844,7 @@ I tempi di risposta reali dei servizi web, invece, raramente sono Normali. Non s
 
 Ecco perché chi gestisce sistemi in produzione guarda direttamente i **percentili osservati** (p50, p95, p99) invece di calcolarli con $\mu+z\sigma$. Il calcolo con la Normale è un'ottima prima stima quando le ipotesi reggono; quando i dati hanno code pesanti, è un errore sistematico, sempre nella direzione pericolosa: promette tempi migliori di quelli veri.
 
-Come per la Poisson con la sovradispersione ([Settimana 5, §19](../settimana_05/index.md#sovradispersione)), il modello va **controllato sui dati**: un istogramma, o il conteggio dei valori oltre $3\sigma$, dice subito se la campana è credibile.
+Come per la distribuzione di Poisson con la sovradispersione ([Settimana 5, §19](../settimana_05/index.md#sovradispersione)), il modello va **controllato sui dati**: un istogramma, o il conteggio dei valori oltre $3\sigma$, dice subito se la campana è credibile.
 
 **Micro-riepilogo.** Somma di tanti piccoli effetti indipendenti: campana, regola 68–95–99,7, calcoli con $\Phi$. Code pesanti e asimmetria: la campana sottostima gli estremi, e si guardano i percentili dei dati.
 
@@ -1017,10 +1017,10 @@ Usando solo la tabella del §18 e la simmetria $\Phi(-z)=1-\Phi(z)$: (a) calcola
 
 ### Esercizio 5 — La stampante {: #esercizio-5 }
 
-A una stampante condivisa arrivano in media 3 lavori all'ora, in modo indipendente. (a) Qual è il tempo medio tra due lavori? (b) Qual è la probabilità che il prossimo lavoro arrivi entro 5 minuti? (c) Qual è la probabilità che in un'ora non arrivi nessun lavoro? Risolvi in due modi: con l'Esponenziale e con la Poisson.
+A una stampante condivisa arrivano in media 3 lavori all'ora, in modo indipendente. (a) Qual è il tempo medio tra due lavori? (b) Qual è la probabilità che il prossimo lavoro arrivi entro 5 minuti? (c) Qual è la probabilità che in un'ora non arrivi nessun lavoro? Risolvi in due modi: con l'Esponenziale e con la distribuzione di Poisson.
 
 ??? esempio-svolto "Soluzione ragionata"
-    (a) $1/\lambda=1/3$ di ora, cioè 20 minuti. (b) Bisogna usare la stessa unità: 5 minuti sono $1/12$ di ora, quindi $P(T\le1/12)=1-e^{-3/12}=1-e^{-0{,}25}\approx0{,}221$. Errore tipico: scrivere $1-e^{-3\cdot5}$, mescolando ore e minuti. (c) Con l'Esponenziale: $P(T>1)=e^{-3}\approx0{,}050$. Con la Poisson: in un'ora il numero di lavori è $\operatorname{Poisson}(3)$ e $P(X=0)=e^{-3}$. Stesso numero, perché è lo stesso evento.
+    (a) $1/\lambda=1/3$ di ora, cioè 20 minuti. (b) Bisogna usare la stessa unità: 5 minuti sono $1/12$ di ora, quindi $P(T\le1/12)=1-e^{-3/12}=1-e^{-0{,}25}\approx0{,}221$. Errore tipico: scrivere $1-e^{-3\cdot5}$, mescolando ore e minuti. (c) Con l'Esponenziale: $P(T>1)=e^{-3}\approx0{,}050$. Con la distribuzione di Poisson: in un'ora il numero di lavori è $\operatorname{Poisson}(3)$ e $P(X=0)=e^{-3}$. Stesso numero, perché è lo stesso evento.
 
 ### Esercizio 6 — Una soglia di allarme {: #esercizio-6 }
 
@@ -1062,13 +1062,13 @@ La **Normale** $\mathcal{N}(\mu,\sigma^2)$ è la campana degli errori di Gauss e
 Per chi scrive software: l'Esponenziale serve a ragionare su timeout e tempi tra eventi; la Normale su errori di misura, benchmark e soglie di allarme. Entrambe sono modelli con ipotesi precise. Se il sistema invecchia o lavora a raffiche, l'Esponenziale sbaglia; se i dati hanno code pesanti, la Normale promette estremi più rari di quelli veri. Il codice che campiona «a caso» deve dire da quale distribuzione: è la lezione di Bertrand.
 
 !!! tip "Che cosa devi saper rifare"
-    Spiegare perché $P(X=c)=0$ e perché la probabilità è un'area; calcolare aree con densità semplici e usare la CDF. Ricavare $P(T>t)=e^{-\lambda t}$ dalla Poisson, usare la media $1/\lambda$ e spiegare l'assenza di memoria con un esempio. Descrivere il ruolo di $\mu$ e $\sigma$ nella Normale, standardizzare, calcolare probabilità con la tabella di $\Phi$, usare la regola 68–95–99,7 e risolvere il problema inverso.
+    Spiegare perché $P(X=c)=0$ e perché la probabilità è un'area; calcolare aree con densità semplici e usare la CDF. Ricavare $P(T>t)=e^{-\lambda t}$ dalla distribuzione di Poisson, usare la media $1/\lambda$ e spiegare l'assenza di memoria con un esempio. Descrivere il ruolo di $\mu$ e $\sigma$ nella Normale, standardizzare, calcolare probabilità con la tabella di $\Phi$, usare la regola 68–95–99,7 e risolvere il problema inverso.
 
 ## Riferimenti e letture {: #riferimenti }
 
 * **Joseph Bertrand**, *Calcul des probabilités*, Parigi, Gauthier-Villars, 1889, cap. I, §§ 4–5, pp. 4–5 (il numero e il suo quadrato; la corda). [Scansione su Internet Archive](https://archive.org/details/calculdesprobab00bertgoog). Le citazioni nel testo sono tradotte dal francese. Alcuni storici datano la prima tiratura al 1888.
 * **Carl Friedrich Gauss**, *Theoria motus corporum coelestium in sectionibus conicis solem ambientium*, Amburgo, 1809. Traduzione inglese di Charles Henry Davis, *Theory of the Motion of the Heavenly Bodies Moving about the Sun in Conic Sections*, Boston, Little, Brown and Co., 1857: prefazione (Cerere, pp. xiv–xv), libro II, sezione III, artt. 175–186 (curva degli errori e minimi quadrati). [Scansione su Internet Archive](https://archive.org/details/theoryofmotionof00gaus); [la prefazione su MacTutor](https://mathshistory.st-andrews.ac.uk/Extras/Gauss_preface/). Le citazioni sono tradotte dall'inglese di Davis.
 * **Abraham De Moivre**, *The Doctrine of Chances*, 3ª edizione, Londra, A. Millar, 1756, pp. 242–254: «A Method of approximating the Sum of the Terms of the Binomial $(a+b)^n$ expanded into a Series», datato 12 novembre 1733. [Scansione su Internet Archive](https://archive.org/details/doctrineofchance00moiv).
-* **Michael Baron**, *Probability and Statistics for Computer Scientists*, 2ª ed., CRC Press, 2014, § 4.2: l'Esponenziale ricavata dalla Poisson con l'evento «zero arrivi», come nel nostro §6.
+* **Michael Baron**, *Probability and Statistics for Computer Scientists*, 2ª ed., CRC Press, 2014, § 4.2: l'Esponenziale ricavata dalla distribuzione di Poisson con l'evento «zero arrivi», come nel nostro §6.
 * **Chris Piech**, *Probability for Computer Scientists*, Stanford, [portale del corso](https://chrispiech.github.io/probabilityForComputerScientists/): capitoli su variabili continue, Esponenziale e Normale, con esempi informatici.
 * Documentazione Python: [`statistics.NormalDist`](https://docs.python.org/3/library/statistics.html#statistics.NormalDist).

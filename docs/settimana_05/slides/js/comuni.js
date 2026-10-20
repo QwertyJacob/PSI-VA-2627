@@ -42,7 +42,7 @@ window.S05 = (function () {
     var g = svg('g', {}, root);
     svg('rect', { x: x, y: y, width: w, height: h, rx: 10, fill: ok ? C.ok : '#ffffff0a', stroke: ok ? C.ok : '#ffffff70', 'stroke-width': 2.5 }, g);
     var fill = ok ? '#0f172a' : C.text;
-    if (title) text(g, x + w / 2, y + h * .42, title, 's05-small', { 'text-anchor': 'middle', style: 'fill:' + fill + (ok ? ';font-weight:700' : '') });
+    if (title) text(g, x + w / 2, y + h * .33, title, 's05-small', { 'text-anchor': 'middle', style: 'fill:' + fill + (ok ? ';font-weight:700' : '') });
     if (sub) text(g, x + w / 2, y + h * .78, sub, 's05-label', { 'text-anchor': 'middle', style: 'font-weight:700;fill:' + fill });
     if (factor) text(g, x + w / 2, y + h + 38, factor, 's05-math', { 'text-anchor': 'middle', style: 'fill:' + (ok ? C.ok : C.text) });
     return g;

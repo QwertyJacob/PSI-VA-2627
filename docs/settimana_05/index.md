@@ -1,4 +1,4 @@
-# Settimana 5 — Bortkiewicz e i calci di cavallo: Geometrica e Poisson
+# Settimana 5 — Bortkiewicz e i calci di cavallo: distribuzione geometrica e distribuzione di Poisson
 
 <style>
 @media screen {
@@ -21,7 +21,7 @@ Questa settimana impariamo a descrivere due situazioni che incontriamo continuam
 - **un’attesa**: «quante volte devo riprovare prima che vada bene?»;
 - **un conteggio in un intervallo**: «quanti eventi si verificano mentre guardo?».
 
-Per ciascuna costruiremo un [modello probabilistico](#modello-probabilistico): dichiareremo le ipotesi con cui rappresentiamo la situazione e ricaveremo la distribuzione della variabile che ci interessa. Prima, però, ci serve un nuovo strumento da affiancare al valore atteso: la **varianza**, che misura quanto i risultati si disperdono attorno alla media. Ne avremo bisogno più volte, e in particolare per capire la Poisson.
+Per ciascuna costruiremo un [modello probabilistico](#modello-probabilistico): dichiareremo le ipotesi con cui rappresentiamo la situazione e ricaveremo la distribuzione della variabile che ci interessa. Prima, però, ci serve un nuovo strumento da affiancare al valore atteso: la **varianza**, che misura quanto i risultati si disperdono attorno alla media. Ne avremo bisogno più volte, e in particolare per capire la distribuzione di Poisson.
 
 ### Come leggere questa dispensa
 
@@ -57,8 +57,8 @@ Alla fine della settimana devi saper:
 - spiegare il significato della **varianza**, scriverne la definizione come media degli scarti al quadrato e calcolarla su una semplice distribuzione discreta;
 - riconoscere il modello **Geometrico**, dichiararne le ipotesi e la convenzione di conteggio, ricavare e usare PMF e coda, calcolare la media $1/p$ e interpretarla;
 - spiegare e ricostruire la proprietà di **assenza di memoria**, distinguendo un’attesa futura da una sequenza osservata fin dall’inizio;
-- spiegare l’idea dei **pezzetti di tempo** che porta dalla Binomiale alla Poisson, compreso il conto per zero eventi;
-- usare la **PMF di Poisson**, sapere che $\mathbb{E}[X]=\operatorname{Var}(X)=\lambda$ e scegliere il parametro relativo all’intervallo della domanda;
+- spiegare l’idea dei **pezzetti di tempo** che porta dalla distribuzione binomiale alla distribuzione di Poisson, compreso il conto per zero eventi;
+- usare la **PMF della distribuzione di Poisson**, sapere che $\mathbb{E}[X]=\operatorname{Var}(X)=\lambda$ e scegliere il parametro relativo all’intervallo della domanda;
 - scegliere il modello in un’applicazione semplice e discutere le ipotesi, soprattutto indipendenza e stabilità del tasso.
 
 ### Che cosa è facoltativo
@@ -66,10 +66,10 @@ Alla fine della settimana devi saper:
 **Sono facoltativi e non richiesti all’esame:**
 
 - il filtro di Bloom (Lettura A);
-- la derivazione completa del limite binomiale e dei momenti della Poisson (Lettura B);
-- l’identità del secondo momento e le derivazioni delle varianze di Bernoulli e Binomiale (Lettura C).
+- la derivazione completa del limite binomiale e dei momenti della distribuzione di Poisson (Lettura B);
+- l’identità del secondo momento e le derivazioni delle varianze delle distribuzioni di Bernoulli e binomiale (Lettura C).
 
-Una precisazione importante: la **proprietà** $\operatorname{Var}(X)=\lambda$ per la Poisson è richiesta; è la sua *dimostrazione* a essere facoltativa. L’esercizio sul campionamento senza reinserimento richiama un approfondimento facoltativo della Settimana 4.
+Una precisazione importante: la **proprietà** $\operatorname{Var}(X)=\lambda$ per la distribuzione di Poisson è richiesta; è la sua *dimostrazione* a essere facoltativa. L’esercizio sul campionamento senza reinserimento richiama un approfondimento facoltativo della Settimana 4.
 
 Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame). I laboratori servono a mettere alla prova le previsioni: una simulazione ci fa *vedere* che una proprietà vale, mentre la spiegazione matematica ci dice *perché* vale. Le due cose si completano.
 
@@ -127,17 +127,17 @@ $$
 
 Per esempio, se ogni tentativo dura 0,3 secondi e $X$ conta i tentativi, la durata è $T=0{,}3X$ e la sua media è $0{,}3\,\mathbb{E}[X]$. In più, se un conteggio è una somma di indicatrici, la sua media è la somma delle probabilità degli eventi contati. Questa proprietà è notevole perché **non richiede indipendenza**: vale anche quando le variabili sono legate fra loro.
 
-### La Binomiale
+### La distribuzione binomiale
 
-Infine conosciamo la **Binomiale**. Fissiamo $n$ prove indipendenti, ognuna con la stessa probabilità di successo $p$, e contiamo i successi. La media del conteggio è $np$.
+Infine conosciamo la **distribuzione binomiale**. Fissiamo $n$ prove indipendenti, ognuna con la stessa probabilità di successo $p$, e contiamo i successi. La media del conteggio è $np$.
 
 ### Una domanda da tenere a mente
 
-La Binomiale risponde a una domanda precisa:
+La distribuzione binomiale risponde a una domanda precisa:
 
 > **«Quanti successi in un numero fissato di prove?»**
 
-Nota che qui il numero di prove è *deciso in anticipo*, mentre il numero di successi è ciò che *osserviamo*. In questa settimana cambieremo proprio ciò che è fissato e ciò che è osservato. Se fissiamo il numero di successi (uno solo) e osserviamo il numero di prove, otterremo la Geometrica. Se fissiamo un intervallo di tempo e osserviamo quanti eventi vi cadono, otterremo la Poisson.
+Nota che qui il numero di prove è *deciso in anticipo*, mentre il numero di successi è ciò che *osserviamo*. In questa settimana cambieremo proprio ciò che è fissato e ciò che è osservato. Se fissiamo il numero di successi (uno solo) e osserviamo il numero di prove, otterremo la Geometrica. Se fissiamo un intervallo di tempo e osserviamo quanti eventi vi cadono, otterremo la distribuzione di Poisson.
 
 Il passaggio da una distribuzione all’altra nasce dunque da una scelta: *che cosa teniamo fermo e che cosa contiamo*. Ci torneremo spesso.
 
@@ -345,7 +345,7 @@ Guarda il peso dei due contributi: il valore raro, che capita una volta su dieci
 
 ### Quanto serve per il percorso principale
 
-Per il percorso principale basta questo metodo, cioè la definizione. Nella [Lettura C](#lettura-varianza) ricaveremo una formula alternativa e la applicheremo alla Binomiale.
+Per il percorso principale basta questo metodo, cioè la definizione. Nella [Lettura C](#lettura-varianza) ricaveremo una formula alternativa e la applicheremo alla distribuzione binomiale.
 
 Una avvertenza per le variabili con infiniti valori possibili: una media finita non assicura una varianza finita. Occorre controllare anche la convergenza della somma degli scarti al quadrato. Per le distribuzioni di questa settimana tutto va bene, ma non è automatico in generale.
 
@@ -404,7 +404,7 @@ Attenzione a che cosa stiamo calcolando: non la probabilità di ottenere una par
 
 Ora cambiamo prospettiva. Scegliamo il punto da cui cominciare a osservare e *contiamo le estrazioni fino alla prima comparsa del 53*. Questo numero non è fissato in anticipo: potrebbe bastare una sola estrazione, potrebbero servirne cento.
 
-Qui nasce la novità. Nella Binomiale decidevamo il numero di prove e contavamo i successi. Adesso decidiamo che cosa vogliamo ottenere (un successo) e contiamo **quante prove servono**.
+Qui nasce la novità. Nella distribuzione binomiale decidevamo il numero di prove e contavamo i successi. Adesso decidiamo che cosa vogliamo ottenere (un successo) e contiamo **quante prove servono**.
 
 **La domanda guida dell’Atto II:** se abbiamo già osservato 100 assenze, quanto dobbiamo ancora aspettare? La risposta è un calcolo di probabilità condizionata, che faremo con tutta la calma necessaria.
 
@@ -440,11 +440,11 @@ $$
 
 Il simbolo $\sim$ si legge «ha distribuzione». I valori possibili sono $1,2,3,\ldots$: non c’è un massimo, ma li possiamo elencare uno dopo l’altro. Una variabile con infiniti valori elencabili è ancora **discreta**.
 
-Confrontiamo la costruzione con quella della Binomiale, per fissare bene la differenza:
+Confrontiamo la costruzione con quella della distribuzione binomiale, per fissare bene la differenza:
 
 | | Che cosa è fissato in anticipo | Che cosa osserviamo |
 |---|---|---|
-| Binomiale | il numero di prove $n$ | il numero di successi |
+| Distribuzione binomiale | il numero di prove $n$ | il numero di successi |
 | Geometrica | il traguardo: **un** successo | il numero di prove necessarie |
 
 Una convenzione da tenere ben presente: qui contiamo **tutte** le prove, compresa quella riuscita. Per questo **$X$ parte da 1**.
@@ -488,7 +488,7 @@ $$
 P(X=4)=(1-p)\cdot(1-p)\cdot(1-p)\cdot p=(1-p)^3p.
 $$
 
-Con una moneta onesta, $p=1/2$, quindi $P(X=4)=(1/2)^4=1/16$. Nota che **non compare un coefficiente binomiale**. Nella Binomiale dovevamo scegliere *quali* prove fossero riuscite; qui l’unica storia compatibile con $X=4$ ha il successo in ultima posizione, e tutte le posizioni precedenti sono già determinate.
+Con una moneta onesta, $p=1/2$, quindi $P(X=4)=(1/2)^4=1/16$. Nota che **non compare un coefficiente binomiale**. Nella distribuzione binomiale dovevamo scegliere *quali* prove fossero riuscite; qui l’unica storia compatibile con $X=4$ ha il successo in ultima posizione, e tutte le posizioni precedenti sono già determinate.
 
 Lo schema è chiaro: per avere $X=k$ servono esattamente $k-1$ fallimenti prima dell’unico successo finale. Abbiamo così costruito la PMF:
 
@@ -1062,7 +1062,7 @@ Questa storia comincia sessant’anni prima dei dati, e lontano dalle caserme: i
 
 Nel 1837 il matematico francese **Siméon-Denis Poisson** pubblicò un libro dal titolo lungo: *Recherches sur la probabilité des jugements en matière criminelle et en matière civile*, cioè «Ricerche sulla probabilità dei giudizi in materia penale e civile». La domanda che lo muoveva era concreta: quanto è probabile che una giuria sbagli, condannando un innocente o assolvendo un colpevole?
 
-Dentro il libro, in poche pagine, Poisson studia un caso particolare della Binomiale: **moltissime prove, ciascuna con una probabilità di successo piccolissima**. In questo caso il conto esatto della Binomiale è scomodo, e Poisson ne ricava una formula più semplice, che dipende da un solo numero: la media $np$. È la formula che oggi porta il suo nome. Nel libro, però, resta un risultato di calcolo, un passaggio tecnico: non viene confrontata con conteggi osservati. Come accade spesso nella storia della scienza, l’idea non era del tutto nuova: Abraham de Moivre aveva ottenuto un’approssimazione simile già nel 1711.
+Dentro il libro, in poche pagine, Poisson studia un caso particolare della distribuzione binomiale: **moltissime prove, ciascuna con una probabilità di successo piccolissima**. In questo caso il conto esatto della distribuzione binomiale è scomodo, e Poisson ne ricava una formula più semplice, che dipende da un solo numero: la media $np$. È la formula che oggi porta il suo nome. Nel libro, però, resta un risultato di calcolo, un passaggio tecnico: non viene confrontata con conteggi osservati. Come accade spesso nella storia della scienza, l’idea non era del tutto nuova: Abraham de Moivre aveva ottenuto un’approssimazione simile già nel 1711.
 
 Poisson è ricordato anche per un nome. Negli stessi anni chiamò **legge dei grandi numeri** un’idea che studieremo nella Settimana 8: se ripetiamo una prova moltissime volte, la frequenza di un evento si stabilizza vicino alla sua probabilità. Ne abbiamo già visto un esempio nell’[Atto II](#fallacia-giocatore): su moltissime estrazioni la frequenza del 53 si avvicina a $1/18$, senza che l’urna «recuperi» nulla.
 
@@ -1121,11 +1121,11 @@ La domanda è questa: **esiste un modello che, usando soltanto la media 0,61, pr
 
 #### Pensare per occasioni
 
-Pensiamo alle *occasioni* di incidente: molte persone, molti giorni, molti contatti con i cavalli. Ogni singola occasione ha una probabilità piccolissima di produrre l’evento contato, ma le occasioni sono moltissime. È proprio la situazione in cui la Binomiale ci dà un primo schema: tante prove, ciascuna con probabilità $p$ molto piccola.
+Pensiamo alle *occasioni* di incidente: molte persone, molti giorni, molti contatti con i cavalli. Ogni singola occasione ha una probabilità piccolissima di produrre l’evento contato, ma le occasioni sono moltissime. È proprio la situazione in cui la distribuzione binomiale ci dà un primo schema: tante prove, ciascuna con probabilità $p$ molto piccola.
 
 Qui però incontriamo un ostacolo pratico. Non conosciamo un numero preciso di prove $n$, né una probabilità $p$ per occasione. Una giornata potrebbe contenere un numero diverso di contatti con i cavalli. Il dato disponibile suggerisce piuttosto il valore del prodotto $np$, cioè il **numero medio di eventi** nell’unità osservata, che qui è 0,61.
 
-#### L’idea della Poisson
+#### L’idea della distribuzione di Poisson
 
 La _distribuzione di Poisson_ nasce da un’idealizzazione: lasciamo crescere il numero di occasioni, facciamo diminuire la probabilità di ciascuna, e **teniamo fissata la media totale**. Nel limite non ci serve più sapere né $n$ né $p$: ci basta la media. Questo è il motivo per cui la distribuzione di Poisson è così utile nella pratica.
 
@@ -1139,7 +1139,7 @@ Prima di costruire la formula, torna alla media 0,61. Essa è inferiore a 1: ti 
 
 ### 11. Dividere l’intervallo in pezzetti {: #pezzetti }
 
-**Dove siamo.** Costruiamo il modello con un trucco semplice: tagliamo l’intervallo in tanti pezzetti, così piccoli che in ciascuno al massimo un evento può capitare. Il conteggio complessivo diventa allora una Binomiale, che sappiamo trattare.
+**Dove siamo.** Costruiamo il modello con un trucco semplice: tagliamo l’intervallo in tanti pezzetti, così piccoli che in ciascuno al massimo un evento può capitare. Il conteggio complessivo segue allora una distribuzione binomiale, che sappiamo trattare.
 
 #### La scelta dei simboli
 
@@ -1147,7 +1147,7 @@ Fissiamo un corpo e un anno. Chiamiamo $\lambda$, «lambda», il **numero medio 
 
 #### Il caso più semplice: un solo pezzetto
 
-Partiamo dal caso estremo, in cui non dividiamo affatto l’anno: lo consideriamo un unico pezzetto. In un solo pezzetto possiamo avere al più un evento, quindi il conteggio vale 0 oppure 1, ed è una Bernoulli. La media di una Bernoulli è la sua probabilità, e deve valere $\lambda$: dunque $p=\lambda=0{,}61$. La probabilità di zero eventi è $1-0{,}61=0{,}39$.
+Partiamo dal caso estremo, in cui non dividiamo affatto l’anno: lo consideriamo un unico pezzetto. In un solo pezzetto possiamo avere al più un evento, quindi il conteggio vale 0 oppure 1, ed è una variabile bernoulliana. La media di una variabile bernoulliana è la sua probabilità, e deve valere $\lambda$: dunque $p=\lambda=0{,}61$. La probabilità di zero eventi è $1-0{,}61=0{,}39$.
 
 Il modello è però rozzo: nella realtà un anno può contenere due o tre morti, e questo modello non può dar loro un posto. Miglioriamolo dividendo l’anno in due metà.
 
@@ -1170,15 +1170,15 @@ Il pedice $n$ ricorda che la probabilità cambia quando cambia la suddivisione. 
 <g fill="#e07a1f"><circle cx="155" cy="67" r="10"/><circle cx="405" cy="67" r="10"/></g>
 <g fill="currentColor" text-anchor="middle"><text x="55" y="108">1</text><text x="105" y="108">2</text><text x="155" y="108">3</text><text x="205" y="108">4</text><text x="255" y="108">5</text><text x="305" y="108">6</text><text x="355" y="108">7</text><text x="405" y="108">8</text><text x="455" y="108">9</text><text x="505" y="108">10</text></g>
 <text x="280" y="138" text-anchor="middle" fill="currentColor">Ogni pezzetto: un evento con probabilità λ/n, oppure niente; pezzetti indipendenti.</text>
-<text x="280" y="160" text-anchor="middle" fill="currentColor">Totale degli eventi: Binomiale(n, λ/n), con media n·(λ/n) = λ per ogni n.</text>
+<text x="280" y="160" text-anchor="middle" fill="currentColor">Distribuzione binomiale(n, λ/n): media λ per ogni n.</text>
 <text x="280" y="187" text-anchor="middle" fill="#e07a1f" font-weight="bold">In questo corpo-anno: 2 eventi</text>
 </svg>
 <figcaption>Più pezzetti significa pezzetti più corti, ciascuno con un evento ancora più raro; la media totale resta la stessa.</figcaption>
 </figure>
 
-#### Il conteggio come Binomiale
+#### La distribuzione binomiale del conteggio
 
-Assumiamo che i pezzetti abbiano la stessa probabilità di evento e siano indipendenti. Il conteggio del modello a $n$ pezzetti, che chiamiamo $X_n$, è allora una Binomiale:
+Assumiamo che i pezzetti abbiano la stessa probabilità di evento e siano indipendenti. Il conteggio del modello a $n$ pezzetti, che chiamiamo $X_n$, segue allora una distribuzione binomiale:
 
 $$
 X_n\sim\operatorname{Binomiale}\left(n,\frac{\lambda}{n}\right),
@@ -1328,9 +1328,9 @@ $$
 
 Con $\lambda=0{,}61$ e $e^{-0{,}61}\approx0{,}54335$ avremmo ad esempio $P(X=2)=\frac{0{,}61^2}{2}\cdot0{,}54335=\frac{0{,}3721}{2}\cdot0{,}54335\approx0{,}10109$.
 
-#### Un confronto con la Binomiale
+#### Un confronto con la distribuzione binomiale
 
-La Poisson ammette zero eventi e **non ha un massimo**: il modello attribuisce probabilità positiva a ogni intero non negativo. La Binomiale con $n$ prove, invece, non può superare $n$. La Poisson può approssimare bene la Binomiale nel regime di eventi rari, ma le due distribuzioni non sono identiche per un $n$ finito.
+La distribuzione di Poisson ammette zero eventi e **non ha un massimo**: il modello attribuisce probabilità positiva a ogni intero non negativo. La distribuzione binomiale con $n$ prove, invece, non può superare $n$. La distribuzione di Poisson può approssimare bene la distribuzione binomiale nel regime di eventi rari, ma le due distribuzioni non sono identiche per un $n$ finito.
 
 #### Calcolare un peso a partire dal precedente
 
@@ -1361,7 +1361,7 @@ $$
 e^\lambda=1+\lambda+\frac{\lambda^2}{2!}+\frac{\lambda^3}{3!}+\cdots.
 $$
 
-Ogni peso della Poisson contiene il fattore comune $e^{-\lambda}$, che possiamo portare fuori dalla somma:
+Ogni peso della distribuzione di Poisson contiene il fattore comune $e^{-\lambda}$, che possiamo portare fuori dalla somma:
 
 $$
 \sum_{k=0}^{\infty}P(X=k)
@@ -1372,7 +1372,7 @@ $$
 La formula assegna così tutto il peso ai conteggi possibili: è davvero una PMF.
 
 !!! note "Che cosa abbiamo ottenuto"
-    Dividendo l’intervallo in pezzetti e lasciandoli diventare infiniti, con media totale $\lambda$ fissata, la Binomiale si trasforma nella Poisson. La sua PMF è $\lambda^ke^{-\lambda}/k!$ e può essere calcolata un peso alla volta con la ricorrenza $\lambda/k$.
+    Dividendo l’intervallo in pezzetti e lasciandoli diventare infiniti, con media totale $\lambda$ fissata, la distribuzione binomiale si trasforma nella distribuzione di Poisson. La sua PMF è $\lambda^ke^{-\lambda}/k!$ e può essere calcolata un peso alla volta con la ricorrenza $\lambda/k$.
 
 ### 14. Tornare ai dati: probabilità e frequenze attese {: #confronto-dati }
 
@@ -1395,7 +1395,7 @@ Con $\lambda=0{,}61$ calcoliamo i numeri attesi e affianchiamoli ai dati:
 | Morti nel corpo-anno $k$ | 0 | 1 | 2 | 3 | 4 | 5 o più |
 |---|---|---|---|---|---|---|
 | Corpi-anno osservati | 109 | 65 | 22 | 3 | 1 | 0 |
-| Corpi-anno attesi con Poisson$(0{,}61)$ | 108,7 | 66,3 | 20,2 | 4,1 | 0,6 | 0,1 |
+| Corpi-anno attesi con la distribuzione di Poisson$(0{,}61)$ | 108,7 | 66,3 | 20,2 | 4,1 | 0,6 | 0,1 |
 
 L’ultima colonna raggruppa tutti i valori da 5 in poi: si calcola come $200[1-P(X=0)-\cdots-P(X=4)]$. Non è soltanto la probabilità di esattamente cinque eventi.
 
@@ -1408,9 +1408,9 @@ L’ultima colonna raggruppa tutti i valori da 5 in poi: si calcola come $200[1-
 <g fill="currentColor" text-anchor="middle" font-weight="bold"><text x="111" y="208">0</text><text x="206" y="208">1</text><text x="301" y="208">2</text><text x="396" y="208">3</text><text x="491" y="208">4</text></g>
 <text x="290" y="230" text-anchor="middle" fill="currentColor">morti nel corpo-anno</text>
 <rect x="300" y="18" width="14" height="14" fill="#4051b5"/><text x="320" y="30" fill="currentColor">osservati</text>
-<rect x="400" y="18" width="14" height="14" fill="#e07a1f"/><text x="420" y="30" fill="currentColor">attesi (Poisson)</text>
+<rect x="300" y="40" width="14" height="14" fill="#e07a1f"/><text x="320" y="52" fill="currentColor">distribuzione di Poisson</text>
 </svg>
-<figcaption>Dati di Bortkiewicz (1898) e previsione Poisson con λ = 0,61: ogni coppia di barre quasi coincide.</figcaption>
+<figcaption>Dati di Bortkiewicz (1898) e previsione della distribuzione di Poisson con λ = 0,61: ogni coppia di barre quasi coincide.</figcaption>
 </figure>
 
 Questa è la tabella di confronto pubblicata da Bortkiewicz a pagina 25. La formula che Poisson aveva lasciato come risultato di calcolo nel 1837 incontra qui, sessantuno anni dopo, dei dati reali. Il risultato è notevole: **un solo parametro**, ricavato da una sola media, produce una forma vicina a quella osservata.
@@ -1424,7 +1424,7 @@ Alcune osservazioni per leggere bene il confronto.
 
 Una tabella vicina sostiene l’utilità del modello; non dimostra tutte le sue ipotesi.
 
-### 15. Media e varianza della Poisson {: #media-varianza-poisson }
+### 15. Media e varianza della distribuzione di Poisson {: #media-varianza-poisson }
 
 **Dove siamo.** Conosciamo la PMF. Ora vogliamo riassumere la distribuzione con i due numeri che abbiamo imparato a usare: il centro e la dispersione.
 
@@ -1441,7 +1441,7 @@ Sono proprietà esatte della **distribuzione teorica**. Con $\lambda=2$, per ese
 
 L’uguaglianza fra media e varianza riguarda i loro *valori numerici*, e non il loro significato. Le interpretazioni restano diverse: la media descrive il centro, la varianza è una media di scarti al quadrato. La deviazione standard, che ha le stesse unità del conteggio, è $\sqrt\lambda$.
 
-Questa coincidenza è una peculiarità della Poisson. Nella Binomiale, per confronto, la varianza è $np(1-p)$, che è più piccola della media $np$; la Poisson si ottiene quando $p$ è così piccolo che il fattore $1-p$ è praticamente 1. È un'altra faccia del limite dei pezzetti.
+Questa coincidenza è una peculiarità della distribuzione di Poisson. Nella distribuzione binomiale, per confronto, la varianza è $np(1-p)$, che è più piccola della media $np$; la distribuzione di Poisson si ottiene quando $p$ è così piccolo che il fattore $1-p$ è praticamente 1. È un'altra faccia del limite dei pezzetti.
 
 #### Perché la media è $\lambda$
 
@@ -1464,7 +1464,7 @@ Per la varianza il calcolo è un poco più lungo, e lo facciamo con cura nella [
 
 ### Controllare la dispersione dei dati
 
-Per i 200 dati di Bortkiewicz conosciamo già $\overline{x}=0{,}61$. Se la Poisson è un buon modello, anche la varianza dei dati dovrebbe essere vicina a 0,61. Verifichiamolo calcolando la varianza dei dati: applichiamo la definizione, con la stessa procedura in quattro passaggi della sezione sulla varianza, ma con le frequenze al posto delle probabilità.
+Per i 200 dati di Bortkiewicz conosciamo già $\overline{x}=0{,}61$. Se la distribuzione di Poisson è un buon modello, anche la varianza dei dati dovrebbe essere vicina a 0,61. Verifichiamolo calcolando la varianza dei dati: applichiamo la definizione, con la stessa procedura in quattro passaggi della sezione sulla varianza, ma con le frequenze al posto delle probabilità.
 
 | Conteggio $k$ | Frequenza $f_k$ | $(k-0{,}61)^2$ | $f_k(k-0{,}61)^2$ |
 |---|---|---|---|
@@ -1484,10 +1484,10 @@ Stiamo descrivendo *questi* 200 valori, perciò usiamo il divisore **200**.
 
 #### Come leggere il risultato, con prudenza
 
-La varianza osservata 0,6079 è vicina alla media osservata 0,61: il confronto è coerente con una Poisson. Attenzione però al *verso* del ragionamento.
+La varianza osservata 0,6079 è vicina alla media osservata 0,61: il confronto è coerente con una distribuzione di Poisson. Attenzione però al *verso* del ragionamento.
 
-- Per una Poisson, media e varianza coincidono.
-- Ma **una distribuzione con media e varianza uguali non è necessariamente Poisson**. Ne vedrai un controesempio nell’esercizio 6.
+- Per una distribuzione di Poisson, media e varianza coincidono.
+- Ma **una distribuzione con media e varianza uguali non è necessariamente una distribuzione di Poisson**. Ne vedrai un controesempio nell’esercizio 6.
 - Inoltre, un campione finito non deve riprodurre esattamente l’uguaglianza teorica.
 
 È un controllo utile, non una certificazione del modello.
@@ -1504,7 +1504,7 @@ Una fluttuazione sulla scala di 10 eventi pesa meno rispetto a 100 di quanto una
 
 #### Esplora: centro, dispersione e probabilità dello zero {: #widget-poisson }
 
-Il riferimento è Poisson$(0{,}61)$. Aumenta $\lambda$ e osserva come la massa si sposta a destra e si allarga. La probabilità di zero eventi diminuisce. Prima di usare il cursore, prova a confrontare $e^{-1}$, $e^{-2}$ ed $e^{-3}$: in quale di questi casi la probabilità di zero scende sotto il 5%?
+Il riferimento è la distribuzione di Poisson$(0{,}61)$. Aumenta $\lambda$ e osserva come la massa si sposta a destra e si allarga. La probabilità di zero eventi diminuisce. Prima di usare il cursore, prova a confrontare $e^{-1}$, $e^{-2}$ ed $e^{-3}$: in quale di questi casi la probabilità di zero scende sotto il 5%?
 
 <div class="psi-widget" id="s05-poisson"></div>
 <script>
@@ -1517,7 +1517,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   PSIWidget.mount('s05-poisson', {
     type: 'bar', xLabel: 'Numero di eventi k', yLabel: 'P(X = k)',
-    xDomain: [0, 15], liveLabel: 'Poisson corrente', fn: massa,
+    xDomain: [0, 15], liveLabel: 'Distribuzione di Poisson corrente', fn: massa,
     params: [{key: 'lam', label: 'λ (numero medio di eventi)',
       min: 0.1, max: 10, step: 0.01, value: 0.61}],
     reference: {label: 'Bortkiewicz: λ = 0,61', params: {lam: 0.61}},
@@ -1539,7 +1539,7 @@ Con $\lambda=3$, $e^{-3}\approx0{,}0498$: meno di un intervallo su venti è vuot
 
 **Dove siamo.** Rifacciamo con il computer tutto ciò che abbiamo fatto a mano nei §9–15, per verificare i numeri e per poter variare i dati.
 
-Il codice parte dalle frequenze osservate, calcola la media e la usa come parametro della Poisson. Poi ricostruisce i numeri attesi e calcola la varianza con **gli scarti al quadrato**, come abbiamo fatto nella tabella. Leggi i commenti del codice mentre procedi: seguono gli stessi passaggi della dispensa.
+Il codice parte dalle frequenze osservate, calcola la media e la usa come parametro della distribuzione di Poisson. Poi ricostruisce i numeri attesi e calcola la varianza con **gli scarti al quadrato**, come abbiamo fatto nella tabella. Leggi i commenti del codice mentre procedi: seguono gli stessi passaggi della dispensa.
 
 <div class="psi-exec" markdown="1">
 ```python
@@ -1577,7 +1577,7 @@ plt.bar([x - 0.2 for x in k], list(osservati.values()), width=0.4,
         label="Osservati (Bortkiewicz)")
 plt.bar([x + 0.2 for x in k],
         [corpi_anno * poisson(x, lam) for x in k], width=0.4,
-        label="Attesi con Poisson(0,61)")
+        label="Attesi con la distribuzione di Poisson(0,61)")
 plt.xticks(k)
 plt.xlabel("Morti in un corpo-anno")
 plt.ylabel("Numero di corpi-anno")
@@ -1587,7 +1587,7 @@ plt.show()
 ```
 </div>
 
-Il grafico confronta le colonne da 0 a 4. La Poisson assegna anche un piccolo peso a «5 o più»: quelle barre non sono disegnate. L’assenza di valori oltre 4 nel campione non rende impossibili quei conteggi nel modello.
+Il grafico confronta le colonne da 0 a 4. La distribuzione di Poisson assegna anche un piccolo peso a «5 o più»: quelle barre non sono disegnate. L’assenza di valori oltre 4 nel campione non rende impossibili quei conteggi nel modello.
 
 #### Un’esplorazione facoltativa
 
@@ -1601,7 +1601,7 @@ La maggiore dispersione è compatibile con unità meno omogenee; questo confront
 
 #### Tasso e parametro non sono la stessa cosa
 
-Un **tasso** indica quanti eventi arrivano in media *per unità di tempo*. Il **parametro** della Poisson indica invece quanti eventi attendiamo *nell’intervallo scelto*. Per evitare confusione chiamiamo il tasso $r$ e la durata $t$:
+Un **tasso** indica quanti eventi arrivano in media *per unità di tempo*. Il **parametro** della distribuzione di Poisson indica invece quanti eventi attendiamo *nell’intervallo scelto*. Per evitare confusione chiamiamo il tasso $r$ e la durata $t$:
 
 $$
 \boxed{\lambda=rt.}
@@ -1615,10 +1615,10 @@ Supponiamo un flusso con tasso costante $r=3$ richieste al secondo e con le ipot
 
 | Durata $t$ | Media nell’intervallo $\lambda=rt$ | Distribuzione del conteggio |
 |---|---|---|
-| Mezzo secondo | $3\cdot0{,}5=1{,}5$ | Poisson$(1{,}5)$ |
-| Un secondo | $3\cdot1=3$ | Poisson$(3)$ |
-| Dieci secondi | $3\cdot10=30$ | Poisson$(30)$ |
-| Un minuto | $3\cdot60=180$ | Poisson$(180)$ |
+| Mezzo secondo | $3\cdot0{,}5=1{,}5$ | Distribuzione di Poisson$(1{,}5)$ |
+| Un secondo | $3\cdot1=3$ | Distribuzione di Poisson$(3)$ |
+| Dieci secondi | $3\cdot10=30$ | Distribuzione di Poisson$(30)$ |
+| Un minuto | $3\cdot60=180$ | Distribuzione di Poisson$(180)$ |
 
 Per zero richieste, in mezzo secondo la probabilità è $e^{-1{,}5}\approx0{,}2231$; in un secondo è $e^{-3}\approx0{,}0498$. Un intervallo più lungo offre più occasioni di arrivo, quindi è meno probabile che resti vuoto.
 
@@ -1634,17 +1634,17 @@ L’intervallo non deve per forza essere temporale. Può essere spaziale: refusi
 
 ### 18. Richieste a un server: calcolare un picco {: #richieste }
 
-**Dove siamo.** Mettiamo la Poisson al servizio di un problema di capacità: con quale frequenza un server riceve più richieste di quante ne può gestire in un secondo?
+**Dove siamo.** Mettiamo la distribuzione di Poisson al servizio di un problema di capacità: con quale frequenza un server riceve più richieste di quante ne può gestire in un secondo?
 
 #### Il modello
 
-Immaginiamo 10.000 utenti. In un secondo ciascuno può inviare una richiesta con probabilità $0{,}0003$, indipendentemente dagli altri. In questo modello il conteggio è esattamente Binomiale e la sua media è:
+Immaginiamo 10.000 utenti. In un secondo ciascuno può inviare una richiesta con probabilità $0{,}0003$, indipendentemente dagli altri. In questo modello il conteggio segue esattamente una distribuzione binomiale e la sua media è:
 
 $$
 10000\cdot0{,}0003=3.
 $$
 
-Siamo nel regime che conosciamo: molte prove, probabilità piccola, media moderata. La Poisson$(3)$ offre dunque un’approssimazione utile. Un traffico reale deve comunque essere controllato rispetto alle ipotesi: un gran numero di utenti, da solo, non le garantisce.
+Siamo nel regime che conosciamo: molte prove, probabilità piccola, media moderata. La distribuzione di Poisson$(3)$ offre dunque un’approssimazione utile. Un traffico reale deve comunque essere controllato rispetto alle ipotesi: un gran numero di utenti, da solo, non le garantisce.
 
 #### Il calcolo
 
@@ -1672,18 +1672,18 @@ Attenzione a non chiedere al conteggio più di quanto può dire. Il comportament
 
 **Dove siamo.** Un modello è utile quando sappiamo anche dire *quando non funziona*. Ripassiamo le ipotesi e vediamo come si violano nei sistemi reali.
 
-Per costruire la Poisson abbiamo richiesto eventi singoli, un tasso stabile e indipendenza dei conteggi in intervalli disgiunti. Nei sistemi possiamo incontrare:
+Per costruire la distribuzione di Poisson abbiamo richiesto eventi singoli, un tasso stabile e indipendenza dei conteggi in intervalli disgiunti. Nei sistemi possiamo incontrare:
 
 - **attività a raffiche**, con molti client influenzati dallo stesso evento;
 - **tassi variabili**, per esempio differenze fra notte e giorno;
 - **effetti a catena**, nei quali una richiesta fallita genera altri tentativi;
 - **cause comuni**, come un problema elettrico che guasta più componenti insieme.
 
-Questi meccanismi possono produrre conteggi **più dispersi** di una Poisson con la stessa media. Si parla di **sovradispersione** quando la varianza supera la media. Nei dati, una differenza consistente fra varianza e media invita a cercare eterogeneità, dipendenza o altri aspetti mancanti nel modello.
+Questi meccanismi possono produrre conteggi **più dispersi** di una distribuzione di Poisson con la stessa media. Si parla di **sovradispersione** quando la varianza supera la media. Nei dati, una differenza consistente fra varianza e media invita a cercare eterogeneità, dipendenza o altri aspetti mancanti nel modello.
 
-#### Un tasso variabile non esclude la Poisson
+#### Un tasso variabile non esclude la distribuzione di Poisson
 
-Un tasso variabile non esclude ogni possibile uso della Poisson. Intervalli omogenei possono avere ciascuno un modello adatto, ma con parametri diversi: per esempio una Poisson di media 1 di notte e una di media 5 di giorno. Mescolare quei conteggi e attribuire a tutti un unico parametro può invece nascondere proprio la variabilità che ci interessa.
+Un tasso variabile non esclude ogni possibile uso della distribuzione di Poisson. Intervalli omogenei possono avere ciascuno un modello adatto, ma con parametri diversi: per esempio una distribuzione di Poisson di media 1 di notte e una di media 5 di giorno. Mescolare quei conteggi e attribuire a tutti un unico parametro può invece nascondere proprio la variabilità che ci interessa.
 
 #### Usare il confronto con prudenza
 
@@ -1693,13 +1693,13 @@ Il confronto tra media e varianza va interpretato con misura:
 - una differenza grande richiede un’indagine;
 - un’uguaglianza non basta a identificare la distribuzione.
 
-Esistono anche conteggi **meno** dispersi della Poisson, per esempio quando gli eventi si ostacolano o vengono regolati.
+Esistono anche conteggi **meno** dispersi della distribuzione di Poisson, per esempio quando gli eventi si ostacolano o vengono regolati.
 
 ### 20. Laboratorio: traffico regolare e traffico a raffiche {: #lab-richieste }
 
 **Dove siamo.** Vediamo la sovradispersione con i nostri occhi, costruendo noi stessi un traffico a raffiche.
 
-Simuliamo 20.000 secondi nel modello dei 10.000 utenti. Con `raffica = False`, ogni secondo ha la stessa probabilità di invio per utente. Prima di eseguire, prevedi la media e chiediti se la varianza sarà vicina a quella di Poisson$(3)$.
+Simuliamo 20.000 secondi nel modello dei 10.000 utenti. Con `raffica = False`, ogni secondo ha la stessa probabilità di invio per utente. Prima di eseguire, prevedi la media e chiediti se la varianza sarà vicina a quella della distribuzione di Poisson$(3)$.
 
 <div class="psi-exec" markdown="1">
 ```python
@@ -1718,7 +1718,7 @@ p_secondo = np.full(secondi, p)
 if raffica:
     # Nel 10% dei secondi ogni client è 5 volte più attivo.
     p_secondo[rng.random(secondi) < 0.1] = 5 * p
-# Ogni secondo: quanti dei 10000 client inviano (una Binomiale).
+# Ogni secondo: quanti dei 10000 client inviano (una distribuzione binomiale).
 richieste = rng.binomial(utenti, p_secondo)
 
 media = richieste.mean()
@@ -1727,8 +1727,8 @@ media_teorica = lam * (1.4 if raffica else 1)
 print(f"Media teorica del modello scelto: {media_teorica:.1f}")
 print(f"Media osservata: {media:.3f}")
 print(f"Varianza osservata: {richieste.var():.3f}")
-# Confronto con la Poisson che ha la stessa media dei dati.
-print(" k  frequenza  Poisson")
+# Confronto con la distribuzione di Poisson che ha la stessa media dei dati.
+print(" k  frequenza  distribuzione di Poisson")
 for k in range(9):
     freq = np.mean(richieste == k)
     teoria = exp(-media) * media ** k / factorial(k)
@@ -1736,7 +1736,7 @@ for k in range(9):
 ```
 </div>
 
-La simulazione genera conteggi binomiali; il confronto Poisson è una previsione approssimata. Con `raffica = False`, media e varianza sono vicine a 3 e le frequenze sono vicine ai pesi teorici, con le oscillazioni che ci aspettiamo da un campionamento.
+La simulazione genera conteggi binomiali; il confronto con la distribuzione di Poisson è una previsione approssimata. Con `raffica = False`, media e varianza sono vicine a 3 e le frequenze sono vicine ai pesi teorici, con le oscillazioni che ci aspettiamo da un campionamento.
 
 #### Il traffico a raffiche
 
@@ -1746,19 +1746,19 @@ $$
 0{,}9\cdot3+0{,}1\cdot15=4{,}2.
 $$
 
-Poi prevedi la varianza. Sarà vicina a 17, molto maggiore di 4,2. Il programma confronta i pesi osservati con una Poisson che usa la **nuova media osservata**, quindi la differenza non nasce dall’aver dimenticato di aggiornare $\lambda$. Nasce dalla *mescolanza* di secondi con attività diverse.
+Poi prevedi la varianza. Sarà vicina a 17, molto maggiore di 4,2. Il programma confronta i pesi osservati con una distribuzione di Poisson che usa la **nuova media osservata**, quindi la differenza non nasce dall’aver dimenticato di aggiornare $\lambda$. Nasce dalla *mescolanza* di secondi con attività diverse.
 
 #### Dove si perde l’indipendenza
 
 Un ultimo punto, sottile ma importante. Condizionatamente al tipo di secondo, gli utenti restano indipendenti nel codice. Ma se non conosciamo quel tipo, l’attività comune li collega: osservare molte richieste da un gruppo di utenti è un indizio che anche gli altri siano nel regime attivo. Il modello che tratta ogni secondo come identico agli altri perde questa informazione, e per questo sottostima le code.
 
-### 21. Geometrica, Binomiale o Poisson? {: #geometrica-o-poisson }
+### 21. Quale distribuzione: geometrica, binomiale o di Poisson? {: #geometrica-o-poisson }
 
 **Dove siamo.** Abbiamo incontrato tre distribuzioni. L’abilità più importante, a questo punto, è scegliere quella giusta davanti a un problema nuovo.
 
 Prima di scegliere una formula, completa la frase **«La variabile conta…»**. Poi dichiara ciò che tieni fissato e quali ipotesi fai. La tabella confronta le tre distribuzioni su queste domande:
 
-| | Geometrica$(p)$ | Binomiale$(n,p)$ | Poisson$(\lambda)$ |
+| | Geometrica$(p)$ | Distribuzione binomiale$(n,p)$ | Distribuzione di Poisson$(\lambda)$ |
 |---|---|---|---|
 | Domanda | Quante prove fino al primo successo? | Quanti successi in $n$ prove? | Quanti eventi in un intervallo? |
 | Che cosa è fissato | Probabilità per prova e traguardo del primo successo | Numero di prove e probabilità per prova | Intervallo e media del conteggio |
@@ -1771,15 +1771,15 @@ Prima di scegliere una formula, completa la frase **«La variabile conta…»**.
 
 La Geometrica conta un’attesa in **prove discrete**, non una durata continua in secondi. Possiamo tradurla in durata se conosciamo i tempi delle prove, come abbiamo fatto nel §8.
 
-La Poisson conta eventi in una finestra: **non** è la distribuzione del tempo fino all’evento successivo. Quel tempo avrà un modello continuo proprio, che incontreremo più avanti.
+La distribuzione di Poisson conta eventi in una finestra: **non** è la distribuzione del tempo fino all’evento successivo. Quel tempo avrà un modello continuo proprio, che incontreremo più avanti.
 
 #### Sosta finale del percorso principale
 
 Per una richiesta che riesce con probabilità 0,9:
 
 - il numero di tentativi fino al successo è **Geometrico**;
-- il numero di successi in dieci tentativi indipendenti è **Binomiale**;
-- il numero di richieste in arrivo in un secondo può essere **Poisson**, se il meccanismo degli arrivi lo giustifica.
+- il numero di successi in dieci tentativi indipendenti ha **distribuzione binomiale**;
+- il numero di richieste in arrivo in un secondo può seguire una **distribuzione di Poisson**, se il meccanismo degli arrivi lo giustifica.
 
 Il fatto che tutti e tre gli esempi parlino di richieste non determina il modello: lo determinano *la domanda e le ipotesi*.
 
@@ -1787,20 +1787,20 @@ Il fatto che tutti e tre gli esempi parlino di richieste non determina il modell
     Per ciascuna situazione, completa la frase «La variabile conta…» e indica il modello: (a) i pacchetti persi in un minuto su un collegamento stabile; (b) il numero di lanci di un dado fino al primo 6; (c) i 6 ottenuti in 20 lanci di un dado.
 
     ??? esempio-svolto "Risposta"
-        (a) Conta eventi in un intervallo, con tasso stabile: **Poisson**, con parametro uguale alla media dei pacchetti persi in un minuto.
+        (a) Conta eventi in un intervallo, con tasso stabile: **distribuzione di Poisson**, con parametro uguale alla media dei pacchetti persi in un minuto.
 
         (b) Conta prove fino al primo successo, con $p=1/6$: **Geometrica$(1/6)$**, media 6.
 
-        (c) Conta successi in un numero fissato di prove: **Binomiale$(20,1/6)$**, media $20/6\approx3{,}33$.
+        (c) Conta successi in un numero fissato di prove: **distribuzione binomiale$(20,1/6)$**, media $20/6\approx3{,}33$.
 
 !!! note "Che cosa abbiamo ottenuto"
-    Abbiamo imparato a riconoscere tre domande diverse sugli stessi eventi: *quanto aspetto?* (Geometrica), *quanti successi in $n$ prove?* (Binomiale), *quanti eventi in un intervallo?* (Poisson). La scelta del modello dipende da ciò che è fissato e da ciò che osserviamo, e non dalla parola «richieste».
+    Abbiamo imparato a riconoscere tre domande diverse sugli stessi eventi: *quanto aspetto?* (Geometrica), *quanti successi in $n$ prove?* (distribuzione binomiale), *quanti eventi in un intervallo?* (distribuzione di Poisson). La scelta del modello dipende da ciò che è fissato e da ciò che osserviamo, e non dalla parola «richieste».
 
 ## Lettura A — Il filtro di Bloom: quanto costa rispondere «forse»? {: #bloom }
 
 *Approfondimento facoltativo, fuori dal nucleo d’esame orale.*
 
-**Perché questa lettura.** È un esempio in cui lo stesso meccanismo della Poisson (molte occasioni, ciascuna con piccola probabilità) governa la progettazione di una struttura dati reale. Se leggi con calma, vedrai ricomparire il limite $(1-\lambda/n)^n\to e^{-\lambda}$.
+**Perché questa lettura.** È un esempio in cui lo stesso meccanismo della distribuzione di Poisson (molte occasioni, ciascuna con piccola probabilità) governa la progettazione di una struttura dati reale. Se leggi con calma, vedrai ricomparire il limite $(1-\lambda/n)^n\to e^{-\lambda}$.
 
 ### Il problema e l’idea
 
@@ -1851,14 +1851,14 @@ $$
 P(\text{bit a zero})=\left(1-\frac1m\right)^{kn}.
 $$
 
-Riconosci la struttura? È proprio la forma $(1-\lambda/N)^N$ del §12, con $N=kn$ occasioni. Il numero di colpi su quel bit è Binomiale con media $kn/m$. Quando l’approssimazione Poisson è adatta, la probabilità di zero colpi è circa $e^{-kn/m}$. Quindi:
+Riconosci la struttura? È proprio la forma $(1-\lambda/N)^N$ del §12, con $N=kn$ occasioni. Il numero di colpi su quel bit ha distribuzione binomiale con media $kn/m$. Quando l’approssimazione con la distribuzione di Poisson è adatta, la probabilità di zero colpi è circa $e^{-kn/m}$. Quindi:
 
 $$
 P(\text{bit a uno})=1-\left(1-\frac1m\right)^{kn}
 \approx1-e^{-kn/m}.
 $$
 
-Ritroviamo il medesimo meccanismo della Poisson: molte occasioni, ciascuna con una piccola probabilità di colpire una posizione fissata.
+Ritroviamo il medesimo meccanismo della distribuzione di Poisson: molte occasioni, ciascuna con una piccola probabilità di colpire una posizione fissata.
 
 ### Secondo conto: tutti i bit dell’interrogazione a uno
 
@@ -1888,15 +1888,15 @@ Il vettore occupa 1000 bit per 100 elementi, cioè 10 bit per elemento, oltre al
 
 ## Lettura B — Perché il limite e i momenti hanno proprio quella forma {: #derivazione-limite }
 
-*Approfondimento facoltativo. Nel percorso d’esame sono richiesti l’idea dei pezzetti, il caso di zero eventi e le proprietà finali della Poisson.*
+*Approfondimento facoltativo. Nel percorso d’esame sono richiesti l’idea dei pezzetti, il caso di zero eventi e le proprietà finali della distribuzione di Poisson.*
 
-**Perché questa lettura.** Nel §13 abbiamo enunciato la PMF di Poisson «passando al limite». Qui facciamo quel passaggio per intero, un fattore alla volta, e poi calcoliamo media e varianza direttamente dalla PMF. Prendiamo il tempo di nominare ciascun pezzo.
+**Perché questa lettura.** Nel §13 abbiamo enunciato la PMF della distribuzione di Poisson «passando al limite». Qui facciamo quel passaggio per intero, un fattore alla volta, e poi calcoliamo media e varianza direttamente dalla PMF. Prendiamo il tempo di nominare ciascun pezzo.
 
 ### B.1. Il limite binomiale, un fattore alla volta
 
 Fissiamo $\lambda>0$ e un intero $k\ge0$. Consideriamo $X_n\sim\operatorname{Binomiale}(n,\lambda/n)$ con $n>\lambda$ e $n\ge k$. Il punto essenziale, da non perdere di vista, è che **$n$ cresce, mentre $k$ e $\lambda$ restano fissi**.
 
-La PMF binomiale è:
+La PMF della distribuzione binomiale è:
 
 $$
 P(X_n=k)=\binom nk\left(\frac\lambda n\right)^k
@@ -1946,11 +1946,11 @@ $$
 
 Possiamo leggere il significato di ciascun pezzo. Il fattoriale rimasto al denominatore viene dalla scelta dei pezzetti: scegliere $k$ posizioni *senza ordine* divide per i $k!$ ordinamenti dello stesso insieme. L’esponenziale deriva invece dal prodotto delle probabilità dei moltissimi pezzetti vuoti.
 
-Per una Binomiale concreta usiamo Poisson$(np)$ come **approssimazione** quando il regime lo consente. «$n$ grande e $p$ piccolo» descrive il meccanismo, ma non è una garanzia universale sulla precisione di ogni domanda: anche la probabilità richiesta e l’accuratezza necessaria contano. Se il modello esatto è disponibile e la differenza è rilevante, possiamo confrontare direttamente le due probabilità.
+Per una distribuzione binomiale concreta usiamo la distribuzione di Poisson$(np)$ come **approssimazione** quando il regime lo consente. «$n$ grande e $p$ piccolo» descrive il meccanismo, ma non è una garanzia universale sulla precisione di ogni domanda: anche la probabilità richiesta e l’accuratezza necessaria contano. Se il modello esatto è disponibile e la differenza è rilevante, possiamo confrontare direttamente le due probabilità.
 
 ### B.2. Media e varianza dalla PMF {: #media-varianza-diretta }
 
-Per verificare i momenti non trasferiamo automaticamente al limite quelli della Binomiale: li calcoliamo dalla distribuzione di Poisson stessa. È un controllo diretto, senza scambi di limite.
+Per verificare i momenti non trasferiamo automaticamente al limite quelli della distribuzione binomiale: li calcoliamo dalla distribuzione di Poisson stessa. È un controllo diretto, senza scambi di limite.
 
 #### La media
 
@@ -2005,13 +2005,13 @@ $$
 =(\lambda^2+\lambda)-\lambda^2=\lambda.
 $$
 
-Abbiamo verificato entrambe le proprietà senza dover scambiare un limite di distribuzioni con un valore atteso. Il risultato conferma che una Poisson ha media e varianza entrambe uguali a $\lambda$.
+Abbiamo verificato entrambe le proprietà senza dover scambiare un limite di distribuzioni con un valore atteso. Il risultato conferma che una distribuzione di Poisson ha media e varianza entrambe uguali a $\lambda$.
 
 ## Lettura C — Due strumenti ulteriori per la varianza {: #lettura-varianza }
 
 *Approfondimento facoltativo, non richiesto all’esame. Per il percorso principale si usa la definizione con gli scarti al quadrato.*
 
-Questa lettura riparte dalla definizione iniziale. Prima ricava un’identità utile nei calcoli; poi la applica a una somma di indicatrici, mostrando esattamente dove l’indipendenza interviene nella varianza binomiale.
+Questa lettura riparte dalla definizione iniziale. Prima ricava un’identità utile nei calcoli; poi la applica a una somma di indicatrici, mostrando esattamente dove l’indipendenza interviene nella varianza della distribuzione binomiale.
 
 ### C.1. La media dei quadrati e il quadrato della media {: #formula-varianza }
 
@@ -2049,7 +2049,7 @@ Seguiamo entrambi i procedimenti nel pagamento che vale 0 oppure 10. Per trovare
 
 Per trovare il quadrato della media, partiamo invece dalla media dei pagamenti, che è 5, ed eleviamo quel numero al quadrato: otteniamo 25. Sottraendo troviamo $50-25=25$, lo stesso valore già ricavato con gli scarti. In particolare, nel primo conto abbiamo elevato al quadrato i **valori**, lasciando inalterati i loro pesi probabilistici.
 
-Applichiamo lo stesso procedimento a una Bernoulli $I$ di parametro $p$, perché ci servirà per il conteggio binomiale. La sua media è $p$, come per ogni indicatrice. Per usare la nuova formula dobbiamo trovare anche la media di $I^2$.
+Applichiamo lo stesso procedimento a una variabile bernoulliana $I$ di parametro $p$, perché ci servirà per il conteggio binomiale. La sua media è $p$, come per ogni indicatrice. Per usare la nuova formula dobbiamo trovare anche la media di $I^2$.
 
 Qui il quadrato è particolarmente semplice: i soli valori possibili sono 0 e 1, e valgono $0^2=0$ e $1^2=1$. Qualunque sia l'esito dell'esperimento, il quadrato del bit è dunque uguale al bit stesso: $I^2=I$. Di conseguenza, anche le loro medie coincidono: $\mathbb{E}[I^2]=\mathbb{E}[I]=p$.
 
@@ -2059,7 +2059,7 @@ $$
 \operatorname{Var}(I)=p-p^2=p(1-p).
 $$
 
-### C.2. La varianza binomiale: dove serve l’indipendenza {: #varianza-binomiale }
+### C.2. La varianza della distribuzione binomiale: dove serve l’indipendenza {: #varianza-binomiale }
 
 Consideriamo $n$ prove indipendenti, ciascuna con probabilità di successo $p$. L'indicatrice $I_i$ vale 1 se la prova $i$ ha successo e 0 altrimenti. Il numero totale di successi è quindi:
 
@@ -2067,7 +2067,7 @@ $$
 X=I_1+I_2+\cdots+I_n.
 $$
 
-Sappiamo già che $X$ è binomiale e ha media $\mathbb{E}[X]=np$. Ora vogliamo misurare quanto il conteggio si disperde attorno a questa media.
+Sappiamo già che $X$ ha distribuzione binomiale e ha media $\mathbb{E}[X]=np$. Ora vogliamo misurare quanto il conteggio si disperde attorno a questa media.
 
 Nella sezione precedente abbiamo trovato la formula:
 
@@ -2202,7 +2202,7 @@ $$
 \mathbb{E}[X]=4\cdot0{,}2=0{,}8.
 $$
 
-**Nel modello con operazioni indipendenti**, $X$ è binomiale. Possiamo usare la formula appena dimostrata. Prima calcoliamo $1-p=1-0{,}2=0{,}8$, poi moltiplichiamo:
+**Nel modello con operazioni indipendenti**, $X$ ha distribuzione binomiale. Possiamo usare la formula appena dimostrata. Prima calcoliamo $1-p=1-0{,}2=0{,}8$, poi moltiplichiamo:
 
 $$
 \begin{aligned}
@@ -2219,7 +2219,7 @@ $$
 |---|---|---|
 | $P(X=x)$ | $0{,}8$ | $0{,}2$ |
 
-Questo conteggio non è binomiale. Per trovarne la varianza torniamo alla definizione, usando la media $0{,}8$. Calcoliamo prima gli scarti e i loro quadrati:
+Questo conteggio non segue una distribuzione binomiale. Per trovarne la varianza torniamo alla definizione, usando la media $0{,}8$. Calcoliamo prima gli scarti e i loro quadrati:
 
 $$
 \begin{aligned}
@@ -2244,7 +2244,7 @@ La varianza del guasto comune è quattro volte quella del modello indipendente: 
 
 Possiamo anche individuare il passaggio della dimostrazione che qui cambia. Due operazioni fissate falliscono insieme con probabilità $0{,}2$, perché basta che avvenga il guasto comune. Nel modello indipendente, invece, la probabilità dei due fallimenti insieme è $0{,}2\cdot0{,}2=0{,}04$. Le probabilità singole coincidono, ma quelle congiunte sono diverse: cambiano quindi le medie dei prodotti $I_iI_j$ e, di conseguenza, la varianza del totale.
 
-**La linearità del valore atteso vale anche per variabili dipendenti; la somma delle varianze richiede ulteriori condizioni.** Per la Binomiale l'indipendenza giustifica il calcolo dei prodotti e porta a $np(1-p)$. Nel modello del guasto comune dobbiamo invece tenere conto del legame tra le operazioni.
+**La linearità del valore atteso vale anche per variabili dipendenti; la somma delle varianze richiede ulteriori condizioni.** Per la distribuzione binomiale l'indipendenza giustifica il calcolo dei prodotti e porta a $np(1-p)$. Nel modello del guasto comune dobbiamo invece tenere conto del legame tra le operazioni.
 
 ## Esercizi: formula la domanda prima di scegliere la formula {: #esercizi }
 
@@ -2323,7 +2323,7 @@ Con $\lambda=0{,}61$, parti da $P(X=0)=e^{-0{,}61}$ e calcola i pesi per 1, 2 e 
 
 ### Esercizio 6 — Calcolare e interpretare una varianza {: #esercizio-6 }
 
-Una variabile $Y$ vale 0 con probabilità $1/4$, 2 con probabilità $1/2$ e 4 con probabilità $1/4$. Calcola media e varianza **con la definizione degli scarti**. Può essere Poisson? Usa poi lo stesso procedimento per verificare la varianza 0,6079 della tabella di Bortkiewicz.
+Una variabile $Y$ vale 0 con probabilità $1/4$, 2 con probabilità $1/2$ e 4 con probabilità $1/4$. Calcola media e varianza **con la definizione degli scarti**. Può avere distribuzione di Poisson? Usa poi lo stesso procedimento per verificare la varianza 0,6079 della tabella di Bortkiewicz.
 
 ??? esempio-svolto "Soluzione ragionata"
     **La media.** $0\cdot\frac14+2\cdot\frac12+4\cdot\frac14=0+1+1=2$.
@@ -2334,7 +2334,7 @@ Una variabile $Y$ vale 0 con probabilità $1/4$, 2 con probabilità $1/2$ e 4 co
     \operatorname{Var}(Y)=(-2)^2\frac14+0^2\frac12+2^2\frac14=1+0+1=2.
     $$
 
-    **Può essere Poisson?** Media e varianza coincidono, ma $Y$ **non è Poisson**: per esempio $P(Y=1)=0$, mentre una Poisson di parametro 2 assegna a 1 probabilità $2e^{-2}>0$. Abbiamo così un controesempio all’idea che l’uguaglianza fra media e varianza identifichi il modello.
+    **Può avere distribuzione di Poisson?** Media e varianza coincidono, ma $Y$ **non ha distribuzione di Poisson**: per esempio $P(Y=1)=0$, mentre una distribuzione di Poisson di parametro 2 assegna a 1 probabilità $2e^{-2}>0$. Abbiamo così un controesempio all’idea che l’uguaglianza fra media e varianza identifichi il modello.
 
     **Bortkiewicz.** I pesi sono le frequenze divise per 200 e la media è 0,61. La somma pesata degli scarti al quadrato è:
 
@@ -2347,24 +2347,24 @@ Una variabile $Y$ vale 0 con probabilità $1/4$, 2 con probabilità $1/2$ e 4 co
 
 ### Esercizio 7 — Scegliere il modello e dichiarare le ipotesi {: #esercizio-7 }
 
-Per ciascuna situazione indica un modello naturale e trova la probabilità richiesta. Quando il testo fornisce soltanto una media, precisa quali ipotesi aggiungi per usare la Poisson.
+Per ciascuna situazione indica un modello naturale e trova la probabilità richiesta. Quando il testo fornisce soltanto una media, precisa quali ipotesi aggiungi per usare la distribuzione di Poisson.
 
 1. Un collegamento perde in media 0,5 pacchetti al minuto: probabilità di almeno una perdita in un minuto.
 2. Ogni connessione riesce con probabilità 0,9, indipendentemente dalle altre: probabilità di dover fare più di un tentativo.
 3. Un testo contiene in media 2 refusi per pagina: probabilità di esattamente 2 refusi in una pagina.
 4. Fra 10 operazioni indipendenti, ciascuna riesce con probabilità 0,9: probabilità che riescano tutte.
-5. **Richiamo facoltativo:** quanti numeri pari ci sono fra i 5 estratti senza reinserimento da 1 a 90? Trova la media e spiega perché il conteggio non è binomiale.
+5. **Richiamo facoltativo:** quanti numeri pari ci sono fra i 5 estratti senza reinserimento da 1 a 90? Trova la media e spiega perché il conteggio non segue una distribuzione binomiale.
 
 ??? esempio-svolto "Soluzione ragionata"
-    1. **Pacchetti persi.** Se le perdite sono eventi singoli, a tasso stabile e senza dipendenza fra intervalli disgiunti, usiamo Poisson$(0{,}5)$. «Almeno una perdita» ha come complementare «zero perdite», quindi $P(X\ge1)=1-e^{-0{,}5}\approx0{,}3935$. La sola media non assicura queste ipotesi: le stiamo aggiungendo noi.
+    1. **Pacchetti persi.** Se le perdite sono eventi singoli, a tasso stabile e senza dipendenza fra intervalli disgiunti, usiamo la distribuzione di Poisson$(0{,}5)$. «Almeno una perdita» ha come complementare «zero perdite», quindi $P(X\ge1)=1-e^{-0{,}5}\approx0{,}3935$. La sola media non assicura queste ipotesi: le stiamo aggiungendo noi.
     2. **Connessioni.** Il numero di tentativi fino al successo è Geometrica$(0{,}9)$. «Più di un tentativo» significa che il primo fallisce: $P(X>1)=0{,}1$.
-    3. **Refusi.** Se adottiamo il modello Poisson, con esposizione omogenea per pagina e refusi non raggruppati, $P(X=2)=2^2e^{-2}/2!=2e^{-2}\approx0{,}2707$. Conoscere la media 2 non basta, da solo, a identificare la distribuzione.
-    4. **Dieci operazioni.** Il numero di riuscite è Binomiale$(10,0{,}9)$; riescono tutte con probabilità $0{,}9^{10}\approx0{,}3487$.
+    3. **Refusi.** Se adottiamo il modello con distribuzione di Poisson, con esposizione omogenea per pagina e refusi non raggruppati, $P(X=2)=2^2e^{-2}/2!=2e^{-2}\approx0{,}2707$. Conoscere la media 2 non basta, da solo, a identificare la distribuzione.
+    4. **Dieci operazioni.** Il numero di riuscite ha distribuzione binomiale$(10,0{,}9)$; riescono tutte con probabilità $0{,}9^{10}\approx0{,}3487$.
     5. **Numeri pari.** Il modello è [Ipergeometrico](../settimana_04/index.md#ipergeometrica). Ci sono 45 pari su 90; dopo ogni estrazione cambia la composizione dei numeri rimasti, quindi le cinque indicatrici non sono indipendenti. Ciascuna ha però media $45/90$. Per linearità, che non richiede indipendenza, la media del totale è $5\cdot45/90=2{,}5$.
 
 ### Esercizio 8 — Un picco oltre la soglia {: #esercizio-8 }
 
-Un conteggio è Poisson con $\lambda=2$. Trova la probabilità di almeno tre eventi. Quali proprietà hanno media e varianza? Se una serie di intervalli comparabili avesse media osservata circa 2 e varianza circa 9, che cosa controlleresti?
+Un conteggio ha distribuzione di Poisson con $\lambda=2$. Trova la probabilità di almeno tre eventi. Quali proprietà hanno media e varianza? Se una serie di intervalli comparabili avesse media osservata circa 2 e varianza circa 9, che cosa controlleresti?
 
 ??? esempio-svolto "Soluzione ragionata"
     **Almeno tre eventi.** Significa $X\ge3$, il cui complementare è $X\in\{0,1,2\}$. Togliamo da 1 i pesi di 0, 1 e 2:
@@ -2376,7 +2376,7 @@ Un conteggio è Poisson con $\lambda=2$. Trova la probabilità di almeno tre eve
 
     **Media e varianza.** Nel modello valgono entrambe 2.
 
-    **Una varianza osservata di 9.** Suggerirebbe sovradispersione rispetto alla Poisson con media 2. Controllerei se abbiamo mescolato intervalli con tassi diversi, se ci sono raffiche o cause comuni, e quanto è grande il campione. Non basta sostituire $\lambda$ con 9: in una Poisson quello cambierebbe anche la media.
+    **Una varianza osservata di 9.** Suggerirebbe sovradispersione rispetto alla distribuzione di Poisson con media 2. Controllerei se abbiamo mescolato intervalli con tassi diversi, se ci sono raffiche o cause comuni, e quanto è grande il campione. Non basta sostituire $\lambda$ con 9: in una distribuzione di Poisson quello cambierebbe anche la media.
 
 ## Errori da evitare: tornare al significato {: #errori }
 
@@ -2390,8 +2390,8 @@ Ogni errore frequente ha una domanda che lo previene. Quando nel tuo conto compa
 | L’idea che il ritardatario sia dovuto | Sto calcolando una probabilità futura condizionata o quella dell’intera sequenza? |
 | La media trattata come una scadenza | Quale probabilità attribuisce la coda al superamento della media? |
 | $\lambda$ copiato dal testo senza unità | A quale durata o esposizione si riferisce la domanda? |
-| Una probabilità Poisson maggiore di 1 | Ho distinto il numero medio $\lambda$ da $P(X=k)$? Ho incluso $e^{-\lambda}$ e $k!$? |
-| «Media uguale a varianza, dunque Poisson» | Ho controllato il meccanismo e le altre probabilità della distribuzione? |
+| Una probabilità della distribuzione di Poisson maggiore di 1 | Ho distinto il numero medio $\lambda$ da $P(X=k)$? Ho incluso $e^{-\lambda}$ e $k!$? |
+| «Media uguale a varianza, dunque distribuzione di Poisson» | Ho controllato il meccanismo e le altre probabilità della distribuzione? |
 | «La media osservata deve essere esattamente $\lambda$» | Sto distinguendo i dati osservati dalla media del modello? |
 | Una varianza calcolata con scarti che si cancellano | Ho elevato al quadrato ogni scarto prima di fare la media? |
 
@@ -2403,7 +2403,7 @@ Rileggiamo il percorso in poche righe, nell’ordine in cui l’abbiamo fatto.
 
 **La Geometrica.** Nasce quando ripetiamo prove indipendenti con probabilità di successo costante e contiamo tutte le prove fino al primo successo. La PMF $(1-p)^{k-1}p$ descrive una sequenza di $k-1$ fallimenti chiusa da un successo. La coda $(1-p)^k$ richiede soltanto $k$ fallimenti. La media è $1/p$; l’assenza di memoria riguarda la distribuzione dell’attesa che resta dopo i fallimenti già osservati.
 
-**La Poisson.** Descrive un conteggio in un intervallo. Il modello a pezzetti la costruisce come limite di Binomiali con sempre più prove, probabilità per prova sempre più piccola e media totale $\lambda$ fissata. La sua PMF è $\lambda^ke^{-\lambda}/k!$; media e varianza valgono entrambe $\lambda$. Con un tasso costante $r$ e una durata $t$, il parametro dell’intervallo è $\lambda=rt$.
+**La distribuzione di Poisson.** Descrive un conteggio in un intervallo. Il modello a pezzetti la costruisce come limite di distribuzioni binomiali con sempre più prove, probabilità per prova sempre più piccola e media totale $\lambda$ fissata. La sua PMF è $\lambda^ke^{-\lambda}/k!$; media e varianza valgono entrambe $\lambda$. Con un tasso costante $r$ e una durata $t$, il parametro dell’intervallo è $\lambda=rt$.
 
 **Le applicazioni.** Gli esempi informatici mostrano perché conta formulare la domanda. Per scegliere un budget di retry serve una coda dell’attesa; per stimare quanti intervalli superano una soglia di arrivi serve una coda del conteggio. In entrambi i casi la formula dipende dal modello: indipendenza, stabilità delle probabilità e corretta unità di osservazione devono avere un significato nel sistema studiato.
 

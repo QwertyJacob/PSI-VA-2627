@@ -906,9 +906,24 @@ Nella prima domanda tutte le 118 assenze sono ancora incerte, e la loro congiunz
 
 #### Scegliere prima o cercare dopo
 
-C’è poi un’ultima sottigliezza, che spiega perché i ritardi vistosi ci colpiscono tanto. Una cosa è scegliere **prima** un numero e un punto di partenza, e poi osservare. Un’altra è cercare **dopo** il ritardo più vistoso fra moltissimi numeri, ruote e periodi.
+Finora ci siamo chiesti che cosa succede **dopo** un ritardo. Resta un’altra domanda, che spiega perché i ritardi vistosi ci colpiscono tanto: **quanto deve stupirci** un ritardo così lungo? La risposta dipende da come lo abbiamo trovato.
 
-Nel secondo caso abbiamo avuto molte occasioni di trovare un’attesa estrema, quindi trovarne una non è sorprendente. È come cercare la persona più alta in una grande folla: ce ne sarà sempre una molto alta. Le attese possono essere dipendenti fra loro, ma rimane essenziale dichiarare *quante possibilità abbiamo esaminato* prima di giudicare sorprendente un risultato.
+- **Scelgo prima.** Oggi decido di seguire il 53 sulla ruota di Venezia, da questa estrazione in avanti. La probabilità che manchi per 100 estrazioni di fila è $(17/18)^{100}\approx0{,}0033$, circa 1 su 300. Se succede, è davvero sorprendente.
+- **Cerco dopo.** Apro le statistiche del Lotto e cerco il numero più in ritardo. Sto guardando 90 numeri su una decina di ruote, cioè circa 900 coppie (numero, ruota). Ciascuna ha la stessa probabilità $(17/18)^{100}\approx0{,}0033$ di avere alle spalle almeno 100 assenze, quindi in media ne troverò $900\cdot0{,}0033\approx3$.
+
+L’evento è lo stesso, «un numero assente da 100 estrazioni», ma nel secondo caso abbiamo avuto centinaia di occasioni per vederlo. In questo caso, trovarne uno è normale; strano sarebbe non trovarne nessuno. Anche il 53 di Venezia non era stato scelto in anticipo: è diventato famoso proprio perché, fra tutti, era il più in ritardo. È come cercare la persona più alta in uno stadio: che superi i due metri non ci stupisce, perché l’abbiamo scelta proprio per la sua altezza.
+
+Questo è un secondo errore, diverso dalla fallacia del giocatore, e spesso la alimenta:
+
+| Errore | Che cosa pensiamo | Perché è sbagliato |
+|---|---|---|
+| Di previsione | «È in ritardo, quindi uscirà» | La probabilità resta $1/18$ |
+| Di valutazione | «Un ritardo così è incredibile, deve voler dire qualcosa» | L’abbiamo trovato cercando fra centinaia di candidati |
+
+La regola generale è che, prima di giudicare sorprendente un risultato, bisogna dichiarare **quante possibilità abbiamo esaminato**. In statistica si parla di problema dei **confronti multipli**.
+
+??? note "Approfondimento facoltativo — E se le attese non sono indipendenti?"
+    Sulla stessa ruota escono 5 numeri senza reinserimento: se esce il 53, resta un posto in meno per gli altri. Le attese di numeri diversi quindi non sono del tutto indipendenti. Il conto della media però non ne risente. Il numero di coppie in ritardo è una somma di 900 indicatrici, e la media di una somma è la somma delle medie anche per variabili dipendenti. La dipendenza cambia altre cose, per esempio la probabilità di trovarne *almeno una*, ma non la conclusione: più possibilità guardiamo, più è facile trovarne una estrema.
 
 !!! note "Da portare con sé"
     Il modello Geometrico descrive prove nuove, indipendenti, con la stessa $p$. L’assenza di memoria deriva direttamente da queste ipotesi. Un passato di fallimenti non crea un credito da riscuotere: l’urna non sa nulla.

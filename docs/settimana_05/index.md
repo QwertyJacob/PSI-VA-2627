@@ -1681,12 +1681,9 @@ Il fatto che tutti e tre gli esempi parlino di richieste non determina il modell
 
 *Approfondimento facoltativo, fuori dal nucleo d’esame orale.*
 
-Supponi di mantenere una lista molto grande di indirizzi web. Prima di consultare una struttura costosa (un database, un disco lento), vorresti un controllo rapido che dica se un indirizzo *può* essere presente. Un **filtro di Bloom** scambia un po’ di precisione con un grande risparmio di memoria: risponde «sicuramente assente» oppure «forse presente».
+Immagina un servizio che deve controllare se un indirizzo web compare in una lista molto lunga, per esempio un elenco di siti pericolosi. La lista completa sta in una struttura costosa da interrogare, come un database remoto o un disco lento, e quasi tutti gli indirizzi che arrivano *non* vi compaiono: interrogarla ogni volta soltanto per sentirsi rispondere «no» sarebbe uno spreco. Il **filtro di Bloom** è un controllo preliminare, piccolo e veloce, che scarta subito la maggior parte di questi casi. Il prezzo da pagare è che non risponde mai «sì, è presente», ma soltanto «sicuramente assente» oppure «forse presente». Quando dice «assente» ci fermiamo lì; quando dice «forse» andiamo a verificare nella struttura costosa.
 
-Il filtro usa $m$ bit, inizialmente tutti a 0, e $k$ funzioni hash. Ciascuna funzione associa un elemento a una posizione fra 0 e $m-1$.
-
-- Per **inserire** un elemento, mettiamo a 1 i suoi $k$ bit.
-- Per **interrogarlo**, guardiamo quei $k$ bit. Se anche uno solo è 0, rispondiamo «assente». Se sono tutti 1, rispondiamo «forse presente».
+Vediamo come funziona. Il filtro è una fila di $m$ bit, all’inizio tutti a 0, accompagnata da $k$ funzioni hash come quelle delle [tabelle hash della Settimana 3](../settimana_03/index.md#hash): ciascuna associa a un elemento una posizione fra 0 e $m-1$. Per inserire un elemento calcoliamo le sue $k$ posizioni e mettiamo a 1 i bit corrispondenti. Per interrogarlo calcoliamo di nuovo le sue $k$ posizioni e guardiamo quei bit. Se anche uno solo vale 0, l’elemento non può essere stato inserito, perché l’inserimento avrebbe acceso quel bit: la risposta è «assente». Se invece sono tutti a 1, la risposta è «forse presente».
 
 <figure markdown="0">
 <svg viewBox="0 0 560 225" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="Un vettore di 12 bit. gatto mette a uno i bit 2 e 7, cane i bit 4 e 9. topo, mai inserito, cade sui bit 2 e 9, entrambi a uno: il filtro risponde forse, ed è un falso positivo.">
@@ -1705,39 +1702,69 @@ Il filtro usa $m$ bit, inizialmente tutti a 0, e $k$ funzioni hash. Ciascuna fun
 <figcaption>Due elementi inseriti con due funzioni hash ciascuno; un terzo elemento, mai inserito, trova accesi tutti i suoi bit: falso positivo.</figcaption>
 </figure>
 
-Nella figura *gatto* e *cane* accendono due bit ciascuno. *Topo*, mai inserito, cade per caso proprio sui bit 2 e 9, già accesi dagli altri due: il filtro risponde «forse», e sbaglia.
+La figura mostra un filtro di 12 bit con due funzioni hash. L’elemento *gatto* ha acceso i bit 2 e 7, l’elemento *cane* i bit 4 e 9. Ora interroghiamo *topo*, che non è mai stato inserito. Le sue due funzioni hash indicano i bit 2 e 9: per pura coincidenza, sono proprio due bit già accesi dagli altri elementi. Il filtro trova tutto a 1 e risponde «forse», ma sbaglia. Questo errore si chiama **falso positivo**.
 
-Nel filtro standard nessuno spegne un bit già acceso. Quindi un elemento inserito trova sempre i propri bit a 1 (**niente falsi negativi**), mentre un elemento mai inserito può trovarli accesi da altri (**falso positivo**). Quanto spesso capita?
+L’errore opposto, invece, non può capitare. Nel filtro standard i bit si accendono e non si spengono mai, quindi un elemento inserito ritrova sempre accesi i propri bit: **non ci sono falsi negativi**. Resta da capire con che frequenza capitano i falsi positivi.
 
 ### La probabilità di un falso positivo
 
-Inseriamo $n$ elementi e trattiamo i risultati delle funzioni hash come indipendenti e uniformi: in tutto, $kn$ scelte di posizione. Ciascuna scelta manca un bit fissato con probabilità $1-1/m$, quindi il bit resta a zero con probabilità
+Per rispondere ci serve un modello. Inseriamo $n$ elementi e supponiamo, come per le [collisioni della Settimana 4](../settimana_04/index.md#collisioni), che ogni funzione hash scelga la posizione in modo uniforme e indipendente da tutte le altre scelte. Ogni elemento produce $k$ scelte di posizione, quindi dopo $n$ inserimenti le scelte sono in tutto $kn$.
+
+Affrontiamo il problema in due passi. Il primo riguarda **un solo bit**, fissato in anticipo: quanto è probabile che, dopo tutti gli inserimenti, sia ancora a 0? Ogni scelta di posizione cade su quel bit con probabilità $1/m$ e lo evita con probabilità $1-1/m$. Il bit resta a 0 soltanto se viene evitato da tutte le $kn$ scelte; poiché le scelte sono indipendenti, moltiplichiamo $kn$ volte lo stesso fattore:
 
 $$
-P(\text{bit a zero})=\left(1-\frac1m\right)^{kn}\approx e^{-kn/m}.
+P(\text{bit a zero})=\left(1-\frac1m\right)^{kn}.
 $$
 
-L’approssimazione è quella del §12: molte prove, ciascuna con una piccola probabilità di colpire il bit, e in media $kn/m$ colpi.
+Questa espressione ha una forma che conosciamo. Il numero di colpi sul nostro bit ha distribuzione binomiale: $kn$ prove indipendenti, ciascuna con probabilità $1/m$, per una media di $kn/m$. Le prove sono molte e ciascuna è poco probabile, proprio come i pezzetti del §12. Lì la probabilità di zero eventi si avvicinava a $e^{-\lambda}$; qui, con $\lambda=kn/m$, otteniamo
 
-Un falso positivo richiede che siano accesi tutti i $k$ bit di un elemento assente. Se trattiamo anche questi bit come indipendenti, ed è un’**ulteriore approssimazione** perché condividono gli stessi inserimenti, otteniamo
+$$
+P(\text{bit a zero})\approx e^{-kn/m},
+\qquad
+P(\text{bit a uno})\approx1-e^{-kn/m}.
+$$
+
+Il secondo passo riguarda l’elemento che interroghiamo. Supponiamo che non sia mai stato inserito: il filtro sbaglia se tutti i suoi $k$ bit risultano accesi. Ciascuno di essi è acceso con probabilità circa $1-e^{-kn/m}$. Se trattiamo i $k$ bit come indipendenti, la probabilità che siano accesi tutti è il prodotto delle $k$ probabilità:
 
 $$
 P(\text{falso positivo})\approx\left(1-e^{-kn/m}\right)^k.
 $$
 
-Con $n=100$ elementi, $m=1000$ bit e $k=7$ funzioni hash: $kn/m=0{,}7$, poi $1-e^{-0{,}7}\approx0{,}5034$ e infine $(0{,}5034)^7\approx0{,}0082$.
+Questa è una **seconda approssimazione**, ed è giusto dichiararla: i bit del filtro non sono davvero indipendenti, perché li hanno accesi gli stessi inserimenti. Quando il filtro ha molti bit, però, il legame è debole e la formula resta una buona descrizione.
 
-Circa lo 0,8% delle interrogazioni di elementi **assenti** riceve un «forse» sbagliato. Non è la probabilità che un «forse» sia sbagliato: per quella servirebbe sapere anche quanto spesso interroghiamo elementi presenti. Con soli 10 bit per elemento, 99 interrogazioni di elementi assenti su 100 si risolvono subito, senza toccare la struttura costosa.
+Mettiamo i numeri, un passo alla volta. Prendiamo $n=100$ elementi, $m=1000$ bit e $k=7$ funzioni hash. Il numero medio di colpi su un bit è $kn/m=700/1000=0{,}7$. Un bit fissato resta a 0 con probabilità circa $e^{-0{,}7}\approx0{,}4966$, quindi è acceso con probabilità circa $1-0{,}4966=0{,}5034$: dopo gli inserimenti, circa metà del filtro è accesa. Infine i sette bit dell’elemento interrogato devono essere accesi tutti:
+
+$$
+(0{,}5034)^7\approx0{,}0082.
+$$
+
+Circa lo 0,8% delle interrogazioni di elementi **assenti** riceve dunque un «forse» sbagliato; il restante 99,2% riceve subito la risposta corretta «assente», senza toccare la struttura costosa. Il tutto con 1000 bit per 100 elementi, cioè 10 bit per elemento: molto meno di quanto servirebbe per memorizzare gli indirizzi stessi.
+
+Attenzione a come leggi questo 0,8%: è la probabilità di un «forse» *sapendo che* l’elemento è assente, non la probabilità che un «forse» sia sbagliato. Per quest’ultima, come con il teorema di Bayes nella [Settimana 2](../settimana_02/index.md), servirebbe sapere anche quanto spesso interroghiamo elementi presenti.
 
 ## Lettura B — Perché il limite e i momenti hanno proprio quella forma {: #derivazione-limite .psi-facoltativo }
 
 *Approfondimento facoltativo. Nel percorso d’esame sono richiesti l’idea dei pezzetti, il caso di zero eventi e le proprietà finali della distribuzione di Poisson.*
 
+Nel §13 abbiamo visto, pezzo per pezzo, perché la PMF della distribuzione binomiale con $p=\lambda/n$ si avvicina a quella della distribuzione di Poisson. In un punto, però, ci siamo accontentati di un «quasi»: abbiamo detto che il prodotto $n(n-1)\cdots(n-k+1)$ è «quasi $n^k$». In questa lettura rendiamo preciso quel passaggio. Poi useremo la PMF ottenuta per calcolare la varianza, che nel §15 avevamo soltanto enunciato.
+
 ### B.1. Il limite binomiale, un fattore alla volta
 
-Fissiamo $\lambda>0$ e un intero $k\ge0$, e prendiamo $X_n\sim\operatorname{Binomiale}(n,\lambda/n)$. Il punto da non perdere di vista è che **$n$ cresce, mentre $k$ e $\lambda$ restano fissi**.
+Fissiamo un numero $\lambda>0$ e un conteggio $k\ge0$, per esempio $k=3$. Per ogni $n$ consideriamo il conteggio del modello a $n$ pezzetti, $X_n\sim\operatorname{Binomiale}(n,\lambda/n)$. Il punto da non perdere mai di vista è questo: **$n$ cresce, mentre $k$ e $\lambda$ restano fissi**. Chiediamo sempre la probabilità di *tre* eventi, in suddivisioni sempre più fini dello stesso intervallo.
 
-Scriviamo il coefficiente binomiale come $\binom nk=\dfrac{n(n-1)\cdots(n-k+1)}{k!}$. Il suo numeratore ha $k$ fattori, e $(\lambda/n)^k$ ha $k$ copie di $n$ al denominatore: possiamo abbinarli a uno a uno. Spezziamo inoltre l’esponente $n-k$ in $n$ e $-k$:
+Partiamo dalla PMF della distribuzione binomiale:
+
+$$
+P(X_n=k)=\binom nk\left(\frac\lambda n\right)^k\left(1-\frac\lambda n\right)^{n-k}.
+$$
+
+L’idea è riorganizzare questa espressione in fattori più semplici, ciascuno con un limite facile da trovare. Cominciamo dal coefficiente binomiale, che possiamo scrivere come
+
+$$
+\binom nk=\frac{n(n-1)\cdots(n-k+1)}{k!}.
+$$
+
+Al numeratore ci sono esattamente $k$ fattori: per $k=3$ sono $n$, $n-1$ e $n-2$. Anche la potenza $(\lambda/n)^k=\lambda^k/n^k$ contiene $k$ copie di $n$, questa volta al denominatore. Conviene metterle insieme, dividendo ogni fattore del numeratore per una copia di $n$. Quanto all’ultima potenza, separiamo l’esponente $n-k$ nelle due parti $n$ e $-k$, cioè scriviamo $(1-\lambda/n)^{n-k}=(1-\lambda/n)^n\cdot(1-\lambda/n)^{-k}$. Riordinando i pezzi otteniamo
 
 $$
 P(X_n=k)=
@@ -1747,112 +1774,207 @@ P(X_n=k)=
 \cdot\underbrace{\left(1-\frac\lambda n\right)^{-k}}_{C_n}.
 $$
 
-Il fattore $\lambda^k/k!$ non dipende da $n$. Studiamo gli altri tre.
+Non abbiamo cambiato nulla: è la stessa probabilità, scritta come prodotto di quattro fattori. Il secondo, $\lambda^k/k!$, non contiene $n$ e quindi non cambia quando $n$ cresce. Studiamo gli altri tre uno alla volta.
 
-- $A_n=1\cdot\left(1-\frac1n\right)\cdots\left(1-\frac{k-1}{n}\right)$ è un prodotto di $k$ fattori che tendono a 1. Il loro numero non cresce con $n$, quindi $A_n\to1$. Per $k=0$ il prodotto è vuoto e vale 1.
-- $B_n\to e^{-\lambda}$, per il limite del §12.
-- $C_n\to1$: la base tende a 1 e l’esponente $-k$ è fisso.
-
-Moltiplicando i limiti:
+Il fattore $A_n$ è quello del «quasi $n^k$». Dividendo ciascun fattore del numeratore per un $n$ otteniamo
 
 $$
-P(X_n=k)\longrightarrow\frac{\lambda^ke^{-\lambda}}{k!}.
+A_n=\frac nn\cdot\frac{n-1}n\cdots\frac{n-k+1}n
+=1\cdot\left(1-\frac1n\right)\cdots\left(1-\frac{k-1}n\right).
 $$
 
-Ogni pezzo ha un significato: il $k!$ al denominatore viene dalla scelta di $k$ pezzetti *senza ordine*, l’esponenziale dai moltissimi pezzetti vuoti.
+Per $k=3$ e $n=100$, per esempio, $A_{100}=1\cdot0{,}99\cdot0{,}98\approx0{,}970$; per $n=1000$ diventa $1\cdot0{,}999\cdot0{,}998\approx0{,}997$. Ogni fattore si avvicina a 1, e il prodotto con loro. Qui conta un dettaglio: i fattori sono sempre $k$, cioè tre, qualunque sia $n$. Un prodotto di un numero **fisso** di quantità che tendono a 1 tende a 1, quindi $A_n\to1$. Nel caso $k=0$ il prodotto non ha fattori e vale 1 per convenzione, e la conclusione non cambia.
+
+Il dettaglio non è una pignoleria. Anche $B_n=(1-\lambda/n)^n$ è un prodotto di quantità che tendono a 1, ma il numero dei suoi fattori è $n$ e cresce insieme a $n$. Nel §12 abbiamo visto che in quel caso il risultato **non** tende a 1: tende a $e^{-\lambda}$. Le piccole differenze da 1, moltiplicate un numero sempre maggiore di volte, si accumulano; se i fattori restano sempre gli stessi tre, questo non succede.
+
+Resta $C_n=(1-\lambda/n)^{-k}$. La base si avvicina a 1 e l’esponente $-k$ resta fisso, quindi, come per $A_n$, la potenza si avvicina a $1^{-k}=1$.
+
+Rimettiamo insieme i quattro limiti:
+
+$$
+P(X_n=k)\longrightarrow
+1\cdot\frac{\lambda^k}{k!}\cdot e^{-\lambda}\cdot1
+=\frac{\lambda^ke^{-\lambda}}{k!}.
+$$
+
+È la PMF della distribuzione di Poisson, e possiamo riconoscere da dove viene ciascun pezzo. Il $k!$ è ciò che resta del coefficiente binomiale, cioè della scelta *senza ordine* dei $k$ pezzetti pieni; l’esponenziale $e^{-\lambda}$ è il contributo di tutti gli altri pezzetti, quelli vuoti, che sono moltissimi.
 
 ### B.2. La varianza dalla PMF {: #media-varianza-diretta }
 
-La media $\lambda$ l’abbiamo già ricavata nel [§15](#media-varianza-poisson) con la ricorrenza. Per la varianza ci serve anche $\mathbb{E}[X^2]$. Il conto diretto di $\sum k^2P(X=k)$ è scomodo; conviene passare da $\mathbb{E}[X(X-1)]$, perché il prodotto $k(k-1)$ si semplifica con il fattoriale: $k!=k(k-1)(k-2)!$. I termini con $k=0$ e $k=1$ sono nulli, quindi
+Nel §15 abbiamo ricavato la media $\mathbb{E}[X]=\lambda$ con la ricorrenza, ma abbiamo soltanto enunciato che anche la varianza vale $\lambda$. Per calcolarla useremo l’identità $\operatorname{Var}(X)=\mathbb{E}[X^2]-(\mathbb{E}[X])^2$, ricavata nella [Lettura C](#formula-varianza), che conviene leggere prima. Il problema si riduce così a trovare $\mathbb{E}[X^2]$, la media dei quadrati.
+
+Cominciamo però dalla media, ricalcolata direttamente dalla definizione: il risultato lo conosciamo già, ma il conto mostra un trucco che fra poco useremo di nuovo. Per definizione
 
 $$
+\mathbb{E}[X]=\sum_{k=0}^{\infty}k\,\frac{\lambda^ke^{-\lambda}}{k!}.
+$$
+
+Il termine con $k=0$ è moltiplicato per 0 e possiamo toglierlo: la somma parte da $k=1$. Per $k\ge1$ vale $k!=k\cdot(k-1)!$, quindi il $k$ davanti si semplifica: $k/k!=1/(k-1)!$. Portiamo poi fuori dalla somma il fattore comune $e^{-\lambda}$ e un fattore $\lambda$ preso dalla potenza:
+
+$$
+\mathbb{E}[X]=\lambda e^{-\lambda}\sum_{k=1}^{\infty}\frac{\lambda^{k-1}}{(k-1)!}.
+$$
+
+Chiamiamo $j=k-1$: quando $k$ va da 1 all’infinito, $j$ va da 0 all’infinito, e la somma rimasta diventa $\sum_{j=0}^{\infty}\lambda^j/j!$. È la serie dell’esponenziale del §13, quella che ci ha mostrato che i pesi sommano a 1, e vale $e^\lambda$. Quindi $\mathbb{E}[X]=\lambda e^{-\lambda}e^\lambda=\lambda$.
+
+Il trucco è che il fattore $k$ si semplifica con il fattoriale. Con $k^2$ funziona male, perché dopo aver semplificato un $k$ ne resta un altro. Conviene allora calcolare la media di una quantità un po’ diversa, $X(X-1)$: il prodotto $k(k-1)$ si semplifica con il fattoriale in un colpo solo, perché per $k\ge2$ vale $k!=k(k-1)\cdot(k-2)!$. I termini con $k=0$ e $k=1$ sono nulli, quindi la somma parte da 2. Ripetiamo gli stessi passi di prima, portando fuori questa volta $\lambda^2$:
+
+$$
+\begin{aligned}
 \mathbb{E}[X(X-1)]
-=\sum_{k=2}^{\infty}k(k-1)\frac{\lambda^ke^{-\lambda}}{k!}
-=\lambda^2e^{-\lambda}\sum_{k=2}^{\infty}\frac{\lambda^{k-2}}{(k-2)!}
-=\lambda^2e^{-\lambda}e^\lambda=\lambda^2.
+&=\sum_{k=2}^{\infty}k(k-1)\frac{\lambda^ke^{-\lambda}}{k!}\\
+&=\lambda^2e^{-\lambda}\sum_{k=2}^{\infty}\frac{\lambda^{k-2}}{(k-2)!}\\
+&=\lambda^2e^{-\lambda}e^\lambda=\lambda^2.
+\end{aligned}
 $$
 
-Nel penultimo passaggio, ponendo $j=k-2$, la somma diventa $\sum_{j\ge0}\lambda^j/j!=e^\lambda$. Poiché $X^2=X(X-1)+X$, per linearità $\mathbb{E}[X^2]=\lambda^2+\lambda$. Con l’identità della [Lettura C](#formula-varianza):
+Nell’ultimo passaggio abbiamo posto $j=k-2$ e riconosciuto ancora la serie dell’esponenziale.
+
+Ora torniamo da $X(X-1)$ a $X^2$. Sviluppando il prodotto si ha $X(X-1)=X^2-X$, cioè $X^2=X(X-1)+X$. Per linearità la media di una somma è la somma delle medie:
+
+$$
+\mathbb{E}[X^2]=\mathbb{E}[X(X-1)]+\mathbb{E}[X]=\lambda^2+\lambda.
+$$
+
+Resta da sottrarre il quadrato della media:
 
 $$
 \operatorname{Var}(X)=\mathbb{E}[X^2]-(\mathbb{E}[X])^2
 =(\lambda^2+\lambda)-\lambda^2=\lambda.
 $$
 
+Il termine $\lambda^2$ si cancella e resta proprio $\lambda$: media e varianza della distribuzione di Poisson coincidono, come avevamo anticipato nel §15.
+
 ## Lettura C — Due strumenti ulteriori per la varianza {: #lettura-varianza .psi-facoltativo }
 
 *Approfondimento facoltativo, non richiesto all’esame. Per il percorso principale si usa la definizione con gli scarti al quadrato.*
 
-Ricaviamo prima un’identità comoda nei calcoli, poi la usiamo per trovare la varianza della distribuzione binomiale, vedendo esattamente dove serve l’indipendenza.
+La definizione della varianza come media degli scarti al quadrato spiega bene *che cosa* misuriamo, ma per fare i conti non è sempre la strada più comoda. Ricaviamo prima una formula alternativa, poi la usiamo per trovare la varianza della distribuzione binomiale, vedendo con precisione in quale passaggio entra l’indipendenza.
 
 ### C.1. La media dei quadrati e il quadrato della media {: #formula-varianza }
 
-Una volta fissato il modello, la media $\mu$ è un numero: possiamo quindi sviluppare lo scarto al quadrato come un normale quadrato di binomio:
+Ripartiamo dallo scarto al quadrato $(X-\mu)^2$ che compare nella definizione. La media $\mu=\mathbb{E}[X]$ è un numero fissato dal modello: non cambia da un esito all’altro, come invece fa $X$. Possiamo quindi trattarla come una costante e sviluppare il quadrato come un normale quadrato di binomio:
 
 $$
 (X-\mu)^2=X^2-2\mu X+\mu^2.
 $$
 
-Facciamo la media dei due lati. A sinistra troviamo la varianza; a destra, per linearità, $\mathbb{E}[X^2]-2\mu\,\mathbb{E}[X]+\mu^2=\mathbb{E}[X^2]-2\mu^2+\mu^2$. Quindi:
+Facciamo la media di entrambi i lati. A sinistra, per definizione, troviamo la varianza. A destra la linearità ci permette di procedere un termine alla volta. Il primo diventa $\mathbb{E}[X^2]$. Nel secondo la costante $-2\mu$ esce dalla media, e resta $-2\mu\,\mathbb{E}[X]=-2\mu\cdot\mu=-2\mu^2$. Il terzo, $\mu^2$, è una costante, e la media di una costante è la costante stessa. Mettendo insieme i tre pezzi:
+
+$$
+\operatorname{Var}(X)=\mathbb{E}[X^2]-2\mu^2+\mu^2,
+$$
+
+e sommando gli ultimi due termini
 
 $$
 \boxed{\operatorname{Var}(X)=\mathbb{E}[X^2]-\mu^2.}
 $$
 
-I due termini differiscono soltanto per l’ordine delle operazioni:
+A parole: la varianza è la media dei quadrati meno il quadrato della media. I due termini si somigliano, ma differiscono per l’ordine delle operazioni. Per $\mathbb{E}[X^2]$ prima eleviamo al quadrato ciascun valore possibile e poi facciamo la media, con gli stessi pesi della PMF di $X$ (è la [regola LOTUS](../settimana_04/index.md#lotus): $\mathbb{E}[X^2]=\sum_x x^2p_X(x)$). Per $\mu^2$, invece, prima facciamo la media e poi eleviamo al quadrato quel singolo numero. In generale i due risultati sono diversi, e la loro differenza è proprio la varianza.
 
-- $\mathbb{E}[X^2]$: **prima** eleviamo al quadrato ciascun valore, **poi** facciamo la media, con gli stessi pesi della PMF di $X$ ([regola LOTUS](../settimana_04/index.md#lotus)): $\mathbb{E}[X^2]=\sum_x x^2p_X(x)$;
-- $\mu^2$: **prima** facciamo la media, **poi** eleviamo al quadrato quel numero.
+Proviamo con il pagamento $B$ della sezione iniziale, che vale 0 oppure 10 euro con probabilità $1/2$ ciascuno. Per la media dei quadrati trasformiamo i valori in $0^2=0$ e $10^2=100$, lasciando invariate le probabilità: $\mathbb{E}[B^2]=0\cdot\frac12+100\cdot\frac12=50$. Per il quadrato della media partiamo dalla media, 5, e la eleviamo al quadrato: 25. La differenza è $50-25=25$, lo stesso valore che avevamo trovato con la tabella degli scarti.
 
-Nel pagamento che vale 0 oppure 10 con probabilità $1/2$: $\mathbb{E}[X^2]=0\cdot\frac12+100\cdot\frac12=50$ e $\mu^2=5^2=25$. La differenza, 25, è la varianza già trovata con gli scarti.
-
-Per una variabile bernoulliana $I$ di parametro $p$ il conto è ancora più semplice. I suoi valori, 0 e 1, non cambiano se elevati al quadrato: $I^2=I$, quindi $\mathbb{E}[I^2]=p$ e
+La formula è particolarmente comoda per una variabile bernoulliana $I$ di parametro $p$, che ci servirà fra poco. La sua media è $p$. Per la media del quadrato osserviamo che $I$ vale soltanto 0 oppure 1, e che $0^2=0$ e $1^2=1$: elevare al quadrato non cambia nulla. Dunque $I^2=I$, e anche $\mathbb{E}[I^2]=p$. Sostituendo nella formula:
 
 $$
 \operatorname{Var}(I)=p-p^2=p(1-p).
 $$
 
+Il risultato ha un significato intuitivo. La varianza è nulla per $p=0$ e per $p=1$, quando la variabile vale sempre lo stesso numero e non c’è nulla di incerto; è massima per $p=1/2$, quando i due valori sono ugualmente probabili, e lì vale $1/4$.
+
 ### C.2. La varianza della distribuzione binomiale: dove serve l’indipendenza {: #varianza-binomiale }
 
-Il numero di successi in $n$ prove indipendenti, ciascuna con probabilità $p$, è una somma di indicatrici: $X=I_1+\cdots+I_n$, con $\mathbb{E}[X]=np$. Per la varianza ci manca $\mathbb{E}[X^2]$.
-
-Vediamo come si sviluppa il quadrato di una somma con due sole indicatrici:
+Consideriamo $n$ prove indipendenti, ciascuna con probabilità di successo $p$. Indichiamo con $I_i$ l’indicatrice della prova $i$, che vale 1 se la prova riesce e 0 altrimenti. Il numero di successi è la somma
 
 $$
-(I_1+I_2)^2=I_1^2+I_2^2+2I_1I_2.
+X=I_1+I_2+\cdots+I_n,
 $$
 
-Con $n$ indicatrici succede lo stesso: un quadrato per ogni indicatrice e un doppio prodotto per ogni coppia di prove diverse.
+e sappiamo già che ha distribuzione binomiale con media $\mathbb{E}[X]=np$. Nella formula $\operatorname{Var}(X)=\mathbb{E}[X^2]-(\mathbb{E}[X])^2$ il secondo termine è facile, $(np)^2$; il lavoro vero sta nel primo, la media del quadrato del numero di successi.
+
+Per capire che aspetto ha $X^2$, prendiamo prima soltanto tre prove. Elevare al quadrato una somma significa moltiplicarla per sé stessa, cioè moltiplicare ogni termine della prima parentesi per ogni termine della seconda. Si ottengono $3\cdot3=9$ prodotti:
 
 $$
-X^2=\sum_{i=1}^n I_i^2+2\sum_{1\le i<j\le n}I_iI_j.
+\begin{aligned}
+(I_1+I_2+I_3)^2
+&=I_1^2+I_1I_2+I_1I_3\\
+&\quad+I_2I_1+I_2^2+I_2I_3\\
+&\quad+I_3I_1+I_3I_2+I_3^2.
+\end{aligned}
 $$
 
-Calcoliamo la media dei due tipi di termine.
+Sulla diagonale compaiono i tre quadrati $I_1^2$, $I_2^2$ e $I_3^2$. Gli altri sei prodotti vanno a coppie uguali, perché l’ordine dei fattori non conta: $I_1I_2=I_2I_1$, e così via. Raccogliendoli:
 
-- **I quadrati.** Come prima, $I_i^2=I_i$, quindi ciascuno ha media $p$. Qui l’indipendenza non serve: guardiamo una prova alla volta.
-- **I prodotti.** $I_iI_j$ vale 1 soltanto se *entrambe* le prove riescono, quindi la sua media è $P(I_i=1,\ I_j=1)$. **È qui che serve l’indipendenza**: ci permette di moltiplicare e ottenere $p\cdot p=p^2$. Conoscere soltanto le probabilità delle singole prove non basterebbe.
+$$
+(I_1+I_2+I_3)^2=I_1^2+I_2^2+I_3^2+2I_1I_2+2I_1I_3+2I_2I_3.
+$$
 
-Ci sono $n$ quadrati e $\binom n2=n(n-1)/2$ coppie. Per linearità:
+Con $n$ prove succede esattamente la stessa cosa: c’è un quadrato per ogni prova e un doppio prodotto per ogni coppia di prove diverse. In forma compatta,
+
+$$
+X^2=\sum_{i=1}^n I_i^2+2\sum_{i<j}I_iI_j,
+$$
+
+dove la condizione $i<j$ serve a elencare ogni coppia una volta sola. Per linearità, la media di $X^2$ è la somma delle medie di tutti questi termini. Ci restano quindi da capire due cose: quanto vale in media un quadrato e quanto vale in media un prodotto.
+
+I quadrati sono facili, perché li abbiamo già incontrati con la variabile bernoulliana: $I_i^2=I_i$, quindi $\mathbb{E}[I_i^2]=p$. Questo passaggio guarda una prova alla volta, e non ha bisogno di nessuna ipotesi sui rapporti fra le prove.
+
+I prodotti richiedono un po’ più di attenzione. Il prodotto $I_iI_j$ moltiplica due numeri che valgono 0 oppure 1: basta che uno dei due sia 0 per annullarlo, e vale 1 soltanto quando entrambi valgono 1. In altre parole, $I_iI_j$ è l’indicatrice dell’evento «la prova $i$ e la prova $j$ riescono entrambe», e la sua media è la probabilità di quell’evento:
+
+$$
+\mathbb{E}[I_iI_j]=P(I_i=1,\ I_j=1).
+$$
+
+**È in questo punto, e soltanto qui, che serve l’indipendenza.** Sapere che ciascuna prova riesce con probabilità $p$ non basta a dire quanto spesso due prove riescono *insieme*. Se le prove sono indipendenti, però, la probabilità che riescano entrambe è il prodotto delle due probabilità:
+
+$$
+P(I_i=1,\ I_j=1)=P(I_i=1)\,P(I_j=1)=p\cdot p=p^2.
+$$
+
+Ora possiamo contare. I quadrati sono $n$, ciascuno con media $p$, e contribuiscono $np$. Le coppie di prove diverse sono $\binom n2=n(n-1)/2$, ciascuna con media $p^2$ e con il fattore 2 davanti; il 2 si semplifica con il denominatore del coefficiente binomiale:
 
 $$
 \mathbb{E}[X^2]=np+2\cdot\frac{n(n-1)}{2}\,p^2=np+n(n-1)p^2.
 $$
 
-Sottraiamo $(\mathbb{E}[X])^2=n^2p^2$; i due termini $n^2p^2$ si cancellano:
+Sottraiamo infine il quadrato della media, $(np)^2=n^2p^2$, e svolgiamo l’algebra una riga alla volta:
 
 $$
-\operatorname{Var}(X)=np+n^2p^2-np^2-n^2p^2=np-np^2=\boxed{np(1-p)}.
+\begin{aligned}
+\operatorname{Var}(X)
+&=np+n(n-1)p^2-n^2p^2\\
+&=np+n^2p^2-np^2-n^2p^2\\
+&=np-np^2\\
+&=\boxed{np(1-p)}.
+\end{aligned}
 $$
 
-Il risultato è la somma delle varianze $p(1-p)$ delle $n$ prove, ma lo abbiamo ottenuto usando l’indipendenza.
+Nella seconda riga abbiamo sviluppato $n(n-1)p^2$; nella terza i due termini $n^2p^2$ si sono cancellati; nell’ultima abbiamo raccolto $np$.
 
-Per vedere che cosa succede senza indipendenza, torniamo ai due modelli del [laboratorio della Settimana 4](../settimana_04/index.md#lab-binomiale): quattro operazioni, ciascuna fallisce con probabilità $0{,}2$, e $X$ conta i fallimenti. In entrambi i modelli la media è $4\cdot0{,}2=0{,}8$.
+Il risultato è $n$ volte la varianza $p(1-p)$ di una singola prova: la varianza del totale è la somma delle varianze delle prove. Ma ci siamo arrivati usando l’indipendenza nel calcolo dei prodotti, e senza di essa la conclusione può cadere.
 
-- **Operazioni indipendenti.** $X$ ha distribuzione binomiale e $\operatorname{Var}(X)=4\cdot0{,}2\cdot0{,}8=0{,}64$.
-- **Guasto comune.** Con probabilità $0{,}2$ falliscono tutte insieme, altrimenti riescono tutte: $X$ vale 4 oppure 0. Con la definizione, $\operatorname{Var}(X)=(0-0{,}8)^2\cdot0{,}8+(4-0{,}8)^2\cdot0{,}2=0{,}512+2{,}048=2{,}56$.
+Per vederlo, riprendiamo i due servizi del [laboratorio della Settimana 4](../settimana_04/index.md#lab-binomiale). Entrambi eseguono quattro operazioni, ciascuna delle quali fallisce con probabilità $0{,}2$, e $X$ conta i fallimenti. Nel primo servizio le operazioni falliscono in modo indipendente. Nel secondo un unico guasto comune, di probabilità $0{,}2$, le fa fallire tutte insieme; altrimenti riescono tutte. La media è la stessa, $4\cdot0{,}2=0{,}8$, perché la linearità non richiede indipendenza.
 
-La media è la stessa, ma la varianza del guasto comune è quattro volte maggiore: il conteggio salta da 0 a 4, senza valori intermedi. Nella dimostrazione cambia proprio il passaggio dei prodotti: con il guasto comune due operazioni falliscono insieme con probabilità $0{,}2$, invece di $0{,}2\cdot0{,}2=0{,}04$.
+Ripetiamo il calcolo nei due servizi. La parte dei quadrati è identica: quattro quadrati con media $0{,}2$, per un totale di $0{,}8$. Le coppie di operazioni sono $\binom42=6$, e con il fattore 2 danno 12 prodotti: è qui che i due servizi si separano. Nel servizio indipendente due operazioni falliscono insieme con probabilità $0{,}2\cdot0{,}2=0{,}04$, quindi
+
+$$
+\mathbb{E}[X^2]=0{,}8+12\cdot0{,}04=1{,}28,
+\qquad
+\operatorname{Var}(X)=1{,}28-0{,}8^2=0{,}64,
+$$
+
+che è proprio $np(1-p)=4\cdot0{,}2\cdot0{,}8$. Nel servizio con il guasto comune, invece, due operazioni falliscono insieme ogni volta che si verifica il guasto, cioè con probabilità $0{,}2$ e non $0{,}04$:
+
+$$
+\mathbb{E}[X^2]=0{,}8+12\cdot0{,}2=3{,}2,
+\qquad
+\operatorname{Var}(X)=3{,}2-0{,}64=2{,}56.
+$$
+
+La definizione dà lo stesso valore: $(0-0{,}8)^2\cdot0{,}8+(4-0{,}8)^2\cdot0{,}2=0{,}512+2{,}048=2{,}56$.
+
+La media è la stessa, ma la varianza del guasto comune è quattro volte maggiore. Il grafico del laboratorio mostra il perché: il conteggio salta da 0 a 4 senza valori intermedi, e si allontana molto di più dalla media. Nel calcolo, l’unica cosa cambiata è la probabilità che due operazioni falliscano insieme.
 
 **La linearità del valore atteso vale anche per variabili dipendenti; per sommare le varianze servono invece ulteriori condizioni, come l’indipendenza.**
 

@@ -923,7 +923,11 @@ Questo è un secondo errore, diverso dalla fallacia del giocatore, e spesso la a
 La regola generale è che, prima di giudicare sorprendente un risultato, bisogna dichiarare **quante possibilità abbiamo esaminato**. In statistica si parla di problema dei **confronti multipli**.
 
 ??? note "Approfondimento facoltativo — E se le attese non sono indipendenti?"
-    Sulla stessa ruota escono 5 numeri senza reinserimento: se esce il 53, resta un posto in meno per gli altri. Le attese di numeri diversi quindi non sono del tutto indipendenti. Il conto della media però non ne risente. Il numero di coppie in ritardo è una somma di 900 indicatrici, e la media di una somma è la somma delle medie anche per variabili dipendenti. 
+    Sulla stessa ruota escono 5 numeri senza reinserimento: se esce il 53, resta un posto in meno per gli altri. Le attese di numeri diversi quindi non sono del tutto indipendenti. Il conto della media però non ne risente. Il numero di coppie in ritardo è una somma di 900 indicatrici, e la media di una somma è la somma delle medie anche per variabili dipendenti.
+
+    La dipendenza cambia invece la probabilità di trovarne *almeno una*. Vediamolo con i numeri: una coppia fissata ha probabilità $q=(17/18)^{100}\approx0{,}003293$ di avere almeno 100 assenze. Se i ritardi dei 90 numeri di una ruota fossero indipendenti, la probabilità che nessuno abbia quel ritardo sarebbe $(1-q)^{90}$; quella di trovarne almeno uno sarebbe quindi $1-(1-q)^{90}\approx25{,}69\%$. Tenendo conto della dipendenza, si ottiene invece circa **$25{,}90\%$**. Il calcolo usa l’inclusione-esclusione: sommiamo le probabilità dei singoli ritardi, sottraiamo quelle dei ritardi simultanei di due numeri, aggiungiamo quelle dei ritardi simultanei di tre, e così via, per evitare conteggi multipli.
+
+    Su 10 ruote indipendenti tra loro, la probabilità di trovarne almeno uno diventa $1-(1-0{,}258987)^{10}\approx95{,}01\%$. La dipendenza modifica il valore preciso, ma resta il punto: cercando fra più numeri e più ruote, abbiamo più occasioni di incontrare un ritardo estremo.
 
 !!! note "Da portare con sé"
     Il modello Geometrico descrive prove nuove, indipendenti, con la stessa $p$. L’assenza di memoria deriva direttamente da queste ipotesi. Un passato di fallimenti non crea un credito da riscuotere: l’urna non sa nulla.
@@ -1027,10 +1031,14 @@ Un client che si ferma dopo $r$ prove non esegue più il numero illimitato $X$: 
 
 Controlliamo infine l’ipotesi più delicata. Durante un guasto persistente, sapere che un tentativo è fallito può rendere più probabile un altro fallimento. In quel caso le prove non sono indipendenti, e il modello Geometrico non descrive più la situazione.
 
-Le pause crescenti fra retry, chiamate *exponential backoff*, possono essere utili nella gestione dei guasti. La loro presenza non garantisce però da sola che i tentativi diventino Geometrici: è una scelta di progetto, non una proprietà probabilistica.
+Quando una richiesta fallisce, il client può riprovare: questo nuovo tentativo si chiama *retry*. Riprovare subito, però, può servire a poco: se il server è ancora sovraccarico, anche la nuova richiesta rischia di fallire e aggiunge altro lavoro da smaltire.
+
+Una possibile strategia è aspettare sempre di più fra un tentativo e il successivo. Per esempio: dopo il primo fallimento aspettiamo 1 secondo, dopo il secondo 2 secondi, poi 4, poi 8. Poiché la pausa raddoppia ogni volta, questa strategia si chiama *exponential backoff*. Le pause danno al servizio tempo per riprendersi e riducono la frequenza delle richieste.
+
+Questo aiuta a gestire il guasto, ma basta per poter usare la Geometrica? Dobbiamo ancora controllare le sue due ipotesi: **tentativi indipendenti** e **stessa probabilità di successo $p$ a ogni tentativo**. Se il guasto persiste, gli esiti possono restare legati tra loro; se nel frattempo il servizio si riprende, la probabilità di successo può cambiare. Allungare le pause, da solo, non garantisce nessuna delle due ipotesi. La Geometrica può descrivere il **numero di tentativi fino al primo successo** soltanto se queste ipotesi sono ragionevoli; il tempo totale di attesa dipende anche dalle pause scelte.
 
 !!! note "Che cosa abbiamo ottenuto"
-    La Geometrica ci permette di rispondere a due domande diverse: quanto aspettiamo *in media* ($1/p$) e quale limite ai tentativi garantisce una probabilità di successo fissata (dalla coda). La seconda è quasi sempre quella utile per un progetto.
+    La Geometrica ci permette di rispondere a due domande diverse: quanti tentativi servono in media ($1/p$) e quanti tentativi concedere per raggiungere almeno una probabilità di successo prefissata (usando la coda). La seconda domanda è essenziale quando progettiamo i retry, per esempio nella consegna di messaggi: permette di scegliere il limite ai tentativi in funzione dell’affidabilità richiesta, sotto le ipotesi del modello.
 
 ## Atto III — I calci di cavallo dell’esercito prussiano {: #bortkiewicz }
 

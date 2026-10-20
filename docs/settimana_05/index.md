@@ -923,7 +923,7 @@ Questo è un secondo errore, diverso dalla fallacia del giocatore, e spesso la a
 La regola generale è che, prima di giudicare sorprendente un risultato, bisogna dichiarare **quante possibilità abbiamo esaminato**. In statistica si parla di problema dei **confronti multipli**.
 
 ??? note "Approfondimento facoltativo — E se le attese non sono indipendenti?"
-    Sulla stessa ruota escono 5 numeri senza reinserimento: se esce il 53, resta un posto in meno per gli altri. Le attese di numeri diversi quindi non sono del tutto indipendenti. Il conto della media però non ne risente. Il numero di coppie in ritardo è una somma di 900 indicatrici, e la media di una somma è la somma delle medie anche per variabili dipendenti. La dipendenza cambia altre cose, per esempio la probabilità di trovarne *almeno una*, ma non la conclusione: più possibilità guardiamo, più è facile trovarne una estrema.
+    Sulla stessa ruota escono 5 numeri senza reinserimento: se esce il 53, resta un posto in meno per gli altri. Le attese di numeri diversi quindi non sono del tutto indipendenti. Il conto della media però non ne risente. Il numero di coppie in ritardo è una somma di 900 indicatrici, e la media di una somma è la somma delle medie anche per variabili dipendenti. 
 
 !!! note "Da portare con sé"
     Il modello Geometrico descrive prove nuove, indipendenti, con la stessa $p$. L’assenza di memoria deriva direttamente da queste ipotesi. Un passato di fallimenti non crea un credito da riscuotere: l’urna non sa nulla.

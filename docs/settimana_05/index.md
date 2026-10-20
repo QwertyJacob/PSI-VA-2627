@@ -14,8 +14,6 @@
 
 ## Il percorso e ciò che è richiesto all’esame {: #esame }
 
-### Dove stiamo andando
-
 Questa settimana impariamo a descrivere due situazioni che incontriamo continuamente quando osserviamo un sistema:
 
 - **un’attesa**: «quante volte devo riprovare prima che vada bene?»;
@@ -23,19 +21,13 @@ Questa settimana impariamo a descrivere due situazioni che incontriamo continuam
 
 Per ciascuna costruiremo un [modello probabilistico](#modello-probabilistico): dichiareremo le ipotesi con cui rappresentiamo la situazione e ricaveremo la distribuzione della variabile che ci interessa. Prima, però, ci serve un nuovo strumento da affiancare al valore atteso: la **varianza**, che misura quanto i risultati si disperdono attorno alla media. Ne avremo bisogno più volte, e in particolare per capire la distribuzione di Poisson.
 
-### Come leggere questa dispensa
-
-Il testo procede con calma e non ha fretta di arrivare alle formule. Ogni formula viene preceduta dalla domanda a cui risponde e da un esempio piccolo, che si può seguire con carta e penna. Dopo le formule più importanti troverai una breve «lettura in parole» di ciò che dicono.
-
-Incontrerai tre tipi di pause:
+Durante la lettura incontrerai tre tipi di pause:
 
 - le **soste di verifica**, con la risposta nascosta: prova a rispondere da solo e poi apri la soluzione;
 - le **domande in apertura** di alcune sezioni: servono a mettere alla prova le tue intuizioni *prima* del calcolo, e non importa se all’inizio sbagli;
 - i **riquadri «Che cosa abbiamo ottenuto»**, che riassumono in poche righe il punto raggiunto.
 
-Gli esempi preparano le definizioni, e non il contrario. Non occorre memorizzare i dati storici né i valori decimali degli esempi: contano il ragionamento e la capacità di rifarlo.
-
-### Il percorso principale
+Non occorre memorizzare i dati storici né i valori decimali degli esempi: contano il ragionamento e la capacità di rifarlo.
 
 La mappa è questa; ogni tappa si appoggia alla precedente.
 
@@ -75,7 +67,7 @@ Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../in
 
 ## Prima di cominciare: che cosa sappiamo già {: #prima-di-cominciare }
 
-Prima di avventurarci in terreno nuovo, richiamiamo con calma gli strumenti che useremo. Riprendiamo gli esiti e le probabilità della Settimana 1, poi le variabili aleatorie e il valore atteso della Settimana 4.
+Useremo gli esiti e le probabilità della Settimana 1, insieme alle variabili aleatorie e al valore atteso della Settimana 4. Riprendiamoli attraverso un esempio che ritroveremo nello studio delle attese.
 
 ### Che cos’è un modello probabilistico {: #modello-probabilistico }
 
@@ -87,7 +79,7 @@ Ora immaginiamo di riprovare dopo un fallimento. Avere descritto una richiesta n
 
 Solo a questo punto scegliamo che cosa misurare: per esempio, chiamiamo $X$ il numero di tentativi fino al primo successo. La **distribuzione di $X$** dice quali valori può assumere questo numero e con quali probabilità. La ricaveremo dalle ipotesi appena dichiarate. Dunque il modello comprende la descrizione della situazione e dei legami fra i tentativi; la distribuzione di $X$ descrive la particolare grandezza che abbiamo scelto di osservare.
 
-### La variabile aleatoria e la sua PMF
+### Variabili aleatorie e valore atteso
 
 Nella Settimana 4 abbiamo imparato a leggere l’esito di un esperimento attraverso una **variabile aleatoria**. Se ci interessa il numero di richieste fallite, la variabile $X$ restituisce quel numero; la **distribuzione** descrive quali valori $X$ può assumere e con quali probabilità.
 
@@ -97,9 +89,7 @@ $$
 p_X(x)=P(X=x).
 $$
 
-Leggiamo il simbolo con calma: a sinistra c’è il nome della funzione, che prende un valore $x$; a destra c’è la probabilità che la variabile $X$ assuma proprio quel valore. I valori della PMF sono **pesi**: ciascuno è non negativo e la loro somma è 1.
-
-### Il valore atteso come media pesata
+A sinistra c’è il nome della funzione, che prende un valore $x$; a destra c’è la probabilità che la variabile $X$ assuma proprio quel valore. I valori della PMF sono **pesi**: ciascuno è non negativo e la loro somma è 1.
 
 La media pesata dei risultati, dove i pesi sono le probabilità, è il **valore atteso**:
 
@@ -117,9 +107,7 @@ $$
 
 Nessun lancio produce 3,5: il valore atteso è un **centro di massa** della distribuzione, e non deve essere un risultato che l’esperimento può dare. È il punto in cui, immaginando i pesi come masse sistemate sull’asse, la distribuzione starebbe in equilibrio.
 
-### La linearità
-
-Useremo spesso anche la **linearità**. Se una durata è $T=aX+b$, allora
+Dal numero di tentativi possiamo passare ad altre grandezze, per esempio al tempo impiegato. Quando la trasformazione è lineare, anche il valore atteso si trasforma nello stesso modo: è la proprietà di **linearità**. Se una durata è $T=aX+b$, allora
 
 $$
 \mathbb{E}[T]=a\,\mathbb{E}[X]+b.
@@ -127,13 +115,9 @@ $$
 
 Per esempio, se ogni tentativo dura 0,3 secondi e $X$ conta i tentativi, la durata è $T=0{,}3X$ e la sua media è $0{,}3\,\mathbb{E}[X]$. In più, se un conteggio è una somma di indicatrici, la sua media è la somma delle probabilità degli eventi contati. Questa proprietà è notevole perché **non richiede indipendenza**: vale anche quando le variabili sono legate fra loro.
 
-### La distribuzione binomiale
-
 Infine conosciamo la **distribuzione binomiale**. Fissiamo $n$ prove indipendenti, ognuna con la stessa probabilità di successo $p$, e contiamo i successi. La media del conteggio è $np$.
 
-### Una domanda da tenere a mente
-
-La distribuzione binomiale risponde a una domanda precisa:
+In questo caso la domanda è:
 
 > **«Quanti successi in un numero fissato di prove?»**
 
@@ -171,9 +155,7 @@ Fermiamoci su questo fatto. Se due offerte con lo stesso valore equo non sono in
 
 Il centro è lo stesso. Eppure i pagamenti si comportano in modo molto diverso: $A$ coincide sempre con la propria media; $B$ se ne allontana sempre di 5 euro, ora in su e ora in giù. **La media, da sola, non descrive questa differenza.** Ci serve un secondo numero, che dica *quanto ci si allontana dal centro*.
 
-Ecco che cosa non vedeva il valore equo. Il prezzo di Huygens guarda soltanto il centro. Chi sceglie fra $A$ e $B$ guarda anche *quanto il pagamento può allontanarsi da quel centro*: $B$ non paga mai 5 euro, così come il dado della Settimana 4 non mostra mai 3,5. Nei prossimi passi daremo un numero proprio a questa distanza.
-
-### Passo 1 — Misurare la distanza dalla media
+### Dagli scarti alla varianza
 
 Per costruire questo numero cominciamo dall’idea più naturale: guardare quanto ogni risultato dista dalla media. Indichiamo la media con la lettera greca $\mu$, letta «mu»:
 
@@ -191,8 +173,6 @@ $$
 
 Il segno ci dice da che parte del centro ci troviamo: negativo sotto, positivo sopra. Il valore assoluto ci dice la distanza.
 
-### Passo 2 — Perché la media degli scarti non funziona
-
 La mossa più semplice sarebbe fare la media degli scarti. Proviamo, per $B$:
 
 $$
@@ -209,14 +189,10 @@ $$
 
 La media degli scarti è dunque *sempre* zero: come misura di dispersione è inutile. Dobbiamo trovare un modo per impedire che i segni si compensino.
 
-### Passo 3 — Eliminare il segno: il quadrato
-
 Ci sono due modi comuni per eliminare il segno: prendere il valore assoluto, oppure elevare al quadrato. Scegliamo il **quadrato**. Sia $-5$ sia $5$ diventano 25, quindi niente si cancella. Il quadrato ha anche due vantaggi:
 
 - attribuisce un peso maggiore agli scarti grandi: raddoppiare la distanza quadruplica il suo contributo;
 - si presta bene al calcolo algebrico, come vedremo nella Lettura C. Il valore assoluto, invece, rende i conti molto più scomodi.
-
-### Passo 4 — La definizione
 
 Facciamo ora la media degli scarti al quadrato. Questa quantità è la **varianza**:
 
@@ -228,7 +204,7 @@ $$
 
 Osserviamo che la varianza è a sua volta un valore atteso: quello della quantità $(X-\mu)^2$, che è una funzione di $X$. Per calcolarlo si pesa ogni valore *trasformato* con la PMF di $X$, secondo la regola che abbiamo visto nella [Settimana 4](../settimana_04/index.md#lotus).
 
-**Leggiamo la formula come una procedura in quattro passaggi:**
+Per calcolare la varianza seguiamo quindi quattro passaggi:
 
 1. trova la media $\mu$;
 2. sottraila a ogni valore possibile, ottenendo gli scarti;
@@ -236,8 +212,6 @@ Osserviamo che la varianza è a sua volta un valore atteso: quello della quantit
 4. pesa i quadrati con le probabilità e somma.
 
 Un errore frequente da evitare subito: eleviamo al quadrato **gli scarti**, non le probabilità.
-
-### Un calcolo completo, riga per riga
 
 Applichiamo la procedura al pagamento $B$. La tabella mette in colonna i quattro passaggi:
 
@@ -254,8 +228,6 @@ $$
 
 Per $A$, invece, ogni scarto è $5-5=0$, quindi $\operatorname{Var}(A)=0$. La varianza distingue finalmente i due pagamenti, pur lasciando uguale la media. Era proprio ciò che cercavamo.
 
-### Che cosa possiamo dire di una varianza
-
 Due proprietà si leggono direttamente dalla definizione.
 
 **La varianza non è mai negativa.** È una media di quantità non negative: ogni quadrato è maggiore o uguale a zero, e i pesi sono non negativi.
@@ -264,7 +236,7 @@ Due proprietà si leggono direttamente dalla definizione.
 
 ### Le unità di misura: la deviazione standard
 
-C’è un dettaglio che conviene notare subito. Se $X$ è in euro, gli scarti sono in euro e i loro quadrati in *euro al quadrato*. Il 25 appena trovato non è un pagamento di 25 euro: ha un’unità di misura diversa da quella della variabile. Per tornare alle unità di partenza prendiamo la radice quadrata:
+Il quadrato cambia anche l’unità di misura. Se $X$ è in euro, gli scarti sono in euro e i loro quadrati in *euro al quadrato*. Il 25 appena trovato non è un pagamento di 25 euro: ha un’unità di misura diversa da quella della variabile. Per tornare alle unità di partenza prendiamo la radice quadrata:
 
 $$
 \sigma_X=\sqrt{\operatorname{Var}(X)}.
@@ -273,8 +245,6 @@ $$
 Questa è la **deviazione standard**; la lettera $\sigma$ si legge «sigma». Per $B$ vale $\sqrt{25}=5$ euro.
 
 In questo esempio ogni pagamento dista proprio 5 euro dalla media, quindi la deviazione standard coincide con la distanza tipica. In generale non è così: la deviazione standard misura una *scala* della dispersione, e non coincide necessariamente con la media delle distanze. Quando le distanze sono tutte diverse, i valori più lontani contano di più, per via del quadrato.
-
-### Un secondo esempio, con pesi diversi
 
 Finora le probabilità erano uguali. Vediamo che cosa succede quando non lo sono. Sia $W$ una variabile che vale 0 con probabilità $0{,}9$ e 10 con probabilità $0{,}1$.
 
@@ -343,15 +313,11 @@ Guarda il peso dei due contributi: il valore raro, che capita una volta su dieci
 !!! note "Che cosa abbiamo ottenuto"
     La media dice *dove* sta il centro; la varianza dice *quanto ci si allontana* da esso. La si calcola con gli scarti al quadrato, perché gli scarti con segno si cancellano. La sua radice, la deviazione standard, ha le stesse unità della variabile.
 
-### Quanto serve per il percorso principale
-
 Per il percorso principale basta questo metodo, cioè la definizione. Nella [Lettura C](#lettura-varianza) ricaveremo una formula alternativa e la applicheremo alla distribuzione binomiale.
 
 Una avvertenza per le variabili con infiniti valori possibili: una media finita non assicura una varianza finita. Occorre controllare anche la convergenza della somma degli scarti al quadrato. Per le distribuzioni di questa settimana tutto va bene, ma non è automatico in generale.
 
 ## Atto I — Il 53 che non usciva {: #ritardatari }
-
-### Una storia e una domanda
 
 Nel gioco del Lotto, ogni settimana si estraggono numeri su più «ruote», che sono come urne separate. Il caso più celebre è quello del **53 di Venezia**: nel periodo 2003–2005 il 53 rimase assente dalla ruota di Venezia per **182 estrazioni consecutive**. Molti giocatori puntarono su quel numero con una convinzione crescente: dopo tanta attesa, *doveva* uscire.
 
@@ -363,9 +329,7 @@ Fermiamoci un momento e facciamo una previsione, prima di qualunque calcolo. Il 
 
 Annota la tua risposta, e magari anche quanto ne sei sicuro. Alla fine dell’Atto II torneremo qui. Non serve sapere nulla dei dettagli delle puntate: serve capire che cosa il modello ci dice sulle estrazioni *future*.
 
-### Il modello di una ruota
-
-Per ragionare in modo preciso dobbiamo dichiarare le ipotesi. Consideriamo una ruota fissata, per esempio Venezia.
+Per studiare questa attesa consideriamo una ruota fissata, per esempio Venezia, e descriviamo come avvengono le estrazioni.
 
 - A ogni estrazione vengono scelti **5 numeri distinti fra 1 e 90**.
 - All’interno della stessa estrazione i numeri sono scelti **senza reinserimento**: un numero estratto non rientra nell’urna.
@@ -374,9 +338,7 @@ Per ragionare in modo preciso dobbiamo dichiarare le ipotesi. Consideriamo una r
 
 L’ultima ipotesi è il cuore del modello: l’urna non «ricorda» che cosa è uscito prima.
 
-### La probabilità in una singola estrazione
-
-Cominciamo dal passo più piccolo: una sola estrazione. Qual è la probabilità che esca il 53?
+Queste ipotesi permettono di calcolare la probabilità che il 53 compaia in una singola estrazione.
 
 **Primo ragionamento (per simmetria).** Fra i 90 numeri non ce n’è uno privilegiato. Se immaginiamo di disporre i 90 numeri in un ordine casuale e di prendere i primi 5, ciascun numero ha la stessa probabilità di trovarsi fra i primi 5. Il 53 viene estratto se occupa una delle prime 5 posizioni su 90, quindi:
 
@@ -400,21 +362,17 @@ $$
 
 Attenzione a che cosa stiamo calcolando: non la probabilità di ottenere una particolare cinquina, ma soltanto la probabilità che **un numero fissato** compaia fra i cinque estratti. Sono domande diverse, con risposte molto diverse.
 
-### Dall’estrazione singola all’attesa
-
 Ora cambiamo prospettiva. Scegliamo il punto da cui cominciare a osservare e *contiamo le estrazioni fino alla prima comparsa del 53*. Questo numero non è fissato in anticipo: potrebbe bastare una sola estrazione, potrebbero servirne cento.
 
 Qui nasce la novità. Nella distribuzione binomiale decidevamo il numero di prove e contavamo i successi. Adesso decidiamo che cosa vogliamo ottenere (un successo) e contiamo **quante prove servono**.
 
-**La domanda guida dell’Atto II:** se abbiamo già osservato 100 assenze, quanto dobbiamo ancora aspettare? La risposta è un calcolo di probabilità condizionata, che faremo con tutta la calma necessaria.
+Se abbiamo già osservato 100 assenze, conosciamo una parte di questa attesa. Per sapere quanto resta da aspettare dovremo tener conto di quell’informazione, attraverso la probabilità condizionata.
 
 ## Atto II — Aspettare il primo successo: la Geometrica {: #geometrica }
 
 ### 1. Prima decidiamo che cosa contiamo {: #modello-geometrico }
 
-**Dove siamo.** Vogliamo un modello per «il numero di prove fino al primo successo». Prima di scrivere formule costruiamolo con un esempio semplice.
-
-Partiamo da una moneta. La lanciamo finché esce la prima testa e chiamiamo $X$ il **numero totale di lanci effettuati, compreso quello riuscito**. Guardiamo le prime sequenze possibili:
+Per studiare un’attesa di questo tipo partiamo da una moneta. La lanciamo finché esce la prima testa e chiamiamo $X$ il **numero totale di lanci effettuati, compreso quello riuscito**. Le prime sequenze possibili mostrano come funziona il conteggio:
 
 | Inizio della sequenza | Valore di $X$ | Perché |
 |---|---|---|
@@ -453,9 +411,7 @@ I casi limite si trattano a parte. Se $p=1$, la prima prova riesce certamente: $
 
 ### 2. La PMF: tradurre un valore in una storia {: #pmf-geometrica }
 
-**Dove siamo.** Ora vogliamo la distribuzione di $X$: la probabilità $P(X=k)$ per ogni $k$. L’idea è di tradurre ciascun valore in una *storia* di successi e fallimenti, e poi moltiplicare le probabilità lungo la storia.
-
-Facciamo tre casi, uno alla volta.
+Per assegnare una probabilità ai valori di $X$ dobbiamo capire quali esiti delle singole prove li producono. Se il primo successo arriva alla seconda prova, per esempio, sappiamo anche che cosa è accaduto alla prima: deve essere fallita. Ogni valore di $X$ determina così una precisa sequenza. Consideriamo i primi tre casi.
 
 **$X=1$.** La prima prova riesce: la storia è «S». Probabilità $p$.
 
@@ -496,7 +452,7 @@ $$
 \boxed{P(X=k)=(1-p)^{k-1}p,\qquad k=1,2,3,\ldots}
 $$
 
-**Lettura in parole.** L’esponente di $(1-p)$ è il numero di fallimenti *prima* del successo; il fattore $p$ finale è il successo che chiude la storia.
+L’esponente di $(1-p)$ è il numero di fallimenti *prima* del successo; il fattore $p$ finale è il successo che chiude la storia.
 
 !!! warning "La convenzione fa parte del modello"
     Se un libro o una libreria conta soltanto i fallimenti prima del successo, usa invece $Y=X-1$, che parte da 0. Per avere $Y=j$ servono $j$ fallimenti e poi un successo: quindi $P(Y=j)=(1-p)^jp$ per $j=0,1,\ldots$. In un esercizio, prima di usare una formula, controlla che cosa conta la variabile. Questa dispensa conta sempre anche la prova riuscita.
@@ -516,9 +472,7 @@ Questo merita una riflessione. Il primo tentativo è **il singolo valore più pr
 
 ### 3. La coda: superare una soglia {: #coda-geometrica }
 
-**Dove siamo.** Finora abbiamo chiesto «il successo arriva *esattamente* alla prova $k$». Spesso la domanda utile è un’altra: «non è ancora arrivato dopo $k$ prove?». È una domanda sulla **coda** della distribuzione.
-
-Cambiamo dunque domanda: qual è la probabilità che **non bastino le prime tre prove**? Non chiediamo più dove arrivi il primo successo; chiediamo se sia ancora assente dopo tre prove.
+Sapere la probabilità di un singolo valore non risponde ancora a una domanda come «basteranno tre tentativi?». Per rispondere dobbiamo considerare insieme tutte le attese che superano quella soglia: è la **coda** della distribuzione. Cerchiamo quindi la probabilità che **non bastino le prime tre prove**.
 
 L’evento è $X>3$. Si verifica se e solo se le prime tre prove falliscono. Notiamo bene che *non imponiamo* un successo alla quarta: potrebbe arrivare alla quarta, alla quinta o molto dopo, e a noi va bene qualunque di questi casi. Quindi:
 
@@ -532,7 +486,7 @@ $$
 \boxed{P(X>k)=(1-p)^k.}
 $$
 
-**Lettura in parole.** Superare la soglia $k$ significa fallire le prime $k$ prove; di che cosa succede dopo non ci occupiamo.
+Superare la soglia $k$ significa fallire le prime $k$ prove; di che cosa succede dopo non ci occupiamo.
 
 Con $p=0{,}2$ otteniamo $P(X>3)=0{,}8^3=0{,}512$. Confrontiamolo con $P(X=4)=0{,}1024$ della tabella: il primo evento *include* tutti i possibili successi dopo la terza prova (alla quarta, alla quinta, e così via), il secondo ne specifica uno solo. È per questo che le due probabilità sono diverse: la seconda è la prima moltiplicata per $p$, perché, dopo tre fallimenti, chiediamo anche che la quarta prova riesca.
 
@@ -547,7 +501,7 @@ Nel nostro esempio con $k=3$ vale $1-0{,}512=0{,}488$. Possiamo ritrovarla somma
 ??? note "Approfondimento facoltativo — La stessa formula sommando la PMF, per ogni $k$"
     Il controllo appena fatto suggerisce una seconda strada. L’evento «riuscire entro $k$ prove» è l’unione degli eventi disgiunti $\{X=1\},\{X=2\},\dots,\{X=k\}$, quindi possiamo sommare i pesi della PMF invece di ragionare sui fallimenti. Mostriamo che le due strade danno **sempre** lo stesso risultato, per qualunque $k\ge1$ e qualunque $0<p\le1$.
 
-    **Impostare la somma.** Scriviamo $q=1-p$ per alleggerire la notazione. Per l’additività,
+    Scriviamo $q=1-p$ per alleggerire la notazione. Per l’additività,
 
     $$
     P(X\le k)=\sum_{j=1}^{k}P(X=j)=\sum_{j=1}^{k}q^{\,j-1}p=p\left(1+q+q^2+\cdots+q^{k-1}\right).
@@ -555,7 +509,7 @@ Nel nostro esempio con $k=3$ vale $1-0{,}512=0{,}488$. Possiamo ritrovarla somma
 
     Il fattore $p$ è comune a tutti i termini e lo abbiamo raccolto. Resta da calcolare la somma tra parentesi, che chiamiamo $S_k$.
 
-    **Il trucco del telescopio.** Moltiplichiamo $S_k$ per $1-q$ e distribuiamo:
+    Per calcolare $S_k$ moltiplichiamo per $1-q$ e distribuiamo:
 
     $$
     \begin{aligned}
@@ -569,7 +523,7 @@ Nel nostro esempio con $k=3$ vale $1-0{,}512=0{,}488$. Possiamo ritrovarla somma
 
     Attenzione: non abbiamo ancora trovato $S_k$. Abbiamo trovato quanto vale $S_k$ **moltiplicato per** $1-q$.
 
-    **Ricavare $S_k$.** Per isolare $S_k$ dividiamo **entrambi i lati** dell’uguaglianza per $1-q$. Possiamo farlo perché $1-q=p$ non è zero:
+    Per isolare $S_k$ dividiamo **entrambi i lati** dell’uguaglianza per $1-q$. Possiamo farlo perché $1-q=p$ non è zero:
 
     $$
     S_k=\frac{1-q^k}{1-q}.
@@ -583,7 +537,7 @@ Nel nostro esempio con $k=3$ vale $1-0{,}512=0{,}488$. Possiamo ritrovarla somma
 
     Quindi $S_k$ non è $1-q^k$: è $1-q^k$ **diviso per** $p$. Con $p=0{,}2$, $q=0{,}8$ e $k=3$: direttamente $S_3=1+0{,}8+0{,}64=2{,}44$, e con la formula $(1-0{,}512)/0{,}2=0{,}488/0{,}2=2{,}44$.
 
-    **Concludere.** Torniamo a $P(X\le k)=p\cdot S_k$ e sostituiamo il valore appena trovato. Il $p$ davanti e il $p$ al denominatore si semplificano:
+    Torniamo a $P(X\le k)=p\cdot S_k$ e sostituiamo il valore appena trovato. Il $p$ davanti e il $p$ al denominatore si semplificano:
 
     $$
     P(X\le k)=p\cdot S_k=p\cdot\frac{1-q^k}{p}=1-q^k=1-(1-p)^k,
@@ -597,9 +551,9 @@ Nel nostro esempio con $k=3$ vale $1-0{,}512=0{,}488$. Possiamo ritrovarla somma
 
     È esattamente la formula trovata contando i fallimenti. Il fattore $p$ davanti alla somma si semplifica con il denominatore: è il motivo per cui nel risultato finale compare soltanto la probabilità di fallire.
 
-    **Controllo con i numeri.** Con $p=0{,}2$ e $k=3$ abbiamo trovato $S_3=2{,}44$, quindi $P(X\le3)=0{,}2\cdot2{,}44=0{,}488$. La formula dà $1-0{,}8^3=1-0{,}512=0{,}488$.
+    Con $p=0{,}2$ e $k=3$ abbiamo trovato $S_3=2{,}44$, quindi $P(X\le3)=0{,}2\cdot2{,}44=0{,}488$. La formula dà $1-0{,}8^3=1-0{,}512=0{,}488$.
 
-    **Che cosa ci insegna.** Le due strade rispondono alla stessa domanda in modi diversi. Contare i fallimenti è più rapido, perché guarda solo le prime $k$ prove. Sommare la PMF è più lungo, ma è un controllo indipendente: se le due strade non coincidessero, avremmo sbagliato la PMF o la lettura dell’evento. Infine, quando $k$ cresce, $(1-p)^k$ tende a 0 e quindi $P(X\le k)$ tende a 1: i pesi della PMF sommano a 1, come vedremo tra poco.
+    Le due strade rispondono alla stessa domanda in modi diversi. Contare i fallimenti è più rapido, perché guarda solo le prime $k$ prove. Sommare la PMF è più lungo, ma è un controllo indipendente: se le due strade non coincidessero, avremmo sbagliato la PMF o la lettura dell’evento. Infine, quando $k$ cresce, $(1-p)^k$ tende a 0 e quindi $P(X\le k)$ tende a 1: i pesi della PMF sommano a 1, come vedremo tra poco.
 
 Un’ultima attenzione alle parole, che sono una fonte frequente di errori. «Servono **più di** $k$ prove» significa $X>k$. «Servono **almeno** $k$ prove» significa $X\ge k$: in questo caso bastano $k-1$ fallimenti, perché la prova $k$ può anche riuscire. Perciò:
 
@@ -617,8 +571,6 @@ $$
 
         La differenza di un esponente è la differenza di un fallimento richiesto: nel primo caso la terza prova *deve* fallire, nel secondo è libera.
 
-#### Il successo arriva prima o poi?
-
 Ogni attesa finita può essere superata: nessuna soglia $k$ è «garantita». Tuttavia, poiché $0<1-p<1$, la quantità $(1-p)^k$ **tende a zero** quando $k$ cresce. La probabilità di *non riuscire mai* è dunque zero. Diciamo che il successo arriva **con probabilità 1**. Attenzione: questo non fornisce un numero finito di prove entro cui il successo sia garantito. Dice soltanto che l’attesa infinita ha probabilità nulla.
 
 Possiamo anche controllare direttamente che la PMF sommi a 1, senza calcolare una serie infinita. Gli eventi $X\le K$ e $X>K$ sono complementari, quindi:
@@ -631,11 +583,9 @@ Leggiamo: sommando i primi $K$ pesi otteniamo tutto tranne la coda $(1-p)^K$. Au
 
 ### 4. La media: quante prove servono in media? {: #media-geometrica }
 
-**Dove siamo.** Vogliamo il valore atteso di $X$: quante prove servono, in media, per il primo successo?
+Se ogni prova riesce con probabilità $1/5$, ci aspettiamo che su molte prove circa una su cinque sia un successo. Questo suggerisce un’attesa media di cinque prove fra un successo e il successivo. Per $p=1/2$ lo stesso ragionamento suggerisce due prove. L’intuizione porta quindi al reciproco di $p$.
 
-Cominciamo dall’intuizione. Se ogni prova riesce con probabilità $1/5$, cioè «una volta su cinque», ci aspettiamo di dover attendere in media cinque prove. Lo stesso per $p=1/2$: due lanci di moneta. L’idea è che $1/p$ sia l’intervallo tipico fra due successi.
-
-Il valore atteso della Geometrica è dunque
+Il risultato, dimostrato nel riquadro facoltativo qui sotto, è che il valore atteso della Geometrica vale
 
 $$
 \boxed{\mathbb{E}[X]=\frac1p.}
@@ -669,9 +619,9 @@ Con una moneta onesta, 2 lanci. Per il 53 del Lotto, $1/(1/18)=18$ estrazioni. P
     \mu=p\cdot1+(1-p)(1+\mu).
     $$
 
-    **Leggiamo l’equazione.** Con probabilità $p$ il costo medio è 1; con probabilità $1-p$ il costo medio è $1+\mu$. È una media pesata, di quelle che conosciamo.
+    Con probabilità $p$ il costo medio è 1; con probabilità $1-p$ il costo medio è $1+\mu$. La media totale tiene conto delle due possibilità con i rispettivi pesi.
 
-    Ora la risolviamo con calma, una riga alla volta. Sviluppiamo la parentesi e raccogliamo:
+    Sviluppando la parentesi e raccogliendo i termini otteniamo:
 
     $$
     \begin{aligned}
@@ -698,7 +648,7 @@ Con una moneta onesta, 2 lanci. Per il 53 del Lotto, $1/(1/18)=18$ estrazioni. P
     \mathbb{E}[X]=P(X>0)+P(X>1)+P(X>2)+\cdots.
     $$
 
-    **Lettura in parole.** La media di un’attesa è la somma delle probabilità di superare ogni soglia: $0$, poi $1$, poi $2$, e così via.
+    La media di un’attesa è quindi la somma delle probabilità di superare ogni soglia: $0$, poi $1$, poi $2$, e così via.
 
     Per una Geometrica le code sono $1,(1-p),(1-p)^2,\ldots$. Poniamo $q=1-p$ per alleggerire la scrittura. La somma dei primi $K$ termini è
 
@@ -746,8 +696,6 @@ Con una moneta onesta, 2 lanci. Per il 53 del Lotto, $1/(1/18)=18$ estrazioni. P
 
     È esattamente l’equazione del ragionamento sul primo tentativo, con $q=1-p$. I due modi di procedere sono lo stesso conto: il termine $p\cdot1$ raccoglie il caso $k=1$, il termine $(1-p)(1+\mu)$ raccoglie tutti i casi $k\ge2$ in un colpo solo.
 
-#### Una media non è una scadenza
-
 C’è un fraintendimento diffuso sulla media. Diciotto estrazioni in media **non** significa «entro diciotto estrazioni». Per il Lotto:
 
 $$
@@ -784,11 +732,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 ### 5. L’assenza di memoria: quanto resta da aspettare? {: #assenza-memoria }
 
-**Dove siamo.** Abbiamo la distribuzione dell’attesa. Ora possiamo finalmente rispondere alla domanda che ci eravamo posti con il 53: se abbiamo già osservato molte assenze, che cosa cambia per il futuro?
-
-#### Il calcolo con numeri concreti
-
-Torniamo al 53. Abbiamo osservato 100 assenze: sappiamo che $X>100$. Chiediamo la probabilità di *altre* 18 assenze, cioè che $X>118$, **dato** ciò che sappiamo già.
+Torniamo al 53 e supponiamo di aver osservato 100 assenze. Sappiamo dunque che $X>100$: una parte della sequenza è ormai nota. Ci interessa la probabilità di *altre* 18 assenze, cioè che $X>118$, **dato** ciò che sappiamo già. Per calcolarla dobbiamo restringere l’attenzione alle attese che hanno superato 100.
 
 Ricordiamo la definizione di probabilità condizionata: la probabilità di $A$ sapendo che si è verificato $B$ è
 
@@ -816,8 +760,6 @@ $$
 
 Nel secondo passaggio abbiamo usato la regola delle potenze: dividere potenze con la stessa base sottrae gli esponenti. Il risultato coincide con $P(X>18)$, la probabilità di 18 assenze quando *iniziamo* a osservare. **I 100 fallimenti non hanno modificato la distribuzione dell’attesa futura.**
 
-#### La stessa cosa con lettere
-
 Il fatto non dipende dai numeri scelti. Generalizziamo con due interi $s,t\ge0$ e $0<p<1$. Qui $s$ è il tempo già trascorso e $t$ è l’attesa ulteriore che ci interessa. L’evento condizionante ha probabilità $(1-p)^s>0$, quindi possiamo dividere:
 
 $$
@@ -835,7 +777,7 @@ $$
 \boxed{P(X>s+t\mid X>s)=P(X>t).}
 $$
 
-**Lettura in parole.** A sinistra abbiamo già aspettato $s$ prove senza successo e guardiamo l’attesa *residua*. A destra partiamo da zero e guardiamo un’attesa *nuova*. Le due probabilità coincidono per ogni soglia futura $t$.
+A sinistra abbiamo già aspettato $s$ prove senza successo e guardiamo l’attesa *residua*. A destra partiamo da zero e guardiamo un’attesa *nuova*. Le due probabilità coincidono per ogni soglia futura $t$.
 
 <figure markdown="0">
 <svg viewBox="0 0 560 205" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="Due righe. Nella prima si osservano tre prove future da subito. Nella seconda cinque prove sono già fallite, e le tre prove future sono identiche. In entrambi i casi la probabilità che tutte e tre falliscano è uno meno p alla terza.">
@@ -895,15 +837,9 @@ Il caso $p=1$ richiede attenzione: dopo una prova non possiamo aver osservato un
 
 ### 6. Il ritardatario e la fallacia del giocatore {: #fallacia-giocatore }
 
-**Dove siamo.** Possiamo ora tornare alla domanda con cui abbiamo aperto l’Atto I. Se hai fatto una previsione, è il momento di confrontarla con il calcolo.
-
 La probabilità che il 53 esca alla prossima estrazione rimane **$1/18$**, anche dopo 100 assenze. Né più alta, né più bassa. Credere che sia diventato «dovuto» è la **fallacia del giocatore**.
 
-#### Perché l’intuizione inganna
-
 L’intuizione sbagliata nasce da un’idea ragionevole in apparenza: «alla lunga le frequenze si compensano». È vero che, su moltissime estrazioni, la frequenza del 53 si avvicina a $1/18$. Ma non si avvicina perché l’urna «recupera» il ritardo. Il ritardo non viene recuperato: viene **diluito**. Dopo 100 assenze, le prossime 1000 estrazioni produrranno ancora circa $1000/18$ comparse, come se nulla fosse successo; le 100 assenze iniziali pesano sempre meno nella frequenza complessiva, ma non vengono compensate.
-
-#### Due domande che sembrano la stessa
 
 Per vedere l’errore, confrontiamo due domande simili che hanno risposte molto diverse:
 
@@ -913,8 +849,6 @@ Per vedere l’errore, confrontiamo due domande simili che hanno risposte molto 
 | Abbiamo già osservato 100 assenze | Mancherà per altre 18 estrazioni? | $(17/18)^{18}\approx0{,}357$ |
 
 Nella prima domanda tutte le 118 assenze sono ancora incerte, e la loro congiunzione è molto rara. Nella seconda le prime 100 sono già note: la probabilità condizionata riguarda soltanto ciò che resta da osservare. La rarità dell’*intera* sequenza non rende meno probabili i suoi possibili proseguimenti. Una sequenza di 118 assenze è rara *prima* di cominciare; dopo le prime 100, quella rarità è già stata «spesa».
-
-#### Scegliere prima o cercare dopo
 
 Finora ci siamo chiesti che cosa succede **dopo** un ritardo. Resta un’altra domanda, che spiega perché i ritardi vistosi ci colpiscono tanto: **quanto deve stupirci** un ritardo così lungo? La risposta dipende da come lo abbiamo trovato.
 
@@ -944,7 +878,7 @@ La regola generale è che, prima di giudicare sorprendente un risultato, bisogna
 
 ### 7. Laboratorio: osservare molte attese {: #lab-geometrica }
 
-**Dove siamo.** Finora abbiamo ragionato con le formule. Ora facciamo una verifica empirica: simuliamo molte attese e controlliamo che le frequenze si avvicinino ai valori che abbiamo calcolato.
+Una simulazione permette di osservare come le proprietà appena ricavate si riflettono in un insieme di attese: possiamo confrontare la media e le frequenze del campione con le previsioni teoriche.
 
 Prima di eseguire il codice, scrivi tre previsioni per $p=1/18$:
 
@@ -999,11 +933,9 @@ La media simulata sarà vicina a 18 e le due frequenze vicine a 0,357. Non devon
 
 ### 8. Tentativi, timeout e limite ai retry {: #retry }
 
-**Dove siamo.** Applichiamo la Geometrica a un problema ingegneristico concreto: un client che riprova una richiesta finché non riesce.
+Un client invia una richiesta e, se fallisce, riprova. Per progettare questa procedura ci interessano sia il numero di tentativi necessari sia il tempo che richiedono.
 
 Supponiamo che ogni tentativo riesca con probabilità $p=0{,}2$, indipendentemente dagli altri. Il numero $X$ di tentativi fino al primo successo è Geometrico e ha media 5.
-
-#### Dal numero di tentativi al tempo
 
 Se **ogni tentativo dura esattamente 0,3 secondi**, il tempo totale è $T=0{,}3X$. Per linearità:
 
@@ -1013,9 +945,7 @@ $$
 
 L’ipotesi sulla durata conta. Se inseriamo pause crescenti, oppure se i tentativi riusciti e quelli falliti hanno durate diverse, il tempo totale deve includere quelle durate e il conto cambia.
 
-#### Un limite ai tentativi: la media non basta
-
-La media dice quanto aspettiamo *in media*, ma non basta per scegliere un limite ai tentativi. Se vogliamo una probabilità di successo **almeno del 99% entro $r$ tentativi**, traduciamo la richiesta in una disuguaglianza sulla funzione cumulativa che conosciamo:
+Una durata media di 1,5 secondi non dice ancora quando convenga interrompere i tentativi. Per scegliere un limite serve stabilire quale probabilità di insuccesso siamo disposti ad accettare. Se vogliamo una probabilità di successo **almeno del 99% entro $r$ tentativi**, traduciamo la richiesta in una disuguaglianza sulla funzione cumulativa:
 
 $$
 P(X\le r)\ge0{,}99
@@ -1033,11 +963,7 @@ Cerchiamo il più piccolo intero $r$ che soddisfa l’ultima condizione. Proviam
 
 La soglia 0,01 viene superata verso il basso proprio fra 20 e 21: $0{,}8^{20}\approx0{,}0115>0{,}01$, mentre $0{,}8^{21}\approx0{,}00922<0{,}01$. Servono quindi **21 tentativi**. Cinque è la media dell’attesa senza limite; ventuno è un limite che lascia meno dell’1% di probabilità di non riuscire. Sono due domande diverse, con due risposte molto diverse.
 
-#### Che cosa fa davvero un client con un limite
-
 Un client che si ferma dopo $r$ prove non esegue più il numero illimitato $X$: esegue $\min(X,r)$ prove e può terminare senza successo. La Geometrica ci aiuta comunque, perché la probabilità di esaurire il budget è proprio la coda $P(X>r)=0{,}8^r$.
-
-#### Quando l’ipotesi di indipendenza fallisce
 
 Controlliamo infine l’ipotesi più delicata. Durante un guasto persistente, sapere che un tentativo è fallito può rendere più probabile un altro fallimento. In quel caso le prove non sono indipendenti, e il modello Geometrico non descrive più la situazione.
 
@@ -1054,11 +980,9 @@ Questo aiuta a gestire il guasto, ma basta per poter usare la Geometrica? Dobbia
 
 ### 9. Prima del modello: che cosa misura la tabella? {: #dati-bortkiewicz }
 
-**Dove siamo.** Cambiamo scenario. Con la Geometrica contavamo prove fino a un successo. Ora vogliamo descrivere un altro tipo di grandezza: il **numero di eventi** che capitano in un intervallo. Cominciamo, come nella buona statistica, guardando i dati *prima* di avere un modello.
+Finora fissavamo il traguardo del primo successo e contavamo le prove necessarie per raggiungerlo. Nei dati che stiamo per leggere è fissato invece il periodo di osservazione, un anno, e contiamo **quanti eventi vi accadono**. Il caso dei militari morti per il calcio di un cavallo ci permetterà di studiare questa diversa domanda a partire da una tabella storica.
 
-#### Una formula che aspettava i dati
-
-Questa storia comincia sessant’anni prima dei dati, e lontano dalle caserme: in un tribunale.
+La distribuzione che useremo per descrivere questi conteggi nasce però sessant’anni prima della loro analisi, e lontano dalle caserme: in uno studio sui giudizi dei tribunali.
 
 Nel 1837 il matematico francese **Siméon-Denis Poisson** pubblicò un libro dal titolo lungo: *Recherches sur la probabilité des jugements en matière criminelle et en matière civile*, cioè «Ricerche sulla probabilità dei giudizi in materia penale e civile». La domanda che lo muoveva era concreta: quanto è probabile che una giuria sbagli, condannando un innocente o assolvendo un colpevole?
 
@@ -1072,8 +996,6 @@ Il quarto esempio del libro riguarda i militari dell’esercito prussiano morti 
 
 Seguiremo la stessa strada, ma in un ordine diverso da quello della storia. Prima guardiamo i dati, senza formule (§9 e §10). Poi costruiamo noi la formula di Poisson, un passo alla volta ([Atto IV](#poisson)). Infine la mettiamo alla prova sulla tabella di Bortkiewicz ([§14](#confronto-dati)), come fece lui.
 
-#### Che cosa è stato osservato
-
 Il libro considera 20 anni, dal 1875 al 1894, e 14 corpi d’armata. Qui usiamo la tabella relativa ai **10 corpi comparabili** del confronto principale. Il punto metodologico è scegliere unità con esposizioni al rischio abbastanza simili: mescolare unità molto diverse (per esempio un corpo con molti più cavalli degli altri) può cambiare la dispersione dei conteggi.
 
 L’unità osservata è un **corpo-anno**: un corpo d’armata seguito per un anno. Le osservazioni sono quindi $10\cdot20=200$. Per ciascuna registriamo un conteggio, cioè il numero di morti di quel corpo in quell’anno:
@@ -1081,8 +1003,6 @@ L’unità osservata è un **corpo-anno**: un corpo d’armata seguito per un an
 | Morti in un corpo-anno | 0 | 1 | 2 | 3 | 4 | 5 o più |
 |---|---|---|---|---|---|---|
 | Numero di corpi-anno | 109 | 65 | 22 | 3 | 1 | 0 |
-
-#### Come leggere la tabella
 
 Leggiamo una colonna con attenzione. Il 22 sotto il 2 significa che **22 corpi-anno hanno avuto due morti ciascuno**. Non significa che i morti totali siano 22. La riga in basso conta *corpi-anno*; la riga in alto indica *quanti morti* ciascuno di essi ha avuto. Confondere le due righe è l’errore più comune con le tabelle di frequenza.
 
@@ -1101,8 +1021,6 @@ $$
 =65+44+9+4=122.
 $$
 
-#### La media osservata
-
 Dividendo il totale dei morti per il numero di osservazioni otteniamo la media:
 
 $$
@@ -1115,23 +1033,15 @@ Nota bene: Il simbolo $\overline{x}$ indica la media di questi dati; $\mathbb{E}
 
 ### 10. Possiamo prevedere la forma del conteggio? {: #legge-piccoli-numeri }
 
-**Dove siamo.** Abbiamo una tabella e una media. Ora vogliamo capire se un modello semplice sia in grado di *produrre* quella tabella.
-
-La domanda è questa: **esiste un modello che, usando soltanto la media 0,61, produca probabilità credibili per zero, uno, due e più morti?**
-
-#### Pensare per occasioni
+La media 0,61 riassume il numero di morti per corpo-anno, ma da sola non dice come quel totale si distribuisca fra le unità osservate. La tabella mostra anche molti zeri e pochi conteggi superiori a due. Vorremmo spiegare questa forma attraverso il meccanismo degli incidenti: **esiste un modello che, usando soltanto la media 0,61, produca probabilità credibili per zero, uno, due e più morti?**
 
 Pensiamo alle *occasioni* di incidente: molte persone, molti giorni, molti contatti con i cavalli. Ogni singola occasione ha una probabilità piccolissima di produrre l’evento contato, ma le occasioni sono moltissime. È proprio la situazione in cui la distribuzione binomiale ci dà un primo schema: tante prove, ciascuna con probabilità $p$ molto piccola.
 
 Qui però incontriamo un ostacolo pratico. Non conosciamo un numero preciso di prove $n$, né una probabilità $p$ per occasione. Una giornata potrebbe contenere un numero diverso di contatti con i cavalli. Il dato disponibile suggerisce piuttosto il valore del prodotto $np$, cioè il **numero medio di eventi** nell’unità osservata, che qui è 0,61.
 
-#### L’idea della distribuzione di Poisson
-
 La _distribuzione di Poisson_ nasce da un’idealizzazione: lasciamo crescere il numero di occasioni, facciamo diminuire la probabilità di ciascuna, e **teniamo fissata la media totale**. Nel limite non ci serve più sapere né $n$ né $p$: ci basta la media. Questo è il motivo per cui la distribuzione di Poisson è così utile nella pratica.
 
-Una precisazione prima di partire. Non basta che un evento sia raro perché valga il modello. Dovremo anche formulare ipotesi sull’**indipendenza** delle occasioni e sull’**uniformità** dell’esposizione. Le richiameremo con cura.
-
-#### Una previsione da annotare
+La rarità, da sola, non assicura però che questo modello sia adatto. Contano anche l’**indipendenza** delle occasioni e l’**uniformità** dell’esposizione: sono le ipotesi che dovremo rendere precise nella costruzione.
 
 Prima di costruire la formula, torna alla media 0,61. Essa è inferiore a 1: ti aspetti molti corpi-anno senza morti? Quale frazione dei 200 prevedi con zero morti: circa la metà, oppure quasi tutti? Annota la tua stima, la confronteremo con il conto del §12.
 
@@ -1139,19 +1049,11 @@ Prima di costruire la formula, torna alla media 0,61. Essa è inferiore a 1: ti 
 
 ### 11. Dividere l’intervallo in pezzetti {: #pezzetti }
 
-**Dove siamo.** Costruiamo il modello con un trucco semplice: tagliamo l’intervallo in tanti pezzetti, così piccoli che in ciascuno al massimo un evento può capitare. Il conteggio complessivo segue allora una distribuzione binomiale, che sappiamo trattare.
+Fissiamo un corpo e un anno. Chiamiamo $\lambda$, «lambda», il **numero medio di eventi nell’intero intervallo**. Per il modello dei dati scegliamo $\lambda=0{,}61$: è una *media* riferita all’intervallo scelto (qui un anno), e non una probabilità.
 
-#### La scelta dei simboli
+Partiamo da una semplificazione: consideriamo l’anno come un unico pezzetto e ammettiamo soltanto l’assenza di eventi oppure un evento. Il conteggio vale quindi 0 oppure 1, ed è una variabile bernoulliana. La media di una variabile bernoulliana è la sua probabilità, e deve valere $\lambda$: dunque $p=\lambda=0{,}61$. La probabilità di zero eventi è $1-0{,}61=0{,}39$.
 
-Fissiamo un corpo e un anno. Chiamiamo $\lambda$, «lambda», il **numero medio di eventi nell’intero intervallo**. Per il modello dei dati scegliamo $\lambda=0{,}61$. Mettiamo in rilievo ciò che $\lambda$ rappresenta: è una *media* riferita all’intervallo scelto (qui un anno), e non una probabilità.
-
-#### Il caso più semplice: un solo pezzetto
-
-Partiamo dal caso estremo, in cui non dividiamo affatto l’anno: lo consideriamo un unico pezzetto. In un solo pezzetto possiamo avere al più un evento, quindi il conteggio vale 0 oppure 1, ed è una variabile bernoulliana. La media di una variabile bernoulliana è la sua probabilità, e deve valere $\lambda$: dunque $p=\lambda=0{,}61$. La probabilità di zero eventi è $1-0{,}61=0{,}39$.
-
-Il modello è però rozzo: nella realtà un anno può contenere due o tre morti, e questo modello non può dar loro un posto. Miglioriamolo dividendo l’anno in due metà.
-
-#### Dividere in $n$ pezzetti
+Questo primo modello esclude però conteggi che compaiono nella tabella: un anno può contenere due o tre morti. Dividendo l’anno in due metà e ammettendo un evento in ciascuna potremmo già arrivare a un totale di due. Suddivisioni più fini permetterebbero conteggi ancora maggiori, mantenendo semplice la descrizione di ciascun pezzetto.
 
 Dividiamo l’anno in $n$ pezzetti uguali. In un primo modello semplificato ciascun pezzetto può contenere un evento oppure nessuno. Se vogliamo che la media totale resti $\lambda$, la probabilità di un evento in ciascun pezzetto deve essere
 
@@ -1176,8 +1078,6 @@ Il pedice $n$ ricorda che la probabilità cambia quando cambia la suddivisione. 
 <figcaption>Più pezzetti significa pezzetti più corti, ciascuno con un evento ancora più raro; la media totale resta la stessa.</figcaption>
 </figure>
 
-#### La distribuzione binomiale del conteggio
-
 Assumiamo che i pezzetti abbiano la stessa probabilità di evento e siano indipendenti. Il conteggio del modello a $n$ pezzetti, che chiamiamo $X_n$, segue allora una distribuzione binomiale:
 
 $$
@@ -1187,9 +1087,7 @@ $$
 
 La condizione $n>\lambda$ assicura che $\lambda/n<1$, cioè che $\lambda/n$ sia davvero una probabilità. Con $\lambda=0{,}61$ basta già $n=1$.
 
-#### Un modello approssimato, con una condizione sul fenomeno
-
-È importante ricordare che si tratta di un **modello approssimato**: nella realtà un intervallo finito può contenere più eventi nello stesso pezzetto. L’idea è di rendere i pezzetti sempre più corti, così che la probabilità di eventi multipli nello stesso pezzetto diventi trascurabile nel conteggio complessivo.
+La restrizione a un solo evento per pezzetto rende questo un **modello approssimato**: nella realtà un intervallo finito può contenere più eventi. L’idea è di rendere i pezzetti sempre più corti, così che la probabilità di eventi multipli nello stesso pezzetto diventi trascurabile nel conteggio complessivo.
 
 Questo funziona soltanto sotto un’ipotesi sul fenomeno: gli eventi non devono arrivare in **gruppi simultanei** che restano indivisibili, per quanto accorciamo il pezzetto. Dividere il tempo, da solo, non crea indipendenza né elimina le raffiche. Stiamo costruendo un modello per eventi che:
 
@@ -1201,35 +1099,29 @@ Teniamo a mente questa lista: ci tornerà utile quando discuteremo i limiti del 
 
 ### 12. Zero eventi: il primo limite {: #numero-e }
 
-**Dove siamo.** Il caso più semplice del conteggio è «nessun evento». Calcolarlo ci mostra come nasce la funzione esponenziale.
-
-Nel modello a pezzetti, avere zero eventi significa che tutti gli $n$ pezzetti sono vuoti. La probabilità di un pezzetto vuoto è $1-\lambda/n$; per indipendenza moltiplichiamo $n$ volte lo stesso fattore:
+Il conteggio totale è zero soltanto se tutti gli $n$ pezzetti sono vuoti. Questo caso permette di seguire il passaggio a suddivisioni sempre più fini senza dover scegliere le posizioni degli eventi. La probabilità di un pezzetto vuoto è $1-\lambda/n$; per indipendenza moltiplichiamo $n$ volte lo stesso fattore:
 
 $$
 P(X_n=0)=\left(1-\frac{\lambda}{n}\right)^n.
 $$
 
-#### Guardare i numeri
-
 Con $\lambda=0{,}61$ calcoliamo questa probabilità per suddivisioni sempre più fini.
 
 !!! example "Sosta di verifica"
-    Un corpo-anno è diviso in $n$ pezzetti; in ciascuno capita un morto con probabilità $0{,}61/n$, indipendentemente dagli altri. Con la calcolatrice, trova la probabilità di nessun morto per $n=1$, 2, 10, 100 e 365. Che cosa succede ai valori quando $n$ cresce?
+    Un corpo-anno è diviso in $n$ pezzetti; in ciascuno capita un morto con probabilità $0{,}61/n$, indipendentemente dagli altri. Con la calcolatrice, trova la probabilità di nessun morto in un anno per $n=1$, 2, 10, 100 e 365. Che cosa succede ai valori quando $n$ cresce?
 
     ??? esempio-svolto "Risposta"
         Si calcola $\left(1-0{,}61/n\right)^n$ per ciascun $n$; per confronto aggiungiamo anche $n=1000$:
 
         | Pezzetti $n$ | 1 | 2 | 10 | 100 | 365 | 1000 |
         |---|---|---|---|---|---|---|
-        | Probabilità di zero eventi | 0,3900 | 0,4830 | 0,5329 | 0,5423 | 0,5431 | 0,5432 |
+        | Probabilità di zero eventi in un anno | 0,3900 | 0,4830 | 0,5329 | 0,5423 | 0,5431 | 0,5432 |
 
         Per esempio, con $n=2$: $(1-0{,}305)^2=0{,}695^2\approx0{,}4830$. Un errore comune è calcolare $(1-0{,}61)^n$: così ogni pezzetto avrebbe probabilità 0,61, e il numero medio di morti crescerebbe con $n$ invece di restare 0,61.
 
 Il primo valore della tabella è quello che avevamo trovato prima, con un solo pezzetto: $1-0{,}61=0{,}39$. Poi i valori crescono sempre più lentamente e **sembrano stabilizzarsi** attorno a 0,543. Questo è il comportamento che ci interessa spiegare.
 
-#### Perché non possiamo dire «tende a 1»
-
-Nella riga cambiano *due cose insieme*: il numero di fattori $n$ aumenta, e ciascun fattore $1-\lambda/n$ si avvicina a 1. Se guardiamo soltanto la base potremmo essere tentati di dire che il risultato sia 1, perché $1^n=1$. Ma la base non è esattamente 1: è un po’ più piccola, e questo scarto viene elevato a una potenza sempre più grande.
+Nell’espressione cambiano *due cose insieme*: il numero di fattori $n$ aumenta, e ciascun fattore $1-\lambda/n$ si avvicina a 1. Se guardiamo soltanto la base potremmo essere tentati di dire che il risultato sia 1, perché $1^n=1$. Ma la base non è esattamente 1: è un po’ più piccola, e questo scarto viene elevato a una potenza sempre più grande.
 
 Le due variazioni si bilanciano e producono un limite diverso da 1. Un modo per intuire quale sia: per $x$ piccolo vale $\ln(1-x)\approx-x$, quindi
 
@@ -1237,7 +1129,7 @@ $$
 \ln\left(1-\frac{\lambda}{n}\right)^n=n\ln\left(1-\frac{\lambda}{n}\right)\approx n\cdot\left(-\frac{\lambda}{n}\right)=-\lambda.
 $$
 
-Il logaritmo del risultato si avvicina a $-\lambda$, e il risultato stesso a $e^{-\lambda}$. Questo è un argomento di *intuizione*; il risultato preciso è un teorema dell’analisi:
+Il logaritmo del risultato si avvicina a $-\lambda$, e il risultato stesso a $e^{-\lambda}$. Questo è un argomento di *intuizione*; il risultato preciso è un teorema di analisi matematica.
 
 $$
 \boxed{\left(1-\frac{\lambda}{n}\right)^n\longrightarrow e^{-\lambda}.}
@@ -1247,9 +1139,7 @@ La freccia significa che i valori si avvicinano al numero a destra quando $n$ cr
 
 Un chiarimento sul ruolo della tabella: qui usiamo questo risultato dell’analisi per capire il modello, ma non lo stiamo dimostrando attraverso i numeri. La tabella mostra, in un caso, il comportamento che il teorema garantisce in generale.
 
-#### Il conto per il corpo-anno
-
-Per il corpo-anno otteniamo:
+Applicando il limite al nostro corpo-anno, con $\lambda=0{,}61$, otteniamo:
 
 $$
 P(X=0)=e^{-0{,}61}\approx0{,}54335.
@@ -1267,11 +1157,7 @@ Ne osserviamo 109. Abbiamo trovato la prima colonna della tabella usando **solta
 
 ### 13. Da zero eventi alla PMF completa {: #pmf-poisson }
 
-**Dove siamo.** Sappiamo calcolare la probabilità di zero eventi. Estendiamo il ragionamento a un numero qualunque di eventi. Procediamo per gradi: zero, uno, e poi il caso generale.
-
-#### Esattamente un evento
-
-Nel modello binomiale dobbiamo scegliere *quale* dei $n$ pezzetti contiene l’unico evento. Ci sono $n$ scelte. Per ciascuna, la probabilità è quella di un evento nel pezzetto scelto e di zero eventi negli altri $n-1$:
+Per avere esattamente un evento dobbiamo lasciare vuoti tutti i pezzetti tranne uno. Rispetto al caso di zero eventi compare quindi una scelta: *quale* dei $n$ pezzetti contiene l’evento? Le possibilità sono $n$ e sono incompatibili fra loro, perciò sommiamo le loro probabilità. Ciascuna richiede un evento nel pezzetto scelto e zero eventi negli altri $n-1$:
 
 $$
 \begin{aligned}
@@ -1293,8 +1179,6 @@ $$
 P(X_n=1)\longrightarrow\lambda e^{-\lambda}.
 $$
 
-#### Il caso generale
-
 Per $k$ eventi scegliamo $k$ pezzetti pieni. Il numero delle scelte è $\binom nk$, mentre una configurazione fissata ha probabilità $(\lambda/n)^k(1-\lambda/n)^{n-k}$. Passando al limite per **$k$ fissato** e $n\to\infty$ si ottiene la distribuzione di **Poisson**:
 
 $$
@@ -1304,16 +1188,12 @@ $$
 
 Scriviamo $X\sim\operatorname{Poisson}(\lambda)$. Il conto completo del limite è nella [Lettura B](#derivazione-limite): qui impariamo a leggere e usare il risultato, che è ciò che serve all’esame.
 
-#### I due simboli da non confondere
-
 Nella formula compaiono due numeri che hanno ruoli molto diversi:
 
 - $k$ è il **conteggio di cui chiediamo la probabilità**: quanti eventi vogliamo vedere;
 - $\lambda$ è il **numero medio di eventi nell’intervallo fissato**: è il parametro del modello.
 
 Non devono coincidere. Con $\lambda=0{,}61$ possiamo chiedere $P(X=3)$; con $\lambda=3$ possiamo chiedere $P(X=0)$. Prima di calcolare, chiediti sempre quale dei due numeri hai davanti.
-
-#### I primi valori
 
 Il fattoriale $k!$ è il prodotto degli interi da 1 a $k$, con la convenzione $0!=1$. Scriviamo i primi casi:
 
@@ -1328,11 +1208,7 @@ $$
 
 Con $\lambda=0{,}61$ e $e^{-0{,}61}\approx0{,}54335$ avremmo ad esempio $P(X=2)=\frac{0{,}61^2}{2}\cdot0{,}54335=\frac{0{,}3721}{2}\cdot0{,}54335\approx0{,}10109$.
 
-#### Un confronto con la distribuzione binomiale
-
 La distribuzione di Poisson ammette zero eventi e **non ha un massimo**: il modello attribuisce probabilità positiva a ogni intero non negativo. La distribuzione binomiale con $n$ prove, invece, non può superare $n$. La distribuzione di Poisson può approssimare bene la distribuzione binomiale nel regime di eventi rari, ma le due distribuzioni non sono identiche per un $n$ finito.
-
-#### Calcolare un peso a partire dal precedente
 
 Se dobbiamo costruire una tabella, possiamo evitare di ricalcolare ogni volta potenze e fattoriali. Per $k\ge1$ facciamo il rapporto fra due pesi consecutivi:
 
@@ -1349,13 +1225,11 @@ $$
 \boxed{P(X=k)=P(X=k-1)\cdot\frac{\lambda}{k}.}
 $$
 
-**Lettura in parole.** Per passare da un peso al successivo si moltiplica per $\lambda/k$. Finché $k<\lambda$ questo fattore è maggiore di 1 e i pesi crescono; quando $k>\lambda$ il fattore è minore di 1 e i pesi decrescono. Il picco della distribuzione si trova quindi attorno a $\lambda$.
+Per passare da un peso al successivo si moltiplica quindi per $\lambda/k$. Finché $k<\lambda$ questo fattore è maggiore di 1 e i pesi crescono; quando $k>\lambda$ il fattore è minore di 1 e i pesi decrescono. Il picco della distribuzione si trova quindi attorno a $\lambda$.
 
 Con $\lambda=0{,}61$ partiamo da $P(X=0)\approx0{,}54335$. Per arrivare a $k=1$ moltiplichiamo per $0{,}61$; per arrivare a $k=2$ moltiplichiamo per $0{,}61/2$. Troviamo circa 0,33144 e 0,10109. Nei calcoli a più passaggi conviene conservare qualche cifra in più e arrotondare soltanto il risultato finale.
 
-#### Perché i pesi sommano a 1
-
-Perché la formula sia una PMF, i pesi devono essere non negativi e sommare a 1. La non negatività è evidente. Per la somma usiamo un’identità dell’esponenziale, che qui accettiamo come risultato dell’analisi:
+Perché la formula sia una PMF, i pesi devono essere non negativi e sommare a 1. La non negatività è evidente. Per la somma usiamo un’identità dell’esponenziale, che qui accettiamo come risultato dell'analisi matematica:
 
 $$
 e^\lambda=1+\lambda+\frac{\lambda^2}{2!}+\frac{\lambda^3}{3!}+\cdots.
@@ -1376,19 +1250,13 @@ La formula assegna così tutto il peso ai conteggi possibili: è davvero una PMF
 
 ### 14. Tornare ai dati: probabilità e frequenze attese {: #confronto-dati }
 
-**Dove siamo.** Abbiamo un modello e abbiamo i dati. Mettiamoli a confronto.
-
-#### Dalla probabilità al numero di unità
-
-La distribuzione di un **singolo** corpo-anno fornisce la probabilità $P(X=k)$. La tabella storica conta invece **quanti dei 200 corpi-anno** presentano quel valore. Per passare da una probabilità a un numero atteso di unità, moltiplichiamo per 200:
+La formula appena ricavata riguarda il conteggio di un **singolo** corpo-anno e fornisce la probabilità $P(X=k)$. Per confrontarla con la tabella storica dobbiamo esprimerla nella stessa scala dei dati, che riportano **quanti dei 200 corpi-anno** presentano quel valore. Passiamo quindi dalla probabilità al numero atteso di unità moltiplicando per 200:
 
 $$
 \text{numero atteso di corpi-anno con }k\text{ morti}=200\cdot P(X=k).
 $$
 
 Possiamo giustificare questa regola con le indicatrici, che conosciamo bene. Per ogni corpo-anno $i$, poniamo $J_i=1$ se il conteggio è $k$ e $J_i=0$ altrimenti. Il numero di unità nella colonna è la somma $J_1+\cdots+J_{200}$. Se tutte le unità hanno la stessa distribuzione, ogni indicatrice ha media $P(X=k)$; per linearità la media della somma è $200P(X=k)$. Ricordiamo che per questa media **non occorre indipendenza fra le 200 indicatrici**: la linearità vale comunque.
-
-#### La tabella di confronto
 
 Con $\lambda=0{,}61$ calcoliamo i numeri attesi e affianchiamoli ai dati:
 
@@ -1415,18 +1283,13 @@ L’ultima colonna raggruppa tutti i valori da 5 in poi: si calcola come $200[1-
 
 Questa è la tabella di confronto pubblicata da Bortkiewicz a pagina 25. La formula che Poisson aveva lasciato come risultato di calcolo nel 1837 incontra qui, sessantuno anni dopo, dei dati reali. Il risultato è notevole: **un solo parametro**, ricavato da una sola media, produce una forma vicina a quella osservata.
 
-#### Come interpretare le differenze
-
-Alcune osservazioni per leggere bene il confronto.
-
-- Il numero atteso 4,1 non significa che un campione debba contenere una frazione di corpo-anno. Una frequenza osservata è sempre intera; la sua media teorica può non esserlo, come il valore atteso di un dado vale 3,5.
-- Anche con un modello perfettamente corretto, campioni diversi produrrebbero tabelle diverse. Piccole differenze come 22 contro 20,2 sono del tutto normali.
+Il numero atteso 4,1 non significa che un campione debba contenere una frazione di corpo-anno. Una frequenza osservata è sempre intera; la sua media teorica può non esserlo, come il valore atteso di un dado vale 3,5. Inoltre, anche con un modello perfettamente corretto, campioni diversi produrrebbero tabelle diverse. Piccole differenze come 22 contro 20,2 sono del tutto normali.
 
 Una tabella vicina sostiene l’utilità del modello; non dimostra tutte le sue ipotesi.
 
 ### 15. Media e varianza della distribuzione di Poisson {: #media-varianza-poisson }
 
-**Dove siamo.** Conosciamo la PMF. Ora vogliamo riassumere la distribuzione con i due numeri che abbiamo imparato a usare: il centro e la dispersione.
+Nella costruzione a pezzetti abbiamo mantenuto fissa la media $\lambda$. La PMF permette ora di studiare anche quanto i conteggi si disperdano attorno a quel centro. In questa distribuzione il parametro che fissa la media determina anche la varianza.
 
 Per $X\sim\operatorname{Poisson}(\lambda)$ valgono due proprietà molto semplici:
 
@@ -1437,17 +1300,13 @@ $$
 
 Sono proprietà esatte della **distribuzione teorica**. Con $\lambda=2$, per esempio, la media del conteggio è 2, la varianza è 2 e la deviazione standard è $\sqrt2\approx1{,}414$.
 
-#### Che cosa significa che media e varianza coincidono
-
 L’uguaglianza fra media e varianza riguarda i loro *valori numerici*, e non il loro significato. Le interpretazioni restano diverse: la media descrive il centro, la varianza è una media di scarti al quadrato. La deviazione standard, che ha le stesse unità del conteggio, è $\sqrt\lambda$.
 
 Questa coincidenza è una peculiarità della distribuzione di Poisson. Nella distribuzione binomiale, per confronto, la varianza è $np(1-p)$, che è più piccola della media $np$; la distribuzione di Poisson si ottiene quando $p$ è così piccolo che il fattore $1-p$ è praticamente 1. È un'altra faccia del limite dei pezzetti.
 
-#### Perché la media è $\lambda$
+Il valore della media è coerente con il modello binomiale a pezzetti, in cui valeva $\lambda$ per ogni $n$. Per verificarlo nella distribuzione limite serve però un argomento ulteriore: in generale non possiamo trasferire una media al limite soltanto perché convergono le probabilità dei singoli valori.
 
-Per la media abbiamo già due buone ragioni. La prima: nel modello binomiale a pezzetti la media vale $\lambda$ per ogni $n$, e questo motiva il risultato. Però non è una dimostrazione sufficiente: in generale non possiamo trasferire una media al limite soltanto perché convergono le probabilità dei singoli valori.
-
-La seconda ragione è un calcolo diretto, che usa la ricorrenza del §13. Moltiplicando per $k$ entrambi i membri di $P(X=k)=P(X=k-1)\,\lambda/k$ otteniamo, per $k\ge1$,
+Possiamo calcolarla direttamente usando la ricorrenza del §13. Moltiplicando per $k$ entrambi i membri di $P(X=k)=P(X=k-1)\,\lambda/k$ otteniamo, per $k\ge1$,
 
 $$
 k\,P(X=k)=\lambda\,P(X=k-1).
@@ -1462,9 +1321,7 @@ $$
 
 Per la varianza il calcolo è un poco più lungo, e lo facciamo con cura nella [Lettura B](#media-varianza-diretta). Le dimostrazioni sono facoltative; **proprietà e significato sono richiesti all’esame**.
 
-### Controllare la dispersione dei dati
-
-Per i 200 dati di Bortkiewicz conosciamo già $\overline{x}=0{,}61$. Se la distribuzione di Poisson è un buon modello, anche la varianza dei dati dovrebbe essere vicina a 0,61. Verifichiamolo calcolando la varianza dei dati: applichiamo la definizione, con la stessa procedura in quattro passaggi della sezione sulla varianza, ma con le frequenze al posto delle probabilità.
+L’uguaglianza fra media e varianza offre anche un controllo sulla dispersione dei dati di Bortkiewicz. La loro media è $\overline{x}=0{,}61$; se la distribuzione di Poisson è un buon modello, ci aspettiamo una varianza osservata vicina a quel valore. Per calcolarla usiamo gli scarti al quadrato, con la stessa procedura della sezione iniziale, ma pesando con le frequenze relative dei 200 dati.
 
 | Conteggio $k$ | Frequenza $f_k$ | $(k-0{,}61)^2$ | $f_k(k-0{,}61)^2$ |
 |---|---|---|---|
@@ -1482,8 +1339,6 @@ $$
 
 Stiamo descrivendo *questi* 200 valori, perciò usiamo il divisore **200**.
 
-#### Come leggere il risultato, con prudenza
-
 La varianza osservata 0,6079 è vicina alla media osservata 0,61: il confronto è coerente con una distribuzione di Poisson. Attenzione però al *verso* del ragionamento.
 
 - Per una distribuzione di Poisson, media e varianza coincidono.
@@ -1491,16 +1346,6 @@ La varianza osservata 0,6079 è vicina alla media osservata 0,61: il confronto �
 - Inoltre, un campione finito non deve riprodurre esattamente l’uguaglianza teorica.
 
 È un controllo utile, non una certificazione del modello.
-
-#### Dispersione assoluta e relativa
-
-Infine, distinguiamo la dispersione assoluta da quella relativa alla media. Con $\lambda=100$, la deviazione standard è 10; con $\lambda=1$, è 1. L’oscillazione assoluta è maggiore nel primo caso, ma il suo rapporto con la media è minore:
-
-$$
-\frac{\sqrt\lambda}{\lambda}=\frac1{\sqrt\lambda}.
-$$
-
-Una fluttuazione sulla scala di 10 eventi pesa meno rispetto a 100 di quanto una fluttuazione sulla scala di 1 pesi rispetto a 1. Più il conteggio medio è alto, più la distribuzione è «stretta» in proporzione. Questa scala, però, è soltanto un ordine di grandezza e non un limite garantito alle oscillazioni.
 
 #### Esplora: centro, dispersione e probabilità dello zero {: #widget-poisson }
 
@@ -1537,9 +1382,9 @@ Con $\lambda=3$, $e^{-3}\approx0{,}0498$: meno di un intervallo su venti è vuot
 
 ### 16. Laboratorio: ricostruire tabella e dispersione {: #lab-bortkiewicz }
 
-**Dove siamo.** Rifacciamo con il computer tutto ciò che abbiamo fatto a mano nei §9–15, per verificare i numeri e per poter variare i dati.
+I conti dei §9–15 si possono ripetere a partire dalle sole frequenze osservate. Nel programma qui sotto, ogni conteggio e la sua frequenza sono registrati nel dizionario `osservati`: modificandolo possiamo studiare un altro insieme di dati con lo stesso procedimento.
 
-Il codice parte dalle frequenze osservate, calcola la media e la usa come parametro della distribuzione di Poisson. Poi ricostruisce i numeri attesi e calcola la varianza con **gli scarti al quadrato**, come abbiamo fatto nella tabella. Leggi i commenti del codice mentre procedi: seguono gli stessi passaggi della dispensa.
+Il codice calcola la media e la usa come parametro della distribuzione di Poisson. Poi ricostruisce i numeri attesi e calcola la varianza con **gli scarti al quadrato**, come nella tabella. I commenti collegano le istruzioni ai passaggi svolti a mano.
 
 <div class="psi-exec" markdown="1">
 ```python
@@ -1589,17 +1434,38 @@ plt.show()
 
 Il grafico confronta le colonne da 0 a 4. La distribuzione di Poisson assegna anche un piccolo peso a «5 o più»: quelle barre non sono disegnate. L’assenza di valori oltre 4 nel campione non rende impossibili quei conteggi nel modello.
 
-#### Un’esplorazione facoltativa
+??? note "Esplorazione facoltativa — Dai 10 corpi comparabili a tutti e 14"
+    Come spiegato nel [§9](#dati-bortkiewicz), i dati storici riguardano 14 corpi d’armata osservati per 20 anni, dal 1875 al 1894. Nel confronto principale abbiamo usato soltanto i **10 corpi con esposizioni al rischio più simili**, per un totale di $10\cdot20=200$ corpi-anno. Possiamo ripetere il calcolo includendo anche gli altri quattro: le osservazioni diventano $14\cdot20=280$.
 
-Dopo aver ritrovato media 0,61 e varianza 0,608, puoi fare un secondo esperimento. Sostituisci la tabella con quella dei 14 corpi: `{0: 144, 1: 91, 2: 32, 3: 11, 4: 2}`. Aggiorna o togli l’`assert`, che verifica i totali del primo insieme, e aggiorna l’etichetta del grafico. Troverai 280 corpi-anno, media 0,70 e varianza circa 0,760.
+    La scelta dei 10 corpi tiene conto della loro composizione e, in particolare, della consistenza della cavalleria. Bortkiewicz esclude dal confronto principale la Guardia e i corpi I, VI e XI; nella nota a p. 24 ricorda, per esempio, che la Guardia aveva **40 squadroni di cavalleria contro i 20 della dotazione normale**. Un corpo con più cavalleria può avere più cavalli e più occasioni di contatto fra uomini e animali, quindi più occasioni di incidente. Due corpi osservati per un anno rappresentano la stessa durata, ma **non necessariamente la stessa esposizione al rischio**: anche a parità di rischio per singolo contatto, il numero medio annuo di incidenti può essere diverso.
 
-La maggiore dispersione è compatibile con unità meno omogenee; questo confronto, da solo, non stabilisce la causa della differenza. È un buon esempio di come un controllo sulla varianza possa segnalare che qualcosa nel modello va riesaminato.
+    Per includere tutti i corpi, sostituisci il blocco iniziale del laboratorio, dal commento su Bortkiewicz fino all’`assert`, con:
+
+    ```python
+    # Bortkiewicz (1898): tutti i 14 corpi d'armata per 20 anni.
+    osservati = {0: 144, 1: 91, 2: 32, 3: 11, 4: 2}
+    corpi_anno = sum(osservati.values())
+    morti = sum(k * f for k, f in osservati.items())
+    lam = morti / corpi_anno
+    assert corpi_anno == 280 and morti == 196
+    ```
+
+    Le chiavi del dizionario sono i conteggi di morti; i valori sono le loro frequenze. Per esempio, `0: 144` significa che **144 corpi-anno non registrarono alcun morto**, mentre `2: 32` significa che 32 corpi-anno registrarono due morti ciascuno. Le frequenze sommano a 280; i morti complessivi sono 196. L’`assert` verifica questi nuovi totali: quello precedente, riferito ai 10 corpi, non sarebbe più soddisfatto.
+
+    Aggiorna anche l’etichetta della seconda serie del grafico, da `"Attesi con la distribuzione di Poisson(0,61)"` a `"Attesi con la distribuzione di Poisson(0,70)"`, e il commento sul divisore della varianza, ora **280**. Il programma ricalcola automaticamente media, varianza e frequenze attese a partire dai nuovi dati.
+
+    Eseguendo di nuovo il codice, ottieni:
+
+    | Dati inclusi | Corpi-anno | Media | Varianza descrittiva |
+    |---|---|---|---|
+    | 10 corpi comparabili | 200 | 0,61 | 0,6079 |
+    | Tutti i 14 corpi | 280 | 0,70 | 0,7600 |
+
+    Nei 10 corpi media e varianza sono quasi uguali; includendo tutti e 14, la varianza supera la media. La maggiore dispersione è compatibile con esposizioni al rischio meno omogenee: corpi con medie diverse, riuniti nello stesso insieme, possono produrre più variabilità di quella prevista da una distribuzione di Poisson con media comune. Questo confronto, da solo, non dimostra la causa della differenza, ma suggerisce di riesaminare l’ipotesi di omogeneità.
 
 ### 17. Tasso e parametro: fissare le unità {: #tasso }
 
-**Dove siamo.** Finora l’intervallo era sempre «un corpo-anno». Nelle applicazioni gli intervalli cambiano: un secondo, un minuto, una pagina. Serve una regola per convertire il parametro.
-
-#### Tasso e parametro non sono la stessa cosa
+Il valore 0,61 si riferisce a un corpo osservato per un anno. Se il periodo fosse di due anni, a parità di condizioni ci aspetteremmo il doppio degli eventi. Anche nelle applicazioni informatiche la finestra può cambiare: una domanda riguarda gli arrivi in un secondo, un’altra quelli in un minuto. Per scegliere il parametro dobbiamo distinguere la frequenza degli arrivi dalla durata dell’osservazione.
 
 Un **tasso** indica quanti eventi arrivano in media *per unità di tempo*. Il **parametro** della distribuzione di Poisson indica invece quanti eventi attendiamo *nell’intervallo scelto*. Per evitare confusione chiamiamo il tasso $r$ e la durata $t$:
 
@@ -1608,8 +1474,6 @@ $$
 $$
 
 Se $r$ è in richieste al secondo, $t$ deve essere in secondi. Le unità di tempo si semplificano e otteniamo il numero medio di richieste nell’intervallo, che non ha dimensioni di tempo: è un conteggio.
-
-#### Un esempio con quattro durate
 
 Supponiamo un flusso con tasso costante $r=3$ richieste al secondo e con le ipotesi del modello di Poisson valide su tutti gli intervalli considerati.
 
@@ -1622,11 +1486,7 @@ Supponiamo un flusso con tasso costante $r=3$ richieste al secondo e con le ipot
 
 Per zero richieste, in mezzo secondo la probabilità è $e^{-1{,}5}\approx0{,}2231$; in un secondo è $e^{-3}\approx0{,}0498$. Un intervallo più lungo offre più occasioni di arrivo, quindi è meno probabile che resti vuoto.
 
-#### Un’ipotesi che spesso dimentichiamo
-
 Conoscere soltanto la distribuzione del conteggio in un secondo **non basta** a dedurre quella in ogni altra durata. Stiamo assumendo un unico modello di arrivi, con tasso stabile e incrementi indipendenti. È questa ipotesi sul flusso a giustificare la conversione del modello, oltre alla semplice conversione della media.
-
-#### Intervalli di tempo e di spazio
 
 L’intervallo non deve per forza essere temporale. Può essere spaziale: refusi per pagina, difetti per metro di cavo, errori per megabyte. Il ragionamento è identico, con le unità appropriate. Prima di inserire $\lambda$ nella formula, scrivi sempre **a quale unità di osservazione si riferisce**. È la domanda che previene più errori in questo capitolo.
 
@@ -1634,9 +1494,7 @@ L’intervallo non deve per forza essere temporale. Può essere spaziale: refusi
 
 ### 18. Richieste a un server: calcolare un picco {: #richieste }
 
-**Dove siamo.** Mettiamo la distribuzione di Poisson al servizio di un problema di capacità: con quale frequenza un server riceve più richieste di quante ne può gestire in un secondo?
-
-#### Il modello
+Supponiamo di voler dimensionare un server per accettare fino a cinque richieste al secondo. La media degli arrivi non basta a valutare questa scelta: dobbiamo sapere quanto spesso il conteggio supera la soglia di cinque.
 
 Immaginiamo 10.000 utenti. In un secondo ciascuno può inviare una richiesta con probabilità $0{,}0003$, indipendentemente dagli altri. In questo modello il conteggio segue esattamente una distribuzione binomiale e la sua media è:
 
@@ -1644,11 +1502,9 @@ $$
 10000\cdot0{,}0003=3.
 $$
 
-Siamo nel regime che conosciamo: molte prove, probabilità piccola, media moderata. La distribuzione di Poisson$(3)$ offre dunque un’approssimazione utile. Un traffico reale deve comunque essere controllato rispetto alle ipotesi: un gran numero di utenti, da solo, non le garantisce.
+Il numero elevato di prove e la piccola probabilità di invio permettono di approssimare il conteggio con una distribuzione di Poisson$(3)$. Indichiamo con $X$ il conteggio in questo modello approssimato.
 
-#### Il calcolo
-
-Chiediamo la probabilità di **più di cinque richieste in un secondo**. L’evento è $X>5$, cioè $X\ge6$. Conviene usare il complementare, perché l’evento originale ha infiniti valori mentre il complementare ne ha soltanto sei:
+La soglia viene superata quando arrivano **più di cinque richieste in un secondo**: l’evento è $X>5$, cioè $X\ge6$. Per calcolarne la probabilità conviene passare dal complementare, che comprende soltanto i sei valori da 0 a 5:
 
 $$
 \begin{aligned}
@@ -1662,17 +1518,13 @@ $$
 
 Controlliamo la somma tra parentesi: $1+3+4{,}5+4{,}5+3{,}375+2{,}025=18{,}4$. Moltiplicata per $e^{-3}\approx0{,}0498$ dà circa $0{,}916$, e il complementare è $0{,}084$.
 
-#### Come interpretare il risultato
-
 Nel modello, circa l’8,4% degli intervalli di un secondo supera cinque arrivi. Se una regola di capacità accetta al massimo cinque arrivi per intervallo, questa è la probabilità di superare quella soglia.
 
-Attenzione a non chiedere al conteggio più di quanto può dire. Il comportamento effettivo di un server dipende anche dai tempi di servizio, dalle code e da come gli arrivi si distribuiscono dentro il secondo. Il solo conteggio non descrive tutta la prestazione.
+Per valutare le prestazioni effettive del server occorre conoscere anche i tempi di servizio, le regole della coda e la distribuzione degli arrivi all’interno del secondo. Il conteggio ci ha permesso di valutare la soglia di cinque arrivi; queste altre informazioni servono a capire come il sistema riesca a smaltirli.
 
 ### 19. Quando il modello perde credibilità {: #sovradispersione }
 
-**Dove siamo.** Un modello è utile quando sappiamo anche dire *quando non funziona*. Ripassiamo le ipotesi e vediamo come si violano nei sistemi reali.
-
-Per costruire la distribuzione di Poisson abbiamo richiesto eventi singoli, un tasso stabile e indipendenza dei conteggi in intervalli disgiunti. Nei sistemi possiamo incontrare:
+La stima appena ottenuta dipende dalle ipotesi sugli utenti: ciascuno invia indipendentemente dagli altri, con una probabilità che resta la stessa. Un gran numero di utenti, da solo, non assicura queste condizioni. Nella costruzione a pezzetti avevamo richiesto eventi singoli, un tasso stabile e indipendenza dei conteggi in intervalli disgiunti; nei sistemi reali possiamo invece incontrare:
 
 - **attività a raffiche**, con molti client influenzati dallo stesso evento;
 - **tassi variabili**, per esempio differenze fra notte e giorno;
@@ -1681,11 +1533,7 @@ Per costruire la distribuzione di Poisson abbiamo richiesto eventi singoli, un t
 
 Questi meccanismi possono produrre conteggi **più dispersi** di una distribuzione di Poisson con la stessa media. Si parla di **sovradispersione** quando la varianza supera la media. Nei dati, una differenza consistente fra varianza e media invita a cercare eterogeneità, dipendenza o altri aspetti mancanti nel modello.
 
-#### Un tasso variabile non esclude la distribuzione di Poisson
-
 Un tasso variabile non esclude ogni possibile uso della distribuzione di Poisson. Intervalli omogenei possono avere ciascuno un modello adatto, ma con parametri diversi: per esempio una distribuzione di Poisson di media 1 di notte e una di media 5 di giorno. Mescolare quei conteggi e attribuire a tutti un unico parametro può invece nascondere proprio la variabilità che ci interessa.
-
-#### Usare il confronto con prudenza
 
 Il confronto tra media e varianza va interpretato con misura:
 
@@ -1697,9 +1545,9 @@ Esistono anche conteggi **meno** dispersi della distribuzione di Poisson, per es
 
 ### 20. Laboratorio: traffico regolare e traffico a raffiche {: #lab-richieste }
 
-**Dove siamo.** Vediamo la sovradispersione con i nostri occhi, costruendo noi stessi un traffico a raffiche.
+Riprendiamo i 10.000 utenti dell’esempio del server e simuliamo 20.000 secondi. Il programma permette di confrontare una probabilità di invio costante con una che aumenta, per tutti gli utenti insieme, in alcuni secondi. Possiamo così osservare quanto cambia la dispersione quando introduciamo una causa comune di maggiore attività.
 
-Simuliamo 20.000 secondi nel modello dei 10.000 utenti. Con `raffica = False`, ogni secondo ha la stessa probabilità di invio per utente. Prima di eseguire, prevedi la media e chiediti se la varianza sarà vicina a quella della distribuzione di Poisson$(3)$.
+Partiamo da `raffica = False`: ogni secondo ha la stessa probabilità di invio per utente. Prima di eseguire, prevedi la media e chiediti se la varianza sarà vicina a quella della distribuzione di Poisson$(3)$.
 
 <div class="psi-exec" markdown="1">
 ```python
@@ -1738,8 +1586,6 @@ for k in range(9):
 
 La simulazione genera conteggi binomiali; il confronto con la distribuzione di Poisson è una previsione approssimata. Con `raffica = False`, media e varianza sono vicine a 3 e le frequenze sono vicine ai pesi teorici, con le oscillazioni che ci aspettiamo da un campionamento.
 
-#### Il traffico a raffiche
-
 Ora imposta `raffica = True`. Nel 10% dei secondi la probabilità di invio di **tutti** gli utenti diventa cinque volte maggiore. Un secondo tranquillo ha media 3; un secondo attivo ha media 15. Prima di guardare l’output, calcola a mano la nuova media pesando i due tipi di secondo:
 
 $$
@@ -1748,15 +1594,11 @@ $$
 
 Poi prevedi la varianza. Sarà vicina a 17, molto maggiore di 4,2. Il programma confronta i pesi osservati con una distribuzione di Poisson che usa la **nuova media osservata**, quindi la differenza non nasce dall’aver dimenticato di aggiornare $\lambda$. Nasce dalla *mescolanza* di secondi con attività diverse.
 
-#### Dove si perde l’indipendenza
-
 Un ultimo punto, sottile ma importante. Condizionatamente al tipo di secondo, gli utenti restano indipendenti nel codice. Ma se non conosciamo quel tipo, l’attività comune li collega: osservare molte richieste da un gruppo di utenti è un indizio che anche gli altri siano nel regime attivo. Il modello che tratta ogni secondo come identico agli altri perde questa informazione, e per questo sottostima le code.
 
 ### 21. Quale distribuzione: geometrica, binomiale o di Poisson? {: #geometrica-o-poisson }
 
-**Dove siamo.** Abbiamo incontrato tre distribuzioni. L’abilità più importante, a questo punto, è scegliere quella giusta davanti a un problema nuovo.
-
-Prima di scegliere una formula, completa la frase **«La variabile conta…»**. Poi dichiara ciò che tieni fissato e quali ipotesi fai. La tabella confronta le tre distribuzioni su queste domande:
+Gli esempi dei retry e degli arrivi parlano entrambi di richieste, ma contano grandezze diverse. Per scegliere una distribuzione conviene quindi precisare la domanda, completando la frase **«La variabile conta…»**, e dichiarare ciò che teniamo fissato e le ipotesi che facciamo. La tabella raccoglie le tre possibilità incontrate fin qui:
 
 | | Geometrica$(p)$ | Distribuzione binomiale$(n,p)$ | Distribuzione di Poisson$(\lambda)$ |
 |---|---|---|---|
@@ -1767,13 +1609,9 @@ Prima di scegliere una formula, completa la frase **«La variabile conta…»**.
 | Media | $1/p$ | $np$ | $\lambda$ |
 | Esempio | Tentativi fino alla prima risposta | Richieste riuscite fra 10 tentativi | Arrivi in un secondo |
 
-#### Due distinzioni da tenere ferme
-
 La Geometrica conta un’attesa in **prove discrete**, non una durata continua in secondi. Possiamo tradurla in durata se conosciamo i tempi delle prove, come abbiamo fatto nel §8.
 
 La distribuzione di Poisson conta eventi in una finestra: **non** è la distribuzione del tempo fino all’evento successivo. Quel tempo avrà un modello continuo proprio, che incontreremo più avanti.
-
-#### Sosta finale del percorso principale
 
 Per una richiesta che riesce con probabilità 0,9:
 
@@ -1800,13 +1638,7 @@ Il fatto che tutti e tre gli esempi parlino di richieste non determina il modell
 
 *Approfondimento facoltativo, fuori dal nucleo d’esame orale.*
 
-**Perché questa lettura.** È un esempio in cui lo stesso meccanismo della distribuzione di Poisson (molte occasioni, ciascuna con piccola probabilità) governa la progettazione di una struttura dati reale. Se leggi con calma, vedrai ricomparire il limite $(1-\lambda/n)^n\to e^{-\lambda}$.
-
-### Il problema e l’idea
-
 Supponi di mantenere una lista molto grande di indirizzi web. Prima di consultare una struttura costosa (un database, un disco lento), vorresti un controllo rapido che dica se un indirizzo *può* essere presente. Un **filtro di Bloom** scambia un po’ di precisione con un grande risparmio di memoria: risponde «sicuramente assente» oppure «forse presente».
-
-### Come funziona
 
 Il filtro usa $m$ bit, inizialmente tutti a 0, e $k$ funzioni hash. Ciascuna funzione associa un elemento a una posizione fra 0 e $m-1$.
 
@@ -1832,8 +1664,6 @@ Il filtro usa $m$ bit, inizialmente tutti a 0, e $k$ funzioni hash. Ciascuna fun
 
 Guarda la figura con attenzione: *gatto* e *cane* accendono ciascuno due bit. L’elemento *topo*, mai inserito, ha per caso proprio i bit 2 e 9, già accesi dagli altri due. Il filtro risponde «forse», ma la risposta è sbagliata.
 
-### Quali errori sono possibili
-
 Nel filtro standard, senza cancellazioni, nessuno spegne un bit già acceso. Ne seguono due fatti:
 
 - un elemento inserito trova sempre tutti i propri bit a 1: **non ci sono falsi negativi**;
@@ -1841,7 +1671,7 @@ Nel filtro standard, senza cancellazioni, nessuno spegne un bit già acceso. Ne 
 
 La domanda quantitativa è dunque: *con che frequenza capita un falso positivo?* La risolviamo in due passi.
 
-### Primo conto: un bit rimasto a zero
+### La probabilità di un falso positivo
 
 Supponiamo di inserire $n$ elementi distinti e modelliamo tutti i risultati hash come indipendenti e uniformi. Gli inserimenti producono $kn$ scelte di posizione. Fissiamo un bit: ogni scelta lo colpisce con probabilità $1/m$ e lo manca con probabilità $1-1/m$.
 
@@ -1851,24 +1681,18 @@ $$
 P(\text{bit a zero})=\left(1-\frac1m\right)^{kn}.
 $$
 
-Riconosci la struttura? È proprio la forma $(1-\lambda/N)^N$ del §12, con $N=kn$ occasioni. Il numero di colpi su quel bit ha distribuzione binomiale con media $kn/m$. Quando l’approssimazione con la distribuzione di Poisson è adatta, la probabilità di zero colpi è circa $e^{-kn/m}$. Quindi:
+Il numero di colpi su quel bit ha distribuzione binomiale con media $kn/m$. Ritroviamo così il meccanismo del §12: molte occasioni, ciascuna con una piccola probabilità di colpire una posizione fissata. Quando l’approssimazione con la distribuzione di Poisson è adatta, la probabilità di zero colpi è circa $e^{-kn/m}$. Quindi:
 
 $$
 P(\text{bit a uno})=1-\left(1-\frac1m\right)^{kn}
 \approx1-e^{-kn/m}.
 $$
 
-Ritroviamo il medesimo meccanismo della distribuzione di Poisson: molte occasioni, ciascuna con una piccola probabilità di colpire una posizione fissata.
-
-### Secondo conto: tutti i bit dell’interrogazione a uno
-
 Un falso positivo richiede che tutte le $k$ posizioni di un elemento assente risultino accese. Per moltiplicare le $k$ probabilità dobbiamo trattare questi stati come indipendenti. È **un’ulteriore approssimazione**: i bit condividono gli stessi inserimenti e le posizioni interrogate possono coincidere. Con questa approssimazione otteniamo:
 
 $$
 P(\text{falso positivo})\approx\left(1-e^{-kn/m}\right)^k.
 $$
-
-### Un esempio numerico
 
 Con $n=100$ elementi, $m=1000$ bit e $k=7$ funzioni hash, procediamo per passi:
 
@@ -1882,15 +1706,13 @@ $$
 
 Il valore è circa lo 0,82% **fra le interrogazioni di elementi assenti**, nel modello. Fai attenzione a non leggerlo diversamente: non è la probabilità che un «forse presente» sia sbagliato. Per quella domanda servirebbe sapere anche quanto spesso interroghiamo elementi presenti e assenti.
 
-### Il guadagno pratico
-
 Il vettore occupa 1000 bit per 100 elementi, cioè 10 bit per elemento, oltre alla gestione delle funzioni hash. Dopo un «forse» consultiamo la struttura che conosce la risposta esatta. Il filtro serve a evitare molti controlli costosi, non a sostituire sempre quel controllo. Con una frequenza di falsi positivi dello 0,8%, circa 99 «assente» su 100 interrogazioni di elementi assenti vengono risolti subito, senza toccare il disco.
 
 ## Lettura B — Perché il limite e i momenti hanno proprio quella forma {: #derivazione-limite }
 
 *Approfondimento facoltativo. Nel percorso d’esame sono richiesti l’idea dei pezzetti, il caso di zero eventi e le proprietà finali della distribuzione di Poisson.*
 
-**Perché questa lettura.** Nel §13 abbiamo enunciato la PMF della distribuzione di Poisson «passando al limite». Qui facciamo quel passaggio per intero, un fattore alla volta, e poi calcoliamo media e varianza direttamente dalla PMF. Prendiamo il tempo di nominare ciascun pezzo.
+Nel §13 abbiamo enunciato la PMF della distribuzione di Poisson passando al limite nel modello a pezzetti. Per ricavare quel risultato studieremo separatamente i fattori della PMF della distribuzione binomiale; dalla nuova PMF potremo poi calcolare media e varianza.
 
 ### B.1. Il limite binomiale, un fattore alla volta
 
@@ -1902,8 +1724,6 @@ $$
 P(X_n=k)=\binom nk\left(\frac\lambda n\right)^k
 \left(1-\frac\lambda n\right)^{n-k}.
 $$
-
-#### Passo 1 — Aprire il coefficiente binomiale
 
 Il coefficiente si scrive $\binom nk=\dfrac{n(n-1)\cdots(n-k+1)}{k!}$: al numeratore ci sono $k$ fattori. Anche $(\lambda/n)^k$ contiene $k$ copie di $n$ al denominatore. Possiamo quindi abbinare ciascun fattore del numeratore a una copia di $n$. Separiamo inoltre la potenza $n-k$ in due parti, $n$ e $-k$:
 
@@ -1917,8 +1737,6 @@ $$
 
 Abbiamo spezzato un’espressione complicata in quattro pezzi. Uno ($\lambda^k/k!$) non dipende da $n$. Degli altri tre studiamo il limite separatamente.
 
-#### Passo 2 — Il primo gruppo, $A_n$
-
 Per $k=0$ il prodotto in $A_n$ è vuoto e vale 1. Per $k\ge1$ dividiamo ciascun fattore del numeratore per un $n$:
 
 $$
@@ -1928,11 +1746,7 @@ $$
 
 Ogni fattore tende a 1 e il **numero di fattori è fisso** ($k$, che non cresce con $n$). Un prodotto di un numero fisso di quantità che tendono a 1 tende a 1.
 
-#### Passo 3 — Il secondo e il terzo gruppo, $B_n$ e $C_n$
-
 Il gruppo $B_n$ tende a $e^{-\lambda}$ per il limite già usato nel §12. Il gruppo $C_n$ tende a 1: la base $1-\lambda/n$ tende a 1 e l’esponente $-k$ è fissato, quindi la potenza tende a $1^{-k}=1$.
-
-#### Passo 4 — Riunire i limiti
 
 Moltiplicando i limiti otteniamo:
 
@@ -1942,19 +1756,13 @@ P(X_n=k)\longrightarrow
 =\frac{\lambda^ke^{-\lambda}}{k!}.
 $$
 
-#### Che cosa abbiamo imparato
-
 Possiamo leggere il significato di ciascun pezzo. Il fattoriale rimasto al denominatore viene dalla scelta dei pezzetti: scegliere $k$ posizioni *senza ordine* divide per i $k!$ ordinamenti dello stesso insieme. L’esponenziale deriva invece dal prodotto delle probabilità dei moltissimi pezzetti vuoti.
 
 Per una distribuzione binomiale concreta usiamo la distribuzione di Poisson$(np)$ come **approssimazione** quando il regime lo consente. «$n$ grande e $p$ piccolo» descrive il meccanismo, ma non è una garanzia universale sulla precisione di ogni domanda: anche la probabilità richiesta e l’accuratezza necessaria contano. Se il modello esatto è disponibile e la differenza è rilevante, possiamo confrontare direttamente le due probabilità.
 
 ### B.2. Media e varianza dalla PMF {: #media-varianza-diretta }
 
-Per verificare i momenti non trasferiamo automaticamente al limite quelli della distribuzione binomiale: li calcoliamo dalla distribuzione di Poisson stessa. È un controllo diretto, senza scambi di limite.
-
-#### La media
-
-Per definizione:
+Calcoliamo i momenti dalla PMF della distribuzione di Poisson. In questo modo non occorre trasferire al limite quelli della distribuzione binomiale. Cominciamo dalla media, che per definizione è:
 
 $$
 \mathbb{E}[X]=\sum_{k=0}^{\infty}k\frac{\lambda^ke^{-\lambda}}{k!}
@@ -1973,8 +1781,6 @@ Poniamo $j=k-1$. Il nuovo indice comincia da 0, e la somma diventa $\sum_{j=0}^{
 $$
 \mathbb{E}[X]=\lambda e^{-\lambda}e^\lambda=\lambda.
 $$
-
-#### Il secondo momento
 
 Per la varianza ci serve la media di $X^2$. Il calcolo diretto di $\sum k^2P(X=k)$ è scomodo. Conviene invece calcolare $\mathbb{E}[X(X-1)]$, perché il fattoriale contiene già il prodotto $k(k-1)$ che si semplifica bene. I termini con $k=0$ e $k=1$ sono nulli, quindi la somma parte da 2:
 
@@ -1995,8 +1801,6 @@ Ora torniamo a $X^2$ con l’identità $X^2=X(X-1)+X$, che si verifica sviluppan
 $$
 \mathbb{E}[X^2]=\mathbb{E}[X(X-1)]+\mathbb{E}[X]=\lambda^2+\lambda.
 $$
-
-#### La varianza
 
 Usando l’identità della varianza ricavata nella [Lettura C](#formula-varianza), troviamo:
 
@@ -2077,8 +1881,6 @@ $$
 
 Il secondo termine è già noto: basta elevare al quadrato la media $np$. Il primo termine, invece, richiede un nuovo conto. Dobbiamo trovare **la media del quadrato del numero di successi**.
 
-#### Passo 1 — Capire che cosa compare nel quadrato
-
 Prima di usare le sommatorie, prendiamo soltanto tre indicatrici. Moltiplicare la somma per sé stessa significa moltiplicare ogni termine della prima parentesi per ogni termine della seconda:
 
 $$
@@ -2106,8 +1908,6 @@ $$
 
 Il vincolo $i<j$ elenca ogni coppia una volta sola; il fattore 2 tiene conto dei due prodotti che abbiamo raccolto. Per trovare la media di $X^2$ studieremo separatamente i quadrati e i prodotti.
 
-#### Passo 2 — Trovare la media di ciascun quadrato
-
 Un'indicatrice assume soltanto i valori 0 e 1. Elevandoli al quadrato otteniamo ancora 0 e 1: per ogni esito vale dunque $I_i^2=I_i$.
 
 Di conseguenza:
@@ -2117,8 +1917,6 @@ $$
 $$
 
 Questo passaggio non richiede indipendenza: riguarda una sola indicatrice alla volta. Poiché i quadrati sono $n$ e ciascuno ha media $p$, il loro contributo complessivo sarà $np$.
-
-#### Passo 3 — Trovare la media di ciascun prodotto
 
 Prendiamo due prove diverse, $i$ e $j$. Che cosa registra il prodotto $I_iI_j$? Possiamo verificarlo su tutti i valori dei due bit:
 
@@ -2147,8 +1945,6 @@ P(I_i=1,\ I_j=1)
 $$
 
 Abbiamo così trovato $\mathbb{E}[I_iI_j]=p^2$ per ogni coppia distinta. Sapere soltanto che ciascuna prova ha probabilità di successo $p$ non basterebbe: serve anche conoscere la probabilità dei due successi insieme.
-
-#### Passo 4 — Riunire i contributi e sottrarre il quadrato della media
 
 Torniamo all'espansione di $X^2$ e facciamo la media. La linearità permette di separare tutti gli addendi:
 
@@ -2193,8 +1989,6 @@ $$
 $$
 
 I due termini $n^2p^2$ si cancellano. Nei due termini rimasti raccogliamo $np$, ottenendo la formula finale. Poiché la varianza di ogni singolo bit è $p(1-p)$, il risultato è anche la somma delle $n$ varianze dei bit. Lo abbiamo però ricavato usando l'indipendenza: non possiamo applicare questa conclusione a qualunque somma di indicatrici.
-
-#### Passo 5 — Confrontare prove indipendenti e guasto comune
 
 Torniamo ai due modelli del laboratorio. In entrambi contiamo i fallimenti di quattro operazioni, ciascuna con probabilità di fallimento $p=0{,}2$. La media del conteggio è la stessa:
 

@@ -21,7 +21,7 @@ Questa settimana impariamo a descrivere due situazioni che incontriamo continuam
 - **un’attesa**: «quante volte devo riprovare prima che vada bene?»;
 - **un conteggio in un intervallo**: «quanti eventi si verificano mentre guardo?».
 
-Per ciascuna costruiremo un modello probabilistico, cioè una distribuzione. Prima, però, ci serve un nuovo strumento da affiancare al valore atteso: la **varianza**, che misura quanto i risultati si disperdono attorno alla media. Ne avremo bisogno più volte, e in particolare per capire la Poisson.
+Per ciascuna costruiremo un [modello probabilistico](#modello-probabilistico): dichiareremo le ipotesi con cui rappresentiamo la situazione e ricaveremo la distribuzione della variabile che ci interessa. Prima, però, ci serve un nuovo strumento da affiancare al valore atteso: la **varianza**, che misura quanto i risultati si disperdono attorno alla media. Ne avremo bisogno più volte, e in particolare per capire la Poisson.
 
 ### Come leggere questa dispensa
 
@@ -75,7 +75,17 @@ Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../in
 
 ## Prima di cominciare: che cosa sappiamo già {: #prima-di-cominciare }
 
-Prima di avventurarci in terreno nuovo, richiamiamo con calma gli strumenti che useremo. Se qualcosa ti sembra poco chiaro, rileggi la Settimana 4: qui ci limitiamo a un ripasso essenziale.
+Prima di avventurarci in terreno nuovo, richiamiamo con calma gli strumenti che useremo. Riprendiamo gli esiti e le probabilità della Settimana 1, poi le variabili aleatorie e il valore atteso della Settimana 4.
+
+### Che cos’è un modello probabilistico {: #modello-probabilistico }
+
+Supponiamo di voler descrivere una richiesta inviata a un server. Consideriamo due esiti: la richiesta riesce oppure fallisce. Assegniamo probabilità $0{,}2$ al successo e $0{,}8$ al fallimento. Abbiamo costruito un primo **modello probabilistico**: una rappresentazione matematica di una situazione incerta, nella quale specifichiamo **gli esiti possibili, gli eventi e le loro probabilità**.
+
+Nella [Settimana 1, §5](../settimana_01/index.md#5-gli-assiomi-di-kolmogorov-1933) abbiamo chiamato la struttura matematica di base *spazio di probabilità*, $(\Omega,\mathcal F,P)$. Per usarla come modello di un fenomeno reale, dobbiamo anche dire come gli esiti matematici rappresentano ciò che osserviamo e quali ipotesi facciamo. Qui, per esempio, stiamo riassumendo tutti i possibili problemi della richiesta in un solo esito, «fallimento»; il valore $0{,}2$ è una scelta del modello, da giustificare nell’applicazione.
+
+Ora immaginiamo di riprovare dopo un fallimento. Avere descritto una richiesta non basta a descrivere l’intera sequenza: dobbiamo aggiungere ipotesi sui rapporti fra i tentativi. Possiamo assumere che siano **indipendenti** e che la probabilità di successo resti **sempre $0{,}2$**. Sono ipotesi che ci permetteranno di fare i calcoli, e che dovremo confrontare con il funzionamento del servizio.
+
+Solo a questo punto scegliamo che cosa misurare: per esempio, chiamiamo $X$ il numero di tentativi fino al primo successo. La **distribuzione di $X$** dice quali valori può assumere questo numero e con quali probabilità. La ricaveremo dalle ipotesi appena dichiarate. Dunque il modello comprende la descrizione della situazione e dei legami fra i tentativi; la distribuzione di $X$ descrive la particolare grandezza che abbiamo scelto di osservare.
 
 ### La variabile aleatoria e la sua PMF
 
@@ -1091,29 +1101,17 @@ $$
 =65+44+9+4=122.
 $$
 
-#### Dai dati alla statistica descrittiva
+#### La media osservata
 
-Finora abbiamo spesso seguito questa direzione: fissare un modello probabilistico e calcolare che cosa ci aspettiamo di osservare. Qui partiamo invece da registrazioni già disponibili. Prima di scegliere un modello, possiamo **organizzare e riassumere ciò che è stato osservato**: è il compito della **statistica descrittiva**. La tabella delle frequenze è già un esempio; la media sarà un altro.
-
-Nella Settimana 1 ci siamo chiesti che rapporto abbiano le probabilità con il mondo osservato. Qui quel problema prende una forma concreta: abbiamo 200 conteggi e vogliamo capire che cosa ci dicono. Descriverli è il primo passo; usarli per parlare di altri corpi o di altri anni richiederà anche ipotesi sul fenomeno e su come sono stati raccolti i dati.
-
-#### La media osservata è una media campionaria
-
-Chiamiamo **campione** l’insieme delle 200 osservazioni disponibili. La loro media si chiama **media campionaria**: sommiamo i valori osservati e dividiamo per quanti sono. La tabella ci permette di fare la somma usando le frequenze, senza riscrivere tutti i 200 valori:
+Dividendo il totale dei morti per il numero di osservazioni otteniamo la media:
 
 $$
 \overline{x}=\frac{122}{200}=0{,}61\text{ morti per corpo-anno}.
 $$
 
-La media campionaria è un esempio di **_statistica_**: una quantità calcolata soltanto a partire dai dati del campione. Anche il massimo osservato o la frazione di corpi-anno senza morti, $109/200$, sono _statistiche_. Il termine al singolare indica dunque una sintesi dei dati; «la statistica» indica anche la disciplina che studia come raccoglierli, descriverli e usarli per trarre conclusioni.
+Nessun corpo-anno ha avuto 0,61 morti: ogni dato è un intero. La media riassume le 200 osservazioni ed è un numero di sintesi, non un risultato possibile.
 
-Nota bene: nessun corpo-anno ha avuto 0,61 morti: ogni dato è un intero. La media riassume le 200 osservazioni ed è un numero di sintesi, non un risultato possibile.
-
-#### Media dei dati e media del modello
-
-Il simbolo $\overline{x}$ indica la media del campione **che abbiamo osservato**; $\mathbb{E}[X]$ indica invece la media teorica, calcolata dai valori e dalle probabilità di un modello probabilistico. Per descrivere questi 200 dati, $0{,}61$ è il risultato esatto del calcolo. Se lo usiamo per approssimare una media teorica ignota, gli stiamo dando un compito ulteriore: diventa una **stima**. Un altro campione potrebbe dare una media diversa.
-
-Più avanti useremo proprio $\overline{x}=0{,}61$ per scegliere il parametro della Poisson. Questo passaggio dai dati al modello non garantisce che il modello sia adatto: dovremo ancora confrontarne le previsioni con le frequenze osservate. Nella Settimana 8 studieremo perché, sotto opportune ipotesi, la media campionaria si avvicina a quella teorica al crescere del campione; nella Settimana 10 affronteremo il rapporto fra campione, popolazione e incertezza delle stime.
+Nota bene: Il simbolo $\overline{x}$ indica la media di questi dati; $\mathbb{E}[X]$ indica invece la media teorica di una distribuzione. Nelle settimane successive chiariremo il legame fra questi due numeri. Per ora ci limitiamo ad usare il valore 0,61 per costruire il modello probabilistico e confrontarne le probabilità con la tabella.
 
 ### 10. Possiamo prevedere la forma del conteggio? {: #legge-piccoli-numeri }
 
@@ -1129,7 +1127,7 @@ Qui però incontriamo un ostacolo pratico. Non conosciamo un numero preciso di p
 
 #### L’idea della Poisson
 
-La Poisson nasce da un’idealizzazione: lasciamo crescere il numero di occasioni, facciamo diminuire la probabilità di ciascuna, e **teniamo fissata la media totale**. Nel limite non ci serve più sapere né $n$ né $p$: ci basta la media. Questo è il motivo per cui la Poisson è così utile nella pratica.
+La _distribuzione di Poisson_ nasce da un’idealizzazione: lasciamo crescere il numero di occasioni, facciamo diminuire la probabilità di ciascuna, e **teniamo fissata la media totale**. Nel limite non ci serve più sapere né $n$ né $p$: ci basta la media. Questo è il motivo per cui la distribuzione di Poisson è così utile nella pratica.
 
 Una precisazione prima di partire. Non basta che un evento sia raro perché valga il modello. Dovremo anche formulare ipotesi sull’**indipendenza** delle occasioni e sull’**uniformità** dell’esposizione. Le richiameremo con cura.
 
@@ -1423,7 +1421,6 @@ Alcune osservazioni per leggere bene il confronto.
 
 - Il numero atteso 4,1 non significa che un campione debba contenere una frazione di corpo-anno. Una frequenza osservata è sempre intera; la sua media teorica può non esserlo, come il valore atteso di un dado vale 3,5.
 - Anche con un modello perfettamente corretto, campioni diversi produrrebbero tabelle diverse. Piccole differenze come 22 contro 20,2 sono del tutto normali.
-- Abbiamo **stimato** $\lambda$ usando la stessa tabella: l’accordo sulla media è quindi *costruito* nella scelta del parametro. Ciò che stiamo davvero confrontando è la **forma restante** della distribuzione, e non una previsione indipendente della media.
 
 Una tabella vicina sostiene l’utilità del modello; non dimostra tutte le sue ipotesi.
 
@@ -1467,7 +1464,7 @@ Per la varianza il calcolo è un poco più lungo, e lo facciamo con cura nella [
 
 ### Controllare la dispersione dei dati
 
-Per i 200 dati di Bortkiewicz conosciamo già $\overline{x}=0{,}61$. Se la Poisson è un buon modello, anche la varianza dei dati dovrebbe essere vicina a 0,61. Verifichiamolo calcolando la varianza descrittiva: applichiamo la definizione, con la stessa procedura in quattro passaggi della sezione sulla varianza, ma con le frequenze al posto delle probabilità.
+Per i 200 dati di Bortkiewicz conosciamo già $\overline{x}=0{,}61$. Se la Poisson è un buon modello, anche la varianza dei dati dovrebbe essere vicina a 0,61. Verifichiamolo calcolando la varianza dei dati: applichiamo la definizione, con la stessa procedura in quattro passaggi della sezione sulla varianza, ma con le frequenze al posto delle probabilità.
 
 | Conteggio $k$ | Frequenza $f_k$ | $(k-0{,}61)^2$ | $f_k(k-0{,}61)^2$ |
 |---|---|---|---|
@@ -1483,7 +1480,7 @@ $$
 v_{\mathrm{dati}}=\frac{121{,}58}{200}=0{,}6079.
 $$
 
-Stiamo descrivendo *questi* 200 valori, perciò usiamo il divisore **200**. Il divisore 199 che potresti incontrare in statistica serve a un diverso scopo di stima, che qui non stiamo affrontando.
+Stiamo descrivendo *questi* 200 valori, perciò usiamo il divisore **200**.
 
 #### Come leggere il risultato, con prudenza
 
@@ -2395,7 +2392,7 @@ Ogni errore frequente ha una domanda che lo previene. Quando nel tuo conto compa
 | $\lambda$ copiato dal testo senza unità | A quale durata o esposizione si riferisce la domanda? |
 | Una probabilità Poisson maggiore di 1 | Ho distinto il numero medio $\lambda$ da $P(X=k)$? Ho incluso $e^{-\lambda}$ e $k!$? |
 | «Media uguale a varianza, dunque Poisson» | Ho controllato il meccanismo e le altre probabilità della distribuzione? |
-| «La media del campione deve essere esattamente $\lambda$» | Sto confondendo un parametro teorico con un risultato campionario? |
+| «La media osservata deve essere esattamente $\lambda$» | Sto distinguendo i dati osservati dalla media del modello? |
 | Una varianza calcolata con scarti che si cancellano | Ho elevato al quadrato ogni scarto prima di fare la media? |
 
 ## Riepilogo per lo studio {: #riepilogo }

@@ -295,7 +295,8 @@
     label(root, 600, 195, '182', 's05-huge', { style: 'font-size:110px;fill:' + C.data });
     var ans = svg('g', {}, root);
     label(ans, 860, 195, '1/18', 's05-huge', { style: 'font-size:100px;fill:' + C.ok });
-    label(ans, 860, 245, 'alla prossima, come sempre', 's05-small', { style: 'fill:' + C.ok });
+    label(ans, 860, 245, 'alla prossima,', 's05-small', { style: 'fill:' + C.ok });
+    label(ans, 860, 275, 'come sempre', 's05-small', { style: 'fill:' + C.ok });
     gsap.set(ans, { opacity: 0 });
     tl.addLabel('s0');
     tl.fromTo(ans, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .5 }).addLabel('s1');

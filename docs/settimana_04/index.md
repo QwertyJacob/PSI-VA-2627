@@ -22,7 +22,7 @@
 
 **Facoltativi e non richiesti all’esame:** formalizzazione dei giochi equi (Lettura A); distribuzione Ipergeometrica, sua PMF, derivazione della media ed esercizio 5 (Lettura B); dettagli tecnici sulla scelta casuale delle funzioni hash. Restano richiesti il significato del valore atteso come prezzo di una possibilità, il modello uniforme e indipendente delle collisioni e il metodo delle indicatrici nelle applicazioni indicate sopra.
 
-**Varianza:** la trattazione sarà all’inizio della Settimana 5 (in arrivo), dove sono precisate le parti richieste all’esame e quelle facoltative.
+**Varianza:** la trattazione è all’inizio della [Settimana 5](../settimana_05/index.md#varianza), dove sono precisate le parti richieste all’esame e quelle facoltative.
 
 Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
 
@@ -45,7 +45,7 @@ Ora immagina di dover inserire **23 chiavi distinte** in una tabella hash. Tra q
 Per ora fermiamoci al conteggio. Sapere quante coppie esistono non dice quante finiranno nella stessa casella. Dobbiamo distinguere una quantità deterministica, **il numero di coppie possibili**, da una quantità incerta, **il numero di coppie che collidono**. È proprio per parlare della seconda che costruiremo gli strumenti di questa settimana.
 
 !!! info "Come leggere questa dispensa"
-    Gli Atti I–V formano il percorso principale: variabili aleatorie, valore atteso, indicatrici, linearità e distribuzione binomiale. Seguono due letture facoltative: giochi equi e campionamento senza reinserimento. Le due letture sono facoltative e non richieste all’esame; il perimetro completo è indicato [in apertura](#esame). La varianza viene introdotta all'inizio della Settimana 5 (in arrivo), con indicazioni precise su ciò che è richiesto all'esame.
+    Gli Atti I–V formano il percorso principale: variabili aleatorie, valore atteso, indicatrici, linearità e distribuzione binomiale. Seguono due letture facoltative: giochi equi e campionamento senza reinserimento. Le due letture sono facoltative e non richieste all’esame; il perimetro completo è indicato [in apertura](#esame). La varianza viene introdotta all'inizio della [Settimana 5](../settimana_05/index.md#varianza), con indicazioni precise su ciò che è richiesto all'esame.
 
 ## Atto I — Vendere una possibilità: la domanda di Huygens {: #huygens }
 
@@ -983,7 +983,7 @@ Dopo l'esecuzione, leggiamo prima le medie stampate: entrambe quelle simulate so
 
 Passiamo poi al grafico. Nel modello del guasto comune compaiono soltanto i totali 0 e 4: il servizio o funziona interamente oppure fallisce interamente. Nel modello binomiale hanno probabilità positiva anche i conteggi intermedi. Le due medie non mostrano questa differenza, mentre le barre la rendono visibile.
 
-Abbiamo così individuato una domanda che la sola media lascia aperta: **quanto sono dispersi i risultati attorno al loro centro?** La sezione iniziale della Settimana 5 (in arrivo) introduce una misura per cominciare a rispondere.
+Abbiamo così individuato una domanda che la sola media lascia aperta: **quanto sono dispersi i risultati attorno al loro centro?** La sezione iniziale della [Settimana 5](../settimana_05/index.md#varianza) introduce una misura per cominciare a rispondere.
 
 **Chiudiamo il percorso principale.** La distribuzione binomiale descrive un conteggio con ipotesi precise. La sua PMF usa combinatoria e indipendenza. La sua media usa indicatrici e linearità. Separare queste due derivazioni permette di capire sia ciò che il modello assume sia ciò che il risultato richiede davvero.
 
@@ -992,7 +992,7 @@ Abbiamo così individuato una domanda che la sola media lascia aperta: **quanto 
 <span id="formula-varianza"></span>
 <span id="varianza-binomiale"></span>
 
-La trattazione della **varianza** sarà all'inizio della Settimana 5 (in arrivo), dove sono distinti i contenuti richiesti all'esame dagli approfondimenti facoltativi.
+La trattazione della **varianza** è all'inizio della [Settimana 5](../settimana_05/index.md#varianza), dove sono distinti i contenuti richiesti all'esame dagli approfondimenti facoltativi.
 
 ## Lettura A — Pagamento, costo e gioco equo {: #giochi-equi .psi-facoltativo }
 
@@ -1307,7 +1307,7 @@ La tabella raccoglie alcune confusioni frequenti e una domanda con cui riconosce
 ## Riepilogo e takeaway per chi scrive software {: #riepilogo }
 
 !!! info "Per l’esame"
-    Questa sintesi comprende anche gli approfondimenti: giochi equi e Ipergeometrica restano facoltativi e non richiesti all’esame. Il perimetro richiesto è quello indicato [in apertura](#esame). La varianza è trattata nella Settimana 5 (in arrivo), con indicazioni specifiche per l’esame.
+    Questa sintesi comprende anche gli approfondimenti: giochi equi e Ipergeometrica restano facoltativi e non richiesti all’esame. Il perimetro richiesto è quello indicato [in apertura](#esame). La varianza è trattata nella [Settimana 5](../settimana_05/index.md#varianza), con indicazioni specifiche per l’esame.
 
 Il percorso della settimana parte da una distinzione fondamentale. L'esperimento produce un esito completo; la variabile aleatoria associa a quell'esito un numero che risponde alla nostra domanda. Possiamo contare teste, guasti, confronti o coppie in collisione, ma dobbiamo scegliere esplicitamente quale quantità vogliamo studiare.
 
@@ -1334,7 +1334,7 @@ $$
 
 Questo numero dipende dalle ipotesi appena dichiarate. Se la chiave può mancare, una ricerca senza successo visita tutta la lista e dobbiamo includere anche la probabilità di quel caso. Se alcune posizioni sono più probabili di altre, dobbiamo usare i loro pesi invece di $1/n$. Perciò un'affermazione sul costo medio di un algoritmo deve sempre specificare il modello degli input o della casualità interna.
 
-La media non descrive tutto. Un servizio con guasti indipendenti e uno con guasti comuni possono avere la stessa media dei fallimenti e comportamenti molto diversi. Nella Settimana 5 (in arrivo) introdurremo la varianza per misurare quella differenza.
+La media non descrive tutto. Un servizio con guasti indipendenti e uno con guasti comuni possono avere la stessa media dei fallimenti e comportamenti molto diversi. Nella [Settimana 5](../settimana_05/index.md#varianza) introdurremo la varianza per misurare quella differenza.
 
 !!! info "Per l’esame"
     I ragionamenti da saper ricostruire sono quelli indicati [in apertura](#esame).

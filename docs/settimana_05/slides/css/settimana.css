@@ -179,7 +179,7 @@
 .reveal .ab-col h3 { margin: 0 0 6px; font-size: 22px; color: var(--psi-muted); text-transform: none; letter-spacing: 1px; }
 .reveal .ab-col p { margin: 0 0 16px; font-size: .85em; font-weight: 600; }
 .reveal .ab-col b { display: block; font-size: 2.6em; font-weight: 800; }
-.reveal .ab-col small { display: block; color: var(--psi-muted); font-size: 22px; margin-top: 4px; }
+.reveal .ab-col .ab-formula { display: block; color: var(--psi-muted); font-size: 22px; margin-top: 4px; }
 .reveal .ab-a b { color: var(--psi-text); }
 .reveal .ab-b b { color: var(--s05-ok); }
 .reveal .ab-arrow { display: flex; flex-direction: column; align-items: center; color: var(--s05-red); font-size: 22px; font-weight: 700; line-height: 1.3; }

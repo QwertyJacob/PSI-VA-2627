@@ -994,7 +994,7 @@ Abbiamo così individuato una domanda che la sola media lascia aperta: **quanto 
 
 La trattazione della **varianza** sarà all'inizio della Settimana 5 (in arrivo), dove sono distinti i contenuti richiesti all'esame dagli approfondimenti facoltativi.
 
-## Lettura A — Pagamento, costo e gioco equo {: #giochi-equi }
+## Lettura A — Pagamento, costo e gioco equo {: #giochi-equi .psi-facoltativo }
 
 !!! info "Approfondimento facoltativo — fuori dall’esame"
     Questa lettura è facoltativa e non richiesta all’esame. Resta richiesto il significato del valore atteso come prezzo di una possibilità, introdotto nel percorso principale.
@@ -1038,7 +1038,7 @@ Quando controlliamo se un gioco è equo, dobbiamo quindi pesare **sia gli import
 
 Questo equilibrio non garantisce di recuperare il denaro dopo un numero fissato di partite. Se giochiamo $r$ volte alle stesse condizioni, la linearità dà valore atteso zero per il guadagno totale, ma il saldo concretamente osservato può essere positivo o negativo. La media descrive il modello, mentre il risultato di una sequenza rimane incerto. Per decidere se partecipare possono contare anche la dispersione dei risultati e la capacità di sostenere una perdita: il prezzo equo risponde alla domanda sul guadagno medio.
 
-## Lettura B — Senza reinserimento: la distribuzione Ipergeometrica {: #ipergeometrica }
+## Lettura B — Senza reinserimento: la distribuzione Ipergeometrica {: #ipergeometrica .psi-facoltativo }
 
 !!! info "Approfondimento facoltativo — fuori dall’esame"
     Questa intera lettura, comprese la PMF e la derivazione della media dell’Ipergeometrica, è facoltativa e non richiesta all’esame. Resta richiesto il metodo delle indicatrici nelle applicazioni del percorso principale.
@@ -1256,7 +1256,7 @@ Considera ora un secondo modello: con probabilità 0,2 un guasto comune fa falli
 
     Il confronto mostra esattamente che cosa resta uguale e che cosa cambia: le probabilità dei singoli fallimenti e la media del totale restano uguali, mentre la distribuzione del totale cambia.
 
-### Esercizio 5 — Un campione senza reinserimento (lettura) {: #esercizio-5 }
+### Esercizio 5 — Un campione senza reinserimento (lettura) {: #esercizio-5 .psi-facoltativo }
 
 !!! info "Approfondimento facoltativo — fuori dall’esame"
     Questo esercizio accompagna la Lettura B ed è facoltativo e non richiesto all’esame.

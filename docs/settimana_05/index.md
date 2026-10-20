@@ -1179,14 +1179,26 @@ $$
 P(X_n=1)\longrightarrow\lambda e^{-\lambda}.
 $$
 
-Per $k$ eventi scegliamo $k$ pezzetti pieni. Il numero delle scelte è $\binom nk$, mentre una configurazione fissata ha probabilità $(\lambda/n)^k(1-\lambda/n)^{n-k}$. Passando al limite per **$k$ fissato** e $n\to\infty$ si ottiene la distribuzione di **Poisson**:
+Per $k$ eventi scegliamo $k$ pezzetti pieni. Il numero delle scelte è $\binom nk$, mentre una configurazione fissata ha probabilità $(\lambda/n)^k(1-\lambda/n)^{n-k}$. Ritroviamo così la PMF della distribuzione binomiale con $p=\lambda/n$:
+
+$$
+P(X_n=k)=\binom nk\left(\frac\lambda n\right)^k\left(1-\frac\lambda n\right)^{n-k}.
+$$
+
+Che cosa succede quando $n$ cresce, con **$k$ fissato**? Guardiamo i pezzi della formula uno alla volta.
+
+- **Il coefficiente binomiale e le potenze di $n$.** Scriviamo $\binom nk=\dfrac{n(n-1)\cdots(n-k+1)}{k!}$. Quando $n$ è molto più grande di $k$, i $k$ fattori del numeratore sono tutti quasi uguali a $n$, e il loro prodotto è quasi $n^k$. Moltiplicando per $(\lambda/n)^k=\lambda^k/n^k$, le $n^k$ si semplificano e resta $\lambda^k/k!$.
+- **I pezzetti vuoti.** Come nel caso di un evento, scriviamo $(1-\lambda/n)^{n-k}=\dfrac{(1-\lambda/n)^n}{(1-\lambda/n)^k}$. Il numeratore tende a $e^{-\lambda}$, per il limite del §12.
+- **Il denominatore** $(1-\lambda/n)^k$ tende a 1: la base tende a 1 e l’esponente $k$ resta fisso.
+
+Rimettendo insieme i pezzi otteniamo la distribuzione di **Poisson**:
 
 $$
 \boxed{P(X=k)=\frac{\lambda^k e^{-\lambda}}{k!},
 \qquad k=0,1,2,\ldots,\quad\lambda>0.}
 $$
 
-Scriviamo $X\sim\operatorname{Poisson}(\lambda)$. Il conto completo del limite è nella [Lettura B](#derivazione-limite): qui impariamo a leggere e usare il risultato, che è ciò che serve all’esame.
+Scriviamo $X\sim\operatorname{Poisson}(\lambda)$. I passaggi del limite, scritti per intero, sono nella [Lettura B](#derivazione-limite): qui impariamo a leggere e usare il risultato, che è ciò che serve all’esame.
 
 Nella formula compaiono due numeri che hanno ruoli molto diversi:
 
@@ -1208,7 +1220,7 @@ $$
 
 Con $\lambda=0{,}61$ e $e^{-0{,}61}\approx0{,}54335$ avremmo ad esempio $P(X=2)=\frac{0{,}61^2}{2}\cdot0{,}54335=\frac{0{,}3721}{2}\cdot0{,}54335\approx0{,}10109$.
 
-La distribuzione di Poisson ammette zero eventi e **non ha un massimo**: il modello attribuisce probabilità positiva a ogni intero non negativo. La distribuzione binomiale con $n$ prove, invece, non può superare $n$. La distribuzione di Poisson può approssimare bene la distribuzione binomiale nel regime di eventi rari, ma le due distribuzioni non sono identiche per un $n$ finito.
+La distribuzione di Poisson ammette zero eventi e **non ha un massimo**: il modello attribuisce probabilità positiva a ogni intero non negativo. La distribuzione binomiale con $n$ prove, invece, non può superare $n$: per $n$ finito le due distribuzioni sono diverse. Alla fine del paragrafo vedremo quanto sono vicine.
 
 Se dobbiamo costruire una tabella, possiamo evitare di ricalcolare ogni volta potenze e fattoriali. Per $k\ge1$ facciamo il rapporto fra due pesi consecutivi:
 
@@ -1245,8 +1257,39 @@ $$
 
 La formula assegna così tutto il peso ai conteggi possibili: è davvero una PMF.
 
+#### La distribuzione di Poisson come approssimazione della distribuzione binomiale {: #approssimazione-binomiale }
+
+Abbiamo ottenuto la distribuzione di Poisson come limite, con infiniti pezzetti. Nella pratica la usiamo anche quando $n$ è finito: se $n$ è grande e $p$ è piccolo, una distribuzione binomiale$(n,p)$ è molto vicina alla distribuzione di Poisson con **la stessa media**, $\lambda=np$. Il grafico confronta due distribuzioni binomiali con media 3 e la distribuzione di Poisson$(3)$.
+
+<figure markdown="0">
+<svg viewBox="0 0 560 262" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="Grafico a barre affiancate dei pesi per k da 0 a 8 di tre distribuzioni con media 3. La distribuzione binomiale con n uguale a 10 e p uguale a 0,3 è più concentrata attorno a 3: per esempio vale 0,267 in 3 contro 0,224 della distribuzione di Poisson. La distribuzione binomiale con n uguale a 100 e p uguale a 0,03 quasi coincide con la distribuzione di Poisson con lambda uguale a 3.">
+<style>.s05-ap-b10{fill:#2e9e5b}.s05-ap-b100{fill:#4051b5}.s05-ap-poi{fill:#d06a14}[data-md-color-scheme="slate"] .s05-ap-b10{fill:#2fa565}[data-md-color-scheme="slate"] .s05-ap-b100{fill:#7385ea}</style>
+<g stroke="currentColor" stroke-opacity="0.15"><path d="M52 165.0H540"/><path d="M52 115.0H540"/><path d="M52 65.0H540"/></g>
+<path d="M52 215H540" stroke="currentColor"/>
+<g fill="currentColor" text-anchor="end" font-size="11"><text x="48" y="219.0">0,0</text><text x="48" y="169.0">0,1</text><text x="48" y="119.0">0,2</text><text x="48" y="69.0">0,3</text></g>
+<text x="14" y="140" fill="currentColor" font-size="12" text-anchor="middle" transform="rotate(-90 14 140)">P(X = k)</text>
+<g class="s05-ap-b10"><path d="M58.0 215V203.9Q58.0 200.9 61.0 200.9H69.0Q72.0 200.9 72.0 203.9V215Z"><title>distribuzione binomiale, n = 10, p = 0,3: P(X = 0) = 0,0282</title></path><path d="M111.0 215V157.5Q111.0 154.5 114.0 154.5H122.0Q125.0 154.5 125.0 157.5V215Z"><title>distribuzione binomiale, n = 10, p = 0,3: P(X = 1) = 0,1211</title></path><path d="M164.0 215V101.3Q164.0 98.3 167.0 98.3H175.0Q178.0 98.3 178.0 101.3V215Z"><title>distribuzione binomiale, n = 10, p = 0,3: P(X = 2) = 0,2335</title></path><path d="M217.0 215V84.6Q217.0 81.6 220.0 81.6H228.0Q231.0 81.6 231.0 84.6V215Z"><title>distribuzione binomiale, n = 10, p = 0,3: P(X = 3) = 0,2668</title></path><path d="M270.0 215V117.9Q270.0 114.9 273.0 114.9H281.0Q284.0 114.9 284.0 117.9V215Z"><title>distribuzione binomiale, n = 10, p = 0,3: P(X = 4) = 0,2001</title></path><path d="M323.0 215V166.5Q323.0 163.5 326.0 163.5H334.0Q337.0 163.5 337.0 166.5V215Z"><title>distribuzione binomiale, n = 10, p = 0,3: P(X = 5) = 0,1029</title></path><path d="M376.0 215V199.6Q376.0 196.6 379.0 196.6H387.0Q390.0 196.6 390.0 199.6V215Z"><title>distribuzione binomiale, n = 10, p = 0,3: P(X = 6) = 0,0368</title></path><path d="M429.0 215V213.5Q429.0 210.5 432.0 210.5H440.0Q443.0 210.5 443.0 213.5V215Z"><title>distribuzione binomiale, n = 10, p = 0,3: P(X = 7) = 0,0090</title></path><path d="M482.0 215V215.0Q482.0 214.3 482.7 214.3H495.3Q496.0 214.3 496.0 215.0V215Z"><title>distribuzione binomiale, n = 10, p = 0,3: P(X = 8) = 0,0014</title></path></g>
+<g class="s05-ap-b100"><path d="M74.0 215V194.2Q74.0 191.2 77.0 191.2H85.0Q88.0 191.2 88.0 194.2V215Z"><title>distribuzione binomiale, n = 100, p = 0,03: P(X = 0) = 0,0476</title></path><path d="M127.0 215V144.5Q127.0 141.5 130.0 141.5H138.0Q141.0 141.5 141.0 144.5V215Z"><title>distribuzione binomiale, n = 100, p = 0,03: P(X = 1) = 0,1471</title></path><path d="M180.0 215V105.4Q180.0 102.4 183.0 102.4H191.0Q194.0 102.4 194.0 105.4V215Z"><title>distribuzione binomiale, n = 100, p = 0,03: P(X = 2) = 0,2252</title></path><path d="M233.0 215V104.3Q233.0 101.3 236.0 101.3H244.0Q247.0 101.3 247.0 104.3V215Z"><title>distribuzione binomiale, n = 100, p = 0,03: P(X = 3) = 0,2275</title></path><path d="M286.0 215V132.7Q286.0 129.7 289.0 129.7H297.0Q300.0 129.7 300.0 132.7V215Z"><title>distribuzione binomiale, n = 100, p = 0,03: P(X = 4) = 0,1706</title></path><path d="M339.0 215V167.3Q339.0 164.3 342.0 164.3H350.0Q353.0 164.3 353.0 167.3V215Z"><title>distribuzione binomiale, n = 100, p = 0,03: P(X = 5) = 0,1013</title></path><path d="M392.0 215V193.2Q392.0 190.2 395.0 190.2H403.0Q406.0 190.2 406.0 193.2V215Z"><title>distribuzione binomiale, n = 100, p = 0,03: P(X = 6) = 0,0496</title></path><path d="M445.0 215V207.7Q445.0 204.7 448.0 204.7H456.0Q459.0 204.7 459.0 207.7V215Z"><title>distribuzione binomiale, n = 100, p = 0,03: P(X = 7) = 0,0206</title></path><path d="M498.0 215V214.3Q498.0 211.3 501.0 211.3H509.0Q512.0 211.3 512.0 214.3V215Z"><title>distribuzione binomiale, n = 100, p = 0,03: P(X = 8) = 0,0074</title></path></g>
+<g class="s05-ap-poi"><path d="M90.0 215V193.1Q90.0 190.1 93.0 190.1H101.0Q104.0 190.1 104.0 193.1V215Z"><title>distribuzione di Poisson, λ = 3: P(X = 0) = 0,0498</title></path><path d="M143.0 215V143.3Q143.0 140.3 146.0 140.3H154.0Q157.0 140.3 157.0 143.3V215Z"><title>distribuzione di Poisson, λ = 3: P(X = 1) = 0,1494</title></path><path d="M196.0 215V106.0Q196.0 103.0 199.0 103.0H207.0Q210.0 103.0 210.0 106.0V215Z"><title>distribuzione di Poisson, λ = 3: P(X = 2) = 0,2240</title></path><path d="M249.0 215V106.0Q249.0 103.0 252.0 103.0H260.0Q263.0 103.0 263.0 106.0V215Z"><title>distribuzione di Poisson, λ = 3: P(X = 3) = 0,2240</title></path><path d="M302.0 215V134.0Q302.0 131.0 305.0 131.0H313.0Q316.0 131.0 316.0 134.0V215Z"><title>distribuzione di Poisson, λ = 3: P(X = 4) = 0,1680</title></path><path d="M355.0 215V167.6Q355.0 164.6 358.0 164.6H366.0Q369.0 164.6 369.0 167.6V215Z"><title>distribuzione di Poisson, λ = 3: P(X = 5) = 0,1008</title></path><path d="M408.0 215V192.8Q408.0 189.8 411.0 189.8H419.0Q422.0 189.8 422.0 192.8V215Z"><title>distribuzione di Poisson, λ = 3: P(X = 6) = 0,0504</title></path><path d="M461.0 215V207.2Q461.0 204.2 464.0 204.2H472.0Q475.0 204.2 475.0 207.2V215Z"><title>distribuzione di Poisson, λ = 3: P(X = 7) = 0,0216</title></path><path d="M514.0 215V213.9Q514.0 210.9 517.0 210.9H525.0Q528.0 210.9 528.0 213.9V215Z"><title>distribuzione di Poisson, λ = 3: P(X = 8) = 0,0081</title></path></g>
+<g fill="currentColor" text-anchor="middle" font-weight="bold"><text x="81" y="232">0</text><text x="134" y="232">1</text><text x="187" y="232">2</text><text x="240" y="232">3</text><text x="293" y="232">4</text><text x="346" y="232">5</text><text x="399" y="232">6</text><text x="452" y="232">7</text><text x="505" y="232">8</text></g>
+<text x="299" y="253" text-anchor="middle" fill="currentColor">k, numero di eventi</text>
+<rect class="s05-ap-b10" x="250" y="14" width="14" height="14" rx="2"/><text x="270" y="26" fill="currentColor">distribuzione binomiale, n = 10, p = 0,3</text><rect class="s05-ap-b100" x="250" y="34" width="14" height="14" rx="2"/><text x="270" y="46" fill="currentColor">distribuzione binomiale, n = 100, p = 0,03</text><rect class="s05-ap-poi" x="250" y="54" width="14" height="14" rx="2"/><text x="270" y="66" fill="currentColor">distribuzione di Poisson, λ = 3</text>
+</svg>
+<figcaption>Stessa media 3, n sempre più grande: la distribuzione binomiale con n = 100 e p = 0,03 è già quasi indistinguibile dalla distribuzione di Poisson con λ = 3.</figcaption>
+</figure>
+
+Con $n=10$ e $p=0{,}3$ la distribuzione binomiale è ancora lontana: è più concentrata attorno a 3 e non può superare 10. Con $n=100$ e $p=0{,}03$ le barre quasi coincidono. La probabilità di zero eventi, per esempio, vale 0,028 con $n=10$, 0,048 con $n=100$ e 0,050 con la distribuzione di Poisson. A parità di media, più $n$ è grande, migliore è l’approssimazione. Lo confermano le varianze: $np(1-p)$ vale 2,1 con $n=10$ e 2,91 con $n=100$, e si avvicina a $\lambda=3$ man mano che $1-p$ si avvicina a 1.
+
+A che cosa serve l’approssimazione? Prima di tutto a evitare conti scomodi. Supponiamo che una persona veda 10.000 annunci in un mese e clicchi su ciascuno con probabilità $10^{-6}$, indipendentemente dagli altri. Il numero di clic ha distribuzione binomiale$(10^4,10^{-6})$, ma la sua PMF richiede coefficienti come $\binom{10^4}{3}$ e potenze come $(1-10^{-6})^{9997}$. Con la distribuzione di Poisson di media $\lambda=10^4\cdot10^{-6}=0{,}01$ basta invece
+
+$$
+P(X=3)\approx\frac{0{,}01^3\,e^{-0{,}01}}{3!}\approx1{,}65\cdot10^{-7}.
+$$
+
+C’è poi un vantaggio più profondo: non serve conoscere $n$ e $p$ separatamente, basta la media. È proprio la situazione dei dati di Bortkiewicz, dove nessuno sa quante «occasioni di incidente» contenga un anno. Useremo di nuovo l’approssimazione per le richieste a un server, nel [§18](#richieste).
+
 !!! note "Che cosa abbiamo ottenuto"
-    Dividendo l’intervallo in pezzetti e lasciandoli diventare infiniti, con media totale $\lambda$ fissata, la distribuzione binomiale si trasforma nella distribuzione di Poisson. La sua PMF è $\lambda^ke^{-\lambda}/k!$ e può essere calcolata un peso alla volta con la ricorrenza $\lambda/k$.
+    Dividendo l’intervallo in pezzetti e lasciandoli diventare infiniti, con media totale $\lambda$ fissata, la distribuzione binomiale si trasforma nella distribuzione di Poisson. La sua PMF è $\lambda^ke^{-\lambda}/k!$ e può essere calcolata un peso alla volta con la ricorrenza $\lambda/k$. Per $n$ grande e $p$ piccolo, la distribuzione di Poisson$(np)$ approssima bene la distribuzione binomiale$(n,p)$.
 
 ### 14. Tornare ai dati: probabilità e frequenze attese {: #confronto-dati }
 
@@ -1304,7 +1347,7 @@ L’uguaglianza fra media e varianza riguarda i loro *valori numerici*, e non il
 
 Questa coincidenza è una peculiarità della distribuzione di Poisson. Nella distribuzione binomiale, per confronto, la varianza è $np(1-p)$, che è più piccola della media $np$; la distribuzione di Poisson si ottiene quando $p$ è così piccolo che il fattore $1-p$ è praticamente 1. È un'altra faccia del limite dei pezzetti.
 
-Il valore della media è coerente con il modello binomiale a pezzetti, in cui valeva $\lambda$ per ogni $n$. Per verificarlo nella distribuzione limite serve però un argomento ulteriore: in generale non possiamo trasferire una media al limite soltanto perché convergono le probabilità dei singoli valori.
+Che la media sia $\lambda$ non sorprende: nel modello a pezzetti valeva $\lambda$ per ogni $n$. Non possiamo però darlo per scontato. Le probabilità dei singoli valori si avvicinano a quelle della distribuzione di Poisson, ma questo da solo non garantisce che si avvicini anche la media: un po’ di probabilità su valori molto grandi può spostare molto un valore atteso, come abbiamo visto con la Geometrica nel §4. Conviene quindi ricalcolarla sulla nuova PMF.
 
 Possiamo calcolarla direttamente usando la ricorrenza del §13. Moltiplicando per $k$ entrambi i membri di $P(X=k)=P(X=k-1)\,\lambda/k$ otteniamo, per $k\ge1$,
 
@@ -1319,7 +1362,7 @@ $$
 =\lambda\sum_{k=1}^{\infty}P(X=k-1)=\lambda\cdot1=\lambda.
 $$
 
-Per la varianza il calcolo è un poco più lungo, e lo facciamo con cura nella [Lettura B](#media-varianza-diretta). Le dimostrazioni sono facoltative; **proprietà e significato sono richiesti all’esame**.
+Per la varianza il calcolo è un poco più lungo: lo trovi nella [Lettura B](#media-varianza-diretta). Le dimostrazioni sono facoltative; **proprietà e significato sono richiesti all’esame**.
 
 L’uguaglianza fra media e varianza offre anche un controllo sulla dispersione dei dati di Bortkiewicz. La loro media è $\overline{x}=0{,}61$; se la distribuzione di Poisson è un buon modello, ci aspettiamo una varianza osservata vicina a quel valore. Per calcolarla usiamo gli scarti al quadrato, con la stessa procedura della sezione iniziale, ma pesando con le frequenze relative dei 200 dati.
 
@@ -1486,7 +1529,7 @@ Supponiamo un flusso con tasso costante $r=3$ richieste al secondo e con le ipot
 
 Per zero richieste, in mezzo secondo la probabilità è $e^{-1{,}5}\approx0{,}2231$; in un secondo è $e^{-3}\approx0{,}0498$. Un intervallo più lungo offre più occasioni di arrivo, quindi è meno probabile che resti vuoto.
 
-Conoscere soltanto la distribuzione del conteggio in un secondo **non basta** a dedurre quella in ogni altra durata. Stiamo assumendo un unico modello di arrivi, con tasso stabile e incrementi indipendenti. È questa ipotesi sul flusso a giustificare la conversione del modello, oltre alla semplice conversione della media.
+Attenzione: la tabella non si ottiene soltanto moltiplicando la media per la durata. Che il conteggio in mezzo secondo o in un minuto abbia ancora una distribuzione di Poisson dipende dalle ipotesi sul flusso degli arrivi, le stesse della costruzione a pezzetti: tasso costante e conteggi indipendenti in intervalli che non si sovrappongono. Se invece gli arrivi venissero a raffiche lunghe parecchi secondi, i 60 secondi di un minuto sarebbero legati fra loro, e il conteggio del minuto non avrebbe più una distribuzione di Poisson$(180)$, anche se la sua media restasse 180.
 
 L’intervallo non deve per forza essere temporale. Può essere spaziale: refusi per pagina, difetti per metro di cavo, errori per megabyte. Il ragionamento è identico, con le unità appropriate. Prima di inserire $\lambda$ nella formula, scrivi sempre **a quale unità di osservazione si riferisce**. È la domanda che previene più errori in questo capitolo.
 
@@ -1502,7 +1545,7 @@ $$
 10000\cdot0{,}0003=3.
 $$
 
-Il numero elevato di prove e la piccola probabilità di invio permettono di approssimare il conteggio con una distribuzione di Poisson$(3)$. Indichiamo con $X$ il conteggio in questo modello approssimato.
+Il numero elevato di prove e la piccola probabilità di invio permettono di [approssimare](#approssimazione-binomiale) il conteggio con una distribuzione di Poisson$(3)$. Indichiamo con $X$ il conteggio in questo modello approssimato.
 
 La soglia viene superata quando arrivano **più di cinque richieste in un secondo**: l’evento è $X>5$, cioè $X\ge6$. Per calcolarne la probabilità conviene passare dal complementare, che comprende soltanto i sei valori da 0 a 5:
 
@@ -1516,7 +1559,7 @@ P(X>5)
 \end{aligned}
 $$
 
-Controlliamo la somma tra parentesi: $1+3+4{,}5+4{,}5+3{,}375+2{,}025=18{,}4$. Moltiplicata per $e^{-3}\approx0{,}0498$ dà circa $0{,}916$, e il complementare è $0{,}084$.
+Controlliamo la somma tra parentesi: $1+3+4{,}5+4{,}5+3{,}375+2{,}025=18{,}4$. Moltiplicata per $e^{-3}\approx0{,}0498$ dà circa $0{,}916$, e il complementare è $0{,}084$. Il conto esatto con la distribuzione binomiale, molto più pesante, darebbe $0{,}08389$ invece di $0{,}08392$: la differenza compare solo alla quinta cifra decimale.
 
 Nel modello, circa l’8,4% degli intervalli di un secondo supera cinque arrivi. Se una regola di capacità accetta al massimo cinque arrivi per intervallo, questa è la probabilità di superare quella soglia.
 
@@ -1541,7 +1584,7 @@ Il confronto tra media e varianza va interpretato con misura:
 - una differenza grande richiede un’indagine;
 - un’uguaglianza non basta a identificare la distribuzione.
 
-Esistono anche conteggi **meno** dispersi della distribuzione di Poisson, per esempio quando gli eventi si ostacolano o vengono regolati.
+Può capitare anche il contrario: conteggi **meno** dispersi di una distribuzione di Poisson con la stessa media, cioè con varianza minore della media. Succede quando un evento rende meno probabile il successivo, come un contatore che dopo ogni rilevazione resta «cieco» per un istante, oppure quando gli arrivi seguono un calendario, come pazienti prenotati ogni venti minuti. Nel caso estremo, tre arrivi esatti ogni ora, la varianza è zero.
 
 ### 20. Laboratorio: traffico regolare e traffico a raffiche {: #lab-richieste }
 
@@ -1594,7 +1637,7 @@ $$
 
 Poi prevedi la varianza. Sarà vicina a 17, molto maggiore di 4,2. Il programma confronta i pesi osservati con una distribuzione di Poisson che usa la **nuova media osservata**, quindi la differenza non nasce dall’aver dimenticato di aggiornare $\lambda$. Nasce dalla *mescolanza* di secondi con attività diverse.
 
-Un ultimo punto, sottile ma importante. Condizionatamente al tipo di secondo, gli utenti restano indipendenti nel codice. Ma se non conosciamo quel tipo, l’attività comune li collega: osservare molte richieste da un gruppo di utenti è un indizio che anche gli altri siano nel regime attivo. Il modello che tratta ogni secondo come identico agli altri perde questa informazione, e per questo sottostima le code.
+Un ultimo punto, sottile ma importante. Nel codice, dentro un singolo secondo, gli utenti decidono ancora in modo indipendente l’uno dall’altro. Ma chi osserva il traffico non sa se un secondo è tranquillo o attivo, e questa incertezza comune li lega: se vediamo molti utenti inviare, probabilmente il secondo è attivo, e allora anche gli altri invieranno più del solito. Per questo i secondi con molte richieste sono più frequenti di quanto preveda una distribuzione di Poisson con la stessa media: un modello che tratta tutti i secondi come uguali sottostima la probabilità dei picchi.
 
 ### 21. Quale distribuzione: geometrica, binomiale o di Poisson? {: #geometrica-o-poisson }
 
@@ -1634,7 +1677,7 @@ Il fatto che tutti e tre gli esempi parlino di richieste non determina il modell
 !!! note "Che cosa abbiamo ottenuto"
     Abbiamo imparato a riconoscere tre domande diverse sugli stessi eventi: *quanto aspetto?* (Geometrica), *quanti successi in $n$ prove?* (distribuzione binomiale), *quanti eventi in un intervallo?* (distribuzione di Poisson). La scelta del modello dipende da ciò che è fissato e da ciò che osserviamo, e non dalla parola «richieste».
 
-## Lettura A — Il filtro di Bloom: quanto costa rispondere «forse»? {: #bloom }
+## Lettura A — Il filtro di Bloom: quanto costa rispondere «forse»? {: #bloom .psi-facoltativo }
 
 *Approfondimento facoltativo, fuori dal nucleo d’esame orale.*
 
@@ -1662,70 +1705,39 @@ Il filtro usa $m$ bit, inizialmente tutti a 0, e $k$ funzioni hash. Ciascuna fun
 <figcaption>Due elementi inseriti con due funzioni hash ciascuno; un terzo elemento, mai inserito, trova accesi tutti i suoi bit: falso positivo.</figcaption>
 </figure>
 
-Guarda la figura con attenzione: *gatto* e *cane* accendono ciascuno due bit. L’elemento *topo*, mai inserito, ha per caso proprio i bit 2 e 9, già accesi dagli altri due. Il filtro risponde «forse», ma la risposta è sbagliata.
+Nella figura *gatto* e *cane* accendono due bit ciascuno. *Topo*, mai inserito, cade per caso proprio sui bit 2 e 9, già accesi dagli altri due: il filtro risponde «forse», e sbaglia.
 
-Nel filtro standard, senza cancellazioni, nessuno spegne un bit già acceso. Ne seguono due fatti:
-
-- un elemento inserito trova sempre tutti i propri bit a 1: **non ci sono falsi negativi**;
-- un elemento mai inserito può trovare i propri bit accesi da altri elementi: è un **falso positivo**.
-
-La domanda quantitativa è dunque: *con che frequenza capita un falso positivo?* La risolviamo in due passi.
+Nel filtro standard nessuno spegne un bit già acceso. Quindi un elemento inserito trova sempre i propri bit a 1 (**niente falsi negativi**), mentre un elemento mai inserito può trovarli accesi da altri (**falso positivo**). Quanto spesso capita?
 
 ### La probabilità di un falso positivo
 
-Supponiamo di inserire $n$ elementi distinti e modelliamo tutti i risultati hash come indipendenti e uniformi. Gli inserimenti producono $kn$ scelte di posizione. Fissiamo un bit: ogni scelta lo colpisce con probabilità $1/m$ e lo manca con probabilità $1-1/m$.
-
-Per restare a zero, il bit deve essere mancato tutte le $kn$ volte. Per indipendenza moltiplichiamo:
+Inseriamo $n$ elementi e trattiamo i risultati delle funzioni hash come indipendenti e uniformi: in tutto, $kn$ scelte di posizione. Ciascuna scelta manca un bit fissato con probabilità $1-1/m$, quindi il bit resta a zero con probabilità
 
 $$
-P(\text{bit a zero})=\left(1-\frac1m\right)^{kn}.
+P(\text{bit a zero})=\left(1-\frac1m\right)^{kn}\approx e^{-kn/m}.
 $$
 
-Il numero di colpi su quel bit ha distribuzione binomiale con media $kn/m$. Ritroviamo così il meccanismo del §12: molte occasioni, ciascuna con una piccola probabilità di colpire una posizione fissata. Quando l’approssimazione con la distribuzione di Poisson è adatta, la probabilità di zero colpi è circa $e^{-kn/m}$. Quindi:
+L’approssimazione è quella del §12: molte prove, ciascuna con una piccola probabilità di colpire il bit, e in media $kn/m$ colpi.
 
-$$
-P(\text{bit a uno})=1-\left(1-\frac1m\right)^{kn}
-\approx1-e^{-kn/m}.
-$$
-
-Un falso positivo richiede che tutte le $k$ posizioni di un elemento assente risultino accese. Per moltiplicare le $k$ probabilità dobbiamo trattare questi stati come indipendenti. È **un’ulteriore approssimazione**: i bit condividono gli stessi inserimenti e le posizioni interrogate possono coincidere. Con questa approssimazione otteniamo:
+Un falso positivo richiede che siano accesi tutti i $k$ bit di un elemento assente. Se trattiamo anche questi bit come indipendenti, ed è un’**ulteriore approssimazione** perché condividono gli stessi inserimenti, otteniamo
 
 $$
 P(\text{falso positivo})\approx\left(1-e^{-kn/m}\right)^k.
 $$
 
-Con $n=100$ elementi, $m=1000$ bit e $k=7$ funzioni hash, procediamo per passi:
+Con $n=100$ elementi, $m=1000$ bit e $k=7$ funzioni hash: $kn/m=0{,}7$, poi $1-e^{-0{,}7}\approx0{,}5034$ e infine $(0{,}5034)^7\approx0{,}0082$.
 
-$$
-\frac{kn}{m}=0{,}7,
-\qquad
-1-e^{-0{,}7}\approx0{,}5034,
-\qquad
-(0{,}5034)^7\approx0{,}0082.
-$$
+Circa lo 0,8% delle interrogazioni di elementi **assenti** riceve un «forse» sbagliato. Non è la probabilità che un «forse» sia sbagliato: per quella servirebbe sapere anche quanto spesso interroghiamo elementi presenti. Con soli 10 bit per elemento, 99 interrogazioni di elementi assenti su 100 si risolvono subito, senza toccare la struttura costosa.
 
-Il valore è circa lo 0,82% **fra le interrogazioni di elementi assenti**, nel modello. Fai attenzione a non leggerlo diversamente: non è la probabilità che un «forse presente» sia sbagliato. Per quella domanda servirebbe sapere anche quanto spesso interroghiamo elementi presenti e assenti.
-
-Il vettore occupa 1000 bit per 100 elementi, cioè 10 bit per elemento, oltre alla gestione delle funzioni hash. Dopo un «forse» consultiamo la struttura che conosce la risposta esatta. Il filtro serve a evitare molti controlli costosi, non a sostituire sempre quel controllo. Con una frequenza di falsi positivi dello 0,8%, circa 99 «assente» su 100 interrogazioni di elementi assenti vengono risolti subito, senza toccare il disco.
-
-## Lettura B — Perché il limite e i momenti hanno proprio quella forma {: #derivazione-limite }
+## Lettura B — Perché il limite e i momenti hanno proprio quella forma {: #derivazione-limite .psi-facoltativo }
 
 *Approfondimento facoltativo. Nel percorso d’esame sono richiesti l’idea dei pezzetti, il caso di zero eventi e le proprietà finali della distribuzione di Poisson.*
 
-Nel §13 abbiamo enunciato la PMF della distribuzione di Poisson passando al limite nel modello a pezzetti. Per ricavare quel risultato studieremo separatamente i fattori della PMF della distribuzione binomiale; dalla nuova PMF potremo poi calcolare media e varianza.
-
 ### B.1. Il limite binomiale, un fattore alla volta
 
-Fissiamo $\lambda>0$ e un intero $k\ge0$. Consideriamo $X_n\sim\operatorname{Binomiale}(n,\lambda/n)$ con $n>\lambda$ e $n\ge k$. Il punto essenziale, da non perdere di vista, è che **$n$ cresce, mentre $k$ e $\lambda$ restano fissi**.
+Fissiamo $\lambda>0$ e un intero $k\ge0$, e prendiamo $X_n\sim\operatorname{Binomiale}(n,\lambda/n)$. Il punto da non perdere di vista è che **$n$ cresce, mentre $k$ e $\lambda$ restano fissi**.
 
-La PMF della distribuzione binomiale è:
-
-$$
-P(X_n=k)=\binom nk\left(\frac\lambda n\right)^k
-\left(1-\frac\lambda n\right)^{n-k}.
-$$
-
-Il coefficiente si scrive $\binom nk=\dfrac{n(n-1)\cdots(n-k+1)}{k!}$: al numeratore ci sono $k$ fattori. Anche $(\lambda/n)^k$ contiene $k$ copie di $n$ al denominatore. Possiamo quindi abbinare ciascun fattore del numeratore a una copia di $n$. Separiamo inoltre la potenza $n-k$ in due parti, $n$ e $-k$:
+Scriviamo il coefficiente binomiale come $\binom nk=\dfrac{n(n-1)\cdots(n-k+1)}{k!}$. Il suo numeratore ha $k$ fattori, e $(\lambda/n)^k$ ha $k$ copie di $n$ al denominatore: possiamo abbinarli a uno a uno. Spezziamo inoltre l’esponente $n-k$ in $n$ e $-k$:
 
 $$
 P(X_n=k)=
@@ -1735,129 +1747,66 @@ P(X_n=k)=
 \cdot\underbrace{\left(1-\frac\lambda n\right)^{-k}}_{C_n}.
 $$
 
-Abbiamo spezzato un’espressione complicata in quattro pezzi. Uno ($\lambda^k/k!$) non dipende da $n$. Degli altri tre studiamo il limite separatamente.
+Il fattore $\lambda^k/k!$ non dipende da $n$. Studiamo gli altri tre.
 
-Per $k=0$ il prodotto in $A_n$ è vuoto e vale 1. Per $k\ge1$ dividiamo ciascun fattore del numeratore per un $n$:
+- $A_n=1\cdot\left(1-\frac1n\right)\cdots\left(1-\frac{k-1}{n}\right)$ è un prodotto di $k$ fattori che tendono a 1. Il loro numero non cresce con $n$, quindi $A_n\to1$. Per $k=0$ il prodotto è vuoto e vale 1.
+- $B_n\to e^{-\lambda}$, per il limite del §12.
+- $C_n\to1$: la base tende a 1 e l’esponente $-k$ è fisso.
 
-$$
-A_n=1\cdot\left(1-\frac1n\right)\cdots
-\left(1-\frac{k-1}{n}\right)\longrightarrow1.
-$$
-
-Ogni fattore tende a 1 e il **numero di fattori è fisso** ($k$, che non cresce con $n$). Un prodotto di un numero fisso di quantità che tendono a 1 tende a 1.
-
-Il gruppo $B_n$ tende a $e^{-\lambda}$ per il limite già usato nel §12. Il gruppo $C_n$ tende a 1: la base $1-\lambda/n$ tende a 1 e l’esponente $-k$ è fissato, quindi la potenza tende a $1^{-k}=1$.
-
-Moltiplicando i limiti otteniamo:
+Moltiplicando i limiti:
 
 $$
-P(X_n=k)\longrightarrow
-1\cdot\frac{\lambda^k}{k!}\cdot e^{-\lambda}\cdot1
-=\frac{\lambda^ke^{-\lambda}}{k!}.
+P(X_n=k)\longrightarrow\frac{\lambda^ke^{-\lambda}}{k!}.
 $$
 
-Possiamo leggere il significato di ciascun pezzo. Il fattoriale rimasto al denominatore viene dalla scelta dei pezzetti: scegliere $k$ posizioni *senza ordine* divide per i $k!$ ordinamenti dello stesso insieme. L’esponenziale deriva invece dal prodotto delle probabilità dei moltissimi pezzetti vuoti.
+Ogni pezzo ha un significato: il $k!$ al denominatore viene dalla scelta di $k$ pezzetti *senza ordine*, l’esponenziale dai moltissimi pezzetti vuoti.
 
-Per una distribuzione binomiale concreta usiamo la distribuzione di Poisson$(np)$ come **approssimazione** quando il regime lo consente. «$n$ grande e $p$ piccolo» descrive il meccanismo, ma non è una garanzia universale sulla precisione di ogni domanda: anche la probabilità richiesta e l’accuratezza necessaria contano. Se il modello esatto è disponibile e la differenza è rilevante, possiamo confrontare direttamente le due probabilità.
+### B.2. La varianza dalla PMF {: #media-varianza-diretta }
 
-### B.2. Media e varianza dalla PMF {: #media-varianza-diretta }
-
-Calcoliamo i momenti dalla PMF della distribuzione di Poisson. In questo modo non occorre trasferire al limite quelli della distribuzione binomiale. Cominciamo dalla media, che per definizione è:
+La media $\lambda$ l’abbiamo già ricavata nel [§15](#media-varianza-poisson) con la ricorrenza. Per la varianza ci serve anche $\mathbb{E}[X^2]$. Il conto diretto di $\sum k^2P(X=k)$ è scomodo; conviene passare da $\mathbb{E}[X(X-1)]$, perché il prodotto $k(k-1)$ si semplifica con il fattoriale: $k!=k(k-1)(k-2)!$. I termini con $k=0$ e $k=1$ sono nulli, quindi
 
 $$
-\mathbb{E}[X]=\sum_{k=0}^{\infty}k\frac{\lambda^ke^{-\lambda}}{k!}
-=\sum_{k=1}^{\infty}k\frac{\lambda^ke^{-\lambda}}{k!}.
-$$
-
-Il termine $k=0$ non contribuisce (è moltiplicato per 0), quindi la somma parte da 1. Per $k\ge1$ vale $k!=k\,(k-1)!$, quindi $k/k!=1/(k-1)!$. Raccogliamo inoltre un fattore $\lambda$ dalla potenza e il fattore comune $e^{-\lambda}$:
-
-$$
-\mathbb{E}[X]=\lambda e^{-\lambda}
-\sum_{k=1}^{\infty}\frac{\lambda^{k-1}}{(k-1)!}.
-$$
-
-Poniamo $j=k-1$. Il nuovo indice comincia da 0, e la somma diventa $\sum_{j=0}^{\infty}\lambda^j/j!=e^\lambda$. Perciò:
-
-$$
-\mathbb{E}[X]=\lambda e^{-\lambda}e^\lambda=\lambda.
-$$
-
-Per la varianza ci serve la media di $X^2$. Il calcolo diretto di $\sum k^2P(X=k)$ è scomodo. Conviene invece calcolare $\mathbb{E}[X(X-1)]$, perché il fattoriale contiene già il prodotto $k(k-1)$ che si semplifica bene. I termini con $k=0$ e $k=1$ sono nulli, quindi la somma parte da 2:
-
-$$
-\begin{aligned}
 \mathbb{E}[X(X-1)]
-&=\sum_{k=2}^{\infty}k(k-1)\frac{\lambda^ke^{-\lambda}}{k!}\\
-&=\lambda^2e^{-\lambda}\sum_{k=2}^{\infty}
-\frac{\lambda^{k-2}}{(k-2)!}\\
-&=\lambda^2e^{-\lambda}e^\lambda=\lambda^2.
-\end{aligned}
+=\sum_{k=2}^{\infty}k(k-1)\frac{\lambda^ke^{-\lambda}}{k!}
+=\lambda^2e^{-\lambda}\sum_{k=2}^{\infty}\frac{\lambda^{k-2}}{(k-2)!}
+=\lambda^2e^{-\lambda}e^\lambda=\lambda^2.
 $$
 
-Nella seconda riga abbiamo usato $k!=k(k-1)(k-2)!$ e raccolto $\lambda^2$. Nella terza abbiamo cambiato indice con $j=k-2$. Le somme sono di termini non negativi e i risultati sono finiti.
-
-Ora torniamo a $X^2$ con l’identità $X^2=X(X-1)+X$, che si verifica sviluppando. Per linearità:
-
-$$
-\mathbb{E}[X^2]=\mathbb{E}[X(X-1)]+\mathbb{E}[X]=\lambda^2+\lambda.
-$$
-
-Usando l’identità della varianza ricavata nella [Lettura C](#formula-varianza), troviamo:
+Nel penultimo passaggio, ponendo $j=k-2$, la somma diventa $\sum_{j\ge0}\lambda^j/j!=e^\lambda$. Poiché $X^2=X(X-1)+X$, per linearità $\mathbb{E}[X^2]=\lambda^2+\lambda$. Con l’identità della [Lettura C](#formula-varianza):
 
 $$
 \operatorname{Var}(X)=\mathbb{E}[X^2]-(\mathbb{E}[X])^2
 =(\lambda^2+\lambda)-\lambda^2=\lambda.
 $$
 
-Abbiamo verificato entrambe le proprietà senza dover scambiare un limite di distribuzioni con un valore atteso. Il risultato conferma che una distribuzione di Poisson ha media e varianza entrambe uguali a $\lambda$.
-
-## Lettura C — Due strumenti ulteriori per la varianza {: #lettura-varianza }
+## Lettura C — Due strumenti ulteriori per la varianza {: #lettura-varianza .psi-facoltativo }
 
 *Approfondimento facoltativo, non richiesto all’esame. Per il percorso principale si usa la definizione con gli scarti al quadrato.*
 
-Questa lettura riparte dalla definizione iniziale. Prima ricava un’identità utile nei calcoli; poi la applica a una somma di indicatrici, mostrando esattamente dove l’indipendenza interviene nella varianza della distribuzione binomiale.
+Ricaviamo prima un’identità comoda nei calcoli, poi la usiamo per trovare la varianza della distribuzione binomiale, vedendo esattamente dove serve l’indipendenza.
 
 ### C.1. La media dei quadrati e il quadrato della media {: #formula-varianza }
 
-La definizione con gli scarti spiega il significato della varianza. Per fare i conti, però, è spesso comodo disporre di una formula che usi la media di $X$ e la media di $X^2$. Ricaviamola senza saltare i passaggi.
-
-Partiamo dallo scarto al quadrato che compare nella definizione. La quantità $\mu$ è la media di $X$: una volta fissato il modello, è un numero determinato. Il valore di $X$ cambia con l'esito dell'esperimento, mentre $\mu$ rimane lo stesso. Possiamo perciò trattare $\mu$ come una costante e applicare l'identità algebrica del quadrato di una differenza:
+Una volta fissato il modello, la media $\mu$ è un numero: possiamo quindi sviluppare lo scarto al quadrato come un normale quadrato di binomio:
 
 $$
 (X-\mu)^2=X^2-2\mu X+\mu^2.
 $$
 
-Ora facciamo la media dei due lati. A sinistra troviamo, per definizione, la varianza. A destra usiamo la linearità per separare i tre termini: il coefficiente costante del termine centrale esce dal valore atteso, mentre l'ultimo termine, essendo costante, ha media uguale a sé stesso:
-
-$$
-\operatorname{Var}(X)=\mathbb{E}[X^2]-2\mu\mathbb{E}[X]+\mu^2.
-$$
-
-Poiché $\mathbb{E}[X]=\mu$, il secondo termine è $-2\mu^2$. Sommandolo all'ultimo resta $-\mu^2$:
+Facciamo la media dei due lati. A sinistra troviamo la varianza; a destra, per linearità, $\mathbb{E}[X^2]-2\mu\,\mathbb{E}[X]+\mu^2=\mathbb{E}[X^2]-2\mu^2+\mu^2$. Quindi:
 
 $$
 \boxed{\operatorname{Var}(X)=\mathbb{E}[X^2]-\mu^2.}
 $$
 
-La formula è spesso comoda nei calcoli, ma richiede attenzione all'ordine delle operazioni. $\mathbb{E}[X^2]$ significa: **prima eleva al quadrato ciascun risultato, poi fai la media**. Il termine $\mu^2=(\mathbb{E}[X])^2$ significa invece: **prima fai la media dei risultati, poi eleva al quadrato quel numero**.
+I due termini differiscono soltanto per l’ordine delle operazioni:
 
-Le parentesi indicano dunque due procedimenti diversi. Non possiamo scambiarli: in generale producono numeri diversi, e la formula ci dice che la loro differenza è proprio la varianza.
+- $\mathbb{E}[X^2]$: **prima** eleviamo al quadrato ciascun valore, **poi** facciamo la media, con gli stessi pesi della PMF di $X$ ([regola LOTUS](../settimana_04/index.md#lotus)): $\mathbb{E}[X^2]=\sum_x x^2p_X(x)$;
+- $\mu^2$: **prima** facciamo la media, **poi** eleviamo al quadrato quel numero.
 
-Per calcolare $\mathbb{E}[X^2]$ applichiamo la [regola LOTUS](../settimana_04/index.md#lotus) con $g(x)=x^2$: non serve ricostruire da zero la distribuzione del quadrato. Usiamo gli stessi pesi della PMF di $X$, applicandoli ai valori elevati al quadrato:
+Nel pagamento che vale 0 oppure 10 con probabilità $1/2$: $\mathbb{E}[X^2]=0\cdot\frac12+100\cdot\frac12=50$ e $\mu^2=5^2=25$. La differenza, 25, è la varianza già trovata con gli scarti.
 
-$$
-\mathbb{E}[X^2]=\sum_x x^2p_X(x).
-$$
-
-Seguiamo entrambi i procedimenti nel pagamento che vale 0 oppure 10. Per trovare $\mathbb{E}[X^2]$, trasformiamo i pagamenti in $0^2=0$ e $10^2=100$, mantenendo probabilità $1/2$ e $1/2$. La media dei quadrati è quindi $\mathbb{E}[X^2]=0^2\cdot1/2+10^2\cdot1/2=50$.
-
-Per trovare il quadrato della media, partiamo invece dalla media dei pagamenti, che è 5, ed eleviamo quel numero al quadrato: otteniamo 25. Sottraendo troviamo $50-25=25$, lo stesso valore già ricavato con gli scarti. In particolare, nel primo conto abbiamo elevato al quadrato i **valori**, lasciando inalterati i loro pesi probabilistici.
-
-Applichiamo lo stesso procedimento a una variabile bernoulliana $I$ di parametro $p$, perché ci servirà per il conteggio binomiale. La sua media è $p$, come per ogni indicatrice. Per usare la nuova formula dobbiamo trovare anche la media di $I^2$.
-
-Qui il quadrato è particolarmente semplice: i soli valori possibili sono 0 e 1, e valgono $0^2=0$ e $1^2=1$. Qualunque sia l'esito dell'esperimento, il quadrato del bit è dunque uguale al bit stesso: $I^2=I$. Di conseguenza, anche le loro medie coincidono: $\mathbb{E}[I^2]=\mathbb{E}[I]=p$.
-
-Sostituendo la media $p$ e la media del quadrato $p$ nella formula della varianza, otteniamo:
+Per una variabile bernoulliana $I$ di parametro $p$ il conto è ancora più semplice. I suoi valori, 0 e 1, non cambiano se elevati al quadrato: $I^2=I$, quindi $\mathbb{E}[I^2]=p$ e
 
 $$
 \operatorname{Var}(I)=p-p^2=p(1-p).
@@ -1865,180 +1814,47 @@ $$
 
 ### C.2. La varianza della distribuzione binomiale: dove serve l’indipendenza {: #varianza-binomiale }
 
-Consideriamo $n$ prove indipendenti, ciascuna con probabilità di successo $p$. L'indicatrice $I_i$ vale 1 se la prova $i$ ha successo e 0 altrimenti. Il numero totale di successi è quindi:
+Il numero di successi in $n$ prove indipendenti, ciascuna con probabilità $p$, è una somma di indicatrici: $X=I_1+\cdots+I_n$, con $\mathbb{E}[X]=np$. Per la varianza ci manca $\mathbb{E}[X^2]$.
+
+Vediamo come si sviluppa il quadrato di una somma con due sole indicatrici:
 
 $$
-X=I_1+I_2+\cdots+I_n.
+(I_1+I_2)^2=I_1^2+I_2^2+2I_1I_2.
 $$
 
-Sappiamo già che $X$ ha distribuzione binomiale e ha media $\mathbb{E}[X]=np$. Ora vogliamo misurare quanto il conteggio si disperde attorno a questa media.
-
-Nella sezione precedente abbiamo trovato la formula:
-
-$$
-\operatorname{Var}(X)=\mathbb{E}[X^2]-(\mathbb{E}[X])^2.
-$$
-
-Il secondo termine è già noto: basta elevare al quadrato la media $np$. Il primo termine, invece, richiede un nuovo conto. Dobbiamo trovare **la media del quadrato del numero di successi**.
-
-Prima di usare le sommatorie, prendiamo soltanto tre indicatrici. Moltiplicare la somma per sé stessa significa moltiplicare ogni termine della prima parentesi per ogni termine della seconda:
-
-$$
-\begin{aligned}
-(I_1+I_2+I_3)^2
-&=(I_1+I_2+I_3)(I_1+I_2+I_3)\\
-&=I_1^2+I_1I_2+I_1I_3\\
-&\quad+I_2I_1+I_2^2+I_2I_3\\
-&\quad+I_3I_1+I_3I_2+I_3^2.
-\end{aligned}
-$$
-
-Ci sono tre quadrati, uno per ogni indicatrice. Gli altri termini si possono raccogliere a due a due: $I_1I_2=I_2I_1$, e lo stesso vale per le altre coppie. Otteniamo:
-
-$$
-(I_1+I_2+I_3)^2
-=I_1^2+I_2^2+I_3^2+2I_1I_2+2I_1I_3+2I_2I_3.
-$$
-
-Con $n$ indicatrici succede la stessa cosa: abbiamo $n$ quadrati e due copie del prodotto per ogni coppia distinta. La scrittura compatta è:
+Con $n$ indicatrici succede lo stesso: un quadrato per ogni indicatrice e un doppio prodotto per ogni coppia di prove diverse.
 
 $$
 X^2=\sum_{i=1}^n I_i^2+2\sum_{1\le i<j\le n}I_iI_j.
 $$
 
-Il vincolo $i<j$ elenca ogni coppia una volta sola; il fattore 2 tiene conto dei due prodotti che abbiamo raccolto. Per trovare la media di $X^2$ studieremo separatamente i quadrati e i prodotti.
+Calcoliamo la media dei due tipi di termine.
 
-Un'indicatrice assume soltanto i valori 0 e 1. Elevandoli al quadrato otteniamo ancora 0 e 1: per ogni esito vale dunque $I_i^2=I_i$.
+- **I quadrati.** Come prima, $I_i^2=I_i$, quindi ciascuno ha media $p$. Qui l’indipendenza non serve: guardiamo una prova alla volta.
+- **I prodotti.** $I_iI_j$ vale 1 soltanto se *entrambe* le prove riescono, quindi la sua media è $P(I_i=1,\ I_j=1)$. **È qui che serve l’indipendenza**: ci permette di moltiplicare e ottenere $p\cdot p=p^2$. Conoscere soltanto le probabilità delle singole prove non basterebbe.
 
-Di conseguenza:
-
-$$
-\mathbb{E}[I_i^2]=\mathbb{E}[I_i]=p.
-$$
-
-Questo passaggio non richiede indipendenza: riguarda una sola indicatrice alla volta. Poiché i quadrati sono $n$ e ciascuno ha media $p$, il loro contributo complessivo sarà $np$.
-
-Prendiamo due prove diverse, $i$ e $j$. Che cosa registra il prodotto $I_iI_j$? Possiamo verificarlo su tutti i valori dei due bit:
-
-| $I_i$ | $I_j$ | $I_iI_j$ |
-|---|---|---|
-| 0 | 0 | 0 |
-| 0 | 1 | 0 |
-| 1 | 0 | 0 |
-| 1 | 1 | 1 |
-
-Il prodotto vale 1 soltanto quando **entrambe le prove hanno successo**. È quindi l'indicatrice di quell'evento, e la sua media è la probabilità dell'evento stesso:
+Ci sono $n$ quadrati e $\binom n2=n(n-1)/2$ coppie. Per linearità:
 
 $$
-\mathbb{E}[I_iI_j]=P(I_i=1,\ I_j=1).
+\mathbb{E}[X^2]=np+2\cdot\frac{n(n-1)}{2}\,p^2=np+n(n-1)p^2.
 $$
 
-**È ora che usiamo l'indipendenza.** Nel modello binomiale, conoscere il successo della prova $i$ non cambia la probabilità di successo della prova $j$. Possiamo quindi moltiplicare le due probabilità:
+Sottraiamo $(\mathbb{E}[X])^2=n^2p^2$; i due termini $n^2p^2$ si cancellano:
 
 $$
-\begin{aligned}
-P(I_i=1,\ I_j=1)
-&=P(I_i=1)\,P(I_j=1)\\
-&=p\cdot p\\
-&=p^2.
-\end{aligned}
+\operatorname{Var}(X)=np+n^2p^2-np^2-n^2p^2=np-np^2=\boxed{np(1-p)}.
 $$
 
-Abbiamo così trovato $\mathbb{E}[I_iI_j]=p^2$ per ogni coppia distinta. Sapere soltanto che ciascuna prova ha probabilità di successo $p$ non basterebbe: serve anche conoscere la probabilità dei due successi insieme.
+Il risultato è la somma delle varianze $p(1-p)$ delle $n$ prove, ma lo abbiamo ottenuto usando l’indipendenza.
 
-Torniamo all'espansione di $X^2$ e facciamo la media. La linearità permette di separare tutti gli addendi:
+Per vedere che cosa succede senza indipendenza, torniamo ai due modelli del [laboratorio della Settimana 4](../settimana_04/index.md#lab-binomiale): quattro operazioni, ciascuna fallisce con probabilità $0{,}2$, e $X$ conta i fallimenti. In entrambi i modelli la media è $4\cdot0{,}2=0{,}8$.
 
-$$
-\mathbb{E}[X^2]
-=\sum_{i=1}^n\mathbb{E}[I_i^2]
-+2\sum_{1\le i<j\le n}\mathbb{E}[I_iI_j].
-$$
+- **Operazioni indipendenti.** $X$ ha distribuzione binomiale e $\operatorname{Var}(X)=4\cdot0{,}2\cdot0{,}8=0{,}64$.
+- **Guasto comune.** Con probabilità $0{,}2$ falliscono tutte insieme, altrimenti riescono tutte: $X$ vale 4 oppure 0. Con la definizione, $\operatorname{Var}(X)=(0-0{,}8)^2\cdot0{,}8+(4-0{,}8)^2\cdot0{,}2=0{,}512+2{,}048=2{,}56$.
 
-Nella prima somma ci sono $n$ termini, tutti uguali a $p$. Nella seconda ci sono $\binom n2$ termini, tutti uguali a $p^2$. Sostituendo:
+La media è la stessa, ma la varianza del guasto comune è quattro volte maggiore: il conteggio salta da 0 a 4, senza valori intermedi. Nella dimostrazione cambia proprio il passaggio dei prodotti: con il guasto comune due operazioni falliscono insieme con probabilità $0{,}2$, invece di $0{,}2\cdot0{,}2=0{,}04$.
 
-$$
-\mathbb{E}[X^2]=np+2\binom n2p^2.
-$$
-
-Ora usiamo $\binom n2=n(n-1)/2$. Il fattore 2 davanti alla somma si semplifica con il denominatore 2:
-
-$$
-\mathbb{E}[X^2]
-=np+2\cdot\frac{n(n-1)}2\,p^2
-=np+n(n-1)p^2.
-$$
-
-Questo è il primo dei due termini necessari per la varianza. Per il secondo, eleviamo al quadrato la media:
-
-$$
-(\mathbb{E}[X])^2=(np)^2=n^2p^2.
-$$
-
-Sottraiamo e svolgiamo l'algebra una riga alla volta:
-
-$$
-\begin{aligned}
-\operatorname{Var}(X)
-&=\mathbb{E}[X^2]-(\mathbb{E}[X])^2\\
-&=np+n(n-1)p^2-n^2p^2\\
-&=np+(n^2-n)p^2-n^2p^2\\
-&=np+n^2p^2-np^2-n^2p^2\\
-&=np-np^2\\
-&=\boxed{np(1-p)}.
-\end{aligned}
-$$
-
-I due termini $n^2p^2$ si cancellano. Nei due termini rimasti raccogliamo $np$, ottenendo la formula finale. Poiché la varianza di ogni singolo bit è $p(1-p)$, il risultato è anche la somma delle $n$ varianze dei bit. Lo abbiamo però ricavato usando l'indipendenza: non possiamo applicare questa conclusione a qualunque somma di indicatrici.
-
-Torniamo ai due modelli del laboratorio. In entrambi contiamo i fallimenti di quattro operazioni, ciascuna con probabilità di fallimento $p=0{,}2$. La media del conteggio è la stessa:
-
-$$
-\mathbb{E}[X]=4\cdot0{,}2=0{,}8.
-$$
-
-**Nel modello con operazioni indipendenti**, $X$ ha distribuzione binomiale. Possiamo usare la formula appena dimostrata. Prima calcoliamo $1-p=1-0{,}2=0{,}8$, poi moltiplichiamo:
-
-$$
-\begin{aligned}
-\operatorname{Var}(X)
-&=4\cdot0{,}2\cdot0{,}8\\
-&=0{,}8\cdot0{,}8\\
-&=0{,}64.
-\end{aligned}
-$$
-
-**Nel modello del guasto comune**, invece, tutte e quattro le operazioni falliscono insieme con probabilità $0{,}2$; altrimenti riescono tutte. Il conteggio può valere soltanto 0 oppure 4:
-
-| Fallimenti $x$ | 0 | 4 |
-|---|---|---|
-| $P(X=x)$ | $0{,}8$ | $0{,}2$ |
-
-Questo conteggio non segue una distribuzione binomiale. Per trovarne la varianza torniamo alla definizione, usando la media $0{,}8$. Calcoliamo prima gli scarti e i loro quadrati:
-
-$$
-\begin{aligned}
-(0-0{,}8)^2&=(-0{,}8)^2=0{,}64,\\
-(4-0{,}8)^2&=(3{,}2)^2=10{,}24.
-\end{aligned}
-$$
-
-Ora pesiamo ciascuno scarto al quadrato con la probabilità del corrispondente conteggio:
-
-$$
-\begin{aligned}
-\operatorname{Var}(X)
-&=(0-0{,}8)^2\cdot0{,}8+(4-0{,}8)^2\cdot0{,}2\\
-&=0{,}64\cdot0{,}8+10{,}24\cdot0{,}2\\
-&=0{,}512+2{,}048\\
-&=2{,}56.
-\end{aligned}
-$$
-
-La varianza del guasto comune è quattro volte quella del modello indipendente: $2{,}56/0{,}64=4$. La media è rimasta $0{,}8$, ma nel guasto comune il conteggio salta direttamente da 0 a 4: mancano tutti i valori intermedi. Il grafico del [laboratorio della Settimana 4](../settimana_04/index.md#lab-binomiale) mostra proprio questa concentrazione agli estremi, e la varianza ne misura la maggiore dispersione attorno alla media.
-
-Possiamo anche individuare il passaggio della dimostrazione che qui cambia. Due operazioni fissate falliscono insieme con probabilità $0{,}2$, perché basta che avvenga il guasto comune. Nel modello indipendente, invece, la probabilità dei due fallimenti insieme è $0{,}2\cdot0{,}2=0{,}04$. Le probabilità singole coincidono, ma quelle congiunte sono diverse: cambiano quindi le medie dei prodotti $I_iI_j$ e, di conseguenza, la varianza del totale.
-
-**La linearità del valore atteso vale anche per variabili dipendenti; la somma delle varianze richiede ulteriori condizioni.** Per la distribuzione binomiale l'indipendenza giustifica il calcolo dei prodotti e porta a $np(1-p)$. Nel modello del guasto comune dobbiamo invece tenere conto del legame tra le operazioni.
+**La linearità del valore atteso vale anche per variabili dipendenti; per sommare le varianze servono invece ulteriori condizioni, come l’indipendenza.**
 
 ## Esercizi: formula la domanda prima di scegliere la formula {: #esercizi }
 

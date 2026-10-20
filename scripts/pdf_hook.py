@@ -33,11 +33,9 @@ def on_page_context(context, page, config, nav):
         return context
     pdf_file = f"pdf/{_pdf_slug(src)}.pdf"
     page.meta["pdf_file"] = pdf_file
-    # Running-header title: "1. Probabilità — 1.2 Assiomi della probabilità"
-    # rather than the bare nav label (an intro page is just "Introduzione").
+    # Running-header title: the chapter's own nav label. The parent sections
+    # ("Modulo I — ...") only group the tabs, so they stay out of the header.
     title = page.title
-    if page.parent is not None and page.parent.title:
-        title = f"{page.parent.title} — {title}"
     _manifest.append(
         {
             "src": src,

@@ -87,11 +87,15 @@ plugins:
       exclude:
         - index.md
 
+# One tab per module (see the home page); the weeks of the active module are
+# listed in the left sidebar. A tab per week overflowed the header from week 5.
 nav:
   - Home: index.md
-  - "0. Che senso ha essere qui?": 0-senso.md
-  - "1. Che cos'è la probabilità?": settimana_01/index.md
-  - "2. Dall'effetto alla causa: alberi e Teorema di Bayes": settimana_02/index.md
-  - "3. L'estate del 1654: Pascal, Fermat e le tabelle hash": settimana_03/index.md
-  - "4. Huygens e il prezzo equo: valore atteso e linearità": settimana_04/index.md
-  - "5. Bortkiewicz e i calci di cavallo: distribuzione geometrica e distribuzione di Poisson": settimana_05/index.md
+  - "Modulo I — Fondamenti":
+      - "0. Che senso ha essere qui?": 0-senso.md
+      - "1. Che cos'è la probabilità?": settimana_01/index.md
+      - "2. Dall'effetto alla causa: alberi e Teorema di Bayes": settimana_02/index.md
+      - "3. L'estate del 1654: Pascal, Fermat e le tabelle hash": settimana_03/index.md
+  - "Modulo II — Variabili aleatorie":
+      - "4. Huygens e il prezzo equo: valore atteso e linearità": settimana_04/index.md
+      - "5. Bortkiewicz e i calci di cavallo: distribuzione geometrica e distribuzione di Poisson": settimana_05/index.md

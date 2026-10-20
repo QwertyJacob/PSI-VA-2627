@@ -8,6 +8,8 @@
  * Options:
  *   --site <dir>            built site directory            (default: site)
  *   --only <substring>      only chapters whose PDF path contains it (debugging)
+ *   --week <n>              only the chapter of week n (5 -> settimana_05;
+ *                           0 -> the introduction, 0-senso)
  *   --max-code-lines <n>    code blocks longer than this are replaced by a note
  *                           pointing at the online version (default: 30)
  *   --concurrency <n>       parallel browser tabs            (default: 3)
@@ -36,6 +38,7 @@ function opt(name, fallback) {
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SITE_DIR = path.resolve(ROOT, opt('--site', 'site'));
 const ONLY = opt('--only', null);
+const WEEK = opt('--week', null);
 const MAX_CODE_LINES = Number(opt('--max-code-lines', MAX_CODE_LINES_DEFAULT));
 const CONCURRENCY = Number(opt('--concurrency', 3));
 
@@ -77,7 +80,17 @@ function startServer(rootDir) {
 
 // ------------------------------------------------------- in-page preparation
 // Runs inside the browser right before switching to print media.
-function preparePageForPdf({ maxCodeLines, onlineUrl }) {
+function preparePageForPdf({ maxCodeLines, onlineUrl, siteUrl }) {
+  // Links to other pages resolve to the local server that serves the build:
+  // point them at the published site. Same-page anchors stay internal.
+  if (siteUrl) {
+    const local = `${location.origin}/`;
+    document.querySelectorAll('a[href]').forEach((a) => {
+      if (a.getAttribute('href').startsWith('#')) return;
+      if (a.href.startsWith(local)) a.href = siteUrl + a.href.slice(local.length);
+    });
+  }
+
   function onlineNote(text) {
     const note = document.createElement('div');
     note.className = 'psi-print-omitted';
@@ -169,7 +182,8 @@ const HF_FOOTER = `font-family: ${HF_FONT}; font-size: 8.5px; color: #666666; ` 
                   'box-sizing: border-box; width: 100%; padding: 3px 15mm 0 15mm; ' +
                   'display: flex; justify-content: space-between;';
 
-async function renderChapter(context, baseUrl, siteName, entry) {
+async function renderChapter(context, baseUrl, manifest, entry) {
+  const siteName = manifest.site_name;
   const page = await context.newPage();
   const problems = [];
   page.on('pageerror', (err) => {
@@ -198,7 +212,9 @@ async function renderChapter(context, baseUrl, siteName, entry) {
     await page.evaluate(() => document.querySelectorAll('img[loading="lazy"]').forEach((i) => { i.loading = 'eager'; }));
     await page.waitForFunction(() => Array.from(document.images).every((i) => i.complete), null, { timeout: 30000 });
 
-    const stats = await page.evaluate(preparePageForPdf, { maxCodeLines: MAX_CODE_LINES, onlineUrl: entry.public_url });
+    const stats = await page.evaluate(preparePageForPdf, {
+      maxCodeLines: MAX_CODE_LINES, onlineUrl: entry.public_url, siteUrl: manifest.site_url,
+    });
     if (stats.unrenderedMath) problems.push(`${stats.unrenderedMath} formule non renderizzate`);
 
     await page.emulateMedia({ media: 'print' });
@@ -244,6 +260,12 @@ async function renderChapter(context, baseUrl, siteName, entry) {
   }));
   let entries = manifest.pages;
   if (ONLY) entries = entries.filter((e) => e.pdf.includes(ONLY));
+  if (WEEK !== null) {
+    const n = Number(WEEK);
+    if (!Number.isInteger(n) || n < 0) { console.error(`--week vuole un numero intero: «${WEEK}»`); process.exit(2); }
+    const folder = `settimana_${String(n).padStart(2, '0')}/`;
+    entries = entries.filter((e) => e.src.startsWith(folder) || e.src.startsWith(`${n}-`));
+  }
   if (entries.length === 0) { console.error('Nessun capitolo da renderizzare.'); process.exit(2); }
 
   const { server, port } = await startServer(SITE_DIR);
@@ -259,7 +281,7 @@ async function renderChapter(context, baseUrl, siteName, entry) {
   const worker = async () => {
     while (queue.length) {
       const entry = queue.shift();
-      const r = await renderChapter(context, baseUrl, manifest.site_name, entry);
+      const r = await renderChapter(context, baseUrl, manifest, entry);
       results.push(r);
       const status = r.ok ? 'OK  ' : 'FAIL';
       const kb = (r.bytes / 1024).toFixed(0).padStart(5);

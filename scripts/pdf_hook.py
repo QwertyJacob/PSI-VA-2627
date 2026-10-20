@@ -55,7 +55,11 @@ def on_post_build(config):
     os.makedirs(out_dir, exist_ok=True)
     with open(os.path.join(out_dir, "manifest.json"), "w", encoding="utf-8") as fh:
         json.dump(
-            {"site_name": config["site_name"], "pages": _manifest},
+            {
+                "site_name": config["site_name"],
+                "site_url": config.get("site_url") or "",
+                "pages": _manifest,
+            },
             fh, ensure_ascii=False, indent=2,
         )
     _manifest.clear()

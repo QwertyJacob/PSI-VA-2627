@@ -9,6 +9,10 @@
  * Utilizzo:
  *   - Proiettore / PC: URL standard (es. .../slides/)
  *   - iPad / Speaker:  URL con parametro ?pen (es. .../slides/?pen o ?pen=PIN)
+ *
+ * I tratti scritti su una slide restano con quella slide. La lavagna scura
+ * ha tratti propri ed è una sola per tutto il mazzo: si allarga con il pinch
+ * a due dita (zoom e spostamento), o con trackpad e rotellina sul PC.
  */
 (function () {
   'use strict';
@@ -63,7 +67,14 @@
       var ctx = canvas.getContext('2d');
 
       // ── Stato Locale ──
-      var strokesBySlide = {}; // slideKey -> [{ id, color, width, mode, points }]
+      // I tratti stanno in strati: uno per slide (chiave 'h_v') e uno per la lavagna,
+      // unica per tutto il mazzo. I tratti della lavagna sono in coordinate «mondo»,
+      // che la vista (zoom e spostamento) proietta sul canvas.
+      var BOARD_KEY = 'board';
+      var MIN_ZOOM = 0.2;
+      var MAX_ZOOM = 5;
+      var strokesBySlide = {}; // slideKey o BOARD_KEY -> [{ id, color, width, mode, points }]
+      var view = { s: 1, x: 0, y: 0 }; // canvas = mondo * s + (x, y)
       var remoteStrokes = {};  // strokeId -> { lastPoint, stroke }
       var currentSlideKey = '0_0';
       var currentColor = '#ff3b30';
@@ -80,8 +91,13 @@
       var lastLocalPoint = null;
       var batchBuffer = [];
       var batchTimer = null;
+
+      // Gesti con le dita: swipe con un dito sulle slide, pinch a due dita sulla lavagna
+      var touchPoints = {}; // pointerId -> punto del canvas
       var touchStartX = 0;
       var touchStartY = 0;
+      var swipeOk = false;  // lo swipe conta solo se il dito è rimasto da solo
+      var pinch = null;     // { d0, s0, wx, wy }: distanza e zoom iniziali, punto del mondo tra le dita
 
       if (isSpeaker) {
         document.documentElement.classList.add('psi-lavagna-pen-mode');
@@ -94,11 +110,16 @@
         } catch (_) {}
       }
 
-      function getSlideKey(indices) {
-        indices = indices || deck.getIndices();
+      function getSlideKey() {
+        var indices = deck.getIndices();
         return indices.h + '_' + indices.v;
       }
       currentSlideKey = getSlideKey();
+
+      // Strato su cui si disegna e che si vede: la lavagna se è attiva, altrimenti la slide
+      function layerKey() {
+        return isBoardActive ? BOARD_KEY : currentSlideKey;
+      }
 
       // Coordinate normalizzate relative al canvas 1280x720
       function getCoords(e) {
@@ -113,21 +134,45 @@
         };
       }
 
-      // Disegno di un singolo segmento fluido
-      function drawSegment(targetCtx, p0, p1, color, width, mode) {
-        targetCtx.save();
+      // Punto del canvas -> coordinate dello strato corrente (il mondo, sulla lavagna)
+      function toLayer(pt) {
+        if (!isBoardActive) return pt;
+        return {
+          x: Math.round((pt.x - view.x) / view.s * 100) / 100,
+          y: Math.round((pt.y - view.y) / view.s * 100) / 100,
+          p: pt.p
+        };
+      }
+
+      function clampZoom(s) {
+        return Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, s));
+      }
+
+      function setStrokeStyle(targetCtx, color, mode) {
         targetCtx.lineCap = 'round';
         targetCtx.lineJoin = 'round';
         if (mode === 'eraser') {
           targetCtx.globalCompositeOperation = 'destination-out';
           targetCtx.strokeStyle = 'rgba(0,0,0,1)';
-          targetCtx.lineWidth = width * 5.5;
         } else {
           targetCtx.globalCompositeOperation = 'source-over';
           targetCtx.strokeStyle = color;
-          var press = (p1.p != null ? p1.p : 0.5);
-          targetCtx.lineWidth = Math.max(1.5, width * (0.35 + press * 0.9));
         }
+      }
+
+      // Spessore di un segmento, modulato dalla pressione; a passi di 0.25 così
+      // i segmenti vicini di un tratto hanno lo stesso spessore e si disegnano insieme
+      function segmentWidth(width, mode, press) {
+        if (mode === 'eraser') return width * 5.5;
+        var w = Math.max(1.5, width * (0.35 + (press != null ? press : 0.5) * 0.9));
+        return Math.round(w * 4) / 4;
+      }
+
+      // Disegno di un singolo segmento fluido
+      function drawSegment(targetCtx, p0, p1, color, width, mode) {
+        targetCtx.save();
+        setStrokeStyle(targetCtx, color, mode);
+        targetCtx.lineWidth = segmentWidth(width, mode, p1.p);
         targetCtx.beginPath();
         targetCtx.moveTo(p0.x, p0.y);
         targetCtx.lineTo(p1.x, p1.y);
@@ -135,25 +180,149 @@
         targetCtx.restore();
       }
 
-      // Ridisegno di un tratto completo
-      function renderFullStroke(targetCtx, stroke) {
-        if (!stroke || !stroke.points || stroke.points.length === 0) return;
+      // Geometria di un tratto: un Path2D per spessore e il riquadro che lo contiene.
+      // Si calcola una volta e si rifà solo se il tratto cresce (i tratti remoti arrivano a pezzi):
+      // così il ridisegno costa meno anche con una lavagna piena.
+      function strokeGeometry(stroke) {
         var pts = stroke.points;
-        if (pts.length === 1) {
-          drawSegment(targetCtx, pts[0], { x: pts[0].x + 0.1, y: pts[0].y + 0.1, p: pts[0].p }, stroke.color, stroke.width, stroke.mode);
-          return;
+        if (stroke.cache && stroke.cache.n === pts.length) return stroke.cache;
+        var paths = {};
+        var path = null;
+        var lastW = null;
+        var maxW = 0;
+        var box = { x0: pts[0].x, y0: pts[0].y, x1: pts[0].x, y1: pts[0].y };
+        var segs = pts.length > 1 ? pts : [pts[0], { x: pts[0].x + 0.1, y: pts[0].y + 0.1, p: pts[0].p }];
+        for (var i = 1; i < segs.length; i++) {
+          var w = segmentWidth(stroke.width, stroke.mode, segs[i].p);
+          if (w !== lastW) {
+            path = paths[w] || (paths[w] = new Path2D());
+            path.moveTo(segs[i - 1].x, segs[i - 1].y);
+            lastW = w;
+            maxW = Math.max(maxW, w);
+          }
+          path.lineTo(segs[i].x, segs[i].y);
+          box.x0 = Math.min(box.x0, segs[i].x);
+          box.y0 = Math.min(box.y0, segs[i].y);
+          box.x1 = Math.max(box.x1, segs[i].x);
+          box.y1 = Math.max(box.y1, segs[i].y);
         }
-        for (var i = 1; i < pts.length; i++) {
-          drawSegment(targetCtx, pts[i - 1], pts[i], stroke.color, stroke.width, stroke.mode);
-        }
+        box.x0 -= maxW; box.y0 -= maxW; box.x1 += maxW; box.y1 += maxW;
+        stroke.cache = { n: pts.length, paths: paths, box: box };
+        return stroke.cache;
       }
 
-      // Ridisegno di tutta la slide corrente
-      function redrawCurrentSlide() {
+      // Ridisegno di un tratto completo (area: riquadro visibile, per saltare i tratti fuori vista)
+      function renderFullStroke(targetCtx, stroke, area) {
+        if (!stroke || !stroke.points || stroke.points.length === 0) return;
+        var geo = strokeGeometry(stroke);
+        if (area && (geo.box.x1 < area.x0 || geo.box.x0 > area.x1 || geo.box.y1 < area.y0 || geo.box.y0 > area.y1)) return;
+        targetCtx.save();
+        setStrokeStyle(targetCtx, stroke.color, stroke.mode);
+        for (var w in geo.paths) {
+          targetCtx.lineWidth = +w;
+          targetCtx.stroke(geo.paths[w]);
+        }
+        targetCtx.restore();
+      }
+
+      // Ridisegno dello strato visibile. Sulla lavagna il contesto resta con la
+      // trasformazione della vista, così anche i segmenti disegnati dopo sono al posto giusto.
+      function redraw() {
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        var strokes = strokesBySlide[currentSlideKey] || [];
+        var area = null;
+        if (isBoardActive) {
+          ctx.setTransform(view.s, 0, 0, view.s, view.x, view.y);
+          area = {
+            x0: -view.x / view.s,
+            y0: -view.y / view.s,
+            x1: (canvas.width - view.x) / view.s,
+            y1: (canvas.height - view.y) / view.s
+          };
+        }
+        var key = layerKey();
+        var strokes = strokesBySlide[key] || [];
         for (var i = 0; i < strokes.length; i++) {
-          renderFullStroke(ctx, strokes[i]);
+          renderFullStroke(ctx, strokes[i], area);
+        }
+        if (activeStroke && activeStroke.layer === key) renderFullStroke(ctx, activeStroke, area);
+      }
+
+      // ── Vista della Lavagna (zoom e spostamento) ──
+      // Ridisegnare tutti i tratti a ogni fotogramma del pinch non regge una lavagna piena.
+      // Durante il gesto si sposta e si scala un'istantanea del canvas (un'immagine sola);
+      // i tratti si ridisegnano davvero, nitidi e completi, quando la vista si ferma.
+      var snapshot = document.createElement('canvas');
+      snapshot.width = canvas.width;
+      snapshot.height = canvas.height;
+      var snapCtx = snapshot.getContext('2d');
+      var snapView = null; // vista al momento dell'istantanea; null = nessun gesto in corso
+      var settleTimer = null;
+      var redrawFrame = 0;
+      var lastViewSend = 0;
+      var viewSendTimer = null;
+
+      function drawSnapshot() {
+        var k = view.s / snapView.s;
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.setTransform(k, 0, 0, k, view.x - snapView.x * k, view.y - snapView.y * k);
+        ctx.drawImage(snapshot, 0, 0);
+        // Il contesto torna alla vista: i segmenti disegnati nel frattempo vanno al posto giusto
+        ctx.setTransform(view.s, 0, 0, view.s, view.x, view.y);
+      }
+
+      function settleView() {
+        clearTimeout(settleTimer);
+        snapView = null;
+      }
+
+      function setView(s, x, y, broadcast) {
+        if (!isFinite(s) || !isFinite(x) || !isFinite(y)) return;
+        if (isBoardActive && !snapView) {
+          snapCtx.clearRect(0, 0, snapshot.width, snapshot.height);
+          snapCtx.drawImage(canvas, 0, 0);
+          snapView = view;
+        }
+        view = { s: clampZoom(s), x: x, y: y };
+
+        // Griglia di puntini sullo sfondo: si muove con la vista e fa vedere lo zoom anche dove non c'è scritto nulla
+        var grid = 40 * view.s;
+        while (grid < 16) grid *= 2;
+        boardOverlay.style.setProperty('--psi-grid', grid + 'px');
+        boardOverlay.style.setProperty('--psi-grid-x', (view.x - grid / 2) + 'px');
+        boardOverlay.style.setProperty('--psi-grid-y', (view.y - grid / 2) + 'px');
+
+        var zoomBtn = document.querySelector('.psi-tb-zoom-btn');
+        if (zoomBtn) zoomBtn.textContent = Math.round(view.s * 100) + '%';
+
+        // Durante il pinch arrivano più eventi per fotogramma: un solo disegno per fotogramma
+        if (!redrawFrame) {
+          redrawFrame = requestAnimationFrame(function () {
+            redrawFrame = 0;
+            if (snapView && isBoardActive) drawSnapshot();
+            else redraw();
+          });
+        }
+        if (snapView) {
+          clearTimeout(settleTimer);
+          settleTimer = setTimeout(function () {
+            settleView();
+            redraw();
+          }, 150);
+        }
+        if (broadcast && isSpeaker) sendView();
+      }
+
+      // Invio della vista al proiettore al massimo ogni 40 ms, sempre con l'ultima vista
+      function sendView() {
+        clearTimeout(viewSendTimer);
+        var wait = 40 - (Date.now() - lastViewSend);
+        if (wait <= 0) {
+          lastViewSend = Date.now();
+          sendBroadcast('view', { token: token, s: view.s, x: view.x, y: view.y });
+        } else {
+          viewSendTimer = setTimeout(sendView, wait);
         }
       }
 
@@ -176,16 +345,16 @@
           clearTimeout(batchTimer);
           batchTimer = null;
         }
-        if (!activeStroke && !isEnd) return;
+        if (!activeStroke) return;
         if (batchBuffer.length === 0 && !isEnd) return;
 
         var payload = {
           token: token,
-          slideId: currentSlideKey,
-          strokeId: activeStroke ? activeStroke.id : null,
-          color: currentColor,
-          width: currentWidth,
-          mode: currentMode,
+          slideId: activeStroke.layer,
+          strokeId: activeStroke.id,
+          color: activeStroke.color,
+          width: activeStroke.width,
+          mode: activeStroke.mode,
           points: batchBuffer,
           isEnd: !!isEnd
         };
@@ -196,8 +365,9 @@
       function finalizeActiveStroke() {
         if (!activeStroke) return;
         flushBatch(true);
-        if (!strokesBySlide[currentSlideKey]) strokesBySlide[currentSlideKey] = [];
-        strokesBySlide[currentSlideKey].push(activeStroke);
+        var key = activeStroke.layer;
+        if (!strokesBySlide[key]) strokesBySlide[key] = [];
+        strokesBySlide[key].push(activeStroke);
         activeStroke = null;
         lastLocalPoint = null;
         batchBuffer = [];
@@ -229,7 +399,7 @@
         for (var i = 0; i < pts.length; i++) {
           var p = pts[i];
           entry.stroke.points.push(p);
-          if (sId === currentSlideKey) {
+          if (sId === layerKey()) {
             if (entry.lastPoint) {
               drawSegment(ctx, entry.lastPoint, p, entry.stroke.color, entry.stroke.width, entry.stroke.mode);
             } else {
@@ -247,8 +417,8 @@
       function handleRemoteClear(payload) {
         if (payload.token !== token) return;
         strokesBySlide[payload.slideId] = [];
-        if (payload.slideId === currentSlideKey) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (payload.slideId === layerKey()) {
+          redraw();
         }
       }
 
@@ -257,8 +427,8 @@
         var list = strokesBySlide[payload.slideId];
         if (list && list.length > 0) {
           list.pop();
-          if (payload.slideId === currentSlideKey) {
-            redrawCurrentSlide();
+          if (payload.slideId === layerKey()) {
+            redraw();
           }
         }
       }
@@ -324,21 +494,68 @@
 
       function handleRemoteBoard(payload) {
         if (payload.token !== token) return;
+        if (payload.view) setView(payload.view.s, payload.view.x, payload.view.y, false);
         setBoardActive(payload.active, false);
       }
 
+      function handleRemoteView(payload) {
+        if (payload.token !== token) return;
+        setView(payload.s, payload.x, payload.y, false);
+      }
+
       function setBoardActive(active, broadcast) {
+        if (activeStroke) finalizeActiveStroke();
+        pinch = null;
+        settleView();
         isBoardActive = active;
         slidesContainer.classList.toggle('psi-board-active', active);
         var btn = document.querySelector('.psi-tb-board-btn');
         if (btn) btn.classList.toggle('psi-active', active);
+        var zoomBtn = document.querySelector('.psi-tb-zoom-btn');
+        if (zoomBtn) zoomBtn.hidden = !active;
+        var clearBtn = document.querySelector('.psi-tb-clear-btn');
+        if (clearBtn) clearBtn.title = active ? 'Pulisci lavagna' : 'Pulisci slide';
+        redraw();
         if (broadcast && isSpeaker) {
-          sendBroadcast('board', { token: token, active: isBoardActive });
+          sendBroadcast('board', { token: token, active: isBoardActive, view: view });
         }
+      }
+
+      // ── Pinch sulla lavagna: zoom e spostamento insieme ──
+      function pinchGeometry() {
+        var ids = Object.keys(touchPoints);
+        var a = touchPoints[ids[0]];
+        var b = touchPoints[ids[1]];
+        return {
+          mx: (a.x + b.x) / 2,
+          my: (a.y + b.y) / 2,
+          d: Math.max(1, Math.hypot(a.x - b.x, a.y - b.y))
+        };
+      }
+
+      // (Ri)parte da zero a ogni dito che si aggiunge o si toglie, così la vista non salta
+      function startPinch() {
+        pinch = null;
+        if (!isBoardActive || activeStroke || Object.keys(touchPoints).length < 2) return;
+        var g = pinchGeometry();
+        pinch = { d0: g.d, s0: view.s, wx: (g.mx - view.x) / view.s, wy: (g.my - view.y) / view.s };
+      }
+
+      // Il punto del mondo che stava tra le dita resta tra le dita
+      function movePinch() {
+        var g = pinchGeometry();
+        var s = clampZoom(pinch.s0 * g.d / pinch.d0);
+        setView(s, g.mx - pinch.wx * s, g.my - pinch.wy * s, true);
       }
 
       // ── Eventi Pointer per Apple Pencil & Palm Rejection ──
       if (isSpeaker) {
+        // Le dita sul canvas le gestisce solo la lavagna: lo swipe di reveal farebbe
+        // girare slide in più a ogni swipe e durante il pinch
+        canvas.setAttribute('data-prevent-swipe', '');
+        // Safari iPad: niente zoom della pagina quando si fa pinch sulla lavagna
+        document.addEventListener('gesturestart', function (e) { e.preventDefault(); });
+
         // Disabilita categoricamente qualsiasi tentativo di selezione testo dal canvas
         canvas.addEventListener('selectstart', function (e) { e.preventDefault(); });
         canvas.addEventListener('contextmenu', function (e) { e.preventDefault(); });
@@ -373,10 +590,23 @@
 
           // Palm Rejection: tocco con le dita ignorato per il disegno
           if (e.pointerType === 'touch') {
-            touchStartX = e.clientX;
-            touchStartY = e.clientY;
+            // Primo dito di un nuovo tocco: via le dita rimaste appese senza pointerup
+            if (e.isPrimary) touchPoints = {};
+            touchPoints[e.pointerId] = getCoords(e);
+            var fingers = Object.keys(touchPoints).length;
+            if (fingers === 1) {
+              touchStartX = e.clientX;
+              touchStartY = e.clientY;
+            }
+            // Sulla lavagna lo swipe non gira le slide: cambierebbero di nascosto, sotto lo sfondo
+            swipeOk = fingers === 1 && !isBoardActive;
+            startPinch();
             return;
           }
+
+          // La penna ha la precedenza sulle dita: con il palmo appoggiato niente pinch né swipe
+          pinch = null;
+          swipeOk = false;
 
           // Se un tratto precedente non è stato chiuso (es. sequenza rapidissima o pen lift volante),
           // finalizzalo immediatamente prima di iniziare quello nuovo!
@@ -384,13 +614,15 @@
             finalizeActiveStroke();
           }
 
-          var pt = getCoords(e);
+          // Sulla lavagna il tratto è nel mondo: lo spessore scelto vale per lo zoom attuale
+          var pt = toLayer(getCoords(e));
           var strokeId = 's_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
           activePointerId = e.pointerId;
           activeStroke = {
             id: strokeId,
+            layer: layerKey(),
             color: currentColor,
-            width: currentWidth,
+            width: isBoardActive ? currentWidth / view.s : currentWidth,
             mode: currentMode,
             points: [pt],
             pointerId: e.pointerId
@@ -407,7 +639,7 @@
           } catch (_) {}
 
           // Disegna subito punto iniziale
-          drawSegment(ctx, pt, { x: pt.x + 0.1, y: pt.y + 0.1, p: pt.p }, currentColor, currentWidth, currentMode);
+          drawSegment(ctx, pt, { x: pt.x + 0.1, y: pt.y + 0.1, p: pt.p }, activeStroke.color, activeStroke.width, activeStroke.mode);
 
           // Flush temporizzato ogni ~35ms
           batchTimer = setTimeout(function () { flushBatch(false); }, 35);
@@ -424,7 +656,13 @@
             return;
           }
 
-          if (e.pointerType === 'touch') return;
+          if (e.pointerType === 'touch') {
+            if (touchPoints[e.pointerId]) {
+              touchPoints[e.pointerId] = getCoords(e);
+              if (pinch) movePinch();
+            }
+            return;
+          }
           if (!activeStroke) return;
 
           // Se l'evento non appartiene al puntatore attivo di disegno, ignoralo (evita interferenze da palmo)
@@ -439,8 +677,8 @@
 
           for (var i = 0; i < events.length; i++) {
             var ev = events[i];
-            var pt = getCoords(ev);
-            drawSegment(ctx, lastLocalPoint, pt, currentColor, currentWidth, currentMode);
+            var pt = toLayer(getCoords(ev));
+            drawSegment(ctx, lastLocalPoint, pt, activeStroke.color, activeStroke.width, activeStroke.mode);
             lastLocalPoint = pt;
             activeStroke.points.push(pt);
             batchBuffer.push(pt);
@@ -451,8 +689,32 @@
           }
         });
 
+        // Fine di un tocco con il dito. Conta solo una volta per dito: endStroke ascolta
+        // sia il canvas sia window, e i tocchi sulla toolbar non devono girare slide.
+        function endTouch(e) {
+          delete touchPoints[e.pointerId];
+          if (pinch) {
+            startPinch(); // continua con le dita rimaste, o si chiude
+            return;
+          }
+          if (!swipeOk || e.type === 'pointercancel') return;
+          swipeOk = false;
+          // Rilevamento swipe orizzontale con le dita per girare le slide
+          var dx = e.clientX - touchStartX;
+          var dy = e.clientY - touchStartY;
+          if (Math.abs(dx) > 75 && Math.abs(dy) < 55) {
+            if (dx < 0) deck.next();
+            else deck.prev();
+          }
+        }
+
         function endStroke(e) {
           if (e && e.preventDefault) e.preventDefault();
+
+          if (e && e.pointerType === 'touch' && touchPoints[e.pointerId]) {
+            endTouch(e);
+            return;
+          }
 
           if (currentMode === 'laser') {
             laserDot.classList.remove('on');
@@ -460,16 +722,7 @@
             return;
           }
 
-          if (e && e.pointerType === 'touch') {
-            // Rilevamento swipe orizzontale con le dita per girare le slide
-            var dx = e.clientX - touchStartX;
-            var dy = e.clientY - touchStartY;
-            if (Math.abs(dx) > 75 && Math.abs(dy) < 55) {
-              if (dx < 0) deck.next();
-              else deck.prev();
-            }
-            return;
-          }
+          if (e && e.pointerType === 'touch') return;
 
           // Se l'evento proviene da un pointer diverso da quello attivo che disegna, ignoralo
           if (activePointerId !== null && e && e.pointerId !== undefined && e.pointerId !== activePointerId) {
@@ -493,6 +746,23 @@
         canvas.addEventListener('pointercancel', endStroke);
         window.addEventListener('pointerup', endStroke);
         window.addEventListener('pointercancel', endStroke);
+
+        // Trackpad o rotellina sulla lavagna (PC): ctrl + rotellina, o pinch sul trackpad, zooma; altrimenti sposta
+        canvas.addEventListener('wheel', function (e) {
+          if (!isBoardActive) return;
+          e.preventDefault();
+          var unit = e.deltaMode === 1 ? 16 : 1;
+          if (e.ctrlKey) {
+            var pt = getCoords(e);
+            // Il pinch del trackpad manda passi piccoli; uno scatto della rotellina vale al massimo x1.28
+            var dz = Math.max(-25, Math.min(25, e.deltaY * unit));
+            var s = clampZoom(view.s * Math.exp(-dz * 0.01));
+            setView(s, pt.x - (pt.x - view.x) * s / view.s, pt.y - (pt.y - view.y) * s / view.s, true);
+          } else {
+            var k = canvas.width / canvas.getBoundingClientRect().width * unit;
+            setView(view.s, view.x - e.deltaX * k, view.y - e.deltaY * k, true);
+          }
+        }, { passive: false });
       }
 
       // ── Sincronizzazione Navigazione & Animazioni Frammenti ──
@@ -507,9 +777,11 @@
         });
       }
 
-      deck.on('slidechanged', function (e) {
-        currentSlideKey = getSlideKey(e);
-        redrawCurrentSlide();
+      // I tratti restano con la loro slide; se la lavagna è attiva resta in vista lei
+      deck.on('slidechanged', function () {
+        if (activeStroke) finalizeActiveStroke();
+        currentSlideKey = getSlideKey();
+        redraw();
         updateToolbarSlideCounter();
         syncSpeakerNav();
       });
@@ -526,20 +798,25 @@
 
       // ── Azioni Locali: Clear, Undo ──
       function localClear() {
-        strokesBySlide[currentSlideKey] = [];
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var key = layerKey();
+        // La lavagna raccoglie tutta la lezione: prima di svuotarla si chiede conferma
+        if (key === BOARD_KEY && (strokesBySlide[key] || []).length > 0 &&
+            !window.confirm('Cancellare tutta la lavagna?')) return;
+        strokesBySlide[key] = [];
+        redraw();
         if (isSpeaker) {
-          sendBroadcast('clear', { token: token, slideId: currentSlideKey });
+          sendBroadcast('clear', { token: token, slideId: key });
         }
       }
 
       function localUndo() {
-        var list = strokesBySlide[currentSlideKey];
+        var key = layerKey();
+        var list = strokesBySlide[key];
         if (list && list.length > 0) {
           list.pop();
-          redrawCurrentSlide();
+          redraw();
           if (isSpeaker) {
-            sendBroadcast('undo', { token: token, slideId: currentSlideKey });
+            sendBroadcast('undo', { token: token, slideId: key });
           }
         }
       }
@@ -641,6 +918,17 @@
         });
         toolsGroup.appendChild(boardBtn);
 
+        // Zoom della lavagna (visibile solo sulla lavagna): tocco = torna alla vista iniziale
+        var zoomBtn = document.createElement('button');
+        zoomBtn.className = 'psi-tb-btn psi-tb-zoom-btn';
+        zoomBtn.textContent = '100%';
+        zoomBtn.title = 'Zoom della lavagna: tocca per tornare alla vista iniziale';
+        zoomBtn.hidden = true;
+        zoomBtn.addEventListener('click', function () {
+          setView(1, 0, 0, true);
+        });
+        toolsGroup.appendChild(zoomBtn);
+
         penBtn.addEventListener('click', function () {
           currentMode = 'pen';
           penBtn.classList.add('psi-active');
@@ -737,7 +1025,7 @@
         actGroup.appendChild(undoBtn);
 
         var clearBtn = document.createElement('button');
-        clearBtn.className = 'psi-tb-btn';
+        clearBtn.className = 'psi-tb-btn psi-tb-clear-btn';
         clearBtn.textContent = '🗑️';
         clearBtn.title = 'Pulisci slide';
         clearBtn.addEventListener('click', localClear);
@@ -766,7 +1054,7 @@
 
       // Scorciatoie da tastiera (funzionano anche su proiettore):
       // W -> Toggle lavagna scura
-      // C -> Clear slide corrente
+      // C -> Clear slide corrente (o lavagna, se attiva)
       // U -> Undo ultimo tratto
       deck.addKeyBinding({ keyCode: 87, key: 'W', description: 'Attiva/disattiva lavagna a mano libera' }, function () {
         setBoardActive(!isBoardActive, true);
@@ -799,6 +1087,7 @@
             .on('broadcast', { event: 'undo' }, function (msg) { handleRemoteUndo(msg.payload); })
             .on('broadcast', { event: 'nav' }, function (msg) { handleRemoteNav(msg.payload); })
             .on('broadcast', { event: 'board' }, function (msg) { handleRemoteBoard(msg.payload); })
+            .on('broadcast', { event: 'view' }, function (msg) { handleRemoteView(msg.payload); })
             .on('broadcast', { event: 'laser' }, function (msg) { handleRemoteLaser(msg.payload); })
             .subscribe(function (status) {
               if (status === 'SUBSCRIBED') {

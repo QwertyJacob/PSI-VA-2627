@@ -1,5 +1,6 @@
 /*
- * Settimana 5: varianza, Geometrica e Poisson. Scene: js/comuni.js, js/varianza.js, js/lezione1.js, js/lezione2.js.
+ * Settimana 5: varianza, Geometrica e Poisson. Scene: js/comuni.js, js/varianza.js, js/lezione1.js,
+ * js/varianza-docente.js, js/sovraffollamenti.js, js/lezione2.js.
  * Le regole comuni (badge, copertine, riepiloghi, esercizi, widget, uscite)
  * sono riprese dal mazzo della Settimana 4, così questo mazzo non dipende dai
  * fogli delle altre settimane.
@@ -186,6 +187,108 @@
 .reveal .ab-arrow svg { display: block; margin: 0 auto 8px; }
 .reveal .ab-spent { margin: 26px 0 0; font-size: .8em; color: var(--psi-muted); }
 
+/* ── L2-V01…V18 spiegazione del docente: la varianza (js/varianza-docente.js) ── */
+.reveal .dv-tw-grid { display: grid; grid-template-columns: 250px 1fr; gap: 50px; align-items: center; max-width: 1100px; margin: 10px auto 0; text-align: left; }
+.reveal .dv-tw-fig { margin: 0; text-align: center; }
+.reveal .dv-tw-fig img { display: block; width: 250px; max-width: none; max-height: none; margin: 0 0 8px; border-radius: 10px; box-shadow: 0 10px 30px #000a; }
+.reveal .dv-tw-fig figcaption { font-size: 18px; color: var(--psi-muted); line-height: 1.35; }
+.reveal .dv-tw-quote { width: auto; max-width: none; margin: 0; padding: 0; font-size: 1.3em; text-align: left; }
+.reveal .dv-tw-grid .tw-who { text-align: left; }
+.reveal .dv-tw-moral { margin: 34px 0 0; font-size: .9em; font-weight: 700; color: var(--s05-ok); }
+.reveal .dv-rv-grid { display: grid; grid-template-columns: 1fr 660px; gap: 30px; align-items: center; text-align: left; }
+.reveal .dv-rv-text p { margin: 0 0 12px; font-size: 22px; line-height: 1.35; }
+.reveal .dv-rv-text .dv-rv-q { font-size: 24px; font-weight: 700; color: var(--psi-b); }
+.reveal .dv-rv-end { margin: 6px 0 0; font-size: .8em; font-weight: 700; color: var(--s05-ok); }
+.reveal .dv-tp { margin: 8px 0 0; font-size: .8em; }
+.reveal .dv-tp-2 { font-weight: 700; color: var(--psi-b); }
+.reveal .dv-tp-3 b { color: var(--s05-ok); }
+.reveal .dv-lead { margin: 0 0 6px; font-size: .85em; }
+.reveal .dv-eq .katex-display { margin: .15em 0 .5em; }
+.reveal .dv-eq .katex-display > .katex { font-size: 1.25em; }
+.reveal .dv-box { margin: 8px 0 6px; font-size: 1.1em; }
+.reveal .dv-say { max-width: 1060px; margin: 16px auto 0; font-size: .8em; }
+.reveal .dv-next { margin: 16px 0 0; font-size: .85em; font-weight: 700; color: var(--s05-ok); }
+.reveal .dv-note { margin: 8px 0 0; font-size: 22px; color: var(--psi-muted); }
+.reveal .dv-big { margin: 6px 0 12px; font-size: 1.6em; }
+.reveal .dv-props { counter-reset: dv; list-style: none; max-width: 1120px; margin: 0 auto; padding: 0; text-align: left; }
+.reveal .dv-props li { counter-increment: dv; display: grid; grid-template-columns: 46px 1fr 1fr; gap: 16px; align-items: center; padding: 10px 0; border-bottom: 1px solid #ffffff18; font-size: .82em; }
+.reveal .dv-props li::before { content: counter(dv); display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; font-size: 22px; font-weight: 700; color: var(--psi-b); background: #fbbf2429; }
+.reveal .dv-props small { display: block; font-size: 22px; color: var(--psi-muted); }
+.reveal .dv-props li > span:last-child { text-align: center; }
+.reveal .dv-rows .lm-row { grid-template-columns: 330px 1fr; }
+.reveal .dv-rows-tight .lm-row .katex-display > .katex { font-size: 1em; }
+.reveal .dv-axb-end { display: flex; justify-content: center; align-items: center; gap: 30px; margin-top: 8px; text-align: left; }
+.reveal .dv-axb-end .katex-display { margin: .25em 0; }
+.reveal .dv-axb-end p { margin: 0; font-size: 22px; line-height: 1.35; }
+.reveal .dv-axb-big { display: flex; flex-direction: column; align-items: center; }
+.reveal .dv-axb-big > span { font-size: 1.3em; color: var(--psi-muted); }
+.reveal .dv-axb-big .katex-display > .katex { font-size: 2.4em; color: var(--s05-ok); }
+.reveal .dv-ex { font-size: .8em; text-align: left; }
+.reveal .dv-ex p { margin: 0 0 12px; }
+.reveal .dv-ex .katex-display { margin: .3em 0; text-align: left; }
+.reveal .dv-ex .katex-display > .katex { font-size: 1.15em; text-align: left; }
+.reveal .dv-steps { margin: 6px 0 0 1.2em; }
+.reveal .dv-steps li { margin: 0 0 12px; }
+.reveal .dv-pm-table { margin: 6px auto 14px; font-size: 1em; }
+.reveal .dv-pm-table td { padding: 6px 18px; }
+.reveal .dv-pm-table td.dv-tot { color: var(--psi-muted); }
+.reveal .dv-ex .dv-pm-table { margin-left: 0; }
+.reveal .dv-credits { margin: 10px 0 0; font-size: 22px; color: var(--psi-muted); }
+.reveal .dv-sol { display: inline-block; margin-top: 4px; text-align: left; }
+.reveal .dv-sol .katex-display { margin: .2em 0; text-align: left; }
+.reveal .dv-sol .katex-display > .katex { text-align: left; }
+/* Le slide d'esame imitano il foglio del compito. */
+.reveal .dv-exam { padding: 20px 30px; border-radius: 6px; background: #f6f3ea; color: #1a202c; font-family: KaTeX_Main, 'Times New Roman', serif; font-size: .8em; line-height: 1.4; text-align: left; box-shadow: 0 14px 40px #000b; }
+.reveal .dv-exam p { margin: 0 0 10px; }
+.reveal .dv-exam ol { margin: 6px 0 0 1.3em; }
+.reveal .dv-exam li { margin: 0 0 10px; }
+.reveal .dv-exam .katex-display { margin: .3em 0; }
+.reveal .dv-pt { color: #4a5568; }
+.reveal .dv-hint { margin: 8px 0 0; }
+.reveal .dv-paper { max-width: 1140px; margin: 0 auto; font-size: .8em; }
+.reveal .dv-two { display: flex; justify-content: center; gap: 60px; }
+.reveal .dv-exam .dv-small { margin: 10px 0 0; font-size: .85em; color: #4a5568; }
+
+/* ── L2-01a…g spiegazione del docente: i sovraffollamenti (js/sovraffollamenti.js) ── */
+.reveal .mc-grid { display: grid; grid-template-columns: 1fr 320px; gap: 44px; align-items: center; max-width: 1180px; margin: 0 auto; text-align: left; }
+.reveal .mc-brief p { margin: 0 0 16px; font-size: .85em; line-height: 1.4; }
+.reveal .mc-lam { display: flex; flex-direction: column; align-items: center; padding: 16px 0 22px; border-radius: 16px; border: 3px solid var(--s05-model); background: #fb923c14; }
+.reveal .mc-lam-cap { font-size: 22px; color: var(--psi-muted); }
+.reveal .mc-lam-val { font-size: 2.3em; color: var(--s05-model); }
+.reveal .mc-then { max-width: 1180px; margin: 18px auto 0; text-align: left; }
+.reveal .mc-then p { margin: 0 0 10px; padding: 10px 20px; border-left: 4px solid var(--s05-ok); border-radius: 10px; background: #ffffff08; font-size: .8em; }
+.reveal .mc-lead { margin: 0 0 8px; font-size: .85em; }
+.reveal .mc-calc { display: flex; justify-content: center; align-items: center; gap: 44px; text-align: left; }
+.reveal .mc-model p { margin: 0 0 8px; font-size: .85em; white-space: nowrap; }
+.reveal .mc-calc .katex-display { margin: 0; }
+.reveal .mc-calc .katex-display > .katex { font-size: 1.15em; }
+.reveal .mc-warn { margin: 12px 0 0; font-size: .8em; color: var(--s05-red); }
+.reveal .mc-warn b { color: var(--psi-text); }
+.reveal .mc-prov { display: flex; justify-content: center; gap: 60px; margin-top: 6px; }
+.reveal .mc-prov p { margin: 0; font-size: .85em; }
+.reveal .mc-lim .s05-box .katex-display { margin: .3em 0; }
+.reveal .lm-rows { display: flex; flex-direction: column; gap: 2px; }
+.reveal section > .lm-rows { max-width: 1080px; margin: 0 auto; }
+.reveal .lm-row { display: grid; grid-template-columns: 300px 1fr; gap: 26px; align-items: center; text-align: left; }
+.reveal .lm-say { margin: 0; font-size: 22px; line-height: 1.3; color: var(--psi-muted); text-align: right; }
+.reveal .lm-row .katex-display { margin: .2em 0; text-align: left; }
+.reveal .lm-row .katex-display > .katex { font-size: 1.12em; text-align: left; }
+.reveal .lm-grid { display: grid; grid-template-columns: 1fr 230px; gap: 24px; align-items: center; }
+.reveal .lm-end { display: flex; justify-content: center; align-items: center; gap: 26px; margin-top: 10px; text-align: left; }
+.reveal .lm-end .katex-display { margin: .3em 0; }
+.reveal .lm-end p { margin: 0; font-size: .8em; }
+.reveal .lm-fig, .reveal .df-fig { margin: 0; text-align: center; }
+.reveal .lm-fig img, .reveal .df-fig img { display: block; max-width: none; max-height: none; margin: 0 0 6px; border-radius: 12px; box-shadow: 0 10px 30px #000a; }
+.reveal .lm-fig img { width: 230px; }
+.reveal .df-fig img { width: 250px; }
+.reveal .lm-fig figcaption, .reveal .df-fig figcaption { font-size: 18px; color: var(--psi-muted); }
+.reveal .df-grid { display: grid; grid-template-columns: 250px 1fr; gap: 40px; align-items: center; max-width: 1160px; margin: 0 auto; text-align: left; }
+.reveal .df-list { margin: 0; padding-left: 1.1em; font-size: .8em; line-height: 1.35; }
+.reveal .df-list li { margin: 0 0 10px; }
+.reveal .df-foot { display: flex; justify-content: center; align-items: center; gap: 40px; margin-top: 14px; }
+.reveal .df-foot p { margin: 0; font-size: .8em; text-align: left; }
+.reveal .df-foot .katex-display { margin: .3em 0; }
+
 /* ── L2-02 registro ── */
 .reveal .rg-grid { display: grid; grid-template-columns: 230px 1fr; gap: 34px; align-items: center; text-align: left; }
 .reveal .rg-portrait { margin: 0; text-align: center; }
@@ -209,8 +312,11 @@
 .reveal .np-foot { margin: 6px 0 0; font-size: .95em; font-weight: 700; color: var(--s05-model); }
 
 /* ── L2-05 esercizio 3 ── */
-.reveal .e3-table td { min-width: 110px; height: 40px; }
+.reveal .e3-table td, .reveal .e3-table th { min-width: 96px; padding: 10px 14px; }
+.reveal .e3-table td { height: 40px; }
 .reveal .e3-table td.blank { background: #ffffff06; }
+.reveal .e3-table td .fragment { display: inline-block; color: var(--s05-model); font-weight: 700; }
+.reveal .e3-wrap .ex-formula { margin-top: 0; }
 
 /* ── L2-06 pezzetti ── */
 .reveal .pz-formula { margin: 0; }
@@ -227,6 +333,7 @@
 .reveal .cn-table td.cn-obs { color: var(--s05-data); }
 .reveal .cn-table td.cn-exp { color: var(--s05-model); }
 .reveal .cn-quote { margin: 30px 0 0; font-size: .75em; font-style: italic; color: #cbd5e0; }
+.reveal .cn-quote .cn-it { display: block; margin-top: 6px; font-size: 22px; color: var(--psi-muted); }
 .reveal .cn-quote small { display: block; font-style: normal; font-size: 22px; color: var(--psi-muted); margin-top: 6px; }
 
 /* ── L2-11 un evento ── */

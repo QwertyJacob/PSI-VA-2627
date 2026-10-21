@@ -3,3 +3,7 @@ bortkiewicz.jpg: Ladislaus von Bortkiewicz, circa 1910, autore ignoto. Pubblico 
   Wikimedia Commons, File:Ladislaus_Bortkiewicz.jpg (da MacTutor History of Mathematics).
 poisson.jpg: Siméon-Denis Poisson, litografia di François-Séraphin Delpech da Nicolas Eustache Maurin, prima del 1840. Pubblico dominio.
   Wikimedia Commons, File:Simeon_Poisson_crop.jpg (miniatura 500 px).
+poisson-mc.jpg, poisson-patatine.jpg: immagini generate con Canva (IA generativa) per il pacco di slide
+  del docente «8. Poisson» (PSI 2025-26); estratte dal PDF originale.
+twain.jpg: Mark Twain, 1907, fotografia di A. F. Bradley (New York). Pubblico dominio.
+  Estratta dal pacco di slide del docente «7. Variabili aleatorie» (PSI 2025-26); ridotta in scala di grigi a 440 px.

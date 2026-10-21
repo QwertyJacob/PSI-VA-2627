@@ -1,4 +1,4 @@
-/* Settimana 5: utilità comuni alle due lezioni (testi SVG, pallina del Lotto, fila di prove, barra a pezzetti, timer degli esercizi). */
+/* Settimana 5: utilità comuni alle due lezioni (testi SVG, PMF a barre, pallina del Lotto, fila di prove, barra a pezzetti, timer degli esercizi). */
 window.S05 = (function () {
   'use strict';
   var svg = PSI.svg, text = PSI.text;
@@ -20,6 +20,21 @@ window.S05 = (function () {
   // Numeri all'italiana: virgola decimale.
   function it(x, digits) {
     return x.toFixed(digits).replace('.', ',');
+  }
+
+  // PMF a barre: una barra centrata in cx, il fulcro sotto la media, la crescita dalla base.
+  function bar(root, cx, base, h, w, color) {
+    var r = svg('rect', { x: cx - w / 2, y: base - h, width: w, height: h, rx: 3, fill: color }, root);
+    r.cx = cx;
+    return r;
+  }
+  function fulcrum(root, x, y, color) {
+    return svg('path', { d: 'M' + x + ' ' + y + ' l-15 25 h30 z', fill: color || C.ok }, root);
+  }
+  function grow(tl, bars, base, pos) {
+    bars.forEach(function (b, i) {
+      tl.fromTo(b, { scaleY: 0, svgOrigin: b.cx + ' ' + base }, { scaleY: 1, duration: .45, ease: 'power2.out' }, i ? '<.03' : pos);
+    });
   }
 
   // Una pallina del Lotto: bianca, bordo rosso, numero scuro.
@@ -100,5 +115,5 @@ window.S05 = (function () {
     deck.on('fragmenthidden', function (e) { var t = find(e.fragment); if (t) t.reset(); });
   }
 
-  return { C: C, label: label, line: line, arrowMarker: arrowMarker, it: it, ball: ball, trial: trial, pieces: pieces, timers: timers };
+  return { C: C, label: label, line: line, arrowMarker: arrowMarker, it: it, bar: bar, fulcrum: fulcrum, grow: grow, ball: ball, trial: trial, pieces: pieces, timers: timers };
 })();

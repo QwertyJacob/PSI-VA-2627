@@ -101,6 +101,14 @@
       <aside class="notes">L'esempio della dispensa: A e B sono i due pagamenti della slide di Huygens. Click: 1 i fulcri: media 5 per entrambi (μ, «mu»), già visto con Huygens, quindi veloce; 2 gli scarti di B: −5 e +5, il segno dice sotto o sopra il centro; 3 prima del click chiedi «e se facessimo la media degli scarti?»: si cancellano, fa 0. Vale sempre: E[X − μ] = μ − μ = 0 (linearità della S4). Anche A dà 0: la media degli scarti non distingue niente. 4 togliamo il segno elevando al quadrato: lo scarto diventa l'area di un quadrato di lato 5; raddoppiare la distanza quadruplica il contributo. 5 la media dei quadrati: 25. Per A ogni scarto è 0, quindi 0.</aside>
     </section>
 
+    <!-- V-03b · prima della definizione: le tre PMF della V-06, senza Var né σ -->
+    <section id="tre-pmf-ordine">
+      <p class="badge">Ordinare per dispersione</p>
+      <h2 class="scene-title">Stessa media, tre dispersioni</h2>
+      <svg class="scene-svg" width="1100" height="450" viewBox="0 0 1100 450" role="img" aria-label="Tre PMF sui valori da 1 a 5, tutte con media 3: la uniforme è la più dispersa, quella a campana è intermedia, quella stretta è la meno dispersa"></svg>
+      <aside class="notes">Prima della definizione, solo a occhio: nessun numero. Click: 1 i fulcri: tutte e tre hanno media 3 (simmetriche). Prima del click 2 chiedi «quale è la più dispersa? E la meno dispersa?»: ordinano a occhio. 2 l'ordine: uniforme > a campana > stretta. 3 più massa lontano dal centro, più dispersione. Ora serve un numero che misuri questo ordine: la definizione. I valori (2; 1,2; 0,4) sono nella V-06, la stessa figura con Var e σ.</aside>
+    </section>
+
     <!-- V-04 · 21: la definizione -->
     <section id="definizione-varianza">
       <p class="badge">Prologo · La definizione</p>
@@ -480,7 +488,7 @@
       <p class="cover-week">Settimana 5</p>
       <h2 class="cover-title">Quante volte succede<br>una cosa rara?</h2>
       <div class="cover-acts"><span>Lezione 2</span><span>venerdì 23 ottobre</span></div>
-      <aside class="notes">Apertura della Lezione 2. Alle 10:45 si chiude la S5: dopo la pausa parte la Settimana 6.</aside>
+      <aside class="notes">Apertura della Lezione 2. Dopo il riepilogo: la spiegazione della varianza dal pacco dell'anno scorso (L2-V01…V18), poi i sovraffollamenti. Alle 10:45 si chiude la S5: dopo la pausa parte la Settimana 6.</aside>
     </section>
 
     <!-- L2-01 · 0–10: riepilogo L1 -->
@@ -500,6 +508,423 @@
         </div>
       </div>
       <aside class="notes">Una domanda per click; nessuna risposta sulla slide. Fai scrivere la fila a uno studente. Risposte: (1) (1 − p)²p; (2) le prove successive sono indipendenti e identiche: la situazione è quella di partenza; (3) 18; (4) un passato di fallimenti non cambia la distribuzione dell'attesa che resta.</aside>
+    </section>
+
+    <!-- ───── Spiegazione del docente: la varianza
+         (pacco «7. Variabili aleatorie», PSI 25/26, pp. 45–66). Scene: js/varianza-docente.js ───── -->
+
+    <!-- L2-V01 · Mark Twain -->
+    <section id="dv-twain">
+      <p class="badge">Spiegazione del docente · La varianza</p>
+      <div class="dv-tw-grid">
+        <figure class="dv-tw-fig">
+          <img src="img/twain.jpg" alt="Ritratto fotografico di Mark Twain anziano, con capelli e baffi bianchi">
+          <figcaption>Mark Twain nel 1907<br>foto di A. F. Bradley</figcaption>
+        </figure>
+        <div>
+          <blockquote class="tw-quote dv-tw-quote">«Ci sono tre tipi di bugie: le bugie [normali], le bugie maledette…<span class="fragment"> …e le statistiche.»</span></blockquote>
+          <p class="tw-who">resa celebre da Mark Twain</p>
+        </div>
+      </div>
+      <p class="dv-tw-moral fragment">A volte il valore atteso non è il modo migliore di riassumere una variabile aleatoria.</p>
+      <aside class="notes">Qui comincia la spiegazione della varianza del pacco «7. Variabili aleatorie» dell'anno scorso (pp. 45–66), fino all'esercizio d'esame sul cyborg; poi si passa ai sovraffollamenti. Mercoledì il prologo ha già usato la citazione e i revisori: le prime tre slide sono un richiamo veloce. Click: 1 la chiusa della citazione; 2 la morale. Sull'attribuzione vedi le note della V-01: Twain la attribuisce a Disraeli, ma l'autore è ignoto.</aside>
+    </section>
+
+    <!-- L2-V02 · i tre revisori, con il testo del pacco -->
+    <section id="dv-revisori">
+      <p class="badge">Quando il valore atteso ci tradisce…</p>
+      <div class="dv-rv-grid">
+        <div class="dv-rv-text">
+          <p>Il voto dell’esame di probabilità lo decide uno dei tre revisori: <b>A</b>, <b>B</b> oppure <b>C</b>.</p>
+          <p>La <span class="red">linea rossa</span> è il voto che meritate; le barre sono la PMF del voto che il revisore vi darebbe.</p>
+          <p class="dv-rv-q">Quale revisore scegliereste?</p>
+          <p class="dv-rv-c">Sicuramente non <b>C</b>: tende a dare un voto più basso di quello meritato.</p>
+          <p class="dv-rv-a">Qualcuno sceglierebbe <b>A</b>, ma rischierebbe un voto basso: A è molto più imprevedibile di B e C.</p>
+          <p class="dv-rv-b">La scelta più «giusta» sembra <b>B</b>. Eppure A e B hanno <b class="highlight">lo stesso valore atteso</b>!</p>
+        </div>
+        <svg class="scene-svg" width="660" height="400" viewBox="0 0 660 400" role="img" aria-label="Tre revisori A, B, C: la PMF del voto che darebbero, da 18 a 30, con il voto meritato 24 tratteggiato in rosso. A è larga attorno a 24, B stretta attorno a 24, C stretta attorno a 21"></svg>
+      </div>
+      <p class="dv-rv-end">Se conoscessimo solo il valore atteso, sceglieremmo indifferentemente tra A e B: una scelta mal informata!</p>
+      <aside class="notes">Le PMF della V-02 di mercoledì, con il ragionamento del pacco scritto a fianco. All'ingresso le tre PMF. Click: 1 la domanda: alzata di mano; 2 C è da scartare: sbaglia in media (media 21); 3 A è imprevedibile: può dare 18 come 30; 4 B sembra la scelta giusta, ma A e B hanno la stessa media, 24; 5 la conclusione. Che cosa distingue A da B? Quanto la massa è sparpagliata: la dispersione.</aside>
+    </section>
+
+    <!-- L2-V03 · un altro esempio: tre PMF, stesso valore atteso -->
+    <section id="dv-tre-pmf">
+      <p class="badge">Un altro esempio</p>
+      <svg class="scene-svg" width="1100" height="340" viewBox="0 0 1100 340" role="img" aria-label="Tre PMF sui valori da 1 a 5, tutte con valore atteso 3: uniforme con probabilità 1/5, a campana con 1/9, 2/9, 3/9, 2/9, 1/9, stretta con 2/9, 5/9, 2/9"></svg>
+      <p class="dv-tp dv-tp-1">Queste tre distribuzioni hanno tutte <b>lo stesso valore atteso</b>! (provate a fare i calcoli)</p>
+      <p class="dv-tp dv-tp-2">Eppure sono diverse: che cosa le rende diverse?</p>
+      <p class="dv-tp dv-tp-3">Esatto: la <b>dispersione</b> della massa di probabilità… e la dispersione si misura con la <b>varianza</b>!</p>
+      <aside class="notes">Le PMF del pacco: uniforme (1/5 ciascuno), a campana (1/9, 2/9, 3/9, 2/9, 1/9), stretta (2/9, 5/9, 2/9). All'ingresso le tre PMF. Click: 1 lo stesso valore atteso, 3: sono simmetriche attorno a 3; se c'è tempo fai verificare la seconda, (1 + 4 + 9 + 8 + 5)/9 = 27/9 = 3; 2 la domanda; 3 la risposta: la dispersione, misurata dalla varianza. Per te: le varianze sono 2, 4/3 ≈ 1,33 e 4/9 ≈ 0,44.</aside>
+    </section>
+
+    <!-- L2-V04 · la definizione -->
+    <section id="dv-definizione">
+      <p class="badge">Varianza · la definizione</p>
+      <h2 class="scene-title">Varianza</h2>
+      <p class="dv-lead">Supponiamo di avere una variabile aleatoria $X$. La varianza di $X$ è definita a partire dal suo valore atteso:</p>
+      <div class="dv-eq">$$\operatorname{Var}(X)=\mathbb{E}\big[(X-\mathbb{E}[X])^2\big]$$</div>
+      <p class="dv-lead fragment" data-fragment-index="1">Equivalentemente, se indichiamo il valore atteso di $X$ con la lettera greca $\mu$ («mu»):</p>
+      <div class="dv-eq fragment" data-fragment-index="1">$$\operatorname{Var}(X)=\mathbb{E}\big[(X-\mu)^2\big]$$</div>
+      <p class="dv-next fragment">La varianza è il valore medio del <b>quadrato della differenza</b> tra i valori di $X$ e il valore medio di $X$.</p>
+      <aside class="notes">La definizione di mercoledì (V-04), nella forma del pacco. Click: 1 la stessa formula con μ; 2 la lettura in parole. Insisti sull'ordine: prima lo scarto, poi il quadrato, poi la media.</aside>
+    </section>
+
+    <!-- L2-V05 · proprietà fondamentali -->
+    <section id="dv-proprieta">
+      <p class="badge">Varianza · le proprietà</p>
+      <h2 class="scene-title">Proprietà fondamentali</h2>
+      <ol class="dv-props">
+        <li class="fragment"><span><b>Non negatività</b></span><span>$\operatorname{Var}(X)\ge0$</span></li>
+        <li class="fragment"><span><b>Varianza di una costante</b><small>$c$ è una costante</small></span><span>$\operatorname{Var}(c)=0$</span></li>
+        <li class="fragment"><span><b>Effetto di una costante moltiplicativa</b><small>$a$ è una costante</small></span><span>$\operatorname{Var}(aX)=a^2\operatorname{Var}(X)$</span></li>
+        <li class="fragment"><span><b>Effetto di una traslazione</b><small>$b$ è una costante</small></span><span>$\operatorname{Var}(X+b)=\operatorname{Var}(X)$</span></li>
+        <li class="fragment"><span><b>Somma di variabili aleatorie indipendenti</b><small>vale solo se $X$ e $Y$ sono indipendenti</small></span><span>$\operatorname{Var}(X+Y)=\operatorname{Var}(X)+\operatorname{Var}(Y)$</span></li>
+      </ol>
+      <aside class="notes">Una proprietà per click. 1 e 2 le abbiamo viste mercoledì (V-05): una media di quadrati non è negativa, e una costante coincide con la sua media. 3 e 4 le dimostriamo tra poco, insieme: Var(aX + b) = a² Var(X). 5 è la proprietà che ha fatto preferire la varianza ad altri indici (l'approfondimento sullo scarto medio assoluto nella dispensa); senza indipendenza è falsa: con Y = X si ottiene Var(2X) = 4 Var(X), non 2 Var(X). La useremo per la varianza della distribuzione binomiale.</aside>
+    </section>
+
+    <!-- L2-V06 · la legge dello statistico inconscio -->
+    <section id="dv-statistico-inconscio">
+      <p class="badge">Varianza · come calcolarla</p>
+      <h2 class="scene-title">Ricordiamo: il valore atteso di una funzione</h2>
+      <p class="dv-lead">Dalla Settimana 4, la proprietà del valore atteso chiamata anche <b>legge dello statistico inconscio</b>:</p>
+      <div class="s05-box dv-box">$$\mathbb{E}[g(X)]=\sum_x g(x)\,P(X=x)$$</div>
+      <p class="dv-say fragment">Il valore atteso di una funzione $g$ di una variabile aleatoria è la media delle immagini $g(x)$, pesate con le probabilità dei valori $x$.</p>
+      <p class="dv-say fragment">Non serve la PMF di $g(X)$: bastano quella di $X$ e la funzione $g$.</p>
+      <p class="dv-next fragment">Anche la varianza è un valore atteso di questo tipo, con $g(x)=(x-\mathbb{E}[X])^2$.</p>
+      <aside class="notes">Il nome: chi la usa di solito non si accorge di applicare un teorema, perché sembra la definizione. Click: 1 la lettura in parole; 2 il vantaggio pratico; 3 il ponte: la applichiamo subito alla varianza.</aside>
+    </section>
+
+    <!-- L2-V07 · Var(X) = E[X²] − E[X]² (denso) -->
+    <section id="dv-formula">
+      <p class="badge">Varianza · come calcolarla</p>
+      <div class="lm-rows dv-rows">
+        <div class="lm-row"><p class="lm-say">statistico inconscio, con<br>$g(x)=(x-\mathbb{E}[X])^2$</p><div>$$\operatorname{Var}(X)=\mathbb{E}\big[(X-\mathbb{E}[X])^2\big]=\sum_x\big(x-\mathbb{E}[X]\big)^2\,p(x)$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">sviluppiamo il quadrato</p><div>$$=\sum_x\textcolor{#fb923c}{\big(x^2-2x\,\mathbb{E}[X]+\mathbb{E}[X]^2\big)}\,p(x)$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">tre somme: $\mathbb{E}[X]$ è un numero<br>ed esce dalla somma</p><div>$$=\underbrace{\sum_x x^2\,p(x)}_{\textcolor{#fb923c}{\mathbb{E}[X^2]}}-\,2\,\mathbb{E}[X]\underbrace{\sum_x x\,p(x)}_{\textcolor{#fb923c}{\mathbb{E}[X]}}+\,\mathbb{E}[X]^2\underbrace{\sum_x p(x)}_{\textcolor{#fb923c}{1}}$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">statistico inconscio (con $x^2$),<br>definizione di valore atteso,<br>probabilità totale</p><div>$$=\mathbb{E}[X^2]-2\,\mathbb{E}[X]^2+\mathbb{E}[X]^2$$</div></div>
+        <div class="lm-end fragment"><div class="s05-box">$$\operatorname{Var}(X)=\mathbb{E}[X^2]-\big(\mathbb{E}[X]\big)^2$$</div><p>la media dei quadrati<br>meno il quadrato della media</p></div>
+      </div>
+      <p class="dv-note">Notazione alleggerita: $\sum_x$ sta per $\sum_{x\in\operatorname{dom}X}$ e $p(x)$ per $P(X=x)$.</p>
+      <aside class="notes">Il passaggio scritto a mano nel pacco, un passo per click: fai dire alla classe il passo prima di mostrarlo. Click: 1 il quadrato di una differenza; 2 la somma si spezza in tre, E[X] ed E[X]² sono numeri ed escono dalla somma; le graffe dicono che cosa riconosciamo; 3 i tre pezzi; 4 la formula. È facoltativa all'esame (Lettura C.1): all'esame basta la definizione, ma la formula accorcia i conti. Errore tipico: confondere E[X²] (media dei quadrati) con (E[X])² (quadrato della media); la loro differenza è proprio la varianza, quindi E[X²] ≥ (E[X])².</aside>
+    </section>
+
+    <!-- L2-V08 · deviazione standard -->
+    <section id="dv-deviazione-standard">
+      <p class="badge">Varianza · un’altra misura</p>
+      <h2 class="scene-title">Deviazione standard</h2>
+      <p class="dv-lead">Un’altra misura di dispersione è la <b>deviazione standard</b>, la cui definizione è molto semplice:</p>
+      <div class="s05-box dv-box">$$\sigma_X=\operatorname{Std}(X)=\sqrt{\operatorname{Var}(X)}$$</div>
+      <p class="dv-next fragment">La deviazione standard è la radice quadrata della varianza!</p>
+      <p class="dv-say fragment">Si misura nelle stesse unità di $X$: se $X$ è in euro, $\operatorname{Var}(X)$ è in euro² e $\sigma_X$ torna in euro.</p>
+      <aside class="notes">Click: 1 la frase del pacco; 2 le unità, come mercoledì con il pagamento B (25 euro², σ = 5 euro).</aside>
+    </section>
+
+    <!-- L2-V09 · esempio: il dado con la formula -->
+    <section id="dv-dado">
+      <p class="badge">Varianza · esempio</p>
+      <h2 class="scene-title">La varianza di un dado, con la formula</h2>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>Calcoliamo la varianza della variabile che indica il risultato del lancio di un <b>dado equo</b>.</p>
+          <div class="fragment" data-fragment-index="2">$$\mathbb{E}[X^2]=\left(1^2+2^2+3^2+4^2+5^2+6^2\right)\cdot\frac16=\frac{91}{6}$$</div>
+          <div class="fragment" data-fragment-index="3">$$\operatorname{Var}(X)=\mathbb{E}[X^2]-\big(\mathbb{E}[X]\big)^2=\frac{91}{6}-\left(\frac72\right)^2=\textcolor{#38ef7d}{\frac{35}{12}}\approx2{,}92$$</div>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="3" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">Mercoledì (Esercizio 0) lo stesso dado con la tabella degli scarti: ora con la formula. Click 1: timer di 3′. Click 2: la media dei quadrati, 91/6. Click 3: la varianza, 91/6 − 49/4 = 182/12 − 147/12 = 35/12 ≈ 2,92, lo stesso numero di mercoledì. Errore atteso: 91/6 − 7/2, cioè sottrarre la media invece del suo quadrato.</aside>
+    </section>
+
+    <!-- L2-V10 · la domanda: Var(aX + b) -->
+    <section id="dv-axb-domanda">
+      <p class="badge">Varianza · linearità?</p>
+      <p class="dv-lead">Il valore atteso è lineare: $\mathbb{E}[aX+b]=a\,\mathbb{E}[X]+b$. Che cosa succede con la varianza?</p>
+      <div class="e4-wrap">
+        <div class="dv-axb-big"><span>Calcoliamo</span><div>$$\operatorname{Var}(aX+b)$$</div></div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="5" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" aria-hidden="true"></span>
+      <aside class="notes">Prima di mostrare la soluzione lascia provare: suggerisci di partire dalla definizione e di usare la linearità del valore atteso. Click 1: timer di 5′. Chi vuole un controllo numerico: X = dado, a = 2, b = 1.</aside>
+    </section>
+
+    <!-- L2-V11 · Var(aX + b) passo per passo (denso) -->
+    <section id="dv-axb">
+      <p class="badge">Varianza · linearità?</p>
+      <div class="lm-rows dv-rows dv-rows-tight">
+        <div class="lm-row"><p class="lm-say">per definizione di varianza</p><div>$$\operatorname{Var}(aX+b)=\mathbb{E}\Big[\big((aX+b)-\mathbb{E}[aX+b]\big)^2\Big]$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">legge dello statistico inconscio</p><div>$$=\sum_x\big[(ax+b)-\mathbb{E}[aX+b]\big]^2\,p(x)$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">linearità del valore atteso</p><div>$$=\sum_x\big[ax+b-\textcolor{#fb923c}{a\,\mathbb{E}[X]-b}\big]^2\,p(x)$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">$b$ si cancella;<br>sviluppiamo il quadrato</p><div>$$=\sum_x\textcolor{#fb923c}{\big[a^2x^2-2a^2x\,\mathbb{E}[X]+a^2\,\mathbb{E}[X]^2\big]}\,p(x)$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">statistico inconscio, valore atteso,<br>probabilità totale</p><div>$$=a^2\,\mathbb{E}[X^2]-2a^2\,\mathbb{E}[X]^2+a^2\,\mathbb{E}[X]^2$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">raccogliamo $a^2$:<br>la formula di prima</p><div>$$=a^2\big(\mathbb{E}[X^2]-\mathbb{E}[X]^2\big)=a^2\operatorname{Var}(X)$$</div></div>
+      </div>
+      <div class="dv-axb-end fragment"><div class="s05-box">$$\operatorname{Var}(aX+b)=a^2\operatorname{Var}(X)$$</div><p>la varianza non cambia con le traslazioni ($+b$);<br>un cambio di scala ($\times a$) ha un effetto <b>quadratico</b></p></div>
+      <aside class="notes">Il passaggio scritto a mano nel pacco, un passo per click. Conseguenze: con a = 0 si ritrova Var(b) = 0 (proprietà 2), con b = 0 la proprietà 3, con a = 1 la 4. Per la deviazione standard: σ di aX + b vale |a|·σ_X. Una scorciatoia per chi la vede: (aX + b) − E[aX + b] = a(X − E[X]), quindi il quadrato è a² volte quello di prima.</aside>
+    </section>
+
+    <!-- L2-V12 · esercizio: il costo di un progetto -->
+    <section id="dv-progetto">
+      <p class="badge">Varianza · esercizio</p>
+      <h2 class="scene-title">Quanto costa un progetto?</h2>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>$X$ è il numero di giorni necessari per finire un progetto, con distribuzione</p>
+          <table class="s05-table dv-pm-table">
+            <tbody>
+              <tr><td class="rowhead">$x_i$</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td class="dv-tot">totale</td></tr>
+              <tr><td class="rowhead">$p_i$</td><td>0,1</td><td>0,3</td><td>0,3</td><td>0,2</td><td>0,1</td><td class="dv-tot">1</td></tr>
+            </tbody>
+          </table>
+          <p>Per esercizio verificate che $\mu=11{,}9$ giorni e $\sigma^2=1{,}29$ giorni².</p>
+          <p>Ci sono costi fissi per 25 000 euro e un costo di 900 euro per ogni giorno di lavoro: <b class="data">quanto vale il costo totale $C$?</b></p>
+          <p>Per definizione $C=25\,000+900X$, e quindi <b class="data">è una variabile aleatoria</b>.</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="6" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <p class="dv-credits">esercizio del prof. Giovanni M. Marchetti</p>
+      <span class="fragment ex-go" aria-hidden="true"></span>
+      <aside class="notes">Esercizio del prof. Marchetti, dal pacco. Click 1: timer di 6′. Ai gruppi: prima la verifica di μ e σ² per X, poi media e deviazione standard di C. Conti: E[X] = 1 + 3,3 + 3,6 + 2,6 + 1,4 = 11,9; E[X²] = 10 + 36,3 + 43,2 + 33,8 + 19,6 = 142,9; Var(X) = 142,9 − 141,61 = 1,29. La soluzione è nella slide successiva.</aside>
+    </section>
+
+    <!-- L2-V13 · esercizio: la soluzione -->
+    <section id="dv-progetto-soluzione">
+      <p class="badge">Varianza · esercizio, la soluzione</p>
+      <p class="dv-lead">$C=25\,000+900X$</p>
+      <table class="s05-table dv-pm-table">
+        <tbody>
+          <tr><td class="rowhead">$c_i$</td><td>34 000</td><td>34 900</td><td>35 800</td><td>36 700</td><td>37 600</td><td class="dv-tot">totale</td></tr>
+          <tr><td class="rowhead">$p_i$</td><td>0,1</td><td>0,3</td><td>0,3</td><td>0,2</td><td>0,1</td><td class="dv-tot">1</td></tr>
+        </tbody>
+      </table>
+      <p class="dv-say fragment">Per media e deviazione standard <b>non occorre rifare il calcolo</b>: bastano le formule.</p>
+      <div class="dv-sol">
+        <div class="fragment">$$\begin{aligned}\mu_C&=\mathbb{E}[25\,000+900X]=25\,000+900\,\mathbb{E}[X]\\&=25\,000+900\cdot11{,}9=\textcolor{#38ef7d}{35\,710\ \text{euro}}\end{aligned}$$</div>
+        <div class="fragment">$$\begin{aligned}\sigma_C^2&=\operatorname{Var}(25\,000+900X)=900^2\operatorname{Var}(X)\\&=810\,000\cdot1{,}29=1\,044\,900\ \text{euro}^2\end{aligned}$$</div>
+        <div class="fragment">$$\sigma_C=\sqrt{1\,044\,900}\approx\textcolor{#38ef7d}{1022\ \text{euro}}$$</div>
+      </div>
+      <aside class="notes">Click: 1 la frase chiave; 2 la media con la linearità; 3 la varianza: i 25 000 euro fissi non contano, il 900 va al quadrato; 4 la deviazione standard, che torna in euro: 1022 ≈ 900 · √1,29 ≈ 900 · 1,136. Errore tipico: 900 · 1,29 invece di 900² · 1,29.</aside>
+    </section>
+
+    <!-- L2-V14 · la varianza di una variabile bernoulliana -->
+    <section id="dv-bernoulli">
+      <p class="badge">Varianza · distribuzione di Bernoulli</p>
+      <h2 class="scene-title">La varianza di una variabile bernoulliana</h2>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>Sia $X$ una variabile bernoulliana di parametro $p$: successo ($X=1$) con probabilità $p$, insuccesso ($X=0$) con probabilità $1-p$.</p>
+          <ol class="dv-steps">
+            <li class="fragment" data-fragment-index="2">Sappiamo che $\mathbb{E}[X]=p$.</li>
+            <li class="fragment" data-fragment-index="3">Poiché $X$ vale solo 0 o 1: $\;\mathbb{E}[X^2]=0^2\cdot(1-p)+1^2\cdot p=p$.</li>
+            <li class="fragment" data-fragment-index="4">Quindi: $\;\operatorname{Var}(X)=\mathbb{E}[X^2]-\big(\mathbb{E}[X]\big)^2=p-p^2=\textcolor{#38ef7d}{p(1-p)}$.</li>
+          </ol>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="3" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">Click 1: timer di 3′. Click 2–4: la soluzione del pacco. La derivazione è facoltativa all'esame (Lettura C), ma è un buon esercizio sulla formula. Da far notare: p(1 − p) è massima per p = 1/2 (moneta equa, massima incertezza) e vale 0 per p = 0 o p = 1 (nessuna incertezza).</aside>
+    </section>
+
+    <!-- L2-V15 · la varianza della distribuzione binomiale -->
+    <section id="dv-binomiale">
+      <p class="badge">Varianza · distribuzione binomiale</p>
+      <h2 class="scene-title">Varianza della distribuzione binomiale</h2>
+      <p class="dv-lead">Sia $X$ una v.a. binomiale:</p>
+      <p class="dv-big">$X\sim\operatorname{Bin}(n,p)$</p>
+      <p class="dv-lead">la sua varianza è pari a:</p>
+      <div class="s05-box dv-box">$$\operatorname{Var}(X)=np(1-p)$$</div>
+      <p class="dv-say fragment">Perché: $X$ è la somma di $n$ variabili bernoulliane <b>indipendenti</b>, ognuna con varianza $p(1-p)$, e per la proprietà 5 le varianze si sommano.</p>
+      <p class="dv-next fragment">Per la media $np$ bastava la linearità; per la varianza serve l’indipendenza.</p>
+      <aside class="notes">Il pacco enunciava solo il risultato. Click: 1 il perché, con la proprietà 5; 2 la differenza con la media: la linearità del valore atteso non chiede indipendenza, la somma delle varianze sì. La derivazione completa è facoltativa (Lettura C.2). Servirà tra poco: con p = λ/n, np(1 − p) tende a λ, la varianza della distribuzione di Poisson.</aside>
+    </section>
+
+    <!-- L2-V16 · esercizio d'esame: il cyborg -->
+    <section id="dv-cyborg">
+      <p class="badge">Esercizio d’esame · Etica dell’intelligenza artificiale</p>
+      <div class="e4-wrap">
+        <div class="dv-exam">
+          <p>Per far aumentare i ricavi aziendali, un cyborg prende decisioni anti-etiche il 40% delle volte. Le decisioni sono probabilisticamente indipendenti l’una dall’altra.</p>
+          <ol>
+            <li>Qual è la probabilità che, su 6 decisioni prese dal cyborg, il numero di decisioni anti-etiche sia dispari? <span class="dv-pt">(3 pt)</span></li>
+            <li>Quali sono il valore atteso e la varianza della variabile aleatoria che conta il numero di decisioni anti-etiche su 100 decisioni prese, e di quella che le conta su 1000 decisioni prese? <span class="dv-pt">(2 pt)</span></li>
+          </ol>
+          <p class="dv-hint"><i>Suggerimento:</i> teniamo presente che $100\cdot0{,}4\cdot0{,}6=24$.</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="8" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" aria-hidden="true"></span>
+      <aside class="notes">Un esercizio d'esame del pacco. Click 1: timer di 8′. Domanda 1: chi è la variabile, che distribuzione ha, quali valori sono dispari? Domanda 2: niente conti lunghi, bastano np e np(1 − p). Le soluzioni sono nelle due slide successive.</aside>
+    </section>
+
+    <!-- L2-V17 · soluzione 1 -->
+    <section id="dv-cyborg-1">
+      <p class="badge">Esercizio d’esame · soluzione 1</p>
+      <div class="dv-exam dv-paper">
+        <p>Sia $\mathcal{X}$ la v.a. che conta le decisioni anti-etiche in un insieme di 6 decisioni: segue una distribuzione binomiale di parametri $n=6$ e $p=0{,}4$, cioè $\mathcal{X}\sim\operatorname{Bin}(6;\,0{,}4)$.</p>
+        <p class="fragment">Se $\mathcal{E}$ è l’evento «$\mathcal{X}$ prende un valore dispari», il quesito è $P(\mathcal{E})$. Gli eventi che compongono $\mathcal{E}$ sono incompatibili, quindi sommiamo le loro probabilità:</p>
+        <div class="fragment">$$P(\mathcal{E})=P(\mathcal{X}=1)+P(\mathcal{X}=3)+P(\mathcal{X}=5)$$</div>
+        <div class="fragment">$$=\binom61\cdot0{,}4\cdot(1-0{,}4)^5+\binom63\cdot0{,}4^3\cdot(1-0{,}4)^3+\binom65\cdot0{,}4^5\cdot(1-0{,}4)$$</div>
+        <div class="fragment">
+          <p>Possiamo lasciare la risposta scritta così, oppure così:</p>
+          $$=6\cdot0{,}4\cdot0{,}6^5+20\cdot0{,}4^3\cdot0{,}6^3+6\cdot0{,}4^5\cdot0{,}6$$
+        </div>
+        <div class="fragment">$$\approx0{,}1866+0{,}2765+0{,}0369\approx\textcolor{#15803d}{0{,}5}$$</div>
+      </div>
+      <aside class="notes">Una riga per click. Il punto d'esame: dichiarare variabile e distribuzione, scrivere l'evento come unione di eventi incompatibili. Il valore numerico non è richiesto. Curiosità: il valore esatto è (1 − 0,2⁶)/2 = 0,499968, quasi esattamente 1/2.</aside>
+    </section>
+
+    <!-- L2-V18 · soluzione 2 -->
+    <section id="dv-cyborg-2">
+      <p class="badge">Esercizio d’esame · soluzione 2</p>
+      <div class="dv-exam dv-paper">
+        <p>La v.a. $\mathcal{Y}$ che conta le decisioni anti-etiche in un insieme di 100 decisioni segue ancora una distribuzione binomiale, questa volta con $n=100$:</p>
+        <div class="dv-two fragment" data-fragment-index="1">
+          <div>$$\mathbb{E}[\mathcal{Y}]=n\cdot p=100\cdot0{,}4=40$$</div>
+          <div>$$\operatorname{Var}(\mathcal{Y})=n\cdot p\cdot(1-p)=100\cdot0{,}4\cdot0{,}6=24$$</div>
+        </div>
+        <p class="fragment" data-fragment-index="2">Allo stesso modo, la v.a. $\mathcal{W}$ per 1000 decisioni segue una distribuzione binomiale con $n=1000$:</p>
+        <div class="dv-two fragment" data-fragment-index="2">
+          <div>$$\mathbb{E}[\mathcal{W}]=1000\cdot0{,}4=400$$</div>
+          <div>$$\operatorname{Var}(\mathcal{W})=1000\cdot0{,}4\cdot0{,}6=240$$</div>
+        </div>
+        <p class="dv-small fragment" data-fragment-index="3">Nonostante il suggerimento, anche la risposta $\operatorname{Var}(\mathcal{Y})=100\cdot0{,}4\cdot0{,}6$ è esatta, e quindi considerata corretta, purché ci sia un minimo di procedimento.</p>
+      </div>
+      <aside class="notes">Click: 1 media e varianza su 100 decisioni; 2 su 1000; 3 la nota di correzione. Da far notare: la media cresce come n (40, 400), la deviazione standard come √n (√24 ≈ 4,9; √240 ≈ 15,5), quindi la frazione di decisioni anti-etiche si concentra attorno a 0,4. Ci torneremo nelle prossime settimane. Poi si passa ai sovraffollamenti: un'altra v.a. binomiale.</aside>
+    </section>
+
+    <!-- ───── Spiegazione del docente: dalla distribuzione binomiale alla distribuzione di Poisson
+         (pacco «8. Poisson», PSI 25/26). Scene: js/sovraffollamenti.js ───── -->
+
+    <!-- L2-01a · il problema dei consulenti -->
+    <section id="mc-problema">
+      <p class="badge">Un problema da consulenti</p>
+      <h2 class="scene-title">Quanti sovraffollamenti domani?</h2>
+      <div class="mc-grid">
+        <div class="mc-brief">
+          <p>Siamo consulenti per <b>McDonald's</b>. Ci chiedono un programma che, dato un locale e un numero $k$, restituisca la probabilità di avere <b>esattamente $k$ sovraffollamenti</b> nelle prossime 24 ore.</p>
+          <p>Oltre all'ID del locale, dal database arriva un solo numero: il <b class="model">valore atteso</b> dei sovraffollamenti in 24 ore.</p>
+        </div>
+        <div class="mc-lam">
+          <span class="mc-lam-cap">un locale, 24 ore</span>
+          <span class="mc-lam-val">$\lambda=6$</span>
+        </div>
+      </div>
+      <div class="mc-then">
+        <p class="fragment">Con una PMF nota potremmo rispondere a <b>tutto</b> sul modello. Per ora abbiamo solo la media.</p>
+        <p class="fragment">Conosciamo le variabili bernoulliane e binomiali: proviamo con una <b class="model">v.a. binomiale</b>.</p>
+      </div>
+      <aside class="notes">Dal pacco «8. Poisson» dell'anno scorso. Racconta la richiesta: un locale, un numero k, una probabilità. Insisti sul fatto che dal database arriva solo λ = 6, una media. Click: 1 con una PMF nota risponderemmo a qualsiasi domanda (richiama il modello probabilistico di mercoledì: esiti, ipotesi, distribuzione della grandezza osservata); 2 conosciamo solo variabili bernoulliane e binomiali: proviamo con una v.a. binomiale. Prima di andare avanti chiedi: «quali sono le prove? quanto vale n?».</aside>
+    </section>
+
+    <!-- L2-01b · un locale: una prova per ogni ora -->
+    <section id="mc-locale">
+      <p class="badge">Un locale · una prova per ogni ora</p>
+      <h2 class="scene-title">Ventiquattro prove al giorno</h2>
+      <svg class="scene-svg" width="1100" height="190" viewBox="0 0 1100 190" role="img" aria-label="Una giornata divisa in 24 ore; in 6 ore c'è un sovraffollamento; un'ora con due sovraffollamenti non è prevista dal modello"></svg>
+      <div class="mc-calc">
+        <div class="mc-model">
+          <p class="mc-s1">$X\sim\operatorname{Binomiale}(n,p)$, &ensp;$n=24$</p>
+          <p class="mc-s2">$\mathbb{E}[X]=np=\lambda=6\;\Rightarrow\;p=\dfrac{6}{24}=\dfrac14$</p>
+        </div>
+        <div class="mc-s3">$$P(X=7)=\binom{24}{7}\left(\frac14\right)^{7}\left(\frac34\right)^{17}\approx0{,}159$$</div>
+      </div>
+      <p class="mc-warn">Per far stare il fenomeno nel modello: <b>al massimo un sovraffollamento per ora</b>.</p>
+      <aside class="notes">Click: 1 un giorno possibile: 6 ore con un sovraffollamento; 2 il modello: una prova per ogni ora, n = 24, con la stessa probabilità in ogni ora (semplificazione); 3 la media di una v.a. binomiale è np: imponendo np = 6 si ricava p = 1/4; 4 la PMF della distribuzione binomiale per k = 7: all'esame ci si ferma all'impostazione, il valore 0,159 è per curiosità; 5 l'ipotesi nascosta: una prova ha due soli esiti, quindi due sovraffollamenti nella stessa ora non sono previsti. Per un solo locale è un'approssimazione accettabile.</aside>
+    </section>
+
+    <!-- L2-01c · una provincia: pezzetti di 2 minuti -->
+    <section id="mc-provincia">
+      <p class="badge">Una provincia · pezzetti di 2 minuti</p>
+      <h2 class="scene-title">Tutti i locali del Varesotto</h2>
+      <p class="mc-lead">30 locali, in media <b class="model">$\lambda=160$</b> sovraffollamenti al giorno in tutta la provincia.</p>
+      <svg class="scene-svg" width="1100" height="250" viewBox="0 0 1100 250" role="img" aria-label="La giornata in 24 ore; in un'ora possono andare in crisi più locali; quell'ora si divide in 30 pezzetti da 2 minuti"></svg>
+      <div class="mc-prov">
+        <p class="mc-s3">$Y\sim\operatorname{Binomiale}(n,p)$, &ensp;$n=\dfrac{60}{2}\cdot24=720$</p>
+        <p class="mc-s4">$\mathbb{E}[Y]=np=160\;\Rightarrow\;p=\dfrac{160}{720}=\dfrac29$</p>
+      </div>
+      <aside class="notes">Ora il programma deve funzionare per tutti i locali di una provincia. Click: 1 nella stessa ora possono andare in crisi più locali: l'ora come prova non basta più, l'ipotesi «al massimo uno per ora» cade; 2 ogni ora in 30 pezzetti da 2 minuti: con 30 locali c'è posto per un sovraffollamento per locale in ogni ora; 3 n = 30 · 24 = 720; 4 la media resta il dato del database: p = 160/720 = 2/9. Chiedi: «e se volessimo tutta Italia?».</aside>
+    </section>
+
+    <!-- L2-01d · tutta Italia: n sempre più grande -->
+    <section id="mc-italia">
+      <p class="badge">Tutta Italia · n → ∞</p>
+      <h2 class="scene-title">Pezzetti di tempo sempre più piccoli</h2>
+      <p class="mc-lead">Domani, in <b>tutta Italia</b>: probabilità di <b>esattamente $k$</b> sovraffollamenti?</p>
+      <svg class="scene-svg" width="1100" height="170" viewBox="0 0 1100 170" role="img" aria-label="La giornata divisa in 24, 720, 10 000 pezzetti e poi in infiniti pezzetti; p uguale a lambda su n tende a zero, mentre np resta lambda"></svg>
+      <div class="mc-lim"><div class="s05-box">$$P(X=k)=\lim_{n\to\infty}\binom{n}{k}\left(\frac{\lambda}{n}\right)^{k}\left(1-\frac{\lambda}{n}\right)^{n-k}$$</div></div>
+      <aside class="notes">Finora il modello binomiale ha retto, con qualche ipotesi. Per tutta Italia potremmo continuare: pezzetti più fini, n più grande. Click: 1 n = 24, il locale; 2 n = 720, la provincia; 3 n = 10 000, pezzetti di 8,6 secondi; 4 n → ∞: pezzetti infinitesimali; p = λ/n tende a 0, ma np = λ resta il dato del database; 5 la PMF della distribuzione binomiale con p = λ/n, al limite. È la stessa idea dei «pezzetti di tempo» della dispensa, che rivedremo con i numeri nell'esercizio 3.</aside>
+    </section>
+
+    <!-- L2-01e · il limite, prima parte (denso) -->
+    <section id="mc-limite-1">
+      <p class="badge">Il limite · passo per passo (1/2)</p>
+      <div class="lm-rows">
+        <div class="lm-row"><p class="lm-say">il punto di partenza,<br>con $p=\lambda/n$</p><div>$$P(X=k)=\lim\nolimits_{n\to\infty}\binom{n}{k}\left(\frac{\lambda}{n}\right)^{k}\left(1-\frac{\lambda}{n}\right)^{n-k}$$</div></div>
+        <div class="lm-row fragment" data-fragment-index="1"><p class="lm-say">sviluppiamo il coefficiente binomiale</p><div>$$=\lim\nolimits_{n\to\infty}\textcolor{#fb923c}{\frac{n!}{(n-k)!\,k!}}\left(\frac{\lambda}{n}\right)^{k}\left(1-\frac{\lambda}{n}\right)^{n-k}$$</div></div>
+        <div class="lm-row fragment" data-fragment-index="2"><p class="lm-say">l'ultimo termine come rapporto di potenze</p><div>$$=\lim\nolimits_{n\to\infty}\frac{n!}{(n-k)!\,k!}\left(\frac{\lambda}{n}\right)^{k}\textcolor{#fb923c}{\frac{(1-\lambda/n)^{n}}{(1-\lambda/n)^{k}}}$$</div></div>
+        <div class="lm-row fragment" data-fragment-index="3"><p class="lm-say">$k$ è fisso: il denominatore tende a $1$</p><div>$$=\lim\nolimits_{n\to\infty}\frac{n!}{(n-k)!\,k!}\left(\frac{\lambda}{n}\right)^{k}\textcolor{#fb923c}{\left(1-\frac{\lambda}{n}\right)^{n}}$$</div></div>
+        <div class="lm-row fragment" data-fragment-index="4"><p class="lm-say">un limite di Analisi 1:<br>$(1-\lambda/n)^{n}\to e^{-\lambda}$</p><div>$$=\textcolor{#38ef7d}{e^{-\lambda}}\cdot\lim\nolimits_{n\to\infty}\frac{n!}{(n-k)!\,k!}\left(\frac{\lambda}{n}\right)^{k}$$</div></div>
+      </div>
+      <aside class="notes">Slide densa: un passaggio per click; fai dire alla classe il passaggio prima di mostrarlo. Click: 1 il coefficiente binomiale scritto con i fattoriali; 2 (1 − λ/n)^(n−k) = (1 − λ/n)^n / (1 − λ/n)^k; 3 k è fisso e λ/n → 0, quindi il denominatore tende a 1; 4 il limite notevole di Analisi 1, (1 + x/n)^n → e^x con x = −λ: lo ritroveremo con i numeri nell'esercizio 3 dei pezzetti di anno. La derivazione completa è facoltativa all'esame (Lettura B): sono richiesti l'idea dei pezzetti e il conto per zero eventi.</aside>
+    </section>
+
+    <!-- L2-01f · il limite, seconda parte (denso) -->
+    <section id="mc-limite-2">
+      <p class="badge">Il limite · passo per passo (2/2)</p>
+      <div class="lm-grid">
+        <div class="lm-rows">
+          <div class="lm-row"><p class="lm-say">da dove eravamo, con<br>$(\lambda/n)^{k}=\lambda^{k}/n^{k}$</p><div>$$P(X=k)=e^{-\lambda}\cdot\lim\nolimits_{n\to\infty}\frac{n!}{(n-k)!\,k!}\cdot\frac{\lambda^{k}}{n^{k}}$$</div></div>
+          <div class="lm-row fragment" data-fragment-index="1"><p class="lm-say">scambiamo $k!$ e $n^{k}$</p><div>$$=e^{-\lambda}\cdot\lim\nolimits_{n\to\infty}\frac{n!}{(n-k)!\,\textcolor{#fb923c}{n^{k}}}\cdot\frac{\lambda^{k}}{\textcolor{#fb923c}{k!}}$$</div></div>
+          <div class="lm-row fragment" data-fragment-index="2"><p class="lm-say">fuori dal limite ciò che non dipende da $n$</p><div>$$=e^{-\lambda}\cdot\textcolor{#fb923c}{\frac{\lambda^{k}}{k!}}\cdot\lim\nolimits_{n\to\infty}\frac{n!}{(n-k)!\,n^{k}}$$</div></div>
+          <div class="lm-row fragment" data-fragment-index="3"><p class="lm-say">$k$ fattori, ognuno tende a $1$</p><div>$$\frac{n!}{(n-k)!\,n^{k}}=\frac{n}{n}\cdot\frac{n-1}{n}\cdots\frac{n-k+1}{n}\;\longrightarrow\;\textcolor{#38ef7d}{1}$$</div></div>
+          <div class="lm-end fragment" data-fragment-index="4"><div class="s05-box">$$P(X=k)=\frac{e^{-\lambda}\,\lambda^{k}}{k!}$$</div><p>la PMF della<br><b class="model">distribuzione di Poisson</b></p></div>
+        </div>
+        <figure class="lm-fig fragment" data-fragment-index="4">
+          <img src="img/poisson-mc.jpg" alt="Siméon-Denis Poisson vestito da clown di McDonald's, con un sacchetto in mano">
+          <figcaption>immagine generata con IA (Canva)</figcaption>
+        </figure>
+      </div>
+      <aside class="notes">Click: 1 scambiamo k! e n^k tra le due frazioni (stesso prodotto); 2 portiamo fuori dal limite ciò che non dipende da n; 3 n!/(n − k)! = n(n − 1)⋯(n − k + 1): sono k fattori, ciascuno diviso per n tende a 1 (k resta fisso); 4 il risultato: la PMF della distribuzione di Poisson, che dipende solo da λ. E Poisson si presenta vestito da McDonald's.</aside>
+    </section>
+
+    <!-- L2-01g · la definizione -->
+    <section id="mc-definizione">
+      <p class="badge">Che cosa abbiamo ottenuto</p>
+      <h2 class="scene-title">La distribuzione di Poisson</h2>
+      <div class="df-grid">
+        <figure class="df-fig">
+          <img src="img/poisson-patatine.jpg" alt="Siméon-Denis Poisson con un cartoccio di patatine e un sacchetto di McDonald's">
+          <figcaption>immagine generata con IA (Canva)</figcaption>
+        </figure>
+        <ul class="df-list">
+          <li class="fragment">Conta il numero <b>esatto</b> di occorrenze di un evento,</li>
+          <li class="fragment">in uno scenario delimitato: un intervallo di tempo, un’area geografica, un volume nello spazio;</li>
+          <li class="fragment">le occorrenze sono indipendenti l’una dall’altra e hanno la stessa probabilità;</li>
+          <li class="fragment">conosciamo la frequenza media delle occorrenze, $\lambda$;</li>
+          <li class="fragment"><b>ma</b> non c’è un massimo teorico: $k=0,1,2,\dots$</li>
+        </ul>
+      </div>
+      <div class="df-foot fragment">
+        <p>$X$ v.a. poissoniana di parametro $\lambda$:<br>$X\sim\operatorname{Poi}(\lambda)$ &ensp;oppure&ensp; $X\sim\operatorname{Poisson}(\lambda)$</p>
+        <div class="s05-box">$$P(X=k)=\frac{e^{-\lambda}\,\lambda^{k}}{k!}$$</div>
+      </div>
+      <aside class="notes">Il riassunto, una riga per click. Sottolinea la differenza con la distribuzione binomiale: lì le prove sono n, qui non c'è un massimo. X conta, quindi è discreta, ma λ è una media e può non essere intera (λ = 30,5 chiamate al minuto in un call center). Lo scenario può essere un giorno, un secondo, un anno: conta solo che sia fissato e che λ si riferisca proprio a quello. Click 6: notazione e PMF. Ponte verso l'Atto III: chi ha trovato questa formula, e regge su dati veri?</aside>
     </section>
 
     <!-- L2-02a · 10–13: una formula senza dati (Poisson, 1837) -->
@@ -526,7 +951,7 @@
         <span class="ps-end data">1898 · i dati</span>
       </div>
       <p class="ps-next fragment">Il libro di Bortkiewicz si intitola <i>la legge dei <b>piccoli</b> numeri</i>: anche gli eventi rari hanno una regola.</p>
-      <aside class="notes">Tre minuti, solo racconto: nessuna formula in vista, la costruiamo oggi. Apri con la domanda del libro: Poisson studia quanto ci si può fidare del verdetto di una giuria. Click: 1 dentro il libro, quasi di passaggio, un caso speciale: tante prove, ognuna quasi impossibile. Chiedi «vi ricorda qualcosa?»: è il regime della Binomiale con n enorme e p minuscolo, quello di oggi. 2 ne esce una formula, ma resta un risultato di calcolo: nel libro non la confronta con dei conteggi. 3 il nome: «loi des grands nombres». In parole: lanciando una moneta moltissime volte, la frazione di teste si avvicina a 1/2 (l'idea frequentista della S1). Si studia nella Settimana 8: qui basta il nome. 4 la linea del tempo: la formula nel 1837, il confronto con dati reali di Bortkiewicz nel 1898. 5 il titolo «Das Gesetz der kleinen Zahlen» richiama quello di Poisson: grandi numeri → frequenze stabili; piccoli numeri (pochi eventi, rari) → anche loro seguono una regola. Lo vedremo con i suoi dati. Se qualcuno lo sa: de Moivre aveva già la stessa approssimazione nel 1711, e Poisson la considerava un risultato minore. Fonti: Poisson, Recherches (1837); per il titolo, Encyclopedia of Mathematics, voce «Bortkiewicz»: il titolo richiama, non contrappone, la legge di Poisson. La chiusura dell'arco è al 56′ (109 contro 108,7).</aside>
+      <aside class="notes">Tre minuti, solo racconto: la formula l'abbiamo appena ricavata con i sovraffollamenti; ora la sua storia, poi la prova su dati veri. Apri con la domanda del libro: Poisson studia quanto ci si può fidare del verdetto di una giuria. Click: 1 dentro il libro, quasi di passaggio, un caso speciale: tante prove, ognuna quasi impossibile. Chiedi «vi ricorda qualcosa?»: è il regime della Binomiale con n enorme e p minuscolo, quello di oggi. 2 ne esce una formula, ma resta un risultato di calcolo: nel libro non la confronta con dei conteggi. 3 il nome: «loi des grands nombres». In parole: lanciando una moneta moltissime volte, la frazione di teste si avvicina a 1/2 (l'idea frequentista della S1). Si studia nella Settimana 8: qui basta il nome. 4 la linea del tempo: la formula nel 1837, il confronto con dati reali di Bortkiewicz nel 1898. 5 il titolo «Das Gesetz der kleinen Zahlen» richiama quello di Poisson: grandi numeri → frequenze stabili; piccoli numeri (pochi eventi, rari) → anche loro seguono una regola. Lo vedremo con i suoi dati. Se qualcuno lo sa: de Moivre aveva già la stessa approssimazione nel 1711, e Poisson la considerava un risultato minore. Fonti: Poisson, Recherches (1837); per il titolo, Encyclopedia of Mathematics, voce «Bortkiewicz»: il titolo richiama, non contrappone, la legge di Poisson. La chiusura dell'arco è al 56′ (109 contro 108,7).</aside>
     </section>
 
     <!-- L2-02 · 13: il registro di Bortkiewicz -->
@@ -582,13 +1007,21 @@
       <p class="badge">Esercizio 3 · un valore di n per gruppo</p>
       <h2 class="scene-title">Pezzetti di anno</h2>
       <svg class="scene-svg" width="1000" height="150" viewBox="0 0 1000 150" role="img" aria-label="Un corpo-anno diviso in 10 pezzetti; in ciascuno un morto con probabilità 0,61 su n, oppure niente"></svg>
-      <p class="ex-formula">Nessun morto in nessun pezzetto: $\;\left(1-\dfrac{0{,}61}{n}\right)^{n}$</p>
-      <table class="s05-table e3-table">
-        <thead><tr><th>$n$</th><th>1</th><th>2</th><th>10</th><th>100</th><th>365</th></tr></thead>
-        <tbody><tr><td class="rowhead">$P(\text{0 morti})$</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr></tbody>
-      </table>
-      <p class="ex-time" style="margin-top:16px"><span class="ex-timer" data-min="7" title="clic: avvia/pausa · doppio clic: azzera" style="font-size:1.2em"></span></p>
-      <aside class="notes">Testo alla lavagna: «un corpo-anno diviso in n pezzetti; in ciascuno un morto con probabilità 0,61/n, indipendentemente. Probabilità di nessun morto?». Ogni gruppo un valore di n; tabella comune alla lavagna. Timer: clic per avviare. Soluzione: 0,3900; 0,4830; 0,5329; 0,5423; 0,5431. Errore atteso: (1 − 0,61)^n invece di (1 − 0,61/n)^n. Chi ha votato «circa 80» ritrova il suo 0,39 con n = 1. Sostituisce la tabella frontale del blocco successivo.</aside>
+      <div class="e4-wrap e3-wrap">
+        <div>
+          <p class="ex-formula">Nessun morto in nessun pezzetto: <span class="fragment" data-fragment-index="2">$\;\left(1-\dfrac{0{,}61}{n}\right)^{n}$</span></p>
+          <table class="s05-table e3-table">
+            <thead><tr><th>$n$</th><th>1</th><th>2</th><th>10</th><th>100</th><th>365</th></tr></thead>
+            <tbody><tr><td class="rowhead">$P(\text{0 morti})$</td><td class="blank"><span class="fragment" data-fragment-index="2">0,3900</span></td><td class="blank"><span class="fragment" data-fragment-index="2">0,4830</span></td><td class="blank"><span class="fragment" data-fragment-index="2">0,5329</span></td><td class="blank"><span class="fragment" data-fragment-index="2">0,5423</span></td><td class="blank"><span class="fragment" data-fragment-index="2">0,5431</span></td></tr></tbody>
+          </table>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="7" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">Testo alla lavagna: «un corpo-anno diviso in n pezzetti; in ciascuno un morto con probabilità 0,61/n, indipendentemente. Probabilità di nessun morto?». Ogni gruppo un valore di n; tabella comune alla lavagna. Click 1: timer di 7′ (clic sul timer: pausa; doppio clic: azzera). Click 2, a fine correzione: la formula (1 − 0,61/n)^n e la soluzione 0,3900; 0,4830; 0,5329; 0,5423; 0,5431. Errore atteso: (1 − 0,61)^n invece di (1 − 0,61/n)^n. Chi ha votato «circa 80» ritrova il suo 0,39 con n = 1. Sostituisce la tabella frontale del blocco successivo.</aside>
     </section>
 
     <!-- L2-06 · 43: pezzetti sempre più fini (denso) -->
@@ -637,7 +1070,7 @@
         <thead><tr><th>osservati (1898)</th><th>attesi (Poisson)</th></tr></thead>
         <tbody><tr><td class="cn-obs"><span class="fragment" data-fragment-index="2">109</span></td><td class="cn-exp"><span class="fragment" data-fragment-index="1">108,7</span></td></tr></tbody>
       </table>
-      <p class="cn-quote fragment" data-fragment-index="3">«… nichts zu wünschen übrig.»<small>Bortkiewicz 1898, p. 25</small></p>
+      <p class="cn-quote fragment" data-fragment-index="3">«… nichts zu wünschen übrig.»<span class="cn-it">«… non lascia nulla a desiderare.»</span><small>Bortkiewicz 1898, p. 25</small></p>
       <aside class="notes">Click: 1 l'atteso 108,7; 2 l'osservato 109, in blu. Silenzio di qualche secondo: un numero ha previsto un dato del 1898. Chiudi l'arco del 10′: la formula del 1837 incontra i dati del 1898. 3 la citazione: l'accordo tra teoria ed esperienza «non lascia nulla a desiderare» (traduzione dal tedesco). Controllo c4 al 58.</aside>
     </section>
 
@@ -719,7 +1152,7 @@
         <div class="s05-box fragment" data-fragment-index="4">$$\mathbb{E}[X]=\operatorname{Var}(X)=\lambda$$</div>
         <p class="mv-data fragment" data-fragment-index="5">Bortkiewicz: media <b>0,61</b>,<br>varianza dei dati <b>0,608</b></p>
       </div>
-      <aside class="notes">Cinque minuti. Click: 1 la media resta λ a ogni n; 2 la varianza binomiale np(1 − p) con p = λ/n: richiama la definizione di mercoledì («media degli scarti al quadrato»); il conto è nella Lettura C, facoltativa; 3 la parentesi tende a 1: varianza λ; 4 il riquadro; 5 il controllo sui dati. Se si è in ritardo mostra solo 4 e 5. Il conto 0,98 − 0,61² resta all'esercizio 6 per casa.</aside>
+      <aside class="notes">Cinque minuti. Click: 1 la media resta λ a ogni n; 2 la varianza binomiale np(1 − p) con p = λ/n: è la formula della L2-V15 di inizio lezione; la derivazione è nella Lettura C, facoltativa; 3 la parentesi tende a 1: varianza λ; 4 il riquadro; 5 il controllo sui dati. Se si è in ritardo mostra solo 4 e 5. Il conto 0,98 − 0,61² resta all'esercizio 6 per casa.</aside>
     </section>
 
     <!-- L2-14 · 75–79 (S): widget Poisson -->
@@ -743,7 +1176,7 @@
       <h2 class="scene-title">Completare la tabella</h2>
       <div class="e4-wrap">
         <div>
-          <p class="e4-lead">$P(X=k)=P(X=k-1)\cdot\dfrac{0{,}61}{k}$, &ensp;poi $\times\,200$</p>
+          <p class="e4-lead">Attesi su 200 corpi-anno: <span class="fragment" data-fragment-index="2">$P(X=k)=P(X=k-1)\cdot\dfrac{0{,}61}{k}$, &ensp;poi $\times\,200$</span></p>
           <table class="s05-table e4-table">
             <thead><tr><th>morti $k$</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>≥ 5</th></tr></thead>
             <tbody>
@@ -758,7 +1191,7 @@
         </div>
       </div>
       <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
-      <aside class="notes">Un k per gruppo (1, 2, 3). Click 1: timer di 6′. Click 2, a fine correzione: gli attesi 66,3; 20,2; 4,1; 0,6; 0,1. Confronto con 65/22/3: scarti piccoli e di segno diverso, come ci si aspetta da un campione finito. Errori attesi: dimenticare il fattore 1/k; non moltiplicare per 200.</aside>
+      <aside class="notes">Un k per gruppo (1, 2, 3). Click 1: timer di 6′. Click 2, a fine correzione: la formula ricorsiva e gli attesi 66,3; 20,2; 4,1; 0,6; 0,1. Confronto con 65/22/3: scarti piccoli e di segno diverso, come ci si aspetta da un campione finito. Errori attesi: dimenticare il fattore 1/k; non moltiplicare per 200.</aside>
     </section>
 
     <!-- L2-16 · 93–105 (S): domanda d'uscita -->
@@ -777,6 +1210,8 @@
   <script src="js/comuni.js"></script>
   <script src="js/varianza.js"></script>
   <script src="js/lezione1.js"></script>
+  <script src="js/varianza-docente.js"></script>
+  <script src="js/sovraffollamenti.js"></script>
   <script src="js/lezione2.js"></script>
   <script>PSIDeck.start({ onReady: function (deck) { PSISondaggio.bind(deck); S05.timers(deck); } });</script>
 </body>

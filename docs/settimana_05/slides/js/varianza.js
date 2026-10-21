@@ -2,22 +2,7 @@
 (function () {
   'use strict';
   var svg = PSI.svg, C = S05.C, label = S05.label, line = S05.line, it = S05.it;
-
-  // Il fulcro: un triangolo con la punta sulla media, sotto l'asse.
-  function fulcrum(root, x, y, color) {
-    return svg('path', { d: 'M' + x + ' ' + y + ' l-15 25 h30 z', fill: color || C.ok }, root);
-  }
-  // Barre che crescono dalla base.
-  function grow(tl, bars, base, pos) {
-    bars.forEach(function (b, i) {
-      tl.fromTo(b, { scaleY: 0, svgOrigin: b.cx + ' ' + base }, { scaleY: 1, duration: .45, ease: 'power2.out' }, i ? '<.03' : pos);
-    });
-  }
-  function bar(root, cx, base, h, w, color) {
-    var r = svg('rect', { x: cx - w / 2, y: base - h, width: w, height: h, rx: 3, fill: color }, root);
-    r.cx = cx;
-    return r;
-  }
+  var bar = S05.bar, fulcrum = S05.fulcrum, grow = S05.grow;
 
   // V-02 · tre revisori, voti da 18 a 30; A e B hanno la stessa media, C no.
   PSI.scene('revisori', function (el, tl) {
@@ -114,6 +99,40 @@
       .fromTo(squares, { opacity: 0, scale: 0, svgOrigin: X(5) + ' ' + YS }, { opacity: 1, scale: 1, duration: .7, ease: 'back.out(1.2)', stagger: .15 })
       .to(steps[3], { opacity: 1, duration: .3 }, '<').addLabel('s4');
     tl.to(result, { opacity: 1, duration: .5 }).to(steps[4], { opacity: 1, duration: .3 }, '<').addLabel('s5');
+  });
+
+  // V-03b · le tre PMF della V-06 senza numeri: prima della definizione, solo l'ordine della dispersione.
+  PSI.scene('tre-pmf-ordine', function (el, tl) {
+    var root = PSI.q(el).one('.scene-svg');
+    var BASE = 300, U = 360, DX = 52;
+    var pmfs = [[.2, .2, .2, .2, .2], [.1, .2, .4, .2, .1], [0, .2, .6, .2, 0]];
+    var words = ['più dispersa', 'intermedia', 'meno dispersa'], parts = [];
+    pmfs.forEach(function (pm, i) {
+      var px = 40 + i * 360, X = function (v) { return px + 36 + (v - 1) * DX; };
+      var g = svg('g', {}, root);
+      line(g, px, BASE, px + 280, BASE, C.axis, 2);
+      var bars = [];
+      pm.forEach(function (p, j) {
+        label(g, X(j + 1), BASE + 56, String(j + 1), 's05-small');
+        if (p) {
+          bars.push(bar(root, X(j + 1), BASE, p * U, 30, C.data));
+          label(g, X(j + 1), BASE - p * U - 10, it(p, 1), 's05-tiny');
+        }
+      });
+      var f = fulcrum(root, X(3), BASE + 2);
+      var w = label(root, X(3), BASE + 104, words[i], 's05-label', { style: 'font-weight:700;fill:' + C.model });
+      parts.push({ g: g, bars: bars, f: f, w: w });
+    });
+    var all = function (k) { return parts.map(function (p) { return p[k]; }); };
+    var gt = [360, 720].map(function (x) { return label(root, x, BASE + 108, '>', 's05-big', { style: 'fill:' + C.model }); });
+    var moral = label(root, 550, BASE + 146, 'più massa lontano dal centro, più dispersione', 's05-small');
+    gsap.set(all('f').concat(all('w'), gt, moral), { opacity: 0 });
+    tl.from(all('g'), { opacity: 0, duration: .4 });
+    parts.forEach(function (p, i) { grow(tl, p.bars, BASE, i ? '<.1' : '>'); });
+    tl.addLabel('s0');
+    tl.to(all('f'), { opacity: 1, duration: .4 }).addLabel('s1');
+    tl.to([parts[0].w, gt[0], parts[1].w, gt[1], parts[2].w], { opacity: 1, duration: .3, stagger: .2 }).addLabel('s2');
+    tl.to(moral, { opacity: 1, duration: .4 }).addLabel('s3');
   });
 
   // V-06 · tre PMF su 1–5 con la stessa media 3: la varianza le ordina.

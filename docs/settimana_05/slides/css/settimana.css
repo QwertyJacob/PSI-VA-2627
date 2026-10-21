@@ -1,6 +1,6 @@
 /*
- * Settimana 5: varianza, Geometrica e Poisson. Scene: js/comuni.js, js/varianza.js, js/lezione1.js,
- * js/varianza-docente.js, js/sovraffollamenti.js, js/lezione2.js.
+ * Settimana 5: varianza, Geometrica e Poisson. Scene: js/comuni.js, js/lezione1.js, js/varianza.js,
+ * js/sovraffollamenti.js, js/lezione2.js.
  * Le regole comuni (badge, copertine, riepiloghi, esercizi, widget, uscite)
  * sono riprese dal mazzo della Settimana 4, così questo mazzo non dipende dai
  * fogli delle altre settimane.
@@ -104,11 +104,9 @@
 .reveal .s05-box { display: inline-block; padding: 0 30px; border-radius: 14px; border: 3px solid var(--s05-ok); background: #38ef7d10; }
 .reveal .s05-box .katex-display { margin: .35em 0; }
 
-/* ── Prologo: varianza (js/varianza.js) ── */
+/* ── V-01…V-10 la varianza (js/varianza.js) ── */
 .reveal .tw-quote { margin: 70px auto 0; max-width: 1000px; border: none; box-shadow: none; background: none; font-size: 1.5em; font-style: italic; line-height: 1.35; }
 .reveal .tw-who { margin: 22px 0 0; font-size: 22px; color: var(--psi-muted); }
-.reveal .tw-moral { margin: 60px 0 0; font-size: 1em; font-weight: 700; color: var(--s05-ok); }
-.reveal .rv-cap { margin: 4px 0 0; font-size: .8em; }
 .reveal .pg-panel { font-size: 24px; }
 .reveal .pg-panel .scene-steps li { margin-bottom: 22px; }
 .reveal .vd-def { margin: 0 0 18px; font-size: .9em; }
@@ -127,7 +125,7 @@
 .reveal .un-facts li { margin: 0 0 8px; }
 .reveal .un-try { margin: 20px 0 0; font-size: .75em; color: var(--psi-b); }
 
-/* ── V-02b Huygens ── */
+/* ── V-03 Huygens ── */
 .reveal .hy-recall { margin: 0 0 4px; font-size: .78em; color: var(--psi-muted); }
 .reveal .hy-recall b { color: var(--psi-text); }
 .reveal .hy-grid { grid-template-columns: 1fr 160px 1fr; max-width: 980px; margin: 14px auto 0; }
@@ -187,7 +185,7 @@
 .reveal .ab-arrow svg { display: block; margin: 0 auto 8px; }
 .reveal .ab-spent { margin: 26px 0 0; font-size: .8em; color: var(--psi-muted); }
 
-/* ── L2-V01…V18 spiegazione del docente: la varianza (js/varianza-docente.js) ── */
+/* ── V-01, V-02, V-11…V-26 la varianza, dal pacco «7. Variabili aleatorie» (js/varianza.js) ── */
 .reveal .dv-tw-grid { display: grid; grid-template-columns: 250px 1fr; gap: 50px; align-items: center; max-width: 1100px; margin: 10px auto 0; text-align: left; }
 .reveal .dv-tw-fig { margin: 0; text-align: center; }
 .reveal .dv-tw-fig img { display: block; width: 250px; max-width: none; max-height: none; margin: 0 0 8px; border-radius: 10px; box-shadow: 0 10px 30px #000a; }
@@ -249,7 +247,7 @@
 .reveal .dv-two { display: flex; justify-content: center; gap: 60px; }
 .reveal .dv-exam .dv-small { margin: 10px 0 0; font-size: .85em; color: #4a5568; }
 
-/* ── L2-01a…g spiegazione del docente: i sovraffollamenti (js/sovraffollamenti.js) ── */
+/* ── L2-01a…g i sovraffollamenti (js/sovraffollamenti.js) ── */
 .reveal .mc-grid { display: grid; grid-template-columns: 1fr 320px; gap: 44px; align-items: center; max-width: 1180px; margin: 0 auto; text-align: left; }
 .reveal .mc-brief p { margin: 0 0 16px; font-size: .85em; line-height: 1.4; }
 .reveal .mc-lam { display: flex; flex-direction: column; align-items: center; padding: 16px 0 22px; border-radius: 16px; border: 3px solid var(--s05-model); background: #fb923c14; }

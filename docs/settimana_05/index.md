@@ -194,6 +194,8 @@ Ci sono due modi comuni per eliminare il segno: prendere il valore assoluto, opp
 - attribuisce un peso maggiore agli scarti grandi: raddoppiare la distanza quadruplica il suo contributo;
 - si presta bene al calcolo algebrico, come vedremo nella Lettura C. Il valore assoluto, invece, rende i conti molto più scomodi.
 
+Se ti chiedi che cosa succederebbe scegliendo il valore assoluto, trovi una risposta nel [riquadro facoltativo](#perche-quadrato) alla fine di questa sezione.
+
 Facciamo ora la media degli scarti al quadrato. Questa quantità è la **varianza**:
 
 $$
@@ -316,6 +318,51 @@ Guarda il peso dei due contributi: il valore raro, che capita una volta su dieci
 Per il percorso principale basta questo metodo, cioè la definizione. Nella [Lettura C](#lettura-varianza) ricaveremo una formula alternativa e la applicheremo alla distribuzione binomiale.
 
 Una avvertenza per le variabili con infiniti valori possibili: una media finita non assicura una varianza finita. Occorre controllare anche la convergenza della somma degli scarti al quadrato. Per le distribuzioni di questa settimana tutto va bene, ma non è automatico in generale.
+
+<span id="perche-quadrato"></span>
+
+??? note "Approfondimento facoltativo — Perché proprio il quadrato?"
+    Questo riquadro non fa parte del programma. È per chi, arrivato alla definizione di varianza, si è chiesto: perché elevare al quadrato, se per eliminare il segno bastava il valore assoluto?
+
+    La domanda è legittima, e la risposta onesta comincia con un’ammissione: la varianza è una **convenzione**. Che cosa chiediamo a un numero che misuri la dispersione? Che non sia mai negativo, che valga zero quando la variabile non si allontana mai dal centro, e che cresca quando la probabilità si sposta verso valori lontani. Il quadrato soddisfa queste richieste, ma non è l’unico modo di farlo. I numeri costruiti per questo scopo si chiamano **indici di dispersione**, e la statistica ne usa diversi.
+
+    Il più vicino alla varianza è proprio quello che ti saresti aspettato: la media delle distanze dalla media, senza quadrati,
+
+    $$
+    \mathbb{E}\big[\,|X-\mu|\,\big]=\sum_x |x-\mu|\,p_X(x).
+    $$
+
+    Si chiama **scarto medio assoluto**. Nei manuali italiani di statistica descrittiva lo trovi anche come *scostamento semplice medio*, e in inglese come *mean absolute deviation*. Ha le stesse unità della variabile, come la deviazione standard, e un significato immediato: è la distanza media dal centro. Nulla vieta di usarlo, e in alcuni campi lo si usa davvero.
+
+    Confrontiamolo con la deviazione standard sugli esempi di questa sezione:
+
+    | Variabile | Scarto medio assoluto | Deviazione standard |
+    |---|---|---|
+    | Pagamento $B$ | 5 | 5 |
+    | Dado equo | 1,5 | circa 1,71 |
+    | $W$, che vale 10 con probabilità 0,1 | 1,8 | 3 |
+
+    Per $B$ i due indici coincidono, perché ogni valore dista dalla media esattamente 5 euro: quando tutte le distanze sono uguali, elevare al quadrato e poi prendere la radice riporta al punto di partenza. Negli altri due casi la deviazione standard è più grande. Non è un caso: si può dimostrare che lo scarto medio assoluto non supera mai la deviazione standard. Chi ha letto la [Lettura C](#formula-varianza) può verificarlo da sé. Applicata alla variabile $|X-\mu|$, la formula «media dei quadrati meno quadrato della media» dice che $\sigma^2-\big(\mathbb{E}|X-\mu|\big)^2$ è una varianza, e quindi non è negativa.
+
+    La differenza più istruttiva è quella di $W$. Lo scarto medio assoluto vale $1\cdot0{,}9+9\cdot0{,}1=0{,}9+0{,}9=1{,}8$: il valore raro fornisce metà del totale. Nella varianza lo stesso valore forniva 8,1 su 9, cioè il 90%. Il quadrato amplifica gli scarti grandi; il valore assoluto li conta per quello che sono. Quale dei due comportamenti sia preferibile dipende dalla domanda. Se un pagamento raro ma grande è proprio ciò che ci preoccupa, vogliamo un indice che lo faccia pesare molto. Se invece temiamo che un valore anomalo sia soltanto un errore di misura, preferiamo un indice che non si lasci trascinare da esso.
+
+    Perché allora la statistica ha adottato il quadrato? Le ragioni principali sono due, e nessuna delle due dice che il valore assoluto sia «sbagliato».
+
+    La prima è un legame con la media. Chiediamoci quale centro $c$ renda più piccola la media degli scarti al quadrato, $\mathbb{E}[(X-c)^2]$. La risposta è proprio $c=\mu$, e anche questo si verifica con la formula della [Lettura C](#formula-varianza). Applicata alla variabile $X-c$, che ha media $\mu-c$ e la stessa varianza $\sigma^2$ di $X$, dice che $\mathbb{E}[(X-c)^2]=\sigma^2+(\mu-c)^2$, e questa quantità è minima quando $c=\mu$. Media e varianza sono dunque fatte l’una per l’altra. Il valore assoluto, invece, è legato a un centro diverso. La media delle distanze $\mathbb{E}|X-c|$ diventa minima quando $c$ è una **mediana**, cioè un valore $m$ che divide la distribuzione in due metà: $P(X\le m)\ge1/2$ e $P(X\ge m)\ge1/2$. Per $W$ la mediana è 0, perché $W$ vale 0 nove volte su dieci, e la distanza media da 0 è $10\cdot0{,}1=1$, meno dell’1,8 misurato rispetto alla media. Chi sceglie il valore assoluto finisce quindi, in modo naturale, per misurare la dispersione attorno alla mediana, non attorno alla media.
+
+    La seconda ragione è più tecnica, ed è quella che ha deciso la partita. Quando sommiamo variabili aleatorie **indipendenti**, le varianze si sommano: lo abbiamo visto nella [Lettura C](#varianza-binomiale), dove la varianza della distribuzione binomiale risulta $n$ volte quella di una singola prova. Lo scarto medio assoluto non ha una regola di questo tipo. Prendiamo due lanci indipendenti di una moneta onesta, ciascuno con valore 0 o 1. Ogni lancio ha media $1/2$ e scarto medio assoluto $1/2$. La loro somma vale 0, 1 o 2 con probabilità $1/4$, $1/2$ e $1/4$, ha media 1 e scarto medio assoluto
+
+    $$
+    1\cdot\frac14+0\cdot\frac12+1\cdot\frac14=\frac12,
+    $$
+
+    non $1/2+1/2=1$. In generale, conoscere gli scarti medi assoluti degli addendi non basta per ricavare quello della somma. Le varianze, invece, si comportano bene: ogni lancio ha varianza $1/4$, e la somma ha varianza $1/4+1/4=1/2$. Gran parte della statistica ragiona su somme e medie di molte osservazioni. Con la varianza quei conti si fanno in una riga; con il valore assoluto diventano faticosi.
+
+    La scelta è stata anche discussa apertamente. Nel 1914 l’astronomo **Arthur Eddington** sosteneva che, per valutare la precisione di una serie di osservazioni, fosse preferibile la media delle distanze senza segno. Nel 1920 **Ronald Fisher** gli rispose con un’analisi matematica: se gli errori di misura seguono la curva a campana che incontreremo nelle prossime settimane, la deviazione standard sfrutta meglio l’informazione contenuta nei dati. L’argomento di Fisher, insieme alla comodità dei conti, prevalse, e il quadrato divenne la convenzione. Quarant’anni dopo, però, **John Tukey** mostrò che basta una piccolissima quota di valori anomali per rovesciare il confronto a favore del valore assoluto. Per questo la statistica detta **robusta**, quella che vuole risultati poco sensibili ai valori anomali, usa ancora oggi indici costruiti con i valori assoluti e con la mediana.
+
+    Esistono anche indici ancora più semplici. Il **campo di variazione**, per esempio, è la distanza tra il valore più grande e il più piccolo. È utile per un insieme di dati, ma non serve per la Geometrica, i cui valori non hanno un massimo. E c’è un piccolo vantaggio del valore assoluto legato all’avvertenza che chiude questa sezione: lo scarto medio assoluto è finito ogni volta che è finita la media, mentre la varianza può essere infinita anche quando la media è finita.
+
+    Ricapitolando: nessuno ci obbliga a misurare la dispersione con la varianza, e altri indici rispondono bene ad altre domande. Noi studiamo la varianza perché è la convenzione adottata dalla statistica, e perché le sue proprietà, a cominciare dalla somma delle varianze per variabili indipendenti, la rendono lo strumento adatto ai risultati delle prossime settimane.
 
 ## Atto I — Il 53 che non usciva {: #ritardatari }
 
@@ -594,7 +641,7 @@ $$
 Con una moneta onesta, 2 lanci. Per il 53 del Lotto, $1/(1/18)=18$ estrazioni. Per un tentativo che riesce con probabilità $0{,}2$, la media è 5.
 
 ??? note "Approfondimento facoltativo — Perché la media è $1/p$"
-    Questa dimostrazione non fa parte del programma. Serve a chi vuole vedere da dove viene il risultato: la facciamo prima guardando solo il primo tentativo, poi con la definizione di valore atteso.
+    Questa dimostrazione non fa parte del programma. Serve a chi vuole vedere da dove viene il risultato: la facciamo prima guardando solo il primo tentativo, poi con la definizione di valore atteso, infine con la strada che si trova nella maggior parte dei manuali, che usa le derivate.
 
     **1. Il ragionamento sul primo tentativo.**
 
@@ -695,6 +742,52 @@ Con una moneta onesta, 2 lanci. Per il 53 del Lotto, $1/(1/18)=18$ estrazioni. P
     $$
 
     È esattamente l’equazione del ragionamento sul primo tentativo, con $q=1-p$. I due modi di procedere sono lo stesso conto: il termine $p\cdot1$ raccoglie il caso $k=1$, il termine $(1-p)(1+\mu)$ raccoglie tutti i casi $k\ge2$ in un colpo solo.
+
+    **4. La strada dei manuali: derivare la serie geometrica.**
+
+    La dimostrazione che si incontra più spesso parte anch’essa dalla definizione, ma usa un’idea dell’analisi: riconoscere nella somma la derivata di una somma più semplice. Serve sapere che cos’è una derivata; chi non ha ancora dimestichezza può fermarsi alla strada precedente, che porta allo stesso risultato.
+
+    Il fattore $p$ non dipende da $k$, quindi possiamo portarlo fuori dalla somma:
+
+    $$
+    \mu=\sum_{k=1}^{\infty}k\,q^{k-1}p=p\sum_{k=1}^{\infty}k\,q^{k-1}.
+    $$
+
+    Guardiamo ora il singolo termine $k\,q^{k-1}$ come una funzione di $q$. È proprio la derivata di $q^k$: la regola delle potenze porta l’esponente davanti e lo abbassa di uno, cioè $\frac{d}{dq}\,q^k=k\,q^{k-1}$. Per derivare trattiamo $q$ come una variabile libera nell’intervallo $[0,1)$: studiamo la funzione e solo alla fine sostituiamo il valore $q=1-p$ del nostro problema. Il fattore $p$ è già stato messo da parte e non partecipa alla derivata. Possiamo allora scrivere
+
+    $$
+    \sum_{k=1}^{\infty}k\,q^{k-1}
+    =\sum_{k=1}^{\infty}\frac{d}{dq}\,q^k
+    =\frac{d}{dq}\sum_{k=0}^{\infty}q^k.
+    $$
+
+    Nell’ultimo passaggio abbiamo fatto due cose. Abbiamo aggiunto il termine $k=0$, cioè $q^0=1$: è una costante, la sua derivata è zero, e quindi non cambia nulla. Poi abbiamo scambiato la derivata con la somma infinita, cioè abbiamo usato «la derivata della somma è la somma delle derivate». Per una somma finita è la regola che conosci. Per una somma infinita non è automatico, ma per somme di potenze come questa è garantito da un teorema dell’analisi, purché $|q|<1$. Qui $0\le q<1$, quindi il passaggio è lecito.
+
+    La somma rimasta dentro la derivata è la **serie geometrica**, e l’abbiamo già calcolata al punto 2: le somme parziali $S_K=(1-q^K)/(1-q)$ tendono a
+
+    $$
+    \sum_{k=0}^{\infty}q^k=\frac{1}{1-q},\qquad 0\le q<1.
+    $$
+
+    Da qui viene anche il nome della distribuzione: i pesi $p,\ pq,\ pq^2,\ldots$ formano una **progressione geometrica**, in cui ogni termine si ottiene dal precedente moltiplicando per lo stesso numero $q$, e sommarli significa sommare una serie geometrica.
+
+    Resta da derivare $1/(1-q)$. Scriviamola come $(1-q)^{-1}$. La regola delle potenze dà $-1\cdot(1-q)^{-2}$, e la regola della catena aggiunge la derivata di $1-q$, che vale $-1$:
+
+    $$
+    \frac{d}{dq}\,(1-q)^{-1}=(-1)\cdot(1-q)^{-2}\cdot(-1)=\frac{1}{(1-q)^2}.
+    $$
+
+    I due segni meno si compensano e il risultato è positivo. Deve esserlo: la somma $1+q+q^2+\cdots$ cresce quando $q$ cresce.
+
+    Solo ora torniamo al nostro problema, con $q=1-p$, cioè $1-q=p$:
+
+    $$
+    \sum_{k=1}^{\infty}k\,q^{k-1}=\frac{1}{(1-q)^2}=\frac{1}{p^2},
+    \qquad
+    \mu=p\cdot\frac{1}{p^2}=\frac1p.
+    $$
+
+    Questa strada è la più rapida per chi conosce le derivate, ed è quella che troverai in quasi tutti i manuali. Il prezzo è che si appoggia su un teorema dell’analisi, lo scambio tra derivata e somma infinita, che qui accettiamo senza dimostrazione. Le strade precedenti usano invece soltanto algebra e probabilità.
 
 C’è un fraintendimento diffuso sulla media. Diciotto estrazioni in media **non** significa «entro diciotto estrazioni». Per il Lotto:
 
@@ -2151,4 +2244,5 @@ La costruzione della dispensa segue i testi disponibili nella bibliografia del c
 - **Michael Baron**, *Probability and Statistics for Computer Scientists*, 2ª ed., CRC Press, 2014, §3.4.3, «Geometric distribution», e §3.4.5, «Poisson distribution»; per la varianza, §3.3.4. Copia di lavoro: `bibs/tech/baron2014probabilityforcs.pdf`. Il testo usa la convenzione geometrica che conta anche la prova riuscita.
 - **Chris Piech**, *Probability for Computer Scientists*, materiale del corso Stanford CS109, copia in `bibs/tech/Piech2023ProbabilityForCSs.pdf`: voci «Variance», «Geometric Random Variable», «Poisson Distribution» e «Binomial Approximation». La costruzione attraverso suddivisioni dell’intervallo è ripresa con spiegazioni autonome in questa dispensa. [Portale del testo](https://chrispiech.github.io/probabilityForComputerScientists/).
 - **Burton H. Bloom**, «Space/time trade-offs in hash coding with allowable errors», *Communications of the ACM*, 13(7), 1970, pp. 422–426. Riferimento originale dell’approfondimento sul filtro; [scheda dell’articolo](https://dl.acm.org/doi/10.1145/362686.362692).
+- **Ronald A. Fisher**, «A mathematical examination of the methods of determining the accuracy of an observation by the mean error, and by the mean square error», *Monthly Notices of the Royal Astronomical Society*, 80, 1920, pp. 758–770; [DOI](https://doi.org/10.1093/mnras/80.8.758). È la risposta all’indicazione di **Arthur Eddington**, *Stellar Movements and the Structure of the Universe*, Macmillan, 1914, p. 147, discussa nel riquadro sul quadrato nella varianza. Per una ricostruzione del dibattito, compreso il risultato di John Tukey (1960) sulle distribuzioni con valori anomali, si veda **Stephen Gorard**, «Revisiting a 90-year-old debate: the advantages of the mean deviation», *British Journal of Educational Studies*, 53(4), 2005, pp. 417–430.
 - **Il 53 di Venezia:** l’episodio è una motivazione storica, non un dato necessario ai calcoli. Per la cronaca del ritardo di 182 estrazioni, si veda [*l’Unità*, 12 giugno 2005, p. 10](https://archivio.unita.news/assets/main/2005/06/12/page_010.pdf), già indicata nella bibliografia della lezione. Il modello probabilistico è dichiarato nel testo e non dipende dalle interpretazioni giornalistiche dell’episodio.

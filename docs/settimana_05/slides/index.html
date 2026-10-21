@@ -16,8 +16,8 @@
     <section id="lezione-1">
       <p class="cover-week">Settimana 5</p>
       <h2 class="cover-title">Quanto bisogna aspettare?</h2>
-      <div class="cover-acts"><span>Varianza e Geometrica</span><span>Lezione 1</span><span>mercoledì 21 ottobre</span></div>
-      <aside class="notes">Resta proiettata durante l'ingresso. Si passa subito al riepilogo della Settimana 4. Con il prologo sulla varianza la lezione è piena: le slide facoltative (S) si saltano di norma.</aside>
+      <div class="cover-acts"><span>Geometrica</span><span>Lezione 1</span><span>mercoledì 21 ottobre</span></div>
+      <aside class="notes">Resta proiettata durante l'ingresso. Si passa subito al riepilogo della Settimana 4, poi al 53 di Venezia. La varianza apre la Lezione 2.</aside>
     </section>
 
     <!-- L1-01 · 0–8: riepilogo S4 -->
@@ -33,167 +33,7 @@
         </div>
         <div class="rq-board">risposte alla lavagna</div>
       </div>
-      <p class="rq-bridge fragment">Due distribuzioni, stesso fulcro: che cosa le distingue?</p>
-      <aside class="notes">Una domanda per click: chiedi, attendi una risposta dalla classe, poi la scrivi alla lavagna. Risposte: (1) il baricentro dei valori pesati dalla PMF; (2) no, la media può essere un valore impossibile; (3) sì, la linearità non chiede indipendenza; (4) n prove, stesso p, indipendenti; media np. Otto minuti in tutto. Click 5: la frase ponte, che richiama i due fulcri sullo stesso punto 0,8 della S4; si apre il prologo sulla varianza.</aside>
-    </section>
-
-    <!-- ───── Prologo · la varianza (dispensa: «Prima di proseguire»). Scene: js/varianza.js ───── -->
-
-    <!-- V-01 · 8: Mark Twain -->
-    <section id="twain">
-      <p class="badge">Prologo · La media non basta</p>
-      <blockquote class="tw-quote">«Ci sono tre tipi di bugie: le bugie, le bugie maledette…<span class="fragment"> e le statistiche.»</span></blockquote>
-      <p class="tw-who">resa celebre da Mark Twain</p>
-      <p class="tw-moral fragment">Un solo numero può nascondere molto: anche la media.</p>
-      <aside class="notes">Trenta secondi. Click: 1 la chiusa della citazione; 2 la morale. Se chiedono l'autore: Twain la riporta nella sua autobiografia (1906–1907) attribuendola a Disraeli, ma non c'è prova che Disraeli l'abbia detta; le prime versioni sono del 1891–1895 (Mackay, Balfour, Courtney) e l'autore è ignoto (Quote Investigator, 2022). Aggancio alla S4: i due fulcri sullo stesso punto 0,8 con distribuzioni diverse. Oggi diamo un numero a quella differenza.</aside>
-    </section>
-
-    <!-- V-02 · 9: i tre revisori -->
-    <section id="revisori">
-      <p class="badge">Prologo · Quando la media ci tradisce</p>
-      <h2 class="scene-title">Chi corregge il tuo esame?</h2>
-      <svg class="scene-svg" width="1100" height="440" viewBox="0 0 1100 440" role="img" aria-label="Tre revisori A, B, C: la PMF del voto che darebbero, da 18 a 30, con il voto meritato 24 tratteggiato in rosso. A è larga attorno a 24, B stretta attorno a 24, C stretta attorno a 21. A e B hanno media 24, C ha media 21"></svg>
-      <p class="rv-cap">A e B hanno la <b class="highlight">stessa media</b>: con la sola media non sapresti scegliere.</p>
-      <aside class="notes">Il voto meritato è 24 (linea rossa). Ogni revisore è una variabile aleatoria: le barre sono la PMF del voto che darebbe. Click: 1 A, 2 B, 3 C. Prima del click 4 chiedi «quale revisore scegliete?» e fai motivare. C è da scartare: sbaglia in media (dà 21). Tra A e B quasi tutti scelgono B; il click 4 mostra i fulcri: A e B hanno media 24. 5 la frase: la media non distingue A da B. Che cosa le distingue? Quanto la massa è sparpagliata attorno al centro: la dispersione.</aside>
-    </section>
-
-    <!-- V-02b · 13–15: il biglietto di Huygens (usa i 2′ della V-06) -->
-    <section id="huygens">
-      <p class="badge">Prologo · Il biglietto di Huygens</p>
-      <h2 class="scene-title">5 euro in mano, o il biglietto?</h2>
-      <p class="hy-recall">Venerdì, con Huygens (1657): un biglietto vale il suo <b>pagamento medio</b>.</p>
-      <div class="ab-grid hy-grid">
-        <div class="ab-col fragment" data-fragment-index="1">
-          <h3>A · IN MANO</h3>
-          <p>5 € certi</p>
-          <b>5 €</b>
-          <small>sempre</small>
-        </div>
-        <div class="hy-vs fragment" data-fragment-index="4">stesso<br>valore</div>
-        <div class="ab-col fragment" data-fragment-index="2">
-          <h3>B · IL BIGLIETTO</h3>
-          <p>testa 10 €, croce 0 €</p>
-          <div class="fragment" data-fragment-index="3"><b>5 €</b><small>metà 0 €, metà 10 €</small></div>
-        </div>
-      </div>
-      <p class="hy-ask fragment" data-fragment-index="5">Quale scegliete?</p>
-      <p class="hy-gap fragment" data-fragment-index="6">Il criterio di Huygens guarda il centro. Ma B non paga mai 5 €: <b>paga 0 o 10</b>.</p>
-      <p class="hy-next fragment" data-fragment-index="7">Quanto ci si allontana dal centro? Diamogli un numero.</p>
-      <aside class="notes">Due minuti. Aggancio alla S4: venerdì il biglietto di Huygens (0 o 8 €, premio con probabilità 1/4) valeva 2 €, il pagamento medio. Oggi lo stesso criterio su un biglietto più semplice. Click: 1 A, 5 € in mano. 2 B, il biglietto: prima del click 3 chiedi «quanto vale B per Huygens?» e fai fare il conto a voce. 3 il 5 € di B. 4 «stesso valore»: per Huygens A e B sono lo stesso affare. 5 alzata di mano: di solito la maggioranza sceglie A, qualcuno B; chiedi il perché a uno per parte. Non c'è risposta giusta: è una preferenza, e la matematica non la impone. 6 il punto: il valore equo vede solo il centro, ma B non paga mai 5 € (come il dado non dà mai 3,5). 7 la differenza tra A e B è quanto ci si allontana dal centro: la slide successiva le dà un numero, e scopriremo che per A vale 0. Se chiedono perché molti preferiscono A: lo studierà Daniel Bernoulli nel 1738 (l'utilità); fuori programma. Tempo: questa slide usa i 2′ della V-06 (tre PMF), che ora si mostra solo se sei in anticipo.</aside>
-    </section>
-
-    <!-- V-03 · 15: due pagamenti, scarti e quadrati (denso) -->
-    <section id="pagamenti">
-      <p class="badge">Prologo · Misurare la dispersione</p>
-      <h2 class="scene-title">Due pagamenti con lo stesso centro</h2>
-      <div class="scene-grid">
-        <svg class="scene-svg" width="660" height="450" viewBox="0 0 660 450" role="img" aria-label="Pagamento A: sempre 5 euro. Pagamento B: 0 o 10 euro con probabilità un mezzo. Entrambi hanno media 5. Gli scarti di B sono meno 5 e più 5 e si cancellano; i loro quadrati sono due quadrati di area 25, la cui media è 25"></svg>
-        <div class="scene-panel pg-panel">
-          <ol class="scene-steps">
-            <li>Stessa media: $\mu=5$ €</li>
-            <li>Scarto dalla media: $x-\mu$</li>
-            <li>Media degli scarti: <b class="red">sempre 0</b></li>
-            <li>Al quadrato: $(-5)^2=(+5)^2=25$</li>
-            <li>Media dei quadrati:<br>$\operatorname{Var}(B)=\color{#38ef7d}{25}$, $\;\operatorname{Var}(A)=0$</li>
-          </ol>
-        </div>
-      </div>
-      <aside class="notes">L'esempio della dispensa: A e B sono i due pagamenti della slide di Huygens. Click: 1 i fulcri: media 5 per entrambi (μ, «mu»), già visto con Huygens, quindi veloce; 2 gli scarti di B: −5 e +5, il segno dice sotto o sopra il centro; 3 prima del click chiedi «e se facessimo la media degli scarti?»: si cancellano, fa 0. Vale sempre: E[X − μ] = μ − μ = 0 (linearità della S4). Anche A dà 0: la media degli scarti non distingue niente. 4 togliamo il segno elevando al quadrato: lo scarto diventa l'area di un quadrato di lato 5; raddoppiare la distanza quadruplica il contributo. 5 la media dei quadrati: 25. Per A ogni scarto è 0, quindi 0.</aside>
-    </section>
-
-    <!-- V-03b · prima della definizione: le tre PMF della V-06, senza Var né σ -->
-    <section id="tre-pmf-ordine">
-      <p class="badge">Ordinare per dispersione</p>
-      <h2 class="scene-title">Stessa media, tre dispersioni</h2>
-      <svg class="scene-svg" width="1100" height="450" viewBox="0 0 1100 450" role="img" aria-label="Tre PMF sui valori da 1 a 5, tutte con media 3: la uniforme è la più dispersa, quella a campana è intermedia, quella stretta è la meno dispersa"></svg>
-      <aside class="notes">Prima della definizione, solo a occhio: nessun numero. Click: 1 i fulcri: tutte e tre hanno media 3 (simmetriche). Prima del click 2 chiedi «quale è la più dispersa? E la meno dispersa?»: ordinano a occhio. 2 l'ordine: uniforme > a campana > stretta. 3 più massa lontano dal centro, più dispersione. Ora serve un numero che misuri questo ordine: la definizione. I valori (2; 1,2; 0,4) sono nella V-06, la stessa figura con Var e σ.</aside>
-    </section>
-
-    <!-- V-04 · 21: la definizione -->
-    <section id="definizione-varianza">
-      <p class="badge">Prologo · La definizione</p>
-      <h2 class="scene-title">Varianza: la media degli scarti al quadrato</h2>
-      <div class="s05-box vd-def">$$\operatorname{Var}(X)=\mathbb{E}\big[(X-\mu)^2\big]=\sum_x(x-\mu)^2\,p_X(x)$$</div>
-      <div class="vd-grid">
-        <ol class="vd-steps">
-          <li class="fragment">trova la media $\mu$</li>
-          <li class="fragment">sottraila a ogni valore</li>
-          <li class="fragment">eleva ogni scarto al quadrato</li>
-          <li class="fragment">pesa con le probabilità e somma</li>
-        </ol>
-        <table class="s05-table vd-table fragment">
-          <thead><tr><th>$x$</th><th>$p_B(x)$</th><th>$x-5$</th><th>$(x-5)^2$</th><th>contributo</th></tr></thead>
-          <tbody>
-            <tr><td>0</td><td>$\tfrac12$</td><td>$-5$</td><td>25</td><td>$\tfrac{25}{2}$</td></tr>
-            <tr><td>10</td><td>$\tfrac12$</td><td>$+5$</td><td>25</td><td>$\tfrac{25}{2}$</td></tr>
-            <tr class="vd-tot"><td colspan="4" class="rowhead">somma</td><td>25</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="vd-warn fragment">Al quadrato vanno gli <b>scarti</b>, non le probabilità.</p>
-      <aside class="notes">La definizione resta alla lavagna per tutta la settimana. Click 1–4: la procedura in quattro passi, falla dire alla classe usando B. 5 la tabella della dispensa. 6 l'errore tipico: (x − μ)·p² oppure x²·p senza togliere la media. Per chi conosce già E[X²] − μ²: è nella Lettura C, facoltativa; in aula si usa la definizione.</aside>
-    </section>
-
-    <!-- V-05 · 24: unità e deviazione standard -->
-    <section id="deviazione-standard">
-      <p class="badge">Prologo · Le unità</p>
-      <h2 class="scene-title">Euro al quadrato?</h2>
-      <p class="un-big">$\operatorname{Var}(B)=25\ \text{euro}^{\color{#ff6b6b}{2}}$</p>
-      <div class="un-sd fragment"><div class="s05-box">$$\sigma_X=\sqrt{\operatorname{Var}(X)}\qquad\sigma_B=\sqrt{25}=\color{#38ef7d}{5\ \text{euro}}$$</div><p>deviazione standard: torna nelle unità di $X$</p></div>
-      <ul class="un-facts">
-        <li class="fragment">$\operatorname{Var}(X)\ge0$: è una media di quadrati</li>
-        <li class="fragment">$\operatorname{Var}(X)=0$ solo se $X$ è sempre uguale alla sua media (come $A$)</li>
-      </ul>
-      <p class="un-try fragment">Prova: $Y$ vale 1 o 3, con probabilità $\tfrac12$ ciascuno. Media? Varianza?</p>
-      <aside class="notes">Chiedi «25 che cosa?»: gli scarti sono in euro, i quadrati in euro². 25 non è un pagamento di 25 euro. Click: 1 la deviazione standard, 5 euro: qui ogni pagamento dista proprio 5 dalla media; in generale σ è una scala della dispersione, non la media delle distanze. 2–3 le due proprietà. 4 la verifica della dispensa, a voce: media 2 (mai osservata), scarti ±1, Var = 1, σ = 1.</aside>
-    </section>
-
-    <!-- V-06 · (S) solo in anticipo: tre PMF, stessa media; i suoi 2′ vanno alla V-02b -->
-    <section id="tre-pmf">
-      <p class="badge">Ordinare per dispersione</p>
-      <h2 class="scene-title">Stessa media, tre dispersioni</h2>
-      <svg class="scene-svg" width="1100" height="450" viewBox="0 0 1100 450" role="img" aria-label="Tre PMF sui valori da 1 a 5, tutte con media 3: uniforme con varianza 2, a campana con varianza 1,2, stretta con varianza 0,4"></svg>
-      <aside class="notes">Sacrificabile: i suoi due minuti ora vanno alla slide di Huygens; mostrala solo se sei in anticipo. Click: 1 i fulcri: tutte e tre hanno media 3 (simmetriche). Prima del click 2 chiedi «quale ha la varianza più grande? E la più piccola?»: ordinano a occhio. 2 i valori: 2; 1,2; 0,4 (fai verificare la terza: 1·0,2 + 0 + 1·0,2 = 0,4). 3 le deviazioni standard. Più massa lontano dal centro, più varianza.</aside>
-    </section>
-
-    <!-- V-07 · 26: controllo c0 -->
-    <section id="sondaggio-c0" class="sondaggio" data-poll="s05-c0">
-      <p class="badge">Controllo comprensione</p>
-      <div class="sondaggio-grid">
-        <div>
-          <p class="sondaggio-q">Come va con la <b>varianza</b>?</p>
-          <ol class="sondaggio-opts">
-            <li><span>1</span>Ho capito e saprei rifarlo</li>
-            <li><span>2</span>Ho capito a metà / ho dubbi</li>
-            <li><span>3</span>Mi sono perso</li>
-          </ol>
-          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
-        </div>
-        <div class="sondaggio-join"></div>
-      </div>
-      <aside class="notes">1 minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, rifai la tabella di B alla lavagna prima dell'esercizio.</aside>
-    </section>
-
-    <!-- V-08 · 27–33: Esercizio 0 -->
-    <section id="esercizio-0">
-      <p class="badge">Esercizio 0 · gruppi di 3–4</p>
-      <h2 class="scene-title">La varianza di un dado</h2>
-      <div class="e5-grid">
-        <div class="ex-text">
-          <p class="ex-lead">$X$ = faccia di un dado equo.</p>
-          <ol>
-            <li>$\mu=\mathbb{E}[X]$?</li>
-            <li>$\operatorname{Var}(X)$ con la tabella degli scarti</li>
-            <li>$\sigma_X$?</li>
-          </ol>
-        </div>
-        <div class="ex-side">
-          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
-          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
-        </div>
-      </div>
-      <span class="fragment ex-go" aria-hidden="true"></span>
-      <aside class="notes">Click 1: parte il timer di 4′. Suggerimento ai bloccati: scarti simmetrici, basta calcolarne tre. Soluzione alla lavagna: μ = 3,5 (dalla S4); scarti ±0,5, ±1,5, ±2,5; quadrati 0,25, 2,25, 6,25, ciascuno due volte; Var = 17,5/6 = 35/12 ≈ 2,92; σ ≈ 1,71. Chi conosce E[X²] − μ² (Lettura C) trova 91/6 − 49/4 = 35/12: stesso numero. Errori attesi: dimenticare il peso 1/6; elevare al quadrato i valori senza togliere la media; dare σ senza radice. Poi si parte con il 53.</aside>
+      <aside class="notes">Una domanda per click: chiedi, attendi una risposta dalla classe, poi la scrivi alla lavagna. Risposte: (1) il baricentro dei valori pesati dalla PMF; (2) no, la media può essere un valore impossibile; (3) sì, la linearità non chiede indipendenza; (4) n prove, stesso p, indipendenti; media np. Otto minuti in tutto.</aside>
     </section>
 
     <!-- L1-02 · 33: il 53 di Venezia -->
@@ -487,8 +327,8 @@
     <section id="lezione-2">
       <p class="cover-week">Settimana 5</p>
       <h2 class="cover-title">Quante volte succede<br>una cosa rara?</h2>
-      <div class="cover-acts"><span>Lezione 2</span><span>venerdì 23 ottobre</span></div>
-      <aside class="notes">Apertura della Lezione 2. Dopo il riepilogo: la spiegazione della varianza dal pacco dell'anno scorso (L2-V01…V18), poi i sovraffollamenti. Alle 10:45 si chiude la S5: dopo la pausa parte la Settimana 6.</aside>
+      <div class="cover-acts"><span>Varianza e Poisson</span><span>Lezione 2</span><span>venerdì 23 ottobre</span></div>
+      <aside class="notes">Apertura della Lezione 2. Dopo il riepilogo: la varianza (V-01…V-26), poi i sovraffollamenti e la distribuzione di Poisson. Alle 10:45 si chiude la S5: dopo la pausa parte la Settimana 6.</aside>
     </section>
 
     <!-- L2-01 · 0–10: riepilogo L1 -->
@@ -507,15 +347,16 @@
           <span>scrivila alla lavagna</span>
         </div>
       </div>
-      <aside class="notes">Una domanda per click; nessuna risposta sulla slide. Fai scrivere la fila a uno studente. Risposte: (1) (1 − p)²p; (2) le prove successive sono indipendenti e identiche: la situazione è quella di partenza; (3) 18; (4) un passato di fallimenti non cambia la distribuzione dell'attesa che resta.</aside>
+      <p class="rq-bridge fragment">Due distribuzioni, stesso fulcro: che cosa le distingue?</p>
+      <aside class="notes">Una domanda per click; nessuna risposta sulla slide. Fai scrivere la fila a uno studente. Risposte: (1) (1 − p)²p; (2) le prove successive sono indipendenti e identiche: la situazione è quella di partenza; (3) 18; (4) un passato di fallimenti non cambia la distribuzione dell'attesa che resta. Click 5: la frase ponte verso la varianza, che richiama i due fulcri sullo stesso punto 0,8 della S4.</aside>
     </section>
 
-    <!-- ───── Spiegazione del docente: la varianza
-         (pacco «7. Variabili aleatorie», PSI 25/26, pp. 45–66). Scene: js/varianza-docente.js ───── -->
+    <!-- ───── La varianza (dispensa: «Prima di proseguire»; molte slide dal pacco «7. Variabili aleatorie»,
+         PSI 25/26, pp. 45–66). Scene: js/varianza.js ───── -->
 
-    <!-- L2-V01 · Mark Twain -->
+    <!-- V-01 · Mark Twain -->
     <section id="dv-twain">
-      <p class="badge">Spiegazione del docente · La varianza</p>
+      <p class="badge">La varianza · La media non basta</p>
       <div class="dv-tw-grid">
         <figure class="dv-tw-fig">
           <img src="img/twain.jpg" alt="Ritratto fotografico di Mark Twain anziano, con capelli e baffi bianchi">
@@ -527,10 +368,10 @@
         </div>
       </div>
       <p class="dv-tw-moral fragment">A volte il valore atteso non è il modo migliore di riassumere una variabile aleatoria.</p>
-      <aside class="notes">Qui comincia la spiegazione della varianza del pacco «7. Variabili aleatorie» dell'anno scorso (pp. 45–66), fino all'esercizio d'esame sul cyborg; poi si passa ai sovraffollamenti. Mercoledì il prologo ha già usato la citazione e i revisori: le prime tre slide sono un richiamo veloce. Click: 1 la chiusa della citazione; 2 la morale. Sull'attribuzione vedi le note della V-01: Twain la attribuisce a Disraeli, ma l'autore è ignoto.</aside>
+      <aside class="notes">Apre il blocco sulla varianza; molte slide vengono dal pacco «7. Variabili aleatorie» dell'anno scorso (pp. 45–66). Trenta secondi. Click: 1 la chiusa della citazione; 2 la morale. Se chiedono l'autore: Twain la riporta nella sua autobiografia (1906–1907) attribuendola a Disraeli, ma non c'è prova che Disraeli l'abbia detta; le prime versioni sono del 1891–1895 (Mackay, Balfour, Courtney) e l'autore è ignoto (Quote Investigator, 2022). Aggancio alla S4: i due fulcri sullo stesso punto 0,8 con distribuzioni diverse. Oggi diamo un numero a quella differenza.</aside>
     </section>
 
-    <!-- L2-V02 · i tre revisori, con il testo del pacco -->
+    <!-- V-02 · i tre revisori, con il testo del pacco -->
     <section id="dv-revisori">
       <p class="badge">Quando il valore atteso ci tradisce…</p>
       <div class="dv-rv-grid">
@@ -545,34 +386,173 @@
         <svg class="scene-svg" width="660" height="400" viewBox="0 0 660 400" role="img" aria-label="Tre revisori A, B, C: la PMF del voto che darebbero, da 18 a 30, con il voto meritato 24 tratteggiato in rosso. A è larga attorno a 24, B stretta attorno a 24, C stretta attorno a 21"></svg>
       </div>
       <p class="dv-rv-end">Se conoscessimo solo il valore atteso, sceglieremmo indifferentemente tra A e B: una scelta mal informata!</p>
-      <aside class="notes">Le PMF della V-02 di mercoledì, con il ragionamento del pacco scritto a fianco. All'ingresso le tre PMF. Click: 1 la domanda: alzata di mano; 2 C è da scartare: sbaglia in media (media 21); 3 A è imprevedibile: può dare 18 come 30; 4 B sembra la scelta giusta, ma A e B hanno la stessa media, 24; 5 la conclusione. Che cosa distingue A da B? Quanto la massa è sparpagliata: la dispersione.</aside>
+      <aside class="notes">Il voto meritato è 24 (linea rossa); ogni revisore è una variabile aleatoria e le barre sono la PMF del voto che darebbe. All'ingresso le tre PMF. Click: 1 la domanda: alzata di mano, fai motivare; 2 C è da scartare: sbaglia in media (media 21); 3 A è imprevedibile: può dare 18 come 30; 4 B sembra la scelta giusta, ma A e B hanno la stessa media, 24; 5 la conclusione. Che cosa distingue A da B? Quanto la massa è sparpagliata attorno al centro: la dispersione.</aside>
     </section>
 
-    <!-- L2-V03 · un altro esempio: tre PMF, stesso valore atteso -->
+    <!-- V-03 · il biglietto di Huygens (usa i 2′ della V-08) -->
+    <section id="huygens">
+      <p class="badge">Varianza · Il biglietto di Huygens</p>
+      <h2 class="scene-title">5 euro in mano, o il biglietto?</h2>
+      <p class="hy-recall">Nella Settimana 4, con Huygens (1657): un biglietto vale il suo <b>pagamento medio</b>.</p>
+      <div class="ab-grid hy-grid">
+        <div class="ab-col fragment" data-fragment-index="1">
+          <h3>A · IN MANO</h3>
+          <p>5 € certi</p>
+          <b>5 €</b>
+          <small>sempre</small>
+        </div>
+        <div class="hy-vs fragment" data-fragment-index="4">stesso<br>valore</div>
+        <div class="ab-col fragment" data-fragment-index="2">
+          <h3>B · IL BIGLIETTO</h3>
+          <p>testa 10 €, croce 0 €</p>
+          <div class="fragment" data-fragment-index="3"><b>5 €</b><small>metà 0 €, metà 10 €</small></div>
+        </div>
+      </div>
+      <p class="hy-ask fragment" data-fragment-index="5">Quale scegliete?</p>
+      <p class="hy-gap fragment" data-fragment-index="6">Il criterio di Huygens guarda il centro. Ma B non paga mai 5 €: <b>paga 0 o 10</b>.</p>
+      <p class="hy-next fragment" data-fragment-index="7">Quanto ci si allontana dal centro? Diamogli un numero.</p>
+      <aside class="notes">Due minuti. Aggancio alla S4: venerdì scorso il biglietto di Huygens (0 o 8 €, premio con probabilità 1/4) valeva 2 €, il pagamento medio. Oggi lo stesso criterio su un biglietto più semplice. Click: 1 A, 5 € in mano. 2 B, il biglietto: prima del click 3 chiedi «quanto vale B per Huygens?» e fai fare il conto a voce. 3 il 5 € di B. 4 «stesso valore»: per Huygens A e B sono lo stesso affare. 5 alzata di mano: di solito la maggioranza sceglie A, qualcuno B; chiedi il perché a uno per parte. Non c'è risposta giusta: è una preferenza, e la matematica non la impone. 6 il punto: il valore equo vede solo il centro, ma B non paga mai 5 € (come il dado non dà mai 3,5). 7 la differenza tra A e B è quanto ci si allontana dal centro: la slide successiva le dà un numero, e scopriremo che per A vale 0. Se chiedono perché molti preferiscono A: lo studierà Daniel Bernoulli nel 1738 (l'utilità); fuori programma. Tempo: questa slide usa i 2′ della V-08 (tre PMF), che ora si mostra solo se sei in anticipo.</aside>
+    </section>
+
+    <!-- V-04 · due pagamenti, scarti e quadrati (denso) -->
+    <section id="pagamenti">
+      <p class="badge">Varianza · Misurare la dispersione</p>
+      <h2 class="scene-title">Due pagamenti con lo stesso centro</h2>
+      <div class="scene-grid">
+        <svg class="scene-svg" width="660" height="450" viewBox="0 0 660 450" role="img" aria-label="Pagamento A: sempre 5 euro. Pagamento B: 0 o 10 euro con probabilità un mezzo. Entrambi hanno media 5. Gli scarti di B sono meno 5 e più 5 e si cancellano; i loro quadrati sono due quadrati di area 25, la cui media è 25"></svg>
+        <div class="scene-panel pg-panel">
+          <ol class="scene-steps">
+            <li>Stessa media: $\mu=5$ €</li>
+            <li>Scarto dalla media: $x-\mu$</li>
+            <li>Media degli scarti: <b class="red">sempre 0</b></li>
+            <li>Al quadrato: $(-5)^2=(+5)^2=25$</li>
+            <li>Media dei quadrati:<br>$\operatorname{Var}(B)=\color{#38ef7d}{25}$, $\;\operatorname{Var}(A)=0$</li>
+          </ol>
+        </div>
+      </div>
+      <aside class="notes">L'esempio della dispensa: A e B sono i due pagamenti della slide di Huygens. Click: 1 i fulcri: media 5 per entrambi (μ, «mu»), già visto con Huygens, quindi veloce; 2 gli scarti di B: −5 e +5, il segno dice sotto o sopra il centro; 3 prima del click chiedi «e se facessimo la media degli scarti?»: si cancellano, fa 0. Vale sempre: E[X − μ] = μ − μ = 0 (linearità della S4). Anche A dà 0: la media degli scarti non distingue niente. 4 togliamo il segno elevando al quadrato: lo scarto diventa l'area di un quadrato di lato 5; raddoppiare la distanza quadruplica il contributo. 5 la media dei quadrati: 25. Per A ogni scarto è 0, quindi 0.</aside>
+    </section>
+
+    <!-- V-05 · prima della definizione: le tre PMF della V-08, senza Var né σ -->
+    <section id="tre-pmf-ordine">
+      <p class="badge">Ordinare per dispersione</p>
+      <h2 class="scene-title">Stessa media, tre dispersioni</h2>
+      <svg class="scene-svg" width="1100" height="450" viewBox="0 0 1100 450" role="img" aria-label="Tre PMF sui valori da 1 a 5, tutte con media 3: la uniforme è la più dispersa, quella a campana è intermedia, quella stretta è la meno dispersa"></svg>
+      <aside class="notes">Prima della definizione, solo a occhio: nessun numero. Click: 1 i fulcri: tutte e tre hanno media 3 (simmetriche). Prima del click 2 chiedi «quale è la più dispersa? E la meno dispersa?»: ordinano a occhio. 2 l'ordine: uniforme > a campana > stretta. 3 più massa lontano dal centro, più dispersione. Ora serve un numero che misuri questo ordine: la definizione. I valori (2; 1,2; 0,4) sono nella V-08, la stessa figura con Var e σ.</aside>
+    </section>
+
+    <!-- V-06 · la definizione -->
+    <section id="definizione-varianza">
+      <p class="badge">Varianza · La definizione</p>
+      <h2 class="scene-title">Varianza: la media degli scarti al quadrato</h2>
+      <div class="s05-box vd-def">$$\operatorname{Var}(X)=\mathbb{E}\big[(X-\mu)^2\big]=\sum_x(x-\mu)^2\,p_X(x)$$</div>
+      <div class="vd-grid">
+        <ol class="vd-steps">
+          <li class="fragment">trova la media $\mu$</li>
+          <li class="fragment">sottraila a ogni valore</li>
+          <li class="fragment">eleva ogni scarto al quadrato</li>
+          <li class="fragment">pesa con le probabilità e somma</li>
+        </ol>
+        <table class="s05-table vd-table fragment">
+          <thead><tr><th>$x$</th><th>$p_B(x)$</th><th>$x-5$</th><th>$(x-5)^2$</th><th>contributo</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>$\tfrac12$</td><td>$-5$</td><td>25</td><td>$\tfrac{25}{2}$</td></tr>
+            <tr><td>10</td><td>$\tfrac12$</td><td>$+5$</td><td>25</td><td>$\tfrac{25}{2}$</td></tr>
+            <tr class="vd-tot"><td colspan="4" class="rowhead">somma</td><td>25</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="vd-warn fragment">Al quadrato vanno gli <b>scarti</b>, non le probabilità.</p>
+      <aside class="notes">La definizione resta alla lavagna per tutta la settimana. Click 1–4: la procedura in quattro passi, falla dire alla classe usando B. 5 la tabella della dispensa. 6 l'errore tipico: (x − μ)·p² oppure x²·p senza togliere la media. La formula E[X²] − μ² arriva più avanti (V-15); qui si lavora con la definizione.</aside>
+    </section>
+
+    <!-- V-07 · unità e deviazione standard -->
+    <section id="deviazione-standard">
+      <p class="badge">Varianza · Le unità</p>
+      <h2 class="scene-title">Euro al quadrato?</h2>
+      <p class="un-big">$\operatorname{Var}(B)=25\ \text{euro}^{\color{#ff6b6b}{2}}$</p>
+      <div class="un-sd fragment"><div class="s05-box">$$\sigma_X=\sqrt{\operatorname{Var}(X)}\qquad\sigma_B=\sqrt{25}=\color{#38ef7d}{5\ \text{euro}}$$</div><p>deviazione standard: torna nelle unità di $X$</p></div>
+      <ul class="un-facts">
+        <li class="fragment">$\operatorname{Var}(X)\ge0$: è una media di quadrati</li>
+        <li class="fragment">$\operatorname{Var}(X)=0$ solo se $X$ è sempre uguale alla sua media (come $A$)</li>
+      </ul>
+      <p class="un-try fragment">Prova: $Y$ vale 1 o 3, con probabilità $\tfrac12$ ciascuno. Media? Varianza?</p>
+      <aside class="notes">Chiedi «25 che cosa?»: gli scarti sono in euro, i quadrati in euro². 25 non è un pagamento di 25 euro. Click: 1 la deviazione standard, 5 euro: qui ogni pagamento dista proprio 5 dalla media; in generale σ è una scala della dispersione, non la media delle distanze. 2–3 le due proprietà. 4 la verifica della dispensa, a voce: media 2 (mai osservata), scarti ±1, Var = 1, σ = 1.</aside>
+    </section>
+
+    <!-- V-08 · (S) solo in anticipo: tre PMF, stessa media; i suoi 2′ vanno alla V-03 -->
+    <section id="tre-pmf">
+      <p class="badge">Ordinare per dispersione</p>
+      <h2 class="scene-title">Stessa media, tre dispersioni</h2>
+      <svg class="scene-svg" width="1100" height="450" viewBox="0 0 1100 450" role="img" aria-label="Tre PMF sui valori da 1 a 5, tutte con media 3: uniforme con varianza 2, a campana con varianza 1,2, stretta con varianza 0,4"></svg>
+      <aside class="notes">Sacrificabile: i suoi due minuti ora vanno alla slide di Huygens; mostrala solo se sei in anticipo. Click: 1 i fulcri: tutte e tre hanno media 3 (simmetriche). Prima del click 2 chiedi «quale ha la varianza più grande? E la più piccola?»: ordinano a occhio. 2 i valori: 2; 1,2; 0,4 (fai verificare la terza: 1·0,2 + 0 + 1·0,2 = 0,4). 3 le deviazioni standard. Più massa lontano dal centro, più varianza.</aside>
+    </section>
+
+    <!-- V-09 · controllo c0 -->
+    <section id="sondaggio-c0" class="sondaggio" data-poll="s05-c0">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>varianza</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, rifai la tabella di B alla lavagna prima dell'esercizio.</aside>
+    </section>
+
+    <!-- V-10 · Esercizio 0 -->
+    <section id="esercizio-0">
+      <p class="badge">Esercizio 0 · gruppi di 3–4</p>
+      <h2 class="scene-title">La varianza di un dado</h2>
+      <div class="e5-grid">
+        <div class="ex-text">
+          <p class="ex-lead">$X$ = faccia di un dado equo.</p>
+          <ol>
+            <li>$\mu=\mathbb{E}[X]$?</li>
+            <li>$\operatorname{Var}(X)$ con la tabella degli scarti</li>
+            <li>$\sigma_X$?</li>
+          </ol>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" aria-hidden="true"></span>
+      <aside class="notes">Click 1: parte il timer di 4′. Suggerimento ai bloccati: scarti simmetrici, basta calcolarne tre. Soluzione alla lavagna: μ = 3,5 (dalla S4); scarti ±0,5, ±1,5, ±2,5; quadrati 0,25, 2,25, 6,25, ciascuno due volte; Var = 17,5/6 = 35/12 ≈ 2,92; σ ≈ 1,71. Con E[X²] − μ² si trova 91/6 − 49/4 = 35/12: lo rifacciamo nella V-17. Errori attesi: dimenticare il peso 1/6; elevare al quadrato i valori senza togliere la media; dare σ senza radice. Poi si prosegue con le slide del pacco, dalla V-11.</aside>
+    </section>
+
+    <!-- V-11 · un altro esempio: tre PMF, stesso valore atteso -->
     <section id="dv-tre-pmf">
       <p class="badge">Un altro esempio</p>
       <svg class="scene-svg" width="1100" height="340" viewBox="0 0 1100 340" role="img" aria-label="Tre PMF sui valori da 1 a 5, tutte con valore atteso 3: uniforme con probabilità 1/5, a campana con 1/9, 2/9, 3/9, 2/9, 1/9, stretta con 2/9, 5/9, 2/9"></svg>
       <p class="dv-tp dv-tp-1">Queste tre distribuzioni hanno tutte <b>lo stesso valore atteso</b>! (provate a fare i calcoli)</p>
       <p class="dv-tp dv-tp-2">Eppure sono diverse: che cosa le rende diverse?</p>
       <p class="dv-tp dv-tp-3">Esatto: la <b>dispersione</b> della massa di probabilità… e la dispersione si misura con la <b>varianza</b>!</p>
-      <aside class="notes">Le PMF del pacco: uniforme (1/5 ciascuno), a campana (1/9, 2/9, 3/9, 2/9, 1/9), stretta (2/9, 5/9, 2/9). All'ingresso le tre PMF. Click: 1 lo stesso valore atteso, 3: sono simmetriche attorno a 3; se c'è tempo fai verificare la seconda, (1 + 4 + 9 + 8 + 5)/9 = 27/9 = 3; 2 la domanda; 3 la risposta: la dispersione, misurata dalla varianza. Per te: le varianze sono 2, 4/3 ≈ 1,33 e 4/9 ≈ 0,44.</aside>
+      <aside class="notes">La V-05 nella forma del pacco: se il tempo stringe, saltala. Le PMF: uniforme (1/5 ciascuno), a campana (1/9, 2/9, 3/9, 2/9, 1/9), stretta (2/9, 5/9, 2/9). All'ingresso le tre PMF. Click: 1 lo stesso valore atteso, 3: sono simmetriche attorno a 3; se c'è tempo fai verificare la seconda, (1 + 4 + 9 + 8 + 5)/9 = 27/9 = 3; 2 la domanda; 3 la risposta: la dispersione, misurata dalla varianza. Per te: le varianze sono 2, 4/3 ≈ 1,33 e 4/9 ≈ 0,44.</aside>
     </section>
 
-    <!-- L2-V04 · la definizione -->
+    <!-- V-12 · la definizione, nella forma del pacco -->
     <section id="dv-definizione">
-      <p class="badge">Varianza · la definizione</p>
+      <p class="badge">Varianza · La definizione</p>
       <h2 class="scene-title">Varianza</h2>
       <p class="dv-lead">Supponiamo di avere una variabile aleatoria $X$. La varianza di $X$ è definita a partire dal suo valore atteso:</p>
       <div class="dv-eq">$$\operatorname{Var}(X)=\mathbb{E}\big[(X-\mathbb{E}[X])^2\big]$$</div>
       <p class="dv-lead fragment" data-fragment-index="1">Equivalentemente, se indichiamo il valore atteso di $X$ con la lettera greca $\mu$ («mu»):</p>
       <div class="dv-eq fragment" data-fragment-index="1">$$\operatorname{Var}(X)=\mathbb{E}\big[(X-\mu)^2\big]$$</div>
       <p class="dv-next fragment">La varianza è il valore medio del <b>quadrato della differenza</b> tra i valori di $X$ e il valore medio di $X$.</p>
-      <aside class="notes">La definizione di mercoledì (V-04), nella forma del pacco. Click: 1 la stessa formula con μ; 2 la lettura in parole. Insisti sull'ordine: prima lo scarto, poi il quadrato, poi la media.</aside>
+      <aside class="notes">La definizione della V-06, nella forma del pacco: se il tempo stringe, saltala. Click: 1 la stessa formula con μ; 2 la lettura in parole. Insisti sull'ordine: prima lo scarto, poi il quadrato, poi la media.</aside>
     </section>
 
-    <!-- L2-V05 · proprietà fondamentali -->
+    <!-- V-13 · proprietà fondamentali -->
     <section id="dv-proprieta">
-      <p class="badge">Varianza · le proprietà</p>
+      <p class="badge">Varianza · Le proprietà</p>
       <h2 class="scene-title">Proprietà fondamentali</h2>
       <ol class="dv-props">
         <li class="fragment"><span><b>Non negatività</b></span><span>$\operatorname{Var}(X)\ge0$</span></li>
@@ -581,12 +561,12 @@
         <li class="fragment"><span><b>Effetto di una traslazione</b><small>$b$ è una costante</small></span><span>$\operatorname{Var}(X+b)=\operatorname{Var}(X)$</span></li>
         <li class="fragment"><span><b>Somma di variabili aleatorie indipendenti</b><small>vale solo se $X$ e $Y$ sono indipendenti</small></span><span>$\operatorname{Var}(X+Y)=\operatorname{Var}(X)+\operatorname{Var}(Y)$</span></li>
       </ol>
-      <aside class="notes">Una proprietà per click. 1 e 2 le abbiamo viste mercoledì (V-05): una media di quadrati non è negativa, e una costante coincide con la sua media. 3 e 4 le dimostriamo tra poco, insieme: Var(aX + b) = a² Var(X). 5 è la proprietà che ha fatto preferire la varianza ad altri indici (l'approfondimento sullo scarto medio assoluto nella dispensa); senza indipendenza è falsa: con Y = X si ottiene Var(2X) = 4 Var(X), non 2 Var(X). La useremo per la varianza della distribuzione binomiale.</aside>
+      <aside class="notes">Una proprietà per click. 1 e 2 le abbiamo già viste (V-07): una media di quadrati non è negativa, e una costante coincide con la sua media. 3 e 4 le dimostriamo tra poco, insieme: Var(aX + b) = a² Var(X). 5 è la proprietà che ha fatto preferire la varianza ad altri indici (l'approfondimento sullo scarto medio assoluto nella dispensa); senza indipendenza è falsa: con Y = X si ottiene Var(2X) = 4 Var(X), non 2 Var(X). La useremo per la varianza della distribuzione binomiale.</aside>
     </section>
 
-    <!-- L2-V06 · la legge dello statistico inconscio -->
+    <!-- V-14 · la legge dello statistico inconscio -->
     <section id="dv-statistico-inconscio">
-      <p class="badge">Varianza · come calcolarla</p>
+      <p class="badge">Varianza · Come calcolarla</p>
       <h2 class="scene-title">Ricordiamo: il valore atteso di una funzione</h2>
       <p class="dv-lead">Dalla Settimana 4, la proprietà del valore atteso chiamata anche <b>legge dello statistico inconscio</b>:</p>
       <div class="s05-box dv-box">$$\mathbb{E}[g(X)]=\sum_x g(x)\,P(X=x)$$</div>
@@ -596,9 +576,9 @@
       <aside class="notes">Il nome: chi la usa di solito non si accorge di applicare un teorema, perché sembra la definizione. Click: 1 la lettura in parole; 2 il vantaggio pratico; 3 il ponte: la applichiamo subito alla varianza.</aside>
     </section>
 
-    <!-- L2-V07 · Var(X) = E[X²] − E[X]² (denso) -->
+    <!-- V-15 · Var(X) = E[X²] − E[X]² (denso) -->
     <section id="dv-formula">
-      <p class="badge">Varianza · come calcolarla</p>
+      <p class="badge">Varianza · Come calcolarla</p>
       <div class="lm-rows dv-rows">
         <div class="lm-row"><p class="lm-say">statistico inconscio, con<br>$g(x)=(x-\mathbb{E}[X])^2$</p><div>$$\operatorname{Var}(X)=\mathbb{E}\big[(X-\mathbb{E}[X])^2\big]=\sum_x\big(x-\mathbb{E}[X]\big)^2\,p(x)$$</div></div>
         <div class="lm-row fragment"><p class="lm-say">sviluppiamo il quadrato</p><div>$$=\sum_x\textcolor{#fb923c}{\big(x^2-2x\,\mathbb{E}[X]+\mathbb{E}[X]^2\big)}\,p(x)$$</div></div>
@@ -610,20 +590,20 @@
       <aside class="notes">Il passaggio scritto a mano nel pacco, un passo per click: fai dire alla classe il passo prima di mostrarlo. Click: 1 il quadrato di una differenza; 2 la somma si spezza in tre, E[X] ed E[X]² sono numeri ed escono dalla somma; le graffe dicono che cosa riconosciamo; 3 i tre pezzi; 4 la formula. È facoltativa all'esame (Lettura C.1): all'esame basta la definizione, ma la formula accorcia i conti. Errore tipico: confondere E[X²] (media dei quadrati) con (E[X])² (quadrato della media); la loro differenza è proprio la varianza, quindi E[X²] ≥ (E[X])².</aside>
     </section>
 
-    <!-- L2-V08 · deviazione standard -->
+    <!-- V-16 · deviazione standard -->
     <section id="dv-deviazione-standard">
-      <p class="badge">Varianza · un’altra misura</p>
+      <p class="badge">Varianza · Un’altra misura</p>
       <h2 class="scene-title">Deviazione standard</h2>
       <p class="dv-lead">Un’altra misura di dispersione è la <b>deviazione standard</b>, la cui definizione è molto semplice:</p>
       <div class="s05-box dv-box">$$\sigma_X=\operatorname{Std}(X)=\sqrt{\operatorname{Var}(X)}$$</div>
       <p class="dv-next fragment">La deviazione standard è la radice quadrata della varianza!</p>
       <p class="dv-say fragment">Si misura nelle stesse unità di $X$: se $X$ è in euro, $\operatorname{Var}(X)$ è in euro² e $\sigma_X$ torna in euro.</p>
-      <aside class="notes">Click: 1 la frase del pacco; 2 le unità, come mercoledì con il pagamento B (25 euro², σ = 5 euro).</aside>
+      <aside class="notes">Click: 1 la frase del pacco; 2 le unità, come con il pagamento B nella V-07 (25 euro², σ = 5 euro).</aside>
     </section>
 
-    <!-- L2-V09 · esempio: il dado con la formula -->
+    <!-- V-17 · esempio: il dado con la formula -->
     <section id="dv-dado">
-      <p class="badge">Varianza · esempio</p>
+      <p class="badge">Varianza · Esempio</p>
       <h2 class="scene-title">La varianza di un dado, con la formula</h2>
       <div class="e4-wrap">
         <div class="dv-ex">
@@ -637,12 +617,12 @@
         </div>
       </div>
       <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
-      <aside class="notes">Mercoledì (Esercizio 0) lo stesso dado con la tabella degli scarti: ora con la formula. Click 1: timer di 3′. Click 2: la media dei quadrati, 91/6. Click 3: la varianza, 91/6 − 49/4 = 182/12 − 147/12 = 35/12 ≈ 2,92, lo stesso numero di mercoledì. Errore atteso: 91/6 − 7/2, cioè sottrarre la media invece del suo quadrato.</aside>
+      <aside class="notes">Nell’Esercizio 0 (V-10) lo stesso dado con la tabella degli scarti: ora con la formula. Click 1: timer di 3′. Click 2: la media dei quadrati, 91/6. Click 3: la varianza, 91/6 − 49/4 = 182/12 − 147/12 = 35/12 ≈ 2,92, lo stesso numero dell’Esercizio 0. Errore atteso: 91/6 − 7/2, cioè sottrarre la media invece del suo quadrato.</aside>
     </section>
 
-    <!-- L2-V10 · la domanda: Var(aX + b) -->
+    <!-- V-18 · la domanda: Var(aX + b) -->
     <section id="dv-axb-domanda">
-      <p class="badge">Varianza · linearità?</p>
+      <p class="badge">Varianza · Linearità?</p>
       <p class="dv-lead">Il valore atteso è lineare: $\mathbb{E}[aX+b]=a\,\mathbb{E}[X]+b$. Che cosa succede con la varianza?</p>
       <div class="e4-wrap">
         <div class="dv-axb-big"><span>Calcoliamo</span><div>$$\operatorname{Var}(aX+b)$$</div></div>
@@ -655,9 +635,9 @@
       <aside class="notes">Prima di mostrare la soluzione lascia provare: suggerisci di partire dalla definizione e di usare la linearità del valore atteso. Click 1: timer di 5′. Chi vuole un controllo numerico: X = dado, a = 2, b = 1.</aside>
     </section>
 
-    <!-- L2-V11 · Var(aX + b) passo per passo (denso) -->
+    <!-- V-19 · Var(aX + b) passo per passo (denso) -->
     <section id="dv-axb">
-      <p class="badge">Varianza · linearità?</p>
+      <p class="badge">Varianza · Linearità?</p>
       <div class="lm-rows dv-rows dv-rows-tight">
         <div class="lm-row"><p class="lm-say">per definizione di varianza</p><div>$$\operatorname{Var}(aX+b)=\mathbb{E}\Big[\big((aX+b)-\mathbb{E}[aX+b]\big)^2\Big]$$</div></div>
         <div class="lm-row fragment"><p class="lm-say">legge dello statistico inconscio</p><div>$$=\sum_x\big[(ax+b)-\mathbb{E}[aX+b]\big]^2\,p(x)$$</div></div>
@@ -670,9 +650,9 @@
       <aside class="notes">Il passaggio scritto a mano nel pacco, un passo per click. Conseguenze: con a = 0 si ritrova Var(b) = 0 (proprietà 2), con b = 0 la proprietà 3, con a = 1 la 4. Per la deviazione standard: σ di aX + b vale |a|·σ_X. Una scorciatoia per chi la vede: (aX + b) − E[aX + b] = a(X − E[X]), quindi il quadrato è a² volte quello di prima.</aside>
     </section>
 
-    <!-- L2-V12 · esercizio: il costo di un progetto -->
+    <!-- V-20 · esercizio: il costo di un progetto -->
     <section id="dv-progetto">
-      <p class="badge">Varianza · esercizio</p>
+      <p class="badge">Varianza · Esercizio</p>
       <h2 class="scene-title">Quanto costa un progetto?</h2>
       <div class="e4-wrap">
         <div class="dv-ex">
@@ -697,9 +677,9 @@
       <aside class="notes">Esercizio del prof. Marchetti, dal pacco. Click 1: timer di 6′. Ai gruppi: prima la verifica di μ e σ² per X, poi media e deviazione standard di C. Conti: E[X] = 1 + 3,3 + 3,6 + 2,6 + 1,4 = 11,9; E[X²] = 10 + 36,3 + 43,2 + 33,8 + 19,6 = 142,9; Var(X) = 142,9 − 141,61 = 1,29. La soluzione è nella slide successiva.</aside>
     </section>
 
-    <!-- L2-V13 · esercizio: la soluzione -->
+    <!-- V-21 · esercizio: la soluzione -->
     <section id="dv-progetto-soluzione">
-      <p class="badge">Varianza · esercizio, la soluzione</p>
+      <p class="badge">Varianza · Esercizio, la soluzione</p>
       <p class="dv-lead">$C=25\,000+900X$</p>
       <table class="s05-table dv-pm-table">
         <tbody>
@@ -716,9 +696,9 @@
       <aside class="notes">Click: 1 la frase chiave; 2 la media con la linearità; 3 la varianza: i 25 000 euro fissi non contano, il 900 va al quadrato; 4 la deviazione standard, che torna in euro: 1022 ≈ 900 · √1,29 ≈ 900 · 1,136. Errore tipico: 900 · 1,29 invece di 900² · 1,29.</aside>
     </section>
 
-    <!-- L2-V14 · la varianza di una variabile bernoulliana -->
+    <!-- V-22 · la varianza di una variabile bernoulliana -->
     <section id="dv-bernoulli">
-      <p class="badge">Varianza · distribuzione di Bernoulli</p>
+      <p class="badge">Varianza · Distribuzione di Bernoulli</p>
       <h2 class="scene-title">La varianza di una variabile bernoulliana</h2>
       <div class="e4-wrap">
         <div class="dv-ex">
@@ -738,9 +718,9 @@
       <aside class="notes">Click 1: timer di 3′. Click 2–4: la soluzione del pacco. La derivazione è facoltativa all'esame (Lettura C), ma è un buon esercizio sulla formula. Da far notare: p(1 − p) è massima per p = 1/2 (moneta equa, massima incertezza) e vale 0 per p = 0 o p = 1 (nessuna incertezza).</aside>
     </section>
 
-    <!-- L2-V15 · la varianza della distribuzione binomiale -->
+    <!-- V-23 · la varianza della distribuzione binomiale -->
     <section id="dv-binomiale">
-      <p class="badge">Varianza · distribuzione binomiale</p>
+      <p class="badge">Varianza · Distribuzione binomiale</p>
       <h2 class="scene-title">Varianza della distribuzione binomiale</h2>
       <p class="dv-lead">Sia $X$ una v.a. binomiale:</p>
       <p class="dv-big">$X\sim\operatorname{Bin}(n,p)$</p>
@@ -751,7 +731,7 @@
       <aside class="notes">Il pacco enunciava solo il risultato. Click: 1 il perché, con la proprietà 5; 2 la differenza con la media: la linearità del valore atteso non chiede indipendenza, la somma delle varianze sì. La derivazione completa è facoltativa (Lettura C.2). Servirà tra poco: con p = λ/n, np(1 − p) tende a λ, la varianza della distribuzione di Poisson.</aside>
     </section>
 
-    <!-- L2-V16 · esercizio d'esame: il cyborg -->
+    <!-- V-24 · esercizio d'esame: il cyborg -->
     <section id="dv-cyborg">
       <p class="badge">Esercizio d’esame · Etica dell’intelligenza artificiale</p>
       <div class="e4-wrap">
@@ -772,7 +752,7 @@
       <aside class="notes">Un esercizio d'esame del pacco. Click 1: timer di 8′. Domanda 1: chi è la variabile, che distribuzione ha, quali valori sono dispari? Domanda 2: niente conti lunghi, bastano np e np(1 − p). Le soluzioni sono nelle due slide successive.</aside>
     </section>
 
-    <!-- L2-V17 · soluzione 1 -->
+    <!-- V-25 · soluzione 1 -->
     <section id="dv-cyborg-1">
       <p class="badge">Esercizio d’esame · soluzione 1</p>
       <div class="dv-exam dv-paper">
@@ -789,7 +769,7 @@
       <aside class="notes">Una riga per click. Il punto d'esame: dichiarare variabile e distribuzione, scrivere l'evento come unione di eventi incompatibili. Il valore numerico non è richiesto. Curiosità: il valore esatto è (1 − 0,2⁶)/2 = 0,499968, quasi esattamente 1/2.</aside>
     </section>
 
-    <!-- L2-V18 · soluzione 2 -->
+    <!-- V-26 · soluzione 2 -->
     <section id="dv-cyborg-2">
       <p class="badge">Esercizio d’esame · soluzione 2</p>
       <div class="dv-exam dv-paper">
@@ -808,7 +788,7 @@
       <aside class="notes">Click: 1 media e varianza su 100 decisioni; 2 su 1000; 3 la nota di correzione. Da far notare: la media cresce come n (40, 400), la deviazione standard come √n (√24 ≈ 4,9; √240 ≈ 15,5), quindi la frazione di decisioni anti-etiche si concentra attorno a 0,4. Ci torneremo nelle prossime settimane. Poi si passa ai sovraffollamenti: un'altra v.a. binomiale.</aside>
     </section>
 
-    <!-- ───── Spiegazione del docente: dalla distribuzione binomiale alla distribuzione di Poisson
+    <!-- ───── Dalla distribuzione binomiale alla distribuzione di Poisson
          (pacco «8. Poisson», PSI 25/26). Scene: js/sovraffollamenti.js ───── -->
 
     <!-- L2-01a · il problema dei consulenti -->
@@ -1152,7 +1132,7 @@
         <div class="s05-box fragment" data-fragment-index="4">$$\mathbb{E}[X]=\operatorname{Var}(X)=\lambda$$</div>
         <p class="mv-data fragment" data-fragment-index="5">Bortkiewicz: media <b>0,61</b>,<br>varianza dei dati <b>0,608</b></p>
       </div>
-      <aside class="notes">Cinque minuti. Click: 1 la media resta λ a ogni n; 2 la varianza binomiale np(1 − p) con p = λ/n: è la formula della L2-V15 di inizio lezione; la derivazione è nella Lettura C, facoltativa; 3 la parentesi tende a 1: varianza λ; 4 il riquadro; 5 il controllo sui dati. Se si è in ritardo mostra solo 4 e 5. Il conto 0,98 − 0,61² resta all'esercizio 6 per casa.</aside>
+      <aside class="notes">Cinque minuti. Click: 1 la media resta λ a ogni n; 2 la varianza binomiale np(1 − p) con p = λ/n: è la formula della V-23; la derivazione è nella Lettura C, facoltativa; 3 la parentesi tende a 1: varianza λ; 4 il riquadro; 5 il controllo sui dati. Se si è in ritardo mostra solo 4 e 5. Il conto 0,98 − 0,61² resta all'esercizio 6 per casa.</aside>
     </section>
 
     <!-- L2-14 · 75–79 (S): widget Poisson -->
@@ -1208,9 +1188,8 @@
   <script src="../../assets/sondaggi.js"></script>
   <script src="../../assets/slides/sondaggio.js"></script>
   <script src="js/comuni.js"></script>
-  <script src="js/varianza.js"></script>
   <script src="js/lezione1.js"></script>
-  <script src="js/varianza-docente.js"></script>
+  <script src="js/varianza.js"></script>
   <script src="js/sovraffollamenti.js"></script>
   <script src="js/lezione2.js"></script>
   <script>PSIDeck.start({ onReady: function (deck) { PSISondaggio.bind(deck); S05.timers(deck); } });</script>

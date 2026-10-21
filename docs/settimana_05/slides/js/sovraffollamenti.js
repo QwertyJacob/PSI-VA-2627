@@ -1,4 +1,4 @@
-/* Lezione 2, spiegazione del docente: i sovraffollamenti da McDonald's, dalla distribuzione binomiale alla distribuzione di Poisson (n → ∞). */
+/* Lezione 2: i sovraffollamenti da McDonald's (pacco «8. Poisson», PSI 25/26), dalla distribuzione binomiale alla distribuzione di Poisson (n → ∞). */
 (function () {
   'use strict';
   var svg = PSI.svg, C = S05.C, label = S05.label;

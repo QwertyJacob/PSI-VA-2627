@@ -51,7 +51,11 @@ html.psi-lavagna-pen-mode body,
   width: 1280px;
   height: 720px;
   z-index: 44;
-  background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+  /* Griglia di puntini: lavagna.js la sposta e la scala con lo zoom della lavagna */
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.13) 1.2px, transparent 1.8px)
+      var(--psi-grid-x, -20px) var(--psi-grid-y, -20px) / var(--psi-grid, 40px) var(--psi-grid, 40px),
+    radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.28s ease;
@@ -164,6 +168,17 @@ html.psi-lavagna-pen-mode body,
   border-color: #38bdf8;
   color: #38bdf8;
   box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+}
+
+.psi-tb-btn[hidden] {
+  display: none;
+}
+
+/* Zoom della lavagna (solo con la lavagna attiva) */
+.psi-tb-zoom-btn {
+  min-width: 58px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Indicatore di connessione */

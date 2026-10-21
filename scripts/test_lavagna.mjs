@@ -39,16 +39,69 @@ async function run() {
   const server = await serve();
   const port = server.address().port;
   const baseUrl = `http://127.0.0.1:${port}/settimana_01/slides/index.html`;
+  // Canale Realtime tutto per il test: un proiettore aperto sul mazzo vero non riceve nulla
+  const deckParam = `deck=lavagna-test-${Date.now()}`;
 
   console.log(`Test server attivo su: http://127.0.0.1:${port}`);
 
   const browser = await chromium.launch({ headless: true });
 
+  // Coordinate in pixel del canvas (1280x720), convertite in coordinate client
+  const SEL = '.reveal .slides .psi-lavagna-canvas';
+  const inkAt = (page, x, y) => page.evaluate(([sel, x, y]) => {
+    const d = document.querySelector(sel).getContext('2d').getImageData(x - 3, y - 3, 7, 7).data;
+    for (let i = 3; i < d.length; i += 4) if (d[i] > 0) return true;
+    return false;
+  }, [SEL, x, y]);
+  const penLine = (page, x0, y0, x1, y1) => page.evaluate(([sel, x0, y0, x1, y1]) => {
+    const c = document.querySelector(sel);
+    const r = c.getBoundingClientRect();
+    const o = (x, y) => ({
+      clientX: r.left + x * r.width / 1280, clientY: r.top + y * r.height / 720,
+      pointerId: 30, pointerType: 'pen', pressure: 0.6, bubbles: true
+    });
+    c.dispatchEvent(new PointerEvent('pointerdown', o(x0, y0)));
+    c.dispatchEvent(new PointerEvent('pointermove', o(x1, y1)));
+    c.dispatchEvent(new PointerEvent('pointerup', o(x1, y1)));
+  }, [SEL, x0, y0, x1, y1]);
+  // fingers: [{ id, from: [x, y], to: [x, y] }], mossi insieme in 10 passi
+  const fingerGesture = (page, fingers) => page.evaluate(([sel, fingers]) => {
+    const c = document.querySelector(sel);
+    const r = c.getBoundingClientRect();
+    const o = (id, x, y) => ({
+      clientX: r.left + x * r.width / 1280, clientY: r.top + y * r.height / 720,
+      pointerId: id, pointerType: 'touch', isPrimary: id === fingers[0].id, bubbles: true
+    });
+    for (const f of fingers) c.dispatchEvent(new PointerEvent('pointerdown', o(f.id, ...f.from)));
+    for (let k = 1; k <= 10; k++) {
+      for (const f of fingers) {
+        const x = f.from[0] + (f.to[0] - f.from[0]) * k / 10;
+        const y = f.from[1] + (f.to[1] - f.from[1]) * k / 10;
+        c.dispatchEvent(new PointerEvent('pointermove', o(f.id, x, y)));
+      }
+    }
+    for (const f of fingers) c.dispatchEvent(new PointerEvent('pointerup', o(f.id, ...f.to)));
+  }, [SEL, fingers]);
+  // Dopo zoom e spostamento la lavagna si ridisegna davvero quando la vista si ferma (150 ms)
+  const settle = (page) => page.waitForTimeout(300);
+  const slideH = (page) => page.evaluate(() => window.Reveal.getIndices().h);
+  const check = (label, ok) => {
+    console.log(`${label}:`, ok);
+    if (!ok) throw new Error(`Fallito: ${label}`);
+  };
+  const eventually = async (fn) => {
+    for (let i = 0; i < 40; i++) {
+      if (await fn()) return true;
+      await new Promise((r) => setTimeout(r, 100));
+    }
+    return false;
+  };
+
   try {
     // 1. Client Proiettore (Viewer, senza ?pen)
     const viewerContext = await browser.newContext();
     const viewerPage = await viewerContext.newPage();
-    await viewerPage.goto(baseUrl);
+    await viewerPage.goto(`${baseUrl}?${deckParam}`);
     await viewerPage.waitForSelector('.reveal .slides');
 
     // Verifica assenza toolbar e pointer-events sul canvas
@@ -65,7 +118,7 @@ async function run() {
     // 2. Client iPad (Speaker, con ?pen)
     const speakerContext = await browser.newContext();
     const speakerPage = await speakerContext.newPage();
-    await speakerPage.goto(`${baseUrl}?pen=psi2627`);
+    await speakerPage.goto(`${baseUrl}?pen=psi2627&${deckParam}`);
     await speakerPage.waitForSelector('.reveal .slides');
 
     const speakerToolbar = await speakerPage.$('.psi-lavagna-toolbar');
@@ -251,7 +304,7 @@ async function run() {
       const data = ctx.getImageData(0, 0, c.width, c.height).data;
       return data.some(val => val !== 0);
     });
-    console.log('10. Palm rejection: tocco dito ignorato (canvas vuoto):', !isTouchDrawn);
+    console.log('13. Palm rejection: tocco dito ignorato (canvas vuoto):', !isTouchDrawn);
     if (isTouchDrawn) throw new Error('Palm rejection fallita: il tocco dito ha disegnato!');
 
     // 8. Test Tratti Consecutivi Rapidi (due stroke ravvicinati con Apple Pencil non devono perdersi)
@@ -323,10 +376,101 @@ async function run() {
       return { nonZeroCount };
     });
 
-    console.log('11. Tratti consecutivi rapidi (pixel disegnati > 0):', rapidStrokesResult.nonZeroCount > 0);
+    console.log('14. Tratti consecutivi rapidi (pixel disegnati > 0):', rapidStrokesResult.nonZeroCount > 0);
     if (rapidStrokesResult.nonZeroCount === 0) {
       throw new Error('I tratti rapidi sono stati ignorati! Nessun pixel disegnato.');
     }
+
+    // 9. Swipe con un dito: una slide alla volta (prima giravano reveal e la lavagna, due volte)
+    await speakerPage.evaluate(() => window.Reveal.slide(1));
+    await speakerPage.waitForTimeout(200);
+    await fingerGesture(speakerPage, [{ id: 40, from: [900, 360], to: [600, 360] }]);
+    await speakerPage.waitForTimeout(300);
+    check('15. Swipe con un dito avanza di una sola slide (1 -> 2)', (await slideH(speakerPage)) === 2);
+
+    // 10. I tratti restano con la loro slide
+    await penLine(speakerPage, 200, 200, 300, 300);
+    await speakerPage.evaluate(() => window.Reveal.next());
+    await speakerPage.waitForTimeout(200);
+    check('16. Slide 3 non mostra il tratto della slide 2', !(await inkAt(speakerPage, 250, 250)));
+    await penLine(speakerPage, 800, 200, 900, 300);
+    await speakerPage.evaluate(() => window.Reveal.prev());
+    await speakerPage.waitForTimeout(200);
+    check('17. Tornando alla slide 2 c\'è il suo tratto e non quello della 3',
+      (await inkAt(speakerPage, 250, 250)) && !(await inkAt(speakerPage, 850, 250)));
+
+    // 11. La lavagna ha tratti propri ed è una per tutto il mazzo
+    await speakerPage.click('.psi-tb-board-btn');
+    check('18. Lavagna attiva: i tratti della slide non si vedono', !(await inkAt(speakerPage, 250, 250)));
+    await penLine(speakerPage, 600, 300, 700, 400);
+    check('19. Si scrive sulla lavagna', await inkAt(speakerPage, 650, 350));
+    await speakerPage.click('.psi-tb-board-btn');
+    check('20. Lavagna spenta: torna il tratto della slide, sparisce quello della lavagna',
+      (await inkAt(speakerPage, 250, 250)) && !(await inkAt(speakerPage, 650, 350)));
+    await speakerPage.evaluate(() => window.Reveal.next());
+    await speakerPage.waitForTimeout(200);
+    await speakerPage.click('.psi-tb-board-btn');
+    check('21. Da un\'altra slide la lavagna mostra ancora i suoi tratti, senza quelli della slide',
+      (await inkAt(speakerPage, 650, 350)) && !(await inkAt(speakerPage, 850, 250)));
+
+    // 12. Sulla lavagna lo swipe con un dito non gira le slide
+    const hBoard = await slideH(speakerPage);
+    await fingerGesture(speakerPage, [{ id: 41, from: [900, 360], to: [600, 360] }]);
+    await speakerPage.waitForTimeout(300);
+    check('22. Swipe sulla lavagna: la slide non cambia', (await slideH(speakerPage)) === hBoard);
+
+    // 13. Pinch a due dita: zoom x2 attorno al centro (640, 360)
+    await fingerGesture(speakerPage, [
+      { id: 42, from: [590, 360], to: [540, 360] },
+      { id: 43, from: [690, 360], to: [740, 360] }
+    ]);
+    await settle(speakerPage);
+    const zoomText = await speakerPage.textContent('.psi-tb-zoom-btn');
+    check('23. Pinch: zoom della lavagna al 200%', zoomText === '200%');
+    check('24. Pinch: il tratto della lavagna si è ingrandito attorno alle dita',
+      (await inkAt(speakerPage, 660, 340)) && !(await inkAt(speakerPage, 650, 350)));
+    check('25. Pinch: la slide non è cambiata', (await slideH(speakerPage)) === hBoard);
+
+    if (connected) {
+      const viewerBoard = await eventually(async () =>
+        (await viewerPage.$('.reveal .slides.psi-board-active')) !== null && (await inkAt(viewerPage, 660, 340)));
+      check('26. Proiettore: lavagna attiva, con i tratti e lo zoom del tablet', viewerBoard);
+    }
+
+    // 14. Un tratto scritto con lo zoom resta al suo posto nel mondo: a 200% lo schermo (200, 600)
+    // corrisponde a (420, 480), che dopo il ritorno al 100% è di nuovo (420, 480)
+    await penLine(speakerPage, 200, 600, 300, 600);
+    await speakerPage.click('.psi-tb-zoom-btn');
+    await settle(speakerPage);
+    check('27. Tocco sullo zoom: torna al 100%', (await speakerPage.textContent('.psi-tb-zoom-btn')) === '100%');
+    check('28. Al 100% i tratti tornano al loro posto',
+      (await inkAt(speakerPage, 650, 350)) && (await inkAt(speakerPage, 445, 480)));
+
+    // 15. Sul PC: ctrl + rotellina zooma la lavagna, uno scatto al massimo x1.28
+    const center = await speakerPage.$eval(SEL, (c) => {
+      const r = c.getBoundingClientRect();
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    });
+    await speakerPage.mouse.move(center.x, center.y);
+    await speakerPage.keyboard.down('Control');
+    await speakerPage.mouse.wheel(0, -100);
+    await speakerPage.keyboard.up('Control');
+    await settle(speakerPage);
+    check('29. Ctrl + rotellina: zoom della lavagna al 128%', (await speakerPage.textContent('.psi-tb-zoom-btn')) === '128%');
+    await speakerPage.click('.psi-tb-zoom-btn');
+    await settle(speakerPage);
+
+    // 16. Pulire la lavagna chiede conferma e non tocca le slide
+    speakerPage.once('dialog', (d) => d.dismiss());
+    await speakerPage.click('.psi-tb-clear-btn');
+    check('30. Conferma rifiutata: la lavagna resta', await inkAt(speakerPage, 650, 350));
+    speakerPage.once('dialog', (d) => d.accept());
+    await speakerPage.click('.psi-tb-clear-btn');
+    check('31. Conferma accettata: la lavagna è vuota', !(await inkAt(speakerPage, 650, 350)));
+    await speakerPage.click('.psi-tb-board-btn');
+    await speakerPage.evaluate(() => window.Reveal.prev());
+    await speakerPage.waitForTimeout(200);
+    check('32. I tratti della slide 2 sono ancora lì', await inkAt(speakerPage, 250, 250));
 
     console.log('\n--- TUTTI I TEST AUTOMATICI SUPERATI CON SUCCESSO! ---');
   } finally {

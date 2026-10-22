@@ -5,6 +5,13 @@
   .md-typeset .md-typeset__scrollwrap { overflow-x: auto; max-width: 100%; }
   .md-typeset div.arithmatex { overflow-x: auto; max-width: 100%; }
   .md-typeset mjx-assistive-mml { max-width: 100%; }
+  .psi-bertrand-frame { display: block; width: 100%; height: 820px; border: 1px solid var(--md-default-fg-color--lightest); border-radius: 8px; }
+}
+@media screen and (max-width: 600px) {
+  .psi-bertrand-frame { height: 920px; }
+}
+@media print {
+  .psi-bertrand-frame { display: none; }
 }
 </style>
 
@@ -14,7 +21,7 @@
 
 ## Il percorso e ciò che è richiesto all’esame {: #esame }
 
-Fino a oggi tutte le nostre variabili aleatorie contavano qualcosa: le facce di un dado, i successi in $n$ prove, i tentativi fino al primo successo, i soldati uccisi in un anno dai calci dei cavalli. I loro valori si potevano mettere in fila, uno dopo l’altro. Questa settimana incontriamo grandezze che non si contano ma si **misurano**: il tempo che passa prima che arrivi un autobus, il tempo tra due richieste a un server, l’altezza di una persona, l’errore di uno strumento. Una misura può cadere in un punto qualsiasi di un intervallo, e i valori possibili non si possono più elencare. Ci servono quindi idee nuove per dire come si distribuisce la probabilità.
+Fino a oggi tutte le nostre variabili aleatorie contavano qualcosa: le facce di un dado, i successi in $n$ prove, i tentativi fino al primo successo, i soldati uccisi in un anno dai calci dei cavalli. I loro valori si potevano mettere in fila, uno dopo l’altro. Questa settimana incontriamo grandezze che non si contano ma si **misurano**: il tempo che passa prima che arrivi un autobus, il tempo tra due richieste a un server, l’altezza di una persona, l’errore di uno strumento. Una misura può cadere in un "punto" qualsiasi di un intervallo, e i valori possibili non si possono più elencare. Ci servono quindi idee nuove per dire come si distribuisce la probabilità.
 
 Il lavoro è diviso in due parti, che corrispondono alle due lezioni. Nella prima parte costruiamo gli strumenti: che cos’è una **variabile aleatoria continua**, perché la sua probabilità si descrive con una **densità** e si calcola come un’area, che cosa misura la **funzione di ripartizione**. Li mettiamo subito alla prova con due distribuzioni: la **distribuzione uniforme**, la più semplice di tutte, e la **distribuzione esponenziale**, che descrive il tempo di attesa tra due eventi e nasce direttamente dalla distribuzione di Poisson della settimana scorsa. Nella seconda parte studiamo la **distribuzione normale**, la celebre curva a campana: impariamo a leggerne i due parametri e a calcolarne le probabilità con una sola tabella, quella della normale standard.
 
@@ -22,7 +29,7 @@ Due storie accompagnano il percorso. La prima è un paradosso che il matematico 
 
 All’esame devi saper spiegare perché, per una variabile continua, la probabilità di un singolo valore è zero e perché la probabilità di un intervallo è un’area sotto la densità; devi saper usare la densità e la funzione di ripartizione per calcolare la probabilità che una variabile cada sotto una soglia, sopra una soglia o tra due soglie. Della distribuzione uniforme devi conoscere densità, media e varianza, e saperla usare. Della distribuzione esponenziale devi saper ricavare la coda $P(T>t)=e^{-\lambda t}$ dalla distribuzione di Poisson, conoscere densità, funzione di ripartizione, media e varianza, e dimostrare la proprietà di assenza di memoria. Della distribuzione normale devi conoscere il significato dei parametri $\mu$ e $\sigma$, saper standardizzare una variabile, calcolare probabilità con la tabella di $\Phi$ e con la sua simmetria, usare la regola 68–95–99,7 e risolvere il problema inverso, cioè trovare la soglia che corrisponde a una probabilità assegnata.
 
-Sono invece **facoltativi e non richiesti all’esame** le due letture in fondo alla dispensa (il paradosso di Bertrand con i conti completi, e il metodo dei minimi quadrati di Gauss) e i riquadri intitolati «Approfondimento facoltativo», che contengono soprattutto le dimostrazioni di medie e varianze con gli integrali. Le formule delle medie e delle varianze sono richieste; le loro dimostrazioni con gli integrali no. Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
+Sono invece **facoltative e non richieste all’esame** le tre letture in fondo alla dispensa (il paradosso di Bertrand con i conti completi, l’argomento di Jaynes sulle invarianze, e il metodo dei minimi quadrati di Gauss). Sono facoltativi anche i riquadri intitolati «Approfondimento facoltativo», che contengono soprattutto le dimostrazioni di medie e varianze con gli integrali. Le formule delle medie e delle varianze sono richieste; le loro dimostrazioni con gli integrali no. Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
 
 Una parola sugli integrali, che compariranno in questa settimana. Il simbolo di integrale indicherà sempre un’area sotto una curva. Chi ha già seguito Analisi lo riconoscerà; chi non lo ha ancora fatto può leggerlo come il nome di quell’area. Nel percorso principale le aree da calcolare a mano sono rettangoli; tutte le altre si ottengono da una formula già pronta oppure si leggono in una tabella.
 
@@ -92,9 +99,9 @@ Tre ragionamenti, tre numeri. Quale è giusto? La risposta di Bertrand è netta:
 > «Tra queste tre risposte, qual è la vera? Nessuna delle tre è falsa, nessuna è esatta: la domanda è mal posta.»
 > — J. Bertrand, *Calcul des probabilités*, 1889, p. 5 (tradotto dal francese)
 
-I conti sono corretti tutti e tre. Il problema sta nelle parole «a caso». Con un dado, «a caso» ha un significato naturale: sei facce, sei pesi uguali. Con le corde, che sono infinite e non si possono elencare, «a caso» può voler dire cose diverse: estremi distribuiti uniformemente sulla circonferenza, distanza uniforme dal centro, punto medio uniforme nel disco. Ciascuna di queste è una **procedura** diversa per produrre corde, e procedure diverse producono collezioni di corde diverse. Se le facciamo eseguire a un computer, come nella [Lettura A](#bertrand-esteso), le tre frequenze tornano: circa 0,333, 0,500 e 0,250.
+I conti sono corretti tutti e tre. Il problema sta nelle parole «a caso». Con un dado, assegnare sei pesi uguali significa assumere che sia equilibrato. Con le corde, «a caso» può voler dire cose diverse: due estremi scelti indipendentemente e uniformemente sulla circonferenza, distanza uniforme dal centro, punto medio uniforme nel disco. Ciascuna di queste è una **procedura** diversa per produrre corde, e le tre procedure assegnano probabilità diverse allo stesso evento: «la corda è più lunga del lato del triangolo». Se le facciamo eseguire a un computer, come nella [Lettura A](#bertrand-esteso), le tre frequenze tornano: circa 0,333, 0,500 e 0,250.
 
-Il paradosso ci consegna la domanda di questa settimana. Quando i valori possibili formano un continuo, non basta dire «a caso»: bisogna dichiarare **come** la probabilità è distribuita sui valori. Lo strumento che serve per dichiararlo si chiama densità di probabilità, ed è il tema del prossimo atto.
+La lezione riguarda **tutte le variabili aleatorie, discrete e continue**: conoscere i valori possibili non basta a determinarne la distribuzione. Qui, per esempio, possiamo chiamare $L$ la lunghezza della corda; i tre procedimenti assegnano a $L$ tre distribuzioni diverse. Nel continuo c’è una difficoltà ulteriore: una grandezza uniforme può smettere di esserlo dopo una trasformazione, anche biunivoca, come il passaggio da un numero positivo al suo quadrato. Su un insieme finito di $n$ esiti equiprobabili, invece, una rietichettatura biunivoca conserva i pesi $1/n$. Il problema generale è dunque giustificare la distribuzione scelta; la [Lettura B](#jaynes-invarianze) mostra come Jaynes usi le simmetrie per farlo. Nel prossimo atto studieremo come descrivere le distribuzioni continue del nostro percorso mediante una **densità di probabilità**.
 
 ## Atto II — Dal contare al misurare: la densità di probabilità {: #continuo }
 
@@ -877,7 +884,7 @@ Il cuore del metodo di Gauss è una domanda di probabilità: con quale probabili
 > «È consuetudine considerare come un assioma l’ipotesi che, se una grandezza è stata determinata con più osservazioni dirette, fatte nelle stesse circostanze e con uguale cura, la media aritmetica dei valori osservati fornisca il valore più probabile, se non rigorosamente, almeno con grande approssimazione.»
 > — C. F. Gauss, *Theoria motus*, 1809, libro II, sezione III, art. 177 (pp. 258–259 della traduzione di Davis, tradotto dall’inglese)
 
-Poi si chiede: quale curva degli errori rende la media aritmetica, sempre, il valore più probabile? La risposta, con un conto che lasciamo ai libri, è una sola: una curva a forma di campana, simmetrica attorno all’errore zero, proporzionale a $e^{-h^2x^2}$, dove $x$ è l’errore e $h$ una costante che Gauss chiama «misura della precisione». È la curva che oggi porta il suo nome. Dalla stessa curva Gauss ricava il **metodo dei minimi quadrati**, con cui calcola le orbite; lo ricostruiamo nella [Lettura B](#minimi-quadrati). Gauss è anche onesto sui limiti del suo modello: nell’articolo successivo osserva che questa curva non può descrivere rigorosamente gli errori reali, che non sono mai infinitamente grandi. È un modello, e funziona straordinariamente bene.
+Poi si chiede: quale curva degli errori rende la media aritmetica, sempre, il valore più probabile? La risposta, con un conto che lasciamo ai libri, è una sola: una curva a forma di campana, simmetrica attorno all’errore zero, proporzionale a $e^{-h^2x^2}$, dove $x$ è l’errore e $h$ una costante che Gauss chiama «misura della precisione». È la curva che oggi porta il suo nome. Dalla stessa curva Gauss ricava il **metodo dei minimi quadrati**, con cui calcola le orbite; lo ricostruiamo nella [Lettura C](#minimi-quadrati). Gauss è anche onesto sui limiti del suo modello: nell’articolo successivo osserva che questa curva non può descrivere rigorosamente gli errori reali, che non sono mai infinitamente grandi. È un modello, e funziona straordinariamente bene.
 
 ??? note "Approfondimento facoltativo — Prima di Gauss: De Moivre e le monete"
     La stessa curva era già apparsa quasi settant’anni prima, in un contesto del tutto diverso. Nel 1733 **Abraham De Moivre**, un matematico francese emigrato a Londra, cercava un modo per approssimare le probabilità della distribuzione binomiale quando il numero di lanci di una moneta è enorme e i conti esatti sono impraticabili. Lo considerava
@@ -1405,7 +1412,66 @@ for nome, metodo, teoria in [("estremi a caso", corda_estremi, 1 / 3),
 
 Le tre frequenze sono vicine a 0,333, 0,500 e 0,250. Nessuno dei tre generatori sbaglia: producono tre distribuzioni diverse di corde. In un programma la domanda di Bertrand si traduce così: quale procedura di campionamento sto usando? Chi genera punti «a caso» in un cerchio scegliendo raggio e angolo uniformi, per esempio, li addensa vicino al centro senza volerlo: è lo stesso scarto che separa il secondo metodo dal terzo.
 
-## Lettura B — Gauss e i minimi quadrati {: #minimi-quadrati .psi-facoltativo }
+## Lettura B — Jaynes: quali trasformazioni lasciano lo stesso problema? {: #jaynes-invarianze .psi-facoltativo }
+
+Questa lettura è facoltativa. Riprende l’argomento di E. T. Jaynes nell’articolo [*The Well-Posed Problem* (1973)](https://bayes.wustl.edu/etj/articles/well.pdf), soprattutto §§ 2–6: rotazioni, cambiamenti di scala e traslazioni. La domanda è come tradurre le simmetrie di un problema in vincoli sulla distribuzione di probabilità.
+
+### La stessa informazione richiede la stessa assegnazione
+
+L’idea di Jaynes è una richiesta di coerenza: **se una trasformazione lascia invariata l’informazione disponibile, i due problemi devono ricevere assegnazioni di probabilità equivalenti**. Cambiare coordinate comporta sempre una trasformazione della distribuzione. Chiedere che la distribuzione trasformata abbia anche la stessa forma richiede una ragione in più: una simmetria delle informazioni con cui descriviamo l’esperimento.
+
+Questo principio opera anche nel discreto. Per un dado che supponiamo equilibrato, scambiare le etichette delle facce non introduce alcuna distinzione probabilistica: l’assegnazione deve restare la stessa sotto tutte le permutazioni, e quindi ogni faccia ha probabilità $1/6$. Jaynes sviluppa questo ragionamento sul finito nel capitolo 2, «Numerical Values», della versione preliminare del suo libro (pp. 34–36). Nel problema delle corde, le trasformazioni da esaminare sono geometriche.
+
+### Uno stesso insieme di rette, cerchi diversi
+
+Jaynes immagina di lanciare sul piano cannucce molto lunghe e di considerare quelle che intersecano un cerchio. Idealizziamo le cannucce come **rette**: la corda è la parte di una retta interna al cerchio. Possiamo allora tenere ferme le rette e cambiare il cerchio attraverso cui le osserviamo. Ogni volta consideriamo soltanto le rette che lo intersecano: stiamo confrontando distribuzioni **condizionate all’intersezione**.
+
+Il requisito da esaminare è che uno stesso processo di rette, privo di un luogo o di una direzione privilegiati, dia distribuzioni compatibili nei diversi cerchi. Rigenerare da capo le corde secondo una ricetta legata a ciascun nuovo cerchio risponderebbe a un’altra domanda: per esempio, scegliere ogni volta due estremi uniformi restituisce sempre $1/3$, ma non verifica che le stesse rette conservino quella legge passando da un cerchio all’altro.
+
+### Rotazione: nessuna direzione privilegiata
+
+Se l’informazione non distingue il nord dall’est, ruotare il sistema di osservazione deve dare una descrizione equivalente. L’orientazione delle rette è quindi uniforme. **Tutti e tre i metodi di Bertrand rispettano questa simmetria**: le rotazioni da sole lasciano ancora aperta la scelta della distribuzione delle distanze dal centro, e dunque della lunghezza delle corde.
+
+Nell’animazione qui sotto la rotazione è resa visibile facendo girare il centro di un cerchio decentrato intorno al centro iniziale. Il raggio e la distanza fra i centri restano fissi. Le probabilità teoriche restano uguali al variare dell’angolo per tutti e tre i metodi; il campione finito di rette disegnate può avere un aspetto diverso nelle varie posizioni.
+
+### Scala: osservare le stesse rette in un cerchio più piccolo
+
+Consideriamo un cerchio più piccolo, concentrico al primo, e teniamo soltanto le rette che lo attraversano. Chiediamo che, misurando le lunghezze in unità del nuovo raggio, la distribuzione sia la stessa. In questo confronto il metodo dei due estremi uniformi perde la sua proprietà: gli estremi delle nuove corde sul cerchio piccolo non sono più due punti indipendenti e uniformi. Restano compatibili sia il metodo della distanza uniforme sia quello del punto medio uniforme nel disco. Jaynes mostra quindi che **l’invarianza di scala non basta ancora a scegliere tra $1/2$ e $1/4$**.
+
+### Traslazione: nessun centro privilegiato
+
+Spostiamo ora il cerchio rispetto alle rette, senza cambiarne il raggio. Il punto medio della porzione interna a un cerchio cambia quando passiamo all’altro cerchio. Una distribuzione uniforme dei punti medi nell’area del primo disco non resta uniforme nell’area del secondo: quel modello privilegia il centro usato per costruirlo. Nell’argomento di Jaynes è questa richiesta di compatibilità sotto traslazione a selezionare la legge che dà $1/2$.
+
+Possiamo vedere il risultato descrivendo una retta con l’orientazione $\theta\in[0,\pi)$ della sua normale e la distanza **con segno** $p$ da un’origine, misurata lungo quella normale. Senza direzioni privilegiate, per ogni distanza uguali intervalli di $\theta$ ricevono uguale peso; senza posizioni privilegiate, per ogni orientazione uguali intervalli di $p$ ricevono uguale peso. La misura delle rette è quindi proporzionale a $dp\,d\theta$. Sul piano intero questa misura è infinita; otteniamo una probabilità normalizzata quando ci limitiamo alle rette che intersecano un cerchio fissato.
+
+Scegliamo il centro di quel cerchio come origine e chiamiamo $R$ il suo raggio. Per ciascuna orientazione, una retta interseca il cerchio quando $-R<p<R$: l’intervallo ha ampiezza $2R$. La corda è lunga quando $-R/2<p<R/2$: l’intervallo ha ampiezza $R$. Dunque
+
+$$
+P\!\left(L>\sqrt3\,R\mid\text{la retta interseca il cerchio}\right)
+=\frac{R}{2R}=\frac12.
+$$
+
+È la distribuzione ottenuta dal secondo metodo di Bertrand: orientazione uniforme e distanza dal centro uniforme. Questa conclusione dipende dalle ipotesi sul processo di rette e dalle invarianze richieste. I tre conti iniziali restano corretti per i tre esperimenti che descrivono. Lo stesso Jaynes, nel § 6, distingue la distribuzione ricavata dalle informazioni disponibili dalle frequenze di un apparato reale, che può essere costruito per produrre leggi diverse.
+
+### Esplora le tre trasformazioni
+
+Nell’animazione le rette sono generate rispetto al cerchio iniziale e poi restano ferme. Il cerchio osservato resta contenuto in quello iniziale: così tutte le rette che lo attraversano sono già rappresentate dal modello. Le percentuali sono probabilità teoriche condizionate all’intersezione; il disegno è un campione riproducibile.
+
+<iframe class="psi-bertrand-frame" src="bertrand/index.html" title="Paradosso di Bertrand: invarianza per rotazione, scala e traslazione" loading="lazy"></iframe>
+
+[Apri l’animazione in una pagina dedicata](bertrand/index.html){ target="_blank" rel="noopener" }
+
+Prova prima **Ruota** con ciascun metodo: confronta gli angoli mantenendo fissi raggio e distanza fra i centri. Poi prova **Cambia scala**, e infine **Trasla** a raggio fisso. Il valore «Cerchio iniziale» riguarda sempre il disco di partenza; in modalità rotazione il cerchio osservato è già più piccolo e decentrato, quindi un eventuale scarto da quel valore precede la rotazione.
+
+| Metodo iniziale | Rotazione | Riduzione concentrica e condizionamento | Traslazione e condizionamento |
+|---|---|---|---|
+| Due estremi uniformi sulla circonferenza | Conserva la legge | Cambia la legge | Cambia la legge |
+| Distanza dal centro uniforme | Conserva la legge | Conserva la legge | Conserva la legge |
+| Punto medio uniforme nel disco | Conserva la legge | Conserva la legge | Cambia la legge |
+
+Le tre simmetrie hanno quindi ruoli diversi. Nell’argomento di Jaynes la condizione di traslazione è già sufficiente, nel contesto isotropo considerato, a determinare il risultato; la scala resta una verifica di compatibilità. Il criterio comune al discreto e al continuo è dichiarare quali trasformazioni rappresentano davvero la stessa informazione e giustificare con esse l’assegnazione di probabilità.
+
+## Lettura C — Gauss e i minimi quadrati {: #minimi-quadrati .psi-facoltativo }
 
 Questa lettura è facoltativa. Mostra, con un esempio piccolo, il legame tra la media aritmetica e il metodo dei minimi quadrati di cui parla Gauss.
 
@@ -1511,7 +1577,7 @@ Infine, gli errori di modello. Credere che dopo una lunga attesa un evento espon
 
 ## Riepilogo per lo studio {: #riepilogo }
 
-Una variabile aleatoria continua può assumere qualunque valore di un intervallo. Per lei un singolo valore ha probabilità zero, e la probabilità sta negli intervalli: è l’area sotto la **densità** $f$, una funzione mai negativa con area totale 1, che dice dove la probabilità è concentrata ma non è essa stessa una probabilità. La **funzione di ripartizione** $F(x)=P(X\le x)$ accumula quell’area da sinistra verso destra, e permette di calcolare le probabilità di «entro», «tra» e «oltre» con una lettura, una differenza o un complemento. Il paradosso di Bertrand ricorda che nel continuo dire «a caso» non basta: bisogna dire quale densità si usa.
+Una variabile aleatoria continua può assumere qualunque valore di un intervallo. Per lei un singolo valore ha probabilità zero, e la probabilità sta negli intervalli: è l’area sotto la **densità** $f$, una funzione mai negativa con area totale 1, che dice dove la probabilità è concentrata ma non è essa stessa una probabilità. La **funzione di ripartizione** $F(x)=P(X\le x)$ accumula quell’area da sinistra verso destra, e permette di calcolare le probabilità di «entro», «tra» e «oltre» con una lettura, una differenza o un complemento. La lezione di Bertrand riguarda sia il discreto sia il continuo: i valori possibili di una variabile non ne determinano la distribuzione, che va giustificata attraverso le ipotesi del modello.
 
 La **distribuzione uniforme** su $[a,b]$ ha una densità costante, un rettangolo alto $1/(b-a)$; la probabilità di un intervallo è la sua lunghezza relativa, la media è il centro $(a+b)/2$ e la varianza è $(b-a)^2/12$. La **distribuzione esponenziale** misura il tempo di attesa del prossimo evento in un flusso di Poisson di tasso $\lambda$: dalla probabilità di zero eventi si ricava $P(T>t)=e^{-\lambda t}$, e da lì la funzione di ripartizione $1-e^{-\lambda t}$ e la densità $\lambda e^{-\lambda t}$. La media è $1/\lambda$, la varianza $1/\lambda^2$, e la distribuzione non ha memoria: il tempo già atteso non cambia la probabilità del tempo che resta.
 
@@ -1528,6 +1594,8 @@ La dispensa riprende le slide e i notebook del corso degli anni precedenti, che 
 - **Michael Baron**, *Probability and Statistics for Computer Scientists*, 2ª ed., CRC Press, 2014, cap. 4, §4.1 (densità) e §4.2 (distribuzioni uniforme, esponenziale e normale), compresi gli esempi della stampante (Esempio 4.5) e dei redditi (Esempi 4.11 e 4.12). Copia di lavoro: `bibs/tech/baron2014probabilityforcs.pdf`.
 - **Mario Abundo**, note sulla proprietà di mancanza di memoria per variabili aleatorie continue, Università di Roma Tor Vergata, [memlessprcont.pdf](https://www.mat.uniroma2.it/~abundo/memlessprcont.pdf): la dimostrazione con la funzione di sopravvivenza dell’Atto V.
 - **Joseph Bertrand**, *Calcul des probabilités*, Parigi, Gauthier-Villars, 1889, cap. I, §§ 4–5, pp. 4–5 (il numero e il suo quadrato; la corda). [Scansione su Internet Archive](https://archive.org/details/calculdesprobab00bertgoog). Alcuni storici datano la prima tiratura al 1888.
+- **Edwin T. Jaynes**, *The Well-Posed Problem*, *Foundations of Physics* 3 (1973), §§ 2–6: rotazione, scala, traslazione e distinzione fra assegnazione di probabilità e frequenze sperimentali. [Testo nell’archivio della Washington University](https://bayes.wustl.edu/etj/articles/well.pdf). Copia in `bibs/classics/Jaynes_1973_The_Well_Posed_Problem.pdf`.
+- **Edwin T. Jaynes**, *Probability Theory: The Logic of Science*, versione preliminare, cap. 2, «Numerical Values», pp. 34–36: simmetrie e permutazioni sul finito. Copia in `bibs/classics/et_jaynes-the_logic_of_science.pdf`, che contiene soltanto i primi tre capitoli; il capitolo 12 su Bertrand, elencato nell’indice, non è incluso. L’altra copia locale, `Jaynes_Probability_Theory_The_Logic_of_Science.pdf`, è invece il precedente *Probability Theory with Applications in Science and Engineering*, edizione frammentaria del febbraio 1974: il frontespizio dichiara mancanti le lezioni 11–12 e rimanda anche all’articolo del 1973.
 - **Carl Friedrich Gauss**, *Theoria motus corporum coelestium in sectionibus conicis solem ambientium*, Amburgo, 1809. Traduzione inglese di Charles Henry Davis, *Theory of the Motion of the Heavenly Bodies Moving about the Sun in Conic Sections*, Boston, Little, Brown and Co., 1857: prefazione (Cerere, pp. xiv–xv), libro II, sezione III, artt. 175–186 (curva degli errori e minimi quadrati). [Scansione su Internet Archive](https://archive.org/details/theoryofmotionof00gaus); [la prefazione su MacTutor](https://mathshistory.st-andrews.ac.uk/Extras/Gauss_preface/).
 - **Abraham De Moivre**, *The Doctrine of Chances*, 3ª edizione, Londra, A. Millar, 1756, pp. 242–254: «A Method of approximating the Sum of the Terms of the Binomial $(a+b)^n$ expanded into a Series», datato 12 novembre 1733. [Scansione su Internet Archive](https://archive.org/details/doctrineofchance00moiv).
 - **Henri Poincaré**, *Calcul des probabilités*, Parigi, Gauthier-Villars, 1896 (2ª ed. 1912): la battuta di Gabriel Lippmann sulla legge normale degli errori.

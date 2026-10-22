@@ -1,0 +1,233 @@
+<div id="bertrand-invarianza">
+  <style>
+    #bertrand-invarianza { color: var(--foreground); }
+    #bertrand-invarianza .bd-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin:12px 0; }
+    #bertrand-invarianza .bd-field { min-width:0; }
+    #bertrand-invarianza .bd-field label { display:block; margin-bottom:6px; }
+    #bertrand-invarianza .bd-slider { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:16px; align-items:center; }
+    #bertrand-invarianza .bd-stage { width:100%; margin:8px 0; }
+    #bertrand-invarianza .bd-stage svg { display:block; width:100%; overflow:hidden; }
+    #bertrand-invarianza .bd-status { display:flex; flex-wrap:wrap; gap:8px 24px; margin:12px 0; }
+    #bertrand-invarianza .bd-legend { display:flex; flex-wrap:wrap; align-items:center; gap:8px 20px; }
+    #bertrand-invarianza .bd-key { display:inline-flex; align-items:center; gap:7px; }
+    #bertrand-invarianza .bd-swatch { width:22px; height:0; border-top:2px solid var(--viz-series-1); }
+    #bertrand-invarianza .bd-short { border-top:1px dashed var(--foreground); }
+    #bertrand-invarianza .bd-original { border-top:1px dashed var(--muted-foreground); }
+    #bertrand-invarianza .bd-orbit { border-top:1px dotted var(--viz-series-2); }
+    #bertrand-invarianza .bd-half { width:12px; height:12px; border:1px dotted var(--foreground); border-radius:50%; }
+    #bertrand-invarianza .bd-muted { color:color-mix(in srgb,var(--foreground) 72%,var(--background)); }
+    #bertrand-invarianza [hidden] { display:none; }
+    @media(max-width:520px) { #bertrand-invarianza .bd-fields { grid-template-columns:minmax(0,1fr); gap:12px; } }
+  </style>
+  <h3>Bertrand: le rette restano ferme</h3>
+  <div class="bd-fields">
+    <div class="bd-field">
+      <label class="form-label" for="bd-method">Metodo nel cerchio iniziale</label>
+      <select class="form-select" id="bd-method">
+        <option value="ends">Due estremi uniformi sulla circonferenza</option>
+        <option value="area">Punto medio uniforme nel disco</option>
+        <option value="lines">Distanza dal centro uniforme</option>
+      </select>
+    </div>
+    <div class="bd-field">
+      <label class="form-label" for="bd-mode">Trasformazione del cerchio</label>
+      <select class="form-select" id="bd-mode">
+        <option value="scale">Cambia scala</option>
+        <option value="shift">Trasla</option>
+        <option value="rotate">Ruota attorno al centro iniziale</option>
+      </select>
+    </div>
+  </div>
+  <label class="form-label" for="bd-parameter" id="bd-paramlabel">Raggio relativo: <span class="tabular-nums" id="bd-paramvalue">1,00</span></label>
+  <div class="bd-slider">
+    <input class="form-range" type="range" id="bd-parameter" min="0.25" max="1" step="0.005" value="1" aria-label="Raggio relativo" aria-describedby="bd-detail">
+    <button class="btn btn-primary" type="button" id="bd-play" aria-pressed="false">Anima scala</button>
+  </div>
+  <div class="bd-status tabular-nums" aria-live="polite" id="bd-status">
+    <span>Cerchio iniziale: <strong id="bd-base">33,3%</strong> lunghe</span>
+    <span>Cerchio osservato: <strong id="bd-result">33,3%</strong> lunghe</span>
+    <span class="bd-muted" id="bd-geometry">R = 1,00 · centro = 0,00</span>
+  </div>
+  <div class="bd-stage" id="bd-stage">
+    <svg id="bd-svg" role="img" aria-labelledby="bd-svg-title bd-svg-desc">
+      <title id="bd-svg-title">Rette fisse e cerchio mobile nel paradosso di Bertrand</title>
+      <desc id="bd-svg-desc">Il cerchio iniziale tratteggiato resta fisso. Il cerchio osservato cambia raggio, trasla o percorre un'orbita attorno al centro iniziale; le stesse rette formano nuove corde. Le corde lunghe sono continue e colorate, le corte tratteggiate. Il cerchio interno indica la soglia R/2.</desc>
+      <defs><clipPath id="bd-clip"><rect id="bd-cliprect" /></clipPath></defs>
+      <g clip-path="url(#bd-clip)">
+        <g id="bd-fieldlines" fill="none" stroke="var(--foreground)" stroke-width="1" opacity="0.07"></g>
+        <circle id="bd-origin" fill="none" stroke="var(--muted-foreground)" stroke-width="1" stroke-dasharray="6 5"></circle>
+        <g id="bd-rotationguide" hidden fill="none" stroke="var(--viz-series-2)" stroke-width="1" stroke-dasharray="2 4" opacity="0.8">
+          <circle id="bd-orbit"></circle>
+          <path id="bd-orbitradius"></path>
+        </g>
+        <circle id="bd-targetfill" fill="var(--viz-series-1)" opacity="0.035"></circle>
+        <g id="bd-shortchords" fill="none" stroke="var(--foreground)" stroke-width="1" stroke-dasharray="3 4" opacity="0.19"></g>
+        <g id="bd-longchords" fill="none" stroke="var(--viz-series-1)" stroke-width="1.2" opacity="0.38"></g>
+        <circle id="bd-halfcircle" fill="none" stroke="var(--foreground)" stroke-width="1" stroke-dasharray="2 4" opacity="0.7"></circle>
+        <circle id="bd-target" fill="none" stroke="var(--foreground)" stroke-width="1.6"></circle>
+        <circle id="bd-center" r="3" fill="var(--foreground)"></circle>
+      </g>
+    </svg>
+  </div>
+  <div class="bd-legend text-small">
+    <span class="bd-key"><span class="bd-swatch"></span>Corde lunghe</span>
+    <span class="bd-key"><span class="bd-swatch bd-short"></span>Corde corte</span>
+    <span class="bd-key"><span class="bd-swatch bd-original"></span>Cerchio iniziale</span>
+    <span class="bd-key"><span class="bd-half"></span>Soglia R/2</span>
+    <span class="bd-key" id="bd-orbit-key" hidden><span class="bd-swatch bd-orbit"></span>Orbita del centro</span>
+  </div>
+  <div class="text-small bd-muted" id="bd-detail" style="margin-top:10px">Probabilità teorica fra le rette che intersecano il cerchio osservato; disegno campionato.</div>
+  <script>
+  (() => {
+    const root = document.getElementById('bertrand-invarianza');
+    const q = id => root.querySelector('#bd-' + id);
+    const method = q('method'), mode = q('mode'), parameter = q('parameter'), play = q('play');
+    const svg = q('svg'), stage = q('stage');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const base = {ends:1/3, area:1/4, lines:1/2};
+    let lines = [], width = 736, height = 420, scale = 180, cx = 368, cy = 210;
+    let radius = 1, centerX = 0, centerY = 0, animation = 0, animating = false;
+    const fixedRadius = 0.42, orbitRadius = 0.40;
+    const fmt = n => n.toLocaleString('it-IT',{minimumFractionDigits:2, maximumFractionDigits:2});
+    const pct = n => (100*n).toLocaleString('it-IT',{minimumFractionDigits:1, maximumFractionDigits:1})+'%';
+    const clamp = n => Math.max(-1,Math.min(1,n));
+    function cdf(p) {
+      const x = clamp(p);
+      if(method.value === 'lines') return (x+1)/2;
+      if(method.value === 'area') return (1+x*Math.abs(x))/2;
+      return 0.5 + Math.asin(x)/Math.PI;
+    }
+    function probability(r, x, y) {
+      let hit = 0, long = 0;
+      const n = 2048;
+      // Every initial law is isotropic: rotate the integration coordinates so
+      // the target center lies on the x axis. This also avoids quadrature drift
+      // when only the polar angle changes.
+      const distance = Math.hypot(x,y);
+      for(let k=0;k<n;k++) {
+        const s = distance*Math.cos(Math.PI*(k+0.5)/n);
+        hit += cdf(s+r)-cdf(s-r);
+        long += cdf(s+r/2)-cdf(s-r/2);
+      }
+      return long/hit;
+    }
+    function rng(seed) {
+      let v = seed >>> 0;
+      return () => { v = (Math.imul(v,1664525)+1013904223)>>>0; return (v+0.5)/4294967296; };
+    }
+    function makeLines() {
+      const rand = rng(28317);
+      lines = [];
+      for(let i=0;i<460;i++) {
+        const a = rand()*Math.PI;
+        const u = rand();
+        let p;
+        if(method.value === 'lines') p=2*u-1;
+        else if(method.value === 'area') p=(u<0.5?-1:1)*Math.sqrt(Math.abs(2*u-1));
+        else p = Math.sin(Math.PI*(u-0.5));
+        lines.push({nx:Math.cos(a),ny:Math.sin(a),p});
+      }
+    }
+    const path = (x1,y1,x2,y2) => 'M'+(cx+x1*scale).toFixed(2)+','+(cy-y1*scale).toFixed(2)+'L'+(cx+x2*scale).toFixed(2)+','+(cy-y2*scale).toFixed(2);
+    function circle(el, x, y, r) {
+      el.setAttribute('cx',cx+x*scale); el.setAttribute('cy',cy-y*scale); el.setAttribute('r',r*scale);
+    }
+    function setPath(group, d) {
+      let p = group.firstElementChild;
+      if(!p) { p = document.createElementNS('http://www.w3.org/2000/svg','path'); group.appendChild(p); }
+      p.setAttribute('d',d);
+    }
+    function draw(announce=true) {
+      const rotating = mode.value==='rotate';
+      radius = mode.value==='scale' ? Number(parameter.value) : fixedRadius;
+      const angle = rotating ? Number(parameter.value)*Math.PI/180 : 0;
+      centerX = rotating ? orbitRadius*Math.cos(angle) : mode.value==='shift' ? Number(parameter.value) : 0;
+      centerY = rotating ? orbitRadius*Math.sin(angle) : 0;
+      let field='', long='', short='';
+      for(const line of lines) {
+        const {nx,ny,p} = line;
+        const tx=-ny, ty=nx;
+        const mx=p*nx, my=p*ny;
+        field += path(mx-3*tx,my-3*ty,mx+3*tx,my+3*ty);
+        const d = p-nx*centerX-ny*centerY;
+        if(Math.abs(d)>=radius) continue;
+        const h = Math.sqrt(Math.max(0,radius*radius-d*d));
+        const qx=centerX+d*nx, qy=centerY+d*ny;
+        const segment=path(qx-h*tx,qy-h*ty,qx+h*tx,qy+h*ty);
+        if(Math.abs(d)<radius/2) long += segment; else short += segment;
+      }
+      setPath(q('fieldlines'),field); setPath(q('longchords'),long); setPath(q('shortchords'),short);
+      circle(q('origin'),0,0,1); circle(q('targetfill'),centerX,centerY,radius);
+      circle(q('target'),centerX,centerY,radius); circle(q('halfcircle'),centerX,centerY,radius/2);
+      circle(q('orbit'),0,0,orbitRadius);
+      q('orbitradius').setAttribute('d',path(0,0,centerX,centerY));
+      q('rotationguide').toggleAttribute('hidden',!rotating);
+      q('orbit-key').hidden=!rotating;
+      q('center').setAttribute('cx',cx+centerX*scale); q('center').setAttribute('cy',cy-centerY*scale);
+      q('base').textContent=pct(base[method.value]);
+      const result=probability(radius,centerX,centerY);
+      q('result').textContent=pct(result);
+      q('geometry').textContent='R = '+fmt(radius)+' · centro = ('+fmt(centerX)+'; '+fmt(centerY)+')';
+      q('paramvalue').textContent=rotating ? Math.round(Number(parameter.value))+'°' : fmt(Number(parameter.value));
+      parameter.setAttribute('aria-valuetext',rotating ? Math.round(Number(parameter.value))+' gradi' : fmt(Number(parameter.value)));
+      // Suppress frame-by-frame announcements while the animation runs.
+      q('status').setAttribute('aria-live', announce ? 'polite' : 'off');
+      svg.setAttribute('data-probability',result.toFixed(8));
+      svg.setAttribute('data-radius',radius); svg.setAttribute('data-offset',Math.hypot(centerX,centerY));
+      svg.setAttribute('data-center-x',centerX); svg.setAttribute('data-center-y',centerY);
+    }
+    function resize() {
+      width = Math.max(240,stage.getBoundingClientRect().width);
+      height = Math.min(420,width*0.79);
+      cx=width/2; cy=height/2; scale=(Math.min(width,height)-28)/2;
+      svg.setAttribute('viewBox','0 0 '+width+' '+height);
+      svg.setAttribute('height',height);
+      q('cliprect').setAttribute('width',width); q('cliprect').setAttribute('height',height);
+      draw(!animating);
+    }
+    function stop() {
+      cancelAnimationFrame(animation); animating=false;
+      play.textContent=mode.value==='scale' ? 'Anima scala' : mode.value==='shift' ? 'Anima traslazione' : reduceMotion ? 'Ruota di 90°' : 'Anima rotazione';
+      play.setAttribute('aria-pressed','false');
+      q('status').setAttribute('aria-live','polite');
+    }
+    function setMode() {
+      stop();
+      const shifting = mode.value==='shift';
+      const rotating = mode.value==='rotate';
+      parameter.min=shifting || rotating ? '0' : '0.25';
+      parameter.max=rotating ? '360' : shifting ? '0.58' : '1';
+      parameter.step=rotating ? '1' : '0.005';
+      parameter.value=shifting || rotating ? '0' : '1';
+      const label=rotating ? 'Angolo di rotazione' : shifting ? 'Spostamento del centro' : 'Raggio relativo';
+      parameter.setAttribute('aria-label',label);
+      q('paramlabel').firstChild.textContent=label+': ';
+      q('detail').textContent=rotating
+        ? 'R = 0,42 e distanza 0,40 dal centro iniziale restano fissi: cambia soltanto l’angolo. Eventuali differenze dal valore iniziale dipendono da raggio e decentramento, già fissati prima di ruotare. Le rette restano fisse. Tutte e tre le leggi sono invarianti per rotazione: la probabilità teorica resta costante con l’angolo e le rotazioni da sole non le distinguono. Il campione disegnato può fluttuare.'
+        : 'Probabilità teorica fra le rette che intersecano il cerchio osservato; disegno campionato. Si muove soltanto il cerchio: le rette restano fisse.';
+      draw();
+    }
+    method.addEventListener('change',()=>{stop();makeLines();draw();});
+    mode.addEventListener('change',setMode);
+    parameter.addEventListener('input',()=>{stop();draw();});
+    play.addEventListener('click',()=>{
+      if(animating) {stop();draw();return;}
+      const from=Number(parameter.value), shifting=mode.value==='shift';
+      const rotating=mode.value==='rotate';
+      const to=rotating ? from+360 : shifting ? (from>0.29 ? 0 : 0.58) : (from<0.70 ? 1 : 0.42);
+      if(reduceMotion) {parameter.value=rotating ? (from+90)%360 : to;draw();return;}
+      const start=performance.now(); animating=true;play.textContent='Pausa';play.setAttribute('aria-pressed','true');
+      const frame=t=>{
+        const u=Math.min(1,(t-start)/(rotating ? 6000 : 2400)), ease=u*u*(3-2*u);
+        const value=from+(to-from)*ease;
+        parameter.value=rotating ? (u===1 && from===0 ? 360 : value%360) : value;
+        draw(false);
+        if(u<1) animation=requestAnimationFrame(frame);
+        else {stop();draw();}
+      };
+      animation=requestAnimationFrame(frame);
+    });
+    makeLines(); new ResizeObserver(resize).observe(stage); resize();
+  })();
+  </script>
+</div>

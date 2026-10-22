@@ -706,7 +706,7 @@ più di una volta su tre, qualunque sia $\lambda$. Se la stampante riceve in med
 
     qualunque sia $n$. Facendo crescere $n$ i pezzetti diventano infinitamente fitti e il tempo diventa continuo, ma la media resta $1/\lambda$. In questo senso la distribuzione esponenziale è la distribuzione geometrica vista con una lente d’ingrandimento infinita.
 
-    **2. Con gli integrali.** Per definizione $\mathbb{E}[T]=\int_0^{\infty}t\,\lambda e^{-\lambda t}\,dt$. Usiamo l’integrazione per parti, $\int u\,dv=uv-\int v\,du$, con $u=t$ (quindi $du=dt$) e $dv=\lambda e^{-\lambda t}dt$ (quindi $v=-e^{-\lambda t}$):
+    **2. Con gli integrali.** Per definizione $\mathbb{E}[T]=\int_0^{\infty}t\,\lambda e^{-\lambda t}\,dt$. Usiamo l’integrazione per parti, $\int u\,dv=uv-\int v\,du$, con $u=t$ (quindi $du=dt$) e $dv=\lambda e^{-\lambda t}dt$. Per $v$ serve una funzione la cui derivata sia $\lambda e^{-\lambda t}$: va bene $v=-e^{-\lambda t}$, perché derivando $e^{-\lambda t}$ esce il fattore $-\lambda$ e il segno meno davanti lo compensa. Si ottiene
 
     $$
     \mathbb{E}[T]=\Big[-t\,e^{-\lambda t}\Big]_0^{\infty}+\int_0^{\infty}e^{-\lambda t}\,dt.
@@ -726,9 +726,9 @@ più di una volta su tre, qualunque sia $\lambda$. Se la stampante riceve in med
     \operatorname{Var}(T)=\mathbb{E}[T^2]-\big(\mathbb{E}[T]\big)^2=\frac2{\lambda^2}-\frac1{\lambda^2}=\frac1{\lambda^2}.
     $$
 
-Vediamo un esempio completo, ripreso dal libro di Michael Baron. A una stampante condivisa arrivano in media 3 lavori all’ora, in modo indipendente. Qual è il tempo medio tra un lavoro e il successivo, e qual è la probabilità che il prossimo lavoro arrivi entro 5 minuti?
+Vediamo un esempio completo, ripreso dal libro di Michael Baron. A una stampante condivisa arrivano in media 3 lavori all’ora. Supponiamo che arrivino uno alla volta, indipendentemente l’uno dall’altro e con un ritmo che resta costante nel periodo che ci interessa. Qual è il tempo medio tra un lavoro e il successivo, e qual è la probabilità che il prossimo lavoro arrivi entro 5 minuti?
 
-Gli arrivi dei lavori sono eventi di Poisson, quindi il tempo $T$ fino al prossimo lavoro ha distribuzione esponenziale con $\lambda=3$ lavori all’ora. Il tempo medio è $\mathbb{E}[T]=1/3$ di ora, cioè 20 minuti. Per la seconda domanda bisogna fare attenzione alle unità di misura: il tasso è espresso in lavori all’ora, quindi anche il tempo va espresso in ore. Cinque minuti sono $5/60=1/12$ di ora, e
+Sono le ipotesi della distribuzione di Poisson, quindi il tempo $T$ fino al prossimo lavoro ha distribuzione esponenziale con $\lambda=3$ lavori all’ora. Il tempo medio è $\mathbb{E}[T]=1/3$ di ora, cioè 20 minuti. Per la seconda domanda bisogna fare attenzione alle unità di misura: il tasso è espresso in lavori all’ora, quindi anche il tempo va espresso in ore. Cinque minuti sono $5/60=1/12$ di ora, e
 
 $$
 P\Big(T\le\frac1{12}\Big)=F\Big(\frac1{12}\Big)=1-e^{-3\cdot\frac1{12}}=1-e^{-0{,}25}\approx0{,}221.
@@ -772,7 +772,7 @@ $$
 
 L’attesa già trascorsa conta: più aspettiamo senza vedere l’autobus, più il suo arrivo si avvicina. L’autobus uniforme ha **memoria**.
 
-La distribuzione esponenziale si comporta in modo completamente diverso. Gode della proprietà di **assenza di memoria** (in inglese *memoryless property*): se il tempo di attesa ha già superato $t$, la probabilità di dover aspettare ancora almeno $u$ è la stessa che avevamo all’inizio, come se l’attesa fosse appena cominciata. In formula, una variabile $T\ge0$ è senza memoria se, per ogni $t,u>0$,
+La distribuzione esponenziale si comporta in modo completamente diverso. Gode della proprietà di **assenza di memoria**, che abbiamo già incontrato con la distribuzione geometrica ([Settimana 5, §5](../settimana_05/index.md#assenza-memoria)): se il tempo di attesa ha già superato $t$, la probabilità di dover aspettare ancora almeno $u$ è la stessa che avevamo all’inizio, come se l’attesa fosse appena cominciata. In formula, una variabile $T\ge0$ è senza memoria se, per ogni $t,u>0$,
 
 $$
 P(T>t+u\mid T>t)=P(T>u).
@@ -1531,7 +1531,7 @@ Il numero di anni di funzionamento di una radio ha distribuzione esponenziale di
 
 ### Esercizio 4 — La stampante e la distribuzione di Poisson {: #esercizio-4 }
 
-A una stampante condivisa arrivano in media 3 lavori all’ora, in modo indipendente. (a) Qual è la probabilità che in un’ora non arrivi nessun lavoro? Risolvi in due modi: con la distribuzione esponenziale e con la distribuzione di Poisson. (b) Qual è la probabilità che il prossimo lavoro arrivi tra 10 e 30 minuti da adesso? (c) Il server di stampa non riceve lavori da 40 minuti: qual è la probabilità che ne arrivi uno nei prossimi 5 minuti?
+A una stampante condivisa arrivano in media 3 lavori all’ora, uno alla volta, indipendentemente l’uno dall’altro e con un ritmo costante. (a) Qual è la probabilità che in un’ora non arrivi nessun lavoro? Risolvi in due modi: con la distribuzione esponenziale e con la distribuzione di Poisson. (b) Qual è la probabilità che il prossimo lavoro arrivi tra 10 e 30 minuti da adesso? (c) Il server di stampa non riceve lavori da 40 minuti: qual è la probabilità che ne arrivi uno nei prossimi 5 minuti?
 
 ??? esempio-svolto "Soluzione ragionata"
     Il tempo $T$ fino al prossimo lavoro, in ore, è esponenziale con $\lambda=3$. (a) Con la distribuzione esponenziale: $P(T>1)=e^{-3}\approx0{,}050$. Con la distribuzione di Poisson: il numero di lavori in un’ora ha media 3, e $P(X=0)=e^{-3}$. Stesso numero, perché è lo stesso evento: è il ragionamento con cui abbiamo costruito la distribuzione esponenziale. (b) Dieci minuti sono $1/6$ di ora e trenta minuti $1/2$ ora; con la funzione di ripartizione, $F(1/2)-F(1/6)=e^{-3/6}-e^{-3/2}=e^{-0{,}5}-e^{-1{,}5}\approx0{,}607-0{,}223=0{,}384$. (c) Per l’assenza di memoria i 40 minuti di silenzio non contano: la probabilità è $P(T\le1/12)=1-e^{-0{,}25}\approx0{,}221$, la stessa dell’esempio nel testo. L’errore tipico è pensare che dopo un lungo silenzio un lavoro sia ormai «dovuto».

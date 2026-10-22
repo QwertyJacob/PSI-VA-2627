@@ -1,0 +1,355 @@
+/*
+ * Settimana 6: variabili aleatorie continue e distribuzione normale.
+ * Scene: js/comuni.js, js/lezione1.js, js/lezione2.js.
+ * Le regole comuni (badge, copertine, riepiloghi, esercizi, timer, widget,
+ * uscite) sono riprese dal mazzo della Settimana 5, così questo mazzo non
+ * dipende dai fogli delle altre settimane.
+ *
+ * Colori della settimana: azzurro = dati e aree, arancio = modello,
+ * verde = successo / valore cercato, viola = terza fascia, rosso = errore.
+ */
+:root {
+  --r-main-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --r-heading-font: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --r-heading-text-transform: none;
+  --r-main-font-size: 30px;
+  --s06-data: var(--psi-a);
+  --s06-model: #fb923c;
+  --s06-ok: var(--psi-sel);
+  --s06-third: var(--psi-c);
+  --s06-red: #ff6b6b;
+}
+.reveal .slides section { text-align: center; }
+.reveal .slides section.sondaggio { text-align: left; }
+.reveal .badge { display: inline-block; margin: 0 0 20px; padding: 6px 16px; border-radius: 20px; font-size: .6em; font-weight: 700; letter-spacing: 1px; background: #16675f; color: #fff; }
+.reveal .data { color: var(--s06-data); }
+.reveal .model { color: var(--s06-model); }
+.reveal .highlight { color: var(--s06-ok); }
+.reveal .third { color: var(--s06-third); }
+.reveal .red { color: var(--s06-red); }
+.reveal .muted { color: var(--psi-muted); }
+.reveal .scene-svg { margin: auto; }
+
+/* ── Testi dentro gli SVG ── */
+.reveal .scene-svg .s06-label { font: 24px var(--r-main-font); fill: var(--psi-text); }
+.reveal .scene-svg .s06-small { font: 19px var(--r-main-font); fill: var(--psi-muted); }
+.reveal .scene-svg .s06-tiny { font: 15px var(--r-main-font); fill: var(--psi-muted); }
+.reveal .scene-svg .s06-big { font: 700 44px var(--r-main-font); fill: var(--psi-text); }
+.reveal .scene-svg .s06-huge { font: 800 72px var(--r-main-font); fill: var(--psi-text); }
+.reveal .scene-svg .s06-math { font: 30px KaTeX_Main, serif; fill: var(--psi-text); }
+.reveal .scene-svg .s06-mono { font: 700 64px 'JetBrains Mono', 'Fira Mono', monospace; fill: var(--psi-text); }
+.reveal .scene-svg .s06-data { fill: var(--s06-data); }
+.reveal .scene-svg .s06-model { fill: var(--s06-model); }
+.reveal .scene-svg .s06-ok { fill: var(--s06-ok); }
+.reveal .scene-svg .s06-third { fill: var(--s06-third); }
+.reveal .scene-svg .s06-red { fill: var(--s06-red); }
+.reveal .scene-svg .s06-white { fill: var(--psi-text); }
+.reveal .scene-svg .s06-bold { font-weight: 700; }
+
+/* ── Copertine ── */
+.reveal .cover-week { font-size: .9em; color: var(--psi-muted); margin: 0; letter-spacing: 2px; text-transform: uppercase; }
+.reveal .cover-title { font-size: 2.5em; font-weight: 800; letter-spacing: -.02em; margin: 14px 0 26px; }
+.reveal .cover-acts { display: flex; justify-content: center; gap: 18px; }
+.reveal .cover-acts > span { padding: 8px 22px; border-radius: 20px; font-size: .8em; border: 1px solid #ffffff30; background: #ffffff0a; color: var(--psi-muted); }
+
+/* ── Riepiloghi ── */
+.reveal .rq-grid { display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: center; max-width: 1180px; margin: 0 auto; text-align: left; }
+.reveal .rq-list { display: flex; flex-direction: column; gap: 16px; }
+.reveal .rq { margin: 0; padding: 14px 22px; border-radius: 12px; background: #ffffff08; border: 1px solid #ffffff1f; font-size: .85em; font-weight: 600; }
+.reveal .rq > span:first-child { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; margin-right: 14px; border-radius: 50%; font-size: .85em; color: var(--psi-b); background: #fbbf2429; }
+.reveal .rq-board { height: 330px; border: 2px dashed #ffffff22; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 0 0 12px; color: #ffffff40; font-size: .55em; }
+.reveal .rq-board svg { margin: 14px auto auto; }
+.reveal .rq-bridge { margin: 26px 0 0; font-size: .9em; font-weight: 700; color: var(--s06-ok); text-align: center; }
+
+/* ── Tabelle ── */
+.reveal .s06-table { border-collapse: collapse; margin: 0 auto; font-size: .82em; }
+.reveal .s06-table th { color: var(--psi-muted); font-weight: 600; padding: 8px 22px; border: none; border-bottom: 2px solid #ffffff30; text-align: center; }
+.reveal .s06-table td { text-align: center; padding: 10px 24px; border: none; border-bottom: 1px solid #ffffff18; }
+.reveal .s06-table .rowhead { color: var(--psi-muted); text-align: left; }
+
+/* ── Ritratti ── */
+.reveal .s06-portrait { margin: 0; text-align: center; }
+.reveal .s06-portrait img { display: block; width: 250px; max-width: none; max-height: none; margin: 0 auto 10px; border-radius: 10px; filter: grayscale(1) contrast(1.05); box-shadow: 0 10px 30px #000a; }
+.reveal .s06-portrait figcaption { font-size: .5em; color: var(--psi-muted); line-height: 1.35; }
+.reveal .s06-portrait.color img { filter: none; }
+
+/* ── Esercizi ── */
+.reveal .e6-grid { display: grid; grid-template-columns: 540px 1fr; gap: 40px; align-items: center; text-align: left; }
+.reveal .ex-text { font-size: .78em; }
+.reveal .ex-text ol { margin: 14px 0 0 1.2em; }
+.reveal .ex-text li { margin: 0 0 12px; }
+.reveal .ex-lead { margin: 0 0 6px; }
+.reveal .ex-small { font-size: .78em; color: var(--psi-muted); margin: 6px 0 0; }
+.reveal .ex-foot { display: flex; align-items: center; gap: 24px; margin-top: 16px; }
+.reveal .ex-time { color: var(--psi-muted); font-size: .8em; margin: 0; }
+.reveal .ex-timer { font: 800 1.9em 'JetBrains Mono', 'Fira Mono', monospace; font-variant-numeric: tabular-nums; padding: 4px 26px; border-radius: 14px; border: 2px solid #ffffff30; background: #ffffff08; cursor: pointer; user-select: none; }
+.reveal .ex-timer.running { border-color: var(--s06-ok); color: var(--s06-ok); }
+.reveal .ex-timer.done { border-color: var(--s06-red); color: var(--s06-red); animation: s06-blink 1s steps(2) infinite; }
+@keyframes s06-blink { 50% { opacity: .35; } }
+
+/* ── Widget (L1-25, L2-07) ── */
+.reveal .wd-box { font-size: .62em; }
+.reveal .wd-ctrl { display: flex; justify-content: center; align-items: center; gap: 44px; margin: 0 0 8px; }
+.reveal .wd-ctrl label { display: flex; align-items: center; gap: 12px; font-size: 1.1em; }
+.reveal .wd-ctrl input[type=range] { width: 380px; accent-color: var(--s06-ok); }
+.reveal .wd-ctrl b { display: inline-block; min-width: 3.4em; text-align: left; }
+.reveal .wd-out { margin: 8px 0 0; font-size: 1.2em; }
+.reveal .wd-out b { color: var(--s06-ok); }
+.reveal .wd-out .sep { color: #ffffff40; margin: 0 14px; }
+.reveal .wd-try { margin: 6px 0 0; font-size: 1em; color: var(--psi-muted); }
+.reveal .wd-try button { margin: 0 6px; }
+
+/* ── Uscite ── */
+.reveal .ux-q { font-size: 1.25em; font-weight: 700; margin: 10px 0; }
+.reveal .ux-a { font-size: 1.1em; font-weight: 800; color: var(--s06-ok); margin: 6px 0 0; }
+.reveal .ux-home { margin: 22px 0 0; font-size: .7em; color: var(--psi-muted); }
+
+/* ── Riquadri delle formule chiave ── */
+.reveal .s06-box { display: inline-block; padding: 0 30px; border-radius: 14px; border: 3px solid var(--s06-ok); background: #38ef7d10; }
+.reveal .s06-box .katex-display { margin: .35em 0; }
+.reveal .s06-code { font: 600 .7em 'JetBrains Mono', 'Fira Mono', monospace; color: var(--psi-muted); background: #ffffff0a; border: 1px solid #ffffff20; border-radius: 8px; padding: 4px 14px; }
+
+/* ── Sondaggi: varianti di questa settimana ── */
+/* Rivelazione: il QR non serve più, resta il contatore; a destra c'è spazio per altro. */
+.reveal section.rivela .sondaggio-qr { display: none; }
+.reveal section.rivela .sondaggio-grid { grid-template-columns: 1fr 300px; gap: 36px; }
+.reveal section.rivela .sondaggio-q { font-size: .9em; margin: 0 0 18px; }
+.reveal section.rivela .sondaggio-opts li { font-size: .9em; padding: 10px 18px; }
+.reveal section.rivela .sondaggio-count { font-size: 1.6em; margin: 0; }
+.reveal section.rivela .sondaggio-grid.rv-wide { grid-template-columns: 1fr 440px; }
+.reveal .rv-side { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.reveal .rv-foot { margin: 22px 0 0; text-align: center; }
+/* Opzioni lunghe (s06-1, s06-2, s06-3, s06-4). */
+.reveal .sondaggio-opts.long { grid-template-columns: 1fr; gap: 10px; }
+.reveal .sondaggio-opts.long li { font-size: .82em; font-weight: 600; line-height: 1.3; padding: 10px 20px; align-items: center; }
+
+/* ── L1-01 corda ── */
+.reveal .cd-grid { display: grid; grid-template-columns: 280px 1fr; gap: 40px; align-items: center; }
+
+/* ── L1-04 «mal posée» ── */
+.reveal .bq-quote { margin: 0; font-size: .95em; font-style: italic; color: var(--psi-text); line-height: 1.4; }
+.reveal .bq-quote small { display: block; font-style: normal; font-size: .62em; color: var(--psi-muted); margin-top: 8px; }
+
+/* ── L1-22 attesa ── */
+.reveal .at-foot { display: grid; grid-template-columns: 1fr auto; gap: 30px; align-items: center; max-width: 1150px; margin: 6px auto 0; text-align: left; }
+.reveal .at-lines p { margin: 0 0 8px; font-size: .9em; }
+.reveal .at-lines b { color: var(--s06-ok); }
+.reveal .at-box { font-size: .95em; }
+
+/* ── L2-02 Cerere ── */
+.reveal .ce-grid { display: grid; grid-template-columns: 250px 1fr; gap: 30px; align-items: center; }
+.reveal .ce-grid .scene-svg { border-radius: 16px; }
+
+/* ── L2-03 sagome delle opzioni ── */
+.reveal .sondaggio-opts li svg.sg-shape { flex: none; align-self: center; }
+
+/* ── L2-04 Gauss ── */
+.reveal .gs-grid { display: grid; grid-template-columns: 290px 1fr; gap: 44px; align-items: center; text-align: left; }
+.reveal .gs-right p { margin: 0 0 12px; font-size: .85em; }
+.reveal .gs-right b { color: var(--s06-model); }
+.reveal .gs-quote { margin: 14px 0 6px; padding-left: 16px; border-left: 4px solid var(--s06-model); font-size: .9em; font-style: italic; color: #e2e8f0; line-height: 1.4; }
+.reveal .gs-quote small { display: block; font-style: normal; font-size: .6em; color: var(--psi-muted); margin-top: 6px; }
+
+/* ── L2-06 formula a pezzi ── */
+.reveal .fp-stack { position: relative; font-size: 1.5em; height: 160px; }
+.reveal .fp-stack .katex-display { margin: 0; }
+.reveal .fp-stack > div { position: absolute; left: 0; right: 0; top: 0; }
+.reveal .fp-cap { position: relative; height: 46px; margin: 0 0 6px; }
+.reveal .fp-cap > p { position: absolute; left: 0; right: 0; top: 0; margin: 0; font-size: .95em; font-weight: 700; }
+
+/* ── L2-09 monete ── */
+.reveal .mo-head { margin: 0 0 6px; font-size: .8em; color: var(--psi-muted); }
+
+/* ── L2-11 righelli ── */
+.reveal .rh-formula { margin: 4px 0 0; }
+
+/* ── L2-12 Φ ── */
+.reveal .ph-table { font-size: .62em; margin: 0 auto 4px; }
+.reveal .ph-table th, .reveal .ph-table td { padding: 6px 12px; }
+.reveal .ph-table td { font-variant-numeric: tabular-nums; }
+.reveal .ph-cards { position: relative; height: 54px; margin: 2px 0 0; }
+.reveal .ph-cards > p { position: absolute; left: 0; right: 0; top: 0; margin: 0; font-size: .8em; }
+.reveal .ph-code { margin: 6px 0 0; }
+
+/* ── L2-14 esercizio 4: tabella di Φ in piccolo (almeno 24 px) ── */
+.reveal .e4-phi { font-size: .8em; margin: 8px auto 0; }
+.reveal .e4-phi th, .reveal .e4-phi td { padding: 4px 10px; }
+
+/* ── L2-16 / L2-17 latenze ── */
+.reveal .lt-top { display: block; margin: 0 auto 8px; }
+.reveal .ht-lines { display: flex; justify-content: center; gap: 40px; margin: 4px 0 0; font-size: .75em; font-weight: 700; }
+
+/* ── L2-19 p99 ── */
+.reveal .pq-lines { display: flex; justify-content: center; align-items: center; gap: 30px; margin: 6px 0 0; }
+.reveal .pq-lines p { margin: 0; font-size: .85em; }
+
+/* ════════ Lezione 1: dal pacco «9. VA continue» ════════ */
+
+/* Testi «del pacco»: righe lunghe, a sinistra o al centro. */
+.reveal .vc-lead { max-width: 1100px; margin: 0 auto 8px; font-size: .72em; color: var(--psi-muted); }
+.reveal .vc-lead b { color: var(--psi-text); }
+.reveal .vc-title { margin: 0 0 4px; }
+.reveal .vc-warn { margin: 18px 0 0; font-size: .75em; color: var(--s06-model); }
+.reveal .rv-next { margin: 14px 0 0; font-size: .85em; font-weight: 700; color: var(--s06-ok); }
+
+/* L1-05 · autobus: testi che si alternano sotto l'istogramma */
+.reveal .vc-cards { max-width: 1060px; margin: 0 auto; min-height: 70px; text-align: left; font-size: .72em; }
+
+/* L1-06 · densità; L1-08 · integrale; L1-18 · come usare F */
+.reveal .vc-grid { display: grid; grid-template-columns: 580px 1fr; gap: 36px; align-items: center; text-align: left; }
+.reveal .vc-text p { margin: 0 0 16px; font-size: .74em; line-height: 1.4; }
+.reveal .vc-text .vc-key { font-size: .82em; }
+.reveal .vc-box { font-size: .85em; }
+.reveal .ig-grid, .reveal .fu-grid { grid-template-columns: 740px 1fr; gap: 24px; }
+.reveal .ig-formula .katex-display { margin: 0 0 4px; }
+.reveal .ig-formula .katex-display > .katex { font-size: 1.1em; }
+.reveal .ig-formula p { margin: 0 0 22px; font-size: .62em; color: var(--psi-muted); }
+.reveal .ig-q { margin: 0; font-size: .72em; line-height: 1.4; }
+
+/* L1-07 · punto esatto */
+.reveal .pt-punch { display: flex; justify-content: center; align-items: center; gap: 34px; margin: 0; }
+.reveal .pt-punch p { margin: 0; max-width: 520px; font-size: .74em; text-align: left; }
+.reveal .pt-box .katex-display { margin: .2em 0; }
+
+/* L1-09 · proprietà (righe numerate, come nella Settimana 5) */
+.reveal .dv-props { counter-reset: dv; list-style: none; max-width: 1120px; margin: 0 auto; padding: 0; text-align: left; }
+.reveal .dv-props li { counter-increment: dv; display: grid; grid-template-columns: 46px 1fr 1fr; gap: 16px; align-items: center; padding: 8px 0; border-bottom: 1px solid #ffffff18; font-size: .8em; }
+.reveal .dv-props li::before { content: counter(dv); display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; font-size: 22px; font-weight: 700; color: var(--psi-b); background: #fbbf2429; }
+.reveal .dv-props small { display: block; font-size: 22px; color: var(--psi-muted); }
+.reveal .dv-props li > span:last-child { text-align: center; }
+
+/* L1-12 / L1-13 / L1-24 · testo a sinistra, grafico a destra */
+.reveal .un-grid { display: grid; grid-template-columns: 1fr 600px; gap: 24px; align-items: center; text-align: left; }
+.reveal .un-text p { margin: 0 0 12px; font-size: .7em; line-height: 1.4; }
+.reveal .un-box { font-size: .8em; margin: 0 0 12px; }
+.reveal .un-moments .katex-display { margin: .1em 0 .4em; text-align: left; }
+.reveal .un-moments .katex-display > .katex { font-size: .85em; text-align: left; }
+.reveal .un-text .un-gen { font-size: .6em; color: var(--psi-muted); }
+.reveal .un-text .un-big { font-size: 1.05em; margin: 4px 0 12px; }
+.reveal .un-text .katex-display { margin: .2em 0 .5em; text-align: left; }
+.reveal .un-text .katex-display > .katex { text-align: left; }
+.reveal .un-text .un-ask { font-weight: 700; color: var(--psi-b); }
+.reveal .un-text .un-ans { font-weight: 700; color: var(--s06-ok); }
+
+/* Esercizi con il gatto e il timer (come nella Settimana 5) */
+.reveal .e4-wrap { display: grid; grid-template-columns: 1fr 280px; gap: 34px; align-items: center; text-align: left; }
+.reveal .ex-side { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.reveal .ex-cat { display: block; width: 270px; max-width: none; max-height: none; margin: 0; border-radius: 12px; box-shadow: 0 14px 40px #000b; }
+.reveal .dv-ex { font-size: .74em; }
+.reveal .dv-ex p { margin: 0 0 12px; line-height: 1.4; }
+.reveal .dv-steps { margin: 6px 0 14px 1.2em; }
+.reveal .dv-steps li { margin: 0 0 10px; }
+.reveal .ex-warn { color: var(--s06-red); font-size: .9em; }
+
+/* L1-15 · definizione della funzione di ripartizione */
+.reveal .fr-lead { margin-bottom: 14px; }
+.reveal .fr-say { max-width: 1100px; margin: 0 auto 10px; font-size: .78em; }
+.reveal .fr-rows { display: flex; flex-direction: column; gap: 4px; max-width: 1000px; margin: 0 auto; }
+.reveal .fr-row { display: grid; grid-template-columns: 1fr 380px; gap: 30px; align-items: center; text-align: left; }
+.reveal .fr-row .katex-display { margin: .2em 0; }
+.reveal .fr-row .katex-display > .katex { font-size: 1.15em; }
+.reveal .fr-row p { margin: 0; font-size: .7em; color: var(--psi-muted); }
+.reveal .fr-row p b { color: var(--psi-text); }
+.reveal .fr-next { margin: 14px 0 0; font-size: .78em; font-weight: 700; color: var(--s06-ok); }
+.reveal .fr-cards { max-width: 1100px; margin: 4px auto 0; min-height: 60px; text-align: left; font-size: .68em; }
+
+/* L1-18 · tre letture di F */
+.reveal .fu-side { display: flex; flex-direction: column; gap: 26px; }
+.reveal .fu-row { margin: 0; font-size: .82em; }
+.reveal .fu-row .fu-num { display: block; margin-top: 4px; font-size: .78em; color: var(--psi-muted); }
+.reveal .fu-1 { border-left: 6px solid #a0aec0; padding-left: 14px; }
+.reveal .fu-2 { border-left: 6px solid var(--s06-red); padding-left: 14px; }
+.reveal .fu-3 { border-left: 6px solid var(--s06-ok); padding-left: 14px; }
+
+/* L1-21 · coppie Poisson / esponenziale */
+.reveal .ep-lead { max-width: 1120px; margin: 0 auto 20px; font-size: .74em; line-height: 1.4; text-align: left; }
+.reveal .ep-pairs { display: flex; flex-direction: column; gap: 14px; max-width: 1120px; margin: 0 auto; text-align: left; }
+.reveal .ep-pair { display: grid; grid-template-columns: 44px 1fr 1fr; gap: 18px; align-items: center; padding: 10px 18px; border-radius: 12px; background: #ffffff08; border: 1px solid #ffffff1f; }
+.reveal .ep-pair > span { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; font-size: 22px; font-weight: 700; color: var(--psi-b); background: #fbbf2429; }
+.reveal .ep-pair p { margin: 0; font-size: .64em; line-height: 1.35; }
+
+/* Derivazioni riga per riga (L1-23, L1-27) */
+.reveal .lm-rows { display: flex; flex-direction: column; gap: 2px; }
+.reveal section > .lm-rows { max-width: 1120px; margin: 0 auto; }
+.reveal .lm-row { display: grid; grid-template-columns: 330px 1fr; gap: 26px; align-items: center; text-align: left; }
+.reveal .lm-say { margin: 0; font-size: 22px; line-height: 1.3; color: var(--psi-muted); text-align: right; }
+.reveal .lm-row .katex-display { margin: .25em 0; text-align: left; }
+.reveal .lm-row .katex-display > .katex { font-size: 1.05em; text-align: left; }
+.reveal .ed-end { margin: 18px 0 0; font-size: .8em; }
+
+/* L1-24 · definizione dell'esponenziale */
+.reveal .ed-grid { grid-template-columns: 1fr 620px; }
+.reveal .ed-two .katex-display { margin: .15em 0; text-align: left; }
+.reveal .ed-two .katex-display > .katex { font-size: .9em; text-align: left; }
+.reveal .un-text .ed-small { font-size: .6em; color: var(--psi-muted); }
+
+/* L1-27 / L1-28 · assenza di memoria */
+.reveal .me-lead { max-width: 1120px; margin: 0 auto 6px; font-size: .74em; }
+.reveal .me-bus { margin: 16px auto 0; max-width: 1180px; font-size: .68em; }
+.reveal .me-box { font-size: .95em; margin: 4px 0 10px; }
+.reveal .me-say { max-width: 1060px; margin: 8px auto 0; font-size: .74em; }
+.reveal .me-small { margin: 10px 0 0; font-size: .66em; font-weight: 700; color: var(--s06-model); }
+
+/* L1-30 · soluzione del signor Rossi accanto al contatore */
+.reveal .rs-sol p { margin: 0 0 16px; font-size: .74em; line-height: 1.4; }
+.reveal .rs-sol .rs-warn { color: var(--s06-model); font-weight: 700; }
+
+/* L1-31 / L1-32 · radio e macchinario */
+.reveal .dv-ex .me-ex { margin: 0 0 22px; padding: 14px 20px; border-left: 4px solid var(--psi-b); background: #ffffff08; border-radius: 8px; }
+.reveal .ms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; max-width: 1160px; margin: 10px auto 0; text-align: left; }
+.reveal .ms-col p { margin: 0 0 16px; font-size: .74em; }
+.reveal .ms-col .ms-head { font-size: .9em; font-weight: 700; color: var(--psi-b); }
+.reveal .ua-grid { grid-template-columns: minmax(0, 1fr) 470px; }
+.reveal .ua-grid .scene-svg { width: 470px; height: auto; }
+.reveal .ua-grid .un-text .katex-display > .katex { font-size: .9em; }
+.reveal #me-def .lm-row { grid-template-columns: 300px 1fr; }
+.reveal #me-def .lm-row .katex-display > .katex { font-size: .95em; }
+.reveal .ms-col p { font-size: .7em; }
+
+/* ════════ Lezione 2: dal pacco «10. Gaussian» ════════ */
+.reveal .gn-grid { display: grid; grid-template-columns: 1fr 460px; gap: 30px; align-items: center; text-align: left; }
+.reveal .gn-grid-r { grid-template-columns: 600px 1fr; }
+.reveal .gn-text p { margin: 0 0 14px; font-size: .72em; line-height: 1.4; }
+.reveal .gn-text .gn-quote { margin-top: 18px; padding-left: 16px; border-left: 4px solid var(--s06-model); font-style: italic; color: #e2e8f0; }
+.reveal .gn-text .gn-quote small { display: block; font-style: normal; font-size: .8em; color: var(--psi-muted); margin-top: 6px; }
+.reveal .gn-lead { max-width: 1100px; margin: 0 auto 10px; font-size: .8em; }
+.reveal .gn-big { margin: 6px 0 14px; font-size: 1.15em; }
+.reveal .gn-text .gn-big { font-size: .95em; }
+.reveal .gn-say { max-width: 1080px; margin: 10px auto 0; font-size: .74em; }
+.reveal .gn-ex { max-width: 1080px; margin: 18px auto 0; font-size: .78em; padding: 12px 20px; border-left: 4px solid var(--psi-b); background: #ffffff08; border-radius: 8px; text-align: left; }
+.reveal .gn-cards { max-width: 1100px; margin: 4px auto 0; min-height: 60px; text-align: left; font-size: .7em; }
+.reveal .gn-trace { max-width: 1140px; margin: 0 auto 10px; font-size: .7em; color: var(--psi-muted); }
+.reveal .gn-trace b { color: var(--psi-text); }
+.reveal .gn-stop { max-width: 1100px; margin: 16px auto 0; font-size: .74em; color: var(--s06-model); }
+.reveal .gn-stop b { color: var(--psi-text); }
+.reveal .tz-grid { display: grid; grid-template-columns: 1fr 720px; gap: 24px; align-items: start; text-align: left; }
+.reveal .tz-left p { margin: 0 0 12px; font-size: .68em; line-height: 1.4; }
+.reveal .tz-left .tz-red { font-size: .95em; font-weight: 800; color: var(--s06-red); }
+.reveal .tz-left .tz-ex { font-size: .85em; }
+.reveal .tz-box { font-size: .85em; }
+.reveal .tz-table { font-size: 17px; margin: 0; }
+.reveal .tz-table th, .reveal .tz-table td { padding: 2px 7px; font-variant-numeric: tabular-nums; }
+.reveal .tz-table td.tz-hit.visible { outline: 3px solid var(--s06-ok); outline-offset: -2px; font-weight: 800; }
+.reveal .tz-right .scene-svg { display: block; margin: 8px auto 0; }
+.reveal .gl-top { display: flex; justify-content: center; align-items: center; gap: 30px; font-size: .8em; }
+.reveal .gl-top p { margin: 0; }
+.reveal .gl-two { display: flex; justify-content: center; gap: 80px; margin-top: 10px; }
+.reveal .gl-two .gl-head { margin: 0; font-size: .6em; color: var(--psi-muted); text-align: center; }
+.reveal .gl-two .katex-display > .katex { font-size: .95em; }
+.reveal .gl-new { margin: 10px 0 0; font-size: .78em; font-weight: 700; color: var(--s06-ok); }
+.reveal .gs-end { display: flex; justify-content: center; align-items: center; gap: 26px; margin-top: 12px; text-align: left; }
+.reveal .gs-end p { margin: 0; font-size: .74em; }
+.reveal .gs-end .katex-display { margin: .3em 0; }
+.reveal .gn-chain { font-size: 1.1em; margin: 10px 0 20px; }
+.reveal .gn-sum { max-width: 1060px; margin: 0 auto; text-align: left; }
+.reveal .gn-sum p { margin: 0 0 16px; font-size: .78em; line-height: 1.4; }
+.reveal .gn-ex3 { font-size: .85em; text-align: left; }
+.reveal .gn-ex3 p { margin: 0 0 10px; }
+.reveal .gn-ex3 .gn-big { font-size: 1.2em; }
+.reveal #gn-standard .gn-text .katex-display { margin: .1em 0; text-align: left; }
+.reveal #gn-standard .gn-text .katex-display > .katex { font-size: .85em; text-align: left; }
+.reveal #gn-altezze .lm-row .katex-display > .katex, .reveal #gn-soluzione .lm-row .katex-display > .katex { font-size: .92em; }
+.reveal #gn-standardizza .lm-row { grid-template-columns: 360px 1fr; }
+.reveal #gn-esercizio-sol .lm-row { grid-template-columns: 250px 1fr; }
+.reveal #gn-esercizio-sol .lm-row .katex-display > .katex { font-size: .9em; }
+.reveal #quantili .pq-lines { flex-direction: column; gap: 4px; }

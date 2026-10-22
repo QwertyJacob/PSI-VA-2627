@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>PSI 26/27 — Settimana 6: variabili aleatorie continue e distribuzione normale</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../assets/slides/deck.js"></script>
+  <link rel="stylesheet" href="css/settimana.css">
+</head>
+<body>
+  <div class="reveal"><div class="slides">
+
+    <!-- ═════════════ LEZIONE 1 · venerdì 23/10, 11:00–12:45. Scene: js/lezione1.js ═════════════ -->
+
+    <!-- L1-00 · copertina -->
+    <section id="lezione-1">
+      <p class="cover-week">Settimana 6</p>
+      <h2 class="cover-title">Che cosa vuol dire «a caso»?</h2>
+      <div class="cover-acts"><span>Variabili aleatorie continue</span><span>Lezione 1</span><span>venerdì 23 ottobre, 11:00</span></div>
+      <aside class="notes">Resta proiettata durante la pausa. La classe arriva dalla Lezione 2 della Settimana 5 (varianza e distribuzione di Poisson): niente riepilogo, si parte da Bertrand. Il blocco dopo Bertrand segue il pacco «9. VA continue» dell'anno scorso; gli esercizi sull'esponenziale vengono dal pacco «10. Gaussian». Le parti segnate (S) si saltano se si è in ritardo. Mai sforare le 12:45: è il quarto blocco orario.</aside>
+    </section>
+
+    <!-- ───── Bertrand (Erlebnis, 10 minuti) ───── -->
+
+    <!-- L1-01 · la corda -->
+    <section id="corda">
+      <p class="badge">Bertrand, 1889</p>
+      <div class="cd-grid">
+        <figure class="s06-portrait">
+          <img src="img/bertrand.jpg" alt="Ritratto di Joseph Bertrand">
+          <figcaption>J. Bertrand,<br><i>Calcul des probabilités</i>, 1889</figcaption>
+        </figure>
+        <svg class="scene-svg" width="700" height="540" viewBox="0 0 700 540" role="img" aria-label="Un cerchio con il triangolo equilatero inscritto tratteggiato; una corda blu tracciata a caso; la domanda: più lunga del lato?"></svg>
+      </div>
+      <aside class="notes">Leggi la domanda originale: «Si traccia a caso una corda in un cerchio. Qual è la probabilità che sia più piccola del lato del triangolo equilatero inscritto?» (cap. I, § 5, p. 4). Noi guardiamo il caso opposto, «più lunga». Click: 1 una corda «a caso»; 2 la domanda; 3 il lato del triangolo in arancio, per il confronto. Chiedi «che cosa vuol dire a caso?» e NON rispondere. Lancia subito s06-1.</aside>
+    </section>
+
+    <!-- L1-02 · sondaggio s06-1 (lancio) -->
+    <section id="sondaggio-1" class="sondaggio" data-poll="s06-1">
+      <p class="badge">Sondaggio · la risposta arriva tra poco</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Si traccia <b>a caso</b> una corda in un cerchio.<br>Probabilità che sia più lunga del lato del triangolo inscritto?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>1/4</li>
+            <li><span>2</span>1/3</li>
+            <li><span>3</span>1/2</li>
+            <li><span>4</span>dipende da come si sceglie la corda</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono · votate d'istinto</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">«Votate d'istinto.» NON premere V: si rivela dopo i tre metodi, sul duplicato. Risposta 4. Le opzioni 1, 2, 3 sono ciascuna giusta per un metodo: chi le sceglie ha in mente, senza dirlo, una procedura.</aside>
+    </section>
+
+    <!-- L1-03 · tre modi, tre nuvole -->
+    <section id="corde">
+      <p class="badge">Tre modi di scegliere</p>
+      <h2 class="scene-title">Tre modi, tre nuvole di corde</h2>
+      <svg class="scene-svg" width="1180" height="500" viewBox="0 0 1180 500" role="img" aria-label="Tre cerchi con il triangolo inscritto: estremi a caso dà 1/3, distanza a caso 1/2, punto medio a caso 1/4; poi 300 corde per metodo, con trame visibilmente diverse, e le frequenze"></svg>
+      <aside class="notes">Un minuto per metodo. Click: 1 estremi a caso: fissato un estremo, la corda è lunga se l'altro cade nell'arco opposto, 60° su 180°: 1/3. 2 distanza dal centro a caso: lunga se il punto medio sta nella metà del raggio vicina al centro: 1/2. 3 punto medio a caso nel disco: lungo se cade nel disco di raggio metà, un quarto dell'area: 1/4. 4 trecento corde per metodo (seme fisso): «stessa parola, tre macchine diverse»; il metodo 3 lascia il centro quasi vuoto. 5 le frequenze accanto alla teoria. I conti completi sono nella Lettura A della dispensa (facoltativa).</aside>
+    </section>
+
+    <!-- L1-04 · rivelazione s06-1 (stesso ID) e «mal posée» -->
+    <section id="sondaggio-1-rivela" class="sondaggio rivela" data-poll="s06-1">
+      <p class="badge">Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Si traccia <b>a caso</b> una corda in un cerchio.<br>Probabilità che sia più lunga del lato del triangolo inscritto?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>1/4</li>
+            <li><span>2</span>1/3</li>
+            <li><span>3</span>1/2</li>
+            <li><span>4</span>dipende da come si sceglie la corda</li>
+          </ol>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <div class="rv-foot">
+        <p class="bq-quote fragment">«Aucune des trois n'est fausse, aucune n'est exacte, la question est mal posée.»<small>«Nessuna delle tre è falsa, nessuna è esatta: la domanda è mal posta.» — J. Bertrand, 1889, p. 5</small></p>
+        <p class="rv-next fragment">Nel continuo «a caso» non basta: bisogna dire <b>come</b> è distribuita la probabilità.</p>
+      </div>
+      <aside class="notes">Premi V. Risposta 4. Commenta ogni opzione con il suo metodo: 1/4 punto medio a caso, 1/3 estremi a caso, 1/2 distanza a caso. Click 1: la citazione. Click 2: la morale, che apre il resto della lezione: lo strumento per dire «come» è la densità. Stesso ID dell'inizio: non è un secondo sondaggio.</aside>
+    </section>
+
+    <!-- ───── Variabili aleatorie continue (pacco «9. VA continue», PSI 25/26) ───── -->
+
+    <!-- L1-05 · l'autobus: dall'istogramma alla densità -->
+    <section id="vc-autobus">
+      <p class="badge">Variabili aleatorie continue</p>
+      <p class="vc-lead">Finora: variabili aleatorie discrete. Ma molti fenomeni vanno codificati in una variabile a <b>valori continui</b>.</p>
+      <h2 class="scene-title vc-title">Quando passa l'autobus, dopo le 14:00?</h2>
+      <svg class="scene-svg" width="1180" height="380" viewBox="0 0 1180 380" role="img" aria-label="Istogramma del momento in cui passa l'autobus tra le 14:00 e le 14:30: barre da 5 minuti, poi da 2,5 minuti, poi con altezza uguale a probabilità diviso larghezza, poi barre da un minuto e da mezzo minuto, infine la curva arancione della densità con l'area verde tra le 14:15 e le 14:20"></svg>
+      <div class="scene-cards vc-cards">
+        <p class="scene-card">Intervalli di 5 minuti: $P(15\lt T\le 20)$ è <b>una barra</b>.</p>
+        <p class="scene-card">Intervalli di 2,5 minuti: $P(15\lt T\le17{,}5)+P(17{,}5\lt T\le20)$, <b>due barre</b>.</p>
+        <p class="scene-card">E tra le 14:12 e le 14:13? Tra le 14:12:00 e le 14:14:36? Stringiamo ancora…</p>
+        <p class="scene-card">Più strette, più basse. Rimedio: altezza $=\dfrac{\text{probabilità}}{\text{larghezza}}$, la <b>probabilità per minuto</b>.</p>
+        <p class="scene-card">Intervalli infinitesimi: una curva, la <b>funzione di densità</b> $f(t)$. La probabilità è l'<b class="highlight">area</b>.</p>
+      </div>
+      <aside class="notes">L'esempio di Piech (CS109) dal pacco: T = minuti dopo le 14:00 in cui passa l'autobus. Click: 1 barre da 2,5 minuti: la stessa probabilità diventa la somma di due barre; fai notare che le barre si sono abbassate della metà. 2 la domanda del pacco: con quegli intervalli non sappiamo rispondere; dobbiamo continuare a stringere, come nel calcolo integrale. Chiedi: «che cosa succede alle barre se continuiamo?» → spariscono. 3 il trucco della densità di popolazione (abitanti per km²): altezza = probabilità ÷ larghezza; le barre tornano su. 4 barre da 1 minuto e da 30 secondi: il profilo resta. 5 la curva arancione: la densità f(t); l'area verde tra 15 e 20 è la probabilità (≈ 0,14). Le altezze sono quelle della dispensa (Atto II).</aside>
+    </section>
+
+    <!-- L1-06 · la densità non è una probabilità -->
+    <section id="vc-densita">
+      <p class="badge">La funzione di densità di probabilità</p>
+      <div class="vc-grid">
+        <svg class="scene-svg" width="580" height="380" viewBox="0 0 580 380" role="img" aria-label="La densità dell'autobus, con f(t) racchiusa in un riquadro sull'asse verticale e l'area verde tra 15 e 20 minuti"></svg>
+        <div class="vc-text">
+          <p>La funzione di massa, che era «a stratti», diventa una curva: la <b>funzione di densità</b> (PDF, <i>probability density function</i>). Cambia la notazione: $f$ <b>minuscola</b>, $f_X(x)$. Cambia anche il concetto.</p>
+          <p class="fragment vc-key">Valutata in un punto, $f(x)$ <b class="red">non</b> restituisce la probabilità che $X$ valga $x$, ma la «<b>derivata della probabilità</b>» attorno a $x$.</p>
+          <p class="fragment">È una probabilità <b>per unità di misura</b>: diventa una probabilità solo moltiplicata per una larghezza.</p>
+          <div class="fragment s06-box vc-box">$$P(x\lt X\lt x+\Delta x)\approx f(x)\cdot\Delta x$$</div>
+        </div>
+      </div>
+      <aside class="notes">Il testo è quello del pacco (slide 5–6). Click: 1 la frase chiave del pacco: la densità NON è la probabilità di un valore. 2 la lettura operativa: probabilità per minuto, come le altezze delle barre della slide prima. 3 la formula: altezza per larghezza; Δx si legge «delta x». Chi ha fatto Analisi riconosce la derivata della funzione che accumula la probabilità: la ritroviamo tra poco con la funzione di ripartizione.</aside>
+    </section>
+
+    <!-- L1-07 · un istante esatto ha probabilità zero -->
+    <section id="vc-punto">
+      <p class="badge">Un istante esatto</p>
+      <h2 class="scene-title">L'autobus arriva alle 14:18:30… esatte?</h2>
+      <svg class="scene-svg" width="1180" height="350" viewBox="0 0 1180 350" role="img" aria-label="Un display che mostra 14:18:30 con sempre più cifre; accanto la precisione, da un secondo a un femtosecondo, e la probabilità che scende fino a zero per l'istante esatto"></svg>
+      <div class="pt-punch">
+        <div class="s06-box pt-box">$$P(X=x)=0\qquad\text{per ogni } x$$</div>
+        <p>Per le v.a. continue parleremo sempre di probabilità che la variabile cada <b>in un intervallo</b>.</p>
+      </div>
+      <aside class="notes">Il ragionamento del pacco (slide 7). Prima del click 1 chiedi: «vuol dire durante quel secondo, o nel preciso istante in cui scatta?». Click 1: un secondo, dalle 14:18:30 alle 14:18:31: ≈ 0,023 per minuto × 1/60 di minuto ≈ 0,0004 (densità della dispensa). 2–4: millisecondo, microsecondo, femtosecondo: ogni volta mille volte più piccola. 5 l'istante esatto ha precisione infinita: probabilità più piccola di qualunque numero positivo, quindi 0. 6 la formula. 7 la conseguenza del pacco: sempre intervalli. Sottolinea: zero non vuol dire impossibile, l'autobus a un certo istante arriva.</aside>
+    </section>
+
+    <!-- L1-08 · la probabilità è un'area -->
+    <section id="vc-integrale">
+      <p class="badge">La probabilità è un'area</p>
+      <div class="vc-grid ig-grid">
+        <svg class="scene-svg" width="740" height="400" viewBox="0 0 740 400" role="img" aria-label="La densità dell'autobus: l'area verde tra 15 e 20 vale circa 0,14; gli estremi si avvicinano fino a coincidere e l'area si annulla; infine tutta l'area sotto la curva, che vale 1"></svg>
+        <div class="ig-side">
+          <div class="ig-formula">$$P(a\lt X\lt b)=\int_{x=a}^{b}\boxed{f(x)}\,dx$$<p>l'integrale tra $a$ e $b$: l'area sotto la densità, che abbiamo racchiuso nel riquadro</p></div>
+          <p class="ig-q">Ha senso disquisire se nella formula va il «minore» o il «minore o uguale»? <b class="highlight">No</b>: un punto non ha area.</p>
+        </div>
+      </div>
+      <aside class="notes">Pacco, slide 8–10. All'ingresso la curva. Click: 1 l'area tra 15 e 20 si riempie: ≈ 0,14. 2 la formula del pacco con la densità nel riquadro: «∫ è una S lunga, la S di somma: sommiamo barre sottilissime; dx ricorda la loro larghezza». Per l'esame gli integrali da fare a mano sono rettangoli. 3 gli estremi si avvicinano fino a 18,5: l'area si assottiglia fino a 0, e la domanda del pacco su «<» e «≤» ha la sua risposta. 4 tutta l'area: 1, come «i pesi sommano a 1».</aside>
+    </section>
+
+    <!-- L1-09 · le proprietà -->
+    <section id="vc-proprieta">
+      <p class="badge">Funzione di densità · proprietà</p>
+      <h2 class="scene-title">Ricordiamoci gli assiomi</h2>
+      <p class="vc-lead">Prima: la somma delle probabilità sul dominio valeva 1. Adesso: l'<b>integrale della densità</b> su tutto il dominio vale 1.</p>
+      <ol class="dv-props">
+        <li class="fragment"><span><b>Mai negativa</b><small>un'area negativa sarebbe una probabilità negativa</small></span><span>$f(x)\ge0$</span></li>
+        <li class="fragment"><span><b>Ogni area è una probabilità</b><small>tra due valori qualsiasi</small></span><span>$0\le\displaystyle\int_{a}^{b}f(x)\,dx\le1$</span></li>
+        <li class="fragment"><span><b>L'area totale vale 1</b><small>anche se i valori possibili arrivano all'infinito</small></span><span>$\displaystyle\int_{-\infty}^{+\infty}f(x)\,dx=1$</span></li>
+      </ol>
+      <p class="vc-warn fragment">Attenzione: $f(x)$ <b>può superare 1</b>. Un tempo uniforme tra 0 e 0,5 minuti ha densità 2: base 0,5, area 1.</p>
+      <aside class="notes">Pacco, slide 11–12. Una proprietà per click. Sulla 3 la nota del pacco: anche nel caso continuo ci sono v.a. con probabilità piccolissima ma non nulla di assumere valori molto grandi; l'area estesa all'infinito resta 1 (la vedremo con l'esponenziale e con la normale). Click 4: f può superare 1, le aree no. Lancia subito s06-c1.</aside>
+    </section>
+
+    <!-- L1-10 · sondaggio s06-c1: f(2) = 3 -->
+    <section id="sondaggio-c1" class="sondaggio" data-poll="s06-c1">
+      <p class="badge">Sondaggio · rivelazione subito (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">La densità di una v.a. continua $X$ vale $f(2)=3$.<br>Che cosa possiamo dire?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>è un errore: una probabilità non supera 1</li>
+            <li><span>2</span>P(X = 2) = 3</li>
+            <li><span>3</span>P(2 &lt; X &lt; 2,01) ≈ 0,03</li>
+            <li><span>4</span>P(X ≤ 2) = 3</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto, poi V. Risposta 3: altezza per larghezza, 3 × 0,01. 1: confonde l'altezza con una probabilità (vicino a 2 la probabilità è solo molto concentrata). 2: P(X = 2) = 0. 4: F(2) è un'area e non supera 1. Se in molti scelgono 1 o 2, torna alla slide della densità.</aside>
+    </section>
+
+    <!-- L1-11 (S) · interpretazione alternativa -->
+    <section id="vc-zone">
+      <p class="badge">Densità · interpretazione alternativa</p>
+      <p class="vc-lead">I valori di $f$ non sono probabilità. Ma dove $f$ è alta, un intervallo di una certa larghezza contiene <b>più probabilità</b> di un intervallo della stessa larghezza dove $f$ è bassa.</p>
+      <svg class="scene-svg" width="1180" height="370" viewBox="0 0 1180 370" role="img" aria-label="Due densità: una crescente e una decrescente. In ciascuna, due intervalli della stessa larghezza: quello dove la curva è alta, in verde, è più probabile; quello dove è bassa, in viola, è meno probabile"></svg>
+      <aside class="notes">(S) Pacco, slide 18: se sei in ritardo, saltala e dillo a voce sulla curva dell'autobus («tra le 14:05 e le 14:10 la densità è alta, dopo le 14:25 quasi nulla»). Nel grafico di sinistra sono più probabili i valori lontani dall'origine, in quello di destra quelli vicini allo zero.</aside>
+    </section>
+
+    <!-- ───── La distribuzione uniforme ───── -->
+
+    <!-- L1-12 · definizione -->
+    <section id="un-def">
+      <p class="badge">Variabile aleatoria con distribuzione uniforme</p>
+      <div class="un-grid">
+        <div class="un-text">
+          <p>$X\sim\operatorname{Uni}(a,b)$ prende valori tra un limite inferiore $a$ e uno superiore $b$, <b>senza preferenze</b>: la densità è costante.</p>
+          <div class="s06-box un-box">$$f(x)=\frac1{b-a}\quad\text{per } a\le x\le b,\qquad 0\ \text{altrove}$$</div>
+          <div class="un-f"><p>Probabilità = area del rettangolo di base $d-c$ e altezza $\frac1{b-a}$:</p>$$P(c\le X\le d)=\frac{d-c}{b-a}$$</div>
+          <p class="un-f">Intervalli della stessa lunghezza, <b>stessa probabilità</b>.</p>
+          <div class="un-f un-moments">$$\mathbb{E}[X]=\mu=\frac{a+b}2\qquad\operatorname{Var}(X)=\frac{(b-a)^2}{12}\qquad\sigma=\sqrt{\frac{(b-a)^2}{12}}$$</div>
+          <p class="un-f un-gen">I generatori di numeri pseudocasuali partono da qui: <span class="s06-code">random.random()</span> dà $\operatorname{Uni}(0,1)$; con $a+(b-a)\cdot U$ si ottiene $\operatorname{Uni}(a,b)$.</p>
+        </div>
+        <svg class="scene-svg" width="600" height="400" viewBox="0 0 600 400" role="img" aria-label="La densità uniforme: un rettangolo arancione alto 1 su b meno a tra a e b; la parte tra c e d è colorata in verde"></svg>
+      </div>
+      <aside class="notes">Pacco, slide 14–15. Ingresso: definizione e rettangolo; l'altezza 1/(b − a) è quella che rende l'area 1, e come ogni valore di densità NON è una probabilità. Click: 1 l'area tra c e d; 2 la proprietà uniforme: conta solo la lunghezza, non la posizione; 3 media (il centro, per simmetria: la lastra in equilibrio a metà) e deviazione standard del pacco: la varianza è lo stesso senza la radice; le dimostrazioni con gli integrali sono facoltative (riquadro nella dispensa). 4 i generatori pseudocasuali; trasformazioni non lineari danno altre famiglie (la vedremo nel laboratorio). Non esiste un'uniforme su tutta la retta: base infinita, area non 1.</aside>
+    </section>
+
+    <!-- L1-13 · l'autobus uniforme -->
+    <section id="un-autobus">
+      <p class="badge">V.a. uniforme · l'autobus</p>
+      <div class="un-grid ua-grid">
+        <div class="un-text">
+          <p>Se l'autobus passa in un istante qualsiasi tra le 14:00 e le 14:30, senza preferenze:</p>
+          <p class="un-big">$T\sim\operatorname{Uni}(\alpha=0,\ \beta=30)$</p>
+          <p>Alle 14:00: probabilità che passi tra le 14:15 e le 14:20?</p>
+          <div class="fragment">$$P(15\lt T\lt 20)=\int_{15}^{20}\frac1{\beta-\alpha}\,dx=\left[\frac{x}{30}\right]_{15}^{20}=\frac{20-15}{30}=\color{#38ef7d}{\frac5{30}}$$</div>
+          <p class="fragment un-ask">E tra le 14:10 e le 14:15?</p>
+          <p class="fragment un-ans">Sempre $\frac5{30}$: ogni finestra di 5 minuti ha la stessa probabilità.</p>
+        </div>
+        <svg class="scene-svg" width="600" height="380" viewBox="0 0 600 380" role="img" aria-label="La densità uniforme dell'autobus, alta un trentesimo tra 14:00 e 14:30; il rettangolo verde tra 15 e 20 minuti ha area 5 trentesimi"></svg>
+      </div>
+      <aside class="notes">Pacco, slide 16–17, l'esempio uniforme di Piech. Click 1: il conto con l'integrale del pacco; chi non ha dimestichezza: base × altezza = 5 × 1/30. Prima del click 2 chiedi la domanda del pacco: «sarebbe cambiata se fossimo arrivati alle 14:10?». Click 3: no, è la proprietà uniforme. Attenzione a non confondere: qui la probabilità è valutata alle 14:00. Se alle 14:15 sappiamo che l'autobus non è ancora passato, cambia (diventa 1/3): lo riprendiamo con l'assenza di memoria. Media 15 min, σ = 30/√12 ≈ 8,7 min.</aside>
+    </section>
+
+    <!-- L1-14 · esercizio: l'autobus ogni 12 minuti -->
+    <section id="un-esercizio">
+      <p class="badge">Esercizio · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>Un autobus passa ogni <b>12 minuti</b> esatti e tu arrivi alla fermata in un momento qualsiasi. L'attesa $X$, in minuti, è uniforme tra 0 e 12.</p>
+          <ol class="dv-steps">
+            <li>Probabilità di aspettare meno di 3 minuti? E più di 10?</li>
+            <li>Attesa media? Deviazione standard?</li>
+            <li>Quanto vale $P(X=6)$?</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">$P(X\lt3)=\frac3{12}=0{,}25\qquad P(X\gt10)=\frac2{12}\approx0{,}17$</p>
+          <p class="fragment" data-fragment-index="3">$\mathbb{E}[X]=6$ min$\qquad\sigma=\frac{12}{\sqrt{12}}=\sqrt{12}\approx3{,}46$ min$\qquad P(X=6)=0$</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">È l'Esercizio 1 della dispensa. Click 1: timer di 4′. Click 2–3: la soluzione. Errore atteso su (3): «1/12». Sul punto 2: σ in minuti, la varianza (12 min²) no.</aside>
+    </section>
+
+    <!-- ───── La funzione di ripartizione ───── -->
+
+    <!-- L1-15 · definizione -->
+    <section id="fr-def">
+      <p class="badge">Funzione di ripartizione</p>
+      <p class="vc-lead fr-lead">Probabilità che una variabile sia minore, maggiore, minore o uguale di un certo numero: comodo avere una formula <b>senza sommatorie</b> (discrete) <b>né integrali</b> (continue).</p>
+      <p class="fr-say">La <b>funzione di ripartizione</b> $F$ (maiuscola; in inglese CDF) codifica la probabilità che la variabile assuma valori <b>minori o uguali</b> a un certo valore:</p>
+      <div class="fr-rows">
+        <div class="fr-row fragment"><div>$$F(x)=P(X\le x)=\sum_{k\le x}p(k)$$</div><p><b>v.a. discrete</b><br>dove $p$ è la PMF</p></div>
+        <div class="fr-row fragment"><div>$$F(x)=P(X\le x)=\int_{t=-\infty}^{t=x}f(t)\,dt$$</div><p><b>v.a. continue</b><br>dove $f$ è la PDF</p></div>
+      </div>
+      <p class="fr-next fragment">La vera utilità: per le distribuzioni note la formula di $F$ è <b>già pronta</b> da usare negli esercizi.</p>
+      <aside class="notes">Pacco, slide 20–22. Click 1: il caso discreto, somma dei pesi fino a x. 2: il caso continuo, l'area a sinistra di x; t è la variabile che scorre sotto l'integrale, x è fisso. 3: la ragione pratica, che vediamo subito con la geometrica della settimana scorsa.</aside>
+    </section>
+
+    <!-- L1-16 · discrete: geometrica e Poisson -->
+    <section id="fr-discrete">
+      <p class="badge">Funzione di ripartizione · v.a. discrete</p>
+      <svg class="scene-svg" width="1180" height="400" viewBox="0 0 1180 400" role="img" aria-label="A sinistra le PMF, a destra le funzioni di ripartizione a gradini: prima per la distribuzione geometrica con p uguale a 0,2, 0,5 e 0,8, poi per la distribuzione di Poisson con lambda uguale a 1, 4 e 10"></svg>
+      <div class="scene-cards fr-cards">
+        <p class="scene-card">Distribuzione geometrica: $P(X=k)=(1-p)^{k-1}p\;\Rightarrow\;F(k)=P(X\le k)=1-(1-p)^k$</p>
+        <p class="scene-card">Distribuzione di Poisson: niente formula semplice, $F(k)$ si ottiene sommando la PMF. Sempre una <b>scala</b>: salti alti $P(X=k)$.</p>
+      </div>
+      <aside class="notes">Pacco, slide 22–24. All'ingresso la geometrica per p = 0,2, 0,5, 0,8 (colori del pacco). La formula di F viene dalla coda della Settimana 5: «non bastano k tentativi» ha probabilità (1 − p)^k, F è il complemento. Esempio: p = 0,2, entro 5 tentativi: 1 − 0,8⁵ ≈ 0,67. Click 1: la distribuzione di Poisson per λ = 1, 4, 10. La funzione di ripartizione di una discreta è una scala: ferma tra un valore e l'altro, salta di P(X = k) nei valori possibili. Attenzione nel discreto: P(X < 5) = F(4), non F(5).</aside>
+    </section>
+
+    <!-- L1-17 · continue: densità e ripartizione legate -->
+    <section id="fr-continua">
+      <p class="badge">Funzione di ripartizione · v.a. continue</p>
+      <svg class="scene-svg" width="1180" height="520" viewBox="0 0 1180 520" role="img" aria-label="Sopra la densità dell'autobus con l'area a sinistra di un punto colorata; sotto la funzione di ripartizione a forma di S. Il punto scorre da 14:00 a 14:30 e l'altezza della S è sempre l'area colorata; alla fine si ferma su F(10) circa 0,54"></svg>
+      <aside class="notes">Pacco, slide 25 (la demo Wolfram «Connecting the CDF and the PDF», qui con l'autobus). Click 1: il punto scorre da 0 a 30: F(t) è sempre l'area azzurra a sinistra; cresce in fretta dove la densità è alta, quasi non si muove dove è bassa; non scende mai; da 0 a 1; niente salti. Click 2: si ferma su 10: F(10) ≈ 0,54, la probabilità che l'autobus passi entro le 14:10. Chi conosce le derivate: f = F′, la «derivata della probabilità» di prima.</aside>
+    </section>
+
+    <!-- L1-18 · come si usa -->
+    <section id="fr-uso">
+      <p class="badge">Funzione di ripartizione · come usarla</p>
+      <div class="vc-grid fu-grid">
+        <svg class="scene-svg" width="740" height="410" viewBox="0 0 740 410" role="img" aria-label="La densità dell'autobus con due soglie a e b: prima l'area a sinistra di a in grigio, poi l'area tra a e b in rosso, infine l'area a destra di b in verde"></svg>
+        <div class="fu-side">
+          <p class="fu-row fu-1">$P(X\le a)=F(a)$<span class="fu-num">$\approx0{,}54$</span></p>
+          <p class="fu-row fu-2">$P(a\le X\le b)=F(b)-F(a)$<span class="fu-num">$\approx0{,}95-0{,}54=0{,}41$</span></p>
+          <p class="fu-row fu-3">$P(X\ge b)=1-F(b)$<span class="fu-num">$\approx1-0{,}95=0{,}05$</span></p>
+        </div>
+      </div>
+      <aside class="notes">Pacco, slide 26–28, sulla densità dell'autobus. Click: 1 «entro»: l'area a sinistra di a, cioè la definizione; 2 «tra»: area a sinistra di b meno area a sinistra di a; 3 «oltre»: il complemento dell'area totale 1. 4 i numeri con a = 14:10 e b = 14:20 (dalla dispensa). Nel continuo ≤ e < sono la stessa cosa.</aside>
+    </section>
+
+    <!-- L1-19 · esercizio: l'autobus uniforme con F -->
+    <section id="fr-esercizio">
+      <p class="badge">Esercizio · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>L'autobus uniforme tra le 14:00 e le 14:30: $T\sim\operatorname{Uni}(0,30)$.</p>
+          <ol class="dv-steps">
+            <li>Scrivi la funzione di ripartizione $F(t)$.</li>
+            <li>Usando <b>solo</b> $F$: probabilità che passi entro le 14:12? Dopo le 14:25? Tra le 14:12 e le 14:25?</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">$F(t)=0$ prima di 0, $\;F(t)=\dfrac{t}{30}$ tra 0 e 30, $\;F(t)=1$ dopo: una rampa.</p>
+          <p class="fragment" data-fragment-index="3">$F(12)=0{,}4\qquad 1-F(25)=\tfrac16\approx0{,}17\qquad F(25)-F(12)=\tfrac{13}{30}\approx0{,}43$</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">Click 1: timer di 4′. Ai bloccati: «l'area a sinistra di t è un rettangolo di base t». Click 2–3: la soluzione. Controllo: le tre probabilità sommano a 1. Se avanza tempo, lancia s06-c2 (S).</aside>
+    </section>
+
+    <!-- L1-20 (S) · controllo c2 -->
+    <section id="sondaggio-c2" class="sondaggio" data-poll="s06-c2">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>funzione di ripartizione</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">(S) Un minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, rifai «entro, tra, oltre» sulla slide di prima con l'autobus uniforme.</aside>
+    </section>
+
+    <!-- ───── La distribuzione esponenziale ───── -->
+
+    <!-- L1-21 · da Poisson all'attesa -->
+    <section id="ex-poisson">
+      <p class="badge">Variabile aleatoria esponenziale</p>
+      <p class="ep-lead"><b>Se assumiamo</b> che le occorrenze di un evento arrivino una alla volta, indipendenti e con ritmo medio costante, il loro <b>numero</b> in un intervallo è una v.a. poissoniana. Allora il <b>tempo</b> fino alla prossima occorrenza è una v.a. <b class="highlight">esponenziale</b>: una v.a. continua.</p>
+      <div class="ep-pairs">
+        <div class="ep-pair fragment"><span>a</span><p><b>Numero</b> di attacchi a un sito web nel prossimo giorno → <b class="data">poissoniana</b></p><p><b>Tempo</b> tra due attacchi → <b class="highlight">esponenziale</b></p></div>
+        <div class="ep-pair fragment"><span>b</span><p><b>Numero</b> di operazioni sul database di Uber nei prossimi 10 ms → <b class="data">poissoniana</b></p><p><b>Tempo</b> fino alla prossima operazione → <b class="highlight">esponenziale</b></p></div>
+        <div class="ep-pair fragment"><span>c</span><p><b>Numero</b> di utenti che cliccano su un annuncio nei prossimi 5 minuti → <b class="data">poissoniana</b></p><p><b>Tempo</b> trascorso tra due clic → <b class="highlight">esponenziale</b></p></div>
+      </div>
+      <aside class="notes">Pacco, slide 30. Prima dei click sottolinea il «se»: è un'ipotesi di modello, quella della costruzione a pezzetti della Settimana 5 (arrivi singoli, indipendenti, tasso stabile), e deve valere per intervalli di ogni durata, non solo per «un giorno». Se gli attacchi arrivano a ondate (una botnet che colpisce per qualche minuto e poi tace) non valgono né la distribuzione di Poisson né l'esponenziale. Una coppia per click: il primo conta, il secondo misura un'attesa. Domanda: «quanti lavori arrivano a una stampante in un'ora?» → distribuzione di Poisson; «quanto aspetto il prossimo?» → la nostra nuova variabile. Il parametro è lo stesso: λ eventi per unità di tempo.</aside>
+    </section>
+
+    <!-- L1-22 · zero eventi = attesa lunga -->
+    <section id="attesa">
+      <p class="badge">Il tempo di attesa</p>
+      <h2 class="scene-title">Zero lavori = attesa lunga</h2>
+      <svg class="scene-svg" width="1180" height="270" viewBox="0 0 1180 270" role="img" aria-label="Una linea del tempo con i lavori che arrivano a una stampante, 3 all'ora in media; la striscia verde tra 0 e 0,5 ore è vuota: il prossimo lavoro arriva dopo"></svg>
+      <div class="at-foot">
+        <div class="at-lines">
+          <p class="at-l1">$T>0{,}5\iff$ <b>zero lavori</b> in mezz'ora</p>
+          <p class="at-l2">distribuzione di Poisson, media $3\cdot0{,}5=1{,}5$</p>
+          <p class="at-l3">$P(T>0{,}5)=e^{-1{,}5}\approx\color{#38ef7d}{0{,}223}$</p>
+        </div>
+        <div class="s06-box at-box">$$P(T>t)=e^{-\lambda t}$$</div>
+      </div>
+      <aside class="notes">Il notebook 4_Continuous_random_vars (§4.2.2). Una stampante riceve in media λ = 3 lavori all'ora; T = tempo da adesso al prossimo lavoro. Click: 1 i lavori scorrono (seme fisso); 2 la striscia di mezz'ora vuota e il primo arrivo dopo; 3 «T > 0,5» e «zero lavori in 0,5 h» sono lo stesso evento; 4 la media della distribuzione di Poisson su mezz'ora (tasso × durata, §17 della S5); prima del click 5 chiedi «quale formula della settimana scorsa?»; 5 e^(−1,5); 6 la striscia diventa lunga t: in t ore la media è λt. L'asse è in ore con lo zero adesso, quindi «l'istante t» è «fra t ore»: dillo esplicitamente, la dispensa lo fa prima della derivazione.</aside>
+    </section>
+
+    <!-- L1-23 · la derivazione -->
+    <section id="ex-derivazione">
+      <p class="badge">Dalla distribuzione di Poisson alla distribuzione esponenziale</p>
+      <div class="lm-rows">
+        <div class="lm-row"><p class="lm-say">$X_t$ = eventi in $[0,t]$,<br>distribuzione di Poisson di media $\lambda t$</p><div>$$P(T>t)=P(X_t=0)=e^{-\lambda t}\frac{(\lambda t)^0}{0!}=e^{-\lambda t}$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">complemento: la funzione<br>di ripartizione</p><div>$$F(t)=P(T\le t)=1-P(T>t)=1-e^{-\lambda t}\qquad t\ge0$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">la densità è la derivata<br>della funzione di ripartizione</p><div>$$f(t)=\frac{d}{dt}\left(1-e^{-\lambda t}\right)=0-\left(-\lambda e^{-\lambda t}\right)=\lambda e^{-\lambda t}$$</div></div>
+      </div>
+      <p class="ed-end fragment">Ebbene sì: la v.a. continua che indica il tempo tra due eventi di Poisson si chiama <b class="highlight">variabile aleatoria esponenziale</b>.</p>
+      <aside class="notes">Il conto del notebook, un passo per click. Riga 1: (λt)⁰ = 1 e 0! = 1. Riga 2: abbiamo la funzione di ripartizione senza calcolare aree. Riga 3: per chi non conosce le derivate, l'idea della dispensa: per cadere nel pezzetto Δt dopo t serve «niente fino a t» (e^(−λt)) e «uno nel pezzetto» (≈ λΔt): f(t)Δt ≈ e^(−λt)·λΔt. Che l'area sotto λe^(−λt) valga 1 è un riquadro facoltativo della dispensa. F(t) = 0 per t < 0: un'attesa non è negativa.</aside>
+    </section>
+
+    <!-- L1-24 · definizione e grafici -->
+    <section id="ex-def">
+      <p class="badge">Variabile aleatoria esponenziale</p>
+      <div class="un-grid ed-grid">
+        <div class="un-text">
+          <p>Una v.a. continua $X$ con densità</p>
+          <div>$$f(x)=\begin{cases}\lambda e^{-\lambda x} & x\ge0\\ 0 & x\lt0\end{cases}\qquad\lambda\gt0$$</div>
+          <p>ha distribuzione esponenziale di parametro $\lambda$: $\;X\sim\operatorname{Exp}(\lambda)$.</p>
+          <div class="ed-two">
+            <div>$$\mathbb{E}[X]=\frac1\lambda\qquad\operatorname{Var}(X)=\frac1{\lambda^2}$$</div>
+            <div>$$F(x)=P(X\le x)=1-e^{-\lambda x}$$</div>
+          </div>
+          <p class="ed-small">$\lambda$ = eventi per unità di tempo. Eventi in media ogni mezzo minuto: $\mathbb{E}[X]=0{,}5$ min e $\lambda=2$ al minuto.</p>
+        </div>
+        <svg class="scene-svg" width="620" height="290" viewBox="0 0 620 290" role="img" aria-label="Densità e funzione di ripartizione esponenziali per lambda uguale a 0,5, 1 e 1,5: con lambda più grande la densità parte più in alto e scende più in fretta, e la funzione di ripartizione sale prima verso 1"></svg>
+      </div>
+      <aside class="notes">Pacco, slide 31–33. All'ingresso le curve per λ = 0,5, 1, 1,5: con λ più grande la massa di probabilità si concentra vicino all'origine. La densità parte da altezza λ (λ = 1,5: f(0) = 1,5, di nuovo più di 1). Media e varianza: le dimostrazioni (pezzetti geometrici, integrazione per parti) sono facoltative nella dispensa. Fai notare: σ = 1/λ, uguale alla media. La media non è una scadenza: P(X > 1/λ) = e^(−1) ≈ 0,37 per ogni λ.</aside>
+    </section>
+
+    <!-- L1-25 (S) · widget Esponenziale -->
+    <section id="widget-esponenziale">
+      <p class="badge">La forma di un'attesa</p>
+      <h2 class="scene-title">Prevedi, poi muovi $\lambda$</h2>
+      <div class="wd-box" id="ex-box" data-prevent-swipe>
+        <div class="wd-ctrl">
+          <label>$\lambda$ <input type="range" min="0.5" max="8" step="0.1" value="3" data-k="lam"> <b data-v="lam">3,0</b></label>
+        </div>
+        <svg class="scene-svg" width="1100" height="360" viewBox="0 0 1100 360" role="img" aria-label="La densità lambda e alla meno lambda t tra 0 e 2 ore, con la curva tratteggiata della stampante, lambda uguale a 3"></svg>
+        <p class="wd-out"></p>
+        <p class="wd-try">Prova: <button class="psi-btn ghost" type="button" data-lam="3">λ = 3</button><button class="psi-btn ghost" type="button" data-lam="6">λ = 6</button><button class="psi-btn ghost" type="button" data-lam="1">λ = 1</button></p>
+      </div>
+      <aside class="notes">(S) Prima di muovere: «se i lavori raddoppiano, che cosa fanno l'altezza iniziale e la media?». λ = 6: altezza 6, media 10 minuti; λ = 1: media 60 minuti. L'area resta 1 (la parte colorata). L'ultima lettura resta 0,368 per ogni λ: cambia solo la scala del tempo.</aside>
+    </section>
+
+    <!-- L1-26 · esercizio: la stampante -->
+    <section id="ex-stampante">
+      <p class="badge">Esempio · Baron, Esempio 4.5</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>A una stampante arrivano lavori con un tasso medio di <b>3 all'ora</b>, in modo indipendente.</p>
+          <ol class="dv-steps">
+            <li>Qual è il tempo atteso tra un lavoro e il successivo?</li>
+            <li>Qual è la probabilità che il prossimo lavoro arrivi <b>entro 5 minuti</b>?</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">$T\sim\operatorname{Exp}(\lambda=3\ \text{all'ora})\qquad\mathbb{E}[T]=\tfrac13$ h $=20$ min</p>
+          <p class="fragment" data-fragment-index="3">Stessa unità: 5 min $=\tfrac1{12}$ h $\;\Rightarrow\; F\!\left(\tfrac1{12}\right)=1-e^{-3\cdot\frac1{12}}=1-e^{-0{,}25}\approx\color{#38ef7d}{0{,}221}$</p>
+          <p class="fragment ex-warn" data-fragment-index="4">$1-e^{-3\cdot5}$ mescola ore e minuti: direbbe «quasi certo», con un'attesa media di 20 minuti!</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">(S) Se sei in ritardo, risolvila a voce in due minuti: è l'esempio svolto della dispensa. Dal notebook (Baron, Esempio 4.5). Click 1: timer di 4′. Click 2–4: la soluzione e l'errore tipico sulle unità.</aside>
+    </section>
+
+    <!-- ───── L'assenza di memoria (note del prof. M. Abundo) ───── -->
+
+    <!-- L1-27 · la definizione -->
+    <section id="me-def">
+      <p class="badge">Proprietà di mancanza di memoria</p>
+      <p class="me-lead">Una v.a. $X\ge0$ gode della proprietà di mancanza di memoria se, per ogni $t,u\gt0$:</p>
+      <div class="lm-rows">
+        <div class="lm-row"><p class="lm-say">(1) già atteso $t$:<br>altri $u$?</p><div>$$P(X>t+u\mid X>t)=P(X>u)$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">probabilità condizionata; se $X$<br>supera $t+u$, supera anche $t$</p><div>$$P(X>t+u\mid X>t)=\frac{P\big(\{X>t+u\}\cap\{X>t\}\big)}{P(X>t)}=\frac{P(X>t+u)}{P(X>t)}$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">ovvero (2)</p><div>$$\frac{P(X>t+u)}{P(X>t)}=P(X>u)$$</div></div>
+      </div>
+      <p class="me-bus fragment">L'autobus uniforme <b class="red">ha memoria</b>: alle 14:15, se non è ancora passato, $P(T\le20\mid T\gt15)=\frac{5/30}{15/30}=\frac13$, non più $\frac16$.</p>
+      <aside class="notes">Le note del prof. Abundo, come nel pacco (slide 34). Click 1: l'intersezione: se X supera t + u, a maggior ragione supera t, quindi {X > t + u} ∩ {X > t} = {X > t + u}. Click 2: la forma (2). Click 3: il contrasto con l'autobus uniforme della slide 13: per lui l'attesa trascorsa conta, più aspetti più l'arrivo si avvicina.</aside>
+    </section>
+
+    <!-- L1-28 · la dimostrazione per l'esponenziale -->
+    <section id="me-dim">
+      <p class="badge">L'esponenziale non ha memoria</p>
+      <p class="me-lead">Con $F(t)=P(X\le t)$ e la <b>funzione di sopravvivenza</b> $S(t)=1-F(t)=P(X\gt t)$, la (2) diventa</p>
+      <div class="s06-box me-box">$$\frac{S(t+u)}{S(t)}=S(u)\qquad\forall\,t,u\gt0\qquad(3)$$</div>
+      <p class="me-lead fragment" data-fragment-index="1">Se $X$ è esponenziale, $F(t)=1-e^{-\lambda t}$, $\;S(t)=e^{-\lambda t}$, e il primo membro della (3) diventa</p>
+      <div class="fragment" data-fragment-index="1">$$\frac{e^{-\lambda(t+u)}}{e^{-\lambda t}}=e^{-\lambda t-\lambda u+\lambda t}=e^{-\lambda u}=S(u)$$</div>
+      <p class="me-say fragment">Se $X$ è un tempo di attesa: la probabilità che sia maggiore di $t+u$, sapendo che è maggiore di $t$, <b>non dipende da quanto si è già atteso</b>, cioè da $t$.</p>
+      <p class="me-small fragment">L'analogo continuo della distribuzione geometrica, ed è l'unica distribuzione continua senza memoria.</p>
+      <aside class="notes">Pacco, slide 35 (Abundo). Click 1: la sostituzione, con e^a/e^b = e^(a−b). Click 2: la lettura del pacco: t sparisce. Click 3: il legame con la Settimana 5 (fallacia del giocatore, versione continua). Poi il signor Rossi, in sondaggio.</aside>
+    </section>
+
+    <!-- L1-29 · sondaggio s06-2: il signor Rossi (lancio) -->
+    <section id="sondaggio-2" class="sondaggio" data-poll="s06-2">
+      <p class="badge">Sondaggio · calcolatelo a coppie</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Il signor Rossi pensa che la durata di un'auto, in migliaia di km, sia <b>esponenziale di parametro 1/20</b>. Compra un'auto che ha già fatto 10 000 km. Probabilità che ne percorra altri 20 000?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>e^(−1,5) ≈ 0,22</li>
+            <li><span>2</span>e^(−1) ≈ 0,37</li>
+            <li><span>3</span>e^(−0,5) ≈ 0,61</li>
+            <li><span>4</span>non si può dire senza sapere quanto è vecchia l'auto</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">L'esercizio del pacco (slide 35–36 del «10. Gaussian»). «Due minuti a coppie, poi votate.» NON premere V: si rivela sul duplicato. Risposta 2. 1 è P(X > 30), senza condizione; 3 è P(X > 10); 4 è l'intuizione giusta per un'auto vera, ma non per il modello esponenziale.</aside>
+    </section>
+
+    <!-- L1-30 · rivelazione s06-2 (stesso ID) e soluzione -->
+    <section id="sondaggio-2-rivela" class="sondaggio rivela" data-poll="s06-2">
+      <p class="badge">Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid rv-wide">
+        <div class="rs-sol">
+          <p>$X$ = durata (migliaia di km), $\;X\sim\operatorname{Exp}(\lambda=\tfrac1{20})$</p>
+          <p>$F(x)=1-e^{-\lambda x}\qquad S(x)=P(X\gt x)=e^{-\lambda x}$</p>
+          <p class="fragment">Per la mancanza di memoria:<br>$P(X\gt30\mid X\gt10)=P(X\gt20)=S(20)=e^{-1}\approx\color{#38ef7d}{0{,}37}$</p>
+          <p class="fragment rs-warn">Un'auto vera <b>si usura</b>: ha memoria. Il conto è giusto, il modello forse no.</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Premi V. Risposta 2. Click 1: la soluzione del pacco. Click 2: la critica al modello: prima di usare e^(−λt) chiediti se il sistema invecchia (dischi meccanici sì, certi circuiti elettronici nella vita utile no).</aside>
+    </section>
+
+    <!-- L1-31 · esercizi: la radio e il macchinario -->
+    <section id="me-esercizi">
+      <p class="badge">Esercizi · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p class="me-ex">Il numero di anni di funzionamento di una radio ha distribuzione esponenziale di parametro $\lambda=1/8$. Qual è la probabilità che una radio funzioni per più di dieci anni?</p>
+          <p class="me-ex">Il tempo (in ore) necessario per riparare un macchinario è una v.a. esponenziale di parametro $\lambda=1$. Qual è la probabilità che la riparazione superi le due ore? Qual è la probabilità che richieda almeno tre ore, sapendo che ne richiede più di due?</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="6" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" aria-hidden="true"></span>
+      <aside class="notes">(S) Se sei in ritardo, assegnali a casa: la radio è l'Esercizio 3 della dispensa, il macchinario la sosta di verifica sull'assenza di memoria. Gli esercizi del pacco (slide 37–40 del «10. Gaussian»). Click 1: timer di 6′. Metodo da far scrivere: chi è la variabile, che distribuzione ha, f, F, S, poi l'evento richiesto. Soluzioni nella slide successiva.</aside>
+    </section>
+
+    <!-- L1-32 · soluzioni -->
+    <section id="me-soluzioni">
+      <p class="badge">Esercizi · soluzioni</p>
+      <div class="ms-grid">
+        <div class="ms-col">
+          <p class="ms-head">La radio</p>
+          <p>$Y$ = anni di funzionamento, $\;Y\sim\operatorname{Exp}(\lambda=\tfrac18)$</p>
+          <p>$S(y)=e^{-\lambda y}$</p>
+          <p class="fragment">$P(Y\gt10)=S(10)=e^{-\frac{10}{8}}\approx\color{#38ef7d}{0{,}29}$</p>
+        </div>
+        <div class="ms-col">
+          <p class="ms-head">Il macchinario</p>
+          <p>$Z$ = tempo di riparazione, $\;Z\sim\operatorname{Exp}(\lambda=1)$</p>
+          <p>$S(z)=e^{-z}$</p>
+          <p class="fragment">$P(Z\gt2)=S(2)=e^{-2}\approx\color{#38ef7d}{0{,}135}$</p>
+          <p class="fragment">$P(Z\gt3\mid Z\gt2)=P(Z\gt1)=e^{-1}\approx\color{#38ef7d}{0{,}368}$</p>
+        </div>
+      </div>
+      <aside class="notes">Una riga per click. Sul macchinario: le due ore già passate non accorciano né allungano il lavoro che resta. La radio con l'assenza di memoria è l'Esercizio 3 della dispensa.</aside>
+    </section>
+
+    <!-- L1-33 · controllo c3 -->
+    <section id="sondaggio-c3" class="sondaggio" data-poll="s06-c3">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>distribuzione esponenziale</b> e l'<b>assenza di memoria</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto, rivelazione immediata (V). Se prevalgono 2 e 3, rifai il conto del macchinario con t = 1, u = 1: e^(−2)/e^(−1) = e^(−1).</aside>
+    </section>
+
+    <!-- L1-34 · uscita -->
+    <section id="uscita-1">
+      <p class="badge">Domanda d'uscita</p>
+      <p class="ux-q">L'autobus non arriva mai «esattamente» alle 14:18:30.<br>Eppure arriva di sicuro. Come è possibile?</p>
+      <p class="ux-a fragment">Ogni istante ha probabilità 0: la probabilità sta negli intervalli, è un'area.</p>
+      <p class="ux-home">A casa: dispensa, Atti I–V · esercizi 1–4 · laboratorio «attese simulate»<br>Mercoledì: Gauss e un asteroide perduto dietro il Sole</p>
+      <aside class="notes">Cuscinetto: nessun concetto nuovo. Due risposte a voce, poi click 1. Letture facoltative: Lettura A (Bertrand con i conti) e Lettura B (Jaynes e le invarianze). Chiudi entro le 12:45.</aside>
+    </section>
+
+  </div></div>
+  <script src="../../assets/slides/scene.js"></script>
+  <script src="../../assets/sondaggi.js"></script>
+  <script src="../../assets/slides/sondaggio.js"></script>
+  <script src="js/comuni.js"></script>
+  <script src="js/lezione1.js"></script>
+  <script>PSIDeck.start({ onReady: function (deck) { PSISondaggio.bind(deck); S06.timers(deck); } });</script>
+</body>
+</html>

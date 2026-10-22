@@ -219,12 +219,14 @@
     label(root, 800, 44, 'precisione', 's06-small');
     label(root, 1040, 44, 'probabilità', 's06-small');
     line(root, 650, 58, 1150, 58, '#ffffff30', 2);
-    var ROWS = [['1 secondo', '≈ 0,0004'], ['1 millisecondo', '≈ 0,0000004'], ['1 microsecondo', '≈ 4 · 10⁻¹⁰'],
-      ['1 femtosecondo', '≈ 4 · 10⁻¹⁹'], ['istante esatto', '0']];
+    // Il terzo campo è l'esponente: un tspan rialzato, perché il font non ha tutti gli apici Unicode.
+    var ROWS = [['1 secondo', '≈ 0,0004'], ['1 millisecondo', '≈ 0,0000004'], ['1 microsecondo', '≈ 4 · 10', '−10'],
+      ['1 femtosecondo', '≈ 4 · 10', '−19'], ['istante esatto', '0']];
     var rows = ROWS.map(function (r, i) {
       var g = svg('g', { opacity: 0 }, root), y = 102 + i * 50, last = i === ROWS.length - 1;
       label(g, 800, y, r[0], 's06-label' + (last ? ' s06-bold' : ''));
-      label(g, 1040, y, r[1], 's06-label s06-bold', { style: last ? 'fill:' + C.ok + ';font-size:32px' : '' });
+      var p = label(g, 1040, y, r[1], 's06-label s06-bold', { style: last ? 'fill:' + C.ok + ';font-size:32px' : '' });
+      if (r[2]) svg('tspan', { dy: -11, style: 'font-size:16px' }, p).textContent = r[2];
       return g;
     });
     var DIG = ['14:18:30', '14:18:30,000', '14:18:30,000 000', '14:18:30,000 000 000 000 000', '14:18:30,000…'];

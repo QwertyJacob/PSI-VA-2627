@@ -334,13 +334,13 @@
     <!-- L1-21 · da Poisson all'attesa -->
     <section id="ex-poisson">
       <p class="badge">Variabile aleatoria esponenziale</p>
-      <p class="ep-lead">La distribuzione di Poisson <b>conta</b> le occorrenze di un evento in un intervallo: occorrenze indipendenti, valore atteso noto. Se invece ci chiediamo <b>quanto tempo</b> passa prima della prossima occorrenza, abbiamo una v.a. <b class="highlight">esponenziale</b>: una v.a. continua.</p>
+      <p class="ep-lead"><b>Se assumiamo</b> che le occorrenze di un evento arrivino una alla volta, indipendenti e con ritmo medio costante, il loro <b>numero</b> in un intervallo è una v.a. poissoniana. Allora il <b>tempo</b> fino alla prossima occorrenza è una v.a. <b class="highlight">esponenziale</b>: una v.a. continua.</p>
       <div class="ep-pairs">
-        <div class="ep-pair fragment"><span>a</span><p><b>Numero</b> di attacchi a un sito web nel prossimo giorno → <b class="data">Poisson</b></p><p><b>Tempo</b> tra due attacchi → <b class="highlight">esponenziale</b></p></div>
-        <div class="ep-pair fragment"><span>b</span><p><b>Numero</b> di operazioni sul database di Uber nei prossimi 10 ms → <b class="data">Poisson</b></p><p><b>Tempo</b> fino alla prossima operazione → <b class="highlight">esponenziale</b></p></div>
-        <div class="ep-pair fragment"><span>c</span><p><b>Numero</b> di utenti che cliccano su un annuncio nei prossimi 5 minuti → <b class="data">Poisson</b></p><p><b>Tempo</b> trascorso tra due clic → <b class="highlight">esponenziale</b></p></div>
+        <div class="ep-pair fragment"><span>a</span><p><b>Numero</b> di attacchi a un sito web nel prossimo giorno → <b class="data">poissoniana</b></p><p><b>Tempo</b> tra due attacchi → <b class="highlight">esponenziale</b></p></div>
+        <div class="ep-pair fragment"><span>b</span><p><b>Numero</b> di operazioni sul database di Uber nei prossimi 10 ms → <b class="data">poissoniana</b></p><p><b>Tempo</b> fino alla prossima operazione → <b class="highlight">esponenziale</b></p></div>
+        <div class="ep-pair fragment"><span>c</span><p><b>Numero</b> di utenti che cliccano su un annuncio nei prossimi 5 minuti → <b class="data">poissoniana</b></p><p><b>Tempo</b> trascorso tra due clic → <b class="highlight">esponenziale</b></p></div>
       </div>
-      <aside class="notes">Pacco, slide 30. Una coppia per click: il primo conta, il secondo misura un'attesa. Domanda: «quanti lavori arrivano a una stampante in un'ora?» → Poisson; «quanto aspetto il prossimo?» → la nostra nuova variabile. Il parametro è lo stesso: λ eventi per unità di tempo.</aside>
+      <aside class="notes">Pacco, slide 30. Prima dei click sottolinea il «se»: è un'ipotesi di modello, quella della costruzione a pezzetti della Settimana 5 (arrivi singoli, indipendenti, tasso stabile), e deve valere per intervalli di ogni durata, non solo per «un giorno». Se gli attacchi arrivano a ondate (una botnet che colpisce per qualche minuto e poi tace) non valgono né la distribuzione di Poisson né l'esponenziale. Una coppia per click: il primo conta, il secondo misura un'attesa. Domanda: «quanti lavori arrivano a una stampante in un'ora?» → distribuzione di Poisson; «quanto aspetto il prossimo?» → la nostra nuova variabile. Il parametro è lo stesso: λ eventi per unità di tempo.</aside>
     </section>
 
     <!-- L1-22 · zero eventi = attesa lunga -->
@@ -356,7 +356,7 @@
         </div>
         <div class="s06-box at-box">$$P(T>t)=e^{-\lambda t}$$</div>
       </div>
-      <aside class="notes">Il notebook 4_Continuous_random_vars (§4.2.2). Una stampante riceve in media λ = 3 lavori all'ora; T = tempo da adesso al prossimo lavoro. Click: 1 i lavori scorrono (seme fisso); 2 la striscia di mezz'ora vuota e il primo arrivo dopo; 3 «T > 0,5» e «zero lavori in 0,5 h» sono lo stesso evento; 4 la media della distribuzione di Poisson su mezz'ora (tasso × durata, §17 della S5); prima del click 5 chiedi «quale formula della settimana scorsa?»; 5 e^(−1,5); 6 la striscia diventa lunga t: in t ore la media è λt.</aside>
+      <aside class="notes">Il notebook 4_Continuous_random_vars (§4.2.2). Una stampante riceve in media λ = 3 lavori all'ora; T = tempo da adesso al prossimo lavoro. Click: 1 i lavori scorrono (seme fisso); 2 la striscia di mezz'ora vuota e il primo arrivo dopo; 3 «T > 0,5» e «zero lavori in 0,5 h» sono lo stesso evento; 4 la media della distribuzione di Poisson su mezz'ora (tasso × durata, §17 della S5); prima del click 5 chiedi «quale formula della settimana scorsa?»; 5 e^(−1,5); 6 la striscia diventa lunga t: in t ore la media è λt. L'asse è in ore con lo zero adesso, quindi «l'istante t» è «fra t ore»: dillo esplicitamente, la dispensa lo fa prima della derivazione.</aside>
     </section>
 
     <!-- L1-23 · la derivazione -->
@@ -425,7 +425,7 @@
         </div>
       </div>
       <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
-      <aside class="notes">Dal notebook (Baron, Esempio 4.5). Click 1: timer di 4′. Click 2–4: la soluzione e l'errore tipico sulle unità.</aside>
+      <aside class="notes">(S) Se sei in ritardo, risolvila a voce in due minuti: è l'esempio svolto della dispensa. Dal notebook (Baron, Esempio 4.5). Click 1: timer di 4′. Click 2–4: la soluzione e l'errore tipico sulle unità.</aside>
     </section>
 
     <!-- ───── L'assenza di memoria (note del prof. M. Abundo) ───── -->
@@ -503,7 +503,7 @@
         </div>
       </div>
       <span class="fragment ex-go" aria-hidden="true"></span>
-      <aside class="notes">Gli esercizi del pacco (slide 37–40 del «10. Gaussian»). Click 1: timer di 6′. Metodo da far scrivere: chi è la variabile, che distribuzione ha, f, F, S, poi l'evento richiesto. Soluzioni nella slide successiva.</aside>
+      <aside class="notes">(S) Se sei in ritardo, assegnali a casa: la radio è l'Esercizio 3 della dispensa, il macchinario la sosta di verifica sull'assenza di memoria. Gli esercizi del pacco (slide 37–40 del «10. Gaussian»). Click 1: timer di 6′. Metodo da far scrivere: chi è la variabile, che distribuzione ha, f, F, S, poi l'evento richiesto. Soluzioni nella slide successiva.</aside>
     </section>
 
     <!-- L1-32 · soluzioni -->
@@ -551,7 +551,7 @@
       <p class="ux-q">L'autobus non arriva mai «esattamente» alle 14:18:30.<br>Eppure arriva di sicuro. Come è possibile?</p>
       <p class="ux-a fragment">Ogni istante ha probabilità 0: la probabilità sta negli intervalli, è un'area.</p>
       <p class="ux-home">A casa: dispensa, Atti I–V · esercizi 1–4 · laboratorio «attese simulate»<br>Mercoledì: Gauss e un asteroide perduto dietro il Sole</p>
-      <aside class="notes">Cuscinetto: nessun concetto nuovo. Due risposte a voce, poi click 1. Letture facoltative: Lettura A (Bertrand con i conti). Chiudi entro le 12:45.</aside>
+      <aside class="notes">Cuscinetto: nessun concetto nuovo. Due risposte a voce, poi click 1. Letture facoltative: Lettura A (Bertrand con i conti) e Lettura B (Jaynes e le invarianze). Chiudi entro le 12:45.</aside>
     </section>
 
     <!-- ═════════════ LEZIONE 2 · mercoledì 28/10, 9:00–10:45. Scene: js/lezione2.js ═════════════ -->
@@ -746,7 +746,7 @@
         </div>
         <div class="sondaggio-join"></div>
       </div>
-      <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2 e 3, rifai i due movimenti del widget (μ = 230, σ = 40).</aside>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2 e 3, rifai i due movimenti del widget (μ = 180, σ = 5).</aside>
     </section>
 
     <!-- L2-12 · De Moivre e le monete -->
@@ -754,7 +754,7 @@
       <p class="badge">De Moivre, 12 novembre 1733</p>
       <h2 class="scene-title">La stessa curva, dalle monete</h2>
       <svg class="scene-svg" width="1100" height="440" viewBox="0 0 1100 440" role="img" aria-label="Istogramma della Binomiale con p un mezzo, standardizzato, per n uguale a 10, 50 e 200; poi la campana sovrapposta"></svg>
-      <aside class="notes">Sacrificabile (31–33). De Moivre cercava di approssimare le probabilità binomiali per moltissimi lanci. Click 1–3: n = 10, 50, 200 lanci di una moneta onesta; le barre sono standardizzate (centro 0, una σ = 1), come faremo tra poco con la campana. 4 la campana sovrapposta. «Due strade, una curva: perché, lo vedremo in Settimana 9.»</aside>
+      <aside class="notes">(S) Se sei in ritardo, saltala: è un riquadro facoltativo della dispensa. De Moivre cercava di approssimare le probabilità binomiali per moltissimi lanci. Click 1–3: n = 10, 50, 200 lanci di una moneta onesta; le barre sono standardizzate (centro 0, una σ = 1), come faremo tra poco con la campana. 4 la campana sovrapposta. «Due strade, una curva: perché, lo vedremo in Settimana 9.»</aside>
     </section>
 
     <!-- L2-13 · la normale standard -->
@@ -902,7 +902,7 @@
         </div>
         <div class="sondaggio-join"></div>
       </div>
-      <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2 e 3, usa la quota S per rifare P(X ≤ 220) = Φ(1) = 0,8413 con NormalDist dal vivo.</aside>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2 e 3, rifai con le altezze P(X ≤ 180) = Φ(1) = 0,8413, anche con NormalDist(170, 10).cdf(180) dal vivo.</aside>
     </section>
 
     <!-- L2-23 · 68, 95, 99,7 -->
@@ -994,7 +994,7 @@
       </div>
       <svg class="scene-svg" width="1180" height="220" viewBox="0 0 1180 220" role="img" aria-label="La distribuzione normale del servizio, bianca, e una curva illustrativa a coda pesante, arancione, con lo stesso centro; nella lente sulla coda le latenze lente, in rosso, cadono sotto la curva arancione e fuori dalla bianca"></svg>
       <div class="ht-lines"><span class="ht-1">$z=5$: circa 3 su 10 milioni</span><span class="ht-3 highlight">guarda i percentili dei dati</span></div>
-      <aside class="notes">Premi V. Risposta 3. Click: 1 z = (300 − 200)/20 = 5: con la distribuzione normale circa 3 su 10 milioni. 2 la curva a coda pesante, ILLUSTRATIVA (95% normale più 5% di attese lunghe, non un dataset reale): nella lente × 50 si vede che le latenze lente stanno sotto la coda arancione e fuori dalla bianca (GC, disco lento, ritrasmissioni). 3 in produzione si guardano i percentili osservati (p50, p95, p99). Due minuti, nessuna nuova formula. Controllo c6 all'89.</aside>
+      <aside class="notes">Premi V. Risposta 3. Click: 1 z = (300 − 200)/20 = 5: con la distribuzione normale circa 3 su 10 milioni. 2 la curva a coda pesante, ILLUSTRATIVA (95% normale più 5% di attese lunghe, non un dataset reale): nella lente × 50 si vede che le latenze lente stanno sotto la coda arancione e fuori dalla bianca (GC, disco lento, ritrasmissioni). 3 in produzione si guardano i percentili osservati (p50, p95, p99). Due minuti, nessuna nuova formula.</aside>
     </section>
 
     <!-- L2-29 · controllo c6 -->
@@ -1021,7 +1021,7 @@
       <p class="ux-q">Un benchmark: media 120 ms, $\sigma=3$ ms.<br>Oggi: <span class="red">135 ms</span>. Che cosa scrivi nel ticket?</p>
       <p class="ux-a fragment">$z=(135-120)/3=5$: cerca la causa, non è «sfortuna»</p>
       <p class="ux-home">A casa: dispensa, Atti VI–VII · esercizi 5–8 · laboratorio «la campana nasce dagli errori»<br>Settimana 9: perché le somme di tanti piccoli errori diventano campane</p>
-      <aside class="notes">Cuscinetto (S). Due risposte a voce, poi click 1: z = (135 − 120)/3 = 5, oltre ogni fascia: un evento rarissimo o, più spesso, qualcosa è cambiato. Facoltative: Lettura B (Gauss e i minimi quadrati) e il riquadro su De Moivre. Chiudi entro le 10:45.</aside>
+      <aside class="notes">Cuscinetto (S). Due risposte a voce, poi click 1: z = (135 − 120)/3 = 5, oltre ogni fascia: un evento rarissimo o, più spesso, qualcosa è cambiato. Facoltative: Lettura C (Gauss e i minimi quadrati) e il riquadro su De Moivre. Chiudi entro le 10:45.</aside>
     </section>
 
   </div></div>

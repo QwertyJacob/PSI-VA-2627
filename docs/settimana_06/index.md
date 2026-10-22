@@ -556,17 +556,21 @@ Gli esempi sono a coppie, e ogni coppia nasce da un’ipotesi. Prendiamo gli att
 
 Per collegare le due grandezze fissiamo il **tasso** $\lambda$: il numero medio di eventi per unità di tempo. Per esempio, una stampante riceve in media $\lambda=3$ lavori all’ora. Chiamiamo $X_t$ il numero di eventi in un intervallo lungo $t$ ore. Sotto le ipotesi appena richiamate, come abbiamo visto nella [Settimana 5](../settimana_05/index.md#tasso), $X_t$ ha distribuzione di Poisson con media $\lambda t$, e questo vale per **ogni** durata $t$, non solo per un’ora: in $t$ ore la stampante riceve in media $3t$ lavori.
 
-Chiamiamo poi $T$ il tempo, misurato in ore a partire da adesso, fino al prossimo evento. Vogliamo la sua distribuzione, e la otteniamo collegandola a $X_t$, che conosciamo già. Cominciamo dalla probabilità di dover aspettare **più** di $t$ ore. L’osservazione decisiva è che le due frasi
+Chiamiamo poi $T$ il tempo, misurato in ore a partire da adesso, fino al prossimo evento. Vogliamo la sua distribuzione, e la otteniamo collegandola a $X_t$, che conosciamo già.
+
+Per ragionare su $T$ conviene disegnare il tempo su una retta, come nella figura qui sotto. Mettiamo lo zero **adesso** e prendiamo l’ora come unità di misura. Allora il punto $t$ della retta è l’istante che arriva fra $t$ ore, e il tratto da 0 a $t$, cioè l’intervallo $[0,t]$, corrisponde alle prossime $t$ ore. Dire «dopo l’istante $t$» o «fra più di $t$ ore» è quindi la stessa cosa. Con i minuti o i secondi come unità il ragionamento non cambierebbe.
+
+Cominciamo dalla probabilità di dover aspettare **più** di $t$ ore. L’osservazione decisiva è che le due frasi
 
 $$
-\{T>t\}\qquad\text{«il prossimo evento arriva dopo l’istante } t\text{»}
+\{T>t\}\qquad\text{«il prossimo evento arriva fra più di } t \text{ ore»}
 $$
 
 $$
-\{X_t=0\}\qquad\text{«nell’intervallo da 0 a } t \text{ non arriva nessun evento»}
+\{X_t=0\}\qquad\text{«nelle prossime } t \text{ ore non arriva nessun evento»}
 $$
 
-descrivono **lo stesso evento**. Se il prossimo evento arriva dopo $t$, nell’intervallo $[0,t]$ non ne è arrivato nessuno; e se nell’intervallo non ne è arrivato nessuno, il prossimo arriverà dopo $t$. Due eventi uguali hanno la stessa probabilità, e la probabilità di zero eventi in una distribuzione di Poisson di media $\lambda t$ la conosciamo:
+descrivono **lo stesso evento**. Se il prossimo evento arriva fra più di $t$ ore, nelle prossime $t$ ore, cioè nell’intervallo $[0,t]$, non ne arriva nessuno; e se in quelle $t$ ore non ne arriva nessuno, il prossimo arriverà fra più di $t$ ore. Due eventi uguali hanno la stessa probabilità, e la probabilità di zero eventi in una distribuzione di Poisson di media $\lambda t$ la conosciamo:
 
 $$
 P(T>t)=P(X_t=0)=e^{-\lambda t}\,\frac{(\lambda t)^0}{0!}=e^{-\lambda t}.
@@ -575,23 +579,24 @@ $$
 Nel conto abbiamo usato $(\lambda t)^0=1$ e $0!=1$.
 
 <figure markdown="0">
-<svg viewBox="0 0 580 195" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="Una linea del tempo da 0 in poi. Tra 0 e t c è una striscia verde senza arrivi; il primo arrivo, un pallino arancione, cade dopo t. Il tratto blu da 0 al primo arrivo è il tempo di attesa T.">
+<svg viewBox="0 0 580 195" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="Una linea del tempo in ore, con lo zero adesso. Tra 0 e t, cioè nelle prossime t ore, c è una striscia verde senza arrivi; il primo arrivo, un pallino arancione, cade dopo t. Il tratto blu da 0 al primo arrivo è il tempo di attesa T.">
 <defs><marker id="s06-tempo-freccia" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="currentColor"/></marker></defs>
-<text x="290" y="20" text-anchor="middle" fill="currentColor" font-weight="bold">«Aspetto più di t» = «nessun arrivo in [0, t]»</text>
+<text x="290" y="20" text-anchor="middle" fill="currentColor" font-weight="bold">«Aspetto più di t ore» = «nessun arrivo in [0, t]»</text>
 <rect x="60" y="55" width="250" height="40" fill="#2e9e5b" opacity="0.18"/>
 <path d="M40 75H545" stroke="currentColor" stroke-width="2" marker-end="url(#s06-tempo-freccia)"/>
-<line x1="60" y1="62" x2="60" y2="88" stroke="currentColor" stroke-width="2"/><text x="60" y="112" text-anchor="middle" fill="currentColor">0</text>
+<line x1="60" y1="62" x2="60" y2="88" stroke="currentColor" stroke-width="2"/><text x="60" y="112" text-anchor="middle" fill="currentColor">0 = adesso</text>
 <line x1="310" y1="62" x2="310" y2="88" stroke="#2e9e5b" stroke-width="2" stroke-dasharray="4 3"/><text x="310" y="112" text-anchor="middle" fill="#2e9e5b" font-weight="bold">t</text>
 <text x="185" y="50" text-anchor="middle" fill="#2e9e5b">nessun arrivo qui: probabilità e^(−λt)</text>
 <circle cx="370" cy="75" r="7" fill="#e07a1f"/>
 <circle cx="455" cy="75" r="7" fill="#e07a1f"/>
 <circle cx="500" cy="75" r="7" fill="#e07a1f"/>
 <text x="370" y="112" text-anchor="middle" fill="#e07a1f">primo arrivo</text>
+<text x="545" y="112" text-anchor="end" fill="currentColor">tempo (ore)</text>
 <path d="M60 135H370" stroke="#4051b5" stroke-width="2"/><line x1="60" y1="128" x2="60" y2="142" stroke="#4051b5" stroke-width="2"/><line x1="370" y1="128" x2="370" y2="142" stroke="#4051b5" stroke-width="2"/>
 <text x="215" y="155" text-anchor="middle" fill="#4051b5" font-weight="bold">T = tempo fino al primo arrivo</text>
 <text x="290" y="182" text-anchor="middle" fill="currentColor">Arrivi in [0, t]: distribuzione di Poisson di media λt.</text>
 </svg>
-<figcaption>L’evento «T > t» coincide con «zero arrivi tra 0 e t». La probabilità di zero arrivi la conosciamo già dalla distribuzione di Poisson della Settimana 5.</figcaption>
+<figcaption>L’evento «T > t» coincide con «zero arrivi nelle prossime t ore», cioè tra 0 e t. La probabilità di zero arrivi la conosciamo già dalla distribuzione di Poisson della Settimana 5.</figcaption>
 </figure>
 
 Dalla probabilità di aspettare più di $t$ ricaviamo subito la funzione di ripartizione di $T$, perché i due eventi $\{T\le t\}$ e $\{T>t\}$ sono complementari:

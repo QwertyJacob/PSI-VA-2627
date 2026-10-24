@@ -26,7 +26,7 @@ Il formulario fornito dal docente accompagna il calcolo: occorre saper scegliere
 
 Script e widget servono a esplorare e verificare i concetti. **Non è richiesta la riproduzione del codice Python**; restano richiesti i ragionamenti probabilistici indicati nel percorso d’esame. Le fonti bibliografiche e i documenti storici sono letture facoltative: non occorre memorizzare date, citazioni o dettagli biografici.
 
-Per ogni settimana, consulta le indicazioni in apertura delle dispense: [Settimana 1](settimana_01/index.md#esame), [Settimana 2](settimana_02/index.md#esame), [Settimana 3](settimana_03/index.md#esame).
+Per ogni settimana, consulta le indicazioni in apertura delle dispense.
 
 ## Il percorso in breve
 

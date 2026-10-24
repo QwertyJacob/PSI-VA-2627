@@ -89,8 +89,8 @@ async function run() {
     console.log(`${label}:`, ok);
     if (!ok) throw new Error(`Fallito: ${label}`);
   };
-  const eventually = async (fn) => {
-    for (let i = 0; i < 40; i++) {
+  const eventually = async (fn, tries = 40) => {
+    for (let i = 0; i < tries; i++) {
       if (await fn()) return true;
       await new Promise((r) => setTimeout(r, 100));
     }
@@ -471,6 +471,179 @@ async function run() {
     await speakerPage.evaluate(() => window.Reveal.prev());
     await speakerPage.waitForTimeout(200);
     check('32. I tratti della slide 2 sono ancora lì', await inkAt(speakerPage, 250, 250));
+
+    // 17. Note del relatore sul tablet: banner in alto, swipe in giù per vederle, in su per nasconderle
+    const notesOpen = (page) => page.evaluate(() => {
+      const b = document.querySelector('.psi-lavagna-notes');
+      return !!b && b.classList.contains('psi-open');
+    });
+    const notesText = (page) => page.textContent('.psi-lavagna-notes .psi-notes-text');
+    check('N1. Il proiettore non ha il banner delle note', (await viewerPage.$('.psi-lavagna-notes')) === null);
+    check('N2. Sul tablet il banner parte chiuso', !(await notesOpen(speakerPage)));
+    // Il mazzo della settimana 1 non ha note: se ne aggiungono tre, l'ultima lunghissima
+    await speakerPage.evaluate(() => {
+      const s = window.Reveal.getHorizontalSlides();
+      s[2].insertAdjacentHTML('beforeend', '<aside class="notes">Nota di prova della slide 3</aside>');
+      s[3].insertAdjacentHTML('beforeend', '<aside class="notes">Nota di prova della slide 4</aside>');
+      s[4].insertAdjacentHTML('beforeend', '<aside class="notes">' + 'Nota lunga. '.repeat(400) + '</aside>');
+    });
+    await speakerPage.evaluate(() => { window.Reveal.next(); window.Reveal.prev(); });
+    const hNotes = await slideH(speakerPage);
+    await fingerGesture(speakerPage, [{ id: 50, from: [640, 200], to: [640, 420] }]);
+    await speakerPage.waitForTimeout(400);
+    check('N3. Swipe in giù: compaiono le note della slide, e la slide non cambia',
+      (await notesOpen(speakerPage)) && (await notesText(speakerPage)) === 'Nota di prova della slide 3' &&
+      (await slideH(speakerPage)) === hNotes);
+    await speakerPage.evaluate(() => window.Reveal.next());
+    await speakerPage.waitForTimeout(200);
+    check('N4. Cambio slide: il banner resta aperto con le note nuove',
+      (await notesOpen(speakerPage)) && (await notesText(speakerPage)) === 'Nota di prova della slide 4');
+    await speakerPage.evaluate(() => window.Reveal.next());
+    await speakerPage.waitForTimeout(200);
+    const longNotes = await speakerPage.evaluate(() => {
+      const b = document.querySelector('.psi-lavagna-notes');
+      const t = b.querySelector('.psi-notes-text');
+      return {
+        tall: b.getBoundingClientRect().height <= window.innerHeight / 3 + 1,
+        small: getComputedStyle(t).fontSize === '13px',
+        scrolls: t.scrollHeight > t.clientHeight && t.style.touchAction === 'pan-y'
+      };
+    });
+    check('N5. Note lunghe: caratteri piccoli, banner alto al massimo un terzo dello schermo, testo che scorre',
+      longNotes.tall && longNotes.small && longNotes.scrolls);
+    await speakerPage.evaluate(() => window.Reveal.prev());
+    await speakerPage.waitForTimeout(200);
+    // Trascinato in su meno di 50 px torna giù; oltre si chiude
+    const dragBanner = (page, dy) => page.evaluate((dy) => {
+      const b = document.querySelector('.psi-lavagna-notes');
+      const r = b.getBoundingClientRect();
+      const o = (y) => ({ clientX: r.left + r.width / 2, clientY: y, pointerId: 60, pointerType: 'touch', bubbles: true });
+      const y0 = r.top + r.height / 2;
+      b.dispatchEvent(new PointerEvent('pointerdown', o(y0)));
+      b.dispatchEvent(new PointerEvent('pointermove', o(y0 + dy / 2)));
+      b.dispatchEvent(new PointerEvent('pointermove', o(y0 + dy)));
+      b.dispatchEvent(new PointerEvent('pointerup', o(y0 + dy)));
+    }, dy);
+    await dragBanner(speakerPage, -30);
+    await speakerPage.waitForTimeout(400);
+    check('N6. Banner trascinato in su di poco: resta aperto', await notesOpen(speakerPage));
+    await dragBanner(speakerPage, -120);
+    await speakerPage.waitForTimeout(400);
+    check('N7. Banner trascinato in su: si chiude', !(await notesOpen(speakerPage)));
+    await speakerPage.click('.psi-tb-notes-btn');
+    check('N8. Pulsante 📝: apre le note e si accende',
+      (await notesOpen(speakerPage)) && (await speakerPage.$('.psi-tb-notes-btn.psi-active')) !== null);
+    await fingerGesture(speakerPage, [{ id: 51, from: [640, 500], to: [640, 280] }]);
+    await speakerPage.waitForTimeout(400);
+    check('N9. Swipe in su sulla slide: le note spariscono e il pulsante si spegne',
+      !(await notesOpen(speakerPage)) && (await speakerPage.$('.psi-tb-notes-btn.psi-active')) === null);
+    check('N10. Il proiettore non ha mai avuto note', (await viewerPage.$('.psi-lavagna-notes')) === null);
+
+    if (connected) {
+      // 17. Proiettore con ?proiettore: tablet e proiettore si seguono a vicenda
+      const projContext = await browser.newContext();
+      const projPage = await projContext.newPage();
+      await projPage.goto(`${baseUrl}?proiettore&${deckParam}`);
+      await projPage.waitForSelector('.reveal .slides');
+      // Il proiettore non ha indicatore di connessione: è collegato quando segue il tablet
+      let linked = false;
+      for (let i = 0; i < 15 && !linked; i++) {
+        await speakerPage.evaluate((h) => window.Reveal.slide(h, 0, -1), 5 + (i % 2));
+        const h = 5 + (i % 2);
+        linked = await eventually(async () => (await slideH(projPage)) === h, 8);
+      }
+      check('33. Proiettore (?proiettore) segue il tablet', linked);
+
+      const pos = (page) => page.evaluate(() => {
+        const i = window.Reveal.getIndices();
+        return i.h + '_' + i.v + '_' + (typeof i.f === 'number' ? i.f : -1);
+      });
+
+      await projPage.evaluate(() => window.Reveal.slide(7, 0, -1));
+      check('34. Il tablet segue il proiettore', await eventually(async () => (await slideH(speakerPage)) === 7));
+      check('35. Anche la pagina senza parametri segue il proiettore',
+        await eventually(async () => (await slideH(viewerPage)) === 7));
+
+      // Una pagina senza parametri (uno studente) segue e basta: non sposta il tablet né il proiettore
+      await viewerPage.evaluate(() => window.Reveal.slide(2, 0, -1));
+      await viewerPage.waitForTimeout(1500);
+      check('36. La pagina senza parametri non sposta tablet e proiettore',
+        (await slideH(speakerPage)) === 7 && (await slideH(projPage)) === 7);
+
+      // Due passi rapidi: l'eco del primo non deve riportare indietro chi è già al secondo
+      const fragSlide = await speakerPage.evaluate(() => {
+        const s = window.Reveal.getHorizontalSlides();
+        for (let h = 0; h < s.length; h++) {
+          if (!s[h].classList.contains('stack') && s[h].querySelectorAll('.fragment').length >= 3) return h;
+        }
+        return -1;
+      });
+      check('37. Il mazzo ha una slide con almeno tre animazioni', fragSlide >= 0);
+      await speakerPage.evaluate((h) => window.Reveal.slide(h, 0, -1), fragSlide);
+      await eventually(async () => (await slideH(projPage)) === fragSlide);
+      await speakerPage.click('.psi-tb-nav-btn[title="Slide / animazione successiva"]');
+      await speakerPage.click('.psi-tb-nav-btn[title="Slide / animazione successiva"]');
+      await speakerPage.click('.psi-tb-nav-btn[title="Slide / animazione successiva"]');
+      const tabletPos = await pos(speakerPage);
+      await projPage.waitForTimeout(1500);
+      check('38. Tre passi rapidi dal tablet: il proiettore arriva allo stesso punto e il tablet non torna indietro',
+        (await pos(projPage)) === tabletPos && (await pos(speakerPage)) === tabletPos);
+      await projPage.evaluate(() => { window.Reveal.prev(); window.Reveal.prev(); });
+      const projPos = await pos(projPage);
+      await speakerPage.waitForTimeout(1500);
+      check('39. Due passi rapidi dal proiettore: il tablet arriva allo stesso punto e il proiettore non torna indietro',
+        (await pos(speakerPage)) === projPos && (await pos(projPage)) === projPos);
+
+      // 18. Panoramica dal tablet: resta sul tablet, il proiettore va sulla slide scelta
+      await speakerPage.evaluate(() => window.Reveal.slide(3, 0, -1));
+      await eventually(async () => (await slideH(projPage)) === 3);
+      await speakerPage.click('.psi-tb-overview-btn');
+      await speakerPage.waitForTimeout(400);
+      check('40. Pulsante panoramica: il tablet è in panoramica e il pulsante è acceso',
+        (await speakerPage.evaluate(() => window.Reveal.isOverview())) &&
+        (await speakerPage.$('.psi-tb-overview-btn.psi-active')) !== null);
+      check('41. In panoramica il canvas non copre le miniature',
+        (await speakerPage.$eval(SEL, (c) => getComputedStyle(c).display)) === 'none');
+      await speakerPage.evaluate(() => window.Reveal.right());
+      await projPage.waitForTimeout(1200);
+      check('42. Il proiettore non va in panoramica e non segue la scelta in corso',
+        !(await projPage.evaluate(() => window.Reveal.isOverview())) && (await slideH(projPage)) === 3);
+      // Tocco sulla miniatura della slide 6, nel punto in cui la si vede
+      const thumb = await speakerPage.evaluate(() => {
+        const s = window.Reveal.getHorizontalSlides()[6];
+        const r = s.getBoundingClientRect();
+        const x = r.left + r.width / 2;
+        const y = r.top + r.height / 2;
+        const hit = document.elementFromPoint(x, y);
+        return { x, y, onSlide: !!hit && hit.closest('section') === s };
+      });
+      check('43. La miniatura della slide 6 è toccabile', thumb.onSlide);
+      await speakerPage.mouse.click(thumb.x, thumb.y);
+      await speakerPage.waitForTimeout(400);
+      check('44. Tocco sulla miniatura: panoramica chiusa, tablet sulla slide 6, pulsante spento',
+        !(await speakerPage.evaluate(() => window.Reveal.isOverview())) && (await slideH(speakerPage)) === 6 &&
+        (await speakerPage.$('.psi-tb-overview-btn.psi-active')) === null);
+      check('45. Il proiettore va sulla slide scelta', await eventually(async () => (await slideH(projPage)) === 6));
+
+      // 19. Lavagna dal proiettore (tasto W): la segue anche il tablet
+      await projPage.keyboard.press('w');
+      check('46. W sul proiettore accende la lavagna sul tablet',
+        await eventually(async () => (await speakerPage.$('.psi-tb-board-btn.psi-active')) !== null));
+      await projPage.keyboard.press('w');
+      check('47. W di nuovo la spegne',
+        await eventually(async () => (await speakerPage.$('.psi-tb-board-btn.psi-active')) === null));
+
+      // 20. Anteprime della vista del relatore (?receiver): non mandano nulla e non seguono il canale
+      const recvPage = await projContext.newPage();
+      await recvPage.goto(`${baseUrl}?proiettore&receiver&${deckParam}#/9`);
+      await recvPage.waitForSelector('.reveal .slides');
+      await recvPage.waitForTimeout(2000);
+      await recvPage.evaluate(() => window.Reveal.slide(10, 0, -1));
+      await speakerPage.evaluate(() => window.Reveal.slide(4, 0, -1));
+      await recvPage.waitForTimeout(1500);
+      check('48. Anteprima del relatore: non sposta il tablet e non segue il canale',
+        (await slideH(speakerPage)) === 4 && (await slideH(recvPage)) === 10);
+    }
 
     console.log('\n--- TUTTI I TEST AUTOMATICI SUPERATI CON SUCCESSO! ---');
   } finally {

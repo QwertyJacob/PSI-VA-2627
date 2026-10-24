@@ -1449,7 +1449,7 @@ La scala elimina così la prima ricetta. Restano in gara $1/2$ e $1/4$, e la sca
 
 Spostiamo ora il cerchio senza cambiarne il raggio, tenendo ferme le rette. La distanza uniforme non se ne accorge: il suo peso è lo stesso per ogni distanza e per ogni direzione, quindi qualunque finestra si ritagli il peso resta costante e il rapporto $1/2$ non cambia.
 
-Il punto medio uniforme invece cambia, e la ragione sta nella ricetta: i punti medi uniformi nel disco si addensano verso il bordo, quindi le rette pesano in proporzione alla distanza dal centro con cui sono state costruite. Quel centro è privilegiato. Spostando il cerchio, la stessa retta viene pesata in modo diverso a seconda che sia parallela o perpendicolare allo spostamento, e la percentuale si muove: con un cerchio di raggio $0{,}42$ spostato di $0{,}58$, dal $25\%$ si passa a circa $47\%$. Una legge che dipende da dove abbiamo messo il centro non rispetta la traslazione.
+Il punto medio uniforme invece cambia, e la ragione sta nella ricetta: i punti medi uniformi nel disco si addensano verso il bordo, quindi le rette pesano in proporzione alla distanza dal centro con cui sono state costruite. Quel centro è privilegiato. Spostando il cerchio, la stessa retta viene pesata in modo diverso a seconda che sia parallela o perpendicolare allo spostamento, e la percentuale si muove: con un cerchio di raggio $0{,}42$ spostato di $0{,}58$, dal $25\%$ si passa a circa $47\%$. Una distribuzione che dipende da dove abbiamo messo il centro non rispetta la traslazione.
 
 Anche gli estremi cambiano, ma non serve: la scala li aveva già esclusi. Resta la distanza uniforme, l’unica che sopravvive a tutte e tre le trasformazioni.
 
@@ -1476,13 +1476,13 @@ Nell’animazione le rette sono generate rispetto al cerchio iniziale. In scala 
 
 [Apri l’animazione in una pagina dedicata](bertrand/index.html){ target="_blank" rel="noopener" }
 
-Prova prima **Ruota** con ciascun metodo: le corde girano, il cerchio resta fermo, e il valore non cambia. Poi prova **Cambia scala**: il primo metodo cambia legge, il secondo e il terzo restano uguali. Infine **Trasla** a raggio fisso: il primo e il terzo cambiano legge, il secondo resta uguale. In traslazione il cerchio ha raggio $0{,}42$, quindi il valore di partenza può non essere quello del cerchio iniziale ($1/3$, $1/2$ o $1/4$): conta se il numero resta costante mentre il cerchio si sposta.
+Prova prima **Ruota** con ciascun metodo: le corde girano, il cerchio resta fermo, e il valore non cambia. Poi prova **Cambia scala**: il primo metodo cambia la distribuzione delle corde, il secondo e il terzo no. Infine **Trasla** a raggio fisso: il primo e il terzo cambiano la distribuzione, il secondo no. In traslazione il cerchio ha raggio $0{,}42$, quindi il valore di partenza può non essere quello del cerchio iniziale ($1/3$, $1/2$ o $1/4$): conta se il numero resta costante mentre il cerchio si sposta.
 
 | Regola con cui scegliamo le corde | Rotazione | Cerchio più piccolo, stesse rette | Traslazione, stesso raggio |
 |---|---|---|---|
-| Due estremi uniformi sulla circonferenza | Conserva la legge | Cambia la legge | Cambia la legge |
-| Distanza dal centro uniforme | Conserva la legge | Conserva la legge | Conserva la legge |
-| Punto medio uniforme nel disco | Conserva la legge | Conserva la legge | Cambia la legge |
+| Due estremi uniformi sulla circonferenza | Conserva la distribuzione | Cambia la distribuzione | Cambia la distribuzione |
+| Distanza dal centro uniforme | Conserva la distribuzione | Conserva la distribuzione | Conserva la distribuzione |
+| Punto medio uniforme nel disco | Conserva la distribuzione | Conserva la distribuzione | Cambia la distribuzione |
 
 Le tre simmetrie hanno ruoli diversi: la rotazione non distingue i metodi, la scala elimina il primo, la traslazione elimina il terzo. Il criterio generale è dichiarare quali trasformazioni rappresentano davvero la stessa informazione e giustificare con esse l’assegnazione di probabilità.
 

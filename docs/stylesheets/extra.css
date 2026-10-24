@@ -397,3 +397,79 @@
   }
   .md-typeset a { color: inherit; }
 }
+
+/* ==========================================================================
+   PSI mascot — animated Three.js logo in the header
+   ========================================================================== */
+
+/* Material hides the logo below the desktop breakpoint; the mascot is the
+   course's identity, so keep it visible on tablets and phones too. */
+.md-header__button.md-logo {
+  margin: 0 .1rem;
+  padding: .1rem;
+  overflow: visible;
+}
+/* Material fades header buttons on hover; the mascot should stay crisp. */
+.md-header__button.md-logo:hover,
+.md-header__button.md-logo:focus-visible { opacity: 1; }
+@media screen and (max-width: 76.234375em) {
+  .md-header__button.md-logo { display: inline-block; }
+}
+
+.psi-pet {
+  display: block;
+  height: 2.05rem;
+  position: relative;
+  transform-origin: center;
+  transition: transform .28s cubic-bezier(.34, 1.56, .64, 1);
+  width: 2.05rem;
+}
+.md-header__button.md-logo:hover .psi-pet,
+.md-header__button.md-logo:focus-visible .psi-pet {
+  transform: scale(1.2);
+}
+
+/* Soft amber halo on hover/focus, behind the 3D canvas. */
+.psi-pet::before {
+  background: radial-gradient(circle, #f4b54466 0%, #f4b54400 70%);
+  border-radius: 50%;
+  content: "";
+  inset: -18%;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity .25s ease;
+}
+.md-header__button.md-logo:focus-visible .psi-pet::before,
+.md-header__button.md-logo:hover .psi-pet::before {
+  opacity: 1;
+}
+
+.psi-pet__canvas,
+.psi-pet__fallback {
+  display: block;
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+}
+.psi-pet__fallback {
+  object-fit: contain;
+  transition: opacity .35s ease;
+}
+.psi-pet__canvas {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+}
+.psi-pet.is-live .psi-pet__canvas { opacity: 1; }
+.psi-pet.is-live .psi-pet__fallback { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .psi-pet,
+  .psi-pet__canvas,
+  .psi-pet__fallback { transition: none; }
+  .md-header__button.md-logo:hover .psi-pet,
+  .md-header__button.md-logo:focus-visible .psi-pet { transform: none; }
+}
+

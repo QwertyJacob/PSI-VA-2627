@@ -15,6 +15,7 @@ theme:
   name: material
   custom_dir: overrides
   language: it
+  favicon: assets/img/psi-pet-favicon.svg
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default

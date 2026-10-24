@@ -5,6 +5,12 @@
 #}
 {% extends "base.html" %}
 
+{# Animated PSI mascot: lives in the header logo slot (partials/logo.html). #}
+{% block extrahead %}
+  {{ super() }}
+  <script type="module" src="{{ 'javascripts/psi-pet.js' | url }}"></script>
+{% endblock %}
+
 {% block content %}
   {% if page.meta.pdf_file %}
     <a href="{{ page.meta.pdf_file | url }}"

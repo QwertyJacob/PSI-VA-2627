@@ -13,6 +13,7 @@ Questo repository pubblico ospita i sorgenti in Markdown (nella cartella `docs/`
 - **Widget interattivi** — controlli grafici e cursori in tempo reale (sviluppati con Chart.js).
 - **Blocchi di codice eseguibili** — codice Python eseguito direttamente nel browser tramite [Pyodide](https://pyodide.org), modificabile ed eseguibile senza installare nulla.
 - **PDF per capitolo** — ogni pagina dispone del pulsante *"Scarica il PDF"*, che genera la versione stampabile del capitolo con formule MathJax e grafici dei widget ad alta risoluzione.
+- **Mascotte animata** — un Ψ 3D con occhi e sorriso (Three.js) fa da logo: si gira all'apertura della pagina, segue il mouse con gli occhi e accompagna il passaggio da una pagina all'altra. Se WebGL non è disponibile resta visibile il logo SVG statico.
 - **Stampa dell'intero corso** — funzionalità integrata per la stampa unificata tramite plugin dedicato.
 
 ---
@@ -24,8 +25,12 @@ docs/                      sorgenti Markdown delle dispense
   index.md                 homepage del corso
   0-senso.md               Capitolo 0: "Che senso ha essere qui?"
   javascripts/             runtime per widget, Chart.js, Pyodide e MathJax
+  javascripts/psi-pet.js   mascotte 3D del logo e transizioni di pagina
+  javascripts/vendor/      three.js (MIT) e Chart.js in locale
+  assets/img/psi-pet*.svg  logo statico e favicon della mascotte
   stylesheets/extra.css    stili personalizzati per widget, codice e stampa
-overrides/main.html        override del tema (pulsante per download PDF)
+overrides/main.html        override del tema (pulsante PDF, script della mascotte)
+overrides/partials/logo.html  logo animato nell'header
 scripts/
   pdf_hook.py              hook MkDocs per il binding e manifest dei PDF
   build_pdfs.mjs           generatore dei PDF tramite Chromium headless (Playwright)

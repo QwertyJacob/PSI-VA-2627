@@ -1563,28 +1563,28 @@ html&gt;body{padding:0}&lt;/style&gt;
     #bertrand-invarianza .bd-swatch { width:22px; height:0; border-top:2px solid var(--viz-series-1); }
     #bertrand-invarianza .bd-short { border-top:1px dashed var(--foreground); }
     #bertrand-invarianza .bd-original { border-top:1px dashed var(--muted-foreground); }
-    #bertrand-invarianza .bd-orbit { border-top:1px dotted var(--viz-series-2); }
     #bertrand-invarianza .bd-half { width:12px; height:12px; border:1px dotted var(--foreground); border-radius:50%; }
+    #bertrand-invarianza .bd-tickmark { width:0; height:12px; border-left:2px solid var(--foreground); opacity:0.55; }
     #bertrand-invarianza .bd-muted { color:color-mix(in srgb,var(--foreground) 72%,var(--background)); }
     #bertrand-invarianza [hidden] { display:none; }
     @media(max-width:520px) { #bertrand-invarianza .bd-fields { grid-template-columns:minmax(0,1fr); gap:12px; } }
   &lt;/style&gt;
-  &lt;h3&gt;Bertrand: le rette restano ferme&lt;/h3&gt;
+  &lt;h3&gt;Bertrand: rotazione, scala e traslazione&lt;/h3&gt;
   &lt;div class=&quot;bd-fields&quot;&gt;
     &lt;div class=&quot;bd-field&quot;&gt;
-      &lt;label class=&quot;form-label&quot; for=&quot;bd-method&quot;&gt;Metodo nel cerchio iniziale&lt;/label&gt;
+      &lt;label class=&quot;form-label&quot; for=&quot;bd-method&quot;&gt;Metodo nel cerchio iniziale (raggio 1)&lt;/label&gt;
       &lt;select class=&quot;form-select&quot; id=&quot;bd-method&quot;&gt;
-        &lt;option value=&quot;ends&quot;&gt;Due estremi uniformi sulla circonferenza&lt;/option&gt;
-        &lt;option value=&quot;area&quot;&gt;Punto medio uniforme nel disco&lt;/option&gt;
-        &lt;option value=&quot;lines&quot;&gt;Distanza dal centro uniforme&lt;/option&gt;
+        &lt;option value=&quot;ends&quot;&gt;Due estremi uniformi sulla circonferenza — 1/3&lt;/option&gt;
+        &lt;option value=&quot;lines&quot;&gt;Distanza dal centro uniforme — 1/2&lt;/option&gt;
+        &lt;option value=&quot;area&quot;&gt;Punto medio uniforme nel disco — 1/4&lt;/option&gt;
       &lt;/select&gt;
     &lt;/div&gt;
     &lt;div class=&quot;bd-field&quot;&gt;
-      &lt;label class=&quot;form-label&quot; for=&quot;bd-mode&quot;&gt;Trasformazione del cerchio&lt;/label&gt;
+      &lt;label class=&quot;form-label&quot; for=&quot;bd-mode&quot;&gt;Trasformazione&lt;/label&gt;
       &lt;select class=&quot;form-select&quot; id=&quot;bd-mode&quot;&gt;
         &lt;option value=&quot;scale&quot;&gt;Cambia scala&lt;/option&gt;
         &lt;option value=&quot;shift&quot;&gt;Trasla&lt;/option&gt;
-        &lt;option value=&quot;rotate&quot;&gt;Ruota attorno al centro iniziale&lt;/option&gt;
+        &lt;option value=&quot;rotate&quot;&gt;Ruota le rette attorno al centro&lt;/option&gt;
       &lt;/select&gt;
     &lt;/div&gt;
   &lt;/div&gt;
@@ -1594,27 +1594,25 @@ html&gt;body{padding:0}&lt;/style&gt;
     &lt;button class=&quot;btn btn-primary&quot; type=&quot;button&quot; id=&quot;bd-play&quot; aria-pressed=&quot;false&quot;&gt;Anima scala&lt;/button&gt;
   &lt;/div&gt;
   &lt;div class=&quot;bd-status tabular-nums&quot; aria-live=&quot;polite&quot; id=&quot;bd-status&quot;&gt;
-    &lt;span&gt;Cerchio iniziale: &lt;strong id=&quot;bd-base&quot;&gt;33,3%&lt;/strong&gt; lunghe&lt;/span&gt;
-    &lt;span&gt;Cerchio osservato: &lt;strong id=&quot;bd-result&quot;&gt;33,3%&lt;/strong&gt; lunghe&lt;/span&gt;
+    &lt;span&gt;Partenza: &lt;strong id=&quot;bd-base&quot;&gt;33,3%&lt;/strong&gt; lunghe&lt;/span&gt;
+    &lt;span&gt;Adesso: &lt;strong id=&quot;bd-result&quot;&gt;33,3%&lt;/strong&gt; lunghe&lt;/span&gt;
     &lt;span class=&quot;bd-muted&quot; id=&quot;bd-geometry&quot;&gt;R = 1,00 · centro = 0,00&lt;/span&gt;
   &lt;/div&gt;
   &lt;div class=&quot;bd-stage&quot; id=&quot;bd-stage&quot;&gt;
     &lt;svg id=&quot;bd-svg&quot; role=&quot;img&quot; aria-labelledby=&quot;bd-svg-title bd-svg-desc&quot;&gt;
-      &lt;title id=&quot;bd-svg-title&quot;&gt;Rette fisse e cerchio mobile nel paradosso di Bertrand&lt;/title&gt;
-      &lt;desc id=&quot;bd-svg-desc&quot;&gt;Il cerchio iniziale tratteggiato resta fisso. Il cerchio osservato cambia raggio, trasla o percorre un&#x27;orbita attorno al centro iniziale; le stesse rette formano nuove corde. Le corde lunghe sono continue e colorate, le corte tratteggiate. Il cerchio interno indica la soglia R/2.&lt;/desc&gt;
+      &lt;title id=&quot;bd-svg-title&quot;&gt;Cerchio mobile e rette nel paradosso di Bertrand&lt;/title&gt;
+      &lt;desc id=&quot;bd-svg-desc&quot;&gt;Il cerchio iniziale tratteggiato resta fisso. Il cerchio osservato cambia raggio o trasla; in rotazione il cerchio resta fermo e ruotano le rette. Le tacche fisse sulla circonferenza non ruotano mai e servono da riferimento: anche quando girano le corde, il cerchio resta visibilmente immobile. Le stesse rette formano nuove corde. Le corde lunghe sono continue e colorate, le corte tratteggiate. Il cerchio interno indica la soglia R/2.&lt;/desc&gt;
       &lt;defs&gt;&lt;clipPath id=&quot;bd-clip&quot;&gt;&lt;rect id=&quot;bd-cliprect&quot; /&gt;&lt;/clipPath&gt;&lt;/defs&gt;
       &lt;g clip-path=&quot;url(#bd-clip)&quot;&gt;
         &lt;g id=&quot;bd-fieldlines&quot; fill=&quot;none&quot; stroke=&quot;var(--foreground)&quot; stroke-width=&quot;1&quot; opacity=&quot;0.07&quot;&gt;&lt;/g&gt;
         &lt;circle id=&quot;bd-origin&quot; fill=&quot;none&quot; stroke=&quot;var(--muted-foreground)&quot; stroke-width=&quot;1&quot; stroke-dasharray=&quot;6 5&quot;&gt;&lt;/circle&gt;
-        &lt;g id=&quot;bd-rotationguide&quot; hidden fill=&quot;none&quot; stroke=&quot;var(--viz-series-2)&quot; stroke-width=&quot;1&quot; stroke-dasharray=&quot;2 4&quot; opacity=&quot;0.8&quot;&gt;
-          &lt;circle id=&quot;bd-orbit&quot;&gt;&lt;/circle&gt;
-          &lt;path id=&quot;bd-orbitradius&quot;&gt;&lt;/path&gt;
-        &lt;/g&gt;
         &lt;circle id=&quot;bd-targetfill&quot; fill=&quot;var(--viz-series-1)&quot; opacity=&quot;0.035&quot;&gt;&lt;/circle&gt;
         &lt;g id=&quot;bd-shortchords&quot; fill=&quot;none&quot; stroke=&quot;var(--foreground)&quot; stroke-width=&quot;1&quot; stroke-dasharray=&quot;3 4&quot; opacity=&quot;0.19&quot;&gt;&lt;/g&gt;
         &lt;g id=&quot;bd-longchords&quot; fill=&quot;none&quot; stroke=&quot;var(--viz-series-1)&quot; stroke-width=&quot;1.2&quot; opacity=&quot;0.38&quot;&gt;&lt;/g&gt;
         &lt;circle id=&quot;bd-halfcircle&quot; fill=&quot;none&quot; stroke=&quot;var(--foreground)&quot; stroke-width=&quot;1&quot; stroke-dasharray=&quot;2 4&quot; opacity=&quot;0.7&quot;&gt;&lt;/circle&gt;
         &lt;circle id=&quot;bd-target&quot; fill=&quot;none&quot; stroke=&quot;var(--foreground)&quot; stroke-width=&quot;1.6&quot;&gt;&lt;/circle&gt;
+        &lt;g id=&quot;bd-ticks&quot; fill=&quot;none&quot; stroke=&quot;var(--foreground)&quot; stroke-width=&quot;1.4&quot; stroke-linecap=&quot;round&quot; opacity=&quot;0.65&quot;&gt;&lt;/g&gt;
+        &lt;g id=&quot;bd-notches&quot; fill=&quot;none&quot; stroke=&quot;var(--background)&quot; stroke-width=&quot;4&quot;&gt;&lt;/g&gt;
         &lt;circle id=&quot;bd-center&quot; r=&quot;3&quot; fill=&quot;var(--foreground)&quot;&gt;&lt;/circle&gt;
       &lt;/g&gt;
     &lt;/svg&gt;
@@ -1624,7 +1622,7 @@ html&gt;body{padding:0}&lt;/style&gt;
     &lt;span class=&quot;bd-key&quot;&gt;&lt;span class=&quot;bd-swatch bd-short&quot;&gt;&lt;/span&gt;Corde corte&lt;/span&gt;
     &lt;span class=&quot;bd-key&quot;&gt;&lt;span class=&quot;bd-swatch bd-original&quot;&gt;&lt;/span&gt;Cerchio iniziale&lt;/span&gt;
     &lt;span class=&quot;bd-key&quot;&gt;&lt;span class=&quot;bd-half&quot;&gt;&lt;/span&gt;Soglia R/2&lt;/span&gt;
-    &lt;span class=&quot;bd-key&quot; id=&quot;bd-orbit-key&quot; hidden&gt;&lt;span class=&quot;bd-swatch bd-orbit&quot;&gt;&lt;/span&gt;Orbita del centro&lt;/span&gt;
+    &lt;span class=&quot;bd-key&quot;&gt;&lt;span class=&quot;bd-tickmark&quot;&gt;&lt;/span&gt;Tacche fisse: il cerchio non ruota&lt;/span&gt;
   &lt;/div&gt;
   &lt;div class=&quot;text-small bd-muted&quot; id=&quot;bd-detail&quot; style=&quot;margin-top:10px&quot;&gt;Probabilità teorica fra le rette che intersecano il cerchio osservato; disegno campionato.&lt;/div&gt;
   &lt;script&gt;
@@ -1634,10 +1632,9 @@ html&gt;body{padding:0}&lt;/style&gt;
     const method = q(&#x27;method&#x27;), mode = q(&#x27;mode&#x27;), parameter = q(&#x27;parameter&#x27;), play = q(&#x27;play&#x27;);
     const svg = q(&#x27;svg&#x27;), stage = q(&#x27;stage&#x27;);
     const reduceMotion = window.matchMedia(&#x27;(prefers-reduced-motion: reduce)&#x27;).matches;
-    const base = {ends:1/3, area:1/4, lines:1/2};
     let lines = [], width = 736, height = 420, scale = 180, cx = 368, cy = 210;
-    let radius = 1, centerX = 0, centerY = 0, animation = 0, animating = false;
-    const fixedRadius = 0.42, orbitRadius = 0.40;
+    let radius = 1, centerX = 0, centerY = 0, rotationAngle = 0, animation = 0, animating = false;
+    const fixedRadius = 0.42;
     const fmt = n =&gt; n.toLocaleString(&#x27;it-IT&#x27;,{minimumFractionDigits:2, maximumFractionDigits:2});
     const pct = n =&gt; (100*n).toLocaleString(&#x27;it-IT&#x27;,{minimumFractionDigits:1, maximumFractionDigits:1})+&#x27;%&#x27;;
     const clamp = n =&gt; Math.max(-1,Math.min(1,n));
@@ -1689,35 +1686,52 @@ html&gt;body{padding:0}&lt;/style&gt;
     }
     function draw(announce=true) {
       const rotating = mode.value===&#x27;rotate&#x27;;
-      radius = mode.value===&#x27;scale&#x27; ? Number(parameter.value) : fixedRadius;
-      const angle = rotating ? Number(parameter.value)*Math.PI/180 : 0;
-      centerX = rotating ? orbitRadius*Math.cos(angle) : mode.value===&#x27;shift&#x27; ? Number(parameter.value) : 0;
-      centerY = rotating ? orbitRadius*Math.sin(angle) : 0;
+      radius = mode.value===&#x27;scale&#x27; ? Number(parameter.value) : rotating ? 1 : fixedRadius;
+      rotationAngle = rotating ? Number(parameter.value)*Math.PI/180 : 0;
+      centerX = mode.value===&#x27;shift&#x27; ? Number(parameter.value) : 0;
+      centerY = 0;
+      const ca = Math.cos(rotationAngle), sa = Math.sin(rotationAngle);
+      // Le corde si fermano un paio di pixel prima della circonferenza: gli
+      // estremi in movimento non toccano il bordo, che così non sembra girare.
+      const chordGap = 2.6/scale;
       let field=&#x27;&#x27;, long=&#x27;&#x27;, short=&#x27;&#x27;;
       for(const line of lines) {
-        const {nx,ny,p} = line;
+        const p = line.p;
+        const nx = line.nx*ca - line.ny*sa;
+        const ny = line.nx*sa + line.ny*ca;
         const tx=-ny, ty=nx;
         const mx=p*nx, my=p*ny;
         field += path(mx-3*tx,my-3*ty,mx+3*tx,my+3*ty);
         const d = p-nx*centerX-ny*centerY;
         if(Math.abs(d)&gt;=radius) continue;
-        const h = Math.sqrt(Math.max(0,radius*radius-d*d));
+        const h = Math.sqrt(Math.max(0,radius*radius-d*d))-chordGap;
+        if(h&lt;=0) continue;
         const qx=centerX+d*nx, qy=centerY+d*ny;
         const segment=path(qx-h*tx,qy-h*ty,qx+h*tx,qy+h*ty);
         if(Math.abs(d)&lt;radius/2) long += segment; else short += segment;
       }
+      // Tacche fisse: restano ancorate al cerchio osservato, non alla rotazione
+      // delle rette, e danno all&#x27;occhio un riferimento immobile.
+      let ticks=&#x27;&#x27;, notches=&#x27;&#x27;;
+      for(let k=0;k&lt;24;k++) {
+        const a=k*Math.PI/12, ux=Math.cos(a), uy=Math.sin(a);
+        const r1=radius+2/scale, r2=radius+(k%6===0?15:8)/scale;
+        ticks += path(centerX+r1*ux,centerY+r1*uy,centerX+r2*ux,centerY+r2*uy);
+        if(k%3===0) notches += path(centerX+(radius-4/scale)*ux,centerY+(radius-4/scale)*uy,centerX+(radius+4/scale)*ux,centerY+(radius+4/scale)*uy);
+      }
       setPath(q(&#x27;fieldlines&#x27;),field); setPath(q(&#x27;longchords&#x27;),long); setPath(q(&#x27;shortchords&#x27;),short);
+      setPath(q(&#x27;ticks&#x27;),ticks); setPath(q(&#x27;notches&#x27;),notches);
       circle(q(&#x27;origin&#x27;),0,0,1); circle(q(&#x27;targetfill&#x27;),centerX,centerY,radius);
       circle(q(&#x27;target&#x27;),centerX,centerY,radius); circle(q(&#x27;halfcircle&#x27;),centerX,centerY,radius/2);
-      circle(q(&#x27;orbit&#x27;),0,0,orbitRadius);
-      q(&#x27;orbitradius&#x27;).setAttribute(&#x27;d&#x27;,path(0,0,centerX,centerY));
-      q(&#x27;rotationguide&#x27;).toggleAttribute(&#x27;hidden&#x27;,!rotating);
-      q(&#x27;orbit-key&#x27;).hidden=!rotating;
+      q(&#x27;origin&#x27;).style.display = rotating ? &#x27;none&#x27; : &#x27;&#x27;;
       q(&#x27;center&#x27;).setAttribute(&#x27;cx&#x27;,cx+centerX*scale); q(&#x27;center&#x27;).setAttribute(&#x27;cy&#x27;,cy-centerY*scale);
-      q(&#x27;base&#x27;).textContent=pct(base[method.value]);
+      const startRadius = mode.value===&#x27;shift&#x27; ? fixedRadius : 1;
+      q(&#x27;base&#x27;).textContent=pct(probability(startRadius,0,0));
       const result=probability(radius,centerX,centerY);
       q(&#x27;result&#x27;).textContent=pct(result);
-      q(&#x27;geometry&#x27;).textContent=&#x27;R = &#x27;+fmt(radius)+&#x27; · centro = (&#x27;+fmt(centerX)+&#x27;; &#x27;+fmt(centerY)+&#x27;)&#x27;;
+      q(&#x27;geometry&#x27;).textContent = rotating
+        ? &#x27;R = 1,00 · rotazione = &#x27;+Math.round(Number(parameter.value))+&#x27;°&#x27;
+        : &#x27;R = &#x27;+fmt(radius)+&#x27; · centro = (&#x27;+fmt(centerX)+&#x27;; &#x27;+fmt(centerY)+&#x27;)&#x27;;
       q(&#x27;paramvalue&#x27;).textContent=rotating ? Math.round(Number(parameter.value))+&#x27;°&#x27; : fmt(Number(parameter.value));
       parameter.setAttribute(&#x27;aria-valuetext&#x27;,rotating ? Math.round(Number(parameter.value))+&#x27; gradi&#x27; : fmt(Number(parameter.value)));
       // Suppress frame-by-frame announcements while the animation runs.
@@ -1725,6 +1739,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       svg.setAttribute(&#x27;data-probability&#x27;,result.toFixed(8));
       svg.setAttribute(&#x27;data-radius&#x27;,radius); svg.setAttribute(&#x27;data-offset&#x27;,Math.hypot(centerX,centerY));
       svg.setAttribute(&#x27;data-center-x&#x27;,centerX); svg.setAttribute(&#x27;data-center-y&#x27;,centerY);
+      svg.setAttribute(&#x27;data-angle&#x27;,rotating ? Number(parameter.value) : 0);
     }
     function resize() {
       width = Math.max(240,stage.getBoundingClientRect().width);
@@ -1753,8 +1768,10 @@ html&gt;body{padding:0}&lt;/style&gt;
       parameter.setAttribute(&#x27;aria-label&#x27;,label);
       q(&#x27;paramlabel&#x27;).firstChild.textContent=label+&#x27;: &#x27;;
       q(&#x27;detail&#x27;).textContent=rotating
-        ? &#x27;R = 0,42 e distanza 0,40 dal centro iniziale restano fissi: cambia soltanto l’angolo. Eventuali differenze dal valore iniziale dipendono da raggio e decentramento, già fissati prima di ruotare. Le rette restano fisse. Tutte e tre le leggi sono invarianti per rotazione: la probabilità teorica resta costante con l’angolo e le rotazioni da sole non le distinguono. Il campione disegnato può fluttuare.&#x27;
-        : &#x27;Probabilità teorica fra le rette che intersecano il cerchio osservato; disegno campionato. Si muove soltanto il cerchio: le rette restano fisse.&#x27;;
+        ? &#x27;Le rette ruotano attorno al centro; il cerchio resta fermo. Le tacche sulla circonferenza non si muovono: sono il riferimento che mostra che il cerchio non gira. Ogni corda si limita a girare e la sua lunghezza non cambia: tutte e tre le leggi sono isotrope, quindi la probabilità resta quella di partenza e la rotazione da sola non distingue i metodi.&#x27;
+        : shifting
+        ? &#x27;Il cerchio si sposta a raggio fisso; le rette restano ferme. Il valore di partenza è la probabilità condizionata al cerchio di raggio 0,42, non quella del cerchio iniziale di raggio 1.&#x27;
+        : &#x27;Il cerchio cambia raggio restando concentrico; le rette restano ferme. Il valore di partenza è quello del cerchio di raggio 1.&#x27;;
       draw();
     }
     method.addEventListener(&#x27;change&#x27;,()=&gt;{stop();makeLines();draw();});

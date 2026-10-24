@@ -73,7 +73,7 @@ La domanda sembra avere una sola risposta. Bertrand ne propone tre, ciascuna con
 <polygon points="480,50 419.4,155 540.6,155" fill="none" stroke="currentColor" stroke-dasharray="4 3" opacity="0.6"/>
 <text x="480" y="212" text-anchor="middle" fill="currentColor">3. punto medio a caso</text>
 <text x="480" y="232" text-anchor="middle" fill="#e07a1f" font-weight="bold">corda lunga: 1/4</text>
-<path d="M100 50 L39.4 155 A70 70 0 0 0 160.6 155 Z" fill="#4051b5" opacity="0.25"/>
+<path d="M100 50 L72.7 97.3 L127.3 97.3 Z" fill="#4051b5" opacity="0.25"/>
 <line x1="100" y1="50" x2="87.8" y2="188.9" stroke="#4051b5" stroke-width="3"/>
 <circle cx="100" cy="50" r="4" fill="currentColor"/>
 <line x1="290" y1="120" x2="290" y2="190" stroke="currentColor" stroke-width="1.5"/>
@@ -1419,62 +1419,72 @@ Le tre frequenze sono vicine a 0,333, 0,500 e 0,250. Nessuno dei tre generatori 
 
 ## Lettura B — Jaynes: quali trasformazioni lasciano lo stesso problema? {: #jaynes-invarianze .psi-facoltativo }
 
-Questa lettura è facoltativa. Riprende l’argomento di E. T. Jaynes nell’articolo [*The Well-Posed Problem* (1973)](https://bayes.wustl.edu/etj/articles/well.pdf), soprattutto §§ 2–6: rotazioni, cambiamenti di scala e traslazioni. La domanda è come tradurre le simmetrie di un problema in vincoli sulla distribuzione di probabilità.
+Questa lettura è facoltativa. Riprende l’argomento di E. T. Jaynes nell’articolo [*The Well-Posed Problem* (1973)](https://bayes.wustl.edu/etj/articles/well.pdf), §§ 2–6, ma lo racconta senza i conti: l’esperimento lo fa l’animazione. La domanda è una sola: quali delle tre ricette di Bertrand continuano a descrivere le stesse corde quando il cerchio viene ruotato, rimpicciolito o spostato?
 
 ### La stessa informazione richiede la stessa assegnazione
 
-L’idea di Jaynes è una richiesta di coerenza: **se una trasformazione lascia invariata l’informazione disponibile, i due problemi devono ricevere assegnazioni di probabilità equivalenti**. Cambiare coordinate comporta sempre una trasformazione della distribuzione. Chiedere che la distribuzione trasformata abbia anche la stessa forma richiede una ragione in più: una simmetria delle informazioni con cui descriviamo l’esperimento.
-
-Questo principio opera anche nel discreto. Per un dado che supponiamo equilibrato, scambiare le etichette delle facce non introduce alcuna distinzione probabilistica: l’assegnazione deve restare la stessa sotto tutte le permutazioni, e quindi ogni faccia ha probabilità $1/6$. Jaynes sviluppa questo ragionamento sul finito nel capitolo 2, «Numerical Values», della versione preliminare del suo libro (pp. 34–36). Nel problema delle corde, le trasformazioni da esaminare sono geometriche.
+L’idea di Jaynes è una richiesta di coerenza: **se una trasformazione non cambia l’informazione disponibile, non deve cambiare nemmeno la probabilità**. Per un dado che supponiamo equilibrato, scambiare le etichette delle facce non introduce alcuna distinzione: tutte le facce devono avere la stessa probabilità, e la somma 1 impone $1/6$. La simmetria non dimostra che il dado è equilibrato; dice che cosa segue dall’assumerlo. Con le corde la domanda diventa: quali simmetrie del cerchio vogliamo che la nostra ricetta rispetti?
 
 ### Uno stesso insieme di rette, cerchi diversi
 
-Jaynes immagina di lanciare sul piano cannucce molto lunghe e di considerare quelle che intersecano un cerchio. Idealizziamo le cannucce come **rette**: la corda è la parte di una retta interna al cerchio. Possiamo allora tenere ferme le rette e cambiare il cerchio attraverso cui le osserviamo. Ogni volta consideriamo soltanto le rette che lo intersecano: stiamo confrontando distribuzioni **condizionate all’intersezione**.
+Jaynes immagina di lanciare sul piano cannucce molto lunghe e di guardare, ogni volta, soltanto quelle che attraversano un cerchio. Le cannucce sono le rette, la parte interna al cerchio è la corda, e il cerchio è il filtro che decide quali rette entrano nel conto. Ogni confronto avviene fra distribuzioni **condizionate all’intersezione**: le stesse rette, osservate attraverso cerchi diversi.
 
-Il requisito da esaminare è che uno stesso processo di rette, privo di un luogo o di una direzione privilegiati, dia distribuzioni compatibili nei diversi cerchi. Rigenerare da capo le corde secondo una ricetta legata a ciascun nuovo cerchio risponderebbe a un’altra domanda: per esempio, scegliere ogni volta due estremi uniformi restituisce sempre $1/3$, ma non verifica che le stesse rette conservino quella legge passando da un cerchio all’altro.
+Il punto delicato è che cosa resta fermo. Se rigenerassimo le corde con la stessa ricetta su ogni cerchio, ogni ricetta restituirebbe sempre la sua probabilità di partenza e non ci sarebbe niente da confrontare. La materia prima sono le rette; il cerchio è solo il modo di guardarle.
 
-### Rotazione: nessuna direzione privilegiata
+### Rotazione: le tre ricette sopravvivono
 
-Se l’informazione non distingue il nord dall’est, ruotare il sistema di osservazione deve dare una descrizione equivalente. L’orientazione delle rette è quindi uniforme. **Tutti e tre i metodi di Bertrand rispettano questa simmetria**: le rotazioni da sole lasciano ancora aperta la scelta della distribuzione delle distanze dal centro, e dunque della lunghezza delle corde.
+Per descrivere una retta rispetto al centro bastano due numeri: la **direzione** e la **distanza**, contata con un segno che dice da che parte passa. Ruotare attorno al centro cambia la direzione e lascia la distanza; la lunghezza della corda dipende solo dalla distanza, quindi nessuna corda si allunga o si accorcia. La rotazione si limita a girare il disegno.
 
-Nell’animazione qui sotto la rotazione è resa visibile facendo girare il centro di un cerchio decentrato intorno al centro iniziale. Il raggio e la distanza fra i centri restano fissi. Le probabilità teoriche restano uguali al variare dell’angolo per tutti e tre i metodi; il campione finito di rette disegnate può avere un aspetto diverso nelle varie posizioni.
+Nessuna delle tre ricette preferisce una direzione all’altra, quindi tutte e tre sopravvivono: nell’animazione le percentuali restano $1/3$, $1/2$ e $1/4$ a ogni angolo. La rotazione non serve a scegliere fra loro, ed è già un risultato: elimina un criterio che sembrava ovvio.
 
-### Scala: osservare le stesse rette in un cerchio più piccolo
+### Scala: la ricetta degli estremi non sopravvive
 
-Consideriamo un cerchio più piccolo, concentrico al primo, e teniamo soltanto le rette che lo attraversano. Chiediamo che, misurando le lunghezze in unità del nuovo raggio, la distribuzione sia la stessa. In questo confronto il metodo dei due estremi uniformi perde la sua proprietà: gli estremi delle nuove corde sul cerchio piccolo non sono più due punti indipendenti e uniformi. Restano compatibili sia il metodo della distanza uniforme sia quello del punto medio uniforme nel disco. Jaynes mostra quindi che **l’invarianza di scala non basta ancora a scegliere tra $1/2$ e $1/4$**.
+Prendiamo un cerchio concentrico più piccolo e teniamo le stesse rette. Due ricette non se ne accorgono. La distanza uniforme pesa tutte le distanze allo stesso modo, e un peso costante resta costante in ogni intervallo che si ritaglia. Il punto medio uniforme resta uniforme perché i dischi concentrici stanno uno dentro l’altro: le corde del cerchio grande che entrano in quello piccolo hanno i punti medi uniformi nel disco piccolo, esattamente come prescrive la ricetta. Nell’animazione, infatti, $1/2$ e $1/4$ non si muovono.
 
-### Traslazione: nessun centro privilegiato
+La ricetta degli estremi invece cambia. Le corde del cerchio grande che passano anche nel cerchio piccolo sono quelle che sfiorano il centro: uniscono punti quasi opposti della circonferenza grande. Viste dal cerchio piccolo hanno gli estremi quasi diametralmente opposti, mentre due estremi scelti a caso sul cerchio piccolo formano con la stessa frequenza angoli piccoli e angoli vicini a $180^\circ$. Sono due popolazioni diverse di corde, e il numero lo dice: la percentuale delle lunghe sale da $1/3$ a circa $0{,}49$ quando il cerchio si stringe a meno della metà del raggio.
 
-Spostiamo ora il cerchio rispetto alle rette, senza cambiarne il raggio. Il punto medio della porzione interna a un cerchio cambia quando passiamo all’altro cerchio. Una distribuzione uniforme dei punti medi nell’area del primo disco non resta uniforme nell’area del secondo: quel modello privilegia il centro usato per costruirlo. Nell’argomento di Jaynes è questa richiesta di compatibilità sotto traslazione a selezionare la legge che dà $1/2$.
+La scala elimina così la prima ricetta. Restano in gara $1/2$ e $1/4$, e la scala da sola non basta a separarle.
 
-Possiamo vedere il risultato descrivendo una retta con l’orientazione $\theta\in[0,\pi)$ della sua normale e la distanza **con segno** $p$ da un’origine, misurata lungo quella normale. Senza direzioni privilegiate, per ogni distanza uguali intervalli di $\theta$ ricevono uguale peso; senza posizioni privilegiate, per ogni orientazione uguali intervalli di $p$ ricevono uguale peso. La misura delle rette è quindi proporzionale a $dp\,d\theta$. Sul piano intero questa misura è infinita; otteniamo una probabilità normalizzata quando ci limitiamo alle rette che intersecano un cerchio fissato.
+### Traslazione: la ricetta del punto medio non sopravvive
 
-Scegliamo il centro di quel cerchio come origine e chiamiamo $R$ il suo raggio. Per ciascuna orientazione, una retta interseca il cerchio quando $-R<p<R$: l’intervallo ha ampiezza $2R$. La corda è lunga quando $-R/2<p<R/2$: l’intervallo ha ampiezza $R$. Dunque
+Spostiamo ora il cerchio senza cambiarne il raggio, tenendo ferme le rette. La distanza uniforme non se ne accorge: il suo peso è lo stesso per ogni distanza e per ogni direzione, quindi qualunque finestra si ritagli il peso resta costante e il rapporto $1/2$ non cambia.
+
+Il punto medio uniforme invece cambia, e la ragione sta nella ricetta: i punti medi uniformi nel disco si addensano verso il bordo, quindi le rette pesano in proporzione alla distanza dal centro con cui sono state costruite. Quel centro è privilegiato. Spostando il cerchio, la stessa retta viene pesata in modo diverso a seconda che sia parallela o perpendicolare allo spostamento, e la percentuale si muove: con un cerchio di raggio $0{,}42$ spostato di $0{,}58$, dal $25\%$ si passa a circa $47\%$. Una legge che dipende da dove abbiamo messo il centro non rispetta la traslazione.
+
+Anche gli estremi cambiano, ma non serve: la scala li aveva già esclusi. Resta la distanza uniforme, l’unica che sopravvive a tutte e tre le trasformazioni.
+
+### Il conto, in breve: perché $1/2$
+
+Resta da tradurre la simmetria in un numero. Senza direzioni privilegiate, uguali intervalli di direzione ricevono uguale peso; senza posizioni privilegiate, per ogni direzione uguali intervalli di distanza ricevono uguale peso. Condizionando all’intersezione, la distanza con segno $p$ è quindi uniforme fra $-R$ e $R$, un intervallo lungo $2R$.
+
+Con il teorema di Pitagora applicato a raggio, distanza e metà della corda si trova che la corda supera il lato del triangolo equilatero esattamente quando $|p|<R/2$ (il conto per esteso è nella [Lettura A](#bertrand-esteso)). Le distanze favorevoli occupano un intervallo lungo $R$, la metà di quello delle rette che intersecano il cerchio:
 
 $$
-P\!\left(L>\sqrt3\,R\mid\text{la retta interseca il cerchio}\right)
+P\left(L>\sqrt3\,R\mid\text{la retta interseca il cerchio}\right)
 =\frac{R}{2R}=\frac12.
 $$
 
-È la distribuzione ottenuta dal secondo metodo di Bertrand: orientazione uniforme e distanza dal centro uniforme. Questa conclusione dipende dalle ipotesi sul processo di rette e dalle invarianze richieste. I tre conti iniziali restano corretti per i tre esperimenti che descrivono. Lo stesso Jaynes, nel § 6, distingue la distribuzione ricavata dalle informazioni disponibili dalle frequenze di un apparato reale, che può essere costruito per produrre leggi diverse.
+### Che cosa resta
+
+Il risultato non è «più vero» degli altri due: è quello che sopravvive se accettiamo rotazioni, cambi di scala e traslazioni come trasformazioni che non cambiano l’informazione. Se una di queste simmetrie non ci sembra giustificata, $1/3$ e $1/4$ tornano risposte corrette per i loro esperimenti. Lo stesso Jaynes, nel § 6, distingue la distribuzione ricavata dalle informazioni disponibili dalle frequenze di un apparato reale, che può essere costruito per produrre leggi diverse: in 128 lanci di cannucce su un cerchio disegnato sul pavimento le frequenze risultarono compatibili con $1/2$.
 
 ### Esplora le tre trasformazioni
 
-Nell’animazione le rette sono generate rispetto al cerchio iniziale e poi restano ferme. Il cerchio osservato resta contenuto in quello iniziale: così tutte le rette che lo attraversano sono già rappresentate dal modello. Le percentuali sono probabilità teoriche condizionate all’intersezione; il disegno è un campione riproducibile.
+Nell’animazione le rette sono generate rispetto al cerchio iniziale. In scala e traslazione restano ferme e il cerchio osservato resta contenuto in quello iniziale, così tutte le rette che lo attraversano sono già rappresentate dal modello; in rotazione è il cerchio a restare fermo e sono le rette a girare. Le percentuali sono probabilità teoriche condizionate all’intersezione; il disegno è un campione riproducibile.
 
 <iframe class="psi-bertrand-frame" src="bertrand/index.html" title="Paradosso di Bertrand: invarianza per rotazione, scala e traslazione" loading="lazy"></iframe>
 
 [Apri l’animazione in una pagina dedicata](bertrand/index.html){ target="_blank" rel="noopener" }
 
-Prova prima **Ruota** con ciascun metodo: confronta gli angoli mantenendo fissi raggio e distanza fra i centri. Poi prova **Cambia scala**, e infine **Trasla** a raggio fisso. Il valore «Cerchio iniziale» riguarda sempre il disco di partenza; in modalità rotazione il cerchio osservato è già più piccolo e decentrato, quindi un eventuale scarto da quel valore precede la rotazione.
+Prova prima **Ruota** con ciascun metodo: le corde girano, il cerchio resta fermo, e il valore non cambia. Poi prova **Cambia scala**: il primo metodo cambia legge, il secondo e il terzo restano uguali. Infine **Trasla** a raggio fisso: il primo e il terzo cambiano legge, il secondo resta uguale. In traslazione il cerchio ha raggio $0{,}42$, quindi il valore di partenza può non essere quello del cerchio iniziale ($1/3$, $1/2$ o $1/4$): conta se il numero resta costante mentre il cerchio si sposta.
 
-| Metodo iniziale | Rotazione | Riduzione concentrica e condizionamento | Traslazione e condizionamento |
+| Regola con cui scegliamo le corde | Rotazione | Cerchio più piccolo, stesse rette | Traslazione, stesso raggio |
 |---|---|---|---|
 | Due estremi uniformi sulla circonferenza | Conserva la legge | Cambia la legge | Cambia la legge |
 | Distanza dal centro uniforme | Conserva la legge | Conserva la legge | Conserva la legge |
 | Punto medio uniforme nel disco | Conserva la legge | Conserva la legge | Cambia la legge |
 
-Le tre simmetrie hanno quindi ruoli diversi. Nell’argomento di Jaynes la condizione di traslazione è già sufficiente, nel contesto isotropo considerato, a determinare il risultato; la scala resta una verifica di compatibilità. Il criterio comune al discreto e al continuo è dichiarare quali trasformazioni rappresentano davvero la stessa informazione e giustificare con esse l’assegnazione di probabilità.
+Le tre simmetrie hanno ruoli diversi: la rotazione non distingue i metodi, la scala elimina il primo, la traslazione elimina il terzo. Il criterio generale è dichiarare quali trasformazioni rappresentano davvero la stessa informazione e giustificare con esse l’assegnazione di probabilità.
 
 ## Lettura C — Gauss e i minimi quadrati {: #minimi-quadrati .psi-facoltativo }
 

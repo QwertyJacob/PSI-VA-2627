@@ -75,7 +75,8 @@
     line(root, 24, 160, 466, 160, C.axis, 2);
     label(root, F.X(0), 184, '0', 's06-small');
     label(root, 470, 184, 'errore x', 's06-small', { 'text-anchor': 'end' });
-    label(root, 470, 60, '∝ e^(−h²x²)', 's06-label s06-model s06-bold', { 'text-anchor': 'start' });
+    var eq = label(root, 468, 64, '∝ e', 's06-label s06-model s06-bold', { 'text-anchor': 'start', style: 'font-size:28px' });
+    svg('tspan', { dy: -13, style: 'font-size:19px' }, eq).textContent = '−h²x²';   // l'esponente, rialzato
   })();
 
   // L2-05 · lo script 3 in JavaScript: 20 000 errori, ognuno somma di 50 uniformi su [−0,1; 0,1].

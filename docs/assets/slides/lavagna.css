@@ -43,6 +43,12 @@ html.psi-lavagna-pen-mode body,
   -webkit-touch-callout: none;
 }
 
+/* In panoramica canvas e lavagna coprirebbero le miniature: via, così si tocca la slide da aprire */
+.reveal.overview .slides .psi-lavagna-canvas,
+.reveal.overview .slides .psi-lavagna-board-overlay {
+  display: none;
+}
+
 /* ── Overlay Lavagna Scura (Blackboard Mode) ── */
 .reveal .slides .psi-lavagna-board-overlay {
   position: absolute;
@@ -291,6 +297,85 @@ html.psi-lavagna-pen-mode body,
 .psi-tb-collapse-btn:active {
   color: #fff;
   background: rgba(255, 255, 255, 0.1);
+}
+
+/* ── Note del relatore sul tablet: banner in alto, caratteri piccoli (le note possono essere lunghe) ── */
+.psi-lavagna-notes {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 8px);
+  left: 0;
+  right: 0;
+  width: min(960px, calc(100vw - 32px));
+  margin: 0 auto;
+  z-index: 99998;
+  display: flex;
+  flex-direction: column;
+  max-height: 33vh;
+  padding: 8px 14px 0;
+  box-sizing: border-box;
+  background: rgba(15, 23, 42, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
+  color: #e2e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  touch-action: none;
+  /* Chiuso: sopra lo schermo; visibility, così nemmeno l'ombra si affaccia */
+  transform: translateY(calc(-100% - 24px));
+  visibility: hidden;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.28s;
+}
+
+.psi-lavagna-notes.psi-open {
+  transform: translateY(0);
+  visibility: visible;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s;
+}
+
+.psi-lavagna-notes.psi-dragging {
+  transition: none;
+}
+
+.psi-notes-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.psi-notes-text {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.psi-notes-empty {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Maniglia in basso: fa capire che il banner si trascina in su */
+.psi-notes-grip {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+}
+
+.psi-notes-grip::after {
+  content: '';
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* ── Toast Notifiche Leggere (opzionale) ── */

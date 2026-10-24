@@ -7,12 +7,21 @@
  * sul videoproiettore via Supabase Realtime Broadcast.
  *
  * Utilizzo:
- *   - Proiettore / PC: URL standard (es. .../slides/)
+ *   - Proiettore / PC: URL con parametro ?proiettore (es. .../slides/?proiettore o ?proiettore=PIN)
  *   - iPad / Speaker:  URL con parametro ?pen (es. .../slides/?pen o ?pen=PIN)
+ *
+ * Tablet e proiettore si seguono a vicenda: slide, animazioni, lavagna, Pulisci e Annulla.
+ * Una pagina aperta senza parametri (per esempio dagli studenti) segue e basta,
+ * così non può spostare le slide in aula. La panoramica (Esc, R o il pulsante ▦
+ * del tablet) resta sullo schermo che la apre; l'altro va sulla slide scelta.
  *
  * I tratti scritti su una slide restano con quella slide. La lavagna scura
  * ha tratti propri ed è una sola per tutto il mazzo: si allarga con il pinch
  * a due dita (zoom e spostamento), o con trackpad e rotellina sul PC.
+ *
+ * Le note del relatore (<aside class="notes">) si vedono solo sul tablet, in un banner
+ * in alto: swipe in giù con un dito per farle comparire, in su (sulla slide o sul
+ * banner) per nasconderle; oppure il pulsante 📝 della barra.
  */
 (function () {
   'use strict';
@@ -24,9 +33,13 @@
       options = options || {};
       var params = new URLSearchParams(window.location.search);
       var isSpeaker = params.has('pen') || params.get('mode') === 'pen';
+      var isProjector = !isSpeaker && params.has('proiettore');
+      // Anteprime della vista del relatore (tasto S): le muove la vista stessa e non mandano nulla
+      var isReceiver = params.has('receiver');
+      var canSend = (isSpeaker || isProjector) && !isReceiver;
 
       // PIN / Token di sicurezza
-      var penVal = params.get('pen');
+      var penVal = params.get('pen') || params.get('proiettore');
       var token = 'psi2627';
       if (penVal && penVal !== 'true' && penVal !== '1') {
         token = penVal;
@@ -311,7 +324,7 @@
             redraw();
           }, 150);
         }
-        if (broadcast && isSpeaker) sendView();
+        if (broadcast) sendView();
       }
 
       // Invio della vista al proiettore al massimo ogni 40 ms, sempre con l'ultima vista
@@ -328,7 +341,7 @@
 
       // ── Supabase Realtime Broadcast ──
       function sendBroadcast(event, payload) {
-        if (!channel || !isConnected) return;
+        if (!canSend || !channel || !isConnected) return;
         try {
           channel.send({
             type: 'broadcast',
@@ -434,10 +447,11 @@
       }
 
       function handleRemoteNav(payload) {
-        if (payload.token !== token) return;
+        if (payload.token !== token || isReceiver) return;
         var cur = deck.getIndices();
         var curF = typeof cur.f === 'number' ? cur.f : -1;
         var targetF = typeof payload.indexf === 'number' ? payload.indexf : -1;
+        remoteNavKey = navKey(payload.indexh, payload.indexv, targetF);
         if (cur.h !== payload.indexh || cur.v !== payload.indexv || curF !== targetF) {
           deck.slide(payload.indexh, payload.indexv, targetF);
         }
@@ -516,7 +530,7 @@
         var clearBtn = document.querySelector('.psi-tb-clear-btn');
         if (clearBtn) clearBtn.title = active ? 'Pulisci lavagna' : 'Pulisci slide';
         redraw();
-        if (broadcast && isSpeaker) {
+        if (broadcast) {
           sendBroadcast('board', { token: token, active: isBoardActive, view: view });
         }
       }
@@ -598,8 +612,8 @@
               touchStartX = e.clientX;
               touchStartY = e.clientY;
             }
-            // Sulla lavagna lo swipe non gira le slide: cambierebbero di nascosto, sotto lo sfondo
-            swipeOk = fingers === 1 && !isBoardActive;
+            // Swipe solo con un dito da solo, e mai mentre la penna scrive
+            swipeOk = fingers === 1 && !activeStroke;
             startPinch();
             return;
           }
@@ -699,12 +713,16 @@
           }
           if (!swipeOk || e.type === 'pointercancel') return;
           swipeOk = false;
-          // Rilevamento swipe orizzontale con le dita per girare le slide
+          // Swipe orizzontale: gira le slide; verticale: mostra (giù) o nasconde (su) le note
           var dx = e.clientX - touchStartX;
           var dy = e.clientY - touchStartY;
           if (Math.abs(dx) > 75 && Math.abs(dy) < 55) {
+            // Sulla lavagna lo swipe non gira le slide: cambierebbero di nascosto, sotto lo sfondo
+            if (isBoardActive) return;
             if (dx < 0) deck.next();
             else deck.prev();
+          } else if (Math.abs(dy) > 75 && Math.abs(dx) < 55) {
+            setNotesOpen(dy > 0);
           }
         }
 
@@ -765,15 +783,28 @@
         }, { passive: false });
       }
 
-      // ── Sincronizzazione Navigazione & Animazioni Frammenti ──
-      function syncSpeakerNav() {
-        if (!isSpeaker) return;
+      // ── Sincronizzazione Navigazione & Animazioni Frammenti (nei due sensi) ──
+      // La posizione arrivata dall'altro schermo non si rimanda indietro: con due passi
+      // rapidi, l'eco del primo riporterebbe indietro chi è già al secondo.
+      var remoteNavKey = null;
+
+      function navKey(h, v, f) {
+        return h + '_' + v + '_' + f;
+      }
+
+      function syncNav() {
+        // In panoramica si sceglie con calma: la posizione parte quando la panoramica si chiude
+        if (deck.isOverview()) return;
         var ind = deck.getIndices();
+        var f = typeof ind.f === 'number' ? ind.f : -1;
+        var key = navKey(ind.h, ind.v, f);
+        if (key === remoteNavKey) return;
+        remoteNavKey = null;
         sendBroadcast('nav', {
           token: token,
           indexh: ind.h,
           indexv: ind.v,
-          indexf: typeof ind.f === 'number' ? ind.f : -1
+          indexf: f
         });
       }
 
@@ -783,17 +814,28 @@
         currentSlideKey = getSlideKey();
         redraw();
         updateToolbarSlideCounter();
-        syncSpeakerNav();
+        updateNotes();
+        syncNav();
       });
 
       deck.on('fragmentshown', function () {
         updateToolbarSlideCounter();
-        syncSpeakerNav();
+        syncNav();
       });
 
       deck.on('fragmenthidden', function () {
         updateToolbarSlideCounter();
-        syncSpeakerNav();
+        syncNav();
+      });
+
+      deck.on('overviewshown', function () {
+        if (activeStroke) finalizeActiveStroke();
+        updateOverviewButton();
+      });
+
+      deck.on('overviewhidden', function () {
+        updateOverviewButton();
+        syncNav();
       });
 
       // ── Azioni Locali: Clear, Undo ──
@@ -804,9 +846,7 @@
             !window.confirm('Cancellare tutta la lavagna?')) return;
         strokesBySlide[key] = [];
         redraw();
-        if (isSpeaker) {
-          sendBroadcast('clear', { token: token, slideId: key });
-        }
+        sendBroadcast('clear', { token: token, slideId: key });
       }
 
       function localUndo() {
@@ -815,9 +855,7 @@
         if (list && list.length > 0) {
           list.pop();
           redraw();
-          if (isSpeaker) {
-            sendBroadcast('undo', { token: token, slideId: key });
-          }
+          sendBroadcast('undo', { token: token, slideId: key });
         }
       }
 
@@ -832,6 +870,11 @@
           txt += '·s' + (indices.f + 1);
         }
         el.textContent = txt;
+      }
+
+      function updateOverviewButton() {
+        var btn = document.querySelector('.psi-tb-overview-btn');
+        if (btn) btn.classList.toggle('psi-active', deck.isOverview());
       }
 
       function updateStatus(connected) {
@@ -880,6 +923,22 @@
         nextBtn.title = 'Slide / animazione successiva';
         nextBtn.addEventListener('click', function () { deck.next(); });
         navGroup.appendChild(nextBtn);
+
+        // Panoramica, come Esc sul PC: si tocca la slide da aprire e il proiettore ci va
+        var overviewBtn = document.createElement('button');
+        overviewBtn.className = 'psi-tb-btn psi-tb-nav-btn psi-tb-overview-btn';
+        overviewBtn.textContent = '▦';
+        overviewBtn.title = 'Panoramica delle slide';
+        overviewBtn.addEventListener('click', function () { deck.toggleOverview(); });
+        navGroup.appendChild(overviewBtn);
+
+        // Note del relatore, solo sul tablet (anche con lo swipe in giù, e in su per chiuderle)
+        var notesBtn = document.createElement('button');
+        notesBtn.className = 'psi-tb-btn psi-tb-notes-btn';
+        notesBtn.textContent = '📝';
+        notesBtn.title = 'Note del relatore (solo sul tablet)';
+        notesBtn.addEventListener('click', function () { setNotesOpen(!notesOpen); });
+        navGroup.appendChild(notesBtn);
 
         bar.appendChild(navGroup);
 
@@ -1048,11 +1107,76 @@
         updateToolbarSlideCounter();
       }
 
-      if (isSpeaker) {
-        buildToolbar();
+      // ── Note del relatore sul tablet (solo qui: il proiettore non le vede) ──
+      var notesBanner = null;
+      var notesOpen = false;
+
+      function updateNotes() {
+        if (!notesBanner) return;
+        var text = notesBanner.querySelector('.psi-notes-text');
+        text.innerHTML = deck.getSlideNotes() || '<span class="psi-notes-empty">Nessuna nota per questa slide.</span>';
+        text.scrollTop = 0;
+        notesBanner.querySelector('.psi-notes-slide').textContent = 'slide ' + (deck.getIndices().h + 1);
+        fitNotes();
       }
 
-      // Scorciatoie da tastiera (funzionano anche su proiettore):
+      // Note lunghe: il testo scorre con il dito; altrimenti tutto il banner si trascina in su per chiuderlo
+      function fitNotes() {
+        if (!notesBanner) return;
+        var text = notesBanner.querySelector('.psi-notes-text');
+        text.style.touchAction = text.scrollHeight > text.clientHeight + 1 ? 'pan-y' : 'none';
+      }
+
+      function setNotesOpen(open) {
+        if (!notesBanner) return;
+        notesOpen = open;
+        notesBanner.style.transform = '';
+        notesBanner.classList.toggle('psi-open', open);
+        var btn = document.querySelector('.psi-tb-notes-btn');
+        if (btn) btn.classList.toggle('psi-active', open);
+      }
+
+      function buildNotes() {
+        notesBanner = document.createElement('div');
+        notesBanner.className = 'psi-lavagna-notes';
+        notesBanner.innerHTML =
+          '<div class="psi-notes-head"><span>Note</span><span class="psi-notes-slide"></span></div>' +
+          '<div class="psi-notes-text"></div>' +
+          '<div class="psi-notes-grip"></div>';
+        document.body.appendChild(notesBanner);
+
+        // Il banner segue il dito verso l'alto: lasciato oltre 50 px si chiude, altrimenti torna giù
+        var drag = null;
+        notesBanner.addEventListener('pointerdown', function (e) {
+          drag = { id: e.pointerId, y0: e.clientY, dy: 0 };
+          notesBanner.classList.add('psi-dragging');
+          try { notesBanner.setPointerCapture(e.pointerId); } catch (_) {}
+        });
+        notesBanner.addEventListener('pointermove', function (e) {
+          if (!drag || e.pointerId !== drag.id) return;
+          drag.dy = Math.min(0, e.clientY - drag.y0);
+          notesBanner.style.transform = 'translateY(' + drag.dy + 'px)';
+        });
+        // pointercancel: il dito ha fatto scorrere il testo, il banner resta aperto
+        function endDrag(e) {
+          if (!drag || e.pointerId !== drag.id) return;
+          var close = e.type === 'pointerup' && drag.dy < -50;
+          drag = null;
+          notesBanner.classList.remove('psi-dragging');
+          setNotesOpen(!close);
+        }
+        notesBanner.addEventListener('pointerup', endDrag);
+        notesBanner.addEventListener('pointercancel', endDrag);
+        window.addEventListener('resize', fitNotes);
+        updateNotes();
+      }
+
+      if (isSpeaker) {
+        buildToolbar();
+        buildNotes();
+      }
+
+      // Scorciatoie da tastiera (funzionano anche sul proiettore, e con ?proiettore arrivano al tablet):
       // W -> Toggle lavagna scura
       // C -> Clear slide corrente (o lavagna, se attiva)
       // U -> Undo ultimo tratto

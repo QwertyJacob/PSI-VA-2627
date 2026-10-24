@@ -1,0 +1,53 @@
+{
+  "retrieved_at": "2026-10-24",
+  "assets": [
+    {
+      "file": "ab-test-bing.png",
+      "credit": "R. Kohavi et al., Online Controlled Experiments at Large Scale, KDD 2013, fig. 1",
+      "source_page": "https://exp-platform.com/large-scale/",
+      "download_url": "https://exp-platform.com/Documents/2013%20controlledExperimentsAtScale.pdf",
+      "note": "Figura 1 estratta dal PDF dell'articolo, senza modifiche. © ACM; riprodotta a fini didattici con attribuzione.",
+      "sha256": "6e38162bfde7eb712ff24879abdf8d39a843cd0d83a1b7601c7df79490aa0fa7"
+    },
+    {
+      "file": "ngrams-frequenze.svg",
+      "credit": "Grafico prodotto per questa pagina dai conteggi del corpus 20 Newsgroups (comp.graphics, rec.sport.baseball)",
+      "source_page": "http://qwone.com/~jason/20Newsgroups/",
+      "download_url": "",
+      "note": "Dati reali: 584 + 597 messaggi di addestramento, parole normalizzate per 10.000 occorrenze.",
+      "sha256": "95dee5899414b42e760868ac08a3d73a96150a2b2c404c1668cb812b7fe693dc"
+    },
+    {
+      "file": "pcr-workflow.jpg",
+      "credit": "Hindson et al., Analytical Chemistry 83 (2011), fig. 1",
+      "source_page": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3216358/",
+      "download_url": "https://cdn.ncbi.nlm.nih.gov/pmc/blobs/7580/3216358/6a591c8f0fc7/ac-2011-02028g_0003.jpg",
+      "note": "© American Chemical Society. ACS AuthorChoice; uso didattico. Anteprima di un particolare tramite CSS; file originale integro.",
+      "sha256": "28e50157ca162ee0ba81c58016fbb5459169cece6004ee27fc4498439f5fe7b2"
+    },
+    {
+      "file": "af447_prior.jpg",
+      "credit": "J. Van Gurley e L. D. Stone, SIAM News, 1 novembre 2016, fig. 1; immagine da Stone et al.",
+      "source_page": "https://www.siam.org/publications/siam-news/articles/bayesian-search-for-missing-aircraft-ships-and-people/",
+      "download_url": "https://www.siam.org/media/0kchsmoj/figure2.jpg",
+      "note": "Figura originale, senza modifiche. Crediti conservati nella pagina.",
+      "sha256": "a5bffff95ddf1c2f57e805673994634859b54954fdcd8c05aefeb9314519646a"
+    },
+    {
+      "file": "af447_posterior.jpg",
+      "credit": "J. Van Gurley e L. D. Stone, SIAM News, 1 novembre 2016, fig. 2; immagine da Stone et al.",
+      "source_page": "https://www.siam.org/publications/siam-news/articles/bayesian-search-for-missing-aircraft-ships-and-people/",
+      "download_url": "https://www.siam.org/media/fxfbwc4h/figure3.jpg",
+      "note": "Figura originale, senza modifiche. Crediti conservati nella pagina.",
+      "sha256": "181c3b7894351e2d5e12ffe036045bcc946c169d5a84180b5e951dac49590b9d"
+    },
+    {
+      "file": "cuscinetto.jpg",
+      "credit": "NSK, Dynamic Load Ratings and Fatigue Life, fotografia del danno da fatica",
+      "source_page": "https://www.nsk.com/am-en/tools-resources/knowledge-center/bearing-abcs/dynamic-load-ratings-and-fatigue-life/",
+      "download_url": "https://www.nsk.com/adobe/dynamicmedia/deliver/dm-aid--ef8be8de-8864-4401-8c5c-45725f5ea846/04-img05.jpg?preferwebp=true&quality=85",
+      "note": "© NSK. Fotografia originale senza modifiche; uso didattico con attribuzione e fonte.",
+      "sha256": "24f39032bccbd5b355ef20964012440d2e869deeea095c4c2bdf7f9fbaabd10d"
+    }
+  ]
+}

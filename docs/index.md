@@ -48,6 +48,8 @@ Il percorso è articolato in 4 moduli tematici distribuiti su **12 settimane**, 
 | **[5. Bortkiewicz e i calci di cavallo](settimana_05/index.md)** *(bozza completa)* | **Varianza e distribuzioni discrete notevoli:** significato, definizione e calcolo della varianza; distribuzione Geometrica (tempo di attesa e assenza di memoria), distribuzione di Poisson (eventi rari e limite della distribuzione binomiale); applicazioni ai sistemi distribuiti. |
 | **[6. Bertrand, Gauss e l'asteroide Cerere](settimana_06/index.md)** *(bozza completa)* | **Variabili aleatorie continue e distribuzione normale:** densità di probabilità (PDF) e funzione di ripartizione (CDF), distribuzione uniforme, distribuzione esponenziale e assenza di memoria, distribuzione normale (gaussiana), standardizzazione, tabella Z e regola 68–95–99,7. |
 
+Alla fine del Modulo II, [La probabilità al lavoro](probabilita-al-lavoro/index.md) raccoglie cinque applicazioni — esperimenti A/B, classificazione dei testi, DNA, ricerca in mare e affidabilità — e mostra quali modelli delle Settimane 2–6 entrano in gioco, distinguendo i dati presi dalle fonti dai numeri costruiti per l'esempio.
+
 ### Modulo III — Distribuzioni congiunte, teoremi limite e campionamento (Settimane 7–10)
 
 | Settimana | Argomenti |

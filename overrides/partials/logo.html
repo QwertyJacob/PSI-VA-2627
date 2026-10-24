@@ -1,0 +1,13 @@
+{#-
+  Animated mascot: a Greek Psi with eyes and a smile. The static SVG is shown
+  immediately (and is also the no-JS / no-WebGL fallback); psi-pet.js fades the
+  live 3D canvas over it as soon as Three.js is ready.
+-#}
+<span class="psi-pet" data-psi-pet>
+  <img class="psi-pet__fallback"
+       src="{{ 'assets/img/psi-pet.svg' | url }}"
+       alt=""
+       width="38" height="38"
+       draggable="false">
+  <canvas class="psi-pet__canvas" width="152" height="152" aria-hidden="true"></canvas>
+</span>

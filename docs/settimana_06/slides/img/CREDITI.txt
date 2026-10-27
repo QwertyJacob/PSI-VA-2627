@@ -1,3 +1,7 @@
 esercizi_time.jpg: immagine del docente, copia di settimana_05/slides/img.
 bertrand.jpg: Joseph Bertrand (1822–1900), incisione, autore ignoto. Pubblico dominio.
   Wikimedia Commons, File:Joseph_bertrand.jpg (miniatura da 500 px).
+piazzi.jpg: Giuseppe Piazzi, incisione di F. Bordiga, 1808. Pubblico dominio.
+  Wikimedia Commons, File:Giuseppe_Piazzi.jpg (miniatura da 500 px).
+gauss.jpg: Carl Friedrich Gauss a 26 anni, pastello di Johann Christian August Schwartz, 1803. Pubblico dominio.
+  Wikimedia Commons, File:Carl_Friedrich_Gauß,_Pastellgemälde_von_Johann_Christian_August_Schwartz,_1803,_ohne_Rahmen.jpg (miniatura da 500 px).

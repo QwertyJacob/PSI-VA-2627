@@ -29,7 +29,7 @@ Due storie accompagnano il percorso. La prima è un paradosso che il matematico 
 
 All’esame devi saper spiegare perché, per una variabile continua, la probabilità di un singolo valore è zero e perché la probabilità di un intervallo è un’area sotto la densità; devi saper usare la densità e la funzione di ripartizione per calcolare la probabilità che una variabile cada sotto una soglia, sopra una soglia o tra due soglie. Della distribuzione uniforme devi conoscere densità, media e varianza, e saperla usare. Della distribuzione esponenziale devi saper ricavare la coda $P(T>t)=e^{-\lambda t}$ dalla distribuzione di Poisson, conoscere densità, funzione di ripartizione, media e varianza, e dimostrare la proprietà di assenza di memoria. Della distribuzione normale devi conoscere il significato dei parametri $\mu$ e $\sigma$, saper standardizzare una variabile, calcolare probabilità con la tabella di $\Phi$ e con la sua simmetria, usare la regola 68–95–99,7 e risolvere il problema inverso, cioè trovare la soglia che corrisponde a una probabilità assegnata.
 
-Sono invece **facoltative e non richieste all’esame** le tre letture in fondo alla dispensa (il paradosso di Bertrand con i conti completi, l’argomento di Jaynes sulle invarianze, e il metodo dei minimi quadrati di Gauss). Sono facoltativi anche i riquadri intitolati «Approfondimento facoltativo», che contengono soprattutto le dimostrazioni di medie e varianze con gli integrali. Le formule delle medie e delle varianze sono richieste; le loro dimostrazioni con gli integrali no. Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
+Sono invece **facoltative e non richieste all’esame** le due letture in fondo alla dispensa (il paradosso di Bertrand con i conti completi e l’argomento di Jaynes sulle invarianze). Sono facoltativi anche i riquadri intitolati «Approfondimento facoltativo», che contengono soprattutto le dimostrazioni di medie e varianze con gli integrali. Le formule delle medie e delle varianze sono richieste; le loro dimostrazioni con gli integrali no. Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
 
 Una parola sugli integrali, che compariranno in questa settimana. Il simbolo di integrale indicherà sempre un’area sotto una curva. Chi ha già seguito Analisi lo riconoscerà; chi non lo ha ancora fatto può leggerlo come il nome di quell’area. Nel percorso principale le aree da calcolare a mano sono rettangoli; tutte le altre si ottengono da una formula già pronta oppure si leggono in una tabella.
 
@@ -73,7 +73,7 @@ La domanda sembra avere una sola risposta. Bertrand ne propone tre, ciascuna con
 <polygon points="480,50 419.4,155 540.6,155" fill="none" stroke="currentColor" stroke-dasharray="4 3" opacity="0.6"/>
 <text x="480" y="212" text-anchor="middle" fill="currentColor">3. punto medio a caso</text>
 <text x="480" y="232" text-anchor="middle" fill="#e07a1f" font-weight="bold">corda lunga: 1/4</text>
-<path d="M100 50 L39.4 155 A70 70 0 0 0 160.6 155 Z" fill="#4051b5" opacity="0.25"/>
+<path d="M100 50 L72.7 97.3 L127.3 97.3 Z" fill="#4051b5" opacity="0.25"/>
 <line x1="100" y1="50" x2="87.8" y2="188.9" stroke="#4051b5" stroke-width="3"/>
 <circle cx="100" cy="50" r="4" fill="currentColor"/>
 <line x1="290" y1="120" x2="290" y2="190" stroke="currentColor" stroke-width="1.5"/>
@@ -552,7 +552,9 @@ Il grafico è una rampa che sale in linea retta da 0 a 1. Per l’autobus unifor
 
 Quando abbiamo studiato la distribuzione di Poisson, l’abbiamo usata per contare quante volte un evento si verifica in un intervallo, quando le occorrenze sono indipendenti l’una dall’altra e arrivano con un ritmo medio costante. Ora cambiamo domanda. Invece di chiederci **quanti** eventi cadono in un intervallo, ci chiediamo **quanto tempo** dobbiamo aspettare il prossimo. Questa seconda grandezza è un tempo, e può assumere qualunque valore positivo: è una variabile continua.
 
-Gli esempi sono a coppie, e ogni coppia nasce da un’ipotesi. Prendiamo gli attacchi a un sito web. **Se assumiamo** che arrivino uno alla volta, indipendentemente l’uno dall’altro e con un ritmo medio costante, cioè con le ipotesi da cui nella [Settimana 5](../settimana_05/index.md#pezzetti) abbiamo costruito la distribuzione di Poisson, **allora** il numero di attacchi in un giorno è una variabile aleatoria poissoniana, e il tempo che separa due attacchi ha la distribuzione che stiamo per introdurre. Non è un fatto garantito: se gli attacchi arrivassero a ondate, per esempio da una rete di computer infetti che colpisce per qualche minuto e poi tace, il modello non descriverebbe bene né il conteggio né l’attesa. La stessa ipotesi forma anche le altre coppie: il numero di operazioni su un grande database nei prossimi 10 millisecondi e il tempo fino alla prossima operazione; il numero di utenti che cliccano su un annuncio nei prossimi 5 minuti e il tempo tra due clic; le stampe inviate a una stampante condivisa in un’ora e il tempo tra due stampe. In ogni coppia il primo numero conta, il secondo misura un’attesa.
+Prendiamo gli attacchi a un sito web. **Se assumiamo** che arrivino uno alla volta, indipendentemente l’uno dall’altro e con un ritmo medio costante, cioè con le ipotesi da cui nella [Settimana 5](../settimana_05/index.md#pezzetti) abbiamo costruito la distribuzione di Poisson, **allora** il numero di attacchi in un giorno è una variabile aleatoria poissoniana, e il tempo che separa due attacchi ha la distribuzione che stiamo per introdurre. Non è un fatto garantito: se gli attacchi arrivassero a ondate, per esempio da una rete di computer infetti che colpisce per qualche minuto e poi tace, il modello non descriverebbe bene né il conteggio né l’attesa. 
+
+Sempre con le assunzioni in mente, menzioniamo altri esempi della relazione Poisson-Esponenziale: il numero di operazioni su un grande database nei prossimi 10 millisecondi e il tempo fra due operazioni; il numero di utenti che cliccano su un annuncio nei prossimi 5 minuti e il tempo tra due clic; le stampe inviate a una stampante condivisa in un’ora e il tempo tra due stampe. In ogni coppia il primo numero conta, il secondo misura un’attesa. Pensa tu ad altri esempi...
 
 Per collegare le due grandezze fissiamo il **tasso** $\lambda$: il numero medio di eventi per unità di tempo. Per esempio, una stampante riceve in media $\lambda=3$ lavori all’ora. Chiamiamo $X_t$ il numero di eventi in un intervallo lungo $t$ ore. Sotto le ipotesi appena richiamate, come abbiamo visto nella [Settimana 5](../settimana_05/index.md#tasso), $X_t$ ha distribuzione di Poisson con media $\lambda t$, e questo vale per **ogni** durata $t$, non solo per un’ora: in $t$ ore la stampante riceve in media $3t$ lavori.
 
@@ -871,21 +873,631 @@ plt.show()
 
 Con il seme fissato, la media delle attese è vicinissima a $1/3$ di ora, le code simulate sono vicine a 0,779 (il complemento dello 0,221 trovato per la stampante), a 0,368 e a 0,050, e le due righe sull’assenza di memoria danno lo stesso numero, circa 0,37: le attese che sono già durate mezz’ora si comportano come attese appena cominciate. L’istogramma segue la curva della densità. Prova a cambiare `LAMBDA` in `6.0`: l’attesa media si dimezza e la curva parte da altezza 6.
 
-## Atti VI e VII — L’asteroide perduto e la distribuzione normale {: #cerere }
+## Atto VI — L’asteroide perduto {: #cerere }
 
-*In arrivo…* Questa parte della dispensa sarà pubblicata con la Lezione 2.
+La notte del primo gennaio 1801, all’osservatorio di Palermo, l’astronomo **Giuseppe Piazzi** nota un puntino luminoso che non compare nei cataloghi delle stelle e che, notte dopo notte, si sposta. È un corpo celeste nuovo, che verrà chiamato **Cerere**: oggi sappiamo che è il più grande oggetto della fascia degli asteroidi, tra Marte e Giove.
+
+Piazzi lo segue fino all’11 febbraio. Poi Cerere si avvicina, nel cielo, alla direzione del Sole, e il bagliore del Sole lo nasconde. Per ritrovarlo bisogna sapere dove puntare il telescopio quando riemergerà, mesi dopo, in una zona di cielo lontana da quella in cui era stato visto per l’ultima volta. Ma le osservazioni coprono appena 41 giorni, e ogni misura di posizione contiene un piccolo **errore**: lo strumento, l’orologio, l’aria, l’occhio dell’osservatore. Gli astronomi d’Europa provano a calcolarne l’orbita, senza successo.
+
+Il giovane **Carl Friedrich Gauss**, che ha 24 anni, racconta nella prefazione della sua *Theoria motus* (1809) perché il problema lo appassionò:
+
+> «[…] l’orbita del pianeta Cerere, che in questi quarantuno giorni aveva descritto un arco geocentrico di soli tre gradi, e che dopo un anno doveva essere cercato in una regione del cielo molto lontana da quella in cui era stato visto per l’ultima volta.»
+> — C. F. Gauss, *Theoria motus corporum coelestium*, 1809, prefazione, p. xv della traduzione inglese di C. H. Davis (1857), tradotto dall’inglese
+
+Nell’autunno del 1801 Gauss calcola l’orbita di Cerere con un metodo nuovo, pensato per ricavare un risultato affidabile da molte osservazioni, ciascuna un po’ imprecisa. Conoscere l’orbita vuol dire sapere dove si troverà Cerere nei mesi successivi, e quindi dove puntare il telescopio. La previsione funziona al primo tentativo: Gauss racconta che Cerere fu ritrovato «la prima notte serena» in cui lo si cercò nel punto del cielo indicato dai suoi calcoli. In una nota aggiunge chi lo ritrovò e quando: l’astronomo **Franz Xaver von Zach**, il 7 dicembre 1801.
+
+Il cuore del metodo di Gauss è una domanda di probabilità: con quale probabilità una misura sbaglia di una certa quantità? Che gli errori piccoli siano frequenti e quelli grandi rari, e che gli errori in eccesso e in difetto siano ugualmente probabili, lo pensavano tutti. Ma con quale curva, esattamente, si distribuiscono? Gauss non la ricava dalla fisica del telescopio. Parte da un’abitudine che tutti gli astronomi già seguivano: quando si misura più volte la stessa grandezza, si prende la **media aritmetica** delle misure. Nella *Theoria motus* lo dice così:
+
+> «È consuetudine considerare come un assioma l’ipotesi che, se una grandezza è stata determinata con più osservazioni dirette, fatte nelle stesse circostanze e con uguale cura, la media aritmetica dei valori osservati fornisca il valore più probabile, se non rigorosamente, almeno con grande approssimazione.»
+> — C. F. Gauss, *Theoria motus*, 1809, libro II, sezione III, art. 177 (pp. 258–259 della traduzione di Davis, tradotto dall’inglese)
+
+Poi si chiede: quale curva degli errori rende la media aritmetica, sempre, il valore più probabile? La risposta, con un conto che lasciamo ai libri, è una sola: una curva a forma di campana, simmetrica attorno all’errore zero, proporzionale a $e^{-h^2x^2}$, dove $x$ è l’errore e $h$ una costante che Gauss chiama «misura della precisione». È la curva che oggi porta il suo nome. Dalla stessa curva Gauss ricava il **metodo dei minimi quadrati**, con cui calcola le orbite. Gauss è anche onesto sui limiti del suo modello: nell’articolo successivo osserva che questa curva non può descrivere rigorosamente gli errori reali, che non sono mai infinitamente grandi. È un modello, e funziona straordinariamente bene.
+
+??? note "Approfondimento facoltativo — Prima di Gauss: De Moivre e le monete"
+    La stessa curva era già apparsa quasi settant’anni prima, in un contesto del tutto diverso. Nel 1733 **Abraham De Moivre**, un matematico francese emigrato a Londra, cercava un modo per approssimare le probabilità della distribuzione binomiale quando il numero di lanci di una moneta è enorme e i conti esatti sono impraticabili. Lo considerava
+
+    > «il problema più difficile che si possa proporre in materia di probabilità»
+    > — A. De Moivre, *The Doctrine of Chances*, 3ª ed., 1756, p. 242 (tradotto dall’inglese)
+
+    e la sua soluzione, stampata il 12 novembre 1733 e ripubblicata nel libro, contiene un fattore della forma $e^{-x^2/2}$. Gli istogrammi della distribuzione binomiale con $n$ grande, che hai visto nel [widget della Settimana 4](../settimana_04/index.md#widget-binomiale), hanno proprio questa forma a campana.
+
+    Due strade indipendenti, i lanci di moneta di De Moivre e gli errori di misura di Gauss, arrivano alla stessa curva. Non è un caso: in entrambe le situazioni il risultato è la **somma di tanti piccoli contributi indipendenti**, i singoli lanci in un caso, i singoli disturbi nell’altro. Perché una somma di questo tipo produca sempre una campana lo spiegherà il Teorema del Limite Centrale, nella Settimana 9.
+
+## Atto VII — La distribuzione normale {: #normale }
+
+### La campana e i suoi due parametri {: #densita-normale }
+
+La distribuzione che descrive gli errori di Gauss si chiama oggi **distribuzione normale**, o **gaussiana**. Gauss aveva notato che gli errori di misura, pur essendo casuali, tendono a distribuirsi in modo simmetrico attorno al valore corretto; la distribuzione normale descrive in generale le grandezze che si concentrano attorno a un valore medio e se ne allontanano sempre più di rado. È una distribuzione continua, che può assumere qualsiasi valore reale; la sua densità ha la forma di una campana simmetrica, con la cima al centro e due code che si estendono all’infinito da entrambi i lati, sempre più basse ma mai nulle. Oltre agli errori di misura, si usa come prima approssimazione per molte grandezze fisiche: l’altezza delle persone, il peso, la temperatura media di una città, la tensione di un circuito.
+
+La distribuzione normale dipende da due parametri: il valore atteso, indicato con la lettera greca $\mu$ («mu»), e la varianza, indicata con $\sigma^2$ («sigma quadro»). Si scrive
+
+$$
+X\sim\mathcal{N}(\mu,\sigma^2),
+$$
+
+dove la $\mathcal{N}$ sta per «normale». Attenzione alla notazione: molti testi, molte librerie e anche alcune slide scrivono $\mathcal{N}(\mu,\sigma)$, mettendo al secondo posto la **deviazione standard** invece della varianza. Per non sbagliare, negli esercizi conviene scrivere sempre il nome del parametro. Per esempio, la stessa distribuzione si può scrivere $X\sim\mathcal{N}(\mu=170,\ \sigma=10)$ oppure $X\sim\mathcal{N}(\mu=170,\ \sigma^2=100)$: se al secondo posto si indica la deviazione standard si scrive 10, se si indica la varianza si scrive il suo quadrato, 100. In questa dispensa e nelle slide usiamo sempre la seconda forma, con la varianza.
+
+Ecco il nostro esempio per tutta la seconda parte. L’altezza degli esseri umani adulti di una certa popolazione è approssimativamente normale, con media 170 cm e deviazione standard 10 cm, quindi con varianza $\sigma^2=10^2=100\ \text{cm}^2$: $X\sim\mathcal{N}(\mu=170,\ \sigma^2=100)$. Questo significa, come vedremo, che la maggior parte delle persone ha un’altezza compresa tra 160 e 180 cm.
+
+La densità della distribuzione normale è
+
+$$
+f(x)=\frac{1}{\sigma\sqrt{2\pi}}\;e^{-\frac{(x-\mu)^2}{2\sigma^2}}\qquad\text{per ogni } x \text{ reale.}
+$$
+
+??? note "Approfondimento facoltativo — Che cosa ci fa $\pi$ nella campana? Un video"
+    Nella formula compare un ospite inatteso: $\pi$, il numero dei cerchi. Che cosa c’entra un cerchio con gli errori di misura di Gauss o con le altezze delle persone? Come vedremo tra poco, $\pi$ sta nella costante davanti alla formula, quella che serve soltanto a rendere l’area totale uguale a 1. La domanda però resta: perché proprio $\pi$, e non un altro numero?
+
+    Una risposta molto bella, senza trucchi di calcolo, la dà Grant Sanderson nel video [*Why π is in the normal distribution (beyond integral tricks)*](https://youtu.be/cy8r7WSuT1I) del suo canale 3Blue1Brown. L’idea è guardare la campana in due dimensioni, come una nuvola di errori su un piano invece che lungo una retta. Se l’errore in orizzontale e quello in verticale sono indipendenti, e nessuna direzione è privilegiata, la nuvola ha la stessa forma in tutte le direzioni, cioè una simmetria circolare. Il volume sotto questa campana a due dimensioni si calcola allora sommando tanti anelli concentrici, e i cerchi portano con sé $\pi$; dall’area in due dimensioni si torna poi a quella su una retta. Il video dura circa 25 minuti ed è in inglese; su YouTube si possono attivare i sottotitoli, anche tradotti automaticamente in italiano.
+
+La formula sembra minacciosa, ma si legge un pezzo alla volta, partendo dall’esponente. La quantità $x-\mu$ è la distanza del punto $x$ dal centro $\mu$. Elevata al quadrato diventa positiva e prende lo stesso valore per due punti alla stessa distanza dal centro, uno a destra e uno a sinistra: per questo la curva è **simmetrica** attorno a $\mu$. Il segno meno davanti fa sì che, più $x$ è lontano da $\mu$, più l’esponente è negativo e più $e^{(\cdots)}$ è piccolo: la curva ha il suo massimo in $x=\mu$ e scende ai lati, e scende in fretta, perché nell’esponente c’è il quadrato della distanza. Il denominatore $2\sigma^2$ fissa la scala: misura le distanze in unità di $\sigma$, così che con $\sigma$ grande bisogna allontanarsi molto prima che la curva cali. Infine la costante davanti, $1/(\sigma\sqrt{2\pi})$, serve soltanto a rendere l’area totale uguale a 1. Per ricordare la forma basta tenere a mente la parte che conta:
+
+$$
+f(x)\;\propto\;\frac1\sigma\cdot\exp\!\left[-\frac{(x-\mu)^2}{2\sigma^2}\right],
+$$
+
+dove il simbolo $\propto$ si legge «è proporzionale a» e $\exp[\cdots]$ è un altro modo di scrivere $e^{(\cdots)}$.
+
+I due parametri hanno un significato geometrico preciso. **$\mu$ è il centro**: è la posizione del vertice della campana e, per la simmetria, anche il suo baricentro, quindi $\mathbb{E}[X]=\mu$. Cambiare $\mu$ trasla la campana a destra o a sinistra, senza deformarla. **$\sigma$ è la larghezza**: è la deviazione standard, quindi $\operatorname{Var}(X)=\sigma^2$, e si misura nelle stesse unità di $X$, centimetri nel nostro esempio. C’è anche un segno visibile di $\sigma$ sul grafico: nei punti $\mu-\sigma$ e $\mu+\sigma$ la campana smette di curvarsi verso il basso e comincia a curvarsi verso l’alto. Sono i suoi **punti di flesso**, e a occhio $\sigma$ è la distanza dal centro di questi due «gomiti». Se $\sigma$ cresce la campana si allarga; ma l’area deve restare 1, quindi allargandosi **si abbassa**. L’altezza del picco è $1/(\sigma\sqrt{2\pi})$: circa 0,40 con $\sigma=1$, circa 0,040 con $\sigma=10$.
+
+<figure markdown="0">
+<svg viewBox="0 0 580 232" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="A sinistra tre campane identiche centrate in mu uno, mu due, mu tre: cambiare mu sposta la curva senza deformarla. A destra tre campane con lo stesso centro e sigma crescente: la più stretta è la più alta, la più larga la più bassa.">
+<text x="290.0" y="18.0" text-anchor="middle" fill="currentColor" font-weight="bold">Che cosa fanno μ e σ alla campana</text>
+<polyline points="25.0,189.7 26.6,189.6 28.2,189.5 29.8,189.4 31.4,189.2 33.0,189.0 34.6,188.7 36.2,188.4 37.7,188.0 39.3,187.5 40.9,187.0 42.5,186.3 44.1,185.5 45.7,184.5 47.3,183.4 48.9,182.1 50.5,180.6 52.1,178.8 53.7,176.8 55.3,174.6 56.9,172.0 58.5,169.1 60.1,166.0 61.7,162.5 63.2,158.7 64.8,154.5 66.4,150.0 68.0,145.2 69.6,140.1 71.2,134.7 72.8,129.1 74.4,123.3 76.0,117.4 77.6,111.4 79.2,105.3 80.8,99.3 82.4,93.4 84.0,87.8 85.6,82.3 87.2,77.3 88.8,72.6 90.3,68.5 91.9,64.9 93.5,62.0 95.1,59.7 96.7,58.1 98.3,57.2 99.9,57.1 101.5,57.7 103.1,59.0 104.7,61.1 106.3,63.9 107.9,67.2 109.5,71.2 111.1,75.7 112.7,80.6 114.2,85.9 115.8,91.5 117.4,97.3 119.0,103.3 120.6,109.3 122.2,115.4 123.8,121.4 125.4,127.2 127.0,132.9 128.6,138.3 130.2,143.5 131.8,148.4 133.4,153.0 135.0,157.3 136.6,161.2 138.2,164.8 139.8,168.1 141.3,171.1 142.9,173.7 144.5,176.1 146.1,178.2 147.7,180.0 149.3,181.6 150.9,183.0 152.5,184.2 154.1,185.2 155.7,186.0 157.3,186.8 158.9,187.4 160.5,187.9 162.1,188.3 163.7,188.6 165.2,188.9 166.8,189.1 168.4,189.3 170.0,189.5 171.6,189.6 173.2,189.7 174.8,189.8 176.4,189.8 178.0,189.9 179.6,189.9 181.2,189.9 182.8,189.9 184.4,190.0 186.0,190.0 187.6,190.0 189.2,190.0 190.8,190.0 192.3,190.0 193.9,190.0 195.5,190.0 197.1,190.0 198.7,190.0 200.3,190.0 201.9,190.0 203.5,190.0 205.1,190.0 206.7,190.0 208.3,190.0 209.9,190.0 211.5,190.0 213.1,190.0 214.7,190.0 216.2,190.0 217.8,190.0 219.4,190.0 221.0,190.0 222.6,190.0 224.2,190.0 225.8,190.0 227.4,190.0 229.0,190.0 230.6,190.0 232.2,190.0 233.8,190.0 235.4,190.0 237.0,190.0 238.6,190.0 240.2,190.0 241.8,190.0 243.3,190.0 244.9,190.0 246.5,190.0 248.1,190.0 249.7,190.0 251.3,190.0 252.9,190.0 254.5,190.0 256.1,190.0 257.7,190.0 259.3,190.0 260.9,190.0 262.5,190.0 264.1,190.0 265.7,190.0 267.2,190.0 268.8,190.0 270.4,190.0 272.0,190.0 273.6,190.0 275.2,190.0 276.8,190.0 278.4,190.0 280.0,190.0" fill="none" stroke="#4051b5" stroke-width="2.3"/>
+<line x1="99.4" y1="190" x2="99.4" y2="57.0" stroke="currentColor" stroke-dasharray="3 3" opacity="0.6"/>
+<polyline points="25.0,190.0 26.6,190.0 28.2,190.0 29.8,190.0 31.4,190.0 33.0,190.0 34.6,190.0 36.2,190.0 37.7,190.0 39.3,190.0 40.9,190.0 42.5,190.0 44.1,190.0 45.7,190.0 47.3,190.0 48.9,190.0 50.5,190.0 52.1,190.0 53.7,190.0 55.3,190.0 56.9,190.0 58.5,190.0 60.1,190.0 61.7,190.0 63.2,190.0 64.8,190.0 66.4,190.0 68.0,190.0 69.6,189.9 71.2,189.9 72.8,189.9 74.4,189.8 76.0,189.8 77.6,189.7 79.2,189.7 80.8,189.6 82.4,189.4 84.0,189.3 85.6,189.1 87.2,188.8 88.8,188.5 90.3,188.2 91.9,187.7 93.5,187.2 95.1,186.5 96.7,185.8 98.3,184.9 99.9,183.8 101.5,182.5 103.1,181.1 104.7,179.4 106.3,177.5 107.9,175.3 109.5,172.9 111.1,170.1 112.7,167.1 114.2,163.7 115.8,160.0 117.4,155.9 119.0,151.5 120.6,146.8 122.2,141.8 123.8,136.5 125.4,131.0 127.0,125.3 128.6,119.4 130.2,113.4 131.8,107.3 133.4,101.3 135.0,95.4 136.6,89.6 138.2,84.1 139.8,78.9 141.3,74.1 142.9,69.8 144.5,66.0 146.1,62.9 147.7,60.3 149.3,58.5 150.9,57.4 152.5,57.0 154.1,57.4 155.7,58.5 157.3,60.3 158.9,62.9 160.5,66.0 162.1,69.8 163.7,74.1 165.2,78.9 166.8,84.1 168.4,89.6 170.0,95.4 171.6,101.3 173.2,107.3 174.8,113.4 176.4,119.4 178.0,125.3 179.6,131.0 181.2,136.5 182.8,141.8 184.4,146.8 186.0,151.5 187.6,155.9 189.2,160.0 190.8,163.7 192.3,167.1 193.9,170.1 195.5,172.9 197.1,175.3 198.7,177.5 200.3,179.4 201.9,181.1 203.5,182.5 205.1,183.8 206.7,184.9 208.3,185.8 209.9,186.5 211.5,187.2 213.1,187.7 214.7,188.2 216.2,188.5 217.8,188.8 219.4,189.1 221.0,189.3 222.6,189.4 224.2,189.6 225.8,189.7 227.4,189.7 229.0,189.8 230.6,189.8 232.2,189.9 233.8,189.9 235.4,189.9 237.0,190.0 238.6,190.0 240.2,190.0 241.8,190.0 243.3,190.0 244.9,190.0 246.5,190.0 248.1,190.0 249.7,190.0 251.3,190.0 252.9,190.0 254.5,190.0 256.1,190.0 257.7,190.0 259.3,190.0 260.9,190.0 262.5,190.0 264.1,190.0 265.7,190.0 267.2,190.0 268.8,190.0 270.4,190.0 272.0,190.0 273.6,190.0 275.2,190.0 276.8,190.0 278.4,190.0 280.0,190.0" fill="none" stroke="#4051b5" stroke-width="2.3"/>
+<line x1="152.5" y1="190" x2="152.5" y2="57.0" stroke="currentColor" stroke-dasharray="3 3" opacity="0.6"/>
+<polyline points="25.0,190.0 26.6,190.0 28.2,190.0 29.8,190.0 31.4,190.0 33.0,190.0 34.6,190.0 36.2,190.0 37.7,190.0 39.3,190.0 40.9,190.0 42.5,190.0 44.1,190.0 45.7,190.0 47.3,190.0 48.9,190.0 50.5,190.0 52.1,190.0 53.7,190.0 55.3,190.0 56.9,190.0 58.5,190.0 60.1,190.0 61.7,190.0 63.2,190.0 64.8,190.0 66.4,190.0 68.0,190.0 69.6,190.0 71.2,190.0 72.8,190.0 74.4,190.0 76.0,190.0 77.6,190.0 79.2,190.0 80.8,190.0 82.4,190.0 84.0,190.0 85.6,190.0 87.2,190.0 88.8,190.0 90.3,190.0 91.9,190.0 93.5,190.0 95.1,190.0 96.7,190.0 98.3,190.0 99.9,190.0 101.5,190.0 103.1,190.0 104.7,190.0 106.3,190.0 107.9,190.0 109.5,190.0 111.1,190.0 112.7,190.0 114.2,190.0 115.8,190.0 117.4,190.0 119.0,190.0 120.6,190.0 122.2,189.9 123.8,189.9 125.4,189.9 127.0,189.9 128.6,189.8 130.2,189.8 131.8,189.7 133.4,189.6 135.0,189.5 136.6,189.3 138.2,189.1 139.8,188.9 141.3,188.6 142.9,188.3 144.5,187.9 146.1,187.4 147.7,186.8 149.3,186.0 150.9,185.2 152.5,184.2 154.1,183.0 155.7,181.6 157.3,180.0 158.9,178.2 160.5,176.1 162.1,173.7 163.7,171.1 165.2,168.1 166.8,164.8 168.4,161.2 170.0,157.3 171.6,153.0 173.2,148.4 174.8,143.5 176.4,138.3 178.0,132.9 179.6,127.2 181.2,121.4 182.8,115.4 184.4,109.3 186.0,103.3 187.6,97.3 189.2,91.5 190.8,85.9 192.3,80.6 193.9,75.7 195.5,71.2 197.1,67.2 198.7,63.9 200.3,61.1 201.9,59.0 203.5,57.7 205.1,57.1 206.7,57.2 208.3,58.1 209.9,59.7 211.5,62.0 213.1,64.9 214.7,68.5 216.2,72.6 217.8,77.3 219.4,82.3 221.0,87.8 222.6,93.4 224.2,99.3 225.8,105.3 227.4,111.4 229.0,117.4 230.6,123.3 232.2,129.1 233.8,134.7 235.4,140.1 237.0,145.2 238.6,150.0 240.2,154.5 241.8,158.7 243.3,162.5 244.9,166.0 246.5,169.1 248.1,172.0 249.7,174.6 251.3,176.8 252.9,178.8 254.5,180.6 256.1,182.1 257.7,183.4 259.3,184.5 260.9,185.5 262.5,186.3 264.1,187.0 265.7,187.5 267.2,188.0 268.8,188.4 270.4,188.7 272.0,189.0 273.6,189.2 275.2,189.4 276.8,189.5 278.4,189.6 280.0,189.7" fill="none" stroke="#4051b5" stroke-width="2.3"/>
+<line x1="205.6" y1="190" x2="205.6" y2="57.0" stroke="currentColor" stroke-dasharray="3 3" opacity="0.6"/>
+<line x1="25" y1="190" x2="280" y2="190" stroke="currentColor"/>
+<line x1="99.4" y1="190" x2="99.4" y2="194" stroke="currentColor"/><text x="99.4" y="206" text-anchor="middle" fill="currentColor" font-size="12">μ₁</text>
+<line x1="152.5" y1="190" x2="152.5" y2="194" stroke="currentColor"/><text x="152.5" y="206" text-anchor="middle" fill="currentColor" font-size="12">μ₂</text>
+<line x1="205.6" y1="190" x2="205.6" y2="194" stroke="currentColor"/><text x="205.6" y="206" text-anchor="middle" fill="currentColor" font-size="12">μ₃</text>
+<text x="152.0" y="222.0" text-anchor="middle" fill="currentColor" font-size="12">μ₁ &lt; μ₂ &lt; μ₃, stessa σ: la campana trasla</text>
+<polyline points="305.0,190.0 306.6,190.0 308.2,190.0 309.8,190.0 311.4,190.0 313.0,190.0 314.6,190.0 316.2,190.0 317.8,190.0 319.3,190.0 320.9,190.0 322.5,190.0 324.1,190.0 325.7,190.0 327.3,190.0 328.9,190.0 330.5,190.0 332.1,190.0 333.7,190.0 335.3,190.0 336.9,190.0 338.5,190.0 340.1,190.0 341.7,190.0 343.2,190.0 344.8,190.0 346.4,190.0 348.0,190.0 349.6,190.0 351.2,190.0 352.8,190.0 354.4,190.0 356.0,190.0 357.6,190.0 359.2,190.0 360.8,190.0 362.4,190.0 364.0,190.0 365.6,190.0 367.2,190.0 368.8,190.0 370.3,190.0 371.9,190.0 373.5,190.0 375.1,190.0 376.7,190.0 378.3,189.9 379.9,189.9 381.5,189.8 383.1,189.8 384.7,189.7 386.3,189.5 387.9,189.2 389.5,188.9 391.1,188.5 392.7,187.8 394.2,187.0 395.8,185.9 397.4,184.5 399.0,182.6 400.6,180.3 402.2,177.5 403.8,174.0 405.4,169.8 407.0,164.8 408.6,159.0 410.2,152.4 411.8,145.0 413.4,136.9 415.0,128.1 416.6,118.8 418.2,109.2 419.8,99.5 421.3,90.0 422.9,80.9 424.5,72.7 426.1,65.4 427.7,59.5 429.3,55.1 430.9,52.3 432.5,51.4 434.1,52.3 435.7,55.1 437.3,59.5 438.9,65.4 440.5,72.7 442.1,80.9 443.7,90.0 445.2,99.5 446.8,109.2 448.4,118.8 450.0,128.1 451.6,136.9 453.2,145.0 454.8,152.4 456.4,159.0 458.0,164.8 459.6,169.8 461.2,174.0 462.8,177.5 464.4,180.3 466.0,182.6 467.6,184.5 469.2,185.9 470.8,187.0 472.3,187.8 473.9,188.5 475.5,188.9 477.1,189.2 478.7,189.5 480.3,189.7 481.9,189.8 483.5,189.8 485.1,189.9 486.7,189.9 488.3,190.0 489.9,190.0 491.5,190.0 493.1,190.0 494.7,190.0 496.2,190.0 497.8,190.0 499.4,190.0 501.0,190.0 502.6,190.0 504.2,190.0 505.8,190.0 507.4,190.0 509.0,190.0 510.6,190.0 512.2,190.0 513.8,190.0 515.4,190.0 517.0,190.0 518.6,190.0 520.2,190.0 521.8,190.0 523.3,190.0 524.9,190.0 526.5,190.0 528.1,190.0 529.7,190.0 531.3,190.0 532.9,190.0 534.5,190.0 536.1,190.0 537.7,190.0 539.3,190.0 540.9,190.0 542.5,190.0 544.1,190.0 545.7,190.0 547.2,190.0 548.8,190.0 550.4,190.0 552.0,190.0 553.6,190.0 555.2,190.0 556.8,190.0 558.4,190.0 560.0,190.0" fill="none" stroke="#e07a1f" stroke-width="2.3"/>
+<polyline points="305.0,190.0 306.6,190.0 308.2,190.0 309.8,190.0 311.4,190.0 313.0,190.0 314.6,190.0 316.2,190.0 317.8,190.0 319.3,190.0 320.9,190.0 322.5,190.0 324.1,190.0 325.7,190.0 327.3,190.0 328.9,190.0 330.5,190.0 332.1,190.0 333.7,190.0 335.3,189.9 336.9,189.9 338.5,189.9 340.1,189.9 341.7,189.9 343.2,189.8 344.8,189.8 346.4,189.7 348.0,189.7 349.6,189.6 351.2,189.5 352.8,189.4 354.4,189.3 356.0,189.2 357.6,189.0 359.2,188.8 360.8,188.6 362.4,188.3 364.0,188.0 365.6,187.6 367.2,187.2 368.8,186.7 370.3,186.2 371.9,185.5 373.5,184.8 375.1,184.0 376.7,183.1 378.3,182.1 379.9,181.1 381.5,179.8 383.1,178.5 384.7,177.1 386.3,175.5 387.9,173.8 389.5,171.9 391.1,170.0 392.7,167.9 394.2,165.6 395.8,163.3 397.4,160.8 399.0,158.3 400.6,155.6 402.2,152.9 403.8,150.1 405.4,147.3 407.0,144.5 408.6,141.6 410.2,138.8 411.8,136.0 413.4,133.3 415.0,130.7 416.6,128.2 418.2,125.9 419.8,123.8 421.3,121.8 422.9,120.0 424.5,118.5 426.1,117.2 427.7,116.2 429.3,115.5 430.9,115.1 432.5,114.9 434.1,115.1 435.7,115.5 437.3,116.2 438.9,117.2 440.5,118.5 442.1,120.0 443.7,121.8 445.2,123.8 446.8,125.9 448.4,128.2 450.0,130.7 451.6,133.3 453.2,136.0 454.8,138.8 456.4,141.6 458.0,144.5 459.6,147.3 461.2,150.1 462.8,152.9 464.4,155.6 466.0,158.3 467.6,160.8 469.2,163.3 470.8,165.6 472.3,167.9 473.9,170.0 475.5,171.9 477.1,173.8 478.7,175.5 480.3,177.1 481.9,178.5 483.5,179.8 485.1,181.1 486.7,182.1 488.3,183.1 489.9,184.0 491.5,184.8 493.1,185.5 494.7,186.2 496.2,186.7 497.8,187.2 499.4,187.6 501.0,188.0 502.6,188.3 504.2,188.6 505.8,188.8 507.4,189.0 509.0,189.2 510.6,189.3 512.2,189.4 513.8,189.5 515.4,189.6 517.0,189.7 518.6,189.7 520.2,189.8 521.8,189.8 523.3,189.9 524.9,189.9 526.5,189.9 528.1,189.9 529.7,189.9 531.3,190.0 532.9,190.0 534.5,190.0 536.1,190.0 537.7,190.0 539.3,190.0 540.9,190.0 542.5,190.0 544.1,190.0 545.7,190.0 547.2,190.0 548.8,190.0 550.4,190.0 552.0,190.0 553.6,190.0 555.2,190.0 556.8,190.0 558.4,190.0 560.0,190.0" fill="none" stroke="#8e44ad" stroke-width="2.3"/>
+<polyline points="305.0,189.0 306.6,188.9 308.2,188.8 309.8,188.7 311.4,188.6 313.0,188.4 314.6,188.3 316.2,188.1 317.8,188.0 319.3,187.8 320.9,187.6 322.5,187.4 324.1,187.2 325.7,187.0 327.3,186.7 328.9,186.5 330.5,186.2 332.1,185.9 333.7,185.6 335.3,185.3 336.9,184.9 338.5,184.6 340.1,184.2 341.7,183.8 343.2,183.4 344.8,182.9 346.4,182.5 348.0,182.0 349.6,181.5 351.2,181.0 352.8,180.4 354.4,179.9 356.0,179.3 357.6,178.7 359.2,178.0 360.8,177.4 362.4,176.7 364.0,176.0 365.6,175.3 367.2,174.6 368.8,173.8 370.3,173.1 371.9,172.3 373.5,171.5 375.1,170.7 376.7,169.9 378.3,169.1 379.9,168.3 381.5,167.4 383.1,166.6 384.7,165.7 386.3,164.9 387.9,164.0 389.5,163.2 391.1,162.4 392.7,161.5 394.2,160.7 395.8,159.9 397.4,159.1 399.0,158.3 400.6,157.5 402.2,156.8 403.8,156.1 405.4,155.4 407.0,154.7 408.6,154.1 410.2,153.5 411.8,152.9 413.4,152.3 415.0,151.8 416.6,151.4 418.2,150.9 419.8,150.5 421.3,150.2 422.9,149.9 424.5,149.6 426.1,149.4 427.7,149.3 429.3,149.1 430.9,149.1 432.5,149.1 434.1,149.1 435.7,149.1 437.3,149.3 438.9,149.4 440.5,149.6 442.1,149.9 443.7,150.2 445.2,150.5 446.8,150.9 448.4,151.4 450.0,151.8 451.6,152.3 453.2,152.9 454.8,153.5 456.4,154.1 458.0,154.7 459.6,155.4 461.2,156.1 462.8,156.8 464.4,157.5 466.0,158.3 467.6,159.1 469.2,159.9 470.8,160.7 472.3,161.5 473.9,162.4 475.5,163.2 477.1,164.0 478.7,164.9 480.3,165.7 481.9,166.6 483.5,167.4 485.1,168.3 486.7,169.1 488.3,169.9 489.9,170.7 491.5,171.5 493.1,172.3 494.7,173.1 496.2,173.8 497.8,174.6 499.4,175.3 501.0,176.0 502.6,176.7 504.2,177.4 505.8,178.0 507.4,178.7 509.0,179.3 510.6,179.9 512.2,180.4 513.8,181.0 515.4,181.5 517.0,182.0 518.6,182.5 520.2,182.9 521.8,183.4 523.3,183.8 524.9,184.2 526.5,184.6 528.1,184.9 529.7,185.3 531.3,185.6 532.9,185.9 534.5,186.2 536.1,186.5 537.7,186.7 539.3,187.0 540.9,187.2 542.5,187.4 544.1,187.6 545.7,187.8 547.2,188.0 548.8,188.1 550.4,188.3 552.0,188.4 553.6,188.6 555.2,188.7 556.8,188.8 558.4,188.9 560.0,189.0" fill="none" stroke="#4051b5" stroke-width="2.3"/>
+<line x1="432.5" y1="190" x2="432.5" y2="51.4" stroke="currentColor" stroke-dasharray="3 3" opacity="0.6"/>
+<line x1="305" y1="190" x2="560" y2="190" stroke="currentColor"/>
+<line x1="432.5" y1="190" x2="432.5" y2="194" stroke="currentColor"/><text x="432.5" y="206" text-anchor="middle" fill="currentColor" font-size="12">μ</text>
+<text x="448.4" y="57.4" text-anchor="start" fill="#e07a1f" font-size="12" font-weight="bold">σ₁</text>
+<text x="458.0" y="116.9" text-anchor="start" fill="#8e44ad" font-size="12" font-weight="bold">σ₂</text>
+<text x="481.4" y="147.1" text-anchor="start" fill="#4051b5" font-size="12" font-weight="bold">σ₃</text>
+<text x="432.0" y="222.0" text-anchor="middle" fill="currentColor" font-size="12">σ₁ &lt; σ₂ &lt; σ₃, stessa μ: si allarga e si abbassa</text>
+</svg>
+<figcaption>μ è la posizione del vertice: cambiarlo sposta la campana. σ è la larghezza: aumentandolo la campana si allarga e, perché l’area resti 1, si abbassa.</figcaption>
+</figure>
+
+#### Esplora: stringere e allargare la campana {: #widget-normale }
+
+La curva tratteggiata è l’altezza della popolazione, con $\mu=170$ cm e $\sigma=10$ cm. Muovi $\mu$: la campana scivola senza cambiare forma. Muovi $\sigma$: si allarga e si abbassa, oppure si stringe e si alza, ma l’area resta 1. Prima di muovere $\sigma$, prevedi: la probabilità di stare entro una deviazione standard dal centro cambierà?
+
+<div class="psi-widget" id="s06-normale"></div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  function erf(x) {
+    // Approssimazione di Abramowitz e Stegun (7.1.26): errore < 1,5e-7.
+    var s = x < 0 ? -1 : 1, a = Math.abs(x), t = 1 / (1 + 0.3275911 * a);
+    var y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t
+      - 0.284496736) * t + 0.254829592) * t * Math.exp(-a * a);
+    return s * y;
+  }
+  function Phi(z) { return 0.5 * (1 + erf(z / Math.SQRT2)); }
+  PSIWidget.mount('s06-normale', {
+    type: 'line', xLabel: 'Altezza x (cm)', yLabel: 'densità f(x)',
+    xDomain: [120, 220], xSamples: 201, yDomain: [0, 0.09],
+    liveLabel: 'distribuzione normale corrente',
+    fn: function (x, p) {
+      var z = (x - p.mu) / p.sigma;
+      return Math.exp(-0.5 * z * z) / (p.sigma * Math.sqrt(2 * Math.PI));
+    },
+    params: [
+      {key: 'mu', label: 'μ (centro, cm)', min: 150, max: 190, step: 1, value: 170},
+      {key: 'sigma', label: 'σ (deviazione standard, cm)', min: 5, max: 20, step: 0.5, value: 10}
+    ],
+    reference: {label: 'altezze: μ = 170, σ = 10', params: {mu: 170, sigma: 10}},
+    stats: function (p) { return [
+      {label: 'altezza del picco 1/(σ√2π)', value: (1 / (p.sigma * Math.sqrt(2 * Math.PI))).toFixed(4)},
+      {label: 'P(μ − σ < X < μ + σ)', value: (Phi(1) - Phi(-1)).toFixed(3)},
+      {label: 'P(X > 180 cm)', value: (1 - Phi((180 - p.mu) / p.sigma)).toFixed(3)}
+    ]; },
+    caption: 'μ sposta la campana, σ la allarga e la abbassa. L\'area entro una σ dal centro resta sempre circa 0,683.'
+  });
+});
+</script>
+
+La risposta è no. Qualunque siano $\mu$ e $\sigma$, la probabilità di stare entro una deviazione standard dal centro resta circa 0,683. Cambia invece $P(X>180)$, perché 180 cm è una soglia fissa: con $\sigma=10$ dista una deviazione standard dal centro, con $\sigma=5$ ne dista due, e la probabilità di superarla crolla. Per una distribuzione normale, quello che conta è la distanza dal centro **misurata in deviazioni standard**. È l’idea su cui si regge tutto il resto della settimana.
+
+### La normale standard e la tabella di Φ {: #standard }
+
+Tra tutte le distribuzioni normali ce n’è una speciale: quella con media 0 e deviazione standard 1. Si chiama **distribuzione normale standard**, e la variabile che la segue si indica di solito con la lettera $Z$:
+
+$$
+Z\sim\mathcal{N}(0,1).
+$$
+
+Per la sua densità e la sua funzione di ripartizione si usano due lettere greche: $\varphi(z)$ («fi» minuscola) per la densità, $\Phi(z)$ («fi» maiuscola) per la funzione di ripartizione. Con $\mu=0$ e $\sigma=1$ la densità si semplifica in
+
+$$
+\varphi(z)=\frac{1}{\sqrt{2\pi}}\,e^{-z^2/2},\qquad\qquad \Phi(z)=P(Z\le z)=\int_{-\infty}^{z}\varphi(t)\,dt.
+$$
+
+<figure markdown="0">
+<svg viewBox="0 0 580 244" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="Campana normale standard centrata in 0, con il massimo poco sotto 0,4. L’area tra meno 1 e 1, colorata, vale circa il 68,3 per cento. In z uguale a 1 la curva cambia concavità: è un punto di flesso.">
+<text x="290.0" y="18.0" text-anchor="middle" fill="currentColor" font-weight="bold">La distribuzione normale standard: μ = 0, σ = 1</text>
+<polygon points="230.0,200 230.0,113.6 231.5,111.4 233.0,109.3 234.5,107.1 236.0,105.0 237.5,102.8 239.0,100.7 240.5,98.6 242.0,96.5 243.5,94.5 245.0,92.5 246.5,90.4 248.0,88.5 249.5,86.5 251.0,84.7 252.5,82.8 254.0,81.0 255.5,79.2 257.0,77.5 258.5,75.9 260.0,74.3 261.5,72.7 263.0,71.2 264.5,69.8 266.0,68.5 267.5,67.2 269.0,66.0 270.5,64.9 272.0,63.8 273.5,62.8 275.0,61.9 276.5,61.1 278.0,60.3 279.5,59.7 281.0,59.1 282.5,58.6 284.0,58.2 285.5,57.9 287.0,57.7 288.5,57.6 290.0,57.5 291.5,57.6 293.0,57.7 294.5,57.9 296.0,58.2 297.5,58.6 299.0,59.1 300.5,59.7 302.0,60.3 303.5,61.1 305.0,61.9 306.5,62.8 308.0,63.8 309.5,64.9 311.0,66.0 312.5,67.2 314.0,68.5 315.5,69.8 317.0,71.2 318.5,72.7 320.0,74.3 321.5,75.9 323.0,77.5 324.5,79.2 326.0,81.0 327.5,82.8 329.0,84.7 330.5,86.5 332.0,88.5 333.5,90.4 335.0,92.5 336.5,94.5 338.0,96.5 339.5,98.6 341.0,100.7 342.5,102.8 344.0,105.0 345.5,107.1 347.0,109.3 348.5,111.4 350.0,113.6 350.0,200" fill="#2e9e5b" opacity="0.45"/>
+<polyline points="50.0,200.0 53.0,199.9 56.0,199.9 59.0,199.9 62.0,199.9 65.0,199.9 68.0,199.8 71.0,199.8 74.0,199.8 77.0,199.7 80.0,199.7 83.0,199.6 86.0,199.6 89.0,199.5 92.0,199.4 95.0,199.3 98.0,199.1 101.0,199.0 104.0,198.8 107.0,198.6 110.0,198.4 113.0,198.2 116.0,197.9 119.0,197.5 122.0,197.2 125.0,196.8 128.0,196.3 131.0,195.7 134.0,195.1 137.0,194.5 140.0,193.7 143.0,192.9 146.0,192.0 149.0,191.0 152.0,189.9 155.0,188.7 158.0,187.3 161.0,185.9 164.0,184.3 167.0,182.6 170.0,180.7 173.0,178.7 176.0,176.6 179.0,174.3 182.0,171.8 185.0,169.2 188.0,166.4 191.0,163.5 194.0,160.4 197.0,157.1 200.0,153.7 203.0,150.2 206.0,146.5 209.0,142.7 212.0,138.8 215.0,134.8 218.0,130.6 221.0,126.5 224.0,122.2 227.0,117.9 230.0,113.6 233.0,109.3 236.0,105.0 239.0,100.7 242.0,96.5 245.0,92.5 248.0,88.5 251.0,84.7 254.0,81.0 257.0,77.5 260.0,74.3 263.0,71.2 266.0,68.5 269.0,66.0 272.0,63.8 275.0,61.9 278.0,60.3 281.0,59.1 284.0,58.2 287.0,57.7 290.0,57.5 293.0,57.7 296.0,58.2 299.0,59.1 302.0,60.3 305.0,61.9 308.0,63.8 311.0,66.0 314.0,68.5 317.0,71.2 320.0,74.3 323.0,77.5 326.0,81.0 329.0,84.7 332.0,88.5 335.0,92.5 338.0,96.5 341.0,100.7 344.0,105.0 347.0,109.3 350.0,113.6 353.0,117.9 356.0,122.2 359.0,126.5 362.0,130.6 365.0,134.8 368.0,138.8 371.0,142.7 374.0,146.5 377.0,150.2 380.0,153.7 383.0,157.1 386.0,160.4 389.0,163.5 392.0,166.4 395.0,169.2 398.0,171.8 401.0,174.3 404.0,176.6 407.0,178.7 410.0,180.7 413.0,182.6 416.0,184.3 419.0,185.9 422.0,187.3 425.0,188.7 428.0,189.9 431.0,191.0 434.0,192.0 437.0,192.9 440.0,193.7 443.0,194.5 446.0,195.1 449.0,195.7 452.0,196.3 455.0,196.8 458.0,197.2 461.0,197.5 464.0,197.9 467.0,198.2 470.0,198.4 473.0,198.6 476.0,198.8 479.0,199.0 482.0,199.1 485.0,199.3 488.0,199.4 491.0,199.5 494.0,199.6 497.0,199.6 500.0,199.7 503.0,199.7 506.0,199.8 509.0,199.8 512.0,199.8 515.0,199.9 518.0,199.9 521.0,199.9 524.0,199.9 527.0,199.9 530.0,200.0" fill="none" stroke="#e07a1f" stroke-width="3"/>
+<line x1="50" y1="200" x2="530" y2="200" stroke="currentColor"/>
+<line x1="50.0" y1="200" x2="50.0" y2="204" stroke="currentColor"/><text x="50.0" y="216" text-anchor="middle" fill="currentColor" font-size="11">−4</text>
+<line x1="110.0" y1="200" x2="110.0" y2="204" stroke="currentColor"/><text x="110.0" y="216" text-anchor="middle" fill="currentColor" font-size="11">−3</text>
+<line x1="170.0" y1="200" x2="170.0" y2="204" stroke="currentColor"/><text x="170.0" y="216" text-anchor="middle" fill="currentColor" font-size="11">−2</text>
+<line x1="230.0" y1="200" x2="230.0" y2="204" stroke="currentColor"/><text x="230.0" y="216" text-anchor="middle" fill="currentColor" font-size="11">−1</text>
+<line x1="290.0" y1="200" x2="290.0" y2="204" stroke="currentColor"/><text x="290.0" y="216" text-anchor="middle" fill="currentColor" font-size="11">0</text>
+<line x1="350.0" y1="200" x2="350.0" y2="204" stroke="currentColor"/><text x="350.0" y="216" text-anchor="middle" fill="currentColor" font-size="11">1</text>
+<line x1="410.0" y1="200" x2="410.0" y2="204" stroke="currentColor"/><text x="410.0" y="216" text-anchor="middle" fill="currentColor" font-size="11">2</text>
+<line x1="470.0" y1="200" x2="470.0" y2="204" stroke="currentColor"/><text x="470.0" y="216" text-anchor="middle" fill="currentColor" font-size="11">3</text>
+<line x1="530.0" y1="200" x2="530.0" y2="204" stroke="currentColor"/><text x="530.0" y="216" text-anchor="middle" fill="currentColor" font-size="11">4</text>
+<line x1="50" y1="200" x2="50" y2="36" stroke="currentColor"/>
+<line x1="46.0" y1="164.3" x2="50.0" y2="164.3" stroke="currentColor"/><text x="43.0" y="168.3" text-anchor="end" fill="currentColor" font-size="10">0,1</text>
+<line x1="46.0" y1="128.6" x2="50.0" y2="128.6" stroke="currentColor"/><text x="43.0" y="132.6" text-anchor="end" fill="currentColor" font-size="10">0,2</text>
+<line x1="46.0" y1="92.9" x2="50.0" y2="92.9" stroke="currentColor"/><text x="43.0" y="96.9" text-anchor="end" fill="currentColor" font-size="10">0,3</text>
+<line x1="46.0" y1="57.1" x2="50.0" y2="57.1" stroke="currentColor"/><text x="43.0" y="61.1" text-anchor="end" fill="currentColor" font-size="10">0,4</text>
+<text x="56.0" y="40.0" text-anchor="start" fill="currentColor" font-size="11">densità φ(z)</text>
+<text x="320.0" y="146.4" text-anchor="start" fill="#2e9e5b" font-size="13" font-weight="bold">68,3%</text>
+<text x="359.0" y="105.6" text-anchor="start" fill="currentColor" font-size="11">flesso in z = 1</text>
+<text x="530.0" y="232.0" text-anchor="end" fill="currentColor" font-size="12">z</text>
+</svg>
+<figcaption>La normale standard Z ha media 0 e deviazione standard 1. La sua densità si indica con φ (fi minuscola), la sua funzione di ripartizione con Φ (fi maiuscola). Tra −1 e 1 c’è circa il 68,3% dell’area.</figcaption>
+</figure>
+
+Proviamo ora a rispondere a una domanda concreta. Con le altezze $X\sim\mathcal{N}(\mu=170,\ \sigma^2=100)$: qual è la probabilità che una persona scelta a caso sia più alta di 180 cm?
+
+La strada diretta è chiara. La probabilità di superare 180 è il complemento della funzione di ripartizione in 180, e la funzione di ripartizione è l’area sotto la densità a sinistra di 180:
+
+$$
+P(X>180)=1-F(180)=1-\int_{-\infty}^{180}\frac{1}{10\sqrt{2\pi}}\;e^{-\frac{(x-170)^2}{200}}\,dx.
+$$
+
+Qui però ci fermiamo. Questo integrale **non si può calcolare in forma chiusa**: non esiste una formula costruita con le funzioni elementari (potenze, esponenziali, logaritmi, funzioni trigonometriche) che dia l’area sotto la campana. E non è un problema di questo esercizio: la funzione di ripartizione della distribuzione normale, in generale, non ha un’espressione in forma chiusa, a differenza di quella dell’esponenziale, $1-e^{-\lambda t}$. I valori si ottengono con il **calcolo numerico**, cioè con metodi di approssimazione eseguiti da un calcolatore, con tutta la precisione che serve.
+
+Come si fa, allora, a un esame senza calcolatore? I valori della funzione di ripartizione della normale **standard**, $\Phi(z)$, sono stati calcolati una volta per tutte e raccolti in una tabella, la **tabella Z**, che si trova in ogni manuale di statistica e che potrai portare all’esame. Per leggere $\Phi(z)$ si cerca la riga che corrisponde alla parte intera e alla prima cifra decimale di $z$, poi la colonna che corrisponde alla seconda cifra decimale; il valore all’incrocio è la probabilità. Per esempio, $\Phi(1{,}31)$ si trova nella riga 1,3 e nella colonna 0,01, e vale 0,9049.
+
+??? info "La tabella Z: i valori di $\Phi(z)=P(Z\le z)$ per $z$ da 0 a 3,09"
+    Riga: parte intera e prima cifra decimale di $z$. Colonna: seconda cifra decimale. Per $z>3{,}09$ si può usare $\Phi(z)\approx1$; per i valori negativi si usa la simmetria $\Phi(-z)=1-\Phi(z)$.
+
+    | $z$ | 0,00 | 0,01 | 0,02 | 0,03 | 0,04 | 0,05 | 0,06 | 0,07 | 0,08 | 0,09 |
+    |---|---|---|---|---|---|---|---|---|---|---|
+    | **0,0** | 0,5000 | 0,5040 | 0,5080 | 0,5120 | 0,5160 | 0,5199 | 0,5239 | 0,5279 | 0,5319 | 0,5359 |
+    | **0,1** | 0,5398 | 0,5438 | 0,5478 | 0,5517 | 0,5557 | 0,5596 | 0,5636 | 0,5675 | 0,5714 | 0,5753 |
+    | **0,2** | 0,5793 | 0,5832 | 0,5871 | 0,5910 | 0,5948 | 0,5987 | 0,6026 | 0,6064 | 0,6103 | 0,6141 |
+    | **0,3** | 0,6179 | 0,6217 | 0,6255 | 0,6293 | 0,6331 | 0,6368 | 0,6406 | 0,6443 | 0,6480 | 0,6517 |
+    | **0,4** | 0,6554 | 0,6591 | 0,6628 | 0,6664 | 0,6700 | 0,6736 | 0,6772 | 0,6808 | 0,6844 | 0,6879 |
+    | **0,5** | 0,6915 | 0,6950 | 0,6985 | 0,7019 | 0,7054 | 0,7088 | 0,7123 | 0,7157 | 0,7190 | 0,7224 |
+    | **0,6** | 0,7257 | 0,7291 | 0,7324 | 0,7357 | 0,7389 | 0,7422 | 0,7454 | 0,7486 | 0,7517 | 0,7549 |
+    | **0,7** | 0,7580 | 0,7611 | 0,7642 | 0,7673 | 0,7704 | 0,7734 | 0,7764 | 0,7794 | 0,7823 | 0,7852 |
+    | **0,8** | 0,7881 | 0,7910 | 0,7939 | 0,7967 | 0,7995 | 0,8023 | 0,8051 | 0,8078 | 0,8106 | 0,8133 |
+    | **0,9** | 0,8159 | 0,8186 | 0,8212 | 0,8238 | 0,8264 | 0,8289 | 0,8315 | 0,8340 | 0,8365 | 0,8389 |
+    | **1,0** | 0,8413 | 0,8438 | 0,8461 | 0,8485 | 0,8508 | 0,8531 | 0,8554 | 0,8577 | 0,8599 | 0,8621 |
+    | **1,1** | 0,8643 | 0,8665 | 0,8686 | 0,8708 | 0,8729 | 0,8749 | 0,8770 | 0,8790 | 0,8810 | 0,8830 |
+    | **1,2** | 0,8849 | 0,8869 | 0,8888 | 0,8907 | 0,8925 | 0,8944 | 0,8962 | 0,8980 | 0,8997 | 0,9015 |
+    | **1,3** | 0,9032 | 0,9049 | 0,9066 | 0,9082 | 0,9099 | 0,9115 | 0,9131 | 0,9147 | 0,9162 | 0,9177 |
+    | **1,4** | 0,9192 | 0,9207 | 0,9222 | 0,9236 | 0,9251 | 0,9265 | 0,9279 | 0,9292 | 0,9306 | 0,9319 |
+    | **1,5** | 0,9332 | 0,9345 | 0,9357 | 0,9370 | 0,9382 | 0,9394 | 0,9406 | 0,9418 | 0,9429 | 0,9441 |
+    | **1,6** | 0,9452 | 0,9463 | 0,9474 | 0,9484 | 0,9495 | 0,9505 | 0,9515 | 0,9525 | 0,9535 | 0,9545 |
+    | **1,7** | 0,9554 | 0,9564 | 0,9573 | 0,9582 | 0,9591 | 0,9599 | 0,9608 | 0,9616 | 0,9625 | 0,9633 |
+    | **1,8** | 0,9641 | 0,9649 | 0,9656 | 0,9664 | 0,9671 | 0,9678 | 0,9686 | 0,9693 | 0,9699 | 0,9706 |
+    | **1,9** | 0,9713 | 0,9719 | 0,9726 | 0,9732 | 0,9738 | 0,9744 | 0,9750 | 0,9756 | 0,9761 | 0,9767 |
+    | **2,0** | 0,9772 | 0,9778 | 0,9783 | 0,9788 | 0,9793 | 0,9798 | 0,9803 | 0,9808 | 0,9812 | 0,9817 |
+    | **2,1** | 0,9821 | 0,9826 | 0,9830 | 0,9834 | 0,9838 | 0,9842 | 0,9846 | 0,9850 | 0,9854 | 0,9857 |
+    | **2,2** | 0,9861 | 0,9864 | 0,9868 | 0,9871 | 0,9875 | 0,9878 | 0,9881 | 0,9884 | 0,9887 | 0,9890 |
+    | **2,3** | 0,9893 | 0,9896 | 0,9898 | 0,9901 | 0,9904 | 0,9906 | 0,9909 | 0,9911 | 0,9913 | 0,9916 |
+    | **2,4** | 0,9918 | 0,9920 | 0,9922 | 0,9925 | 0,9927 | 0,9929 | 0,9931 | 0,9932 | 0,9934 | 0,9936 |
+    | **2,5** | 0,9938 | 0,9940 | 0,9941 | 0,9943 | 0,9945 | 0,9946 | 0,9948 | 0,9949 | 0,9951 | 0,9952 |
+    | **2,6** | 0,9953 | 0,9955 | 0,9956 | 0,9957 | 0,9959 | 0,9960 | 0,9961 | 0,9962 | 0,9963 | 0,9964 |
+    | **2,7** | 0,9965 | 0,9966 | 0,9967 | 0,9968 | 0,9969 | 0,9970 | 0,9971 | 0,9972 | 0,9973 | 0,9974 |
+    | **2,8** | 0,9974 | 0,9975 | 0,9976 | 0,9977 | 0,9977 | 0,9978 | 0,9979 | 0,9979 | 0,9980 | 0,9981 |
+    | **2,9** | 0,9981 | 0,9982 | 0,9982 | 0,9983 | 0,9984 | 0,9984 | 0,9985 | 0,9985 | 0,9986 | 0,9986 |
+    | **3,0** | 0,9987 | 0,9987 | 0,9987 | 0,9988 | 0,9988 | 0,9989 | 0,9989 | 0,9989 | 0,9990 | 0,9990 |
+
+La tabella contiene soltanto i valori di $z$ positivi. Per quelli negativi si usa la **simmetria** della campana attorno allo zero: l’area a sinistra di $-z$ è uguale all’area a destra di $+z$. L’area a destra di $z$ è $1-\Phi(z)$, quindi
+
+$$
+\Phi(-z)=1-\Phi(z).
+$$
+
+Per esempio, $\Phi(-1)=1-\Phi(1)=1-0{,}8413=0{,}1587$. Con la tabella e la simmetria possiamo calcolare qualunque probabilità della normale standard. Ecco tre esempi, presi dal libro di Baron:
+
+$$
+P(Z<1{,}35)=\Phi(1{,}35)=0{,}9115,\qquad P(Z>1{,}35)=1-\Phi(1{,}35)=0{,}0885,
+$$
+
+$$
+P(-0{,}77<Z<1{,}35)=\Phi(1{,}35)-\Phi(-0{,}77)=0{,}9115-(1-0{,}7794)=0{,}9115-0{,}2206=0{,}6909.
+$$
+
+Nell’ultimo conto abbiamo usato la regola $F(b)-F(a)$ dell’Atto IV e poi la simmetria per $\Phi(-0{,}77)$.
+
+Resta un problema: la tabella è per la normale **standard**, e le altezze hanno media 170 e deviazione standard 10. Servirebbe una tabella diversa per ogni coppia di parametri, cioè infinite tabelle. Il prossimo paragrafo mostra che non è necessario: una tabella sola basta per tutte.
+
+### Standardizzare {: #standardizzazione }
+
+La chiave è una proprietà della distribuzione normale: **una trasformazione lineare di una variabile normale è ancora normale**. Se $X\sim\mathcal{N}(\mu,\sigma^2)$ e costruiamo la nuova variabile $Y=aX+b$, con $a$ e $b$ numeri fissati e $a\ne0$, allora
+
+$$
+Y=aX+b\sim\mathcal{N}\big(a\mu+b,\ a^2\sigma^2\big).
+$$
+
+Due parti di questo enunciato le conosciamo già. La media di $Y$ viene dalla linearità del valore atteso ([Settimana 4](../settimana_04/index.md#linearita)): $\mathbb{E}[aX+b]=a\,\mathbb{E}[X]+b=a\mu+b$. La varianza viene dalla regola $\operatorname{Var}(aX+b)=a^2\operatorname{Var}(X)=a^2\sigma^2$, che abbiamo visto a lezione nella Settimana 5 e che si capisce così: aggiungere $b$ sposta tutti i valori e la loro media della stessa quantità, quindi le distanze dalla media non cambiano; moltiplicare per $a$ moltiplica ogni distanza per $a$, e il suo quadrato per $a^2$. La parte nuova, che non dimostriamo, è che la forma resta quella di una campana: spostare e cambiare scala a una distribuzione normale dà ancora una distribuzione normale.
+
+Ora usiamo la proprietà con una trasformazione lineare scelta apposta. Partiamo da $X\sim\mathcal{N}(\mu,\sigma^2)$ e prendiamo
+
+$$
+a=\frac1\sigma,\qquad b=-\frac{\mu}{\sigma},\qquad\text{cioè}\qquad Z=aX+b=\frac{X-\mu}{\sigma}.
+$$
+
+Per la proprietà appena vista, $Z$ è normale, con media $a\mu+b=\frac{\mu}{\sigma}-\frac{\mu}{\sigma}=0$ e varianza $a^2\sigma^2=\frac{\sigma^2}{\sigma^2}=1$:
+
+$$
+X\sim\mathcal{N}(\mu,\sigma^2)\quad\Longrightarrow\quad Z=\frac{X-\mu}{\sigma}\sim\mathcal{N}(0,1).
+$$
+
+È proprio la normale standard. Questa operazione si chiama **standardizzazione**, e ha un significato semplice. Sottrarre $\mu$ sposta il centro in zero; dividere per $\sigma$ cambia l’unità di misura, come passare dai centimetri ai «metri» di una nuova scala in cui una deviazione standard vale 1. Il numero
+
+$$
+z=\frac{x-\mu}{\sigma}
+$$
+
+dice di quante deviazioni standard il valore $x$ si trova sopra la media (se $z>0$) o sotto (se $z<0$). Per le altezze, 180 cm corrisponde a $z=(180-170)/10=1$, una deviazione standard sopra la media; 150 cm a $z=-2$, due deviazioni standard sotto; 170 cm a $z=0$.
+
+Ora trasferiamo le probabilità. Vogliamo $P(X<x)$ per una soglia $x$ qualsiasi. Una disuguaglianza resta vera se sottraiamo lo stesso numero da entrambi i lati, e resta vera se dividiamo entrambi i lati per lo stesso numero positivo. Quindi prima sottraiamo $\mu$, poi dividiamo per $\sigma$, che è positivo:
+
+$$
+P(X<x)=P(X-\mu<x-\mu)=P\left(\frac{X-\mu}{\sigma}<\frac{x-\mu}{\sigma}\right)=P\left(Z<\frac{x-\mu}{\sigma}\right).
+$$
+
+L’evento «$X<x$» e l’evento «$Z<(x-\mu)/\sigma$» sono lo stesso evento scritto in due unità di misura diverse, quindi hanno la stessa probabilità. E quest’ultima è un valore della funzione di ripartizione della normale standard, che leggiamo nella tabella:
+
+$$
+\boxed{F(x)=P(X\le x)=\Phi\left(\frac{x-\mu}{\sigma}\right).}
+$$
+
+Riassumiamo il ragionamento, perché è il cuore della seconda parte. Con una trasformazione lineare opportuna possiamo trasformare qualsiasi variabile normale nella normale standard. Le probabilità della variabile originale si trasferiscono immutate ai valori corrispondenti della variabile standardizzata. Quindi basta applicare la trasformazione alle soglie e leggere le probabilità nella tabella di $\Phi$, calcolata una volta per tutte.
+
+<figure markdown="0">
+<svg viewBox="0 0 580 268" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="Campana delle altezze con media 170 centimetri e deviazione standard 10. Sotto l’asse in centimetri, da 140 a 200, c’è un secondo asse in deviazioni standard, da meno 3 a più 3: 180 centimetri corrisponde a z uguale a 1. L’area a destra di 180, colorata, vale 1 meno Phi di 1, circa 0,1587.">
+<text x="290.0" y="18.0" text-anchor="middle" fill="currentColor" font-weight="bold">Standardizzare: lo stesso punto su due righelli</text>
+<polygon points="361.4,170 361.4,91.4 363.7,93.8 365.9,96.3 368.1,98.7 370.4,101.1 372.6,103.6 374.8,105.9 377.1,108.3 379.3,110.6 381.5,112.9 383.8,115.2 386.0,117.4 388.2,119.6 390.4,121.8 392.7,123.9 394.9,125.9 397.1,127.9 399.4,129.9 401.6,131.7 403.8,133.6 406.1,135.4 408.3,137.1 410.5,138.8 412.8,140.4 415.0,142.0 417.2,143.5 419.5,144.9 421.7,146.3 423.9,147.6 426.2,148.9 428.4,150.2 430.6,151.3 432.9,152.5 435.1,153.5 437.3,154.5 439.6,155.5 441.8,156.4 444.0,157.3 446.2,158.2 448.5,158.9 450.7,159.7 452.9,160.4 455.2,161.1 457.4,161.7 459.6,162.3 461.9,162.8 464.1,163.4 466.3,163.8 468.6,164.3 470.8,164.7 473.0,165.1 475.3,165.5 477.5,165.9 479.7,166.2 482.0,166.5 484.2,166.8 486.4,167.0 488.7,167.3 490.9,167.5 493.1,167.7 495.4,167.9 497.6,168.1 499.8,168.3 502.1,168.4 504.3,168.6 506.5,168.7 508.8,168.8 511.0,168.9 513.2,169.0 515.4,169.1 517.7,169.2 519.9,169.3 522.1,169.3 524.4,169.4 526.6,169.5 528.8,169.5 531.1,169.6 533.3,169.6 535.5,169.6 537.8,169.7 540.0,169.7 540.0,170" fill="#2e9e5b" opacity="0.5"/>
+<polyline points="40.0,169.7 43.1,169.7 46.2,169.6 49.4,169.6 52.5,169.5 55.6,169.4 58.8,169.3 61.9,169.2 65.0,169.1 68.1,169.0 71.2,168.8 74.4,168.6 77.5,168.4 80.6,168.2 83.8,168.0 86.9,167.7 90.0,167.4 93.1,167.1 96.2,166.7 99.4,166.3 102.5,165.9 105.6,165.4 108.8,164.8 111.9,164.2 115.0,163.6 118.1,162.8 121.2,162.0 124.4,161.2 127.5,160.3 130.6,159.2 133.8,158.2 136.9,157.0 140.0,155.7 143.1,154.3 146.2,152.9 149.4,151.3 152.5,149.7 155.6,147.9 158.8,146.0 161.9,144.1 165.0,142.0 168.1,139.8 171.2,137.4 174.4,135.0 177.5,132.5 180.6,129.9 183.8,127.1 186.9,124.3 190.0,121.3 193.1,118.3 196.2,115.2 199.4,112.0 202.5,108.8 205.6,105.5 208.8,102.1 211.9,98.7 215.0,95.3 218.1,91.9 221.2,88.4 224.4,85.0 227.5,81.6 230.6,78.2 233.8,74.9 236.9,71.7 240.0,68.5 243.1,65.5 246.2,62.5 249.4,59.7 252.5,57.0 255.6,54.5 258.8,52.2 261.9,50.0 265.0,48.0 268.1,46.3 271.2,44.7 274.4,43.4 277.5,42.3 280.6,41.5 283.8,40.8 286.9,40.5 290.0,40.3 293.1,40.5 296.2,40.8 299.4,41.5 302.5,42.3 305.6,43.4 308.8,44.7 311.9,46.3 315.0,48.0 318.1,50.0 321.2,52.2 324.4,54.5 327.5,57.0 330.6,59.7 333.8,62.5 336.9,65.5 340.0,68.5 343.1,71.7 346.2,74.9 349.4,78.2 352.5,81.6 355.6,85.0 358.8,88.4 361.9,91.9 365.0,95.3 368.1,98.7 371.2,102.1 374.4,105.5 377.5,108.8 380.6,112.0 383.8,115.2 386.9,118.3 390.0,121.3 393.1,124.3 396.2,127.1 399.4,129.9 402.5,132.5 405.6,135.0 408.8,137.4 411.9,139.8 415.0,142.0 418.1,144.1 421.2,146.0 424.4,147.9 427.5,149.7 430.6,151.3 433.8,152.9 436.9,154.3 440.0,155.7 443.1,157.0 446.2,158.2 449.4,159.2 452.5,160.3 455.6,161.2 458.8,162.0 461.9,162.8 465.0,163.6 468.1,164.2 471.2,164.8 474.4,165.4 477.5,165.9 480.6,166.3 483.8,166.7 486.9,167.1 490.0,167.4 493.1,167.7 496.2,168.0 499.4,168.2 502.5,168.4 505.6,168.6 508.8,168.8 511.9,169.0 515.0,169.1 518.1,169.2 521.2,169.3 524.4,169.4 527.5,169.5 530.6,169.6 533.8,169.6 536.9,169.7 540.0,169.7" fill="none" stroke="#e07a1f" stroke-width="3"/>
+<line x1="40" y1="170" x2="540" y2="170" stroke="currentColor"/>
+<line x1="75.7" y1="170" x2="75.7" y2="174" stroke="currentColor"/><text x="75.7" y="187" text-anchor="middle" fill="currentColor" font-size="11">140</text>
+<line x1="147.1" y1="170" x2="147.1" y2="174" stroke="currentColor"/><text x="147.1" y="187" text-anchor="middle" fill="currentColor" font-size="11">150</text>
+<line x1="218.6" y1="170" x2="218.6" y2="174" stroke="currentColor"/><text x="218.6" y="187" text-anchor="middle" fill="currentColor" font-size="11">160</text>
+<line x1="290.0" y1="170" x2="290.0" y2="174" stroke="currentColor"/><text x="290.0" y="187" text-anchor="middle" fill="currentColor" font-size="11">170</text>
+<line x1="361.4" y1="170" x2="361.4" y2="174" stroke="currentColor"/><text x="361.4" y="187" text-anchor="middle" fill="currentColor" font-size="11">180</text>
+<line x1="432.9" y1="170" x2="432.9" y2="174" stroke="currentColor"/><text x="432.9" y="187" text-anchor="middle" fill="currentColor" font-size="11">190</text>
+<line x1="504.3" y1="170" x2="504.3" y2="174" stroke="currentColor"/><text x="504.3" y="187" text-anchor="middle" fill="currentColor" font-size="11">200</text>
+<text x="540.0" y="205.0" text-anchor="end" fill="currentColor" font-size="11">altezza x (cm)</text>
+<line x1="40" y1="232" x2="540" y2="232" stroke="#4051b5"/>
+<line x1="75.7" y1="232" x2="75.7" y2="236" stroke="#4051b5"/><text x="75.7" y="249.0" text-anchor="middle" fill="#4051b5" font-size="11">−3</text>
+<line x1="75.7" y1="192" x2="75.7" y2="229" stroke="currentColor" stroke-dasharray="1 3" opacity="0.5"/>
+<line x1="147.1" y1="232" x2="147.1" y2="236" stroke="#4051b5"/><text x="147.1" y="249.0" text-anchor="middle" fill="#4051b5" font-size="11">−2</text>
+<line x1="147.1" y1="192" x2="147.1" y2="229" stroke="currentColor" stroke-dasharray="1 3" opacity="0.5"/>
+<line x1="218.6" y1="232" x2="218.6" y2="236" stroke="#4051b5"/><text x="218.6" y="249.0" text-anchor="middle" fill="#4051b5" font-size="11">−1</text>
+<line x1="218.6" y1="192" x2="218.6" y2="229" stroke="currentColor" stroke-dasharray="1 3" opacity="0.5"/>
+<line x1="290.0" y1="232" x2="290.0" y2="236" stroke="#4051b5"/><text x="290.0" y="249.0" text-anchor="middle" fill="#4051b5" font-size="11">0</text>
+<line x1="290.0" y1="192" x2="290.0" y2="229" stroke="currentColor" stroke-dasharray="1 3" opacity="0.5"/>
+<line x1="361.4" y1="232" x2="361.4" y2="236" stroke="#4051b5"/><text x="361.4" y="249.0" text-anchor="middle" fill="#4051b5" font-size="11">1</text>
+<line x1="361.4" y1="192" x2="361.4" y2="229" stroke="currentColor" stroke-dasharray="1 3" opacity="0.5"/>
+<line x1="432.9" y1="232" x2="432.9" y2="236" stroke="#4051b5"/><text x="432.9" y="249.0" text-anchor="middle" fill="#4051b5" font-size="11">2</text>
+<line x1="432.9" y1="192" x2="432.9" y2="229" stroke="currentColor" stroke-dasharray="1 3" opacity="0.5"/>
+<line x1="504.3" y1="232" x2="504.3" y2="236" stroke="#4051b5"/><text x="504.3" y="249.0" text-anchor="middle" fill="#4051b5" font-size="11">3</text>
+<line x1="504.3" y1="192" x2="504.3" y2="229" stroke="currentColor" stroke-dasharray="1 3" opacity="0.5"/>
+<text x="540.0" y="264.0" text-anchor="end" fill="#4051b5" font-size="11">z = (x − 170)/10</text>
+<line x1="361.4" y1="61.4" x2="361.4" y2="232" stroke="#2e9e5b" stroke-width="2"/>
+<text x="369.4" y="61.4" text-anchor="start" fill="#2e9e5b" font-size="12" font-weight="bold">180 cm ↔ z = 1</text>
+<text x="432.9" y="150.5" text-anchor="start" fill="#2e9e5b" font-size="12" font-weight="bold">1 − Φ(1) ≈ 0,1587</text>
+</svg>
+<figcaption>Il secondo righello misura le distanze dalla media in deviazioni standard. 180 cm sta una deviazione standard sopra la media, e l’area a destra è la stessa nei due righelli: 1 − Φ(1) ≈ 0,1587.</figcaption>
+</figure>
+
+Torniamo alla domanda delle altezze. Il modo non conveniente era calcolare l’integrale della densità con $\mu=170$ e $\sigma=10$. Il modo conveniente è standardizzare la soglia:
+
+$$
+P(X>180)=1-P(X\le180)=1-\Phi\left(\frac{180-170}{10}\right)=1-\Phi(1)=1-0{,}8413=0{,}1587.
+$$
+
+Circa una persona su sei è più alta di 180 cm. Il procedimento ha sempre gli stessi tre passi: **standardizzare le soglie, leggere $\Phi$ nella tabella, usare il complemento o la differenza se serve**.
+
+Vediamo un secondo esempio con un intervallo, ripreso dal libro di Baron. Il reddito medio delle famiglie di un certo paese è di 900 monete, con deviazione standard di 200 monete, e supponiamo che i redditi seguano una distribuzione normale. Quale frazione delle famiglie appartiene alla «classe media», cioè ha un reddito compreso tra 600 e 1200 monete? Standardizziamo le due soglie, $(600-900)/200=-1{,}5$ e $(1200-900)/200=1{,}5$, e usiamo la differenza e poi la simmetria:
+
+$$
+P(600<X<1200)=\Phi(1{,}5)-\Phi(-1{,}5)=0{,}9332-(1-0{,}9332)=0{,}9332-0{,}0668=0{,}8664.
+$$
+
+Circa l’87% delle famiglie appartiene alla classe media.
+
+!!! example "Sosta di verifica"
+    Con le altezze $X\sim\mathcal{N}(\mu=170,\ \sigma^2=100)$, calcola la probabilità che una persona sia più bassa di 155 cm e quella che sia alta tra 165 e 185 cm.
+
+    ??? esempio-svolto "Risposta"
+        Per la prima, $z=(155-170)/10=-1{,}5$, quindi $P(X<155)=\Phi(-1{,}5)=1-\Phi(1{,}5)=1-0{,}9332=0{,}0668$. Per la seconda le soglie diventano $z=-0{,}5$ e $z=1{,}5$: $P(165<X<185)=\Phi(1{,}5)-\Phi(-0{,}5)=0{,}9332-(1-0{,}6915)=0{,}9332-0{,}3085=0{,}6247$.
+
+### La regola 68–95–99,7 {: #regola-empirica }
+
+Tre aree della normale standard vale la pena ricordarle, perché danno un’idea immediata di qualunque distribuzione normale. Standardizzando, il punto $\mu+k\sigma$ diventa $z=k$ e il punto $\mu-k\sigma$ diventa $z=-k$, quindi per ogni distribuzione normale
+
+$$
+\begin{aligned}
+P(\mu-\sigma<X<\mu+\sigma)&=\Phi(1)-\Phi(-1)\approx0{,}683,\\
+P(\mu-2\sigma<X<\mu+2\sigma)&=\Phi(2)-\Phi(-2)\approx0{,}954,\\
+P(\mu-3\sigma<X<\mu+3\sigma)&=\Phi(3)-\Phi(-3)\approx0{,}997.
+\end{aligned}
+$$
+
+Circa il 68% dei valori cade entro una deviazione standard dalla media, circa il 95% entro due, quasi tutti, il 99,7%, entro tre. Per questo la regola si chiama 68–95–99,7.
+
+<figure markdown="0">
+<svg viewBox="0 0 580 272" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="Campana normale con fasce colorate. Tra mu meno sigma e mu più sigma c’è il 68,27 per cento dell’area (34,13 per cento per lato); tra mu meno 2 sigma e mu più 2 sigma il 95,45 per cento; tra mu meno 3 sigma e mu più 3 sigma il 99,73 per cento. Le fasce esterne valgono 13,59 e 2,14 per cento per lato.">
+<text x="290.0" y="18.0" text-anchor="middle" fill="currentColor" font-weight="bold">Quanta area sta a 1, 2 e 3 deviazioni standard dal centro</text>
+<polygon points="81.7,230 81.7,228.3 82.5,228.3 83.4,228.2 84.3,228.1 85.1,228.1 86.0,228.0 86.9,227.9 87.7,227.8 88.6,227.8 89.5,227.7 90.3,227.6 91.2,227.5 92.1,227.4 93.0,227.3 93.8,227.2 94.7,227.1 95.6,227.0 96.4,226.9 97.3,226.8 98.2,226.7 99.0,226.6 99.9,226.5 100.8,226.3 101.6,226.2 102.5,226.1 103.4,226.0 104.2,225.8 105.1,225.7 106.0,225.5 106.8,225.4 107.7,225.2 108.6,225.1 109.4,224.9 110.3,224.7 111.2,224.6 112.0,224.4 112.9,224.2 113.8,224.0 114.7,223.8 115.5,223.6 116.4,223.4 117.3,223.2 118.1,223.0 119.0,222.8 119.9,222.6 120.7,222.3 121.6,222.1 122.5,221.9 123.3,221.6 124.2,221.3 125.1,221.1 125.9,220.8 126.8,220.5 127.7,220.3 128.5,220.0 129.4,219.7 130.3,219.4 131.1,219.1 132.0,218.8 132.9,218.4 133.8,218.1 134.6,217.8 135.5,217.4 136.4,217.1 137.2,216.7 138.1,216.3 139.0,215.9 139.8,215.6 140.7,215.2 141.6,214.8 142.4,214.4 143.3,213.9 144.2,213.5 145.0,213.1 145.9,212.6 146.8,212.2 147.6,211.7 148.5,211.2 149.4,210.7 150.2,210.3 151.1,209.8 151.1,230" fill="#4051b5" opacity="0.18"/>
+<polygon points="151.1,230 151.1,209.8 152.0,209.2 152.8,208.7 153.7,208.2 154.6,207.7 155.5,207.1 156.3,206.5 157.2,206.0 158.1,205.4 158.9,204.8 159.8,204.2 160.7,203.6 161.5,203.0 162.4,202.3 163.3,201.7 164.1,201.1 165.0,200.4 165.9,199.7 166.7,199.0 167.6,198.3 168.5,197.6 169.3,196.9 170.2,196.2 171.1,195.5 171.9,194.7 172.8,194.0 173.7,193.2 174.5,192.4 175.4,191.7 176.3,190.9 177.2,190.0 178.0,189.2 178.9,188.4 179.8,187.6 180.6,186.7 181.5,185.9 182.4,185.0 183.2,184.1 184.1,183.2 185.0,182.3 185.8,181.4 186.7,180.5 187.6,179.6 188.4,178.7 189.3,177.7 190.2,176.8 191.0,175.8 191.9,174.8 192.8,173.9 193.6,172.9 194.5,171.9 195.4,170.9 196.2,169.9 197.1,168.8 198.0,167.8 198.9,166.8 199.7,165.7 200.6,164.7 201.5,163.6 202.3,162.6 203.2,161.5 204.1,160.4 204.9,159.4 205.8,158.3 206.7,157.2 207.5,156.1 208.4,155.0 209.3,153.9 210.1,152.8 211.0,151.7 211.9,150.5 212.7,149.4 213.6,148.3 214.5,147.2 215.3,146.1 216.2,144.9 217.1,143.8 218.0,142.7 218.8,141.5 219.7,140.4 220.6,139.3 220.6,230" fill="#4051b5" opacity="0.32"/>
+<polygon points="220.6,230 220.6,139.3 221.4,138.1 222.3,137.0 223.2,135.9 224.0,134.7 224.9,133.6 225.8,132.5 226.6,131.3 227.5,130.2 228.4,129.1 229.2,128.0 230.1,126.9 231.0,125.8 231.8,124.7 232.7,123.6 233.6,122.5 234.4,121.4 235.3,120.3 236.2,119.2 237.0,118.1 237.9,117.1 238.8,116.0 239.7,115.0 240.5,113.9 241.4,112.9 242.3,111.9 243.1,110.9 244.0,109.9 244.9,108.9 245.7,107.9 246.6,106.9 247.5,106.0 248.3,105.0 249.2,104.1 250.1,103.2 250.9,102.3 251.8,101.4 252.7,100.5 253.5,99.7 254.4,98.8 255.3,98.0 256.1,97.2 257.0,96.4 257.9,95.6 258.8,94.8 259.6,94.1 260.5,93.3 261.4,92.6 262.2,91.9 263.1,91.2 264.0,90.6 264.8,89.9 265.7,89.3 266.6,88.7 267.4,88.1 268.3,87.5 269.2,87.0 270.0,86.5 270.9,85.9 271.8,85.5 272.6,85.0 273.5,84.6 274.4,84.1 275.2,83.7 276.1,83.4 277.0,83.0 277.8,82.7 278.7,82.4 279.6,82.1 280.5,81.8 281.3,81.6 282.2,81.3 283.1,81.1 283.9,81.0 284.8,80.8 285.7,80.7 286.5,80.6 287.4,80.5 288.3,80.4 289.1,80.4 290.0,80.4 290.0,230" fill="#4051b5" opacity="0.55"/>
+<polygon points="290.0,230 290.0,80.4 290.9,80.4 291.7,80.4 292.6,80.5 293.5,80.6 294.3,80.7 295.2,80.8 296.1,81.0 296.9,81.1 297.8,81.3 298.7,81.6 299.5,81.8 300.4,82.1 301.3,82.4 302.2,82.7 303.0,83.0 303.9,83.4 304.8,83.7 305.6,84.1 306.5,84.6 307.4,85.0 308.2,85.5 309.1,85.9 310.0,86.5 310.8,87.0 311.7,87.5 312.6,88.1 313.4,88.7 314.3,89.3 315.2,89.9 316.0,90.6 316.9,91.2 317.8,91.9 318.6,92.6 319.5,93.3 320.4,94.1 321.2,94.8 322.1,95.6 323.0,96.4 323.9,97.2 324.7,98.0 325.6,98.8 326.5,99.7 327.3,100.5 328.2,101.4 329.1,102.3 329.9,103.2 330.8,104.1 331.7,105.0 332.5,106.0 333.4,106.9 334.3,107.9 335.1,108.9 336.0,109.9 336.9,110.9 337.7,111.9 338.6,112.9 339.5,113.9 340.3,115.0 341.2,116.0 342.1,117.1 343.0,118.1 343.8,119.2 344.7,120.3 345.6,121.4 346.4,122.5 347.3,123.6 348.2,124.7 349.0,125.8 349.9,126.9 350.8,128.0 351.6,129.1 352.5,130.2 353.4,131.3 354.2,132.5 355.1,133.6 356.0,134.7 356.8,135.9 357.7,137.0 358.6,138.1 359.4,139.3 359.4,230" fill="#4051b5" opacity="0.55"/>
+<polygon points="359.4,230 359.4,139.3 360.3,140.4 361.2,141.5 362.0,142.7 362.9,143.8 363.8,144.9 364.7,146.1 365.5,147.2 366.4,148.3 367.3,149.4 368.1,150.5 369.0,151.7 369.9,152.8 370.7,153.9 371.6,155.0 372.5,156.1 373.3,157.2 374.2,158.3 375.1,159.4 375.9,160.4 376.8,161.5 377.7,162.6 378.5,163.6 379.4,164.7 380.3,165.7 381.1,166.8 382.0,167.8 382.9,168.8 383.8,169.9 384.6,170.9 385.5,171.9 386.4,172.9 387.2,173.9 388.1,174.8 389.0,175.8 389.8,176.8 390.7,177.7 391.6,178.7 392.4,179.6 393.3,180.5 394.2,181.4 395.0,182.3 395.9,183.2 396.8,184.1 397.6,185.0 398.5,185.9 399.4,186.7 400.2,187.6 401.1,188.4 402.0,189.2 402.8,190.0 403.7,190.9 404.6,191.7 405.5,192.4 406.3,193.2 407.2,194.0 408.1,194.7 408.9,195.5 409.8,196.2 410.7,196.9 411.5,197.6 412.4,198.3 413.3,199.0 414.1,199.7 415.0,200.4 415.9,201.1 416.7,201.7 417.6,202.3 418.5,203.0 419.3,203.6 420.2,204.2 421.1,204.8 421.9,205.4 422.8,206.0 423.7,206.5 424.5,207.1 425.4,207.7 426.3,208.2 427.2,208.7 428.0,209.2 428.9,209.8 428.9,230" fill="#4051b5" opacity="0.32"/>
+<polygon points="428.9,230 428.9,209.8 429.8,210.3 430.6,210.7 431.5,211.2 432.4,211.7 433.2,212.2 434.1,212.6 435.0,213.1 435.8,213.5 436.7,213.9 437.6,214.4 438.4,214.8 439.3,215.2 440.2,215.6 441.0,215.9 441.9,216.3 442.8,216.7 443.6,217.1 444.5,217.4 445.4,217.8 446.2,218.1 447.1,218.4 448.0,218.8 448.9,219.1 449.7,219.4 450.6,219.7 451.5,220.0 452.3,220.3 453.2,220.5 454.1,220.8 454.9,221.1 455.8,221.3 456.7,221.6 457.5,221.9 458.4,222.1 459.3,222.3 460.1,222.6 461.0,222.8 461.9,223.0 462.7,223.2 463.6,223.4 464.5,223.6 465.3,223.8 466.2,224.0 467.1,224.2 468.0,224.4 468.8,224.6 469.7,224.7 470.6,224.9 471.4,225.1 472.3,225.2 473.2,225.4 474.0,225.5 474.9,225.7 475.8,225.8 476.6,226.0 477.5,226.1 478.4,226.2 479.2,226.3 480.1,226.5 481.0,226.6 481.8,226.7 482.7,226.8 483.6,226.9 484.4,227.0 485.3,227.1 486.2,227.2 487.0,227.3 487.9,227.4 488.8,227.5 489.7,227.6 490.5,227.7 491.4,227.8 492.3,227.8 493.1,227.9 494.0,228.0 494.9,228.1 495.7,228.1 496.6,228.2 497.5,228.3 498.3,228.3 498.3,230" fill="#4051b5" opacity="0.18"/>
+<polyline points="40.0,229.8 43.1,229.7 46.2,229.7 49.4,229.6 52.5,229.6 55.6,229.5 58.8,229.4 61.9,229.3 65.0,229.2 68.1,229.1 71.3,229.0 74.4,228.8 77.5,228.6 80.6,228.4 83.8,228.2 86.9,227.9 90.0,227.6 93.1,227.3 96.2,226.9 99.4,226.5 102.5,226.1 105.6,225.6 108.7,225.0 111.9,224.4 115.0,223.7 118.1,223.0 121.3,222.2 124.4,221.3 127.5,220.3 130.6,219.3 133.8,218.1 136.9,216.8 140.0,215.5 143.1,214.0 146.2,212.4 149.4,210.7 152.5,208.9 155.6,207.0 158.8,204.9 161.9,202.7 165.0,200.4 168.1,197.9 171.2,195.3 174.4,192.6 177.5,189.7 180.6,186.7 183.8,183.6 186.9,180.3 190.0,177.0 193.1,173.5 196.2,169.9 199.4,166.2 202.5,162.4 205.6,158.5 208.8,154.5 211.9,150.5 215.0,146.5 218.1,142.4 221.3,138.4 224.4,134.3 227.5,130.2 230.6,126.2 233.8,122.2 236.9,118.3 240.0,114.6 243.1,110.9 246.2,107.3 249.4,103.9 252.5,100.7 255.6,97.6 258.8,94.8 261.9,92.2 265.0,89.8 268.1,87.6 271.2,85.8 274.4,84.1 277.5,82.8 280.6,81.8 283.8,81.0 286.9,80.5 290.0,80.4 293.1,80.5 296.2,81.0 299.4,81.8 302.5,82.8 305.6,84.1 308.8,85.8 311.9,87.6 315.0,89.8 318.1,92.2 321.2,94.8 324.4,97.6 327.5,100.7 330.6,103.9 333.8,107.3 336.9,110.9 340.0,114.6 343.1,118.3 346.2,122.2 349.4,126.2 352.5,130.2 355.6,134.3 358.8,138.4 361.9,142.4 365.0,146.5 368.1,150.5 371.3,154.5 374.4,158.5 377.5,162.4 380.6,166.2 383.8,169.9 386.9,173.5 390.0,177.0 393.1,180.3 396.3,183.6 399.4,186.7 402.5,189.7 405.6,192.6 408.8,195.3 411.9,197.9 415.0,200.4 418.1,202.7 421.2,204.9 424.4,207.0 427.5,208.9 430.6,210.7 433.8,212.4 436.9,214.0 440.0,215.5 443.1,216.8 446.2,218.1 449.4,219.3 452.5,220.3 455.6,221.3 458.8,222.2 461.9,223.0 465.0,223.7 468.1,224.4 471.2,225.0 474.4,225.6 477.5,226.1 480.6,226.5 483.8,226.9 486.9,227.3 490.0,227.6 493.1,227.9 496.2,228.2 499.4,228.4 502.5,228.6 505.6,228.8 508.8,229.0 511.9,229.1 515.0,229.2 518.1,229.3 521.2,229.4 524.4,229.5 527.5,229.6 530.6,229.6 533.8,229.7 536.9,229.7 540.0,229.8" fill="none" stroke="#e07a1f" stroke-width="3"/>
+<text x="116.4" y="262.0" text-anchor="middle" fill="currentColor" font-size="11">2,14%</text>
+<text x="185.8" y="262.0" text-anchor="middle" fill="currentColor" font-size="11">13,59%</text>
+<text x="255.3" y="262.0" text-anchor="middle" fill="currentColor" font-size="11">34,13%</text>
+<text x="324.7" y="262.0" text-anchor="middle" fill="currentColor" font-size="11">34,13%</text>
+<text x="394.2" y="262.0" text-anchor="middle" fill="currentColor" font-size="11">13,59%</text>
+<text x="463.6" y="262.0" text-anchor="middle" fill="currentColor" font-size="11">2,14%</text>
+<line x1="40" y1="230" x2="540" y2="230" stroke="currentColor"/>
+<line x1="81.7" y1="230" x2="81.7" y2="234" stroke="currentColor"/><text x="81.7" y="246" text-anchor="middle" fill="currentColor" font-size="11">μ − 3σ</text>
+<line x1="151.1" y1="230" x2="151.1" y2="234" stroke="currentColor"/><text x="151.1" y="246" text-anchor="middle" fill="currentColor" font-size="11">μ − 2σ</text>
+<line x1="220.6" y1="230" x2="220.6" y2="234" stroke="currentColor"/><text x="220.6" y="246" text-anchor="middle" fill="currentColor" font-size="11">μ − σ</text>
+<line x1="290.0" y1="230" x2="290.0" y2="234" stroke="currentColor"/><text x="290.0" y="246" text-anchor="middle" fill="currentColor" font-size="11">μ</text>
+<line x1="359.4" y1="230" x2="359.4" y2="234" stroke="currentColor"/><text x="359.4" y="246" text-anchor="middle" fill="currentColor" font-size="11">μ + σ</text>
+<line x1="428.9" y1="230" x2="428.9" y2="234" stroke="currentColor"/><text x="428.9" y="246" text-anchor="middle" fill="currentColor" font-size="11">μ + 2σ</text>
+<line x1="498.3" y1="230" x2="498.3" y2="234" stroke="currentColor"/><text x="498.3" y="246" text-anchor="middle" fill="currentColor" font-size="11">μ + 3σ</text>
+<line x1="220.6" y1="112" x2="359.4" y2="112" stroke="currentColor" stroke-width="1.3"/><line x1="220.6" y1="107" x2="220.6" y2="230" stroke="currentColor" stroke-dasharray="3 3" opacity="0.5"/><line x1="359.4" y1="107" x2="359.4" y2="230" stroke="currentColor" stroke-dasharray="3 3" opacity="0.5"/>
+<text x="290.0" y="106.0" text-anchor="middle" fill="currentColor" font-size="12" font-weight="bold">68,27%</text>
+<line x1="151.1" y1="82" x2="428.9" y2="82" stroke="currentColor" stroke-width="1.3"/><line x1="151.1" y1="77" x2="151.1" y2="230" stroke="currentColor" stroke-dasharray="3 3" opacity="0.5"/><line x1="428.9" y1="77" x2="428.9" y2="230" stroke="currentColor" stroke-dasharray="3 3" opacity="0.5"/>
+<text x="290.0" y="76.0" text-anchor="middle" fill="currentColor" font-size="12" font-weight="bold">95,45%</text>
+<line x1="81.7" y1="52" x2="498.3" y2="52" stroke="currentColor" stroke-width="1.3"/><line x1="81.7" y1="47" x2="81.7" y2="230" stroke="currentColor" stroke-dasharray="3 3" opacity="0.5"/><line x1="498.3" y1="47" x2="498.3" y2="230" stroke="currentColor" stroke-dasharray="3 3" opacity="0.5"/>
+<text x="290.0" y="46.0" text-anchor="middle" fill="currentColor" font-size="12" font-weight="bold">99,73%</text>
+</svg>
+<figcaption>La regola 68–95–99,7. Vale per ogni distribuzione normale, qualunque siano μ e σ, perché dipende solo da quante deviazioni standard ci si allontana dal centro.</figcaption>
+</figure>
+
+Per le altezze: circa due persone su tre sono alte tra 160 e 180 cm, il 95% tra 150 e 190 cm, quasi tutte tra 140 e 200 cm. La regola funziona anche al contrario, come strumento di controllo. Un valore che dista più di tre deviazioni standard dalla media, in una distribuzione normale, capita circa 3 volte su mille. Se lo vediamo spesso, o se vediamo valori a cinque deviazioni standard, che in una normale capitano circa 3 volte su 10 milioni, le spiegazioni possibili sono due: è successo un evento rarissimo, oppure **il modello è sbagliato**. Nella pratica, la seconda è molto più frequente.
+
+### Il problema inverso: da una probabilità a una soglia {: #quantili }
+
+Finora siamo partiti da una soglia e abbiamo cercato una probabilità. Sono problemi diretti. Molte applicazioni chiedono il contrario: data una probabilità, trovare la soglia corrispondente.
+
+Riprendiamo l’esempio dei redditi, sempre dal libro di Baron. Il governo decide di assegnare dei buoni alimentari al 3% delle famiglie più povere. Al di sotto di quale reddito le famiglie riceveranno i buoni? Dobbiamo trovare un reddito $x$ tale che $P(X<x)=0{,}03$. Standardizziamo come sempre:
+
+$$
+P(X<x)=\Phi\left(\frac{x-\mu}{\sigma}\right)=0{,}03.
+$$
+
+Ora leggiamo la tabella al contrario: cerchiamo il valore di $z$ per cui $\Phi(z)=0{,}03$. Poiché 0,03 è minore di 0,5, quel $z$ è negativo, e la tabella contiene solo i positivi; per simmetria cerchiamo allora il $z$ positivo con $\Phi(z)=1-0{,}03=0{,}97$, e troviamo $z\approx1{,}88$. Quindi $\Phi(-1{,}88)\approx0{,}03$. Infine torniamo nelle unità del reddito invertendo la standardizzazione: da $z=(x-\mu)/\sigma$ si ricava
+
+$$
+x=\mu+z\,\sigma=900+(-1{,}88)\cdot200=900-376=524\ \text{monete}.
+$$
+
+Le famiglie con un reddito inferiore a 524 monete riceveranno i buoni. Il procedimento è quello dei problemi diretti percorso all’indietro: prima si trova nella tabella il valore standard $z$, poi si destandardizza con $x=\mu+z\sigma$.
+
+La soglia che lascia sotto di sé una certa frazione dei valori si chiama **quantile**: 524 monete è il quantile al 3% della distribuzione dei redditi. Chi gestisce un servizio informatico fa lo stesso conto quando si chiede quale tempo di risposta viene superato solo dall’1% delle richieste: è il quantile al 99%, che nel gergo dei sistemi si chiama **p99**. Se il tempo di risposta fosse normale con media 200 ms e deviazione standard 20 ms, il p99 sarebbe $200+2{,}326\cdot20\approx246{,}5$ ms, perché $\Phi(2{,}326)\approx0{,}99$.
+
+Con il computer i conti diretti e inversi si fanno in una riga. In Python la libreria standard contiene già la distribuzione normale:
+
+```python
+from statistics import NormalDist
+
+altezze = NormalDist(mu=170, sigma=10)   # attenzione: sigma, non sigma^2
+print(1 - altezze.cdf(180))              # P(X > 180) = 0.1586...
+redditi = NormalDist(mu=900, sigma=200)
+print(redditi.inv_cdf(0.03))             # quantile al 3%: 523.8...
+```
+
+Lo stesso si fa con la libreria scientifica SciPy, con `scipy.stats.norm.cdf(180, loc=170, scale=10)` e `scipy.stats.norm.ppf(0.03, loc=900, scale=200)`. NB. In tutti questi casi il secondo parametro è la deviazione standard, non la varianza.
+
+### Quando la campana descrive bene i dati {: #normale-informatica }
+
+Perché la distribuzione normale compare così spesso? Gauss e De Moivre ci hanno lasciato un indizio: in entrambe le loro situazioni il risultato era la somma di tanti piccoli contributi indipendenti. È questa la situazione in cui la campana descrive bene i dati: una grandezza che nasce dalla **somma di molti piccoli disturbi indipendenti**, nessuno dei quali domina gli altri. L’errore di un sensore, il tempo di un benchmark ripetuto, l’errore di un orologio di sistema sono di questo tipo.
+
+In questi casi la regola 68–95–99,7 aiuta a capire se una misura rientra nell’ordinario o se è successo qualcosa. Prendiamo un benchmark che, ripetuto molte volte, dura in media 120 ms, con una deviazione standard di 3 ms. Per la regola, quasi tutte le esecuzioni, il 99,7%, durano tra $120-3\cdot3=111$ ms e $120+3\cdot3=129$ ms. Supponiamo ora che un giorno lo stesso benchmark duri 135 ms. Sono 15 ms sopra la media, cioè $15/3=5$ deviazioni standard: secondo il modello normale, un valore così lontano capita circa una volta su tre milioni e mezzo. Liquidarlo come un caso sfortunato non è ragionevole: è molto più probabile che qualcosa sia cambiato, per esempio un altro programma che occupava la macchina o una modifica al codice che l’ha rallentato, e vale la pena cercarne la causa.
+
+Non tutto, però, è normale. I tempi di risposta reali dei servizi web, per esempio, non sono mai negativi, sono asimmetrici e ogni tanto presentano valori molto grandi, per una pausa del garbage collector, un disco lento, una ritrasmissione. Prendiamo un servizio con un tempo di risposta medio di 200 ms e una deviazione standard di 20 ms, e supponiamo che arrivi una richiesta da 300 ms. Sono $100/20=5$ deviazioni standard sopra la media, proprio come il benchmark, e se i tempi fossero normali un valore così capiterebbe anche qui circa una volta su tre milioni e mezzo. Eppure chi osserva un servizio vero vede richieste da 300 ms tutti i giorni. Questa volta, però, la conclusione è diversa. Il benchmark lo avevamo ripetuto molte volte e sapevamo che la campana lo descriveva bene: un valore a cinque deviazioni standard era un’eccezione, e segnalava che qualcosa era cambiato. Qui invece i valori lontani non sono un’eccezione, perché si ripetono di continuo. A sbagliare è la campana, che non descrive la parte destra dei dati. Si dice che la distribuzione vera ha una **coda pesante**: i valori molto grandi restano rari, ma sono molto meno rari di quanto prevede la distribuzione normale.
+
+La conseguenza pratica riguarda i quantili. Nella sezione precedente abbiamo calcolato il p99 di questo servizio come se i tempi fossero normali, e abbiamo ottenuto $200+2{,}326\cdot20\approx246{,}5$ ms. Con una coda pesante quel numero è troppo ottimista. Le slide lo mostrano con una distribuzione costruita per l’esempio, con lo stesso centro, in cui 95 richieste su 100 seguono la campana e le altre 5 subiscono un’attesa lunga. Con questa distribuzione una richiesta da 300 ms capita circa una volta su 60, e il p99 sale a circa 335 ms: quasi 90 ms in più di quanto prometteva la campana. Per questo chi gestisce sistemi in produzione non calcola i quantili con $\mu+z\sigma$, ma li misura direttamente sui dati. Mette in ordine i tempi di risposta osservati, per esempio quelli dell’ultima ora, e legge il tempo che viene superato soltanto da una richiesta su cento: è il p99 osservato. Allo stesso modo si ottengono il p50, la mediana, e il p95. Per misurarli non serve nessun modello, e per questo restano affidabili anche quando la campana non lo è.
+
+Il confronto tra i due numeri è anche un controllo del modello. Se il p99 dei dati è vicino ai 246 ms della campana, la campana descrive bene anche la coda; se è molto più grande, come succede di solito con i tempi di risposta, almeno per la coda la campana va abbandonata. Come per la distribuzione di Poisson ([Settimana 5, §19](../settimana_05/index.md#sovradispersione)), il modello va controllato sui dati: un istogramma, il confronto tra i quantili osservati e quelli della campana, o il conteggio dei valori oltre $3\sigma$ dicono subito se la campana è credibile.
+
+C’è una battuta che il matematico Henri Poincaré riporta nel suo *Calcul des probabilités* e attribuisce al fisico Gabriel Lippmann: tutti credono nella legge normale degli errori, «gli sperimentatori perché pensano che sia un teorema di matematica, i matematici perché pensano che sia un fatto sperimentale». La battuta funziona perché ciascuno dei due gruppi si fida della campana pensando che a garantirla sia l’altro: lo sperimentatore si affida al matematico, il matematico allo sperimentatore, e così nessuno dei due l’ha davvero controllata. Dietro lo scherzo c’è un punto serio. La matematica garantisce la campana solo in una situazione precisa, quella vista sopra: una grandezza che nasce dalla somma di tanti piccoli effetti indipendenti. In tutti gli altri casi la campana è un’ipotesi, e per sapere se è credibile bisogna guardare i dati, come abbiamo visto con i tempi di risposta dei servizi web.
+
+### Laboratorio: la campana nasce dagli errori {: #lab-normale }
+
+Il secondo script ripete in piccolo l’idea di Gauss e di De Moivre. Ogni misura è disturbata da **50 piccoli errori indipendenti**, ciascuno distribuito uniformemente tra $-0{,}1$ e $+0{,}1$: nessuno di loro, da solo, ha la forma di una campana. L’errore totale è la loro somma. Lo script disegna l’istogramma di 20 000 errori totali, ci sovrappone la distribuzione normale con la stessa media e la stessa deviazione standard, controlla la regola 68–95–99,7 e infine rifà con `NormalDist` i conti delle altezze e dei redditi.
+
+<div class="psi-exec" markdown="1">
+```python
+from statistics import NormalDist
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+rng = np.random.default_rng(1801)   # l'anno di Cerere
+
+# Ogni misura = valore vero + 50 piccoli errori indipendenti,
+# ciascuno uniforme tra -0,1 e +0,1 (vibrazioni, lettura, aria...).
+N_MISURE, N_ERRORI = 20_000, 50
+errori = rng.uniform(-0.1, 0.1, size=(N_MISURE, N_ERRORI))
+scarto = errori.sum(axis=1)          # errore totale di ogni misura
+
+mu, sigma = scarto.mean(), scarto.std()
+print(f"media degli errori: {mu:+.4f}   sigma: {sigma:.4f}")
+for k in [1, 2, 3]:
+    dentro = np.mean(np.abs(scarto - mu) < k * sigma)
+    print(f"entro {k} sigma: {dentro:.3f}")
+
+# La campana con la stessa media e la stessa sigma.
+x = np.linspace(-1.6, 1.6, 400)
+campana = [NormalDist(mu, sigma).pdf(v) for v in x]
+plt.hist(scarto, bins=60, density=True, alpha=0.6,
+         label="Errori simulati")
+plt.plot(x, campana, label="Normale con stessa media e sigma")
+plt.xlabel("Errore totale di una misura")
+plt.ylabel("Densità")
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+# Calcoli con la distribuzione normale.
+altezze = NormalDist(mu=170, sigma=10)
+redditi = NormalDist(mu=900, sigma=200)
+print(f"P(altezza > 180 cm)       = {1 - altezze.cdf(180):.4f}")
+print(f"P(600 < reddito < 1200)   = {redditi.cdf(1200) - redditi.cdf(600):.4f}")
+print(f"soglia dei buoni (3%)     = {redditi.inv_cdf(0.03):.1f} monete")
+```
+</div>
+
+Lo script trova una deviazione standard di circa 0,41 e frazioni entro una, due e tre deviazioni standard vicine a 0,68, 0,95 e 0,997: la regola della campana, anche se nessun singolo errore era a campana. Poi stampa 0,1587, 0,8664 e circa 523,8 monete; la differenza con il 524 del conto a mano viene dall’aver arrotondato $z$ a $-1{,}88$. Prova a sostituire `N_ERRORI = 50` con `N_ERRORI = 2`: l’istogramma diventa un triangolo, e la campana lo descrive male. Servono **tanti** piccoli contributi. Il perché lo vedremo con il Teorema del Limite Centrale, nella Settimana 9.
 
 ## Lettura A — Il paradosso di Bertrand, con i conti {: #bertrand-esteso .psi-facoltativo }
 
-*In arrivo…*
+Questa lettura è facoltativa. Riprende i tre ragionamenti dell’Atto I con i conti completi e li verifica con una simulazione.
+
+Prendiamo un cerchio di raggio 1. Il triangolo equilatero inscritto ha lato $\sqrt3\approx1{,}732$, e la distanza dei suoi lati dal centro, cioè il raggio del cerchio inscritto nel triangolo, è $1/2$.
+
+Un fatto geometrico unisce i tre metodi. Una corda che dista $d$ dal centro ha lunghezza $2\sqrt{1-d^2}$. Infatti metà corda, la distanza $d$ e il raggio formano un triangolo rettangolo, con il raggio come ipotenusa, e il teorema di Pitagora dà $(\text{metà corda})^2=1-d^2$. La corda è più lunga del lato quando $2\sqrt{1-d^2}>\sqrt3$, cioè quando $1-d^2>3/4$, cioè quando $d<1/2$. In tutti e tre i metodi la corda è lunga esattamente quando il suo punto medio dista dal centro meno di $1/2$; ciò che cambia è la distribuzione di quella distanza.
+
+Nel primo metodo fissiamo il primo estremo $A$, e il secondo cade in un punto uniforme della circonferenza. Il triangolo con un vertice in $A$ ha gli altri due vertici che, insieme ad $A$, dividono la circonferenza in tre archi uguali. La corda supera il lato solo se il secondo estremo cade nell’arco opposto ad $A$, che è un terzo della circonferenza: la probabilità è $1/3$.
+
+Nel secondo metodo, fissata la direzione, la distanza $d$ del punto medio dal centro è uniforme tra 0 e 1. Serve $d<1/2$, e per la distribuzione uniforme dell’Atto III la probabilità è $(1/2-0)/(1-0)=1/2$.
+
+Nel terzo metodo il punto medio è uniforme nel disco, cioè la probabilità di una regione è proporzionale alla sua area. Serve $d<1/2$: il punto medio deve cadere nel disco di raggio $1/2$, che ha area $\pi/4$ contro l’area $\pi$ del disco intero. La probabilità è $1/4$.
+
+Prima della corda, Bertrand propone un esempio ancora più semplice (p. 4). Scegliamo «a caso» un numero tra 0 e 100: la probabilità che superi 50 sembra $1/2$. Ma scegliere il numero equivale a sceglierne il quadrato, tra 0 e 10 000; e il numero supera 50 esattamente quando il quadrato supera 2500. Se è il **quadrato** a essere uniforme, la probabilità è $7500/10\,000=3/4$. «I due problemi sono identici», scrive Bertrand. «Da dove viene la differenza delle risposte? Gli enunciati mancano di precisione.» Dire «uniforme» richiede di dire su quale grandezza.
+
+Lo script seguente genera 50 000 corde con ciascun metodo e conta quelle più lunghe di $\sqrt3$.
+
+<div class="psi-exec" markdown="1">
+```python
+import random
+from math import cos, pi, sin, sqrt
+
+random.seed(1889)            # l'anno del libro di Bertrand
+N = 50_000                   # corde per ciascun metodo
+LATO = sqrt(3)               # lato del triangolo inscritto (raggio 1)
+
+
+def corda_estremi():
+    """Metodo 1: due punti scelti a caso sulla circonferenza."""
+    a = random.uniform(0, 2 * pi)
+    b = random.uniform(0, 2 * pi)
+    # Distanza tra due punti del cerchio di raggio 1.
+    return sqrt((cos(a) - cos(b)) ** 2 + (sin(a) - sin(b)) ** 2)
+
+
+def corda_raggio():
+    """Metodo 2: distanza del punto medio dal centro, uniforme su [0, 1]."""
+    d = random.uniform(0, 1)
+    return 2 * sqrt(1 - d * d)  # Pitagora: metà corda = sqrt(1 - d^2)
+
+
+def corda_punto_medio():
+    """Metodo 3: punto medio uniforme dentro il disco."""
+    while True:
+        # Punto uniforme nel quadrato; teniamo solo quelli nel disco.
+        x, y = random.uniform(-1, 1), random.uniform(-1, 1)
+        if x * x + y * y <= 1:
+            return 2 * sqrt(1 - (x * x + y * y))
+
+
+for nome, metodo, teoria in [("estremi a caso", corda_estremi, 1 / 3),
+                             ("raggio a caso", corda_raggio, 1 / 2),
+                             ("punto medio a caso", corda_punto_medio,
+                              1 / 4)]:
+    lunghe = sum(metodo() > LATO for _ in range(N))
+    print(f"{nome:20s} frequenza {lunghe / N:.3f}"
+          f"   teoria {teoria:.3f}")
+```
+</div>
+
+Le tre frequenze sono vicine a 0,333, 0,500 e 0,250. Nessuno dei tre generatori sbaglia: producono tre distribuzioni diverse di corde. In un programma la domanda di Bertrand si traduce così: quale procedura di campionamento sto usando? Chi genera punti «a caso» in un cerchio scegliendo raggio e angolo uniformi, per esempio, li addensa vicino al centro senza volerlo: è lo stesso scarto che separa il secondo metodo dal terzo.
 
 ## Lettura B — Jaynes: quali trasformazioni lasciano lo stesso problema? {: #jaynes-invarianze .psi-facoltativo }
 
-*In arrivo…*
+Questa lettura è facoltativa. Riprende l’argomento di E. T. Jaynes nell’articolo [*The Well-Posed Problem* (1973)](https://bayes.wustl.edu/etj/articles/well.pdf), §§ 2–6, ma lo racconta senza i conti: l’esperimento lo fa l’animazione. La domanda è una sola: quali delle tre ricette di Bertrand continuano a descrivere le stesse corde quando il cerchio viene ruotato, rimpicciolito o spostato?
 
-## Lettura C — Gauss e i minimi quadrati {: #minimi-quadrati .psi-facoltativo }
+### La stessa informazione richiede la stessa assegnazione
 
-*In arrivo…*
+L’idea di Jaynes è una richiesta di coerenza: **se una trasformazione non cambia l’informazione disponibile, non deve cambiare nemmeno la probabilità**. Per un dado che supponiamo equilibrato, scambiare le etichette delle facce non introduce alcuna distinzione: tutte le facce devono avere la stessa probabilità, e la somma 1 impone $1/6$. La simmetria non dimostra che il dado è equilibrato; dice che cosa segue dall’assumerlo. Con le corde la domanda diventa: quali simmetrie del cerchio vogliamo che la nostra ricetta rispetti?
+
+### Uno stesso insieme di rette, cerchi diversi
+
+Jaynes immagina di lanciare sul piano cannucce molto lunghe e di guardare, ogni volta, soltanto quelle che attraversano un cerchio. Le cannucce sono le rette, la parte interna al cerchio è la corda, e il cerchio è il filtro che decide quali rette entrano nel conto. Ogni confronto avviene fra distribuzioni **condizionate all’intersezione**: le stesse rette, osservate attraverso cerchi diversi.
+
+Il punto delicato è che cosa resta fermo. Se rigenerassimo le corde con la stessa ricetta su ogni cerchio, ogni ricetta restituirebbe sempre la sua probabilità di partenza e non ci sarebbe niente da confrontare. La materia prima sono le rette; il cerchio è solo il modo di guardarle.
+
+### Rotazione: le tre ricette sopravvivono
+
+Per descrivere una retta rispetto al centro bastano due numeri: la **direzione** e la **distanza**, contata con un segno che dice da che parte passa. Ruotare attorno al centro cambia la direzione e lascia la distanza; la lunghezza della corda dipende solo dalla distanza, quindi nessuna corda si allunga o si accorcia. La rotazione si limita a girare il disegno.
+
+Nessuna delle tre ricette preferisce una direzione all’altra, quindi tutte e tre sopravvivono: nell’animazione le percentuali restano $1/3$, $1/2$ e $1/4$ a ogni angolo. La rotazione non serve a scegliere fra loro, ed è già un risultato: elimina un criterio che sembrava ovvio.
+
+### Scala: la ricetta degli estremi non sopravvive
+
+Prendiamo un cerchio concentrico più piccolo e teniamo le stesse rette. Due ricette non se ne accorgono. La distanza uniforme pesa tutte le distanze allo stesso modo, e un peso costante resta costante in ogni intervallo che si ritaglia. Il punto medio uniforme resta uniforme perché i dischi concentrici stanno uno dentro l’altro: le corde del cerchio grande che entrano in quello piccolo hanno i punti medi uniformi nel disco piccolo, esattamente come prescrive la ricetta. Nell’animazione, infatti, $1/2$ e $1/4$ non si muovono.
+
+La ricetta degli estremi invece cambia. Le corde del cerchio grande che passano anche nel cerchio piccolo sono quelle che sfiorano il centro: uniscono punti quasi opposti della circonferenza grande. Viste dal cerchio piccolo hanno gli estremi quasi diametralmente opposti, mentre due estremi scelti a caso sul cerchio piccolo formano con la stessa frequenza angoli piccoli e angoli vicini a $180^\circ$. Sono due popolazioni diverse di corde, e il numero lo dice: la percentuale delle lunghe sale da $1/3$ a circa $0{,}49$ quando il cerchio si stringe a meno della metà del raggio.
+
+La scala elimina così la prima ricetta. Restano in gara $1/2$ e $1/4$, e la scala da sola non basta a separarle.
+
+### Traslazione: la ricetta del punto medio non sopravvive
+
+Spostiamo ora il cerchio senza cambiarne il raggio, tenendo ferme le rette. La distanza uniforme non se ne accorge: il suo peso è lo stesso per ogni distanza e per ogni direzione, quindi qualunque finestra si ritagli il peso resta costante e il rapporto $1/2$ non cambia.
+
+Il punto medio uniforme invece cambia, e la ragione sta nella ricetta: i punti medi uniformi nel disco si addensano verso il bordo, quindi le rette pesano in proporzione alla distanza dal centro con cui sono state costruite. Quel centro è privilegiato. Spostando il cerchio, la stessa retta viene pesata in modo diverso a seconda che sia parallela o perpendicolare allo spostamento, e la percentuale si muove: con un cerchio di raggio $0{,}42$ spostato di $0{,}58$, dal $25\%$ si passa a circa $47\%$. Una distribuzione che dipende da dove abbiamo messo il centro non rispetta la traslazione.
+
+Anche gli estremi cambiano, ma non serve: la scala li aveva già esclusi. Resta la distanza uniforme, l’unica che sopravvive a tutte e tre le trasformazioni.
+
+### Il conto, in breve: perché $1/2$
+
+Resta da tradurre la simmetria in un numero. Senza direzioni privilegiate, uguali intervalli di direzione ricevono uguale peso; senza posizioni privilegiate, per ogni direzione uguali intervalli di distanza ricevono uguale peso. Condizionando all’intersezione, la distanza con segno $p$ è quindi uniforme fra $-R$ e $R$, un intervallo lungo $2R$.
+
+Con il teorema di Pitagora applicato a raggio, distanza e metà della corda si trova che la corda supera il lato del triangolo equilatero esattamente quando $|p|<R/2$ (il conto per esteso è nella [Lettura A](#bertrand-esteso)). Le distanze favorevoli occupano un intervallo lungo $R$, la metà di quello delle rette che intersecano il cerchio:
+
+$$
+P\left(L>\sqrt3\,R\mid\text{la retta interseca il cerchio}\right)
+=\frac{R}{2R}=\frac12.
+$$
+
+### Che cosa resta
+
+Il risultato non è «più vero» degli altri due: è quello che sopravvive se accettiamo rotazioni, cambi di scala e traslazioni come trasformazioni che non cambiano l’informazione. Se una di queste simmetrie non ci sembra giustificata, $1/3$ e $1/4$ tornano risposte corrette per i loro esperimenti. Lo stesso Jaynes, nel § 6, distingue la distribuzione ricavata dalle informazioni disponibili dalle frequenze di un apparato reale, che può essere costruito per produrre leggi diverse: in 128 lanci di cannucce su un cerchio disegnato sul pavimento le frequenze risultarono compatibili con $1/2$.
+
+### Esplora le tre trasformazioni
+
+Nell’animazione le rette sono generate rispetto al cerchio iniziale. In scala e traslazione restano ferme e il cerchio osservato resta contenuto in quello iniziale, così tutte le rette che lo attraversano sono già rappresentate dal modello; in rotazione è il cerchio a restare fermo e sono le rette a girare. Le percentuali sono probabilità teoriche condizionate all’intersezione; il disegno è un campione riproducibile.
+
+<iframe class="psi-bertrand-frame" src="bertrand/index.html" title="Paradosso di Bertrand: invarianza per rotazione, scala e traslazione" loading="lazy"></iframe>
+
+[Apri l’animazione in una pagina dedicata](bertrand/index.html){ target="_blank" rel="noopener" }
+
+Prova prima **Ruota** con ciascun metodo: le corde girano, il cerchio resta fermo, e il valore non cambia. Poi prova **Cambia scala**: il primo metodo cambia la distribuzione delle corde, il secondo e il terzo no. Infine **Trasla** a raggio fisso: il primo e il terzo cambiano la distribuzione, il secondo no. In traslazione il cerchio ha raggio $0{,}42$, quindi il valore di partenza può non essere quello del cerchio iniziale ($1/3$, $1/2$ o $1/4$): conta se il numero resta costante mentre il cerchio si sposta.
+
+| Regola con cui scegliamo le corde | Rotazione | Cerchio più piccolo, stesse rette | Traslazione, stesso raggio |
+|---|---|---|---|
+| Due estremi uniformi sulla circonferenza | Conserva la distribuzione | Cambia la distribuzione | Cambia la distribuzione |
+| Distanza dal centro uniforme | Conserva la distribuzione | Conserva la distribuzione | Conserva la distribuzione |
+| Punto medio uniforme nel disco | Conserva la distribuzione | Conserva la distribuzione | Cambia la distribuzione |
+
+Le tre simmetrie hanno ruoli diversi: la rotazione non distingue i metodi, la scala elimina il primo, la traslazione elimina il terzo. Il criterio generale è dichiarare quali trasformazioni rappresentano davvero la stessa informazione e giustificare con esse l’assegnazione di probabilità.
 
 ## Esercizi: prima prova, poi apri la soluzione {: #esercizi }
 
@@ -919,17 +1531,49 @@ A una stampante condivisa arrivano in media 3 lavori all’ora, uno alla volta, 
 ??? esempio-svolto "Soluzione ragionata"
     Il tempo $T$ fino al prossimo lavoro, in ore, è esponenziale con $\lambda=3$. (a) Con la distribuzione esponenziale: $P(T>1)=e^{-3}\approx0{,}050$. Con la distribuzione di Poisson: il numero di lavori in un’ora ha media 3, e $P(X=0)=e^{-3}$. Stesso numero, perché è lo stesso evento: è il ragionamento con cui abbiamo costruito la distribuzione esponenziale. (b) Dieci minuti sono $1/6$ di ora e trenta minuti $1/2$ ora; con la funzione di ripartizione, $F(1/2)-F(1/6)=e^{-3/6}-e^{-3/2}=e^{-0{,}5}-e^{-1{,}5}\approx0{,}607-0{,}223=0{,}384$. (c) Per l’assenza di memoria i 40 minuti di silenzio non contano: la probabilità è $P(T\le1/12)=1-e^{-0{,}25}\approx0{,}221$, la stessa dell’esempio nel testo. L’errore tipico è pensare che dopo un lungo silenzio un lavoro sia ormai «dovuto».
 
-Gli esercizi sulla distribuzione normale arriveranno con la Lezione 2.
+### Esercizio 5 — Le altezze {: #esercizio-5 }
+
+L’altezza delle persone adulte di una popolazione è $X\sim\mathcal{N}(\mu=170,\ \sigma^2=100)$, in centimetri. (a) Qual è la probabilità che una persona sia più bassa di 180 cm? (b) E che sia alta tra 150 e 175 cm? (c) Su 1000 persone, quante ti aspetti più alte di 190 cm?
+
+??? esempio-svolto "Soluzione ragionata"
+    (a) $z=(180-170)/10=1$, quindi $P(X<180)=\Phi(1)=0{,}8413$. (b) Le soglie diventano $z=-2$ e $z=0{,}5$: $\Phi(0{,}5)-\Phi(-2)=0{,}6915-(1-0{,}9772)=0{,}6915-0{,}0228=0{,}6687$. (c) $z=2$, quindi $P(X>190)=1-\Phi(2)=0{,}0228$. Per la linearità del valore atteso, su 1000 persone ce ne aspettiamo circa $1000\cdot0{,}0228\approx23$.
+
+### Esercizio 6 — Tre probabilità da una normale {: #esercizio-6 }
+
+Sia $X\sim\mathcal{N}(\mu=3,\ \sigma^2=16)$. Calcola $P(X>0)$, $P(2<X<5)$ e $P(|X-3|>6)$.
+
+??? esempio-svolto "Soluzione ragionata"
+    Prima di tutto, la deviazione standard: $\sigma=\sqrt{16}=4$. È il primo errore da evitare, cioè dividere per 16 invece che per 4.
+
+    $P(X>0)=1-\Phi\big((0-3)/4\big)=1-\Phi(-0{,}75)=1-(1-\Phi(0{,}75))=\Phi(0{,}75)=0{,}7734$.
+
+    $P(2<X<5)=\Phi\big((5-3)/4\big)-\Phi\big((2-3)/4\big)=\Phi(0{,}5)-\Phi(-0{,}25)=0{,}6915-(1-0{,}5987)=0{,}6915-0{,}4013=0{,}2902$.
+
+    Per l’ultima, $|X-3|>6$ vuol dire che $X$ dista dalla media più di 6, cioè $X>9$ oppure $X<-3$. I due eventi sono incompatibili, quindi sommiamo: $P(X>9)+P(X<-3)=\big(1-\Phi(1{,}5)\big)+\Phi(-1{,}5)=2\big(1-\Phi(1{,}5)\big)=2\cdot0{,}0668=0{,}1336$. Nota che 6 è uguale a $1{,}5\sigma$: la domanda chiede la probabilità di allontanarsi dalla media più di una deviazione standard e mezza.
+
+### Esercizio 7 — Quante deviazioni standard? {: #esercizio-7 }
+
+Il servizio A ha un tempo di risposta normale con media 200 ms e $\sigma=20$ ms; il servizio B con media 50 ms e $\sigma=5$ ms. Una richiesta impiega 250 ms su A, un’altra 65 ms su B. In millisecondi la prima supera la media di 50, la seconda di 15. (a) Quale delle due è più anomala? (b) Calcola $P(X>250)$ per A e $P(Y>65)$ per B.
+
+??? esempio-svolto "Soluzione ragionata"
+    (a) Su A: $z=(250-200)/20=2{,}5$. Su B: $z=(65-50)/5=3$. È più anomala la seconda, anche se lo scarto in millisecondi è più piccolo: conta lo scarto misurato in deviazioni standard. (b) $1-\Phi(2{,}5)=1-0{,}9938=0{,}0062$; $1-\Phi(3)=1-0{,}9987=0{,}0013$.
+
+### Esercizio 8 — I redditi più alti {: #esercizio-8 }
+
+Con i redditi $X\sim\mathcal{N}(\mu=900,\ \sigma^2=200^2)$ dell’esempio nel testo: (a) quale reddito supera solo il 5% delle famiglie? (b) Quale frazione delle famiglie ha un reddito superiore a 1300 monete?
+
+??? esempio-svolto "Soluzione ragionata"
+    (a) Cerchiamo $x$ con $P(X>x)=0{,}05$, cioè $\Phi\big((x-900)/200\big)=0{,}95$. Nella tabella $\Phi(1{,}64)=0{,}9495$ e $\Phi(1{,}65)=0{,}9505$, quindi $z\approx1{,}645$. Destandardizziamo: $x=900+1{,}645\cdot200=1229$ monete. (b) $z=(1300-900)/200=2$, quindi $P(X>1300)=1-\Phi(2)=0{,}0228$, circa il 2,3% delle famiglie.
 
 ## Errori da evitare {: #errori }
 
 Molti errori di questa settimana nascono dal confondere la densità con una probabilità. Il valore $f(x)$ non è la probabilità che la variabile valga $x$: quella vale zero, e la densità diventa una probabilità solo dopo averla moltiplicata per una larghezza, o meglio dopo averne preso l’area. Se in un tuo conto compare una probabilità maggiore di 1, chiediti se hai preso un’altezza al posto di un’area.
 
-Un secondo gruppo di errori riguarda le unità di misura. Un tasso espresso in eventi all’ora va usato con tempi espressi in ore: con la stampante, $1-e^{-3\cdot5}$ mescola ore e minuti. Per lo stesso motivo, con NumPy conviene ricordare che `rng.exponential` vuole la scala $1/\lambda$, e non il tasso.
+Un secondo gruppo di errori riguarda le unità di misura. Un tasso espresso in eventi all’ora va usato con tempi espressi in ore: con la stampante, $1-e^{-3\cdot5}$ mescola ore e minuti. Allo stesso modo, nella distribuzione normale va sempre controllato se il secondo parametro è la varianza o la deviazione standard: con $\mathcal{N}(\mu=3,\ \sigma^2=16)$ si standardizza dividendo per 4, non per 16. Per lo stesso motivo, quando si usano le librerie di Python conviene ricordare che `NormalDist`, `scipy.stats.norm` e `rng.exponential` vogliono la deviazione standard, o la scala $1/\lambda$, e non la varianza o il tasso.
 
-Un terzo gruppo riguarda la lettura degli eventi. «Entro» si traduce in $F(a)$, «oltre» in $1-F(b)$, «tra» in una differenza: scambiare la coda $e^{-\lambda t}$ con la funzione di ripartizione $1-e^{-\lambda t}$ è un errore frequente.
+Un terzo gruppo riguarda la lettura degli eventi. «Entro» si traduce in $F(a)$, «oltre» in $1-F(b)$, «tra» in una differenza: scambiare la coda $e^{-\lambda t}$ con la funzione di ripartizione $1-e^{-\lambda t}$ è un errore frequente. E la tabella di $\Phi$ contiene soltanto valori positivi di $z$: per quelli negativi serve la simmetria $\Phi(-z)=1-\Phi(z)$, non il segno meno davanti al numero letto.
 
-Infine, gli errori di modello. Credere che dopo una lunga attesa un evento esponenziale sia «imminente» è la fallacia del giocatore in versione continua. Usare la distribuzione esponenziale per un oggetto che invecchia porta a conti corretti su un modello sbagliato. Prima di scegliere una formula, conviene chiedersi se le ipotesi del modello valgono.
+Infine, gli errori di modello. Credere che dopo una lunga attesa un evento esponenziale sia «imminente» è la fallacia del giocatore in versione continua. Usare la distribuzione esponenziale per un oggetto che invecchia, o la distribuzione normale per dati asimmetrici con valori estremi frequenti, porta a conti corretti su un modello sbagliato. Prima di scegliere una formula, conviene chiedersi se le ipotesi del modello valgono.
 
 ## Riepilogo per lo studio {: #riepilogo }
 
@@ -937,17 +1581,23 @@ Una variabile aleatoria continua può assumere qualunque valore di un intervallo
 
 La **distribuzione uniforme** su $[a,b]$ ha una densità costante, un rettangolo alto $1/(b-a)$; la probabilità di un intervallo è la sua lunghezza relativa, la media è il centro $(a+b)/2$ e la varianza è $(b-a)^2/12$. La **distribuzione esponenziale** misura il tempo di attesa del prossimo evento in un flusso di Poisson di tasso $\lambda$: dalla probabilità di zero eventi si ricava $P(T>t)=e^{-\lambda t}$, e da lì la funzione di ripartizione $1-e^{-\lambda t}$ e la densità $\lambda e^{-\lambda t}$. La media è $1/\lambda$, la varianza $1/\lambda^2$, e la distribuzione non ha memoria: il tempo già atteso non cambia la probabilità del tempo che resta.
 
+La **distribuzione normale** $\mathcal{N}(\mu,\sigma^2)$ è la campana degli errori di Gauss: $\mu$ è il centro, $\sigma$ la larghezza. La sua funzione di ripartizione non ha una forma chiusa, ma standardizzando, $z=(x-\mu)/\sigma$, ogni distribuzione normale si riporta alla normale standard, i cui valori $\Phi(z)$ stanno in una tabella; per i valori negativi si usa $\Phi(-z)=1-\Phi(z)$. Entro una, due e tre deviazioni standard dalla media cadono circa il 68%, il 95% e il 99,7% dei valori. Il problema inverso si risolve percorrendo gli stessi passi all’indietro: si cerca $z$ nella tabella e si torna alle unità originali con $x=\mu+z\sigma$.
+
 !!! tip "Prova a raccontarlo senza il formulario"
-    Spiega a un compagno perché l’autobus non arriva mai «esattamente» alle 14:18:30 e però arriva di sicuro. Racconta come si passa dalla distribuzione di Poisson alla coda $e^{-\lambda t}$, e perché il signor Rossi dovrebbe diffidare del suo modello. Se riesci a farlo, le formule della settimana sono diventate strumenti di ragionamento.
+    Spiega a un compagno perché l’autobus non arriva mai «esattamente» alle 14:18:30 e però arriva di sicuro. Racconta come si passa dalla distribuzione di Poisson alla coda $e^{-\lambda t}$, e perché il signor Rossi dovrebbe diffidare del suo modello. Poi prendi una domanda sulle altezze e risolvila ad alta voce con i tre passi: standardizzare, leggere la tabella, usare complemento o differenza. Se riesci a farlo, le formule della settimana sono diventate strumenti di ragionamento.
 
 ## Riferimenti e letture {: #riferimenti }
 
 La dispensa riprende le slide e i notebook del corso degli anni precedenti, che a loro volta adattano due testi presenti nella bibliografia. Le citazioni storiche sono tradotte; le fonti sono letture facoltative.
 
-- **Chris Piech**, *Probability for Computer Scientists*, materiale del corso Stanford CS109: voci «Continuous Distribution» ed «Exponential Distribution». L’esempio dell’autobus e gli istogrammi che si raffinano vengono da qui. [Portale del testo](https://chrispiech.github.io/probabilityForComputerScientists/).
-- **Michael Baron**, *Probability and Statistics for Computer Scientists*, 2ª ed., CRC Press, 2014, cap. 4, §4.1 (densità) e §4.2 (distribuzioni uniforme ed esponenziale), compreso l’esempio della stampante (Esempio 4.5). [Scheda dell’editore](https://doi.org/10.1201/b14800).
+- **Chris Piech**, *Probability for Computer Scientists*, materiale del corso Stanford CS109: voci «Continuous Distribution», «Exponential Distribution» e «Normal Distribution». L’esempio dell’autobus e gli istogrammi che si raffinano vengono da qui. [Portale del testo](https://chrispiech.github.io/probabilityForComputerScientists/).
+- **Michael Baron**, *Probability and Statistics for Computer Scientists*, 2ª ed., CRC Press, 2014, cap. 4, §4.1 (densità) e §4.2 (distribuzioni uniforme, esponenziale e normale), compresi gli esempi della stampante (Esempio 4.5) e dei redditi (Esempi 4.11 e 4.12). [Scheda dell’editore](https://doi.org/10.1201/b14800).
 - **Mario Abundo**, note sulla proprietà di mancanza di memoria per variabili aleatorie continue, Università di Roma Tor Vergata, [memlessprcont.pdf](https://www.mat.uniroma2.it/~abundo/memlessprcont.pdf): la dimostrazione con la funzione di sopravvivenza dell’Atto V.
 - **Joseph Bertrand**, *Calcul des probabilités*, Parigi, Gauthier-Villars, 1889, cap. I, §§ 4–5, pp. 4–5 (il numero e il suo quadrato; la corda). [Scansione su Internet Archive](https://archive.org/details/calculdesprobab00bertgoog). Alcuni storici datano la prima tiratura al 1888.
 - **Edwin T. Jaynes**, *The Well-Posed Problem*, *Foundations of Physics* 3 (1973), §§ 2–6: rotazione, scala, traslazione e distinzione fra assegnazione di probabilità e frequenze sperimentali. [Testo nell’archivio della Washington University](https://bayes.wustl.edu/etj/articles/well.pdf).
 - **Edwin T. Jaynes**, *Probability Theory: The Logic of Science*, a cura di G. Larry Bretthorst, Cambridge University Press, 2003, cap. 2, «The Quantitative Rules», paragrafo «Numerical Values»: simmetrie e permutazioni sul finito. Il capitolo 12 dello stesso libro torna sul paradosso di Bertrand. [Scheda dell’editore](https://doi.org/10.1017/CBO9780511790423).
-- Documentazione Python: [`numpy.random.Generator.exponential`](https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.exponential.html).
+- **Carl Friedrich Gauss**, *Theoria motus corporum coelestium in sectionibus conicis solem ambientium*, Amburgo, 1809. Traduzione inglese di Charles Henry Davis, *Theory of the Motion of the Heavenly Bodies Moving about the Sun in Conic Sections*, Boston, Little, Brown and Co., 1857: prefazione (Cerere, pp. xiv–xv), libro II, sezione III, artt. 175–186 (curva degli errori e minimi quadrati). [Scansione su Internet Archive](https://archive.org/details/theoryofmotionof00gaus); [la prefazione su MacTutor](https://mathshistory.st-andrews.ac.uk/Extras/Gauss_preface/).
+- **Abraham De Moivre**, *The Doctrine of Chances*, 3ª edizione, Londra, A. Millar, 1756, pp. 242–254: «A Method of approximating the Sum of the Terms of the Binomial $(a+b)^n$ expanded into a Series», datato 12 novembre 1733. [Scansione su Internet Archive](https://archive.org/details/doctrineofchance00moiv).
+- **Henri Poincaré**, *Calcul des probabilités*, Parigi, Gauthier-Villars, 1896 (2ª ed. 1912): la battuta di Gabriel Lippmann sulla legge normale degli errori.
+- **Grant Sanderson** (3Blue1Brown), *Why π is in the normal distribution (beyond integral tricks)*, video, 2023: il $\pi$ nella costante della densità normale, spiegato con la simmetria circolare. [Il video su YouTube](https://youtu.be/cy8r7WSuT1I).
+- Documentazione Python: [`statistics.NormalDist`](https://docs.python.org/3/library/statistics.html#statistics.NormalDist), [`scipy.stats.norm`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html) e [`numpy.random.Generator.exponential`](https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.exponential.html).

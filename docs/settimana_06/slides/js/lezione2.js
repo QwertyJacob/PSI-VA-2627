@@ -554,11 +554,11 @@
     S.xAxis(root, F, 120, 420, [[140, '140'], [200, '200'], [260, '260'], [300, '300'], [360, '360']], 'ms', { unitDy: 0 });
     S.xAxis(root, Z, 250, 420, [[260, '260'], [300, '300'], [360, '360'], [400, '400']], '');
     label(hv, F.X(330), 70, 'coda pesante (illustrativa)', 's06-small s06-model', { 'text-anchor': 'middle' });
-    var l1 = q.one('.ht-1'), l3 = q.one('.ht-3');
-    gsap.set([l1, l3], { opacity: 0 });
+    var l1 = q.one('.ht-1'), l2 = q.one('.ht-2'), l3 = q.one('.ht-3');
+    gsap.set([l1, l2, l3], { opacity: 0 });
     tl.addLabel('s0');
     tl.to(l1, { opacity: 1, duration: .4 }).addLabel('s1');
-    tl.to(hv, { opacity: 1, duration: .6 }).addLabel('s2');
+    tl.to([hv, l2], { opacity: 1, duration: .6 }).addLabel('s2');
     tl.to(l3, { opacity: 1, duration: .4 }).addLabel('s3');
   });
 

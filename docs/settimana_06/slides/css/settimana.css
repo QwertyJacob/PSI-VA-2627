@@ -177,7 +177,8 @@
 
 /* ── L2-16 / L2-17 latenze ── */
 .reveal .lt-top { display: block; margin: 0 auto 8px; }
-.reveal .ht-lines { display: flex; justify-content: center; gap: 40px; margin: 4px 0 0; font-size: .75em; font-weight: 700; }
+.reveal .ht-lines { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 40px; margin: 4px 0 0; font-size: .75em; font-weight: 700; }
+.reveal .ht-3 { flex-basis: 100%; text-align: center; }
 
 /* ── L2-19 p99 ── */
 .reveal .pq-lines { display: flex; justify-content: center; align-items: center; gap: 30px; margin: 6px 0 0; }

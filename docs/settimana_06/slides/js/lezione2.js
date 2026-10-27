@@ -229,6 +229,204 @@
     tl.addLabel('s4');
   });
 
+  // L2-15b · simmetria: le barre in −z e +z scorrono e le due code restano uguali;
+  // poi la coda destra si ribalta sulla sinistra e Φ, girata di mezzo giro attorno a (0, ½),
+  // ricade su se stessa. Trascinando sulla figura si sposta z a mano.
+  PSI.scene('gn-simmetria', function (el, tl) {
+    var q = PSI.q(el), root = q.one('.scene-svg');
+    var Z0 = 1.31, ZMAX = 3.4;
+    var P = S.frame(-3.6, 3.6, 30, 520, 290, 500);    // densità: φ(0) ≈ 0,399 → 200 px
+    var R = S.frame(-3.6, 3.6, 652, 1072, 290, 220);  // ripartizione: Φ = 1 → 220 px
+    var ticks = [-3, -2, -1, 0, 1, 2, 3].map(function (v) { return [v, it(v, 0)]; });
+    var GO = R.X(0) + ' ' + R.Y(.5), MIRROR = P.X(0) + ' ' + P.base;
+    function put(node, attrs) { for (var k in attrs) node.setAttribute(k, attrs[k]); }
+
+    // Sinistra: la campana e le due code.
+    var tailL = svg('path', { fill: C.ok, opacity: .55 }, root);
+    var tailR = svg('path', { fill: C.ok, opacity: .55 }, root);
+    svg('path', { d: S.curve(std, -3.6, 3.6, 160, P), fill: 'none', stroke: C.text, 'stroke-width': 3.5 }, root);
+    S.xAxis(root, P, -3.6, 3.6, ticks);
+    var flip = svg('path', { fill: 'none', stroke: C.model, 'stroke-width': 3, 'stroke-dasharray': '8 5' }, root);
+    var barL = line(root, 0, P.base + 8, 0, 62, C.model, 3), barR = line(root, 0, P.base + 8, 0, 62, C.model, 3);
+    var zL = label(root, 0, 50, '', 's06-small s06-model s06-bold'), zR = label(root, 0, 50, '', 's06-small s06-model s06-bold');
+    label(root, P.X(-2.45), 150, 'Φ(−z)', 's06-label s06-ok halo');
+    label(root, P.X(2.45), 150, '1 − Φ(z)', 's06-label s06-ok halo');
+    var vL = label(root, P.X(-2.45), 180, '', 's06-label s06-ok s06-bold halo');
+    var vR = label(root, P.X(2.45), 180, '', 's06-label s06-ok s06-bold halo');
+    label(root, P.X(0), 352, 'densità φ', 's06-small');
+
+    // Destra: la funzione di ripartizione, con lo stesso z.
+    line(root, 640, R.base, 640, R.Y(1) - 14, C.axis, 2);
+    [[0, '0'], [.5, '0,5'], [1, '1']].forEach(function (t) {
+      line(root, 634, R.Y(t[0]), 640, R.Y(t[0]), C.axis, 2);
+      label(root, 628, R.Y(t[0]) + 6, t[1], 's06-small', { 'text-anchor': 'end' });
+    });
+    [1, .5].forEach(function (h) { line(root, 640, R.Y(h), 1086, R.Y(h), C.axis, 1.5, { 'stroke-dasharray': '6 6' }); });
+    svg('path', { d: S.curve(S.Phi, -3.6, 3.6, 160, R), fill: 'none', stroke: C.data, 'stroke-width': 3.5 }, root);
+    S.xAxis(root, R, -3.6, 3.6, ticks);
+    label(root, R.X(0), 352, 'funzione di ripartizione Φ', 's06-small');
+    var cbarL = line(root, 0, R.base + 8, 0, R.Y(1) - 8, C.model, 3), cbarR = line(root, 0, R.base + 8, 0, R.Y(1) - 8, C.model, 3);
+    var segL = line(root, 0, 0, 0, 0, C.ok, 8), segR = line(root, 0, 0, 0, 0, C.ok, 8);
+    var dotL = svg('circle', { r: 6, fill: C.model }, root), dotR = svg('circle', { r: 6, fill: C.model }, root);
+    var nL = label(root, 0, R.Y(.13), 'Φ(−z)', 's06-label s06-ok s06-bold halo', { 'text-anchor': 'end' });
+    var nR = label(root, 0, R.Y(.79), '1 − Φ(z)', 's06-label s06-ok s06-bold halo', { 'text-anchor': 'start' });
+    // La copia che gira: la curva e il segmento in alto, tratteggiati.
+    var ghost = svg('g', {}, root);
+    svg('path', { d: S.curve(S.Phi, -3.6, 3.6, 160, R), fill: 'none', stroke: C.model, 'stroke-width': 3, 'stroke-dasharray': '10 6' }, ghost);
+    var gseg = line(ghost, 0, 0, 0, 0, C.model, 4, { 'stroke-dasharray': '6 4' });
+    var pivot = svg('circle', { cx: R.X(0), cy: R.Y(.5), r: 6, fill: C.text }, root);
+
+    var st = { z: Z0 };
+    function render() {
+      var z = st.z, lo = S.Phi(-z), hi = S.Phi(z);
+      tailL.setAttribute('d', S.area(std, -3.6, -z, 80, P));
+      tailR.setAttribute('d', S.area(std, z, 3.6, 80, P));
+      flip.setAttribute('d', S.area(std, z, 3.6, 80, P));
+      put(barL, { x1: P.X(-z), x2: P.X(-z) }); put(barR, { x1: P.X(z), x2: P.X(z) });
+      put(zL, { x: P.X(-z) }); put(zR, { x: P.X(z) });
+      zL.textContent = it(-z, 2); zR.textContent = it(z, 2);
+      vL.textContent = it(lo, 4); vR.textContent = it(1 - hi, 4);
+      put(cbarL, { x1: R.X(-z), x2: R.X(-z) }); put(cbarR, { x1: R.X(z), x2: R.X(z) });
+      put(segL, { x1: R.X(-z), y1: R.base, x2: R.X(-z), y2: R.Y(lo) });
+      put(segR, { x1: R.X(z), y1: R.Y(hi), x2: R.X(z), y2: R.Y(1) });
+      put(gseg, { x1: R.X(z), y1: R.Y(hi), x2: R.X(z), y2: R.Y(1) });
+      put(dotL, { cx: R.X(-z), cy: R.Y(lo) }); put(dotR, { cx: R.X(z), cy: R.Y(hi) });
+      nL.setAttribute('x', R.X(-z) - 12); nR.setAttribute('x', R.X(z) + 12);
+    }
+    render();
+
+    // Trascinamento: la distanza dal centro del pannello sotto il puntatore diventa z.
+    var dragging = false;
+    function toZ(e) {
+      var pt = root.createSVGPoint();
+      pt.x = e.clientX; pt.y = e.clientY;
+      var x = pt.matrixTransform(root.getScreenCTM().inverse()).x, F = x > 580 ? R : P;
+      return Math.min(ZMAX, Math.abs(x - F.X(0)) / F.k);
+    }
+    root.addEventListener('pointerdown', function (e) {
+      dragging = true;
+      root.setPointerCapture(e.pointerId);
+      e.preventDefault();
+      st.z = toZ(e); render();
+    });
+    root.addEventListener('pointermove', function (e) { if (dragging) { st.z = toZ(e); render(); } });
+    root.addEventListener('pointerup', function () { dragging = false; });
+
+    var box = q.one('.sy-formula');
+    gsap.set([flip, ghost, pivot, box], { opacity: 0 });
+    tl.addLabel('s0');
+    tl.to(st, { z: 0, duration: 1.4, ease: 'power1.inOut', onUpdate: render })
+      .to(st, { z: 2.8, duration: 2.4, ease: 'power1.inOut', onUpdate: render })
+      .to(st, { z: 1, duration: 1.4, ease: 'power1.inOut', onUpdate: render }).addLabel('s1');
+    tl.to([flip, ghost, pivot], { opacity: 1, duration: .3 })
+      .to(flip, { scaleX: -1, svgOrigin: MIRROR, duration: 1.4, ease: 'power2.inOut' })
+      .to(ghost, { rotation: 180, svgOrigin: GO, duration: 1.8, ease: 'power2.inOut' }, '<').addLabel('s2');
+    tl.to(box, { opacity: 1, duration: .5 }).addLabel('s3');
+  });
+
+  // L2-16 · Y = 2X + 3 con X ∼ N(1, 1), sullo stesso asse: × 2 allarga e abbassa, + 3 sposta.
+  // La fascia tra media − dev. std. e media + dev. std. vale sempre il 68,3%: la forma non cambia.
+  PSI.scene('gn-lineare', function (el, tl) {
+    var q = PSI.q(el), root = q.one('.scene-svg');
+    var MU = 1, SD = 1, A = 2, B = 3, DARK = '#1a202c';
+    var F = S.frame(-3, 11, 40, 700, 255, 500);
+    var ticks = [];
+    for (var v = -3; v <= 11; v++) ticks.push([v, it(v, 0)]);
+    var band = svg('path', { fill: '#fbbf24', opacity: .55 }, root);
+    svg('path', { d: S.curve(bellFn(MU, SD), -3, 11, 240, F), fill: 'none', stroke: C.muted, 'stroke-width': 2.5, 'stroke-dasharray': '8 6' }, root);
+    var ghost = label(root, F.X(MU), F.Y(S.npdf(MU, MU, SD)) - 12, 'X', 's06-label', { opacity: 0, style: 'fill:' + C.muted });
+    var bell = svg('path', { fill: 'none', stroke: C.data, 'stroke-width': 4 }, root);
+    S.xAxis(root, F, -3, 11, ticks);
+    var mid = line(root, 0, 0, 0, 0, DARK, 2, { 'stroke-dasharray': '5 4' });
+    var arrow = line(root, 0, 0, 0, 0, DARK, 2.5, { 'marker-end': S.arrowMarker(root, 's06-gl-arrow', DARK) });
+    var pct = label(root, 0, F.base - 12, '68,3%', 's06-small s06-bold', { style: 'fill:' + DARK });
+    var sdl = label(root, 0, 0, '', 's06-small halo', { 'text-anchor': 'start', style: 'fill:' + C.text });
+    var name = label(root, 712, 30, '', 's06-label', { 'text-anchor': 'end' });
+    var pars = label(root, 712, 58, '', 's06-small', { 'text-anchor': 'end' });
+    var opMul = label(root, 40, 60, '× 2', 's06-big s06-model', { 'text-anchor': 'start', opacity: 0 });
+    var opAdd = label(root, 40, 60, '+ 3', 's06-big s06-model', { 'text-anchor': 'start', opacity: 0 });
+    // Interi senza decimali, valori di passaggio con un decimale.
+    function fmt(x) { return Math.abs(x - Math.round(x)) < .005 ? it(Math.round(x), 0) : it(x, 1); }
+    function put(node, attrs) { for (var k in attrs) node.setAttribute(k, attrs[k]); }
+    var st = { a: 1, b: 0 };
+    function render() {
+      var m = st.a * MU + st.b, s = st.a * SD, f = bellFn(m, s), yi = F.Y(f(m + s));
+      bell.setAttribute('d', S.curve(f, -3, 11, 240, F));
+      band.setAttribute('d', S.area(f, m - s, m + s, 60, F));
+      put(mid, { x1: F.X(m), y1: F.Y(f(m)) + 6, x2: F.X(m), y2: F.base - 34 });
+      put(arrow, { x1: F.X(m), y1: yi, x2: F.X(m + s) - 2, y2: yi });
+      pct.setAttribute('x', F.X(m));
+      put(sdl, { x: F.X(m + s) + 8, y: yi - 10 });
+      sdl.textContent = 'dev. std. ' + fmt(s);
+      name.textContent = (st.a > 1.005 ? fmt(st.a) : '') + 'X' + (st.b > .005 ? ' + ' + fmt(st.b) : '');
+      pars.textContent = 'media ' + fmt(m) + ' · varianza ' + fmt(s * s);
+    }
+    render();
+    var two = q.one('.gl-two'), cards = q.all('.gl-cards .scene-card'), end = q.one('.gl-new');
+    gsap.set([two, root, cards, end], { opacity: 0 });
+    tl.addLabel('s0');
+    tl.to(two, { opacity: 1, duration: .5 }).addLabel('s1');
+    tl.to([root, cards[0]], { opacity: 1, duration: .6 }).addLabel('s2');
+    tl.to(cards[0], { opacity: 0, duration: .25 }).to([opMul, cards[1]], { opacity: 1, duration: .3 })
+      .to(st, { a: A, duration: 1.8, ease: 'power1.inOut', onUpdate: render })
+      .to(ghost, { opacity: 1, duration: .3 }, '-=1').addLabel('s3');
+    tl.to([opMul, cards[1]], { opacity: 0, duration: .25 }).to([opAdd, cards[2]], { opacity: 1, duration: .3 })
+      .to(st, { b: B, duration: 1.5, ease: 'power1.inOut', onUpdate: render }).addLabel('s4');
+    tl.to(end, { opacity: 1, duration: .5 }).to([name, pars], { fill: C.ok, duration: .4 }, '<').addLabel('s5');
+  });
+
+  // L2-17 · Z = (X − μ)/σ con X ∼ N(3, 4): × 1/2 stringe e alza, − 3/2 sposta in 0.
+  // Come in gn-lineare, la fascia tra media − dev. std. e media + dev. std. resta il 68,3%.
+  PSI.scene('gn-standardizza', function (el, tl) {
+    var q = PSI.q(el), root = q.one('.scene-svg');
+    var MU = 3, SD = 2, DARK = '#1a202c';
+    var F = S.frame(-4, 9, 24, 516, 240, 470);
+    var ticks = [];
+    for (var v = -4; v <= 9; v++) ticks.push([v, it(v, 0)]);
+    var band = svg('path', { fill: '#fbbf24', opacity: .55 }, root);
+    svg('path', { d: S.curve(bellFn(MU, SD), -4, 9, 240, F), fill: 'none', stroke: C.muted, 'stroke-width': 2.5, 'stroke-dasharray': '8 6' }, root);
+    var ghost = label(root, F.X(MU + 1.2 * SD) + 6, F.Y(S.npdf(MU + 1.2 * SD, MU, SD)) - 8, 'X', 's06-label', { opacity: 0, 'text-anchor': 'start', style: 'fill:' + C.muted });
+    var bell = svg('path', { fill: 'none', stroke: C.data, 'stroke-width': 4 }, root);
+    S.xAxis(root, F, -4, 9, ticks);
+    var mid = line(root, 0, 0, 0, 0, DARK, 2, { 'stroke-dasharray': '5 4' });
+    var arrow = line(root, 0, 0, 0, 0, DARK, 2.5, { 'marker-end': S.arrowMarker(root, 's06-gz-arrow', DARK) });
+    var pct = label(root, 0, F.base - 12, '68,3%', 's06-small s06-bold', { style: 'fill:' + DARK });
+    var sdl = label(root, 0, 0, '', 's06-small halo', { 'text-anchor': 'start', style: 'fill:' + C.text });
+    var name = label(root, 516, 28, '', 's06-label', { 'text-anchor': 'end' });
+    var pars = label(root, 516, 56, '', 's06-small', { 'text-anchor': 'end' });
+    var opMul = label(root, 24, 44, '× 1/2', 's06-big s06-model', { 'text-anchor': 'start', opacity: 0 });
+    var opAdd = label(root, 24, 44, '− 3/2', 's06-big s06-model', { 'text-anchor': 'start', opacity: 0 });
+    function fmt(x) { return Math.abs(x - Math.round(x)) < .005 ? it(Math.round(x), 0) : it(x, 1); }
+    function put(node, attrs) { for (var k in attrs) node.setAttribute(k, attrs[k]); }
+    var st = { a: 1, b: 0, fin: 0 };
+    function render() {
+      var m = st.a * MU + st.b, s = st.a * SD, f = bellFn(m, s), yi = F.Y(f(m + s));
+      bell.setAttribute('d', S.curve(f, -4, 9, 240, F));
+      band.setAttribute('d', S.area(f, m - s, m + s, 60, F));
+      put(mid, { x1: F.X(m), y1: F.Y(f(m)) + 6, x2: F.X(m), y2: F.base - 34 });
+      put(arrow, { x1: F.X(m), y1: yi, x2: F.X(m + s) - 2, y2: yi });
+      pct.setAttribute('x', F.X(m));
+      put(sdl, { x: F.X(m + s) + 8, y: yi - 10 });
+      sdl.textContent = 'dev. std. ' + fmt(s);
+      name.textContent = st.fin > .5 ? 'Z = (X − 3)/2'
+        : (st.a < .995 ? fmt(st.a) + 'X' : 'X') + (st.b < -.005 ? ' − ' + fmt(-st.b) : '');
+      pars.textContent = 'media ' + fmt(m) + ' · varianza ' + fmt(s * s);
+    }
+    render();
+    var rows = q.all('.gz-rows .lm-row'), end = q.one('.gz-end');
+    gsap.set([rows[1], rows[2], rows[3], rows[4], end], { opacity: 0 });
+    tl.addLabel('s0');
+    tl.to(rows[1], { opacity: 1, duration: .5 }).addLabel('s1');
+    tl.to(rows[2], { opacity: 1, duration: .5 }).addLabel('s2');
+    tl.to([opMul, rows[3]], { opacity: 1, duration: .4 })
+      .to(st, { a: 1 / SD, duration: 1.8, ease: 'power1.inOut', onUpdate: render })
+      .to(ghost, { opacity: 1, duration: .3 }, '-=1').addLabel('s3');
+    tl.to(opMul, { opacity: 0, duration: .25 }).to([opAdd, rows[4]], { opacity: 1, duration: .4 })
+      .to(st, { b: -MU / SD, duration: 1.5, ease: 'power1.inOut', onUpdate: render }).addLabel('s4');
+    tl.to(opAdd, { opacity: 0, duration: .25 }).to(st, { fin: 1, duration: .01, onUpdate: render })
+      .to(end, { opacity: 1, duration: .5 }).to([name, pars], { fill: C.ok, duration: .4 }, '<').addLabel('s5');
+  });
+
   // L2-18 · due righelli: − μ, ÷ σ, poi cm e z allineati; 180 ↔ 1, area a destra 1 − Φ(1).
   PSI.scene('righelli', function (el, tl) {
     var q = PSI.q(el), root = q.one('.scene-svg');

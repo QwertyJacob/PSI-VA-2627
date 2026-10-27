@@ -669,14 +669,23 @@
       <aside class="notes">Pacco «10. Gaussian», slide 2, e notebook 4.2.3. Click: 1 continua, campana, code infinite; 2 dove si usa; 3 la battuta di Lippmann riportata da Poincaré (il notebook la attribuisce a Poincaré: è lui a riferirla). Il punto serio: la campana è un modello, giustificato quando la grandezza è una somma di tanti piccoli effetti, da controllare sui dati negli altri casi.</aside>
     </section>
 
+    <!-- L2-06b · video: perché c'è π (3Blue1Brown) -->
+    <section id="gn-video">
+      <p class="badge">Distribuzione normale · un video</p>
+      <p class="gn-lead">Da dove viene la campana, e perché nella sua formula compare $\pi$?</p>
+      <iframe class="gv-player" data-src="https://www.youtube.com/embed/cy8r7WSuT1I?rel=0&amp;enablejsapi=1" title="3Blue1Brown, Why π is in the normal distribution (beyond integral tricks)" allow="encrypted-media; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <p class="gv-src">3Blue1Brown, <i>Why π is in the normal distribution (beyond integral tricks)</i>, 2023, 25 min · <a href="https://youtu.be/cy8r7WSuT1I" target="_blank" rel="noopener">youtu.be/cy8r7WSuT1I</a></p>
+      <aside class="notes">Il video si carica solo quando arrivi qui e si ferma da solo quando cambi slide. Dopo aver cliccato nel player le frecce non cambiano slide: clicca fuori dal riquadro. Se la rete dell'aula non va, il link resta sulla slide e il video è anche nel riquadro facoltativo della dispensa, accanto alla formula. Capitoli: 0:00 la campana e la costante; 3:44 la dimostrazione classica (volume sotto la campana in 2D, sommando anelli: da lì viene π); 12:47 la derivazione di Herschel–Maxwell (errori indipendenti in x e y, nessuna direzione privilegiata: l'unica curva possibile è la campana, che si aggancia a Gauss); 21:55 riflessioni; 23:50 problema bonus. Se il tempo è poco, mostra solo 12:47–21:55.</aside>
+    </section>
+
     <!-- L2-07 · i due parametri -->
     <section id="gn-parametri">
       <p class="badge">Distribuzione normale · i parametri</p>
       <p class="gn-lead">La distribuzione normale dipende da due parametri: il valore atteso $\mu$ e la varianza $\sigma^2$.</p>
       <p class="gn-big">$X\sim\mathcal{N}(\mu,\sigma^2)$</p>
-      <p class="gn-say fragment">La «N» sta per «normale». Attenzione: molti testi e librerie scrivono $\mathcal{N}(\mu,\sigma)$, con la <b>deviazione standard</b> al secondo posto. Per non sbagliare scriviamo sempre il nome: $\mathcal{N}(\mu=170,\ \sigma=10)$.</p>
+      <p class="gn-say fragment">La «N» sta per «normale». Attenzione: molti testi e librerie scrivono $\mathcal{N}(\mu,\sigma)$, con la <b>deviazione standard</b> al secondo posto. Per non sbagliare scriviamo sempre il nome, e noi al secondo posto mettiamo la varianza: con $\sigma=10$ si scrive $\mathcal{N}(\mu=170,\ \sigma^2=100)$.</p>
       <p class="gn-ex fragment">L'altezza degli esseri umani è approssimativamente normale, con media <b>170 cm</b> e deviazione standard <b>10 cm</b>: la maggior parte delle persone è alta tra <b class="highlight">160 e 180 cm</b>.</p>
-      <aside class="notes">Pacco, slide 3–4. Il pacco scrive N(μ, σ) e altrove N(μ, σ²): per questo insistiamo sul nome del parametro. Le altezze sono l'esempio che ci accompagna fino alla fine. «La maggior parte»: lo renderemo preciso con la regola 68–95–99,7.</aside>
+      <aside class="notes">Pacco, slide 3–4. Il pacco scrive N(μ, σ) e altrove N(μ, σ²): per questo insistiamo sul nome del parametro. Noi usiamo sempre N(μ, σ²): σ = 10 diventa σ² = 100. Le altezze sono l'esempio che ci accompagna fino alla fine. «La maggior parte»: lo renderemo preciso con la regola 68–95–99,7.</aside>
     </section>
 
     <!-- L2-08 · le curve -->
@@ -764,7 +773,7 @@
         <svg class="scene-svg" width="600" height="400" viewBox="0 0 600 400" role="img" aria-label="La campana standard centrata in 0, con sigma uguale a 1; l'area tra meno 1 e 1, colorata, vale il 68,3 per cento"></svg>
         <div class="gn-text">
           <p>Un caso speciale: la normale con media 0 e deviazione standard 1, la <b>normale standard</b>. Si indica con la $Z$ maiuscola:</p>
-          <p class="gn-big">$Z\sim\mathcal{N}(\mu=0,\ \sigma=1)$, $\;$ o $\;Z\sim\mathcal{N}(0,1)$</p>
+          <p class="gn-big">$Z\sim\mathcal{N}(\mu=0,\ \sigma^2=1)$, $\;$ o $\;Z\sim\mathcal{N}(0,1)$</p>
           <p>La densità e la funzione di ripartizione si scrivono</p>
           <p class="gn-big">$\varphi_{0,1}(z)\quad\Phi_{0,1}(z)$, $\;$ o $\;\varphi(z)\quad\Phi(z)$</p>
           <div>$$\varphi(z)=\frac1{\sqrt{2\pi}}e^{-z^2/2}$$</div><div>$$\Phi(z)=P(Z\le z)=\int_{-\infty}^{z}\varphi(t)\,dt$$</div>
@@ -778,9 +787,9 @@
       <p class="badge">Distribuzione normale · esercizio</p>
       <p class="gn-trace">Supponiamo che l'altezza degli esseri umani sia approssimativamente normale, con media 170 cm e deviazione standard 10 cm. <b>Qual è la probabilità che una persona scelta a caso sia più alta di 180 cm?</b></p>
       <div class="lm-rows">
-        <div class="lm-row fragment"><p class="lm-say">dalla traccia ho</p><div>$$X\sim\mathcal{N}(\mu=170,\ \sigma=10)$$</div></div>
-        <div class="lm-row fragment"><p class="lm-say">e quindi la densità è</p><div>$$\varphi_{170,10}(x)=\frac{1}{10\sqrt{2\pi}}\,e^{-\frac{(x-170)^2}{200}}$$</div></div>
-        <div class="lm-row fragment"><p class="lm-say">perciò la risposta è</p><div>$$P(X>180)=1-\Phi_{170,10}(180)=1-\int_{-\infty}^{180}\frac{1}{10\sqrt{2\pi}}\,e^{-\frac{(x-170)^2}{200}}\,dx$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">dalla traccia ho</p><div>$$X\sim\mathcal{N}(\mu=170,\ \sigma^2=10^2=100)$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">e quindi la densità è</p><div>$$\varphi_{170,100}(x)=\frac{1}{10\sqrt{2\pi}}\,e^{-\frac{(x-170)^2}{200}}$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">perciò la risposta è</p><div>$$P(X>180)=1-\Phi_{170,100}(180)=1-\int_{-\infty}^{180}\frac{1}{10\sqrt{2\pi}}\,e^{-\frac{(x-170)^2}{200}}\,dx$$</div></div>
       </div>
       <p class="gn-stop fragment">Questo integrale <b>non ha una soluzione in forma chiusa</b>: va risolto con il calcolo numerico. E vale in generale: la funzione di ripartizione della normale non è esprimibile in forma chiusa!</p>
       <aside class="notes">Pacco, slide 15–21, una riga per click. Riga 3: «1 − F», perché vogliamo «più di». Click 4: lo stallo. Chiedi: «e all'esame, senza calcolatore?». La risposta nelle due slide successive: una tabella sola, e un trucco per usarla con tutte le normali.</aside>
@@ -792,7 +801,7 @@
       <div class="tz-grid">
         <div class="tz-left">
           <p>I valori di $\Phi(z)$ sono calcolati con grande precisione dai computer e raccolti in una tabella: la <b>tabella Z</b>.</p>
-          <p class="tz-red">Portatela all'esame!</p>
+          
           <p class="fragment" data-fragment-index="1">Riga: unità e primo decimale di $z$. Colonna: secondo decimale. All'incrocio: $\Phi(z)$.</p>
           <p class="fragment tz-ex" data-fragment-index="1">$\Phi(1{,}31)=\color{#38ef7d}{0{,}9049}$</p>
           <p class="fragment" data-fragment-index="2">Solo $z\ge0$. Per i negativi, la <b>simmetria</b>:</p>
@@ -803,7 +812,16 @@
           <svg class="scene-svg fragment" data-fragment-index="2" width="560" height="170" viewBox="0 0 560 170" role="img" aria-label="La campana standard con le due code colorate uguali: a sinistra di meno z e a destra di z"></svg>
         </div>
       </div>
-      <aside class="notes">Pacco, slide 25–26 (la cella evidenziata è 1,31 → 0,9049). Click 1: come si legge, e la cella si accende. Click 2: la simmetria: l'area a sinistra di −z è uguale a quella a destra di z, cioè 1 − Φ(z). Esempio a voce: Φ(−1) = 1 − 0,8413 = 0,1587. La tabella completa (0 – 3,09) è nella dispensa. Ma la tabella è per la normale standard: e le altezze?</aside>
+      <aside class="notes">Pacco, slide 25–26 (la cella evidenziata è 1,31 → 0,9049). Click 1: come si legge, e la cella si accende. Click 2: la simmetria: l'area a sinistra di −z è uguale a quella a destra di z, cioè 1 − Φ(z). Esempio a voce: Φ(−1) = 1 − 0,8413 = 0,1587. La tabella completa (0 – 3,09) è nella dispensa. Nella slide successiva la simmetria si vede in movimento.</aside>
+    </section>
+
+    <!-- L2-15b · la simmetria, con la barra che scorre -->
+    <section id="gn-simmetria">
+      <p class="badge">Normale standard · simmetria</p>
+      <h2 class="scene-title">Due code uguali, per ogni $z$</h2>
+      <svg class="scene-svg" width="1180" height="360" viewBox="0 0 1180 360" role="img" aria-label="A sinistra la campana standard con due barre in meno z e più z e le due code colorate; a destra la funzione di ripartizione con le stesse barre. Le barre scorrono e le due code restano sempre uguali; poi la coda destra si ribalta sulla sinistra e la funzione di ripartizione, girata di mezzo giro attorno al punto zero, un mezzo, ricade su se stessa"></svg>
+      <div class="sy-formula"><div class="s06-box">$$\Phi(-z)=1-\Phi(z)$$</div><p>$\Phi(-1)=1-\Phi(1)=1-0{,}8413=\color{#38ef7d}{0{,}1587}$</p></div>
+      <aside class="notes">Notebook 4.2.3 (Baron): la simmetria che ricava la metà negativa della tabella da quella positiva. All'ingresso z = 1,31, la cella della slide precedente: Φ(−1,31) = 1 − 0,9049 = 0,0951. Click 1: la barra scorre fino a 0 (ogni coda è mezza campana: 0,5 = 0,5), poi fino a 2,8 (code sottilissime), e si ferma a z = 1. I due numeri restano sempre uguali. A destra, sulla Φ, il segmento verde in basso a −z è Φ(−z), quello in alto a +z è quanto manca a 1, cioè 1 − Φ(z): sono lunghi uguali. Click 2: la coda destra si ribalta sulla sinistra; la curva Φ, girata di mezzo giro attorno al punto (0; 0,5), ricade su se stessa e il segmento in alto finisce su quello in basso. Click 3: la formula e l'esempio. Dopo i click puoi trascinare sulla figura per spostare z a mano. Ma la tabella è per la normale standard: e le altezze?</aside>
     </section>
 
     <!-- L2-16 · trasformazioni lineari -->
@@ -814,24 +832,57 @@
         <p>se $\;X\sim\mathcal{N}(\mu,\sigma^2)\;$ e $\;Y=aX+b$</p>
         <div class="s06-box">$$Y\sim\mathcal{N}\big(a\mu+b,\ a^2\sigma^2\big)$$</div>
       </div>
-      <div class="gl-two fragment">
-        <div><p class="gl-head">linearità del valore atteso (Settimana 4)</p>$$\begin{aligned}\mathbb{E}[Y]&=\mathbb{E}[aX+b]\\&=a\,\mathbb{E}[X]+b\\&=a\mu+b\end{aligned}$$</div>
-        <div><p class="gl-head">proprietà della varianza (Settimana 5)</p>$$\begin{aligned}\operatorname{Var}(Y)&=\operatorname{Var}(aX+b)\\&=a^2\operatorname{Var}(X)\\&=a^2\sigma^2\end{aligned}$$</div>
+      <div class="gl-grid">
+        <div class="gl-two">
+          <div><p class="gl-head">linearità del valore atteso (Settimana 4)</p>$$\begin{aligned}\mathbb{E}[Y]&=\mathbb{E}[aX+b]\\&=a\,\mathbb{E}[X]+b\\&=a\mu+b\end{aligned}$$</div>
+          <div><p class="gl-head">proprietà della varianza (Settimana 5)</p>$$\begin{aligned}\operatorname{Var}(Y)&=\operatorname{Var}(aX+b)\\&=a^2\operatorname{Var}(X)\\&=a^2\sigma^2\end{aligned}$$</div>
+        </div>
+        <div class="gl-anim">
+          <svg class="scene-svg" width="720" height="300" viewBox="0 0 720 300" role="img" aria-label="La campana di X, normale con media 1 e varianza 1; moltiplicando per 2 diventa larga il doppio e alta la metà; aggiungendo 3 si sposta a destra senza deformarsi; tra media meno e più una deviazione standard resta sempre il 68,3 per cento dell'area"></svg>
+          <div class="scene-cards gl-cards">
+            <p class="scene-card">Un esempio: $X\sim\mathcal{N}(\mu=1,\ \sigma^2=1)$, con $a=2$ e $b=3$.</p>
+            <p class="scene-card">$\times\,2$: ogni valore raddoppia, anche la media. La campana diventa larga il doppio e alta la metà: l'area resta 1.</p>
+            <p class="scene-card">$+\,3$: ogni valore aumenta di 3. La campana si sposta di 3, senza deformarsi.</p>
+          </div>
+        </div>
       </div>
-      <p class="gl-new fragment">La parte nuova, che accettiamo senza dimostrazione: la forma resta una <b>campana</b>.</p>
-      <aside class="notes">Pacco, slide 27. Click 1: da dove vengono media e varianza: +b sposta tutto, le distanze non cambiano; ×a moltiplica le distanze per a e i loro quadrati per a². Click 2: la proprietà speciale della normale. Ora la usiamo con un a e un b scelti apposta.</aside>
+      <p class="gl-new">La forma resta una <b>campana</b>: $\;Y=2X+3\sim\mathcal{N}\big(2\cdot1+3,\ 2^2\cdot1\big)=\mathcal{N}(5,\,4)$</p>
+      <aside class="notes">Pacco, slide 27. Click 1: da dove vengono media e varianza: +b sposta tutto, le distanze non cambiano; ×a moltiplica le distanze per a e i loro quadrati per a². Click 2–4: l'esempio X ∼ N(1, 1) con a = 2 e b = 3, sullo stesso asse; la curva tratteggiata è X. «× 2» allarga e abbassa (l'area resta 1); «+ 3» sposta senza deformare. Far notare la fascia gialla: tra media − dev. std. e media + dev. std. resta sempre il 68,3%, cioè la forma è la stessa. Click 5: la proprietà speciale della normale, il risultato è proprio N(aμ + b, a²σ²). Ora la usiamo con un a e un b scelti apposta.</aside>
     </section>
 
-    <!-- L2-17 · la standardizzazione -->
+    <!-- L2-17 · la standardizzazione: una trasformazione scelta apposta -->
     <section id="gn-standardizza">
       <p class="badge">Variabile aleatoria normale · standardizzare</p>
-      <div class="lm-rows">
-        <div class="lm-row"><p class="lm-say">creo $Z=aX+b$ con<br>$a=1/\sigma$ e $b=-\mu/\sigma$</p><div>$$Z=\frac{X-\mu}{\sigma}\sim\mathcal{N}\Big(\frac\mu\sigma-\frac\mu\sigma,\ \frac{\sigma^2}{\sigma^2}\Big)=\mathcal{N}(0,1)$$</div></div>
-        <div class="lm-row fragment"><p class="lm-say">se mi chiedono $P(X\lt x)$:<br>prima tolgo $\mu$…</p><div>$$P(X\lt x)=P(X-\mu\lt x-\mu)$$</div></div>
-        <div class="lm-row fragment"><p class="lm-say">…poi divido per $\sigma\gt0$:<br>la disuguaglianza resta valida</p><div>$$=P\left(\frac{X-\mu}{\sigma}\lt\frac{x-\mu}{\sigma}\right)=P\left(Z\lt\frac{x-\mu}{\sigma}\right)$$</div></div>
+      <p class="gn-lead">Usiamo la proprietà appena vista con una trasformazione lineare <b>scelta apposta</b>:</p>
+      <div class="gz-grid">
+        <div class="lm-rows gz-rows">
+          <div class="lm-row"><p class="lm-say">data $X\sim\mathcal{N}(\mu,\sigma^2)$,<br>creo una nuova v.a.</p><div>$$Z=aX+b\quad\text{con}\quad a=\frac1\sigma,\ \ b=-\frac\mu\sigma$$</div></div>
+          <div class="lm-row"><p class="lm-say">cioè</p><div>$$Z=\frac{X}{\sigma}-\frac{\mu}{\sigma}=\frac{X-\mu}{\sigma}$$</div></div>
+          <div class="lm-row"><p class="lm-say">e io so che</p><div>$$Z\sim\mathcal{N}\big(a\mu+b,\ a^2\sigma^2\big)$$</div></div>
+          <div class="lm-row"><p class="lm-say">$\times\,1/\sigma$: la varianza</p><div>$$a^2\sigma^2=\frac{1}{\sigma^2}\,\sigma^2=1$$</div></div>
+          <div class="lm-row"><p class="lm-say">$-\,\mu/\sigma$: la media</p><div>$$a\mu+b=\frac\mu\sigma-\frac\mu\sigma=0$$</div></div>
+        </div>
+        <div class="gz-anim">
+          <svg class="scene-svg" width="540" height="300" viewBox="0 0 540 300" role="img" aria-label="La campana di X, normale con media 3 e varianza 4; dividendo per 2 diventa stretta la metà e alta il doppio, con media 1,5 e varianza 1; togliendo 1,5 si sposta in 0: è la normale standard. Tra media meno e più una deviazione standard resta sempre il 68,3 per cento dell'area"></svg>
+          <p class="gz-ex">Esempio: $X\sim\mathcal{N}(3,\,4)$, $\sigma=2$: $\;a=\tfrac12$, $\;b=-\tfrac32$</p>
+        </div>
       </div>
-      <div class="gs-end fragment"><div class="s06-box">$$\Phi_{\mu,\sigma}(x)=P(X\le x)=\Phi\left(\frac{x-\mu}{\sigma}\right)$$</div><p>e $\Phi$ la leggo nella<br>tabella precalcolata!</p></div>
-      <aside class="notes">Pacco, slide 28–29, un passo per click. Riga 1: la trasformazione particolare; z = (x − μ)/σ dice di quante deviazioni standard x sta sopra o sotto la media. Righe 2–3: la disuguaglianza resta vera se sottraiamo lo stesso numero da entrambi i lati e se dividiamo per un numero positivo. L'evento è lo stesso, scritto in due unità diverse: stessa probabilità.</aside>
+      <div class="gz-end"><div class="s06-box">$$Z=\frac{X-\mu}{\sigma}\sim\mathcal{N}(0,1)$$</div><p>cioè la v.a. <b>normale standard</b>!</p></div>
+      <aside class="notes">Pacco, slide 28, un passo per click. All'ingresso la trasformazione particolare e, a destra, la campana di un esempio. Click 1: riscritta, Z = (X − μ)/σ. Click 2: la proprietà della slide precedente: Z resta normale, con media aμ + b e varianza a²σ². Click 3: «× 1/σ»: la campana diventa stretta la metà e alta il doppio; la varianza diventa 1 (media 1,5). Click 4: «− μ/σ»: la campana si sposta senza deformarsi e il centro va in 0. La fascia gialla tra media − dev. std. e media + dev. std. vale sempre il 68,3%. Click 5: è la normale standard. z = (x − μ)/σ dice di quante deviazioni standard x sta sopra o sotto la media.</aside>
+    </section>
+
+    <!-- L2-17b · le probabilità di X con la standardizzazione -->
+    <section id="gn-standardizza-prob">
+      <p class="badge">Variabile aleatoria normale · probabilità con $Z$</p>
+      <p class="gn-lead">Ora usiamo $Z$ per calcolare $P(X\lt x)$, per <b>qualsiasi</b> normale $X\sim\mathcal{N}(\mu,\sigma^2)$:</p>
+      <div class="lm-rows">
+        <div class="lm-row fragment"><p class="lm-say">se mi chiedono $P(X\lt x)$,<br>prima tolgo $\mu$ ai due lati…</p><div>$$P(X\lt x)=P(X-\mu\lt x-\mu)$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">…poi divido per $\sigma\gt0$:<br>la disuguaglianza resta valida</p><div>$$=P\left(\frac{X-\mu}{\sigma}\lt\frac{x-\mu}{\sigma}\right)$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">ma $\dfrac{X-\mu}{\sigma}$ è proprio $Z$!</p><div>$$=P\left(Z\lt\frac{x-\mu}{\sigma}\right)$$</div></div>
+      </div>
+      <div class="gs-end fragment"><div class="s06-box">$$\Phi_{\mu,\sigma^2}(x)=P(X\le x)=\Phi\left(\frac{x-\mu}{\sigma}\right)$$</div><p>e $\Phi$ la leggo nella<br>tabella precalcolata!</p></div>
+      <p class="gz-try fragment">Con l'esempio di prima, $X\sim\mathcal{N}(3,\,4)$: $\;P(X\lt5)=\Phi\Big(\dfrac{5-3}{2}\Big)=\Phi(1)=\color{#38ef7d}{0{,}8413}$</p>
+      <aside class="notes">Pacco, slide 29, un passo per click. Righe 1–2: la disuguaglianza resta vera se sottraiamo lo stesso numero da entrambi i lati e se dividiamo per un numero positivo (con σ negativo si girerebbe, ma σ è sempre positiva). Riga 3: a sinistra c'è proprio la Z della slide precedente. L'evento è lo stesso, scritto in due unità diverse: stessa probabilità. Click 4: la formula da ricordare. Click 5: un conto con l'esempio di prima; 5 sta una deviazione standard sopra la media. Poi lo stesso conto visto sul righello delle altezze.</aside>
     </section>
 
     <!-- L2-18 · due righelli -->
@@ -858,7 +909,7 @@
     <!-- L2-20 · la soluzione delle altezze -->
     <section id="gn-soluzione">
       <p class="badge">Distribuzione normale · esercizio, la soluzione</p>
-      <p class="gn-trace">Altezza $X\sim\mathcal{N}(\mu=170,\ \sigma=10)$: probabilità di superare 180 cm?</p>
+      <p class="gn-trace">Altezza $X\sim\mathcal{N}(\mu=170,\ \sigma^2=100)$: probabilità di superare 180 cm?</p>
       <div class="lm-rows">
         <div class="lm-row"><p class="lm-say red">modo non conveniente</p><div>$$P(X>180)=1-\int_{-\infty}^{180}\frac{1}{10\sqrt{2\pi}}\,e^{-\frac{(x-170)^2}{200}}\,dx$$</div></div>
         <div class="lm-row fragment"><p class="lm-say">modo conveniente:<br>la proprietà appena vista</p><div>$$P(X>180)=1-\Phi\left(\frac{180-170}{10}\right)=1-\Phi(1)$$</div></div>
@@ -902,7 +953,22 @@
         </div>
         <div class="sondaggio-join"></div>
       </div>
-      <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2 e 3, rifai con le altezze P(X ≤ 180) = Φ(1) = 0,8413, anche con NormalDist(170, 10).cdf(180) dal vivo.</aside>
+      <aside class="notes">1 minuto, rivelazione immediata (V). Se prevalgono 2 e 3, rifai con le altezze P(X ≤ 180) = Φ(1) = 0,8413, anche con NormalDist(mu=170, sigma=10).cdf(180) dal vivo (NormalDist vuole σ, non σ²).</aside>
+    </section>
+
+    <!-- L2-22b · esercizio: da dove viene il 68% -->
+    <section id="gn-68">
+      <p class="badge">Distribuzione normale · esercizio</p>
+      <p class="gn-trace">Data una variabile normale $X\sim\mathcal{N}(\mu,\sigma^2)$, non meglio specificata, <b>calcolare la probabilità che prenda valori tra $\mu-\sigma$ e $\mu+\sigma$</b>. Dare un valore numerico.</p>
+      <div class="lm-rows">
+        <div class="lm-row fragment"><p class="lm-say">mi stanno chiedendo</p><div>$$P(\mu-\sigma\le X\le\mu+\sigma)$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">con la funzione di<br>ripartizione, $F(b)-F(a)$</p><div>$$=\Phi_{\mu,\sigma^2}(\mu+\sigma)-\Phi_{\mu,\sigma^2}(\mu-\sigma)$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">standardizzando</p><div>$$=\Phi\left(\frac{(\mu+\sigma)-\mu}{\sigma}\right)-\Phi\left(\frac{(\mu-\sigma)-\mu}{\sigma}\right)=\Phi(1)-\Phi(-1)$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">simmetria</p><div>$$=\Phi(1)-\big(1-\Phi(1)\big)=2\,\Phi(1)-1$$</div></div>
+        <div class="lm-row fragment"><p class="lm-say">tabella Z</p><div>$$=2\cdot0{,}8413-1=\color{#38ef7d}{0{,}6826}$$</div></div>
+      </div>
+      <p class="gz-try fragment">Il risultato non dipende né da $\mu$ né da $\sigma$: vale per <b>ogni</b> normale. È il 68% della prossima slide.</p>
+      <aside class="notes">Pacco «11. Inferenza Bayesiana», slide 6–7 (nel pacco il risultato era scritto 0,6816: il conto giusto è 2 · 0,8413 − 1 = 0,6826). Lascia due o tre minuti prima del primo click: «non meglio specificata» spaventa, ma μ e σ si semplificano. Un passo per click: l'evento; F(b) − F(a); standardizzare le due soglie, che diventano 1 e −1; la simmetria della slide gn-simmetria; la tabella. Click 6: non dipende dalla normale scelta, quindi è una regola generale. Con 2 e 3 al posto di 1 si ottengono 95% e 99,7%.</aside>
     </section>
 
     <!-- L2-23 · 68, 95, 99,7 -->
@@ -935,7 +1001,7 @@
     <!-- L2-25 · la soluzione -->
     <section id="gn-esercizio-sol">
       <p class="badge">Distribuzione normale · esercizio, la soluzione</p>
-      <p class="gn-trace">$X\sim\mathcal{N}(\mu=3,\ \sigma=4)$</p>
+      <p class="gn-trace">$X\sim\mathcal{N}(\mu=3,\ \sigma^2=16)$, quindi $\sigma=4$</p>
       <div class="lm-rows">
         <div class="lm-row"><p class="lm-say">complemento,<br>poi simmetria</p><div>$$P(X\gt0)=1-\Phi\Big(\frac{0-3}{4}\Big)=1-\Phi(-0{,}75)=\Phi(0{,}75)=\color{#38ef7d}{0{,}7734}$$</div></div>
         <div class="lm-row fragment"><p class="lm-say">differenza</p><div>$$P(2\lt X\lt5)=\Phi\Big(\frac{5-3}{4}\Big)-\Phi\Big(\frac{2-3}{4}\Big)=\Phi(0{,}5)-\Phi(-0{,}25)$$</div></div>
@@ -953,7 +1019,7 @@
       <svg class="scene-svg" width="1100" height="320" viewBox="0 0 1100 320" role="img" aria-label="La campana dei redditi; una soglia scorre da sinistra finché l'area a sinistra vale il 3 per cento, a 524 monete"></svg>
       <div class="pq-lines">
         <p class="pq-2">$\Phi(z)=0{,}03\;\Rightarrow\;z\approx-1{,}88\;\Rightarrow\;x=\mu+z\sigma=900-1{,}88\cdot200=\color{#38ef7d}{524}$</p>
-        <p class="pq-3"><span class="s06-code">NormalDist(900, 200).inv_cdf(0.03)</span></p>
+        <p class="pq-3"><span class="s06-code">NormalDist(mu=900, sigma=200).inv_cdf(0.03)</span></p>
       </div>
       <aside class="notes">Notebook 4.2.3 (Baron, Esempio 4.12). Prima i problemi diretti: dalla soglia alla probabilità; ora il contrario. Click 1: la soglia scorre finché a sinistra resta il 3%. 2: nella tabella cerco Φ(z) = 0,97 → z = 1,88, quindi per simmetria Φ(−1,88) = 0,03; poi destandardizzo con x = μ + zσ. 3: in Python. Si chiama quantile al 3%; nei sistemi il quantile al 99% di un tempo di risposta si chiama p99.</aside>
     </section>
@@ -1021,7 +1087,7 @@
       <p class="ux-q">Un benchmark: media 120 ms, $\sigma=3$ ms.<br>Oggi: <span class="red">135 ms</span>. Che cosa scrivi nel ticket?</p>
       <p class="ux-a fragment">$z=(135-120)/3=5$: cerca la causa, non è «sfortuna»</p>
       <p class="ux-home">A casa: dispensa, Atti VI–VII · esercizi 5–8 · laboratorio «la campana nasce dagli errori»<br>Settimana 9: perché le somme di tanti piccoli errori diventano campane</p>
-      <aside class="notes">Cuscinetto (S). Due risposte a voce, poi click 1: z = (135 − 120)/3 = 5, oltre ogni fascia: un evento rarissimo o, più spesso, qualcosa è cambiato. Facoltative: Lettura C (Gauss e i minimi quadrati) e il riquadro su De Moivre. Chiudi entro le 10:45.</aside>
+      <aside class="notes">Cuscinetto (S). Due risposte a voce, poi click 1: z = (135 − 120)/3 = 5, oltre ogni fascia: un evento rarissimo o, più spesso, qualcosa è cambiato. Facoltativo: il riquadro su De Moivre. Chiudi entro le 10:45.</aside>
     </section>
 
   </div></div>

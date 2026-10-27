@@ -29,7 +29,7 @@ Due storie accompagnano il percorso. La prima è un paradosso che il matematico 
 
 All’esame devi saper spiegare perché, per una variabile continua, la probabilità di un singolo valore è zero e perché la probabilità di un intervallo è un’area sotto la densità; devi saper usare la densità e la funzione di ripartizione per calcolare la probabilità che una variabile cada sotto una soglia, sopra una soglia o tra due soglie. Della distribuzione uniforme devi conoscere densità, media e varianza, e saperla usare. Della distribuzione esponenziale devi saper ricavare la coda $P(T>t)=e^{-\lambda t}$ dalla distribuzione di Poisson, conoscere densità, funzione di ripartizione, media e varianza, e dimostrare la proprietà di assenza di memoria. Della distribuzione normale devi conoscere il significato dei parametri $\mu$ e $\sigma$, saper standardizzare una variabile, calcolare probabilità con la tabella di $\Phi$ e con la sua simmetria, usare la regola 68–95–99,7 e risolvere il problema inverso, cioè trovare la soglia che corrisponde a una probabilità assegnata.
 
-Sono invece **facoltative e non richieste all’esame** le tre letture in fondo alla dispensa (il paradosso di Bertrand con i conti completi, l’argomento di Jaynes sulle invarianze, e il metodo dei minimi quadrati di Gauss). Sono facoltativi anche i riquadri intitolati «Approfondimento facoltativo», che contengono soprattutto le dimostrazioni di medie e varianze con gli integrali. Le formule delle medie e delle varianze sono richieste; le loro dimostrazioni con gli integrali no. Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
+Sono invece **facoltative e non richieste all’esame** le due letture in fondo alla dispensa (il paradosso di Bertrand con i conti completi e l’argomento di Jaynes sulle invarianze). Sono facoltativi anche i riquadri intitolati «Approfondimento facoltativo», che contengono soprattutto le dimostrazioni di medie e varianze con gli integrali. Le formule delle medie e delle varianze sono richieste; le loro dimostrazioni con gli integrali no. Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
 
 Una parola sugli integrali, che compariranno in questa settimana. Il simbolo di integrale indicherà sempre un’area sotto una curva. Chi ha già seguito Analisi lo riconoscerà; chi non lo ha ancora fatto può leggerlo come il nome di quell’area. Nel percorso principale le aree da calcolare a mano sono rettangoli; tutte le altre si ottengono da una formula già pronta oppure si leggono in una tabella.
 
@@ -552,7 +552,9 @@ Il grafico è una rampa che sale in linea retta da 0 a 1. Per l’autobus unifor
 
 Quando abbiamo studiato la distribuzione di Poisson, l’abbiamo usata per contare quante volte un evento si verifica in un intervallo, quando le occorrenze sono indipendenti l’una dall’altra e arrivano con un ritmo medio costante. Ora cambiamo domanda. Invece di chiederci **quanti** eventi cadono in un intervallo, ci chiediamo **quanto tempo** dobbiamo aspettare il prossimo. Questa seconda grandezza è un tempo, e può assumere qualunque valore positivo: è una variabile continua.
 
-Gli esempi sono a coppie, e ogni coppia nasce da un’ipotesi. Prendiamo gli attacchi a un sito web. **Se assumiamo** che arrivino uno alla volta, indipendentemente l’uno dall’altro e con un ritmo medio costante, cioè con le ipotesi da cui nella [Settimana 5](../settimana_05/index.md#pezzetti) abbiamo costruito la distribuzione di Poisson, **allora** il numero di attacchi in un giorno è una variabile aleatoria poissoniana, e il tempo che separa due attacchi ha la distribuzione che stiamo per introdurre. Non è un fatto garantito: se gli attacchi arrivassero a ondate, per esempio da una rete di computer infetti che colpisce per qualche minuto e poi tace, il modello non descriverebbe bene né il conteggio né l’attesa. La stessa ipotesi forma anche le altre coppie: il numero di operazioni su un grande database nei prossimi 10 millisecondi e il tempo fino alla prossima operazione; il numero di utenti che cliccano su un annuncio nei prossimi 5 minuti e il tempo tra due clic; le stampe inviate a una stampante condivisa in un’ora e il tempo tra due stampe. In ogni coppia il primo numero conta, il secondo misura un’attesa.
+Prendiamo gli attacchi a un sito web. **Se assumiamo** che arrivino uno alla volta, indipendentemente l’uno dall’altro e con un ritmo medio costante, cioè con le ipotesi da cui nella [Settimana 5](../settimana_05/index.md#pezzetti) abbiamo costruito la distribuzione di Poisson, **allora** il numero di attacchi in un giorno è una variabile aleatoria poissoniana, e il tempo che separa due attacchi ha la distribuzione che stiamo per introdurre. Non è un fatto garantito: se gli attacchi arrivassero a ondate, per esempio da una rete di computer infetti che colpisce per qualche minuto e poi tace, il modello non descriverebbe bene né il conteggio né l’attesa. 
+
+Sempre con le assunzioni in mente, menzioniamo altri esempi della relazione Poisson-Esponenziale: il numero di operazioni su un grande database nei prossimi 10 millisecondi e il tempo fra due operazioni; il numero di utenti che cliccano su un annuncio nei prossimi 5 minuti e il tempo tra due clic; le stampe inviate a una stampante condivisa in un’ora e il tempo tra due stampe. In ogni coppia il primo numero conta, il secondo misura un’attesa. Pensa tu ad altri esempi...
 
 Per collegare le due grandezze fissiamo il **tasso** $\lambda$: il numero medio di eventi per unità di tempo. Per esempio, una stampante riceve in media $\lambda=3$ lavori all’ora. Chiamiamo $X_t$ il numero di eventi in un intervallo lungo $t$ ore. Sotto le ipotesi appena richiamate, come abbiamo visto nella [Settimana 5](../settimana_05/index.md#tasso), $X_t$ ha distribuzione di Poisson con media $\lambda t$, e questo vale per **ogni** durata $t$, non solo per un’ora: in $t$ ore la stampante riceve in media $3t$ lavori.
 
@@ -882,14 +884,14 @@ Il giovane **Carl Friedrich Gauss**, che ha 24 anni, racconta nella prefazione d
 > «[…] l’orbita del pianeta Cerere, che in questi quarantuno giorni aveva descritto un arco geocentrico di soli tre gradi, e che dopo un anno doveva essere cercato in una regione del cielo molto lontana da quella in cui era stato visto per l’ultima volta.»
 > — C. F. Gauss, *Theoria motus corporum coelestium*, 1809, prefazione, p. xv della traduzione inglese di C. H. Davis (1857), tradotto dall’inglese
 
-Gauss calcola l’orbita nell’autunno del 1801 con un metodo nuovo, pensato per mettere d’accordo molte osservazioni imprecise. E, scrive, «la prima notte serena in cui il pianeta fu cercato seguendo i numeri ricavati» lo restituì all’osservazione. In una nota indica chi lo cercò e quando: l’astronomo **Franz Xaver von Zach**, il 7 dicembre 1801.
+Nell’autunno del 1801 Gauss calcola l’orbita di Cerere con un metodo nuovo, pensato per ricavare un risultato affidabile da molte osservazioni, ciascuna un po’ imprecisa. Conoscere l’orbita vuol dire sapere dove si troverà Cerere nei mesi successivi, e quindi dove puntare il telescopio. La previsione funziona al primo tentativo: Gauss racconta che Cerere fu ritrovato «la prima notte serena» in cui lo si cercò nel punto del cielo indicato dai suoi calcoli. In una nota aggiunge chi lo ritrovò e quando: l’astronomo **Franz Xaver von Zach**, il 7 dicembre 1801.
 
 Il cuore del metodo di Gauss è una domanda di probabilità: con quale probabilità una misura sbaglia di una certa quantità? Che gli errori piccoli siano frequenti e quelli grandi rari, e che gli errori in eccesso e in difetto siano ugualmente probabili, lo pensavano tutti. Ma con quale curva, esattamente, si distribuiscono? Gauss non la ricava dalla fisica del telescopio. Parte da un’abitudine che tutti gli astronomi già seguivano: quando si misura più volte la stessa grandezza, si prende la **media aritmetica** delle misure. Nella *Theoria motus* lo dice così:
 
 > «È consuetudine considerare come un assioma l’ipotesi che, se una grandezza è stata determinata con più osservazioni dirette, fatte nelle stesse circostanze e con uguale cura, la media aritmetica dei valori osservati fornisca il valore più probabile, se non rigorosamente, almeno con grande approssimazione.»
 > — C. F. Gauss, *Theoria motus*, 1809, libro II, sezione III, art. 177 (pp. 258–259 della traduzione di Davis, tradotto dall’inglese)
 
-Poi si chiede: quale curva degli errori rende la media aritmetica, sempre, il valore più probabile? La risposta, con un conto che lasciamo ai libri, è una sola: una curva a forma di campana, simmetrica attorno all’errore zero, proporzionale a $e^{-h^2x^2}$, dove $x$ è l’errore e $h$ una costante che Gauss chiama «misura della precisione». È la curva che oggi porta il suo nome. Dalla stessa curva Gauss ricava il **metodo dei minimi quadrati**, con cui calcola le orbite; lo ricostruiamo nella [Lettura C](#minimi-quadrati). Gauss è anche onesto sui limiti del suo modello: nell’articolo successivo osserva che questa curva non può descrivere rigorosamente gli errori reali, che non sono mai infinitamente grandi. È un modello, e funziona straordinariamente bene.
+Poi si chiede: quale curva degli errori rende la media aritmetica, sempre, il valore più probabile? La risposta, con un conto che lasciamo ai libri, è una sola: una curva a forma di campana, simmetrica attorno all’errore zero, proporzionale a $e^{-h^2x^2}$, dove $x$ è l’errore e $h$ una costante che Gauss chiama «misura della precisione». È la curva che oggi porta il suo nome. Dalla stessa curva Gauss ricava il **metodo dei minimi quadrati**, con cui calcola le orbite. Gauss è anche onesto sui limiti del suo modello: nell’articolo successivo osserva che questa curva non può descrivere rigorosamente gli errori reali, che non sono mai infinitamente grandi. È un modello, e funziona straordinariamente bene.
 
 ??? note "Approfondimento facoltativo — Prima di Gauss: De Moivre e le monete"
     La stessa curva era già apparsa quasi settant’anni prima, in un contesto del tutto diverso. Nel 1733 **Abraham De Moivre**, un matematico francese emigrato a Londra, cercava un modo per approssimare le probabilità della distribuzione binomiale quando il numero di lanci di una moneta è enorme e i conti esatti sono impraticabili. Lo considerava
@@ -913,15 +915,20 @@ $$
 X\sim\mathcal{N}(\mu,\sigma^2),
 $$
 
-dove la $\mathcal{N}$ sta per «normale». Attenzione alla notazione: molti testi, molte librerie e anche alcune slide scrivono $\mathcal{N}(\mu,\sigma)$, mettendo al secondo posto la **deviazione standard** invece della varianza. Per non sbagliare, negli esercizi conviene scrivere sempre il nome del parametro, per esempio $X\sim\mathcal{N}(\mu=170,\ \sigma=10)$, oppure $\mathcal{N}(\mu=3,\ \sigma^2=16)$.
+dove la $\mathcal{N}$ sta per «normale». Attenzione alla notazione: molti testi, molte librerie e anche alcune slide scrivono $\mathcal{N}(\mu,\sigma)$, mettendo al secondo posto la **deviazione standard** invece della varianza. Per non sbagliare, negli esercizi conviene scrivere sempre il nome del parametro. Per esempio, la stessa distribuzione si può scrivere $X\sim\mathcal{N}(\mu=170,\ \sigma=10)$ oppure $X\sim\mathcal{N}(\mu=170,\ \sigma^2=100)$: se al secondo posto si indica la deviazione standard si scrive 10, se si indica la varianza si scrive il suo quadrato, 100. In questa dispensa e nelle slide usiamo sempre la seconda forma, con la varianza.
 
-Ecco il nostro esempio per tutta la seconda parte. L’altezza degli esseri umani adulti di una certa popolazione è approssimativamente normale, con media 170 cm e deviazione standard 10 cm: $X\sim\mathcal{N}(\mu=170,\ \sigma=10)$, cioè con varianza $\sigma^2=100\ \text{cm}^2$. Questo significa, come vedremo, che la maggior parte delle persone ha un’altezza compresa tra 160 e 180 cm.
+Ecco il nostro esempio per tutta la seconda parte. L’altezza degli esseri umani adulti di una certa popolazione è approssimativamente normale, con media 170 cm e deviazione standard 10 cm, quindi con varianza $\sigma^2=10^2=100\ \text{cm}^2$: $X\sim\mathcal{N}(\mu=170,\ \sigma^2=100)$. Questo significa, come vedremo, che la maggior parte delle persone ha un’altezza compresa tra 160 e 180 cm.
 
 La densità della distribuzione normale è
 
 $$
 f(x)=\frac{1}{\sigma\sqrt{2\pi}}\;e^{-\frac{(x-\mu)^2}{2\sigma^2}}\qquad\text{per ogni } x \text{ reale.}
 $$
+
+??? note "Approfondimento facoltativo — Che cosa ci fa $\pi$ nella campana? Un video"
+    Nella formula compare un ospite inatteso: $\pi$, il numero dei cerchi. Che cosa c’entra un cerchio con gli errori di misura di Gauss o con le altezze delle persone? Come vedremo tra poco, $\pi$ sta nella costante davanti alla formula, quella che serve soltanto a rendere l’area totale uguale a 1. La domanda però resta: perché proprio $\pi$, e non un altro numero?
+
+    Una risposta molto bella, senza trucchi di calcolo, la dà Grant Sanderson nel video [*Why π is in the normal distribution (beyond integral tricks)*](https://youtu.be/cy8r7WSuT1I) del suo canale 3Blue1Brown. L’idea è guardare la campana in due dimensioni, come una nuvola di errori su un piano invece che lungo una retta. Se l’errore in orizzontale e quello in verticale sono indipendenti, e nessuna direzione è privilegiata, la nuvola ha la stessa forma in tutte le direzioni, cioè una simmetria circolare. Il volume sotto questa campana a due dimensioni si calcola allora sommando tanti anelli concentrici, e i cerchi portano con sé $\pi$; dall’area in due dimensioni si torna poi a quella su una retta. Il video dura circa 25 minuti ed è in inglese; su YouTube si possono attivare i sottotitoli, anche tradotti automaticamente in italiano.
 
 La formula sembra minacciosa, ma si legge un pezzo alla volta, partendo dall’esponente. La quantità $x-\mu$ è la distanza del punto $x$ dal centro $\mu$. Elevata al quadrato diventa positiva e prende lo stesso valore per due punti alla stessa distanza dal centro, uno a destra e uno a sinistra: per questo la curva è **simmetrica** attorno a $\mu$. Il segno meno davanti fa sì che, più $x$ è lontano da $\mu$, più l’esponente è negativo e più $e^{(\cdots)}$ è piccolo: la curva ha il suo massimo in $x=\mu$ e scende ai lati, e scende in fretta, perché nell’esponente c’è il quadrato della distanza. Il denominatore $2\sigma^2$ fissa la scala: misura le distanze in unità di $\sigma$, così che con $\sigma$ grande bisogna allontanarsi molto prima che la curva cali. Infine la costante davanti, $1/(\sigma\sqrt{2\pi})$, serve soltanto a rendere l’area totale uguale a 1. Per ricordare la forma basta tenere a mente la parte che conta:
 
@@ -1043,7 +1050,7 @@ $$
 <figcaption>La normale standard Z ha media 0 e deviazione standard 1. La sua densità si indica con φ (fi minuscola), la sua funzione di ripartizione con Φ (fi maiuscola). Tra −1 e 1 c’è circa il 68,3% dell’area.</figcaption>
 </figure>
 
-Proviamo ora a rispondere a una domanda concreta. Con le altezze $X\sim\mathcal{N}(\mu=170,\ \sigma=10)$: qual è la probabilità che una persona scelta a caso sia più alta di 180 cm?
+Proviamo ora a rispondere a una domanda concreta. Con le altezze $X\sim\mathcal{N}(\mu=170,\ \sigma^2=100)$: qual è la probabilità che una persona scelta a caso sia più alta di 180 cm?
 
 La strada diretta è chiara. La probabilità di superare 180 è il complemento della funzione di ripartizione in 180, e la funzione di ripartizione è l’area sotto la densità a sinistra di 180:
 
@@ -1210,7 +1217,7 @@ $$
 Circa l’87% delle famiglie appartiene alla classe media.
 
 !!! example "Sosta di verifica"
-    Con le altezze $X\sim\mathcal{N}(\mu=170,\ \sigma=10)$, calcola la probabilità che una persona sia più bassa di 155 cm e quella che sia alta tra 165 e 185 cm.
+    Con le altezze $X\sim\mathcal{N}(\mu=170,\ \sigma^2=100)$, calcola la probabilità che una persona sia più bassa di 155 cm e quella che sia alta tra 165 e 185 cm.
 
     ??? esempio-svolto "Risposta"
         Per la prima, $z=(155-170)/10=-1{,}5$, quindi $P(X<155)=\Phi(-1{,}5)=1-\Phi(1{,}5)=1-0{,}9332=0{,}0668$. Per la seconda le soglie diventano $z=-0{,}5$ e $z=1{,}5$: $P(165<X<185)=\Phi(1{,}5)-\Phi(-0{,}5)=0{,}9332-(1-0{,}6915)=0{,}9332-0{,}3085=0{,}6247$.
@@ -1296,15 +1303,17 @@ redditi = NormalDist(mu=900, sigma=200)
 print(redditi.inv_cdf(0.03))             # quantile al 3%: 523.8...
 ```
 
-Lo stesso si fa con la libreria scientifica SciPy, con `scipy.stats.norm.cdf(180, loc=170, scale=10)` e `scipy.stats.norm.ppf(0.03, loc=900, scale=200)`. In tutti questi casi il secondo parametro è la deviazione standard, non la varianza.
+Lo stesso si fa con la libreria scientifica SciPy, con `scipy.stats.norm.cdf(180, loc=170, scale=10)` e `scipy.stats.norm.ppf(0.03, loc=900, scale=200)`. NB. In tutti questi casi il secondo parametro è la deviazione standard, non la varianza.
 
 ### Quando la campana descrive bene i dati {: #normale-informatica }
 
-Perché la distribuzione normale compare così spesso? Gauss e De Moivre ci hanno lasciato un indizio: in entrambe le loro situazioni il risultato era la somma di tanti piccoli contributi indipendenti. È questa la situazione in cui la campana descrive bene i dati: una grandezza che nasce dalla **somma di molti piccoli disturbi indipendenti**, nessuno dei quali domina gli altri. L’errore di un sensore, il tempo di un benchmark ripetuto, l’errore di un orologio di sistema sono di questo tipo. In questi casi la regola 68–95–99,7 diventa un linguaggio comune: un benchmark con media 120 ms e $\sigma=3$ ms che un giorno dà 135 ms è a cinque deviazioni standard dalla media, e vale la pena cercarne la causa invece di archiviarlo come sfortuna.
+Perché la distribuzione normale compare così spesso? Gauss e De Moivre ci hanno lasciato un indizio: in entrambe le loro situazioni il risultato era la somma di tanti piccoli contributi indipendenti. È questa la situazione in cui la campana descrive bene i dati: una grandezza che nasce dalla **somma di molti piccoli disturbi indipendenti**, nessuno dei quali domina gli altri. L’errore di un sensore, il tempo di un benchmark ripetuto, l’errore di un orologio di sistema sono di questo tipo.
+
+In questi casi la regola 68–95–99,7 aiuta a capire se una misura rientra nell’ordinario o se è successo qualcosa. Prendiamo un benchmark che, ripetuto molte volte, dura in media 120 ms, con una deviazione standard di 3 ms. Per la regola, quasi tutte le esecuzioni, il 99,7%, durano tra $120-3\cdot3=111$ ms e $120+3\cdot3=129$ ms. Supponiamo ora che un giorno lo stesso benchmark duri 135 ms. Sono 15 ms sopra la media, cioè $15/3=5$ deviazioni standard: secondo il modello normale, un valore così lontano capita circa una volta su tre milioni e mezzo. Liquidarlo come un caso sfortunato non è ragionevole: è molto più probabile che qualcosa sia cambiato, per esempio un altro programma che occupava la macchina o una modifica al codice che l’ha rallentato, e vale la pena cercarne la causa.
 
 Non tutto, però, è normale. I tempi di risposta reali dei servizi web, per esempio, non sono mai negativi, sono asimmetrici e ogni tanto presentano valori molto grandi, per una pausa del garbage collector, un disco lento, una ritrasmissione. Una distribuzione normale con la stessa media e la stessa deviazione standard direbbe che quei valori sono praticamente impossibili, e prometterebbe tempi migliori di quelli veri. Per questo chi gestisce sistemi in produzione misura i quantili direttamente sui dati, invece di calcolarli con $\mu+z\sigma$. Come per la distribuzione di Poisson ([Settimana 5, §19](../settimana_05/index.md#sovradispersione)), il modello va controllato sui dati: un istogramma, o il conteggio dei valori oltre $3\sigma$, dice subito se la campana è credibile.
 
-C’è una battuta che il matematico Henri Poincaré riporta nel suo *Calcul des probabilités* e attribuisce al fisico Gabriel Lippmann: tutti credono nella legge normale degli errori, «gli sperimentatori perché pensano che sia un teorema di matematica, i matematici perché pensano che sia un fatto sperimentale». La battuta coglie un punto serio: la campana è un modello, giustificato dalla matematica quando la grandezza è una somma di tanti piccoli effetti, e da controllare sui dati in tutti gli altri casi.
+C’è una battuta che il matematico Henri Poincaré riporta nel suo *Calcul des probabilités* e attribuisce al fisico Gabriel Lippmann: tutti credono nella legge normale degli errori, «gli sperimentatori perché pensano che sia un teorema di matematica, i matematici perché pensano che sia un fatto sperimentale». La battuta funziona perché ciascuno dei due gruppi si fida della campana pensando che a garantirla sia l’altro: lo sperimentatore si affida al matematico, il matematico allo sperimentatore, e così nessuno dei due l’ha davvero controllata. Dietro lo scherzo c’è un punto serio. La matematica garantisce la campana solo in una situazione precisa, quella vista sopra: una grandezza che nasce dalla somma di tanti piccoli effetti indipendenti. In tutti gli altri casi la campana è un’ipotesi, e per sapere se è credibile bisogna guardare i dati, come abbiamo visto con i tempi di risposta dei servizi web.
 
 ### Laboratorio: la campana nasce dagli errori {: #lab-normale }
 
@@ -1486,34 +1495,6 @@ Prova prima **Ruota** con ciascun metodo: le corde girano, il cerchio resta ferm
 
 Le tre simmetrie hanno ruoli diversi: la rotazione non distingue i metodi, la scala elimina il primo, la traslazione elimina il terzo. Il criterio generale è dichiarare quali trasformazioni rappresentano davvero la stessa informazione e giustificare con esse l’assegnazione di probabilità.
 
-## Lettura C — Gauss e i minimi quadrati {: #minimi-quadrati .psi-facoltativo }
-
-Questa lettura è facoltativa. Mostra, con un esempio piccolo, il legame tra la media aritmetica e il metodo dei minimi quadrati di cui parla Gauss.
-
-Supponiamo di misurare quattro volte la stessa distanza e di ottenere 10, 12, 11 e 13, in qualche unità. Quale numero $c$ riassume meglio le misure? Un criterio naturale è scegliere $c$ in modo che gli scarti $x_i-c$ siano, nel complesso, piccoli. Gauss propone di rendere minima la **somma dei quadrati degli scarti**:
-
-$$
-S(c)=\sum_{i=1}^{n}(x_i-c)^2.
-$$
-
-Qui $x_1,\dots,x_n$ sono le misure e $n$ il loro numero; il simbolo $\sum_{i=1}^n$ indica la somma su tutte le misure. Mostriamo, senza derivate, che il minimo si ha quando $c$ è la media aritmetica $\bar x=(x_1+\dots+x_n)/n$.
-
-Scriviamo ogni scarto passando per la media, $x_i-c=(x_i-\bar x)+(\bar x-c)$, ed eleviamo al quadrato:
-
-$$
-(x_i-c)^2=(x_i-\bar x)^2+2(x_i-\bar x)(\bar x-c)+(\bar x-c)^2.
-$$
-
-Sommiamo su tutte le misure. Il termine centrale contiene la somma degli scarti dalla media, $\sum_i(x_i-\bar x)$, che vale zero: poiché $\sum_i x_i=n\bar x$, gli scarti positivi e quelli negativi dalla media si compensano esattamente. Restano
-
-$$
-S(c)=\sum_{i=1}^{n}(x_i-\bar x)^2+n(\bar x-c)^2.
-$$
-
-Il primo pezzo non dipende da $c$. Il secondo è un quadrato moltiplicato per $n$, quindi non è mai negativo, e vale zero solo per $c=\bar x$. Dunque $S(c)$ è minima quando $c=\bar x$.
-
-Con le nostre misure, $\bar x=(10+12+11+13)/4=11{,}5$. È il collegamento che Gauss sfrutta nell’articolo 179 della *Theoria motus*: se gli errori seguono la sua curva, il valore più probabile è quello che rende minima la somma dei quadrati degli scarti, e per una sola grandezza misurata più volte è proprio la media. Gauss scrive di usare questo principio dal 1795, e riconosce nel testo che a pubblicarlo per primo era stato **Adrien-Marie Legendre**, nelle sue *Nouvelles méthodes pour la détermination des orbites des comètes* (art. 186). Per un’orbita le incognite sono più di una e i conti più lunghi, ma il principio è identico. È lo stesso principio che oggi addestra una regressione lineare, quando si rende minimo l’errore quadratico medio.
-
 ## Esercizi: prima prova, poi apri la soluzione {: #esercizi }
 
 Per ogni esercizio scrivi prima, in una frase, che cosa misura la variabile, quale distribuzione ha e con quali parametri, e quale evento ti viene chiesto. Poi fai il conto. I risultati numerici servono a controllare il procedimento; all’esame conta il ragionamento.
@@ -1548,7 +1529,7 @@ A una stampante condivisa arrivano in media 3 lavori all’ora, uno alla volta, 
 
 ### Esercizio 5 — Le altezze {: #esercizio-5 }
 
-L’altezza delle persone adulte di una popolazione è $X\sim\mathcal{N}(\mu=170,\ \sigma=10)$, in centimetri. (a) Qual è la probabilità che una persona sia più bassa di 180 cm? (b) E che sia alta tra 150 e 175 cm? (c) Su 1000 persone, quante ti aspetti più alte di 190 cm?
+L’altezza delle persone adulte di una popolazione è $X\sim\mathcal{N}(\mu=170,\ \sigma^2=100)$, in centimetri. (a) Qual è la probabilità che una persona sia più bassa di 180 cm? (b) E che sia alta tra 150 e 175 cm? (c) Su 1000 persone, quante ti aspetti più alte di 190 cm?
 
 ??? esempio-svolto "Soluzione ragionata"
     (a) $z=(180-170)/10=1$, quindi $P(X<180)=\Phi(1)=0{,}8413$. (b) Le soglie diventano $z=-2$ e $z=0{,}5$: $\Phi(0{,}5)-\Phi(-2)=0{,}6915-(1-0{,}9772)=0{,}6915-0{,}0228=0{,}6687$. (c) $z=2$, quindi $P(X>190)=1-\Phi(2)=0{,}0228$. Per la linearità del valore atteso, su 1000 persone ce ne aspettiamo circa $1000\cdot0{,}0228\approx23$.
@@ -1575,7 +1556,7 @@ Il servizio A ha un tempo di risposta normale con media 200 ms e $\sigma=20$ ms;
 
 ### Esercizio 8 — I redditi più alti {: #esercizio-8 }
 
-Con i redditi $X\sim\mathcal{N}(\mu=900,\ \sigma=200)$ dell’esempio nel testo: (a) quale reddito supera solo il 5% delle famiglie? (b) Quale frazione delle famiglie ha un reddito superiore a 1300 monete?
+Con i redditi $X\sim\mathcal{N}(\mu=900,\ \sigma^2=200^2)$ dell’esempio nel testo: (a) quale reddito supera solo il 5% delle famiglie? (b) Quale frazione delle famiglie ha un reddito superiore a 1300 monete?
 
 ??? esempio-svolto "Soluzione ragionata"
     (a) Cerchiamo $x$ con $P(X>x)=0{,}05$, cioè $\Phi\big((x-900)/200\big)=0{,}95$. Nella tabella $\Phi(1{,}64)=0{,}9495$ e $\Phi(1{,}65)=0{,}9505$, quindi $z\approx1{,}645$. Destandardizziamo: $x=900+1{,}645\cdot200=1229$ monete. (b) $z=(1300-900)/200=2$, quindi $P(X>1300)=1-\Phi(2)=0{,}0228$, circa il 2,3% delle famiglie.
@@ -1614,4 +1595,5 @@ La dispensa riprende le slide e i notebook del corso degli anni precedenti, che 
 - **Carl Friedrich Gauss**, *Theoria motus corporum coelestium in sectionibus conicis solem ambientium*, Amburgo, 1809. Traduzione inglese di Charles Henry Davis, *Theory of the Motion of the Heavenly Bodies Moving about the Sun in Conic Sections*, Boston, Little, Brown and Co., 1857: prefazione (Cerere, pp. xiv–xv), libro II, sezione III, artt. 175–186 (curva degli errori e minimi quadrati). [Scansione su Internet Archive](https://archive.org/details/theoryofmotionof00gaus); [la prefazione su MacTutor](https://mathshistory.st-andrews.ac.uk/Extras/Gauss_preface/).
 - **Abraham De Moivre**, *The Doctrine of Chances*, 3ª edizione, Londra, A. Millar, 1756, pp. 242–254: «A Method of approximating the Sum of the Terms of the Binomial $(a+b)^n$ expanded into a Series», datato 12 novembre 1733. [Scansione su Internet Archive](https://archive.org/details/doctrineofchance00moiv).
 - **Henri Poincaré**, *Calcul des probabilités*, Parigi, Gauthier-Villars, 1896 (2ª ed. 1912): la battuta di Gabriel Lippmann sulla legge normale degli errori.
+- **Grant Sanderson** (3Blue1Brown), *Why π is in the normal distribution (beyond integral tricks)*, video, 2023: il $\pi$ nella costante della densità normale, spiegato con la simmetria circolare. [Il video su YouTube](https://youtu.be/cy8r7WSuT1I).
 - Documentazione Python: [`statistics.NormalDist`](https://docs.python.org/3/library/statistics.html#statistics.NormalDist), [`scipy.stats.norm`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html) e [`numpy.random.Generator.exponential`](https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.exponential.html).

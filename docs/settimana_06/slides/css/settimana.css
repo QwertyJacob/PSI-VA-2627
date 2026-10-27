@@ -316,6 +316,9 @@
 .reveal .gn-big { margin: 6px 0 14px; font-size: 1.15em; }
 .reveal .gn-text .gn-big { font-size: .95em; }
 .reveal .gn-say { max-width: 1080px; margin: 10px auto 0; font-size: .74em; }
+.reveal .gv-player { display: block; width: 896px; height: 504px; max-width: none; max-height: none; margin: 0 auto; border: 0; border-radius: 10px; background: #000; box-shadow: 0 10px 30px #000a; }
+.reveal .gv-src { margin: 12px 0 0; font-size: .5em; color: var(--psi-muted); }
+.reveal .gv-src a { color: inherit; text-decoration: underline; }
 .reveal .gn-ex { max-width: 1080px; margin: 18px auto 0; font-size: .78em; padding: 12px 20px; border-left: 4px solid var(--psi-b); background: #ffffff08; border-radius: 8px; text-align: left; }
 .reveal .gn-cards { max-width: 1100px; margin: 4px auto 0; min-height: 60px; text-align: left; font-size: .7em; }
 .reveal .gn-trace { max-width: 1140px; margin: 0 auto 10px; font-size: .7em; color: var(--psi-muted); }
@@ -331,12 +334,19 @@
 .reveal .tz-table th, .reveal .tz-table td { padding: 2px 7px; font-variant-numeric: tabular-nums; }
 .reveal .tz-table td.tz-hit.visible { outline: 3px solid var(--s06-ok); outline-offset: -2px; font-weight: 800; }
 .reveal .tz-right .scene-svg { display: block; margin: 8px auto 0; }
+.reveal #gn-simmetria .scene-svg { cursor: ew-resize; touch-action: none; }
+.reveal .sy-formula { display: flex; justify-content: center; align-items: center; gap: 34px; margin: 2px 0 0; }
+.reveal .sy-formula p { margin: 0; font-size: .8em; }
+.reveal .sy-formula .katex-display { margin: .25em 0; }
 .reveal .gl-top { display: flex; justify-content: center; align-items: center; gap: 30px; font-size: .8em; }
 .reveal .gl-top p { margin: 0; }
-.reveal .gl-two { display: flex; justify-content: center; gap: 80px; margin-top: 10px; }
+.reveal .gl-grid { display: grid; grid-template-columns: auto 720px; gap: 44px; justify-content: center; align-items: center; margin-top: 12px; }
+.reveal .gl-two { display: flex; flex-direction: column; gap: 10px; }
 .reveal .gl-two .gl-head { margin: 0; font-size: .6em; color: var(--psi-muted); text-align: center; }
+.reveal .gl-two .katex-display { margin: .3em 0; }
 .reveal .gl-two .katex-display > .katex { font-size: .95em; }
-.reveal .gl-new { margin: 10px 0 0; font-size: .78em; font-weight: 700; color: var(--s06-ok); }
+.reveal .gl-cards { min-height: 80px; margin-top: 4px; text-align: left; font-size: .66em; }
+.reveal .gl-new { margin: 12px 0 0; font-size: .74em; font-weight: 700; color: var(--s06-ok); }
 .reveal .gs-end { display: flex; justify-content: center; align-items: center; gap: 26px; margin-top: 12px; text-align: left; }
 .reveal .gs-end p { margin: 0; font-size: .74em; }
 .reveal .gs-end .katex-display { margin: .3em 0; }
@@ -349,7 +359,15 @@
 .reveal #gn-standard .gn-text .katex-display { margin: .1em 0; text-align: left; }
 .reveal #gn-standard .gn-text .katex-display > .katex { font-size: .85em; text-align: left; }
 .reveal #gn-altezze .lm-row .katex-display > .katex, .reveal #gn-soluzione .lm-row .katex-display > .katex { font-size: .92em; }
-.reveal #gn-standardizza .lm-row { grid-template-columns: 360px 1fr; }
+.reveal #gn-standardizza-prob .lm-row { grid-template-columns: 360px 1fr; }
+.reveal .gz-grid { display: grid; grid-template-columns: auto 540px; gap: 30px; justify-content: center; align-items: center; }
+.reveal #gn-standardizza .lm-row { grid-template-columns: 250px auto; gap: 18px; }
+.reveal #gn-standardizza .lm-row .katex-display > .katex { font-size: .9em; }
+.reveal .gz-ex { margin: 2px 0 0; font-size: .56em; color: var(--psi-muted); text-align: center; }
+.reveal .gz-end { display: flex; justify-content: center; align-items: center; gap: 26px; margin-top: 6px; }
+.reveal .gz-end p { margin: 0; font-size: .8em; font-weight: 700; color: var(--s06-ok); }
+.reveal .gz-end .katex-display { margin: .3em 0; }
+.reveal .gz-try { margin: 14px 0 0; font-size: .74em; }
 .reveal #gn-esercizio-sol .lm-row { grid-template-columns: 250px 1fr; }
 .reveal #gn-esercizio-sol .lm-row .katex-display > .katex { font-size: .9em; }
 .reveal #quantili .pq-lines { flex-direction: column; gap: 4px; }

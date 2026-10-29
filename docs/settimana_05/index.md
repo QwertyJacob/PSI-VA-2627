@@ -1440,9 +1440,8 @@ L’uguaglianza fra media e varianza riguarda i loro *valori numerici*, e non il
 
 Questa coincidenza è una peculiarità della distribuzione di Poisson. Nella distribuzione binomiale, per confronto, la varianza è $np(1-p)$, che è più piccola della media $np$; la distribuzione di Poisson si ottiene quando $p$ è così piccolo che il fattore $1-p$ è praticamente 1. È un'altra faccia del limite dei pezzetti.
 
-Che la media sia $\lambda$ non sorprende: nel modello a pezzetti valeva $\lambda$ per ogni $n$. Non possiamo però darlo per scontato. Le probabilità dei singoli valori si avvicinano a quelle della distribuzione di Poisson, ma questo da solo non garantisce che si avvicini anche la media: un po’ di probabilità su valori molto grandi può spostare molto un valore atteso, come abbiamo visto con la Geometrica nel §4. Conviene quindi ricalcolarla sulla nuova PMF.
 
-Possiamo calcolarla direttamente usando la ricorrenza del §13. Moltiplicando per $k$ entrambi i membri di $P(X=k)=P(X=k-1)\,\lambda/k$ otteniamo, per $k\ge1$,
+Nel modello a pezzetti le medie sono già tutte uguali a $\lambda$. Ora  giustifichiamo che la distribuzione limite conservi quella media. Possiamo calcolarla direttamente usando la ricorrenza del §13. Moltiplicando per $k$ entrambi i membri di $P(X=k)=P(X=k-1)\,\lambda/k$ otteniamo, per $k\ge1$,
 
 $$
 k\,P(X=k)=\lambda\,P(X=k-1).

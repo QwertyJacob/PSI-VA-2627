@@ -293,7 +293,7 @@ $$
 P(L \cup M) = 0.70 + 0.50 - 0.35 = 0.85 \quad (85\%)
 $$
 
-#### Estensione a tre eventi (Inclusione-Esclusione)
+#### Estensione a tre eventi (Inclusione-Esclusione) {: .psi-facoltativo }
 
 !!! info "Approfondimento facoltativo — fuori dall’esame"
     Questa estensione non è richiesta all’esame. È richiesta la regola dell’unione di due eventi e il ragionamento sulla sovrapposizione.
@@ -988,7 +988,7 @@ Poiché la matematica della probabilità può scorrere a ritroso come un filmato
 
 ---
 
-## Atto V: Frequentisti contro Bayesiani — Il paradosso di Alice e Bob
+## Atto V: Frequentisti contro Bayesiani — Il paradosso di Alice e Bob {: .psi-facoltativo }
 
 !!! info "Approfondimento facoltativo — fuori dall’esame"
     Questa sezione è una lettura facoltativa e non è richiesta all’esame.
@@ -1040,7 +1040,7 @@ Avendo osservato entrambi 9 teste e 3 croci, Alice e Bob ottengono per un bayesi
 
 ---
 
-## Atto VI: Uno sguardo all'abisso subatomico — Epistemico, Ontico e Non-Località
+## Atto VI: Uno sguardo all'abisso subatomico — Epistemico, Ontico e Non-Località {: .psi-facoltativo }
 
 !!! info "Approfondimento facoltativo — fuori dall’esame"
     Questa sezione è una lettura facoltativa e non è richiesta all’esame.
@@ -1130,7 +1130,7 @@ La probabilità non è un dogma di fede, ma un prisma concettuale che dobbiamo s
 * **Nei Big Data, nei server distribuiti e nel monitoraggio di rete**, dove fluiscono miliardi di pacchetti e log, il **frequentismo** è lo strumento principe: le medie empiriche convergono con straordinaria stabilità ai limiti asintotici.
 * **Nella Cybersecurity, nell'affidabilità di sistemi critici e nel Machine Learning**, dove affrontiamo attacchi informatici inediti o decisioni mediche ad alto rischio in condizioni di scarsità di dati, l'approccio **bayesiano** è l'unico capace di guidare razionalmente l'aggiornamento della credenza.
 
-### 2. Cos'è un A/B Test e il "Peeking Problem" moderno
+### 2. Cos'è un A/B Test e il "Peeking Problem" moderno {: .psi-facoltativo }
 
 !!! info "Approfondimento facoltativo — fuori dall’esame"
     Questa sezione è una lettura facoltativa e non è richiesta all’esame.

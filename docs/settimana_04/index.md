@@ -16,9 +16,9 @@
 
 - **Definizioni e calcoli:** definire una variabile aleatoria discreta, costruirne la PMF e calcolare e interpretare il valore atteso su esempi semplici. Devi distinguere il valore assunto dalla variabile dalla sua probabilità e spiegare perché il valore atteso può non essere un risultato possibile.
 - **Linearità e indicatrici:** usare la linearità del valore atteso anche con variabili dipendenti; definire l’indicatrice di un evento e usare $\mathbb{E}[I_A]=P(A)$; costruire un conteggio come somma di indicatrici prima di calcolarne la media.
-- **Binomiale:** riconoscere le ipotesi di un numero fissato di prove indipendenti con la stessa probabilità di successo; calcolare probabilità con la PMF e la media $np$. Devi distinguere ciò che richiede l’indipendenza da ciò che segue dalla sola linearità.
+- **Distribuzione binomiale:** riconoscere le ipotesi di un numero fissato di prove indipendenti con la stessa probabilità di successo; calcolare probabilità con la PMF e la media $np$. Devi distinguere ciò che richiede l’indipendenza da ciò che segue dalla sola linearità.
 - **Applicazioni:** impostare semplici conteggi di coppie in collisione e fallimenti, esplicitando il modello; distinguere un numero medio di eventi dalla probabilità che ne accada almeno uno. Gli esempi illustrano il metodo: non devi memorizzarne i valori numerici.
-- **Ragionamenti da ricostruire:** ricavare la media di un’indicatrice dalla definizione di valore atteso; spiegare perché la somma delle indicatrici conta gli oggetti richiesti; ricavare la media binomiale con la linearità e la PMF binomiale pesando una sequenza e contando le posizioni dei successi.
+- **Ragionamenti da ricostruire:** ricavare la media di un’indicatrice dalla definizione di valore atteso; spiegare perché la somma delle indicatrici conta gli oggetti richiesti; ricavare la media della distribuzione binomiale con la linearità e la PMF della distribuzione binomiale pesando una sequenza e contando le posizioni dei successi.
 
 **Facoltativi e non richiesti all’esame:** formalizzazione dei giochi equi (Lettura A); distribuzione Ipergeometrica, sua PMF, derivazione della media ed esercizio 5 (Lettura B); dettagli tecnici sulla scelta casuale delle funzioni hash. Restano richiesti il significato del valore atteso come prezzo di una possibilità, il modello uniforme e indipendente delle collisioni e il metodo delle indicatrici nelle applicazioni indicate sopra.
 
@@ -45,7 +45,7 @@ Ora immagina di dover inserire **23 chiavi distinte** in una tabella hash. Tra q
 Per ora fermiamoci al conteggio. Sapere quante coppie esistono non dice quante finiranno nella stessa casella. Dobbiamo distinguere una quantità deterministica, **il numero di coppie possibili**, da una quantità incerta, **il numero di coppie che collidono**. È proprio per parlare della seconda che costruiremo gli strumenti di questa settimana.
 
 !!! info "Come leggere questa dispensa"
-    Gli Atti I–V formano il percorso principale: variabili aleatorie, valore atteso, indicatrici, linearità e Binomiale. Seguono due letture facoltative: giochi equi e campionamento senza reinserimento. Le due letture sono facoltative e non richieste all’esame; il perimetro completo è indicato [in apertura](#esame). La varianza viene introdotta all'inizio della [Settimana 5](../settimana_05/index.md#varianza), con indicazioni precise su ciò che è richiesto all'esame.
+    Gli Atti I–V formano il percorso principale: variabili aleatorie, valore atteso, indicatrici, linearità e distribuzione binomiale. Seguono due letture facoltative: giochi equi e campionamento senza reinserimento. Le due letture sono facoltative e non richieste all’esame; il perimetro completo è indicato [in apertura](#esame). La varianza viene introdotta all'inizio della [Settimana 5](../settimana_05/index.md#varianza), con indicazioni precise su ciò che è richiesto all'esame.
 
 ## Atto I — Vendere una possibilità: la domanda di Huygens {: #huygens }
 
@@ -775,13 +775,13 @@ Poi aumenta soltanto `prove`, lasciando fissi `n` e `m`. Stai osservando più vo
 
 **Il metodo da portare con te:** identifica che cosa conti, scrivilo come somma di bit, calcola la probabilità che ogni bit valga 1, somma. Prima di cercare la distribuzione completa, chiediti se la media basta a rispondere alla tua domanda.
 
-## Atto V — La Binomiale nasce da una somma di bit {: #binomiale }
+## Atto V — La distribuzione binomiale nasce da una somma di bit {: #binomiale }
 
-### 12. Quando un conteggio è binomiale {: #modello-binomiale }
+### 12. Quando un conteggio ha distribuzione binomiale {: #modello-binomiale }
 
 Finora le indicatrici ci hanno permesso di trovare il numero medio di collisioni senza conoscere la probabilità di ogni possibile totale. Ora facciamo un passo diverso: cerchiamo un modello nel quale sia possibile descrivere anche **tutta la distribuzione del conteggio**. In particolare, vorremo rispondere a domande come «qual è la probabilità di osservare esattamente due fallimenti?».
 
-La distribuzione Binomiale risponde a questa esigenza quando le prove soddisfano alcune ipotesi precise.
+La distribuzione binomiale risponde a questa esigenza quando le prove soddisfano alcune ipotesi precise.
 
 !!! note "Un cenno storico"
 
@@ -799,19 +799,19 @@ $$
 
 La somma può valere 0 se nessuna operazione fallisce, 4 se falliscono tutte, oppure uno degli interi intermedi. Per definire il conteggio non abbiamo ancora usato l'indipendenza: la somma delle indicatrici conta i fallimenti qualunque sia il legame tra le operazioni. Le ipotesi sul loro comportamento servono quando vogliamo assegnare una distribuzione a quella somma.
 
-Generalizziamo l'esempio. Osserviamo un numero fissato di **$n$ prove**; per ciascuna registriamo 1 se si verifica l'evento che vogliamo contare e 0 altrimenti. Se la probabilità del valore 1 è **lo stesso numero $p$ in ogni prova**, e se **tutte le prove sono indipendenti**, allora il totale ha distribuzione **Binomiale di parametri $n$ e $p$**:
+Generalizziamo l'esempio. Osserviamo un numero fissato di **$n$ prove**; per ciascuna registriamo 1 se si verifica l'evento che vogliamo contare e 0 altrimenti. Se la probabilità del valore 1 è **lo stesso numero $p$ in ogni prova**, e se **tutte le prove sono indipendenti**, allora il totale ha distribuzione **binomiale di parametri $n$ e $p$**:
 
 $$
 X=\sum_{i=1}^{n}I_i,\qquad X\sim\operatorname{Binomiale}(n,p).
 $$
 
-La notazione $\sum_{i=1}^n I_i$ è una forma compatta per $I_1+I_2+\cdots+I_n$. Il numero $n$ è un intero positivo; $p$ è compreso tra 0 e 1. Per $n=1$, la Binomiale coincide con una Bernoulli.
+La notazione $\sum_{i=1}^n I_i$ è una forma compatta per $I_1+I_2+\cdots+I_n$. Il numero $n$ è un intero positivo; $p$ è compreso tra 0 e 1. Per $n=1$, la distribuzione binomiale coincide con la distribuzione di Bernoulli.
 
 Rileggiamo le ipotesi alla luce dell'esempio. Il numero $n$ è fissato prima di osservare gli esiti: nel servizio esaminiamo quattro operazioni, indipendentemente da quante ne falliranno. In ciascuna operazione distinguiamo soltanto l'evento «fallisce» dal suo complemento «riesce». Continuiamo a chiamare *successo* l'evento contato dal valore 1, anche se, nel linguaggio del servizio, è un guasto.
 
 Il parametro $p$ deve poi essere comune a tutte le prove: qui ogni operazione fallisce con probabilità $0{,}2$. Infine, l'indipendenza riguarda l'intera famiglia: conoscere gli esiti delle altre operazioni non deve modificare la probabilità di fallimento di quella che stiamo considerando. Avere lo stesso $p$ e avere indipendenza sono due richieste distinte; una non garantisce l'altra.
 
-Prima di chiamare binomiale un conteggio, dobbiamo verificare queste condizioni nel modello. Se un guasto comune può far fallire tutte le operazioni insieme, l'indipendenza viene meno. Se alcune operazioni hanno probabilità di fallimento diverse, viene meno l'ipotesi di un unico parametro $p$. In entrambi i casi la somma delle indicatrici conta ancora correttamente i fallimenti, ma non possiamo attribuirle automaticamente la distribuzione Binomiale.
+Prima di attribuire una distribuzione binomiale a un conteggio, dobbiamo verificare queste condizioni nel modello. Se un guasto comune può far fallire tutte le operazioni insieme, l'indipendenza viene meno. Se alcune operazioni hanno probabilità di fallimento diverse, viene meno l'ipotesi di un unico parametro $p$. In entrambi i casi la somma delle indicatrici conta ancora correttamente i fallimenti, ma non possiamo attribuirle automaticamente la distribuzione binomiale.
 
 ### 13. La PMF: contare posizioni, pesare sequenze {: #pmf-binomiale }
 
@@ -889,7 +889,7 @@ La formula $np$ ha dunque un significato diretto: somma il contributo medio $p$ 
 
 In una singola esecuzione conteremo 0, 1, 2, 3 oppure 4 fallimenti. Il valore 0,8 descrive la media prevista dal modello; non va arrotondato a 1 per renderlo un conteggio possibile. La domanda sul numero medio e la domanda sull'esito di una singola esecuzione rimangono diverse.
 
-Ripercorriamo il ruolo dell'indipendenza. Nella sezione precedente ci ha permesso di moltiplicare le probabilità per trovare il peso di ogni sequenza: serviva quindi a ricavare la PMF binomiale. Qui abbiamo usato soltanto la rappresentazione come somma di indicatrici e la linearità. Nessuno dei due passaggi richiede indipendenza.
+Ripercorriamo il ruolo dell'indipendenza. Nella sezione precedente ci ha permesso di moltiplicare le probabilità per trovare il peso di ogni sequenza: serviva quindi a ricavare la PMF della distribuzione binomiale. Qui abbiamo usato soltanto la rappresentazione come somma di indicatrici e la linearità. Nessuno dei due passaggi richiede indipendenza.
 
 Per verificarlo, immaginiamo che le quattro operazioni falliscano sempre insieme, con probabilità 0,2. Ciascuna, considerata da sola, ha ancora probabilità 0,2 di fallire, quindi ogni bit ha ancora media 0,2. La somma ha perciò media 0,8. Il totale può però valere soltanto 0 o 4: la sua distribuzione è diversa da quella binomiale. È proprio questa differenza che osserveremo nel laboratorio.
 
@@ -915,7 +915,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   PSIWidget.mount('s04-binomiale', {
     type: 'bar', xLabel: 'Numero di successi k', yLabel: 'P(X = k)',
-    xDomain: [0, 20], liveLabel: 'Binomiale corrente', fn: massa,
+    xDomain: [0, 20], liveLabel: 'Distribuzione binomiale corrente', fn: massa,
     params: [
       {key: 'n', label: 'n (numero di prove)', min: 1, max: 20,
        step: 1, value: 4},
@@ -933,7 +933,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 Nel laboratorio confrontiamo due servizi con quattro operazioni ciascuno. Per ogni singola operazione la probabilità di fallimento è $0{,}2$ in entrambi i servizi. Ciò che cambia è il modo in cui i fallimenti si presentano insieme.
 
-Nel primo modello ogni operazione ha un esito indipendente dagli altri. Il totale può assumere tutti i valori da 0 a 4 e segue la distribuzione Binomiale. Nel secondo modello un unico evento comune, di probabilità $0{,}2$, fa fallire tutte e quattro le operazioni; quando quell'evento non si verifica, riescono tutte. Il totale può quindi valere soltanto 0 oppure 4, con probabilità rispettivamente $0{,}8$ e $0{,}2$.
+Nel primo modello ogni operazione ha un esito indipendente dagli altri. Il totale può assumere tutti i valori da 0 a 4 e segue la distribuzione binomiale. Nel secondo modello un unico evento comune, di probabilità $0{,}2$, fa fallire tutte e quattro le operazioni; quando quell'evento non si verifica, riescono tutte. Il totale può quindi valere soltanto 0 oppure 4, con probabilità rispettivamente $0{,}8$ e $0{,}2$.
 
 Prima di eseguire il codice, possiamo prevedere la media del secondo modello: $0\cdot0{,}8+4\cdot0{,}2=0{,}8$. È la stessa media $np$ del primo. Il grafico ci permetterà di vedere le differenze che questo singolo numero non mostra.
 
@@ -967,7 +967,7 @@ assert np.isclose(np.dot(k, pmf), n * p)
 print(f"Media teorica di entrambi: {n * p:.3f}")
 print(f"Media simulata, indipendenti: {indipendenti.mean():.3f}")
 print(f"Media simulata, dipendenti: {dipendenti.mean():.3f}")
-plt.bar(k - 0.2, pmf, width=0.4, label="Binomiale teorica")
+plt.bar(k - 0.2, pmf, width=0.4, label="Distribuzione binomiale teorica")
 plt.bar(k + 0.2, np.bincount(dipendenti, minlength=n + 1) / prove,
         width=0.4, label="Guasto comune simulato")
 plt.xticks(k)
@@ -985,7 +985,7 @@ Passiamo poi al grafico. Nel modello del guasto comune compaiono soltanto i tota
 
 Abbiamo così individuato una domanda che la sola media lascia aperta: **quanto sono dispersi i risultati attorno al loro centro?** La sezione iniziale della [Settimana 5](../settimana_05/index.md#varianza) introduce una misura per cominciare a rispondere.
 
-**Chiudiamo il percorso principale.** La Binomiale è un conteggio con ipotesi precise. La sua PMF usa combinatoria e indipendenza. La sua media usa indicatrici e linearità. Separare queste due derivazioni permette di capire sia ciò che il modello assume sia ciò che il risultato richiede davvero.
+**Chiudiamo il percorso principale.** La distribuzione binomiale descrive un conteggio con ipotesi precise. La sua PMF usa combinatoria e indipendenza. La sua media usa indicatrici e linearità. Separare queste due derivazioni permette di capire sia ciò che il modello assume sia ciò che il risultato richiede davvero.
 
 <span id="varianza"></span>
 <span id="definizione-varianza"></span>
@@ -994,7 +994,7 @@ Abbiamo così individuato una domanda che la sola media lascia aperta: **quanto 
 
 La trattazione della **varianza** è all'inizio della [Settimana 5](../settimana_05/index.md#varianza), dove sono distinti i contenuti richiesti all'esame dagli approfondimenti facoltativi.
 
-## Lettura A — Pagamento, costo e gioco equo {: #giochi-equi }
+## Lettura A — Pagamento, costo e gioco equo {: #giochi-equi .psi-facoltativo }
 
 !!! info "Approfondimento facoltativo — fuori dall’esame"
     Questa lettura è facoltativa e non richiesta all’esame. Resta richiesto il significato del valore atteso come prezzo di una possibilità, introdotto nel percorso principale.
@@ -1038,7 +1038,7 @@ Quando controlliamo se un gioco è equo, dobbiamo quindi pesare **sia gli import
 
 Questo equilibrio non garantisce di recuperare il denaro dopo un numero fissato di partite. Se giochiamo $r$ volte alle stesse condizioni, la linearità dà valore atteso zero per il guadagno totale, ma il saldo concretamente osservato può essere positivo o negativo. La media descrive il modello, mentre il risultato di una sequenza rimane incerto. Per decidere se partecipare possono contare anche la dispersione dei risultati e la capacità di sostenere una perdita: il prezzo equo risponde alla domanda sul guadagno medio.
 
-## Lettura B — Senza reinserimento: la distribuzione Ipergeometrica {: #ipergeometrica }
+## Lettura B — Senza reinserimento: la distribuzione Ipergeometrica {: #ipergeometrica .psi-facoltativo }
 
 !!! info "Approfondimento facoltativo — fuori dall’esame"
     Questa intera lettura, comprese la PMF e la derivazione della media dell’Ipergeometrica, è facoltativa e non richiesta all’esame. Resta richiesto il metodo delle indicatrici nelle applicazioni del percorso principale.
@@ -1047,7 +1047,7 @@ Questo equilibrio non garantisce di recuperare il denaro dopo un numero fissato 
 
 Consideriamo un insieme di **5 moduli software**, dei quali **2 sono difettosi** e 3 sono sani. Vogliamo controllarne 2 e li scegliamo a caso, **senza reinserimento**. Questo significa che, dopo la prima scelta, il modulo selezionato viene tolto dall'insieme: la seconda scelta avverrà tra i quattro rimasti. I due moduli controllati saranno dunque distinti.
 
-Chiamiamo $X$ il numero di difettosi nel campione scelto. Possiamo trovarne zero, uno oppure due. Anche qui stiamo contando quante volte si presenta una proprietà, ma dobbiamo capire se sono soddisfatte le ipotesi della Binomiale.
+Chiamiamo $X$ il numero di difettosi nel campione scelto. Possiamo trovarne zero, uno oppure due. Anche qui stiamo contando quante volte si presenta una proprietà, ma dobbiamo capire se sono soddisfatte le ipotesi della distribuzione binomiale.
 
 Per capire quale modello usare, immaginiamo di effettuare le due scelte in successione. All'inizio ci sono 2 difettosi su 5 moduli. Dopo la prima scelta restano quattro moduli, ma la loro composizione dipende da ciò che abbiamo estratto.
 
@@ -1118,7 +1118,7 @@ $$
 +2\cdot\frac1{10}=\frac8{10}=0{,}8.
 $$
 
-Il conto è breve perché la tabella ha soltanto tre valori. Se la popolazione e il campione fossero più grandi, potremmo trovare la media senza costruire e sommare tutta la PMF. Torniamo, come per le collisioni e la Binomiale, alle indicatrici.
+Il conto è breve perché la tabella ha soltanto tre valori. Se la popolazione e il campione fossero più grandi, potremmo trovare la media senza costruire e sommare tutta la PMF. Torniamo, come per le collisioni e la distribuzione binomiale, alle indicatrici.
 
 Questa volta dobbiamo chiarire con cura quali probabilità assegnare ai singoli bit. Abbiamo appena visto che conoscere il primo modulo cambia le probabilità del secondo. Eppure, **prima di osservare qualsiasi estrazione**, ciascuna posizione ha la stessa probabilità di contenere un difettoso. Le due affermazioni riguardano informazioni diverse, e possono essere vere entrambe.
 
@@ -1153,7 +1153,7 @@ Leggiamo il risultato attraverso i parametri del problema. La frazione $K/N$ des
 
 Nell'esempio scegliamo $n=2$ moduli da una popolazione in cui $K/N=2/5$ sono difettosi. La media è quindi $2\cdot2/5=0{,}8$, lo stesso valore ottenuto dalla tabella. Abbiamo ritrovato il risultato con un conto che non richiede le probabilità dei singoli totali.
 
-Il risultato ha la stessa forma $np$ della media binomiale, con $p=K/N$. Questo non rende uguali le due distribuzioni. Con reinserimento e scelte indipendenti avremmo un conteggio binomiale; senza reinserimento abbiamo il conteggio ipergeometrico. Le medie coincidono perché le singole indicatrici hanno la stessa media nei due modelli e la linearità vale in entrambi. Le probabilità dei diversi totali, invece, tengono conto del modo in cui le estrazioni sono legate.
+Il risultato ha la stessa forma $np$ della media della distribuzione binomiale, con $p=K/N$. Questo non rende uguali le due distribuzioni. Con reinserimento e scelte indipendenti avremmo un conteggio binomiale; senza reinserimento abbiamo il conteggio ipergeometrico. Le medie coincidono perché le singole indicatrici hanno la stessa media nei due modelli e la linearità vale in entrambi. Le probabilità dei diversi totali, invece, tengono conto del modo in cui le estrazioni sono legate.
 
 ## Esercizi: prima prova, poi apri la soluzione {: #esercizi }
 
@@ -1240,7 +1240,7 @@ Quattro operazioni falliscono indipendentemente, ciascuna con probabilità 0,2. 
 Considera ora un secondo modello: con probabilità 0,2 un guasto comune fa fallire tutte le operazioni insieme; altrimenti riescono tutte. Confronta la media e la probabilità di due fallimenti con quelle del primo modello. Spiega che cosa resta uguale e che cosa cambia.
 
 ??? esempio-svolto "Soluzione ragionata"
-    Definiamo $I_i=1$ se fallisce l'operazione $i$ e $I_i=0$ altrimenti. Il totale è $X=I_1+I_2+I_3+I_4$. Nel primo modello le indicatrici sono indipendenti e hanno tutte parametro $0{,}2$, quindi il conteggio è Binomiale di parametri 4 e $0{,}2$.
+    Definiamo $I_i=1$ se fallisce l'operazione $i$ e $I_i=0$ altrimenti. Il totale è $X=I_1+I_2+I_3+I_4$. Nel primo modello le indicatrici sono indipendenti e hanno tutte parametro $0{,}2$, quindi il conteggio ha distribuzione binomiale di parametri 4 e $0{,}2$.
 
     Per la **media** usiamo la linearità: ciascuna indicatrice ha media $0{,}2$, quindi $\mathbb{E}[X]=4\cdot0{,}2=0{,}8$. Questo calcolo usa le quattro probabilità singole.
 
@@ -1256,14 +1256,14 @@ Considera ora un secondo modello: con probabilità 0,2 un guasto comune fa falli
 
     Il confronto mostra esattamente che cosa resta uguale e che cosa cambia: le probabilità dei singoli fallimenti e la media del totale restano uguali, mentre la distribuzione del totale cambia.
 
-### Esercizio 5 — Un campione senza reinserimento (lettura) {: #esercizio-5 }
+### Esercizio 5 — Un campione senza reinserimento (lettura) {: #esercizio-5 .psi-facoltativo }
 
 !!! info "Approfondimento facoltativo — fuori dall’esame"
     Questo esercizio accompagna la Lettura B ed è facoltativo e non richiesto all’esame.
 
 Tra 10 moduli, 3 sono difettosi. Scegli un sottoinsieme di 4 moduli, dando la stessa probabilità a tutti i sottoinsiemi di quella dimensione. Qual è il numero medio di difettosi nel campione?
 
-Prima di usare la formula di una distribuzione, chiediti se questo conteggio soddisfa le ipotesi della Binomiale. Poi costruisci la probabilità di trovare esattamente un difettoso: quanti campioni hanno la composizione richiesta e quanti campioni sono possibili in tutto?
+Prima di usare la formula di una distribuzione, chiediti se questo conteggio soddisfa le ipotesi della distribuzione binomiale. Poi costruisci la probabilità di trovare esattamente un difettoso: quanti campioni hanno la composizione richiesta e quanti campioni sono possibili in tutto?
 
 ??? esempio-svolto "Soluzione ragionata"
     Per la media possiamo immaginare di estrarre i quattro moduli in ordine, senza reinserimento. Associamo un'indicatrice a ciascuna posizione: vale 1 se vi compare un difettoso, 0 altrimenti. Prima di osservare le estrazioni, ciascuna posizione ha probabilità $3/10$ di contenere un difettoso, perché i difettosi sono 3 sui 10 moduli della popolazione.
@@ -1274,7 +1274,7 @@ Prima di usare la formula di una distribuzione, chiediti se questo conteggio sod
     \mathbb{E}[X]=4\cdot\frac3{10}=1{,}2.
     $$
 
-    Il conteggio è Ipergeometrico. Non è Binomiale, perché togliere un modulo modifica la composizione di quelli rimasti e lega tra loro gli esiti delle estrazioni.
+    Il conteggio è Ipergeometrico. Non segue una distribuzione binomiale, perché togliere un modulo modifica la composizione di quelli rimasti e lega tra loro gli esiti delle estrazioni.
 
     Per la probabilità di esattamente un difettoso, torniamo invece ai sottoinsiemi. Un campione favorevole deve contenere 1 modulo del gruppo dei 3 difettosi e 3 moduli del gruppo dei 7 sani. Possiamo fare la prima scelta in $\binom31=3$ modi e la seconda in $\binom73=35$ modi. Abbinandole otteniamo $3\cdot35=105$ campioni favorevoli.
 
@@ -1300,7 +1300,7 @@ La tabella raccoglie alcune confusioni frequenti e una domanda con cui riconosce
 | Trattare la media come il risultato della prossima prova | Su quale faccia del dado si trova 3,5? |
 | Usare $\mathbb{E}[C]$ come $P(C\ge1)$ | Un esperimento con tre coppie quanto pesa nei due conti? |
 | Richiedere indipendenza per la linearità | Che cosa è accaduto nella tabella con $X+Y=1$? |
-| Chiamare Binomiale ogni somma di bit | Le prove sono indipendenti e hanno tutte lo stesso $p$? |
+| Attribuire una distribuzione binomiale a ogni somma di bit | Le prove sono indipendenti e hanno tutte lo stesso $p$? |
 | Contare caselle occupate invece di coppie | Tre chiavi nella stessa casella producono quante coppie? |
 | Chiamare equo un gioco perché si vince metà delle volte | Hai pesato anche gli importi persi e ricevuti? |
 
@@ -1317,7 +1317,7 @@ Il passaggio successivo è la linearità. Quando una quantità è la somma di pi
 
 Per i conteggi, i contributi più semplici sono le indicatrici. Assegniamo un bit a ciascun evento da contare e verifichiamo che la loro somma conti proprio gli oggetti richiesti. Poi facciamo la media: ogni bit contribuisce con la probabilità del proprio evento. È lo stesso procedimento che abbiamo usato per coppie in collisione, fallimenti e difettosi nel campione.
 
-La dipendenza tra le parti non impedisce questo procedimento. Richiede però attenzione quando vogliamo dire di più sulla distribuzione del totale. Per chiamare Binomiale una somma di indicatrici servono prove indipendenti con lo stesso parametro $p$; per il campionamento uniforme senza reinserimento abbiamo invece il modello Ipergeometrico. La media può avere una forma simile in modelli diversi, mentre le probabilità dei singoli totali cambiano.
+La dipendenza tra le parti non impedisce questo procedimento. Richiede però attenzione quando vogliamo dire di più sulla distribuzione del totale. Per attribuire una distribuzione binomiale a una somma di indicatrici servono prove indipendenti con lo stesso parametro $p$; per il campionamento uniforme senza reinserimento abbiamo invece il modello Ipergeometrico. La media può avere una forma simile in modelli diversi, mentre le probabilità dei singoli totali cambiano.
 
 Per l'informatico, la domanda decisiva viene **prima** della formula: che cosa stiamo misurando? Coppie in collisione, caselle occupate e probabilità di un incidente sono quantità diverse. Un'analisi del caso medio ha valore soltanto se dichiara anche il modello degli input o della casualità interna al programma.
 

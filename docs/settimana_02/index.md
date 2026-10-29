@@ -1196,7 +1196,7 @@ Il nome operativo del fenomeno è **alert fatigue**, «stanchezza da allarmi»: 
 2. **alzare il prior prima di valutare l'allarme**: considerare il contesto (un server critico, un utente amministratore, un orario anomalo). Tecnicamente significa condizionare su informazioni aggiuntive e ragionare con $P(\cdot \mid \text{contesto})$, un universo in cui gli attacchi sono meno rari;
 3. **incrociare rilevatori condizionatamente indipendenti**: due allarmi indipendenti dato lo stato del sistema si possono usare uno dopo l'altro, e ognuno alza il posterior. Ma due rilevatori che leggono gli stessi log **non** lo sono.
 
-### 2. Il dizionario del machine learning
+### 2. Il dizionario del machine learning {: .psi-facoltativo }
 
 !!! info "Approfondimento facoltativo — fuori dall’esame"
     Sensibilità, specificità, matrice di confusione e metriche dei classificatori sono approfondimenti del corso di Machine Learning e non sono richiesti all’esame di questo corso.

@@ -878,7 +878,7 @@ Questo prodotto si legge anche con la regola del prodotto: la seconda persona ev
 
 La nostra intuizione confronta **la mia data** con quelle degli altri: 22 persone hanno circa il 6% di probabilità di condividere *il mio* compleanno ($1 - (364/365)^{22} \approx 5{,}9\%$). Ma il paradosso chiede se **qualunque coppia** coincide, e le coppie sono molte di più delle persone: in una stanza di $n$ persone ci sono $\binom{n}{2} = \frac{n(n-1)}{2}$ coppie, cioè **253** per $n = 23$. Ognuna di queste coppie ha una probabilità $\tfrac1{365}$ di coincidere, e ogni coppia è un'occasione in più per trovare una coincidenza. Il numero di coppie cresce come $n^2$, non come $n$: è questo che l'intuizione sottovaluta.
 
-### L'approssimazione esponenziale e la regola della radice {: #approssimazione }
+### L'approssimazione esponenziale e la regola della radice {: #approssimazione .psi-facoltativo }
 
 !!! info "Approfondimento facoltativo — fuori dall’esame"
     Questa intera sezione, compresa la scala $\sqrt{N}$ e la costante 1,18, è facoltativa e non richiesta all’esame.
@@ -1216,7 +1216,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-### Il Birthday Attack {: #birthday-attack }
+### Il Birthday Attack {: #birthday-attack .psi-facoltativo }
 
 !!! info "Approfondimento facoltativo — fuori dall’esame"
     Questa sezione e il successivo laboratorio sono facoltativi e non richiesti all’esame, compresa la traduzione della scala delle collisioni in $2^{b/2}$.
@@ -1237,7 +1237,7 @@ Per questo i progettisti ragionano al contrario: se si vuole una sicurezza a 128
 
 Una precisazione di realtà: il birthday attack è il limite generale che vale per **qualunque** funzione hash, ma le funzioni difettose cedono molto prima. Per MD5 le prime collisioni pratiche sono state ottenute con attacchi crittanalitici nel 2004 ([Wang e Yu, *How to Break MD5 and Other Hash Functions*, Eurocrypt 2005](https://doi.org/10.1007/11426639_2)), e per SHA-1 nel 2017 il progetto [*SHAttered*](https://security.googleblog.com/2017/02/announcing-first-sha1-collision.html) ha prodotto due PDF diversi con lo stesso hash, con circa nove miliardi di miliardi di calcoli SHA-1 (circa $2^{63}$, contro i circa $2^{80}$ del birthday attack puro).
 
-### Script 5 — Il birthday attack su un hash troncato {: #lab-hash }
+### Script 5 — Il birthday attack su un hash troncato {: #lab-hash .psi-facoltativo }
 
 Non possiamo rompere SHA-256, ma possiamo verificare la regola della radice su una versione in miniatura: **troncare** l'hash ai suoi primi $b$ bit, con $b$ piccolo (12, 16, 20, 24). Così lo spazio dei valori è $N = 2^b$ e le collisioni arrivano abbastanza presto da poterle osservare.
 

@@ -14,7 +14,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 DEST=docs/assets/vendor
 
-specs=$(grep -rhoE '[a-z][a-z0-9.-]*@[0-9]+\.[0-9]+\.[0-9]+/dist/' \
+specs=$(grep -rhoE '(@[a-z0-9_.-]+/)?[a-z0-9_.-]+@[0-9]+\.[0-9]+\.[0-9]+/dist/' \
           --include='*.html' --include='*.js' docs/*/slides \
         | sed 's|/dist/$||' | sort -u)
 
@@ -36,7 +36,8 @@ for spec in $specs; do
   # reveal.js: anche il plugin delle note, per la vista del relatore (tasto S).
   extract=(package/dist)
   [[ "$name" == reveal.js ]] && extract+=(package/plugin/notes)
-  if ! curl -fsSL "https://registry.npmjs.org/$name/-/$name-$version.tgz" \
+  tarball_name=${name##*/}
+  if ! curl -fsSL "https://registry.npmjs.org/$name/-/$tarball_name-$version.tgz" \
        | tar -xz -C "$out" --strip-components=1 "${extract[@]}"; then
     rm -rf "$out"
     echo "Download di $spec fallito." >&2

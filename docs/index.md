@@ -54,7 +54,7 @@ Alla fine del Modulo II, [La probabilità al lavoro](probabilita-al-lavoro/index
 
 | Settimana | Argomenti |
 |---|---|
-| **Settimana 7** *(in arrivo)* | **Distribuzioni congiunte e correlazione:** variabili aleatorie congiunte e distribuzioni marginali, covarianza, coefficiente di correlazione (e perché correlazione non implica causazione). |
+| **[7. Galton e le altezze di genitori e figli](settimana_07/index.md)** *(bozza completa)* | **Distribuzioni congiunte e correlazione:** distribuzione congiunta di due variabili discrete e distribuzioni marginali, variabili aleatorie indipendenti, covarianza e coefficiente di correlazione; incorrelazione e indipendenza, correlazione e causazione. |
 | **Settimana 8** *(in arrivo)* | **Disuguaglianze e Legge dei Grandi Numeri:** somma di variabili aleatorie indipendenti, disuguaglianze di Markov e Čebyšëv, convergenza in probabilità e Legge Debole dei Grandi Numeri. |
 | **Settimana 9** *(in arrivo)* | **Il Teorema del Limite Centrale:** enunciato, cosa garantisce e cosa no, comportamento asintotico della media campionaria. |
 | **Settimana 10** *(in arrivo)* | **Campionamento e introduzione all'inferenza:** campionamento statistico, stimatori puntuali e loro proprietà, errore standard, intervalli di confidenza e Bootstrap computazionale. |

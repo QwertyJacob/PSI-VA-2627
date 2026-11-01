@@ -7,10 +7,10 @@
 
 - **Definizioni e calcoli:** esperimento, esito, spazio campionario, eventi e operazioni (comprese le leggi di De Morgan); assiomi di Kolmogorov; probabilità dell’evento impossibile, complementare e unione di due eventi; condizionamento con probabilità del condizionante positiva, regola del prodotto e indipendenza. Devi distinguere indipendenza e incompatibilità: due eventi disgiunti con probabilità positiva non sono indipendenti.
 - **Applicazioni:** semplici calcoli di affidabilità in serie e parallelo, esplicitando l’ipotesi d’indipendenza dei componenti.
-- **Comprensione concettuale:** significato essenziale delle interpretazioni classica, frequentista e soggettiva, distinzione epistemico/ontico e un esempio concreto. Devi spiegare perché gli assiomi regolano il calcolo senza scegliere l’interpretazione dei numeri.
+- **Comprensione concettuale:** significato essenziale delle interpretazioni classica, frequentista e soggettiva e un esempio concreto. Devi spiegare perché gli assiomi regolano il calcolo senza scegliere l’interpretazione dei numeri.
 - **Ragionamenti da ricostruire:** complementare, unione di due eventi (perché si sottrae l’intersezione) e regola del prodotto dalla definizione di probabilità condizionata.
 
-**Facoltativi e non richiesti all’esame:** formalismo della σ-algebra e questioni di cardinalità oltre la distinzione intuitiva tra discreto e continuo; inclusione-esclusione a tre eventi; dettagli delle dispute filosofiche, Carnap, paradossi specialistici e parte quantistica; p-value, optional stopping e dettagli dell’A/B testing. Le altre dimostrazioni formali non sono richieste.
+**Facoltativi e non richiesti all’esame:** formalismo della σ-algebra e questioni di cardinalità oltre la distinzione intuitiva tra discreto e continuo; inclusione-esclusione a tre eventi; distinzione tra polo epistemico e polo ontico, dettagli delle dispute filosofiche, Carnap, paradossi specialistici e parte quantistica; p-value, optional stopping e dettagli dell’A/B testing. Le altre dimostrazioni formali non sono richieste.
 
 Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
 
@@ -756,7 +756,7 @@ Per la prima volta nella storia, l'incertezza del futuro veniva domata dal calco
 ## Atto III: Il regno epistemico — La mente che lotta con l'ignoranza
 
 !!! info "Per l’esame"
-    Sono richiesti il significato essenziale delle interpretazioni classica e soggettiva e un esempio. Carnap, i dettagli storici, i paradossi specialistici e la derivazione del Dutch book sono facoltativi e non richiesti all’esame.
+    Sono richiesti il significato essenziale delle interpretazioni classica e soggettiva e un esempio. La distinzione tra polo epistemico e polo ontico, Carnap, i dettagli storici, i paradossi specialistici e la derivazione del Dutch book sono facoltativi e non richiesti all’esame.
 
 I pensatori del **Polo Epistemico** sostengono una tesi radicale: la probabilità non appartiene al mondo fisico esterno, ma è la misura del nostro **stato di informazione o credenza** di fronte a una realtà che non conosciamo completamente.
 
@@ -914,7 +914,7 @@ Quale valore di $\lambda$ deve scegliere la scienza? La logica sintattica tace. 
 ## Atto IV: Il regno ontico — La probabilità incisa nella materia
 
 !!! info "Per l’esame"
-    Sono richiesti il significato essenziale dell’interpretazione frequentista, un esempio e la distinzione epistemico/ontico. Il formalismo dei collettivi, la trattazione della propensione e i paradossi specialistici sono facoltativi e non richiesti all’esame.
+    Sono richiesti il significato essenziale dell’interpretazione frequentista e un esempio. La distinzione tra polo epistemico e polo ontico, il formalismo dei collettivi, la trattazione della propensione e i paradossi specialistici sono facoltativi e non richiesti all’esame.
 
 Delusi dalle ambiguità della mente, del linguaggio e delle scommesse soggettive, i pensatori del **Polo Ontico** decisero di espellere completamente l'osservatore umano dall'equazione, radicando la probabilità nella natura fisica oggettiva.
 

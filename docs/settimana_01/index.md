@@ -1,4 +1,4 @@
-[:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" }
+[:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" } [:material-comment-question-outline: Domande d'esame](domande.md){ .md-button }
 
 # Settimana 1 — Che cos'è la probabilità?
 *Un viaggio attraverso la storia, la filosofia, i paradossi e il codice della disciplina che misura l'incertezza.*
@@ -11,6 +11,8 @@
 - **Ragionamenti da ricostruire:** complementare, unione di due eventi (perché si sottrae l’intersezione) e regola del prodotto dalla definizione di probabilità condizionata.
 
 **Facoltativi e non richiesti all’esame:** formalismo della σ-algebra e questioni di cardinalità oltre la distinzione intuitiva tra discreto e continuo; inclusione-esclusione a tre eventi; distinzione tra polo epistemico e polo ontico, dettagli delle dispute filosofiche, Carnap, paradossi specialistici e parte quantistica; p-value, optional stopping e dettagli dell’A/B testing. Le altre dimostrazioni formali non sono richieste.
+
+Le venti domande del primo round dell'esame orale su questa settimana, ciascuna con la sua risposta attesa, sono raccolte nella pagina [Domande d'esame](domande.md).
 
 Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
 

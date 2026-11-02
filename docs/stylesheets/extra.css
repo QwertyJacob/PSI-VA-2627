@@ -473,3 +473,8 @@
   .md-header__button.md-logo:focus-visible .psi-pet { transform: none; }
 }
 
+/* The exam-questions page of a week sits in the nav right after its
+   dispensa; indent it so it reads as a sub-item of that week. */
+.md-nav__link[href$="domande/"] {
+  padding-left: 0.8rem;
+}

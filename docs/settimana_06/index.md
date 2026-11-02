@@ -1367,6 +1367,68 @@ print(f"soglia dei buoni (3%)     = {redditi.inv_cdf(0.03):.1f} monete")
 
 Lo script trova una deviazione standard di circa 0,41 e frazioni entro una, due e tre deviazioni standard vicine a 0,68, 0,95 e 0,997: la regola della campana, anche se nessun singolo errore era a campana. Poi stampa 0,1587, 0,8664 e circa 523,8 monete; la differenza con il 524 del conto a mano viene dall’aver arrotondato $z$ a $-1{,}88$. Prova a sostituire `N_ERRORI = 50` con `N_ERRORI = 2`: l’istogramma diventa un triangolo, e la campana lo descrive male. Servono **tanti** piccoli contributi. Il perché lo vedremo con il Teorema del Limite Centrale, nella Settimana 9.
 
+??? note "Approfondimento facoltativo — Quando una somma diventa una campana, e quando no"
+    Nel laboratorio i 50 errori sono tutti dello stesso tipo: ciascuno è uniforme tra $-0{,}1$ e $+0{,}1$, come se fossero 50 copie della stessa variabile aleatoria, estratte in modo indipendente. Variabili di questo genere si dicono **indipendenti e identicamente distribuite**, in breve **i.i.d.** È proprio la situazione del Teorema del Limite Centrale nella forma che vedremo nella Settimana 9: se sommiamo tante variabili aleatorie i.i.d., ciascuna con una varianza finita, la distribuzione della somma si avvicina sempre di più a una distribuzione normale man mano che il numero degli addendi cresce. «Varianza finita» vuol dire che la varianza è un numero e non è infinita, e tutte le distribuzioni incontrate finora la soddisfano. Il laboratorio è un esempio concreto del teorema, con 50 addendi.
+
+    Gli errori di una misura reale, però, non sono copie l’uno dell’altro. La vibrazione del tavolo, l’errore di lettura e il tremolio dell’aria hanno cause diverse, e quindi ampiezze diverse e spesso anche forme diverse. Serve davvero che siano tutti uguali perché la campana compaia? Lo script seguente mette alla prova tre situazioni, sempre con 20 000 misure e 50 errori indipendenti per ogni misura. Nel primo caso ogni errore è ancora uniforme, ma ha una larghezza tutta sua, scelta a caso tra $0{,}02$ e $0{,}2$. Nel secondo caso un errore è uniforme tra $-1$ e $+1$, mentre gli altri 49 restano tra $-0{,}01$ e $+0{,}01$. Nel terzo caso gli errori sono lanci di moneta che valgono $\pm\tfrac12$, $\pm\tfrac14$, $\pm\tfrac18$ e così via, ciascuno la metà del precedente. Per ogni caso lo script stampa le frazioni di misure entro una, due e tre deviazioni standard, e anche la quota della varianza totale che spetta all’errore più grande: tra poco vedremo perché conta.
+
+    <div class="psi-exec" markdown="1">
+    ```python
+    from statistics import NormalDist
+
+    import matplotlib.pyplot as plt
+    import numpy as np
+
+    rng = np.random.default_rng(1801)
+    N_MISURE, N_ERRORI = 20_000, 50
+    FORMA = (N_MISURE, N_ERRORI)   # una riga per misura, una colonna per errore
+
+    # Caso 1: ogni errore è uniforme, ma con una larghezza tutta sua.
+    larghezze = rng.uniform(0.02, 0.2, size=N_ERRORI)
+    # Caso 2: un errore uniforme tra -1 e 1, gli altri 49 tra -0,01 e 0,01.
+    dominante = np.array([1.0] + [0.01] * (N_ERRORI - 1))
+    # Caso 3: lanci di moneta che valgono ±1/2, ±1/4, ±1/8, ...
+    pesi = 0.5 ** np.arange(1, N_ERRORI + 1)
+
+    casi = {
+        "larghezze tutte diverse": rng.uniform(-larghezze, larghezze, size=FORMA),
+        "un errore grande, 49 minuscoli": rng.uniform(-dominante, dominante,
+                                                      size=FORMA),
+        "monete che si dimezzano": rng.choice([-1, 1], size=FORMA) * pesi,
+    }
+
+    fig, assi = plt.subplots(1, 3, figsize=(11, 3.2))
+    for asse, (nome, errori) in zip(assi, casi.items()):
+        scarto = errori.sum(axis=1)               # errore totale di ogni misura
+        mu, sigma = scarto.mean(), scarto.std()
+        varianze = errori.var(axis=0)             # varianza di ciascun errore
+        quota = varianze.max() / varianze.sum()   # peso dell'errore più grande
+        print(f"{nome}: l'errore più grande porta il {quota:.1%} della varianza")
+        dentro = [np.mean(np.abs(scarto - mu) < k * sigma) for k in [1, 2, 3]]
+        print(f"   entro 1, 2, 3 sigma: {dentro[0]:.3f}  {dentro[1]:.3f}  "
+              f"{dentro[2]:.3f}")
+        x = np.linspace(mu - 4 * sigma, mu + 4 * sigma, 400)
+        asse.hist(scarto, bins=60, density=True, alpha=0.6)
+        asse.plot(x, [NormalDist(mu, sigma).pdf(v) for v in x])
+        asse.set_title(nome, fontsize=10)
+        asse.set_xlabel("Errore totale")
+    plt.tight_layout()
+    plt.show()
+    ```
+    </div>
+
+    Nel primo caso le frazioni sono 0,684, 0,955 e 0,997, come nel laboratorio, e l’istogramma segue la campana. Gli errori non sono più identicamente distribuiti, eppure la campana c’è ancora. Lo stesso succede se si mescolano errori di forma diversa, per esempio alcuni uniformi, alcuni che valgono soltanto $+a$ o $-a$ e alcuni asimmetrici, che sbagliano spesso di poco per difetto e qualche volta di molto per eccesso. L’ipotesi «identicamente distribuite» si può quindi lasciar cadere.
+
+    Che cosa serve, allora? Servono tre cose: gli errori devono essere indipendenti, ciascuno deve avere una varianza finita e **nessuno deve prevalere sugli altri**. L’ultima richiesta si misura con le varianze. Per variabili indipendenti le varianze si sommano, come abbiamo visto per la distribuzione binomiale nella [Lettura C della Settimana 5](../settimana_05/index.md#varianza-binomiale): la varianza dell’errore totale è la somma delle varianze dei singoli errori. Un errore prevale quando, da solo, porta una parte grande di quella somma. Nel primo caso l’errore più largo porta soltanto il 6,9% della varianza totale, e gli altri 49 si spartiscono il resto: nessuno prevale.
+
+    Il secondo caso viola proprio questa richiesta. L’errore largo porta il 99,5% della varianza, e la somma ne copia la forma: l’istogramma è un rettangolo, cioè una distribuzione uniforme come quella dell’Atto III. Anche le frazioni sono quelle della distribuzione uniforme: entro una deviazione standard cade circa il 58% delle misure, invece del 68%, ed entro due deviazioni standard cadono tutte. I 49 errori piccoli ci sono, ma sono troppo piccoli per arrotondare gli spigoli di un errore cento volte più largo di ciascuno di loro.
+
+    Il terzo caso è più sottile, perché nessun errore sembra enorme: ogni moneta vale soltanto la metà della precedente. Eppure la prima moneta, da sola, vale più di tutte le altre messe insieme, perché $\tfrac14+\tfrac18+\tfrac1{16}+\dots$ resta sempre sotto $\tfrac12$, e porta il 75% della varianza. Anche qui l’istogramma è un rettangolo, tra $-1$ e $+1$. Aggiungere altre monete non cambierebbe nulla: le nuove monete sono sempre più piccole e non riescono a modificare la forma decisa dalle prime.
+
+    Chi studia informatica può riconoscere questo rettangolo. Ogni moneta decide una cifra binaria del risultato: la prima dice se il numero sta nella metà destra o nella metà sinistra dell’intervallo da $-1$ a $+1$, la seconda in quale metà di quella metà, e così via. Se tutte le cifre sono scelte a caso e in modo indipendente, nessun punto dell’intervallo è favorito, e il risultato è un numero con distribuzione uniforme. È proprio così che Python e NumPy fabbricano un numero casuale tra 0 e 1: prendono 53 bit casuali e li usano come cifre binarie dopo la virgola.
+
+    Che le tre condizioni bastino a far comparire la campana, anche senza la distribuzione identica, lo dimostrarono il matematico russo Aleksandr Ljapunov, nel 1901, e il finlandese Jarl Waldemar Lindeberg, nel 1922. Il loro risultato è ancora il Teorema del Limite Centrale, in una forma più generale, e la richiesta che nessun addendo prevalga, scritta in modo preciso, si chiama oggi **condizione di Lindeberg**. Ritroviamo così la frase della sezione [Quando la campana descrive bene i dati](#normale-informatica): la campana nasce dalla somma di molti piccoli disturbi indipendenti, «nessuno dei quali domina gli altri». I disturbi possono essere diversi tra loro, ma se uno domina, la somma prende la sua forma.
+
 ## Lettura A — Il paradosso di Bertrand, con i conti {: #bertrand-esteso .psi-facoltativo }
 
 Questa lettura è facoltativa. Riprende i tre ragionamenti dell’Atto I con i conti completi e li verifica con una simulazione.

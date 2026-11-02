@@ -1031,7 +1031,7 @@ Per i bayesiani (**Harold Jeffreys**, **Edwin Jaynes**) questo è inaccettabile:
 
 $$
 \begin{aligned}
-\text{Posterior (Nuova convinzione)} \;\propto\;& \text{Prior (Convinzione iniziale)} \\
+\text{Probabilità a posteriori (nuova convinzione)} \;\propto\;& \text{Probabilità a priori (convinzione iniziale)} \\
 &\times\; \text{Verosimiglianza (Dati reali)}
 \end{aligned}
 $$

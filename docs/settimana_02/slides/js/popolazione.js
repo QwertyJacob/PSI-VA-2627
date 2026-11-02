@@ -170,7 +170,7 @@
     var note = q.one('.pv-note');
     gsap.set(note, { opacity: 0 });
     tl.addLabel('s0');
-    // 1. Attacchi 100 volte più rari: il posterior crolla.
+    // 1. Attacchi 100 volte più rari: la probabilità a posteriori crolla.
     tl.to(st, { lp: -4, duration: 1.8, ease: 'power1.inOut', onUpdate: render }).addLabel('s1');
     // 2. Sensibilità perfetta: quasi nulla cambia.
     tl.to(st, { sens: 1, duration: 1.2, onUpdate: render }).addLabel('s2');

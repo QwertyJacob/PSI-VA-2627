@@ -5,10 +5,10 @@
 
 ## Che cosa è richiesto all’esame {: #esame }
 
-- **Definizioni e calcoli:** costruire e leggere alberi di probabilità; riconoscere partizioni; moltiplicare lungo un cammino e sommare casi disgiunti; applicare probabilità totale e Bayes, anche con più ipotesi. Devi riconoscere prior, verosimiglianza, evidenza e posterior e distinguere $P(E \mid H)$ da $P(H \mid E)$.
+- **Definizioni e calcoli:** costruire e leggere alberi di probabilità; riconoscere partizioni; moltiplicare lungo un cammino e sommare casi disgiunti; applicare probabilità totale e Bayes, anche con più ipotesi. Devi riconoscere probabilità a priori, verosimiglianza, evidenza e probabilità a posteriori e distinguere $P(E \mid H)$ da $P(H \mid E)$.
 - **Comprensione:** spiegare l’effetto del tasso di base (la probabilità iniziale dell’ipotesi) sul risultato. Gli esempi medico, IDS e debugging illustrano lo stesso ragionamento: non devi memorizzarne i valori numerici.
 - **Ragionamenti da ricostruire:** probabilità totale mediante decomposizione in casi disgiunti e Bayes dalla regola del prodotto.
-- **Aggiornamento sequenziale:** comprendere che il posterior può diventare il nuovo prior e che la stessa evidenza non va contata due volte. La formalizzazione dell’indipendenza condizionata è rinviata alla Settimana 12, nell’applicazione a Naive Bayes.
+- **Aggiornamento sequenziale:** comprendere che la probabilità a posteriori può diventare la nuova probabilità a priori e che la stessa evidenza non va contata due volte. La formalizzazione dell’indipendenza condizionata è rinviata alla Settimana 12, nell’applicazione a Naive Bayes.
 
 **Facoltativi e non richiesti all’esame:** sensibilità, specificità e metriche di valutazione dei classificatori (argomenti del corso di Machine Learning); dimostrazione formale del lemma sulle partizioni, verifica completa degli assiomi per la probabilità condizionata, induzione sulla regola del cammino e ricostruzione del tavolo storico di Bayes. Nei problemi d’esame le probabilità necessarie saranno espresse direttamente come $P(E \mid H)$, $P(E \mid H^c)$, ecc., oppure in parole, senza richiedere il lessico delle metriche.
 
@@ -111,7 +111,7 @@ Lo trovò l'amico **Richard Price**, anch'egli ministro dissenziente, filosofo e
 1. Nella lettera a Canton, Price racconta che Bayes aveva risolto il problema partendo da un **postulato**, cioè da un'ipotesi di partenza accettata senza dimostrazione: all'inizio, prima di osservare qualunque dato, tutti i valori possibili della probabilità sconosciuta vanno considerati ugualmente plausibili. Price aggiunge che Bayes *«afterwards considered, that the postulate on which he had argued might not perhaps be looked upon by all as reasonable»* («in seguito considerò che il postulato su cui aveva ragionato forse non sarebbe stato ritenuto ragionevole da tutti»). Per questo Bayes presentò il risultato in un'altra forma e lo giustificò in una nota a parte (uno *Scholium*).
 2. Lo storico della statistica Stephen Stigler ([2013](https://arxiv.org/abs/1310.0173)) avanza l'ipotesi che Bayes abbia messo da parte il lavoro *«possibly because he did not regard his solution as mathematically fully satisfactory»* («forse perché non considerava la sua soluzione matematicamente del tutto soddisfacente»): il metodo con cui approssimava un certo calcolo non lo convinceva.
 
-Tieni a mente il primo indizio, perché è il cuore del dramma: **il dubbio di Bayes riguardava il punto di partenza**, cioè quanto credere alle varie ipotesi *prima* di vedere i dati. Tra poco daremo a questo punto di partenza un nome, *prior*, e vedremo che è esattamente l'ingrediente che fa sbagliare quasi tutti nella domanda dell'allarme. Nella Settimana 1 lo abbiamo già incontrato sotto un'altra veste: il *principio di indifferenza* di Laplace («se non so nulla, assegno a tutti i casi la stessa probabilità») e le sue crisi.
+Tieni a mente il primo indizio, perché è il cuore del dramma: **il dubbio di Bayes riguardava il punto di partenza**, cioè quanto credere alle varie ipotesi *prima* di vedere i dati. Tra poco daremo a questo punto di partenza un nome, *probabilità a priori*, e vedremo che è esattamente l'ingrediente che fa sbagliare quasi tutti nella domanda dell'allarme. Nella Settimana 1 lo abbiamo già incontrato sotto un'altra veste: il *principio di indifferenza* di Laplace («se non so nulla, assegno a tutti i casi la stessa probabilità») e le sue crisi.
 
 ### Dentro il saggio: una piccola grammatica, 170 anni prima di Kolmogorov
 
@@ -185,7 +185,7 @@ Il nome tecnico dell'errore di fondo è **fallacia del tasso di base** (*base-ra
     1. Perché sapere che $P(\text{allarme} \mid \text{attacco}) = 0.99$ ci dice così poco su $P(\text{attacco} \mid \text{allarme})$?
     2. Da dove viene il «denominatore» di cui parla Laplace, e perché per calcolarlo dobbiamo considerare **tutte** le cause possibili?
     3. Che cosa guadagna un sistema quando la conclusione di oggi diventa il punto di partenza per l'evidenza di domani?
-    4. Se il punto di partenza (il *prior*) era il tormento di Bayes, possiamo farne a meno? Che cosa succede se lo ignoriamo?
+    4. Se il punto di partenza (la *probabilità a priori*) era il tormento di Bayes, possiamo farne a meno? Che cosa succede se lo ignoriamo?
 
 ---
 
@@ -720,38 +720,38 @@ Ogni pezzo della formula di Bayes ha un nome. Questi nomi li userai per tutto il
 
 | Simbolo | Nome | Che cosa significa | Nell'esempio dell'IDS |
 |:---|:---|:---|:---|
-| $P(H)$ | **prior** (probabilità *a priori*) | quanto crediamo all'ipotesi **prima** di osservare l'evidenza | $0.01$: frazione di connessioni malevole |
+| $P(H)$ | **probabilità a priori** | quanto crediamo all'ipotesi **prima** di osservare l'evidenza | $0.01$: frazione di connessioni malevole |
 | $P(E \mid H)$ | **verosimiglianza** (*likelihood*) | quanto l'ipotesi, se fosse vera, renderebbe probabile ciò che abbiamo osservato | $0.99$: se è un attacco, l'allarme scatta quasi sempre |
 | $P(E)$ | **evidenza** (probabilità marginale) | quanto era probabile l'osservazione, considerando **tutte** le ipotesi | $0.0198$: frazione di connessioni con allarme |
-| $P(H \mid E)$ | **posterior** (probabilità *a posteriori*) | quanto crediamo all'ipotesi **dopo** aver osservato l'evidenza | $0.5$: la risposta alla Domanda Guida |
+| $P(H \mid E)$ | **probabilità a posteriori** | quanto crediamo all'ipotesi **dopo** aver osservato l'evidenza | $0.5$: la risposta alla Domanda Guida |
 
 Con questi nomi, il Teorema di Bayes si legge in italiano così:
 
 $$
-\text{posterior} = \frac{\text{verosimiglianza} \times \text{prior}}{\text{evidenza}}.
+\text{probabilità a posteriori} = \frac{\text{verosimiglianza} \times \text{probabilità a priori}}{\text{evidenza}}.
 $$
 
-!!! tip "Una scorciatoia per fare i conti: posterior $\propto$ verosimiglianza $\times$ prior"
-    Il simbolo $\propto$ si legge «è proporzionale a». Una volta fissata l'evidenza osservata $E$, il denominatore $P(E)$ è **lo stesso per tutte le ipotesi**. Quindi i posterior sono proporzionali ai prodotti verosimiglianza $\times$ prior, e il denominatore serve solo a «normalizzare», cioè a far sommare i posterior a 1. In pratica:
+!!! tip "Una scorciatoia per fare i conti: probabilità a posteriori $\propto$ verosimiglianza $\times$ probabilità a priori"
+    Il simbolo $\propto$ si legge «è proporzionale a». Una volta fissata l'evidenza osservata $E$, il denominatore $P(E)$ è **lo stesso per tutte le ipotesi**. Quindi le probabilità a posteriori sono proporzionali ai prodotti verosimiglianza $\times$ probabilità a priori, e il denominatore serve solo a «normalizzare», cioè a far sommare a 1 le probabilità a posteriori. In pratica:
 
-    1. per ogni ipotesi calcola **verosimiglianza $\times$ prior** (sull'albero: le foglie compatibili con $E$);
+    1. per ogni ipotesi calcola **verosimiglianza $\times$ probabilità a priori** (sull'albero: le foglie compatibili con $E$);
     2. **somma** tutti questi prodotti (la probabilità totale, $P(E)$);
     3. **dividi** ciascun prodotto per la somma (il ribaltamento dell'albero).
 
     Questi tre passi sono tutto ciò che fa lo Script 1 del laboratorio.
 
 !!! caution "La verosimiglianza non è una misura di probabilità delle ipotesi"
-    Fissata l'evidenza $E$, i numeri $P(E \mid H_1), P(E \mid H_2), \dots$ **non sommano a 1**, e non devono farlo: ciascuno è calcolato in un «universo» diverso (dentro $H_1$, dentro $H_2$…). Nell'esempio dei moduli software che vedremo tra poco, le verosimiglianze sono $0.5$, $0.8$, $0.9$ e $0$, con somma $2.2$. Sono invece i **posterior** $P(H_1 \mid E), P(H_2 \mid E), \dots$ a sommare a 1, perché sono tutti calcolati nello stesso universo, quello in cui $E$ si è verificato.
+    Fissata l'evidenza $E$, i numeri $P(E \mid H_1), P(E \mid H_2), \dots$ **non sommano a 1**, e non devono farlo: ciascuno è calcolato in un «universo» diverso (dentro $H_1$, dentro $H_2$…). Nell'esempio dei moduli software che vedremo tra poco, le verosimiglianze sono $0.5$, $0.8$, $0.9$ e $0$, con somma $2.2$. Sono invece le **probabilità a posteriori** $P(H_1 \mid E), P(H_2 \mid E), \dots$ a sommare a 1, perché sono tutti calcolati nello stesso universo, quello in cui $E$ si è verificato.
 
     
 
 **Due casi limite istruttivi.**
 
-* **Prior zero, posterior zero.** Se $P(H_j) = 0$, il numeratore è zero e quindi $P(H_j \mid E) = 0$, *qualunque* cosa si osservi. Un'ipotesi a cui si è dato probabilità zero in partenza non può più essere «riscoperta» da nessun dato. Per questo, in pratica, non si assegna mai probabilità esattamente zero a un'ipotesi che si vuole poter scoprire.
+* **Probabilità a priori zero, probabilità a posteriori zero.** Se $P(H_j) = 0$, il numeratore è zero e quindi $P(H_j \mid E) = 0$, *qualunque* cosa si osservi. Un'ipotesi a cui si è dato probabilità zero in partenza non può più essere «riscoperta» da nessun dato. Per questo, in pratica, non si assegna mai probabilità esattamente zero a un'ipotesi che si vuole poter scoprire.
 * **Verosimiglianza zero, ipotesi eliminata.** Se $P(E \mid H_j) = 0$ (l'ipotesi $H_j$ rende *impossibile* ciò che abbiamo visto), allora osservare $E$ elimina del tutto $H_j$. Esempio: se il programma è andato in crash, l'ipotesi «nessun errore nel codice» (che non causa mai crash) esce di scena.
 
-!!! question "E se ignorassimo il prior?"
-    Nel problema dell'IDS, rispondere «99%» sembra un modo di non usare il prior. In realtà, se sensibilità e specificità valgono entrambe $0.99$, si ottiene un posterior del 99% **solo** ponendo $P(H) = 0.5$, cioè supponendo che metà delle connessioni siano attacchi. **Ignorare il prior non significa non averne uno: significa usarne uno sbagliato**, di solito quello «50 e 50». Questo è il vero significato della fallacia del tasso di base, ed è la risposta alla quarta domanda guida.
+!!! question "E se ignorassimo la probabilità a priori?"
+    Nel problema dell'IDS, rispondere «99%» sembra un modo di non usare la probabilità a priori. In realtà, se sensibilità e specificità valgono entrambe $0.99$, si ottiene una probabilità a posteriori del 99% **solo** ponendo $P(H) = 0.5$, cioè supponendo che metà delle connessioni siano attacchi. **Ignorare la probabilità a priori non significa non averne una: significa usarne una sbagliata**, di solito quella «50 e 50». Questo è il vero significato della fallacia del tasso di base, ed è la risposta alla quarta domanda guida.
 
 **Quanto deve essere buono un IDS?** Supponiamo che gli attacchi siano uno su diecimila, $P(H) = 10^{-4}$, e che il rilevatore abbia sensibilità $0.99$. Quanti falsi allarmi $f = P(E \mid H^c)$ possiamo permetterci, se vogliamo che un allarme sia vero almeno nel 90% dei casi? Imponiamo $P(H \mid E) \ge 0.9$:
 
@@ -768,14 +768,14 @@ Circa un errore ogni centomila connessioni legittime. Ecco, in numeri, la conclu
 !!! info "Più avanti nel corso: la forma a odds"
     Il Teorema di Bayes ha anche una forma ancora più compatta, che usa le **quote** degli scommettitori (*odds*, «3 contro 1») e il **rapporto di verosimiglianza** $P(E \mid H) / P(E \mid H^c)$. In quella forma ogni nuova evidenza **moltiplica** le quote per un fattore fisso, e in scala logaritmica le evidenze **si sommano**. La vedremo nella Settimana 12, quando servirà per il classificatore Naive Bayes.
 
-### 7. Il posterior di oggi è il prior di domani
+### 7. La probabilità a posteriori di oggi è la probabilità a priori di domani
 
 !!! info "Per l’esame"
-    È richiesta l’idea del posterior come nuovo prior e del divieto di contare due volte la stessa evidenza. La definizione formale dell’indipendenza condizionata sarà introdotta nella Settimana 12 per Naive Bayes; qui i dettagli formali e il laboratorio sono facoltativi.
+    È richiesta l’idea della probabilità a posteriori come nuova probabilità a priori e del divieto di contare due volte la stessa evidenza. La definizione formale dell’indipendenza condizionata sarà introdotta nella Settimana 12 per Naive Bayes; qui i dettagli formali e il laboratorio sono facoltativi.
 
 Torniamo alle tre di notte. Dopo il primo allarme, la probabilità di attacco è salita dall'1% al 50%. Ora scatta un **secondo** allarme, da un altro rilevatore installato sul server (non sulla rete). Come aggiorniamo?
 
-L'idea naturale è: **il posterior di prima diventa il nuovo prior**, e si applica di nuovo Bayes con i dati del secondo rilevatore. Supponiamo che il secondo rilevatore abbia sensibilità $0.95$ e tasso di falsi positivi $0.05$:
+L'idea naturale è: **la probabilità a posteriori di prima diventa la nuova probabilità a priori**, e si applica di nuovo Bayes con i dati del secondo rilevatore. Supponiamo che il secondo rilevatore abbia sensibilità $0.95$ e tasso di falsi positivi $0.05$:
 
 $$
 P(H \mid E_1 \cap E_2) = \frac{0.95 \cdot 0.5}{0.95 \cdot 0.5 + 0.05 \cdot 0.5} = 0.95.
@@ -783,12 +783,12 @@ $$
 
 Due allarmi, e siamo passati dall'1% al 95%.
 
-Guardiamo bene che cosa abbiamo messo nella formula. Il prior $0.5$ è **aggiornato**: è $P(H \mid E_1)$, il posterior dopo il primo allarme. Usare il posterior come nuovo prior è sempre lecito. Le verosimiglianze $0.95$ e $0.05$, invece, **non** sono aggiornate: sono i dati del produttore, $P(E_2 \mid H)$ e $P(E_2 \mid H^c)$, che descrivono il secondo rilevatore da solo, senza sapere nulla del primo.
+Guardiamo bene che cosa abbiamo messo nella formula. La probabilità a priori $0.5$ è **aggiornata**: è $P(H \mid E_1)$, la probabilità a posteriori dopo il primo allarme. Usare la probabilità a posteriori come nuova probabilità a priori è sempre lecito. Le verosimiglianze $0.95$ e $0.05$, invece, **non** sono aggiornate: sono i dati del produttore, $P(E_2 \mid H)$ e $P(E_2 \mid H^c)$, che descrivono il secondo rilevatore da solo, senza sapere nulla del primo.
 
 È lecito riusare le verosimiglianze del produttore del secondo rilevatore (cioè sensibilità $0.95$ e tasso di falsi positivi $0.05$) anche dopo aver visto il primo allarme? Dipende da **dove nascono gli errori** dei due rilevatori. Immaginiamo una notte **senza** attacchi in cui il primo rilevatore ha dato un falso allarme. Il secondo ha qualche motivo per sbagliare anche lui?
 
 * **Rilevatori che guardano dati diversi.** Il primo analizza il traffico di rete, il secondo i file del server. Qualcosa di strano nel traffico ha ingannato il primo, ma il secondo quel traffico non lo vede nemmeno. La probabilità che sbagli resta quella dichiarata dal produttore, $0.05$. Lo stesso vale nelle notti con un attacco. In questo caso le verosimiglianze del produttore vanno bene, e il conto che dà il 95% è corretto.
-* **Rilevatori che guardano gli stessi dati.** Entrambi leggono lo stesso log di rete. Ogni notte alle tre parte un backup legittimo che invia molti dati all'esterno: somiglia a un furto di dati e inganna **tutti e due**. Quindi, se il primo ha già dato un falso allarme, è molto probabile che anche il secondo stia sbagliando sulla stessa connessione, molto più del $5\%$ dichiarato dal produttore. Usare quel $5\%$ dà un posterior troppo alto.
+* **Rilevatori che guardano gli stessi dati.** Entrambi leggono lo stesso log di rete. Ogni notte alle tre parte un backup legittimo che invia molti dati all'esterno: somiglia a un furto di dati e inganna **tutti e due**. Quindi, se il primo ha già dato un falso allarme, è molto probabile che anche il secondo stia sbagliando sulla stessa connessione, molto più del $5\%$ dichiarato dal produttore. Usare quel $5\%$ dà una probabilità a posteriori troppo alta.
 
 Conta **che cosa guardano** i due rilevatori, non quanto sono precisi. Il primo rilevatore sbaglia sull'$1\%$ delle connessioni legittime, il secondo sul $5\%$. Queste percentuali dicono **quanto spesso** sbaglia ciascuno, ma non **su quali connessioni**. Due rilevatori che leggono lo stesso log possono avere percentuali di errore diverse e sbagliare comunque sulle stesse connessioni. Al contrario, due copie dello stesso software, una che analizza il traffico di rete e una che analizza il server, hanno le stesse percentuali di errore ma guardano dati diversi: ciò che inganna una, l'altra non lo vede nemmeno, e quindi non sbagliano insieme.
 
@@ -809,12 +809,12 @@ Quando gli errori dei due rilevatori non hanno cause in comune, si dice che i du
     \frac{1 \cdot 0.5}{1 \cdot 0.5 + 1 \cdot 0.5} = 0.5.
     $$
 
-    Il posterior non si muove, ed è giusto così: la copia non porta nessuna informazione nuova. Il conto ingenuo arriva al 99% perché **conta due volte la stessa evidenza**.
+    La probabilità a posteriori non si muove, ed è giusto così: la copia non porta nessuna informazione nuova. Il conto ingenuo arriva al 99% perché **conta due volte la stessa evidenza**.
 
 !!! warning "Nota per l'ingegnere"
-    Prima di combinare due allarmi, chiediti da quali dati partono. Se i due rilevatori leggono **lo stesso flusso di log** o usano **le stesse regole**, non sono condizionatamente indipendenti: usare le verosimiglianze del produttore significa contare **due volte la stessa evidenza**, e il posterior che ne esce è troppo sicuro di sé.
+    Prima di combinare due allarmi, chiediti da quali dati partono. Se i due rilevatori leggono **lo stesso flusso di log** o usano **le stesse regole**, non sono condizionatamente indipendenti: usare le verosimiglianze del produttore significa contare **due volte la stessa evidenza**, e la probabilità a posteriori che ne esce è troppo sicura di sé.
 
-Il grafico seguente mostra come cresce il posterior dopo $k$ allarmi consecutivi, **supponendo** che siano condizionatamente indipendenti e tutti prodotti da rilevatori con la stessa sensibilità e lo stesso tasso di falsi positivi.
+Il grafico seguente mostra come cresce la probabilità a posteriori dopo $k$ allarmi consecutivi, **supponendo** che siano condizionatamente indipendenti e tutti prodotti da rilevatori con la stessa sensibilità e lo stesso tasso di falsi positivi.
 
 <div class="psi-widget" id="s02-widget-sequenziale"></div>
 <script>
@@ -830,23 +830,23 @@ document.addEventListener('DOMContentLoaded', function () {
     yLabel: 'P(attacco | k allarmi)',
     xDomain: [0, 6],
     yDomain: [0, 1.05],
-    liveLabel: 'posterior dopo k allarmi',
+    liveLabel: 'probabilità a posteriori dopo k allarmi',
     fn: function (k, p) { return dopoKAllarmi(k, p); },
     params: [
-      { key: 'logprior', label: 'Prior iniziale P(H) (log10: −2 = 0.01)', min: -6, max: -0.5, step: 0.1, value: -2 },
+      { key: 'logprior', label: 'Probabilità a priori iniziale P(H) (log10: −2 = 0.01)', min: -6, max: -0.5, step: 0.1, value: -2 },
       { key: 'sens', label: 'Sensibilità di ogni rilevatore P(E | H)', min: 0.5, max: 1, step: 0.01, value: 0.99 },
       { key: 'fpr', label: 'Falsi positivi di ogni rilevatore P(E | Hᶜ)', min: 0.001, max: 0.2, step: 0.001, value: 0.01 }
     ],
-    reference: { label: 'IDS del Prologo, prior 1%', params: { logprior: -2, sens: 0.99, fpr: 0.01 } },
+    reference: { label: 'IDS del Prologo, probabilità a priori 1%', params: { logprior: -2, sens: 0.99, fpr: 0.01 } },
     stats: function (p) {
       return [
-        { label: 'Prior P(H)', value: Math.pow(10, p.logprior).toPrecision(2) },
+        { label: 'Probabilità a priori P(H)', value: Math.pow(10, p.logprior).toPrecision(2) },
         { label: 'Dopo 1 allarme', value: (100 * dopoKAllarmi(1, p)).toFixed(2) + '%' },
         { label: 'Dopo 2 allarmi', value: (100 * dopoKAllarmi(2, p)).toFixed(2) + '%' },
         { label: 'Dopo 3 allarmi', value: (100 * dopoKAllarmi(3, p)).toFixed(2) + '%' }
       ];
     },
-    caption: 'Ogni allarme usa come prior il posterior dell’allarme precedente. Vale SOLO se gli allarmi sono condizionatamente indipendenti dato lo stato del sistema: due rilevatori che leggono gli stessi log non lo sono.'
+    caption: 'Ogni allarme usa come probabilità a priori la probabilità a posteriori dell’allarme precedente. Vale SOLO se gli allarmi sono condizionatamente indipendenti dato lo stato del sistema: due rilevatori che leggono gli stessi log non lo sono.'
   });
 });
 </script>
@@ -859,8 +859,8 @@ Ora applichiamo quanto visto a una serie di problemi. Per ciascuno seguiamo semp
 
 1. **dare un nome agli eventi** (qual è l'ipotesi nascosta? qual è l'evidenza osservata?);
 2. **tradurre i dati in simboli**, stando attenti a che cosa sta a destra e a sinistra della barra;
-3. **controllare che le ipotesi formino una partizione** (i prior sommano a 1?);
-4. **calcolare verosimiglianza × prior** per ogni ipotesi, **sommare**, **dividere**.
+3. **controllare che le ipotesi formino una partizione** (le probabilità a priori sommano a 1?);
+4. **calcolare verosimiglianza × probabilità a priori** per ogni ipotesi, **sommare**, **dividere**.
 
 !!! esempio-svolto "Esempio 1 — Il test medico, fino in fondo"
     *Dati:* prevalenza $P(H) = 0.01$, sensibilità $P(E \mid H) = 0.95$, specificità $P(E^c \mid H^c) = 0.90$, quindi falsi positivi $P(E \mid H^c) = 0.10$.
@@ -901,7 +901,7 @@ Ora applichiamo quanto visto a una serie di problemi. Per ciascuno seguiamo semp
     P(V \mid S) = \frac{0.95 \cdot 0.04}{0.95 \cdot 0.04 + 0.01 \cdot 0.96} = \frac{0.038}{0.038 + 0.0096} = \frac{0.038}{0.0476} \approx 0.798.
     $$
 
-    *Confronto:* con lo stesso test, se la prevalenza fosse l'1% il posterior sarebbe circa $0.49$. Passando dall'1% al 4% di prevalenza, il posterior sale da circa il 49% a circa l'80%. Il test non è cambiato: è cambiato il **prior**.
+    *Confronto:* con lo stesso test, se la prevalenza fosse l'1% la probabilità a posteriori sarebbe circa $0.49$. Passando dall'1% al 4% di prevalenza, la probabilità a posteriori sale da circa il 49% a circa l'80%. Il test non è cambiato: è cambiata la **probabilità a priori**.
 
 !!! esempio-svolto "Esempio 4 — Diagnostica del codice (Baron, Esempio 2.35)"
     Un programma ha due moduli. Il modulo I contiene un errore con probabilità $0.2$; il modulo II con probabilità $0.4$, indipendentemente dal primo. Un errore **solo** nel modulo I fa andare in crash il programma con probabilità $0.5$; un errore **solo** nel modulo II con probabilità $0.8$; errori in **entrambi** con probabilità $0.9$. Il programma è andato in crash ($C$). Con che probabilità ci sono errori in entrambi i moduli?
@@ -914,11 +914,11 @@ Ora applichiamo quanto visto a una serie di problemi. Per ciascuno seguiamo semp
 
     Sono quattro casi che si escludono a vicenda e coprono tutto. (Ricorda il controesempio dell'Atto IV: $\{A, B, A \cap B\}$ **non** va bene.)
 
-    *Passo 2 — I prior.* Per l'indipendenza, $P(A \cap B) = 0.2 \cdot 0.4 = 0.08$. Poiché $A$ si divide in «solo I» ed «entrambi», $P(\text{solo I}) = 0.2 - 0.08 = 0.12$. Allo stesso modo $P(\text{solo II}) = 0.4 - 0.08 = 0.32$. Per differenza, $P(\text{nessuno}) = 1 - 0.12 - 0.32 - 0.08 = 0.48$ (controllo: coincide con $0.8 \cdot 0.6$, come deve per l'indipendenza).
+    *Passo 2 — Le probabilità a priori.* Per l'indipendenza, $P(A \cap B) = 0.2 \cdot 0.4 = 0.08$. Poiché $A$ si divide in «solo I» ed «entrambi», $P(\text{solo I}) = 0.2 - 0.08 = 0.12$. Allo stesso modo $P(\text{solo II}) = 0.4 - 0.08 = 0.32$. Per differenza, $P(\text{nessuno}) = 1 - 0.12 - 0.32 - 0.08 = 0.48$ (controllo: coincide con $0.8 \cdot 0.6$, come deve per l'indipendenza).
 
-    *Passo 3 — Verosimiglianza × prior, somma, divisione.*
+    *Passo 3 — Verosimiglianza × probabilità a priori, somma, divisione.*
 
-    | Ipotesi | Prior | Verosimiglianza $P(C \mid \cdot)$ | Prodotto | Posterior $P(\cdot \mid C)$ |
+    | Ipotesi | Probabilità a priori | Verosimiglianza $P(C \mid \cdot)$ | Prodotto | Probabilità a posteriori $P(\cdot \mid C)$ |
     |:---|---:|---:|---:|---:|
     | solo I | 0.12 | 0.5 | 0.060 | 0.155 |
     | solo II | 0.32 | 0.8 | 0.256 | **0.660** |
@@ -930,16 +930,16 @@ Ora applichiamo quanto visto a una serie di problemi. Per ciascuno seguiamo semp
     P(A \cap B \mid C) = \frac{0.9 \cdot 0.08}{0.5 \cdot 0.12 + 0.8 \cdot 0.32 + 0.9 \cdot 0.08 + 0 \cdot 0.48} = \frac{0.072}{0.388} \approx 0.186.
     $$
 
-    *La lettura più utile per chi fa debugging:* il colpevole più probabile è **il modulo II da solo (66%)**, non la combinazione dei due, anche se la combinazione è quella che causa il crash più spesso (verosimiglianza $0.9$). Il motivo è il prior: «solo II» è quattro volte più frequente di «entrambi». Se puoi ispezionare un solo modulo, comincia dal II.
+    *La lettura più utile per chi fa debugging:* il colpevole più probabile è **il modulo II da solo (66%)**, non la combinazione dei due, anche se la combinazione è quella che causa il crash più spesso (verosimiglianza $0.9$). Il motivo è la probabilità a priori: «solo II» è quattro volte più frequente di «entrambi». Se puoi ispezionare un solo modulo, comincia dal II.
 
 !!! esempio-svolto "Esempio 5 — Controllo qualità: dove si è rotto?"
     Riprendiamo l'Albero 3 (materiali, design, test finale). Il prodotto **ha fallito il test finale** ($T^c$). In quale fase è nato il problema?
 
     *Probabilità totale.* Le foglie con $T^c$ sono quattro: $0.036$, $0.072$, $0.016$, $0.042$. Quindi $P(T^c) = 0.036 + 0.072 + 0.016 + 0.042 = 0.166$.
 
-    *Bayes.* Le ipotesi sono i quattro nodi del secondo livello (che formano una partizione, come ogni livello di un albero). Ciascun posterior è la foglia corrispondente divisa per $0.166$:
+    *Bayes.* Le ipotesi sono i quattro nodi del secondo livello (che formano una partizione, come ogni livello di un albero). Ciascuna probabilità a posteriori è la foglia corrispondente divisa per $0.166$:
 
-    | Ipotesi | Foglia con $T^c$ | Posterior $P(\cdot \mid T^c)$ |
+    | Ipotesi | Foglia con $T^c$ | Probabilità a posteriori $P(\cdot \mid T^c)$ |
     |:---|---:|---:|
     | materiali ok, design ok | 0.036 | 0.217 |
     | materiali ok, design fallito | 0.072 | **0.434** |
@@ -963,14 +963,14 @@ La funzione `albero` fa in tre righe esattamente i tre passi di Bayes: calcola l
 <div class="psi-exec" markdown="1">
 ```python
 # Script 1 — Calcolatore ad albero: partizione {H_1,...,H_n}, evidenza E
-def albero(prior, verosimiglianza):
-    """prior: {H_i: P(H_i)}; verosimiglianza: {H_i: P(E | H_i)}.
-    Restituisce foglie P(H_i ∩ E), P(E) (probabilità totale) e posterior P(H_i | E)."""
-    assert abs(sum(prior.values()) - 1) < 1e-12, "le H_i devono formare una partizione"
-    foglie = {h: prior[h] * verosimiglianza[h] for h in prior}          # regola del cammino
+def albero(a_priori, verosimiglianza):
+    """a_priori: {H_i: P(H_i)}; verosimiglianza: {H_i: P(E | H_i)}.
+    Restituisce foglie P(H_i ∩ E), P(E) (probabilità totale) e probabilità a posteriori P(H_i | E)."""
+    assert abs(sum(a_priori.values()) - 1) < 1e-12, "le H_i devono formare una partizione"
+    foglie = {h: a_priori[h] * verosimiglianza[h] for h in a_priori}    # regola del cammino
     p_E = sum(foglie.values())                                          # probabilità totale
-    posterior = {h: foglie[h] / p_E for h in prior}                     # Bayes
-    return foglie, p_E, posterior
+    a_posteriori = {h: foglie[h] / p_E for h in a_priori}               # Bayes
+    return foglie, p_E, a_posteriori
 
 # (a) Test medico: prevalenza 1%, sensibilità 0.95, specificità 0.90
 foglie, p_pos, post = albero({"H": 0.01, "H^c": 0.99}, {"H": 0.95, "H^c": 0.10})
@@ -978,14 +978,14 @@ print(f"Test medico: P(E) = {p_pos:.4f}, P(H|E) = {post['H']:.4f}")
 assert abs(p_pos - 0.1085) < 1e-12 and round(post["H"], 3) == 0.088
 
 # (b) Partizione con n = 4 ipotesi: moduli software (Baron 2.35), E = crash
-prior = {"solo I": 0.12, "solo II": 0.32, "entrambi": 0.08, "nessuno": 0.48}
-lik   = {"solo I": 0.5,  "solo II": 0.8,  "entrambi": 0.9,  "nessuno": 0.0}
-_, p_C, post = albero(prior, lik)
+a_priori = {"solo I": 0.12, "solo II": 0.32, "entrambi": 0.08, "nessuno": 0.48}
+lik      = {"solo I": 0.5,  "solo II": 0.8,  "entrambi": 0.9,  "nessuno": 0.0}
+_, p_C, post = albero(a_priori, lik)
 print(f"Moduli: P(C) = {p_C:.3f}")
 for h, v in post.items():
     print(f"  P({h} | C) = {v:.4f}")
 assert abs(p_C - 0.388) < 1e-12 and round(post["entrambi"], 4) == 0.1856
-assert abs(sum(post.values()) - 1) < 1e-12        # i posterior sommano a 1
+assert abs(sum(post.values()) - 1) < 1e-12        # le probabilità a posteriori sommano a 1
 
 # (c) Controllo qualità a tre livelli, letto all'indietro
 p_T = {(True, True): 0.95, (True, False): 0.60, (False, True): 0.60, (False, False): 0.30}
@@ -1043,7 +1043,7 @@ Con circa 4.000 allarmi, la frequenza osservata oscilla attorno a 0.5 di circa $
 
 <div class="psi-exec" markdown="1">
 ```python
-# Script 3 — Monte Carlo IDS: la frequenza converge al posterior di Bayes
+# Script 3 — Monte Carlo IDS: la frequenza converge alla probabilità a posteriori di Bayes
 import random
 random.seed(2627)
 N, prev, sens, fpr = 200_000, 0.01, 0.99, 0.01
@@ -1069,21 +1069,21 @@ print("Script 3: tutti gli assert superati.")
 
 Verifichiamo che, con due rilevatori condizionatamente indipendenti, aggiornare in sequenza e aggiornare in blocco danno lo stesso risultato: $0.95$. Nella parte Monte Carlo, il secondo allarme viene generato in modo indipendente dal primo **una volta noto** se c'è un attacco: è così che si costruisce l'indipendenza condizionata in una simulazione.
 
-*Da provare:* modifica la simulazione in modo che `e2 = e1` (il secondo rilevatore copia il primo). Il posterior stimato torna a circa $0.5$ e l'ultimo `assert` fallisce, giustamente: il secondo allarme non porta nessuna informazione nuova, e la formula che dava $0.95$ non vale più.
+*Da provare:* modifica la simulazione in modo che `e2 = e1` (il secondo rilevatore copia il primo). La probabilità a posteriori stimata torna a circa $0.5$ e l'ultimo `assert` fallisce, giustamente: il secondo allarme non porta nessuna informazione nuova, e la formula che dava $0.95$ non vale più.
 
 <div class="psi-exec" markdown="1">
 ```python
 # Script 4 — Aggiornamento sequenziale vs in blocco (rilevatori condizionatamente indipendenti)
 import random
-def aggiorna(prior, p_E_H, p_E_Hc):
-    return p_E_H * prior / (p_E_H * prior + p_E_Hc * (1 - prior))
+def aggiorna(a_priori, p_E_H, p_E_Hc):
+    return p_E_H * a_priori / (p_E_H * a_priori + p_E_Hc * (1 - a_priori))
 
-prior = 0.01
+a_priori = 0.01
 d1 = (0.99, 0.01)     # (sensibilità, tasso di falsi positivi) del rilevatore di rete
 d2 = (0.95, 0.05)     # rilevatore sul server, condizionatamente indipendente dato H
-post1 = aggiorna(prior, *d1)
-post12 = aggiorna(post1, *d2)                                   # il posterior diventa prior
-blocco = aggiorna(prior, d1[0] * d2[0], d1[1] * d2[1])          # E1 ∩ E2 in un colpo solo
+post1 = aggiorna(a_priori, *d1)
+post12 = aggiorna(post1, *d2)                                   # la probabilità a posteriori diventa la nuova probabilità a priori
+blocco = aggiorna(a_priori, d1[0] * d2[0], d1[1] * d2[1])       # E1 ∩ E2 in un colpo solo
 print(f"Dopo E1: {post1:.4f} | dopo E1 poi E2: {post12:.4f} | in blocco: {blocco:.4f}")
 assert round(post1, 6) == 0.5 and abs(post12 - blocco) < 1e-12
 assert round(blocco, 6) == 0.95
@@ -1092,7 +1092,7 @@ assert round(blocco, 6) == 0.95
 random.seed(7)
 n12 = h12 = 0
 for _ in range(400_000):
-    h = random.random() < prior
+    h = random.random() < a_priori
     e1 = random.random() < (d1[0] if h else d1[1])
     e2 = random.random() < (d2[0] if h else d2[1])
     if e1 and e2:
@@ -1134,7 +1134,7 @@ print("Script 5: tutti gli assert superati.")
 
 Torniamo al tavolo quadrato dell'Atto I. Lo dividiamo in 10 strisce parallele e ci chiediamo in quale striscia si trovi la linea della palla W. All'inizio non sappiamo nulla, quindi diamo a tutte le strisce la stessa probabilità (è il postulato che tormentava Bayes!).
 
-Se la linea di W sta alla frazione $x$ della larghezza del tavolo, ogni lancio di O cade «di qua» (evento M) con probabilità $x$. Dopo $p$ eventi M e $q$ eventi «non M», la verosimiglianza della striscia $j$ è $x_j^{\,p}\,(1 - x_j)^{q}$, e il posterior si ottiene con i soliti tre passi: moltiplica per il prior, somma, dividi. È il Teorema di Bayes con una partizione di 10 ipotesi.
+Se la linea di W sta alla frazione $x$ della larghezza del tavolo, ogni lancio di O cade «di qua» (evento M) con probabilità $x$. Dopo $p$ eventi M e $q$ eventi «non M», la verosimiglianza della striscia $j$ è $x_j^{\,p}\,(1 - x_j)^{q}$, e le probabilità a posteriori delle strisce si ottengono con i soliti tre passi: moltiplica per la probabilità a priori, somma, dividi. È il Teorema di Bayes con una partizione di 10 ipotesi.
 
 Guarda come l'istogramma, piatto all'inizio, si concentra lancio dopo lancio attorno alla posizione vera. In fondo, con strisce sottilissime, lo script ritrova due risultati storici:
 
@@ -1145,10 +1145,11 @@ Guarda come l'istogramma, piatto all'inizio, si concentra lancio dopo lancio att
 ```python
 # Script 6 — Il tavolo di Bayes discretizzato
 import random
-def posterior_tavolo(p, q, strisce):
-    """Posterior sulla striscia di W dopo p eventi M e q eventi M^c (prior uniforme)."""
+def tavolo_a_posteriori(p, q, strisce):
+    """Probabilità a posteriori delle strisce di W dopo p eventi M e q eventi M^c,
+    partendo da probabilità a priori uniformi."""
     centri = [(j + 0.5) / strisce for j in range(strisce)]
-    pesi = [x**p * (1 - x)**q for x in centri]       # prior uniforme × verosimiglianza
+    pesi = [x**p * (1 - x)**q for x in centri]       # probabilità a priori uniforme × verosimiglianza
     Z = sum(pesi)                                    # normalizzazione (probabilità totale)
     return centri, [w / Z for w in pesi]
 
@@ -1158,17 +1159,17 @@ lanci = [random.random() < w for _ in range(20)]     # evento M: O cade dalla pa
 print(f"Posizione nascosta di W: {w:.3f}")
 for k in (0, 1, 5, 20):
     p = sum(lanci[:k]); q = k - p
-    centri, post = posterior_tavolo(p, q, 10)
+    centri, post = tavolo_a_posteriori(p, q, 10)
     assert abs(sum(post) - 1) < 1e-12
     barre = " ".join(f"{v:.2f}" for v in post)
     print(f"k={k:2d} (p={p:2d}, q={q:2d}): {barre}")
 
 # Con strisce sottilissime si ritrovano i risultati di Price e Laplace
-centri, post = posterior_tavolo(1, 0, 10_000)
+centri, post = tavolo_a_posteriori(1, 0, 10_000)
 p_oltre_meta = sum(v for x, v in zip(centri, post) if x > 0.5)
 print(f"Dopo un'alba: P(x > 1/2) = {p_oltre_meta:.4f}  -> {p_oltre_meta/(1-p_oltre_meta):.2f} contro 1")
 assert abs(p_oltre_meta - 0.75) < 1e-3
-centri, post = posterior_tavolo(7, 3, 10_000)
+centri, post = tavolo_a_posteriori(7, 3, 10_000)
 media = sum(x * v for x, v in zip(centri, post))
 print(f"p=7, q=3: media a posteriori = {media:.4f}  (regola di successione (p+1)/(n+2) = {8/12:.4f})")
 assert abs(media - 8 / 12) < 1e-4
@@ -1193,8 +1194,8 @@ Rifacciamo a mente un conto con numeri tondi. Un sistema di monitoraggio della s
 Il nome operativo del fenomeno è **alert fatigue**, «stanchezza da allarmi»: gli analisti, sommersi da allarmi quasi sempre falsi, imparano a ignorarli, e l'allarme vero finisce in una coda che nessuno legge più. La probabilità spiega perché il problema **non** si risolve comprando un rilevatore più sensibile. Le leve che funzionano sono tre, e ognuna corrisponde a un pezzo della formula di Bayes:
 
 1. **abbassare i falsi positivi $P(E \mid H^c)$**: regole più specifiche, liste di eccezioni note (*allow-list*), soppressione dei falsi positivi già riconosciuti;
-2. **alzare il prior prima di valutare l'allarme**: considerare il contesto (un server critico, un utente amministratore, un orario anomalo). Tecnicamente significa condizionare su informazioni aggiuntive e ragionare con $P(\cdot \mid \text{contesto})$, un universo in cui gli attacchi sono meno rari;
-3. **incrociare rilevatori condizionatamente indipendenti**: due allarmi indipendenti dato lo stato del sistema si possono usare uno dopo l'altro, e ognuno alza il posterior. Ma due rilevatori che leggono gli stessi log **non** lo sono.
+2. **alzare la probabilità a priori prima di valutare l'allarme**: considerare il contesto (un server critico, un utente amministratore, un orario anomalo). Tecnicamente significa condizionare su informazioni aggiuntive e ragionare con $P(\cdot \mid \text{contesto})$, un universo in cui gli attacchi sono meno rari;
+3. **incrociare rilevatori condizionatamente indipendenti**: due allarmi indipendenti dato lo stato del sistema si possono usare uno dopo l'altro, e ognuno alza la probabilità a posteriori. Ma due rilevatori che leggono gli stessi log **non** lo sono.
 
 ### 2. Il dizionario del machine learning {: .psi-facoltativo }
 
@@ -1208,10 +1209,10 @@ La tabella delle frequenze naturali è la **matrice di confusione** che si usa p
 | **Recall** (sensibilità, TPR) | TP / (TP + FN) | $P(E \mid H)$ | verosimiglianza (sotto $H$) |
 | **Specificità** (TNR) | TN / (TN + FP) | $P(E^c \mid H^c)$ | complemento della verosimiglianza sotto $H^c$ |
 | **False positive rate** (FPR) | FP / (FP + TN) | $P(E \mid H^c) = 1 -$ specificità | verosimiglianza (sotto $H^c$) |
-| **Prevalenza** | (TP + FN) / N | $P(H)$ | prior |
+| **Prevalenza** | (TP + FN) / N | $P(H)$ | probabilità a priori |
 | **Tasso di positivi predetti** (*positive prediction rate*, tasso di allarme) | (TP + FP) / N | $P(E)$ | **evidenza** |
-| **Precision** (PPV, *positive predictive value*, valore predittivo positivo) | TP / (TP + FP) | $P(H \mid E)$ | **posterior** |
-| **NPV** (*negative predictive value*, valore predittivo negativo) | TN / (TN + FN) | $P(H^c \mid E^c)$ | posterior del test negativo |
+| **Precision** (PPV, *positive predictive value*, valore predittivo positivo) | TP / (TP + FP) | $P(H \mid E)$ | **probabilità a posteriori** |
+| **NPV** (*negative predictive value*, valore predittivo negativo) | TN / (TN + FN) | $P(H^c \mid E^c)$ | probabilità a posteriori dopo un test negativo |
 | **Accuracy** | (TP + TN) / N | $P(E \mid H)P(H) + P(E^c \mid H^c)P(H^c)$ | probabilità totale |
 
 (TP, FN, FP, TN sono i quattro conteggi della matrice di confusione: veri positivi, falsi negativi, falsi positivi, veri negativi; N è il totale.)
@@ -1231,16 +1232,16 @@ Due conseguenze importanti:
 
 Fare debugging significa ragionare **dall'effetto** (il sintomo: un crash, un test rosso) **alla causa** (il difetto nel codice). È la struttura dell'Esempio 4.
 
-* **Il colpevole più probabile non è quello che causa più spesso il sintomo.** Nell'esempio dei moduli, la verosimiglianza più alta è quella di «entrambi i moduli» (0.9), ma il posterior più alto è quello di «solo modulo II» (0.66), perché il suo prior è quattro volte più grande.
-* **Il prior viene dal contesto.** Un rilascio di dieci minuti fa, un componente appena modificato, una libreria appena aggiornata: sono informazioni che alzano la probabilità a priori di certe cause ancora prima di leggere il messaggio d'errore.
-* **In che ordine ispezionare.** Se ispezionare un modulo costa lo stesso per tutti e rivela con certezza se il difetto c'è, conviene ispezionare le ipotesi **in ordine di posterior decrescente**: così si minimizza il numero medio di ispezioni.
+* **Il colpevole più probabile non è quello che causa più spesso il sintomo.** Nell'esempio dei moduli, la verosimiglianza più alta è quella di «entrambi i moduli» (0.9), ma la probabilità a posteriori più alta è quella di «solo modulo II» (0.66), perché la sua probabilità a priori è quattro volte più grande.
+* **La probabilità a priori viene dal contesto.** Un rilascio di dieci minuti fa, un componente appena modificato, una libreria appena aggiornata: sono informazioni che alzano la probabilità a priori di certe cause ancora prima di leggere il messaggio d'errore.
+* **In che ordine ispezionare.** Se ispezionare un modulo costa lo stesso per tutti e rivela con certezza se il difetto c'è, conviene ispezionare le ipotesi **in ordine di probabilità a posteriori decrescente**: così si minimizza il numero medio di ispezioni.
 * **Le pipeline di test sono alberi.** Il controllo qualità dell'Esempio 5 è lo schema di ogni pipeline di integrazione continua (CI/CD): la build fallisce all'ultimo stadio e la domanda è in quale stadio precedente sia nato il problema. L'albero dà la risposta e mostra il costo dei controlli intermedi che lasciano passare difetti.
 
 ### 4. Bayes nell'era dell'intelligenza artificiale
 
 * **Il cervello bayesiano.** Nelle neuroscienze computazionali è stata proposta l'ipotesi che il cervello rappresenti le informazioni sensoriali in forma probabilistica e le combini con le aspettative precedenti in un modo vicino a quello ottimo di Bayes ([Knill & Pouget, 2004](https://doi.org/10.1016/j.tins.2004.10.007)). È un'**ipotesi di ricerca** influente, sostenuta da esperimenti su percezione e movimento, non un fatto acquisito.
 * **Il denominatore che non si riesce a calcolare.** Il denominatore di Bayes, $P(E) = \sum_i P(E \mid H_i)\,P(H_i)$, è una somma su **tutte** le ipotesi. Con due ipotesi è banale. Ma quando le «ipotesi» sono tutte le possibili configurazioni di milioni di variabili nascoste in un modello di deep learning, quella somma diventa impossibile da calcolare esattamente.
-* **Approssimare invece di calcolare.** I *Variational Autoencoder* ([Kingma & Welling, 2013](https://arxiv.org/abs/1312.6114)) affrontano proprio questo problema: invece di calcolare il posterior esatto, lo approssimano con una famiglia di distribuzioni più semplici, ottimizzando un limite inferiore (tecnica detta *inferenza variazionale*). Anche i modelli di diffusione che generano immagini ([Ho, Jain & Abbeel, 2020](https://arxiv.org/abs/2006.11239)) vengono addestrati su un limite variazionale di questo tipo.
+* **Approssimare invece di calcolare.** I *Variational Autoencoder* ([Kingma & Welling, 2013](https://arxiv.org/abs/1312.6114)) affrontano proprio questo problema: invece di calcolare esattamente la distribuzione a posteriori, la approssimano con una famiglia di distribuzioni più semplici, ottimizzando un limite inferiore (tecnica detta *inferenza variazionale*). Anche i modelli di diffusione che generano immagini ([Ho, Jain & Abbeel, 2020](https://arxiv.org/abs/2006.11239)) vengono addestrati su un limite variazionale di questo tipo.
 
 
 Nella Settimana 12 chiuderemo il cerchio con il classificatore **Naive Bayes**: il Teorema di Bayes con partizione, più l'ipotesi di indipendenza condizionata, riscritto nella forma a odds.
@@ -1252,10 +1253,10 @@ Nella Settimana 12 chiuderemo il cerchio con il classificatore **Naive Bayes**: 
 1. **Confondere l'inverso.** Leggere $P(E \mid H)$ come se fosse $P(H \mid E)$. Rimedio: leggi sempre ad alta voce, «probabilità di *allarme* sapendo che c'è un *attacco*» contro «probabilità di *attacco* sapendo che c'è un *allarme*». Le due differiscono per il fattore $P(H)/P(E)$.
 2. **Fidarsi di «accurato al 99%».** Senza sensibilità, specificità e prevalenza separate, quella frase non definisce nessun numero utile.
 3. **Sommare le condizionate sbagliate.** $P(A \mid B) + P(A^c \mid B) = 1$ è vero; $P(A \mid B) + P(A \mid B^c) = 1$ in generale è falso (controesempio: $0.95 + 0.10 = 1.05$).
-4. **Usare ipotesi che non formano una partizione.** Per esempio $\{A, B, A \cap B\}$ per i due moduli: conta due volte gli errori in entrambi e dimentica «nessun errore». Controllo: i prior devono sommare a 1.
-5. **Trattare la verosimiglianza come una distribuzione.** Non stupirti se $\sum_j P(E \mid H_j) \neq 1$, e non «normalizzarla»: sono i posterior a sommare a 1.
-6. **Contare due volte la stessa evidenza.** Riusare le verosimiglianze del produttore per due rilevatori che leggono gli stessi log: non sono condizionatamente indipendenti, e il posterior che ne esce è troppo sicuro di sé.
-7. **Pensare di poter ignorare il prior.** Ignorarlo significa usare implicitamente il prior «50 e 50», che di solito è il più sbagliato di tutti.
+4. **Usare ipotesi che non formano una partizione.** Per esempio $\{A, B, A \cap B\}$ per i due moduli: conta due volte gli errori in entrambi e dimentica «nessun errore». Controllo: le probabilità a priori devono sommare a 1.
+5. **Trattare la verosimiglianza come una distribuzione.** Non stupirti se $\sum_j P(E \mid H_j) \neq 1$, e non «normalizzarla»: sono le probabilità a posteriori a sommare a 1.
+6. **Contare due volte la stessa evidenza.** Riusare le verosimiglianze del produttore per due rilevatori che leggono gli stessi log: non sono condizionatamente indipendenti, e la probabilità a posteriori che ne esce è troppo sicura di sé.
+7. **Pensare di poter ignorare la probabilità a priori.** Ignorarla significa usare implicitamente la probabilità a priori «50 e 50», che di solito è la più sbagliata di tutte.
 
 ---
 
@@ -1265,9 +1266,9 @@ Nella Settimana 12 chiuderemo il cerchio con il classificatore **Naive Bayes**: 
 * Un **albero di probabilità** ha eventi nei nodi, probabilità condizionate sui rami, e figli che formano una **partizione** del padre. La probabilità di un nodo è il **prodotto dei rami** lungo il cammino.
 * **Probabilità totale:** $P(E) = \sum_i P(E \mid H_i)\,P(H_i)$, cioè la somma delle foglie compatibili con $E$.
 * **Teorema di Bayes:** $P(H_j \mid E) = P(E \mid H_j)\,P(H_j) \,/\, P(E)$, cioè una foglia divisa per la somma delle foglie compatibili con $E$. È il **ribaltamento dell'albero**.
-* **Vocabolario:** prior $P(H)$, verosimiglianza $P(E \mid H)$, evidenza $P(E)$, posterior $P(H \mid E)$. Posterior $\propto$ verosimiglianza $\times$ prior.
-* **Aggiornamento sequenziale:** il posterior di oggi è **sempre** il prior di domani; riusare le verosimiglianze originali (e moltiplicarle) è lecito solo con evidenze **condizionatamente indipendenti**, cioè indipendenti una volta noto lo stato del sistema.
-* **Quando l'ipotesi è rara, il prior domina anche un test eccellente.** Un IDS al 99% su attacchi che sono l'1% del traffico produce allarmi veri solo nel 50% dei casi; se gli attacchi sono uno su diecimila, meno di un allarme su cento è vero. Conta il tasso di falsi allarmi.
+* **Vocabolario:** probabilità a priori $P(H)$, verosimiglianza $P(E \mid H)$, evidenza $P(E)$, probabilità a posteriori $P(H \mid E)$. La probabilità a posteriori è proporzionale al prodotto verosimiglianza $\times$ probabilità a priori.
+* **Aggiornamento sequenziale:** la probabilità a posteriori di oggi è **sempre** la probabilità a priori di domani; riusare le verosimiglianze originali (e moltiplicarle) è lecito solo con evidenze **condizionatamente indipendenti**, cioè indipendenti una volta noto lo stato del sistema.
+* **Quando l'ipotesi è rara, la probabilità a priori domina anche un test eccellente.** Un IDS al 99% su attacchi che sono l'1% del traffico produce allarmi veri solo nel 50% dei casi; se gli attacchi sono uno su diecimila, meno di un allarme su cento è vero. Conta il tasso di falsi allarmi.
 
 ---
 

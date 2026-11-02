@@ -516,7 +516,7 @@
       });
       left.style.opacity = st.show * (1 - 0.82 * sl);
 
-      // Albero ribaltato: nodo E con la somma, poi i rami con i posterior.
+      // Albero ribaltato: nodo E con la somma, poi i rami con le probabilità a posteriori.
       var fEnd = function (i) { return [FX + side(val[i]) / 2 + 4, SLOT[FLIP[i]]]; };
       var REDGE = [[R.r, R.e], [R.r, R.ne], [R.e, fEnd(0)], [R.e, fEnd(2)], [R.ne, fEnd(1)], [R.ne, fEnd(3)]];
       var RLAB = [e, ne, val[0] / e, val[2] / e, val[1] / ne, val[3] / ne], RDY = [-12, 28, -10, 24, -10, 24];

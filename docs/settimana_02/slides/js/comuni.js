@@ -1,7 +1,7 @@
 /*
  * Utilità comuni alle scene della Settimana 2 (oggetto globale S2).
  * Palette: ipotesi H (attacco, malattia) in rosso, evidenza E (allarme,
- * test positivo) in ambra, posterior e risposte in verde, come nelle formule.
+ * test positivo) in ambra, probabilità a posteriori e risposte in verde, come nelle formule.
  */
 window.S2 = (function () {
   'use strict';

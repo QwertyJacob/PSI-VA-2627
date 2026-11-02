@@ -16,7 +16,7 @@
     });
   }
 
-  // ── Moduli software (Baron 2.35): prior, verosimiglianza, somma, divisione ──
+  // ── Moduli software (Baron 2.35): probabilità a priori, verosimiglianza, somma, divisione ──
   PSI.scene('moduli', function (el, tl) {
     var q = PSI.q(el), root = q.one('svg');
     var X0 = 40, W = 620, Y0 = 44, H = 270, BY = 372, BH = 40;
@@ -41,7 +41,7 @@
     HYP.slice(1).forEach(function (h) { svg('line', { x1: h.x, y1: Y0, x2: h.x, y2: Y0 + H, 'class': 'md-sep' }, root); });
     var cLbl = text(root, X0 + W + 12, Y0 + H - 10, 'C', 'md-c it');
 
-    // Barra della probabilità totale e, dopo, dei posterior.
+    // Barra della probabilità totale e, dopo, delle probabilità a posteriori.
     var bx = X0, pieces = [];
     HYP.forEach(function (h) {
       var a = h.prior * h.lik;
@@ -62,7 +62,7 @@
     gsap.set(omega, { opacity: 0 });
     tl.to(omega, { opacity: 1, duration: 0.4 }).addLabel('s0');
 
-    // 1. Partizione: le colonne hanno larghezza = prior.
+    // 1. Partizione: le colonne hanno larghezza = probabilità a priori.
     tl.to(steps[0], { opacity: 1, duration: 0.3 })
       .to(cols, { opacity: 1, duration: 0.4, stagger: 0.12 }, '<')
       .to([names, priors], { opacity: 1, duration: 0.4 }, '<0.2')
@@ -87,7 +87,7 @@
     tl.to(total, { opacity: 1, duration: 0.4 })
       .addLabel('s3');
 
-    // 4. Divisione: la barra si allarga fino a 1, i pezzi diventano posterior.
+    // 4. Divisione: la barra si allarga fino a 1, i pezzi diventano probabilità a posteriori.
     tl.to(steps[3], { opacity: 1, duration: 0.3 })
       .to(total, { opacity: 0, duration: 0.3 }, '<')
       .to(f2, { opacity: 1, duration: 0.4 }, '<');
@@ -221,7 +221,7 @@
       tl.to(fl[i], { attr: { x: c.bx, y: BY, width: c.bw, height: BH }, duration: 0.9, ease: 'power2.inOut' }, i ? '<0.15' : '>');
     });
     tl.to(total, { opacity: 1, duration: 0.4 }).addLabel('s3');
-    // 4. Divisione: posterior.
+    // 4. Divisione: probabilità a posteriori.
     tl.to(total, { opacity: 0, duration: 0.3 });
     keep.forEach(function (c, i) {
       tl.to(fl[i], { attr: { x: c.fx, width: c.fw }, duration: 1, ease: 'power2.inOut' }, i ? '<' : '>');

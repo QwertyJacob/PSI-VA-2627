@@ -1,7 +1,7 @@
 /*
  * Stile delle scene della Settimana 2. Lo stile comune (palette, pannelli,
  * pulsanti) è in assets/slides/scenes.css, caricato prima di questo file.
- * Ipotesi H in rosso, evidenza E in ambra, posterior in verde.
+ * Ipotesi H in rosso, evidenza E in ambra, probabilità a posteriori in verde.
  */
 :root {
   --psi-h: #f87171;

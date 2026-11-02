@@ -558,7 +558,7 @@
           <p class="tr-opt"><span>$\{A,\; B,\; A \cap B\}$</span><b class="fragment vf-no">✗ &nbsp;<small>si sovrappongono, manca «nessuno»</small></b></p>
           <p class="tr-opt"><span>$\{A \cap B^c,\; A^c \cap B,\; A \cap B,\; A^c \cap B^c\}$</span><b class="fragment vf-yes">✓ &nbsp;<small>solo I · solo II · entrambi · nessuno</small></b></p>
         </div>
-        <p class="subtitle fragment">Controllo: i prior sommano a 1. &nbsp;$0.12 + 0.32 + 0.08 + 0.48 = 1$</p>
+        <p class="subtitle fragment">Controllo: le probabilità a priori sommano a 1.<br>$0.12 + 0.32 + 0.08 + 0.48 = 1$</p>
       </section>
 
       <!-- Atto IV • Probabilità totale e Bayes sul mosaico (scena: js/bayes.js) -->
@@ -569,10 +569,10 @@
           <svg class="scene-svg" width="700" height="450" viewBox="0 0 700 450" role="img" aria-label="Omega diviso nei quattro casi di errore; dentro ogni caso la parte con crash"></svg>
           <div class="scene-panel">
             <ol class="scene-steps">
-              <li><strong>Partizione</strong>: 4 casi, prior che sommano a 1</li>
+              <li><strong>Partizione</strong>: 4 casi, probabilità a priori che sommano a 1</li>
               <li><strong>Verosimiglianza</strong> $P(C \mid H_i)$: somma 2.2, non 1!</li>
               <li><strong>Somma</strong> i pezzi: $P(C) = 0.388$</li>
-              <li><strong>Dividi</strong>: ogni pezzo diventa un posterior</li>
+              <li><strong>Dividi</strong>: ogni pezzo diventa una probabilità a posteriori</li>
             </ol>
             <div class="scene-def md-f1">$$P(C) = \sum_i P(C \mid H_i)\,P(H_i)$$</div>
             <div class="scene-def md-f2">$$P(H_j \mid C) = \frac{P(C \mid H_j)\,P(H_j)}{P(C)}$$</div>
@@ -597,23 +597,23 @@
         <h2 class="scene-title">Ogni pezzo ha un nome</h2>
         <div class="vc-formula">$$\color{#38ef7d}P(H \mid E) \color{#edf2f7} = \frac{\color{#fbbf24}P(E \mid H)\,\color{#edf2f7}\cdot\,\color{#f87171}P(H)}{\color{#c084fc}P(E)}$$</div>
         <div class="vc-names">
-          <span class="fragment vc-name" style="color: #f87171;">prior<small>prima dei dati</small></span>
+          <span class="fragment vc-name" style="color: #f87171;">probabilità a priori<small>prima dei dati</small></span>
           <span class="fragment vc-name" style="color: #fbbf24;">verosimiglianza<small>quanto H spiega E</small></span>
           <span class="fragment vc-name" style="color: #c084fc;">evidenza<small>tutte le cause</small></span>
-          <span class="fragment vc-name" style="color: #38ef7d;">posterior<small>dopo i dati</small></span>
+          <span class="fragment vc-name" style="color: #38ef7d;">probabilità a posteriori<small>dopo i dati</small></span>
         </div>
-        <p class="vc-prop fragment">posterior $\;\propto\;$ verosimiglianza $\times$ prior</p>
+        <p class="vc-prop fragment">probabilità a posteriori $\;\propto\;$ verosimiglianza $\times$ probabilità a priori</p>
       </section>
 
-      <!-- Ignorare il prior -->
+      <!-- Ignorare la probabilità a priori -->
       <section>
-        <p class="badge orange">E se ignorassi il prior?</p>
+        <p class="badge orange">E se ignorassi la probabilità a priori?</p>
         <h2 class="huge-question" style="font-size: 1.6em !important;">Chi risponde «99%»…</h2>
         <div class="box ig-box">
           <p class="fragment">$\dfrac{0.99 \cdot \color{#f87171}{0.5}}{0.99 \cdot \color{#f87171}{0.5}\color{#edf2f7} + 0.01 \cdot \color{#f87171}{0.5}} = 0.99$</p>
           <p class="fragment ig-verdict">…sta usando $P(H) = 0.5$: <span class="warning">metà delle connessioni sono attacchi.</span></p>
         </div>
-        <p class="subtitle fragment">Ignorare il prior = usare il prior sbagliato.</p>
+        <p class="subtitle fragment">Ignorare la probabilità a priori = usarne una sbagliata.</p>
       </section>
 
       <!-- Esercizio: quanto deve essere buono un IDS -->
@@ -665,7 +665,7 @@
             <p class="pop-row"><span class="pop-key k-tp"></span><b data-k="tp">76</b> segnalati infetti <span style="font-size: 0.8em; opacity: 0.75; vertical-align: baseline;">$= 0.95 \cdot 0.04 \cdot 2000$</span></p>
             <p class="pop-row"><span class="pop-key k-fp"></span><b data-k="fp">19</b> segnalati sani <span style="font-size: 0.8em; opacity: 0.75; vertical-align: baseline;">$\approx 0.01 \cdot 0.96 \cdot 2000$</span></p>
             <div class="scene-def pop-res">$$\frac{\color{#f87171}76}{\color{#f87171}76\color{#edf2f7} + \color{#94a3b8}19} \approx 80\%$$<p class="scene-note">È Bayes: probabilità × 2000 = conteggi.</p></div>
-            <p class="scene-note pop-extra">Con prevalenza 1%: $\approx 49\%$. Stesso test, <strong>prior</strong> diverso.</p>
+            <p class="scene-note pop-extra">Con prevalenza 1%: $\approx 49\%$. Stesso test, <strong>probabilità a priori</strong> diversa.</p>
           </div>
         </div>
       </section>
@@ -761,7 +761,7 @@
           <p class="fragment sm-num"><b class="warning">10.000</b><span>falsi allarmi<br>(falsi positivi 1%)</span></p>
           <p class="fragment sm-num"><b class="highlight">≤ 100</b><span>allarmi veri<br>(anche con recall 100%)</span></p>
         </div>
-        <p class="subtitle fragment">Le leve: meno falsi positivi · più contesto (prior) · rilevatori davvero indipendenti.</p>
+        <p class="subtitle fragment">Le leve: meno falsi positivi · più contesto (probabilità a priori) · rilevatori davvero indipendenti.</p>
       </section>
 
       <!-- Domanda d'uscita (regia) -->
@@ -770,13 +770,13 @@
         <h2 class="huge-question" style="font-size: 1.5em !important;">Il tuo rilevatore ha precision <span class="highlight">50%</span> in laboratorio,<br>dove metà del traffico è malevolo.<br>In produzione è malevolo l'1%. Precision?</h2>
         <div class="box qb-box">
           <p class="fragment">$\dfrac{r \cdot 0.5}{r \cdot 0.5 + f \cdot 0.5} = 0.5 \;\Rightarrow\; r = f$</p>
-          <p class="fragment">Il rilevatore non distingue nulla: posterior = prior = <span class="warning">1%</span></p>
+          <p class="fragment">Il rilevatore non distingue nulla: probabilità a posteriori = probabilità a priori = <span class="warning">1%</span></p>
         </div>
       </section>
 
       <!-- Chiusura -->
       <section>
-        <h2 class="huge-question">Il posterior di oggi<br>è il <span class="highlight">prior</span> di domani.</h2>
+        <h2 class="huge-question">La probabilità a posteriori di oggi<br>è la <span class="highlight">probabilità a priori</span> di domani.</h2>
         <p class="subtitle">Rileggi Laplace: <em>una foglia, diviso la somma delle foglie compatibili con ciò che hai visto.</em></p>
         <p style="margin-top: 30px;"><a class="psi-btn ghost" href="../" target="_blank">📖 Dispensa e laboratorio ↗</a></p>
       </section>

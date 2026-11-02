@@ -245,7 +245,7 @@
   // come quadrati di area proporzionale alla probabilità; 1 i rami verso Eᶜ
   // si spengono e le foglie con E si accendono; 2 le foglie scivolano a destra
   // riordinate per E / Eᶜ, con colore e area invariati, e nasce il nodo E con
-  // la somma; 3 compaiono i rami ribaltati con i posterior.
+  // la somma; 3 compaiono i rami ribaltati con le probabilità a posteriori.
   // Tutto è ridisegnato da render() a partire da st: cursori, scala delle
   // aree e pulsante «Ribalta» restano coerenti con gli step.
   PSI.scene('ribalta', function (el, tl) {
@@ -347,7 +347,7 @@
       });
       left.style.opacity = st.show * (1 - 0.82 * sl);
 
-      // Albero ribaltato: nodo E con la somma, poi i rami con i posterior.
+      // Albero ribaltato: nodo E con la somma, poi i rami con le probabilità a posteriori.
       var fEnd = function (i) { return [FX + side(val[i]) / 2 + 4, SLOT[FLIP[i]]]; };
       var REDGE = [[R.r, R.e], [R.r, R.ne], [R.e, fEnd(0)], [R.e, fEnd(2)], [R.ne, fEnd(1)], [R.ne, fEnd(3)]];
       var RLAB = [e, ne, val[0] / e, val[2] / e, val[1] / ne, val[3] / ne], RDY = [-12, 28, -10, 24, -10, 24];

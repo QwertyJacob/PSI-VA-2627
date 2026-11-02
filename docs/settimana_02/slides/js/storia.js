@@ -68,8 +68,8 @@
   // La palla W si ferma in x (frazione della larghezza) e resta nascosta.
   // Ogni palla O cade a sinistra della linea di W con probabilità x.
   // Sotto il tavolo, sullo stesso asse, la credenza sulla striscia che
-  // contiene la linea di W: prior uniforme (il
-  // postulato di Bayes), poi posterior ∝ x_j^p (1−x_j)^q, con 10 o 100 strisce.
+  // contiene la linea di W: distribuzione a priori uniforme (il
+  // postulato di Bayes), poi distribuzione a posteriori ∝ x_j^p (1−x_j)^q, con 10 o 100 strisce.
   PSI.scene('tavolo', function (el, tl) {
     var q = PSI.q(el), root = q.one('svg');
     var X0 = 40, W = 620, Y0 = 14, H = 222, BASE = 452, PH = 160, K = 180, MAX = 2000;
@@ -177,7 +177,7 @@
     var note = q.one('.tv-note');
     gsap.set(note, { opacity: 0 });
     tl.addLabel('s0');
-    // 1. W rotola, traccia la sua linea e sparisce; prior piatto.
+    // 1. W rotola, traccia la sua linea e sparisce; distribuzione a priori piatta.
     tl.to(st, { roll: 1, duration: 1.3, ease: 'none', onUpdate: render })
       .to(st, { line: 1, duration: 0.6, ease: 'power1.inOut', onUpdate: render })
       .to(st, { hide: 1, duration: 0.7, onUpdate: render }, '+=0.4')
@@ -217,7 +217,7 @@
 
   // ── Il sole di Price e la regola di successione di Laplace ──
   //
-  // Dopo n albe (prior uniforme) la credenza su x è (n+1) x^n.
+  // Dopo n albe (distribuzione a priori uniforme) la credenza su x è (n+1) x^n.
   // L'area a destra di ½ è 1 − (½)^(n+1): scommessa 2^(n+1) − 1 contro 1.
   PSI.scene('alba', function (el, tl) {
     var q = PSI.q(el), root = q.one('svg');

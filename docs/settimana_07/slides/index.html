@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>PSI 26/27 — Settimana 7: distribuzioni congiunte, covarianza e correlazione</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../assets/slides/deck.js"></script>
+  <link rel="stylesheet" href="css/settimana.css">
+</head>
+<body>
+  <div class="reveal"><div class="slides">
+
+    <!-- ═════════════ LEZIONE 1 · mercoledì, 9:00–10:45. Scene: js/lezione1.js ═════════════ -->
+
+    <!-- L1-00 · copertina -->
+    <section id="lezione-1">
+      <p class="cover-week">Settimana 7</p>
+      <h2 class="cover-title">Perché i figli dei giganti<br>non sono giganti?</h2>
+      <div class="cover-acts"><span>Distribuzioni congiunte</span><span>Lezione 1</span><span>mercoledì, 9:00</span></div>
+      <aside class="notes">Data da confermare. Si parte dal riepilogo della Lezione 2 della Settimana 6 (15 minuti). Dopo Galton, il blocco centrale segue il pacco «11. Inferenza Bayesiana» dell'anno scorso, pp. 23–44 (modelli a due variabili, note di S. Boffa ed esempi di Piech); l'indipendenza segue il notebook 4.3_Distribuzioni_Congiunte (esempio dei due moduli di Baron). Le parti segnate (S) si saltano se si è in ritardo.</aside>
+    </section>
+
+    <!-- L1-01 · riepilogo della Settimana 6 -->
+    <section id="riepilogo-s6">
+      <p class="badge">Riepilogo · Settimana 6</p>
+      <h2 class="scene-title">Quattro domande sulla campana</h2>
+      <div class="rq-grid">
+        <div class="rq-list">
+          <p class="rq fragment"><span>1</span>$N(170,\,10^2)$: che cosa dicono 170 e 10?</p>
+          <p class="rq fragment"><span>2</span>Che cosa vuol dire $z=2$?</p>
+          <p class="rq fragment"><span>3</span>$P(X\gt180)$ con la tabella di $\Phi$?</p>
+          <p class="rq fragment"><span>4</span>Entro una, due, tre $\sigma$?</p>
+        </div>
+        <div class="rq-board">
+          <svg class="scene-svg" width="360" height="230" viewBox="0 0 360 230" role="img" aria-label="Una campana con due righelli sotto: centimetri e unità z"></svg>
+          risposte alla lavagna
+        </div>
+      </div>
+      <p class="rq-bridge fragment">Oggi le deviazioni «in unità statistiche» tornano con Galton.</p>
+      <aside class="notes">Una domanda per click, risposte dalla classe e alla lavagna. (1) 170 cm è il centro, 10 cm la deviazione standard: la larghezza, in centimetri; la varianza è 100 cm². (2) Due deviazioni standard sopra la media, in qualunque unità. (3) z = (180 − 170)/10 = 1, quindi 1 − Φ(1) = 1 − 0,8413 = 0,1587. (4) 68%, 95%, 99,7%. Controlla l'esercizio 6 della Settimana 6: in N(3, 16) il primo passo è σ = 4. Click 5: il ponte verso la Lezione 2 di questa settimana, dove la standardizzazione diventa la chiave della correlazione.</aside>
+    </section>
+
+    <!-- ───── Galton (Erlebnis, 10 minuti) ───── -->
+
+    <!-- L1-02 · la tavola di Galton -->
+    <section id="quincunx">
+      <p class="badge">Francis Galton, 1889</p>
+      <div class="qx-grid">
+        <figure class="s07-portrait">
+          <img src="img/galton.jpg" alt="Ritratto di Francis Galton">
+          <figcaption>Francis Galton<br>(1822–1911)<br>ritratto di C. W. Furse</figcaption>
+        </figure>
+        <div>
+          <svg class="scene-svg" width="820" height="440" viewBox="0 0 820 440" role="img" aria-label="La tavola di Galton: un imbuto, otto file di chiodi a triangolo, nove colonne. Un pallino rimbalza a destra o a sinistra; poi 512 pallini riempiono le colonne, che seguono la campana tratteggiata della distribuzione binomiale con n = 8 e p = 1/2"></svg>
+          <p class="qx-quote">«A ogni pallino, lungo il suo percorso, capita un gran numero di piccoli incidenti indipendenti.»<small>F. Galton, <i>Natural Inheritance</i>, 1889, pp. 64–65 (dall'inglese)</small></p>
+        </div>
+      </div>
+      <aside class="notes">Pacco «11. Inferenza Bayesiana», p. 12 (la macchina di Galton), qui animata. Galton: inglese, cugino di Darwin, ossessionato dalla misura; voleva capire come si trasmettono le caratteristiche. Quincunx è il nome latino del cinque sulla faccia del dado: i chiodi sono sfalsati così. Click: 1 un pallino: a ogni chiodo destra o sinistra, come una moneta; 2 cinquecento pallini: il numero della colonna conta le volte a destra, una distribuzione binomiale con n = 8 e p = 1/2 (Settimana 4); 3 la campana della Settimana 6; 4 la citazione: tanti piccoli effetti indipendenti producono una campana, come i cinquanta errori del laboratorio della Settimana 6. Galton pensava che l'altezza funzionasse così.</aside>
+    </section>
+
+    <!-- L1-03 · le altezze che non esplodono -->
+    <section id="generazioni">
+      <p class="badge">Una domanda sulle altezze</p>
+      <h2 class="scene-title">Perché le altezze non «esplodono»?</h2>
+      <svg class="scene-svg" width="1180" height="330" viewBox="0 0 1180 330" role="img" aria-label="Una campana delle altezze; se i figli ripetessero i genitori con piccole variazioni, la campana si allargherebbe a ogni generazione; invece resta la stessa"></svg>
+      <p class="gn-quote">«Come è possibile che una popolazione resti simile nei suoi tratti per molte generazioni, se la discendenza di ogni coppia somiglia ai genitori? […] i genitori avevano figli meno eccezionali di loro.»<small>F. Galton, <i>Memories of My Life</i>, 1908, p. 300 (dall'inglese)</small></p>
+      <aside class="notes">Nuova (dispensa, Atto I). All'ingresso la campana delle altezze di oggi. Click: 1 se i figli ripetessero l'altezza dei genitori, più le solite piccole variazioni, la campana si allargherebbe a ogni generazione: sempre più giganti e sempre più persone minuscole; 2 non succede: la distribuzione resta più o meno la stessa nel tempo; 3 la domanda di Galton, nelle sue parole. Le curve sono illustrative, non dati. Lancia subito s07-1.</aside>
+    </section>
+
+    <!-- L1-04 · sondaggio s07-1 (lancio) -->
+    <section id="sondaggio-1" class="sondaggio" data-poll="s07-1">
+      <p class="badge">Sondaggio · la risposta arriva tra poco</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Genitori molto alti: il genitore medio è <b>10 cm sopra la media</b>.<br>I loro figli adulti, in media, sono…</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>ancora più alti dei genitori</li>
+            <li><span>2</span>alti quanto i genitori</li>
+            <li><span>3</span>alti, ma meno dei genitori</li>
+            <li><span>4</span>nella media della popolazione</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono · votate d'istinto</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">«Genitore medio»: la media tra padre e madre, con l'altezza della madre moltiplicata per 1,08 (così faceva Galton). Votate d'istinto. NON premere V: si rivela dopo la tabella, sul duplicato. Risposta 3.</aside>
+    </section>
+
+    <!-- L1-05 · la tabella di Galton -->
+    <section id="tabella-galton">
+      <p class="badge">Galton, 1886 · 928 figli adulti di 205 coppie</p>
+      <svg class="scene-svg" width="1180" height="560" viewBox="0 0 1180 560" role="img" aria-label="La tabella a doppia entrata di Galton: righe per l'altezza del genitore medio, colonne per l'altezza del figlio, in ogni casella il numero di figli. Poi sono evidenziate le righe dei genitori alti e dei genitori bassi, con le medie dei figli"></svg>
+      <aside class="notes">Nuova: la tabella dell'articolo del 1886 (dati HistData, convertiti in centimetri; le classi estreme sono aperte). Galton la chiamava «table of correlations». All'ingresso la tabella: in ogni casella il numero di figli con quella coppia di classi. Click: 1 la casella più piena (48 figli); 2 i genitori alti, dai 179 cm in su: media 180,8 cm, figli 178,3; 3 i genitori bassi, fino ai 166 cm: media 165,3, figli 168,2. Chiedi: «dove stanno i figli, rispetto ai genitori?». Poi la rivelazione.</aside>
+    </section>
+
+    <!-- L1-06 · rivelazione s07-1 -->
+    <section id="sondaggio-1-rivela" class="sondaggio rivela" data-poll="s07-1">
+      <p class="badge">Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Genitori molto alti: il genitore medio è <b>10 cm sopra la media</b>.<br>I loro figli adulti, in media, sono…</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>ancora più alti dei genitori</li>
+            <li><span>2</span>alti quanto i genitori</li>
+            <li><span>3</span>alti, ma meno dei genitori</li>
+            <li><span>4</span>nella media della popolazione</li>
+          </ol>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <div class="rv-foot">
+        <p class="s07-quote fragment">«La statura dei figli adulti deve essere nel complesso più mediocre di quella dei genitori; cioè più vicina alla media della popolazione.»<small>F. Galton, <i>Natural Inheritance</i>, 1889, p. 95 (dall'inglese)</small></p>
+        <p class="rv-next fragment">La <b>regressione verso la media</b>. Per misurarla: leggere una tabella a doppia entrata.</p>
+      </div>
+      <aside class="notes">Premi V. Risposta 3. 1: è l'intuizione dell'esplosione, che i dati smentiscono. 2: «si eredita tutto»: varrebbe se l'altezza dipendesse solo dai genitori. 4: «non si eredita niente»: i figli dei genitori alti restano alti. Click 1: Galton; «mediocre» vuol dire solo «vicino alla media». Click 2: il nome, e il ponte verso il pacco. La regressione si misura nella Lezione 2; la retta è nella Lettura A (facoltativa).</aside>
+    </section>
+
+    <!-- ───── Modelli a due variabili (pacco «11. Inferenza Bayesiana», pp. 23–44) ───── -->
+
+    <!-- L1-07 · probabilità congiunta -->
+    <section id="cg-def">
+      <p class="badge">Modelli probabilistici a due variabili</p>
+      <h2 class="scene-title">Variabili congiunte e marginali</h2>
+      <p class="s07-text">Due variabili aleatorie discrete $X$ e $Y$. L'evento congiunto $\{X=x\}\cap\{Y=y\}$ ha una probabilità, la <b>probabilità congiunta</b>:</p>
+      <div class="s07-box">$$P(\{X=x\}\cap\{Y=y\})=P(X=x,\;Y=y)=P(x,y)$$</div>
+      <p class="s07-text fragment">La virgola si legge «e».</p>
+      <p class="s07-text fragment">$P(X=x)$ e $P(Y=y)$ prendono il nome di <b>probabilità marginali</b>.</p>
+      <p class="s07-text fragment">Nel caso discreto, la probabilità congiunta si scrive in forma di <b>tabella</b>.</p>
+      <aside class="notes">Pacco, slide 25 (note di S. Boffa). La notazione abbreviata P(x, y) è quella delle slide e di molti libri: la minuscola x sta per l'evento X = x. Click: 1 la virgola; 2 il nome delle probabilità delle singole variabili, che vediamo tra poco; 3 la tabella, che è il tema dei prossimi esempi.</aside>
+    </section>
+
+    <!-- L1-08 · un dado: tre oggetti -->
+    <section id="cg-dado">
+      <p class="badge">Esempio</p>
+      <p class="s07-text">Lanciamo un dado a 6 facce e chiamiamo $X$ il risultato.</p>
+      <div class="dd-cards">
+        <div class="dd-card"><p class="dd-big">$X$</p><p>variabile aleatoria</p><small>la regola che legge il dado</small></div>
+        <div class="dd-card fragment"><p class="dd-big">$P(X=1)=\frac16$</p><p>probabilità di un evento</p><small>un numero</small></div>
+        <div class="dd-card fragment"><p class="dd-big">$P(X=k)$</p><p>funzione di massa di probabilità</p><small>una funzione di $k$</small></div>
+      </div>
+      <aside class="notes">Pacco, slide 26. Tre oggetti che non vanno confusi: la variabile (la regola), l'evento con la sua probabilità (un numero), la PMF (una funzione). Click 1 e 2. Con due dadi avremo tutto doppio, più la probabilità che succedano due cose insieme.</aside>
+    </section>
+
+    <!-- L1-09 · due dadi: la tabella congiunta -->
+    <section id="cg-dadi">
+      <p class="badge">Esempio · due dadi</p>
+      <div class="scene-grid dd-grid">
+        <div class="dd-side">
+          <p>Due dadi a 6 facce:<br><span class="data">$X$</span> il primo, <span class="model">$Y$</span> il secondo.</p>
+          <p class="dd-s1">Qual è la PMF congiunta?<br>$P(X=a,\;Y=b)=\frac1{36}$<br>per ogni coppia $(a,b)$</p>
+          <p class="dd-s2"><span class="highlight">$P(X=4,\;Y=3)=\frac1{36}$</span></p>
+          <p class="dd-s3"><b>Tabella di probabilità congiunta</b>: contiene le probabilità di <b>tutti</b> i possibili valori congiunti.</p>
+        </div>
+        <svg class="scene-svg" width="620" height="520" viewBox="0 0 620 520" role="img" aria-label="Griglia sei per sei: colonne i valori di X, righe i valori di Y; ogni casella contiene 1/36; la casella X = 4, Y = 3 è evidenziata"></svg>
+      </div>
+      <aside class="notes">Pacco, slide 27. Click: 1 le 36 caselle si riempiono: 36 coppie equiprobabili, se i dadi sono equilibrati e lanciati indipendentemente; 2 la casella X = 4, Y = 3: è l'evento «il primo mostra 4 e il secondo 3», probabilità 1/36; 3 il nome della tabella. Con i dadi la tabella è noiosa (tutte uguali): la prossima no.</aside>
+    </section>
+
+    <!-- L1-10 · la tabella degli studenti -->
+    <section id="cg-studenti">
+      <p class="badge">Esempio · Piech, CS109</p>
+      <p class="s07-lead">Situazione sentimentale degli studenti di un'università, divisa per anni.</p>
+      <div class="st-grid">
+        <table class="s07-table st-table">
+          <thead><tr><th></th><th>single<small>$X=0$</small></th><th>in una<br>relazione<small>$X=1$</small></th><th>è com-<br>plicato<small>$X=2$</small></th><th class="mg-h fragment" data-fragment-index="2">somma</th></tr></thead>
+          <tbody>
+            <tr><th>1° anno <small>$Y=0$</small></th><td class="fragment hl" data-fragment-index="3">0,21</td><td>0,00</td><td>0,00</td><td class="mg fragment" data-fragment-index="2">0,21</td></tr>
+            <tr><th>2° anno <small>$Y=1$</small></th><td class="fragment hl" data-fragment-index="3">0,24</td><td>0,06</td><td>0,00</td><td class="mg fragment" data-fragment-index="2">0,30</td></tr>
+            <tr><th>3° anno <small>$Y=2$</small></th><td>0,00</td><td class="fragment hl" data-fragment-index="4">0,21</td><td class="fragment hl" data-fragment-index="4">0,00</td><td class="mg fragment" data-fragment-index="2">0,21</td></tr>
+            <tr><th>4° anno <small>$Y=3$</small></th><td>0,00</td><td class="fragment hl" data-fragment-index="4">0,11</td><td class="fragment hl" data-fragment-index="4">0,00</td><td class="mg fragment" data-fragment-index="2">0,11</td></tr>
+            <tr><th>oltre <small>$Y=4$</small></th><td>0,00</td><td class="fragment hl" data-fragment-index="4">0,02</td><td class="fragment hl" data-fragment-index="4">0,15</td><td class="mg fragment" data-fragment-index="2">0,17</td></tr>
+            <tr class="tot-row fragment" data-fragment-index="2"><th></th><td></td><td></td><td></td><td class="mg">1,00</td></tr>
+          </tbody>
+        </table>
+        <div class="st-side">
+          <p class="fragment" data-fragment-index="1">Fornisce l'<b>informazione completa</b>: risponde a qualsiasi domanda su $X$ e $Y$.</p>
+          <p class="fragment" data-fragment-index="2">Ogni casella è un evento <b>incompatibile</b> con le altre: $\displaystyle\sum_x\sum_y P(x,y)=1$</p>
+          <p class="fragment" data-fragment-index="3">Single e al più al 2° anno: <span class="highlight">$0{,}21+0{,}24=0{,}45$</span></p>
+          <p class="fragment" data-fragment-index="4">Oltre il 2° anno e non single: <span class="highlight">$0{,}49$</span></p>
+        </div>
+      </div>
+      <aside class="notes">Pacco, slide 28–30 (tabella di Piech, CS109). I numeri 0, 1, 2 sono solo etichette. Click: 1 informazione completa (pacco, slide 29); 2 ogni casella è incompatibile con le altre, quindi le quindici caselle sommano a 1: le somme di riga e il totale (slide 30); 3 un evento è un insieme di caselle: si sommano; 4 sei caselle: 0,21 + 0,00 + 0,11 + 0,00 + 0,02 + 0,15 = 0,49. Domanda veloce: «al 4° anno e in una relazione?» → 0,11, una casella sola.</aside>
+    </section>
+
+    <!-- L1-11 · Esercizio A: due dadi -->
+    <section id="es-dadi">
+      <p class="badge">Esercizio · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>Due dadi equilibrati: $X$ e $Y$ i due risultati.<br>Usa la tabella congiunta.</p>
+          <ol class="dv-steps">
+            <li>$P(X=2,\;Y=5)$?</li>
+            <li>$P(X+Y=7)$: quali caselle?</li>
+            <li>$P(X\gt Y)$?</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">1. $\dfrac1{36}\qquad$ 2. sei caselle su una diagonale: $\dfrac6{36}=\dfrac16$</p>
+          <p class="fragment" data-fragment-index="3">3. sotto la diagonale $(36-6)/2=15$ caselle: $\dfrac{15}{36}\approx0{,}417$</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">Esercizio 1 (a, c) della dispensa, sulla tabella del pacco (slide 27). Click 1: timer di 4′. Click 2–3: la soluzione. Errori attesi: per P(X > Y) la risposta 1/2, dimenticando le 6 caselle con X = Y; per la diagonale, contare 7 caselle. Se avanza tempo: P(X = 2) come somma di una colonna (1/6), che anticipa le marginali.</aside>
+    </section>
+
+    <!-- L1-12 · marginalizzazione: la somma di una colonna -->
+    <section id="mg-colonna">
+      <p class="badge">Marginalizzazione</p>
+      <p class="s07-lead">Probabilità che uno studente sia in una relazione, $P(X=1)$?</p>
+      <div class="st-grid mc-grid">
+        <table class="s07-table st-table">
+          <thead><tr><th></th><th>single</th><th>in una<br>relazione</th><th>è com-<br>plicato</th></tr></thead>
+          <tbody>
+            <tr><th>1° anno</th><td>0,21</td><td class="fragment hl-keep" data-fragment-index="1">0,00</td><td>0,00</td></tr>
+            <tr><th>2° anno</th><td>0,24</td><td class="fragment hl-keep" data-fragment-index="1">0,06</td><td>0,00</td></tr>
+            <tr><th>3° anno</th><td>0,00</td><td class="fragment hl-keep" data-fragment-index="1">0,21</td><td>0,00</td></tr>
+            <tr><th>4° anno</th><td>0,00</td><td class="fragment hl-keep" data-fragment-index="1">0,11</td><td>0,00</td></tr>
+            <tr><th>oltre</th><td>0,00</td><td class="fragment hl-keep" data-fragment-index="1">0,02</td><td>0,15</td></tr>
+            <tr class="tot-row"><th></th><td></td><td class="mg fragment" data-fragment-index="2">0,40</td><td></td></tr>
+          </tbody>
+        </table>
+        <div class="st-side">
+          <div class="fragment" data-fragment-index="1">$$P(X=1)=\sum_{y}P(X=1,\;Y=y)$$</div>
+          <p class="fragment" data-fragment-index="2">Si sommano tutte le congiunte compatibili con l'evento: tutta la colonna, <span class="highlight">0,40</span>.</p>
+          <div class="fragment" data-fragment-index="3">
+            <svg class="scene-svg" width="520" height="200" viewBox="0 0 520 200" role="img" aria-label="Una striscia divisa in cinque pezzi dagli anni di corso; la fascia «in una relazione» la attraversa e ogni pezzo ha la sua probabilità"></svg>
+            <p class="mc-tot">È la <b>probabilità totale</b> della Settimana 2!</p>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">Pacco, slide 31–32. Click: 1 la colonna «in una relazione» e la formula: uno studente in una relazione è in una relazione e al 1° anno, oppure e al 2° anno, e così via; 2 i pezzi sono incompatibili e ricostruiscono l'evento: la somma è 0,40; 3 il disegno del pacco: gli anni formano una partizione e la fascia «in una relazione» la attraversa. È il teorema della probabilità totale della Settimana 2, scritto in forma di tabella.</aside>
+    </section>
+
+    <!-- L1-13 · marginalizzazione: esempio con le righe -->
+    <section id="mg-riga">
+      <p class="badge">Marginalizzazione · esempio</p>
+      <div class="st-grid">
+        <table class="s07-table st-table">
+          <thead><tr><th></th><th>$X=0$</th><th>$X=1$</th><th>$X=2$</th><th></th></tr></thead>
+          <tbody>
+            <tr><th>$Y=0$</th><td>0,21</td><td>0,00</td><td>0,00</td><td class="mg fragment" data-fragment-index="2">0,21</td></tr>
+            <tr><th>$Y=1$</th><td class="fragment hl" data-fragment-index="1">0,24</td><td class="fragment hl" data-fragment-index="1">0,06</td><td class="fragment hl" data-fragment-index="1">0,00</td><td class="mg fragment" data-fragment-index="1">0,30</td></tr>
+            <tr><th>$Y=2$</th><td>0,00</td><td>0,21</td><td>0,00</td><td class="mg fragment" data-fragment-index="2">0,21</td></tr>
+            <tr><th>$Y=3$</th><td>0,00</td><td>0,11</td><td>0,00</td><td class="mg fragment" data-fragment-index="2">0,11</td></tr>
+            <tr><th>$Y=4$</th><td>0,00</td><td>0,02</td><td>0,15</td><td class="mg fragment" data-fragment-index="2">0,17</td></tr>
+            <tr class="tot-row fragment" data-fragment-index="2"><th></th><td class="mg">0,45</td><td class="mg">0,40</td><td class="mg">0,15</td><td class="mg">1</td></tr>
+          </tbody>
+        </table>
+        <div class="st-side">
+          <p>Probabilità che uno studente sia al secondo anno?</p>
+          <div class="fragment" data-fragment-index="1">$$P(Y=1)=\sum_{x}P(X=x,\;Y=1)$$<p class="mr-res">$=0{,}24+0{,}06+0{,}00=0{,}30$</p></div>
+          <p class="fragment" data-fragment-index="2">Ai <b>margini</b>: in basso la distribuzione di $X$, a destra quella di $Y$.</p>
+          <p class="fragment" data-fragment-index="3">Lungo quale direzione sommo? La variabile che resta <b>fissa</b> è quella della marginale.</p>
+        </div>
+      </div>
+      <aside class="notes">Pacco, slide 33–34, con le etichette numeriche X = 0, 1, 2 e Y = 0, …, 4. Click: 1 la riga del secondo anno, somma 0,30; 2 tutti i margini: sotto le colonne la PMF di X (0,45; 0,40; 0,15), a destra la PMF di Y; sommano a 1; 3 la domanda da farsi sempre: è il modo per non scambiare i margini (che è proprio l'errore che troveremo nel prossimo esercizio).</aside>
+    </section>
+
+    <!-- L1-14 · definizione delle marginali -->
+    <section id="mg-def">
+      <p class="badge">Distribuzioni marginali</p>
+      <p class="s07-text">Per due variabili aleatorie discrete $X$ e $Y$, la <b>funzione di massa di probabilità congiunta</b> è</p>
+      <div>$$p_{X,Y}(a,b)=P(X=a,\;Y=b)$$</div>
+      <p class="s07-text fragment" data-fragment-index="1">Le <b>distribuzioni marginali</b> della PMF congiunta:</p>
+      <div class="fragment s07-box" data-fragment-index="1">$$P(X=a)=\sum_{y}P(X=a,\;Y=y)$$$$P(Y=b)=\sum_{x}P(X=x,\;Y=b)$$</div>
+      <p class="s07-note fragment">Dalla PMF congiunta, con le marginali, otteniamo una v.a. a <b>una</b> dimensione.</p>
+      <p class="s07-text muted fragment">«Marginalizzare rispetto a $Y$»: sommare su tutti i valori di $Y$, per farla sparire.</p>
+      <aside class="notes">Pacco, slide 35. Click 1: le due formule; il nome viene dai margini della tabella. Click 2: il riquadro arancione del pacco: la marginale di X è una PMF a tutti gli effetti, quella delle settimane scorse. Click 3: il verbo. Il vettore aleatorio (X, Y) e la notazione p_{X,Y} sono nella dispensa (Atto II).</aside>
+    </section>
+
+    <!-- L1-15 · le marginali non bastano -->
+    <section id="mg-monete">
+      <p class="badge">Le marginali non bastano</p>
+      <div class="mn-two">
+        <div>
+          <p class="mn-cap">Due monete lanciate separatamente</p>
+          <table class="s07-table">
+            <thead><tr><th></th><th>$Y=0$</th><th>$Y=1$</th><th></th></tr></thead>
+            <tbody>
+              <tr><th>$X=0$</th><td>0,25</td><td>0,25</td><td class="mg fragment hl-b" data-fragment-index="2">0,50</td></tr>
+              <tr><th>$X=1$</th><td>0,25</td><td>0,25</td><td class="mg fragment hl-b" data-fragment-index="2">0,50</td></tr>
+              <tr class="tot-row"><th></th><td class="mg fragment hl-b" data-fragment-index="2">0,50</td><td class="mg fragment hl-b" data-fragment-index="2">0,50</td><td class="mg">1</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="fragment" data-fragment-index="1">
+          <p class="mn-cap">La seconda copia la prima</p>
+          <table class="s07-table">
+            <thead><tr><th></th><th>$Y=0$</th><th>$Y=1$</th><th></th></tr></thead>
+            <tbody>
+              <tr><th>$X=0$</th><td>0,50</td><td>0,00</td><td class="mg fragment hl-b" data-fragment-index="2">0,50</td></tr>
+              <tr><th>$X=1$</th><td>0,00</td><td>0,50</td><td class="mg fragment hl-b" data-fragment-index="2">0,50</td></tr>
+              <tr class="tot-row"><th></th><td class="mg fragment hl-b" data-fragment-index="2">0,50</td><td class="mg fragment hl-b" data-fragment-index="2">0,50</td><td class="mg">1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="s07-text fragment" data-fragment-index="3">Stessi margini, situazioni opposte. Il legame sta <b>dentro</b> la tabella: marginalizzare butta via informazione.</p>
+      <p class="s07-note fragment" data-fragment-index="4">Galton: due campane quasi uguali, genitori e figli, non dicono se i figli somigliano ai genitori.</p>
+      <aside class="notes">Dal notebook 4.3 (§4.3.1: «la congiunta non si ricava dalle marginali»); dispensa, Atto III. All'ingresso le monete indipendenti (1 testa, 0 croce). Click: 1 la seconda moneta appoggiata sul tavolo con la stessa faccia della prima; 2 i margini, identici; 3 la conclusione: dalla congiunta alle marginali sì, al contrario in generale no; 4 il ritorno a Galton: per questo gli serviva la tabella a doppia entrata. Poi il controllo s07-c1.</aside>
+    </section>
+
+    <!-- L1-16 · controllo c1 -->
+    <section id="sondaggio-c1" class="sondaggio" data-poll="s07-c1">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con le <b>distribuzioni marginali</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, rifai alla lavagna P(Y = 1) sulla riga del secondo anno prima dell'esercizio del marketing.</aside>
+    </section>
+
+    <!-- L1-17 · Esercizio B: il marketing -->
+    <section id="es-marketing">
+      <p class="badge">Esercizio · a coppie · note di S. Boffa</p>
+      <div class="e4-wrap">
+        <div class="dv-ex mk-ex">
+          <p>Un analista intervista dei volontari. $X$: fascia d'età (1: 16–25, 2: 26–45, 3: 46–85). $Y$: 1 compra, 2 non compra.</p>
+          <table class="s07-table mk-table">
+            <thead><tr><th></th><th>$X=1$</th><th>$X=2$</th><th>$X=3$</th><th>margine</th></tr></thead>
+            <tbody>
+              <tr><th>$Y=1$</th><td>0,10</td><td>0,20</td><td>0,10</td><td class="mg">0,40</td></tr>
+              <tr><th>$Y=2$</th><td>0,25</td><td>0,25</td><td>0,10</td><td class="mg">0,60</td></tr>
+              <tr><th>margine</th><td class="mg">0,35</td><td class="mg">0,45</td><td class="mg">0,20</td><td class="mg">1</td></tr>
+            </tbody>
+          </table>
+          <ol class="dv-steps">
+            <li>Quale margine è di $X$ e quale di $Y$?</li>
+            <li>$P(\text{più di 25 anni})$? $\;P(\text{al più 45 anni e compra})$?</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">A destra si somma lungo le righe, $Y$ fissa: è $P(Y=y)$. In basso: $P(X=x)$.</p>
+          <p class="fragment" data-fragment-index="3">$0{,}45+0{,}20=0{,}65\qquad 0{,}10+0{,}20=0{,}30$</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">Pacco, slide 36–40 (note di S. Boffa), trasformato in esercizio: sostituisce l'esempio frontale del marketing. ATTENZIONE: nel pacco (pp. 38–39) le etichette dei margini sono scambiate; qui sono neutre e lo studente deve capire quale è quale. Click 1: timer di 4′. Click 2: i margini. Click 3: «più di 25 anni» = X = 2 oppure 3, dalla marginale (o 1 − 0,35); «al più 45 anni e compra» = due caselle. Errore atteso: chiamare P(X = x) la colonna di destra, come faceva il pacco.</aside>
+    </section>
+
+    <!-- L1-18 (S) · tre variabili -->
+    <section id="tre-var">
+      <p class="badge">Tabella di probabilità congiunta · limitazione</p>
+      <p class="s07-lead">$D$: malattia (1 sì) · $S$: olfatto (0 perso) · $F$: febbre (assente, bassa, alta)</p>
+      <div class="mn-two tv-two">
+        <div>
+          <p class="mn-cap">$D=0$</p>
+          <table class="s07-table">
+            <thead><tr><th></th><th>$S=0$</th><th>$S=1$</th></tr></thead>
+            <tbody>
+              <tr><th>assente</th><td>0,024</td><td>0,783</td></tr>
+              <tr><th>bassa</th><td>0,003</td><td>0,092</td></tr>
+              <tr><th>alta</th><td>0,001</td><td>0,046</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <p class="mn-cap">$D=1$</p>
+          <table class="s07-table">
+            <thead><tr><th></th><th>$S=0$</th><th>$S=1$</th></tr></thead>
+            <tbody>
+              <tr><th>assente</th><td class="fragment hl-r" data-fragment-index="1">0,006</td><td class="fragment hl-r" data-fragment-index="1">0,014</td></tr>
+              <tr><th>bassa</th><td class="fragment hl-r" data-fragment-index="1">0,005</td><td class="fragment hl-r" data-fragment-index="1">0,011</td></tr>
+              <tr><th>alta</th><td class="fragment hl-r" data-fragment-index="1">0,004</td><td class="fragment hl-r" data-fragment-index="1">0,011</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="fragment" data-fragment-index="1">$$P(D=1)=\sum_f\sum_s P(D=1,\;F=f,\;S=s)=0{,}051$$</div>
+      <p class="s07-text fragment" data-fragment-index="2">Con 3 variabili servono due tabelle e le caselle raddoppiano: qual è la regola?</p>
+      <p class="s07-text highlight fragment" data-fragment-index="3">caselle = prodotto dei numeri di valori: $2\cdot2\cdot3=12$</p>
+      <aside class="notes">(S) Pacco, slide 41–42 (Piech). Se salti: a voce «con una terza variabile a due valori le caselle raddoppiano: il numero di caselle è il prodotto dei numeri di valori (Settimana 3)»; l'esercizio 4 resta a casa. Attenzione: 0,005 è una congiunta (malato, olfatto perso, febbre bassa), non «la febbre bassa tra i malati». Click: 1 la tabella D = 1 e la doppia somma; 2 la domanda del pacco; 3 il principio di moltiplicazione.</aside>
+    </section>
+
+    <!-- L1-19 (S) · 5^10 e funzioni -->
+    <section id="esplosione">
+      <p class="badge">Tabella di probabilità congiunta · limitazione</p>
+      <p class="s07-text">10 v.a. discrete, ciascuna con 5 valori possibili:</p>
+      <p class="ep-big">$5^{10}=9\,765\,625$ <span class="ep-lab">eventi congiunti</span></p>
+      <p class="s07-text fragment">Per questo esistono le distribuzioni multidimensionali: <b>funzioni e non tabelle</b>. Per esempio la distribuzione multinomiale:</p>
+      <div class="s07-box fragment">$$P(X_1=c_1,\dots,X_m=c_m)=\frac{n!}{c_1!\cdots c_m!}\,p_1^{c_1}\cdots p_m^{c_m}$$</div>
+      <p class="s07-note fragment">Settimana 12: Naive Bayes spezza una congiunta enorme in tanti pezzi piccoli.</p>
+      <aside class="notes">(S) Pacco, slide 43–44. Quasi dieci milioni di probabilità da stimare e conservare. Click 1–2: la multinomiale, facoltativa (riquadro nella dispensa, Atto III): con m = 2 è la distribuzione binomiale. Click 3: il rinvio alla Settimana 12. Se salti: una frase sui dieci milioni di caselle.</aside>
+    </section>
+
+    <!-- ───── Indipendenza (notebook 4.3_Distribuzioni_Congiunte) ───── -->
+
+    <!-- L1-20 · definizione -->
+    <section id="in-def">
+      <p class="badge">Variabili aleatorie indipendenti</p>
+      <p class="s07-text">Settimana 1: $A$ e $B$ indipendenti se $P(A\cap B)=P(A)\,P(B)$.<br>Ora: ogni evento $\{X=x\}$ indipendente da ogni evento $\{Y=y\}$.</p>
+      <div class="s07-box">$$p_{X,Y}(x,y)=p_X(x)\,p_Y(y)\qquad\text{per tutti i valori } x,\,y$$</div>
+      <p class="s07-text fragment">Ogni casella = prodotto dei due margini che le stanno di fronte.</p>
+      <p class="s07-text fragment">Due dadi: $\frac1{36}=\frac16\cdot\frac16$ in tutte le 36 caselle: <b class="highlight">indipendenti</b>.</p>
+      <p class="s07-text fragment">Moneta che copia: casella $(1,1)=\frac12$, ma $\frac12\cdot\frac12=\frac14$: <b class="red">dipendenti</b>.</p>
+      <p class="s07-note fragment">Indipendenza: <b>tutte</b> le caselle. Dipendenza: basta <b>un</b> controesempio.</p>
+      <aside class="notes">Dal notebook 4.3 (§4.3.2, Definizione 4.5). Quando vale, le marginali bastano: basta moltiplicarle. In termini di condizionate (Settimana 2): ogni riga divisa per il suo totale ha lo stesso profilo della marginale; sapere Y non cambia la distribuzione di X. Click: 1 la lettura sulla tabella; 2 i dadi; 3 la moneta che copia; 4 l'asimmetria tra i due verdetti, dal notebook.</aside>
+    </section>
+
+    <!-- L1-21 · gli studenti non sono indipendenti -->
+    <section id="in-studenti">
+      <p class="badge">Indipendenti?</p>
+      <div class="st-grid">
+        <table class="s07-table st-table">
+          <thead><tr><th></th><th>single</th><th>in una<br>relazione</th><th>è com-<br>plicato</th><th></th></tr></thead>
+          <tbody>
+            <tr><th>1° anno</th><td>0,21</td><td class="fragment hl-r-keep" data-fragment-index="1">0,00</td><td>0,00</td><td class="mg fragment hl-b-keep" data-fragment-index="1">0,21</td></tr>
+            <tr><th>2° anno</th><td>0,24</td><td>0,06</td><td>0,00</td><td class="mg">0,30</td></tr>
+            <tr><th>3° anno</th><td>0,00</td><td>0,21</td><td>0,00</td><td class="mg">0,21</td></tr>
+            <tr><th>4° anno</th><td>0,00</td><td>0,11</td><td>0,00</td><td class="mg">0,11</td></tr>
+            <tr><th>oltre</th><td>0,00</td><td>0,02</td><td>0,15</td><td class="mg">0,17</td></tr>
+            <tr class="tot-row"><th></th><td class="mg">0,45</td><td class="mg fragment hl-b-keep" data-fragment-index="1">0,40</td><td class="mg">0,15</td><td class="mg">1</td></tr>
+          </tbody>
+        </table>
+        <div class="st-side">
+          <p class="fragment" data-fragment-index="1">$P(X=1,\;Y=0)=0$<br>ma $P(X=1)\,P(Y=0)=0{,}40\cdot0{,}21=0{,}084$</p>
+          <p class="fragment" data-fragment-index="2">Casella vuota, margini pieni: <b class="red">dipendenti</b>.</p>
+          <p class="fragment" data-fragment-index="3">Tra le matricole: $\frac{0{,}21}{0{,}21}=1$ di single, contro $0{,}45$ in tutta la popolazione.</p>
+        </div>
+      </div>
+      <aside class="notes">Dispensa, Atto IV. Click: 1 la casella (in una relazione, 1° anno) e i suoi due margini; 2 il controesempio più rapido: una casella vuota con entrambi i margini pieni; 3 la stessa cosa con le condizionate: sapere l'anno cambia molto ciò che ci aspettiamo. Anche la prima casella basterebbe: 0,21 contro 0,45 · 0,21 ≈ 0,095.</aside>
+    </section>
+
+    <!-- L1-22 · due moduli: la prima casella -->
+    <section id="in-moduli">
+      <p class="badge">Un programma con due moduli · Baron</p>
+      <p class="s07-lead">$X$ = errori nel primo modulo, $Y$ = errori nel secondo. Le altre coppie hanno probabilità 0.</p>
+      <p class="md-data">$P(0,0)=P(0,1)=P(1,0)=0{,}20\qquad P(1,1)=P(1,2)=P(1,3)=0{,}10$<br>$P(0,2)=P(0,3)=0{,}05$</p>
+      <div class="md-grid">
+        <table class="s07-table fragment" data-fragment-index="1">
+          <thead><tr><th></th><th>$y=0$</th><th>$y=1$</th><th>$y=2$</th><th>$y=3$</th><th>$P(X=x)$</th></tr></thead>
+          <tbody>
+            <tr><th>$x=0$</th><td class="fragment hl-keep" data-fragment-index="2">0,20</td><td>0,20</td><td>0,05</td><td>0,05</td><td class="mg fragment hl-b-keep" data-fragment-index="2">0,50</td></tr>
+            <tr><th>$x=1$</th><td>0,20</td><td>0,10</td><td>0,10</td><td>0,10</td><td class="mg">0,50</td></tr>
+            <tr class="tot-row"><th>$P(Y=y)$</th><td class="mg fragment hl-b-keep" data-fragment-index="2">0,40</td><td class="mg">0,30</td><td class="mg">0,15</td><td class="mg">0,15</td><td class="mg">1</td></tr>
+          </tbody>
+        </table>
+        <p class="s07-text fragment" data-fragment-index="2">$P(0,0)=0{,}20$ e $0{,}50\cdot0{,}40=0{,}20$:<br><b class="highlight">coincidono</b>. Allora…?</p>
+      </div>
+      <aside class="notes">Dal notebook 4.3 (Esempio BONUS, Baron, Esempio 3.6). Come nelle slide, P(x, y) sta per P(X = x, Y = y). Click: 1 i dati messi in tabella, con le somme di riga e di colonna: primo modulo senza errori con probabilità 0,50, secondo con 0,40; 2 la prima casella rispetta la regola. NON concludere: lancia s07-2.</aside>
+    </section>
+
+    <!-- L1-23 · sondaggio s07-2 (lancio) -->
+    <section id="sondaggio-2" class="sondaggio" data-poll="s07-2">
+      <p class="badge">Sondaggio · la risposta arriva tra poco</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Due moduli: la casella $(0,0)$ vale $0{,}20$,<br>come il prodotto dei margini $0{,}50\cdot0{,}40$.<br>Allora $X$ e $Y$…</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>sono indipendenti</li>
+            <li><span>2</span>sono dipendenti</li>
+            <li><span>3</span>non si può ancora dire</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto. Risposta 3. NON premere V qui: si rivela sulla slide dopo, con la seconda casella.</aside>
+    </section>
+
+    <!-- L1-24 · rivelazione s07-2 -->
+    <section id="sondaggio-2-rivela" class="sondaggio rivela" data-poll="s07-2">
+      <p class="badge">Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Due moduli: la casella $(0,0)$ vale $0{,}20$,<br>come il prodotto dei margini $0{,}50\cdot0{,}40$.<br>Allora $X$ e $Y$…</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>sono indipendenti</li>
+            <li><span>2</span>sono dipendenti</li>
+            <li><span>3</span>non si può ancora dire</li>
+          </ol>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <div class="rv-foot">
+        <p class="rv-line fragment">Seconda casella: $P(0,1)=0{,}20$, ma $0{,}50\cdot0{,}30=0{,}15$: <b class="red">dipendenti</b>.</p>
+        <p class="rv-next fragment">Una casella che rispetta la regola non dimostra nulla.</p>
+      </div>
+      <aside class="notes">Premi V. Risposta 3. 1: è l'errore che il notebook vuole smascherare, generalizzare da una casella. 2: la conclusione è giusta, ma con le informazioni della domanda non si poteva ancora dire. Click 1: la seconda casella decide. Click 2: la regola dell'asimmetria.</aside>
+    </section>
+
+    <!-- L1-25 (S) · il totale degli errori -->
+    <section id="in-somma">
+      <p class="badge">Il totale degli errori · $Z=X+Y$</p>
+      <svg class="scene-svg" width="1180" height="470" viewBox="0 0 1180 470" role="img" aria-label="La tabella dei due moduli con le caselle colorate secondo x più y: le diagonali hanno lo stesso colore. A destra le barre della distribuzione di Z: 0,20; 0,40; 0,15; 0,15; 0,10, con media 1,55"></svg>
+      <aside class="notes">(S) Dal notebook 4.3 (distribuzione di X + Y). Ogni evento è un insieme di caselle: Z = 1 sono le caselle con x + y = 1. Click: 1 le diagonali colorate; 2 le barre di P(Z = z); 3 la media 1,55. Baron (Es. 3.9) scrive 1,65: è un refuso. Se salti: «il totale si legge sulle diagonali».</aside>
+    </section>
+
+    <!-- L1-26 · il valore atteso di g(X, Y) -->
+    <section id="in-lotus">
+      <p class="badge">Il valore atteso di una funzione di due variabili</p>
+      <div class="s07-box">$$\mathbb{E}[g(X,Y)]=\sum_{x}\sum_{y}g(x,y)\,p_{X,Y}(x,y)$$</div>
+      <p class="s07-text">In ogni casella: il valore di $g$ per la probabilità della casella. Poi la somma.</p>
+      <p class="s07-text fragment">$g=x+y$: $\;\mathbb{E}[X+Y]=1{,}55=0{,}5+1{,}05$: la linearità vale anche per variabili dipendenti.</p>
+      <p class="s07-text fragment">$g=xy$: contano solo le caselle con $x=1$ e $y\ge1$:</p>
+      <div class="fragment">$$\mathbb{E}[XY]=1\cdot1\cdot0{,}10+1\cdot2\cdot0{,}10+1\cdot3\cdot0{,}10=0{,}60$$</div>
+      <p class="s07-text fragment">$\mathbb{E}[X]\,\mathbb{E}[Y]=0{,}5\cdot1{,}05=0{,}525$: <b class="red">diverso</b>.</p>
+      <aside class="notes">Dispensa, Atto IV (lotus-due). È la regola LOTUS della Settimana 4, con le caselle al posto dei valori. Click: 1 la somma: stesso numero della distribuzione di Z, e anche dalle marginali per linearità (E[X] = 0,5, E[Y] = 1,05); 2–3 la media del prodotto: le caselle con x = 0 o y = 0 danno zero; 4 non è il prodotto delle medie. Domanda: «e quando lo è?»</aside>
+    </section>
+
+    <!-- L1-27 · se sono indipendenti -->
+    <section id="in-prodotto">
+      <p class="badge">Se sono indipendenti, la media del prodotto si spezza</p>
+      <p class="s07-text">Due dadi, ogni casella $\frac1{36}=\frac16\cdot\frac16$:</p>
+      <div>$$\mathbb{E}[XY]=\sum_{x=1}^{6}\sum_{y=1}^{6}x\,y\,\frac16\cdot\frac16=\Big(\sum_{x}\frac x6\Big)\Big(\sum_{y}\frac y6\Big)$$<p class="mr-res">$=3{,}5\cdot3{,}5=12{,}25$</p></div>
+      <div class="s07-box fragment">$$X,\,Y\ \text{indipendenti}\;\Longrightarrow\;\mathbb{E}[XY]=\mathbb{E}[X]\,\mathbb{E}[Y]$$</div>
+      <p class="s07-note fragment">La freccia va in un verso solo: l'uguaglianza <b>non</b> dimostra l'indipendenza.</p>
+      <aside class="notes">Dispensa, Atto IV (prodotto). Il passaggio chiave: la probabilità della casella si spezza in un pezzo che dipende solo da x e uno solo da y, e la somma doppia si separa. La dimostrazione generale è un riquadro facoltativo; la formula è richiesta. Click 1: il risultato. Click 2: il verso della freccia; esistono variabili dipendenti con E[XY] = E[X]E[Y], le vediamo venerdì. Nei due moduli 0,60 ≠ 0,525, coerente con la dipendenza.</aside>
+    </section>
+
+    <!-- L1-28 · controllo c2 -->
+    <section id="sondaggio-c2" class="sondaggio" data-poll="s07-c2">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con l'<b>indipendenza</b> di due variabili?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto, rivelazione immediata (V). Se prevalgono 2 e 3, rifai il controllo sulla tabella delle monete che copiano, casella per casella, oppure usa il widget (slide dopo).</aside>
+    </section>
+
+    <!-- L1-29 (S) · widget: stesse marginali, tabelle diverse -->
+    <section id="widget-tabella">
+      <p class="badge">Stesse marginali, tabelle diverse</p>
+      <div class="wt-box" id="wt-box" data-prevent-swipe>
+        <div class="wt-ctrl">
+          <label><span>$p=P(X=1)$</span> <input type="range" min="0.1" max="0.9" step="0.05" value="0.4" data-k="p"> <b data-v="p">0,40</b></label>
+          <label><span>$q=P(Y=1)$</span> <input type="range" min="0.1" max="0.9" step="0.05" value="0.5" data-k="q"> <b data-v="q">0,50</b></label>
+          <label><span>$a=P(X=1,\,Y=1)$</span> <input type="range" min="0" max="0.4" step="0.01" value="0.3" data-k="a"> <b data-v="a">0,30</b></label>
+        </div>
+        <div class="wt-main">
+          <table class="s07-table wt-table">
+            <thead><tr><th></th><th>$Y=0$</th><th>$Y=1$</th><th></th></tr></thead>
+            <tbody>
+              <tr><th>$X=0$</th><td data-cell="00"></td><td data-cell="01"></td><td class="mg" data-cell="x0"></td></tr>
+              <tr><th>$X=1$</th><td data-cell="10"></td><td data-cell="11"></td><td class="mg" data-cell="x1"></td></tr>
+              <tr class="tot-row"><th></th><td class="mg" data-cell="y0"></td><td class="mg" data-cell="y1"></td><td class="mg">1</td></tr>
+            </tbody>
+          </table>
+          <div class="wt-out"></div>
+        </div>
+        <p class="wd-try">Prova: <button class="psi-btn ghost" type="button" data-a="0.2">a = 0,20</button><button class="psi-btn ghost" type="button" data-a="0.4">a = 0,40</button><button class="psi-btn ghost" type="button" data-a="0">a = 0</button></p>
+      </div>
+      <aside class="notes">(S) Il widget della dispensa (Atto IV). Prima di muovere: «con p = 0,40 e q = 0,50, per quale a le variabili sono indipendenti?» → a = pq = 0,20. Muovi solo a: i margini restano fermi, il legame cambia. a alto: tendono a valere 1 insieme; a basso: tendono a escludersi. Tieni d'occhio a − pq: venerdì le daremo un nome (la covarianza).</aside>
+    </section>
+
+    <!-- L1-30 (S) · Esercizio C: il primo dado e la somma -->
+    <section id="es-somma">
+      <p class="badge">Esercizio · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>Due dadi: $X$ il risultato del primo, $S=X+Y$ la somma.</p>
+          <ol class="dv-steps">
+            <li>$X$ e $S$ sono indipendenti?</li>
+            <li>Trova <b>una</b> casella che lo decide.</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">$P(X=1,\;S=12)=0$<br>ma $P(X=1)\,P(S=12)=1/6\cdot1/36=1/216\neq0$</p>
+          <p class="fragment" data-fragment-index="3">Casella vuota, margini pieni: <b class="red">dipendenti</b>. Il primo dado cambia ciò che ci aspettiamo dalla somma.</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="3" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">(S) La sosta di verifica dell'Atto IV. Click 1: timer di 3′. Click 2–3: la soluzione. Altre caselle buone: (X = 6, S = 2), (X = 1, S = 8). Se salti, assegnala a casa.</aside>
+    </section>
+
+    <!-- L1-31 · uscita -->
+    <section id="uscita-1">
+      <p class="badge">Domanda d'uscita</p>
+      <p class="ux-q">Galton aveva la distribuzione delle altezze dei genitori<br>e quella dei figli, ciascuna per conto suo.<br>Gli bastavano per dire se i figli somigliano ai genitori?</p>
+      <p class="ux-a fragment">No: le marginali non bastano. Il legame sta dentro la tabella congiunta.</p>
+      <p class="ux-home">A casa: dispensa, Atti I–IV · esercizi 1–4 · laboratorio «dalla tabella alle marginali»<br>Venerdì: Galton sotto una roccia, e un numero per misurare la somiglianza</p>
+      <aside class="notes">Cuscinetto: nessun concetto nuovo. Due risposte a voce, poi click 1. L'approfondimento sulla multinomiale è facoltativo. Chiudi entro le 10:45.</aside>
+    </section>
+
+  </div></div>
+  <script src="../../assets/slides/scene.js"></script>
+  <script src="../../assets/sondaggi.js"></script>
+  <script src="../../assets/slides/sondaggio.js"></script>
+  <script src="js/comuni.js"></script>
+  <script src="js/lezione1.js"></script>
+  <script>PSIDeck.start({ onReady: function (deck) { PSISondaggio.bind(deck); S07.timers(deck); S07L1.widget(); } });</script>
+</body>
+</html>

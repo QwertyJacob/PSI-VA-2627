@@ -1,0 +1,3 @@
+esercizi_time.jpg: immagine del docente, copia di settimana_06/slides/img.
+galton.jpg: Sir Francis Galton, olio di Charles Wellington Furse, 1903. Pubblico dominio.
+  Wikimedia Commons, File:Sir_Francis_Galton_by_Charles_Wellington_Furse.jpg (miniatura da 500 px).

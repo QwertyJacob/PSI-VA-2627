@@ -1296,7 +1296,7 @@ Nella Settimana 12 chiuderemo il cerchio con il classificatore **Naive Bayes**: 
 **Manuale di riferimento degli esempi**
 
 * **Michael Baron (2014)** — *Probability and Statistics for Computer Scientists*, 2ª ed., CRC Press, §2.4 (Esempi 2.32–2.35). [Scheda ACM Digital Library](https://dl.acm.org/doi/book/10.5555/2536837).
-* **Notebook Colab del corso** — [2.4 Probabilità condizionata](https://colab.research.google.com/github/QwertyJacob/colab_handouts_PSI/blob/main/2.4_probcond.ipynb) e [2.4 BONUS Alberi di probabilità](https://colab.research.google.com/github/QwertyJacob/colab_handouts_PSI/blob/main/2.4BONUS_alberi_prob.ipynb) (repository [colab_handouts_PSI](https://github.com/QwertyJacob/colab_handouts_PSI)).
+* **Notebook Colab degli anni passati** — [2.4 Probabilità condizionata](https://colab.research.google.com/github/QwertyJacob/colab_handouts_PSI/blob/main/2.4_probcond.ipynb) e [2.4 BONUS Alberi di probabilità](https://colab.research.google.com/github/QwertyJacob/colab_handouts_PSI/blob/main/2.4BONUS_alberi_prob.ipynb) (repository [colab_handouts_PSI](https://github.com/QwertyJacob/colab_handouts_PSI)). Sono materiale degli anni passati e non sostituiscono la dispensa: come usarli è spiegato nella pagina [Notebook degli anni passati](../notebook.md).
 
 **Intelligenza artificiale e machine learning**
 

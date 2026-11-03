@@ -1362,7 +1362,7 @@ Atteso: la mediana vicina alla soglia $1{,}18 \cdot 2^{b/2}$ per ogni $b$ (per e
 * **IETF** — *RFC 9562: Universally Unique IDentifiers (UUIDs)*: [rfc-editor.org](https://www.rfc-editor.org/rfc/rfc9562.html).
 * **Wikipedia, *Birthday problem*** — media del numero di estrazioni e approssimazioni: <https://en.wikipedia.org/wiki/Birthday_problem>.
 
-**Manuale di riferimento e notebook del corso**
+**Manuale di riferimento e notebook degli anni passati**
 
 * **Michael Baron (2014)** — *Probability and Statistics for Computer Scientists*, 2ª ed., CRC Press, §2.3 (combinatoria). [Scheda ACM Digital Library](https://dl.acm.org/doi/book/10.5555/2536837).
-* **Notebook Colab del corso** (repository [colab_handouts_PSI](https://github.com/QwertyJacob/colab_handouts_PSI)): [2.1 Disposizioni e combinazioni](https://colab.research.google.com/github/QwertyJacob/colab_handouts_PSI/blob/main/2.1_disposizioni_combinazioni.ipynb) e [Compleanni](https://colab.research.google.com/github/QwertyJacob/colab_handouts_PSI/blob/main/compleanni.ipynb).
+* **Notebook Colab degli anni passati** (repository [colab_handouts_PSI](https://github.com/QwertyJacob/colab_handouts_PSI)): [2 Introduzione al conteggio](https://colab.research.google.com/github/QwertyJacob/colab_handouts_PSI/blob/main/2_intro_conteggio.ipynb), [2.1 Disposizioni e combinazioni](https://colab.research.google.com/github/QwertyJacob/colab_handouts_PSI/blob/main/2.1_disposizioni_combinazioni.ipynb), [2.3 BONUS Ancora conteggio](https://colab.research.google.com/github/QwertyJacob/colab_handouts_PSI/blob/main/2.3BONUS_ancoraconteggio.ipynb) e [Compleanni](https://colab.research.google.com/github/QwertyJacob/colab_handouts_PSI/blob/main/compleanni.ipynb). Sono materiale degli anni passati e non sostituiscono la dispensa: come usarli è spiegato nella pagina [Notebook degli anni passati](../notebook.md).

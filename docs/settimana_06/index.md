@@ -1650,8 +1650,9 @@ La **distribuzione normale** $\mathcal{N}(\mu,\sigma^2)$ è la campana degli err
 
 ## Riferimenti e letture {: #riferimenti }
 
-La dispensa riprende le slide e i notebook del corso degli anni precedenti, che a loro volta adattano due testi presenti nella bibliografia. Le citazioni storiche sono tradotte; le fonti sono letture facoltative.
+La dispensa riprende le slide e i notebook degli anni passati, che a loro volta adattano due testi presenti nella bibliografia. Le citazioni storiche sono tradotte; le fonti sono letture facoltative.
 
+- **Notebook Colab degli anni passati**: [4 Variabili aleatorie continue](https://colab.research.google.com/github/QwertyJacob/colab_handouts_PSI/blob/main/4_Continuous_random_vars.ipynb) e [4.2.3 Distribuzione normale](https://colab.research.google.com/github/QwertyJacob/colab_handouts_PSI/blob/main/4.2.3_Gaussian.ipynb). Sono materiale degli anni passati e non sostituiscono la dispensa: come usarli è spiegato nella pagina [Notebook degli anni passati](../notebook.md).
 - **Chris Piech**, *Probability for Computer Scientists*, materiale del corso Stanford CS109: voci «Continuous Distribution», «Exponential Distribution» e «Normal Distribution». L’esempio dell’autobus e gli istogrammi che si raffinano vengono da qui. [Portale del testo](https://chrispiech.github.io/probabilityForComputerScientists/).
 - **Michael Baron**, *Probability and Statistics for Computer Scientists*, 2ª ed., CRC Press, 2014, cap. 4, §4.1 (densità) e §4.2 (distribuzioni uniforme, esponenziale e normale), compresi gli esempi della stampante (Esempio 4.5) e dei redditi (Esempi 4.11 e 4.12). [Scheda dell’editore](https://doi.org/10.1201/b14800).
 - **Mario Abundo**, note sulla proprietà di mancanza di memoria per variabili aleatorie continue, Università di Roma Tor Vergata, [memlessprcont.pdf](https://www.mat.uniroma2.it/~abundo/memlessprcont.pdf): la dimostrazione con la funzione di sopravvivenza dell’Atto V.

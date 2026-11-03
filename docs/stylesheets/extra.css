@@ -4,6 +4,19 @@
    Uses Material for MkDocs' own CSS variables so colors follow the active
    light/dark palette automatically instead of hardcoding a theme. */
 
+/* Navigation tabs: Material keeps them on one line and scrolls the overflow
+   sideways, which hid the last tab. Let them wrap onto a second row instead.
+   The tabs only exist on wide screens; phones use the drawer. */
+@media screen and (min-width: 76.25em) {
+  .md-tabs__list {
+    flex-wrap: wrap;
+    overflow: visible;
+    padding-bottom: 0.3rem;
+  }
+  .md-tabs__item { height: 2rem; }
+  .md-tabs__link { margin-top: 0.6rem; }
+}
+
 .psi-widget-host {
   border: 1px solid var(--md-default-fg-color--lightest);
   border-radius: 0.4rem;

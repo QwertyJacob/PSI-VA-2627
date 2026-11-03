@@ -80,6 +80,29 @@
 
 .psi-print-snapshot { display: none; max-width: 100%; }
 
+/* Figures in the "La probabilità al lavoro" page: same readable width as the
+   course's inline SVG diagrams, with captions aligned to the image. */
+.md-typeset figure.psi-figure {
+  margin: 1.5rem auto;
+  text-align: center;
+}
+.md-typeset figure.psi-figure img {
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+}
+.md-typeset figure.psi-figure--tall img {
+  max-width: 420px;
+}
+.md-typeset figure.psi-figure figcaption {
+  max-width: 560px;
+  margin: 0.4rem auto 0;
+  text-align: left;
+}
+.md-typeset figure.psi-figure--tall figcaption {
+  max-width: 420px;
+}
+
 /* Runnable Pyodide code blocks */
 .psi-exec { margin: 1.5rem 0; }
 

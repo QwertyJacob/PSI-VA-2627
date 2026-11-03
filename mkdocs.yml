@@ -109,3 +109,4 @@ nav:
       - "6. Bertrand, Gauss e l'asteroide Cerere: variabili aleatorie continue e distribuzione normale": settimana_06/index.md
   - "Modulo III — Distribuzioni congiunte, teoremi limite e campionamento":
       - "7. Galton e le altezze di genitori e figli: distribuzioni congiunte, covarianza e correlazione": settimana_07/index.md
+  - "La probabilità al lavoro": probabilita-al-lavoro/index.md

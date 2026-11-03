@@ -64,3 +64,7 @@ Il percorso è articolato in 4 moduli tematici distribuiti su **12 settimane**, 
 |---|---|
 | **Settimana 11** *(in arrivo)* | **Massima Verosimiglianza (MLE):** funzione di verosimiglianza e log-verosimiglianza, stima di massima verosimiglianza; legame con le funzioni di perdita nel Machine Learning. Ripasso generale. |
 | **Settimana 12** *(in arrivo)* | **Inferenza bayesiana e Machine Learning:** il classificatore Naive Bayes con Laplace smoothing, cenni all'inferenza variazionale e sintesi finale del corso. |
+
+### Approfondimento facoltativo
+
+Per chi è interessato, [La probabilità al lavoro](probabilita-al-lavoro/index.md) raccoglie cinque casi documentati — esperimenti A/B, classificazione dei testi, DNA, ricerca in mare e affidabilità — e mostra quali modelli delle Settimane 2–6 entrano in gioco. Non contiene argomenti nuovi e non è richiesta all'esame.

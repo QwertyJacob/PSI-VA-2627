@@ -16,6 +16,7 @@ Il materiale contiene adattamenti di testi classici e di testi contemporanei, in
 - **Approfondimenti** (contrassegnati come tali) espandono un argomento con dettagli facoltativi; **esempi svolti** applicano la teoria a problemi concreti.
 - **Widget interattivi**: dove vedi dei cursori sotto un grafico, trascinali per vedere come cambia la curva — è lo stesso identico grafico del testo, ma con i parametri nelle tue mani.
 - **Codice eseguibile**: i blocchi di codice con il pulsante "▶ Esegui" girano Python nel tuo browser (nessuna installazione richiesta). Puoi modificare il codice prima di eseguirlo.
+- **Notebook Colab di anni passati**: per ogni settimana trovi anche dei notebook Colab scritti per le edizioni precedenti del corso, con altri esempi ed esercizi svolti. Possono aiutarti a studiare, ma non sostituiscono le dispense di quest'anno: li trovi, con le istruzioni per usarli, nella pagina [Notebook degli anni passati](notebook.md).
 - **Stampa**: ogni pagina è pensata per essere stampata singolarmente (Ctrl/Cmd+P o pulsante "Scarica il PDF") — i controlli interattivi vengono nascosti automaticamente e sostituiti da un'istantanea statica dell'ultimo grafico esplorato. In fondo al menu trovi anche un'opzione per stampare l'intero corso (quando ci sarà) in un unico documento.
 
 ## Come studiare per l’esame {: #esame }
@@ -26,7 +27,7 @@ Il formulario fornito dal docente accompagna il calcolo: occorre saper scegliere
 
 Script e widget servono a esplorare e verificare i concetti. **Non è richiesta la riproduzione del codice Python**; restano richiesti i ragionamenti probabilistici indicati nel percorso d’esame. Le fonti bibliografiche e i documenti storici sono letture facoltative: non occorre memorizzare date, citazioni o dettagli biografici.
 
-Per ogni settimana, consulta le indicazioni in apertura delle dispense: [Settimana 1](settimana_01/index.md#esame), [Settimana 2](settimana_02/index.md#esame), [Settimana 3](settimana_03/index.md#esame).
+Per ogni settimana, consulta le indicazioni in apertura delle dispense.
 
 ## Il percorso in breve
 

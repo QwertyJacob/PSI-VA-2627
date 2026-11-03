@@ -96,6 +96,7 @@ plugins:
 # listed in the left sidebar. A tab per week overflowed the header from week 5.
 nav:
   - Home: index.md
+  - Notebook degli anni passati: notebook.md
   - "Modulo I — Fondamenti":
       - "0. Che senso ha essere qui?": 0-senso.md
       - "1. Che cos'è la probabilità?": settimana_01/index.md

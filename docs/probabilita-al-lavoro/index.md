@@ -1,5 +1,5 @@
 ---
-description: Cinque problemi di lavoro e i modelli probabilistici che li risolvono. Le applicazioni sono documentate; i numeri vengono dalle fonti quando è possibile, altrimenti sono costruiti per l'esempio.
+description: Approfondimento facoltativo. Cinque casi documentati in cui compaiono i modelli probabilistici delle Settimane 2–6, con le fonti da cui vengono.
 ---
 
 # La probabilità al lavoro
@@ -12,36 +12,19 @@ description: Cinque problemi di lavoro e i modelli probabilistici che li risolvo
 }
 </style>
 
-*Cinque problemi di lavoro e i modelli che li risolvono. Una pausa tra un capitolo e l'altro, non un argomento nuovo.*
+Questa pagina è un approfondimento facoltativo, per chi è interessato. Raccoglie cinque casi documentati in cui compaiono gli strumenti delle Settimane 2–6; non contiene argomenti nuovi e non è richiesta all'esame.
 
-!!! info "Che cosa trovi in questa pagina"
-    Qui non c'è teoria nuova. Ci sono cinque situazioni di lavoro in cui compaiono gli strumenti delle Settimane 1–6. Per ogni caso trovi la domanda, che cosa si osserva, il modello e un conto semplice. Non serve ricordare i numeri: serve riconoscere il tipo di problema.
-
-## Applicazioni reali, numeri quasi sempre inventati {: #reale-inventato }
-
-Le applicazioni sono reali. Non tutte sono però un caso aziendale documentato: per la classificazione dei testi è documentato il metodo e c'è un corpus pubblico di testi veri, non l'uso fatto da una specifica azienda. In quattro casi su cinque i numeri sono inventati, per poter fare i conti a mente e per non dover dipendere da dati riservati. In fondo a ogni caso trovi che cosa viene da una fonte e che cosa è stato costruito per questa pagina.
-
-| Caso | Che cosa è documentato | Che cosa è inventato |
-|---|---|---|
-| 1. Esperimenti A/B | Bing usava esperimenti controllati su larga scala (Kohavi et al., 2013) | pulsante, 1.000 utenti, 100 contro 112 |
-| 2. Classificare testi | il corpus pubblico *20 Newsgroups* e il metodo *Multinomial Naive Bayes* | niente: conteggi e risultato sono calcolati su testi veri |
-| 3. DNA | PCR digitale a goccioline Bio-Rad, circa 20.000 gocce (Hindson et al., 2011) | 50% di gocce negative e 13.863 copie |
-| 4. Ricerche in mare | ricerca del volo AF447 con il teorema di Bayes (Stone et al., 2014) | esempio con due sole zone |
-| 5. Guasti | TI per la distribuzione esponenziale; NSK e SKF per la distribuzione di Weibull e la durata $L_{10}$ | $\lambda=0{,}0001$ ore$^{-1}$ |
-
-In altre parole: **il fenomeno è vero, la storia numerica è didattica**. È lo stesso patto delle dispense, dove gli esempi servono a mostrare il ragionamento e non a sostituire i dati di uno studio. L'unica eccezione è il secondo caso, dove anche i numeri sono presi da un corpus reale e si possono rifare.
-
-## 1. Due versioni della stessa pagina {: #ab }
+## 1. Due versioni dello stesso annuncio {: #ab }
 
 *Modello: distribuzione di Bernoulli e distribuzione binomiale · Settimane 4–5*
 
-**La domanda.** Una squadra ha reso più visibile il pulsante di ricerca di un sito. Prima di estendere la modifica a tutti gli utenti, vuole sapere se il pulsante aumenta la probabilità che un utente lo usi.
+**La domanda.** Il motore di ricerca Bing voleva permettere agli inserzionisti di aggiungere ai loro annunci i *site link*, cioè collegamenti diretti alle sezioni del proprio sito. L'idea era rendere gli annunci più utili: l'utente vede subito che cosa offre il sito e può andare direttamente alla sezione che gli interessa. Prima di adottare il nuovo formato per tutti, la squadra voleva sapere se funzionava davvero.
 
-**Che cosa si osserva.** Per ogni utente registriamo un solo esito: ha cliccato almeno una volta, oppure no. Dividiamo gli utenti a caso in due gruppi: A vede la versione attuale, B quella nuova. I due gruppi restano attivi nello stesso periodo. L'unità osservata è l'utente: cinque clic della stessa persona valgono un solo successo.
+**Che cosa si osserva.** La squadra condusse un esperimento controllato, detto anche esperimento A/B. Gli utenti vengono divisi a caso in due gruppi: il gruppo A vede gli annunci nella forma attuale, il gruppo B quelli con i *site link*. La divisione è persistente, cioè un utente che torna sul sito vede sempre la stessa versione. Per ogni utente si registra che cosa fa, e alla fine si confrontano i due gruppi.
 
 L'assegnazione casuale non rende i gruppi identici. Serve a evitare che siamo noi a scegliere utenti diversi per A e B. Anche due gruppi casuali, però, possono comportarsi in modo diverso per puro caso.
 
-**Il modello.** Per l'utente $i$ definiamo $X_i=1$ se clicca e $X_i=0$ altrimenti. $X_i$ è una **variabile bernoulliana** con probabilità di successo $p$: è la distribuzione di Bernoulli. Il conteggio dei successi nel gruppo,
+**Il modello.** Concentriamoci su una sola domanda: l'utente ha cliccato su un annuncio, sì o no? Per l'utente $i$ definiamo $X_i=1$ se clicca e $X_i=0$ altrimenti. $X_i$ è una **variabile bernoulliana** con probabilità di successo $p$: è la distribuzione di Bernoulli. Il conteggio dei successi nel gruppo,
 
 $$
 S=X_1+\cdots+X_n,
@@ -55,31 +38,16 @@ $$
 
 Qui $p$ è la quantità che ci interessa, $S$ è il numero casuale che vediamo e $S/n$ è la nostra stima.
 
-**Un conto semplice.** Immaginiamo di osservare 1.000 utenti per versione.
-
-| Versione | Utenti | Clic | Frequenza |
-|---|---:|---:|---:|
-| A | 1.000 | 100 | 10,0% |
-| B | 1.000 | 112 | 11,2% |
-
-B ha 12 successi in più, cioè 1,2 punti percentuali. Sembra un vantaggio. Ma quanto possono oscillare i conteggi se le due versioni funzionano ugualmente bene?
-
-Se entrambe avessero davvero $p=0{,}10$, il conteggio di ciascun gruppo avrebbe deviazione standard
-
-$$
-\sqrt{1.000\cdot 0{,}10\cdot 0{,}90}\approx 9{,}5.
-$$
-
-Per la differenza tra due gruppi indipendenti, la deviazione standard è circa $\sqrt{90+90}\approx 13{,}4$ successi. I 12 successi osservati sono quindi poco meno di una deviazione standard: una differenza del genere può comparire per caso con una certa frequenza. **Il fatto che 112 superi 100, da solo, non dimostra che B sia migliore.**
+**Quanto pesa il caso.** Supponiamo che le due versioni funzionino ugualmente bene, con la stessa probabilità $p$. I conteggi dei due gruppi non saranno comunque uguali: ciascuno oscilla attorno a $np$, con deviazione standard $\sqrt{np(1-p)}$, come abbiamo visto per la distribuzione binomiale nella Settimana 5. Una differenza tra i due gruppi diventa convincente solo quando è grande rispetto a questa oscillazione. **Il fatto che B abbia più clic di A, da solo, non dimostra che B sia migliore.**
 
 Questa non è ancora una regola completa di decisione: è il primo passo, quello che dice quanto pesare la variabilità prima di fidarsi di una differenza.
 
 <figure class="psi-figure">
-  <img src="assets/ab-test-bing.png" alt="Due annunci identici in un esperimento A/B di Bing: la versione di controllo e quella di trattamento, che aggiunge i site link." loading="lazy">
-  <figcaption>Lo stesso schema, in un esperimento reale di Bing: due versioni dello stesso annuncio, senza e con i <em>site link</em>. Il trattamento aumentò i clic di quasi il 15% ($p=0{,}01$). Figura 1 di Kohavi et al., KDD 2013.</figcaption>
+  <img src="assets/ab-test-bing.png" alt="Due versioni dello stesso annuncio in un esperimento A/B di Bing: la versione di controllo e quella di trattamento, che aggiunge i site link." loading="lazy">
+  <figcaption>Le due versioni dell'annuncio nell'esperimento di Bing: in alto il controllo, in basso il trattamento con i <em>site link</em>. Figura 1 di Kohavi et al., KDD 2013.</figcaption>
 </figure>
 
-**Reale e inventato.** L'uso degli esperimenti A/B a Bing è documentato: Kohavi e colleghi parlano di oltre 200 esperimenti simultanei e di milioni di utenti, e la figura qui sopra è tratta dal loro articolo. Il pulsante di ricerca, i 1.000 utenti e i conteggi 100 e 112 sono invece inventati per questa pagina.
+**Com'è andata.** Bing non guardava soltanto i clic. Il criterio scelto per decidere era aumentare il ricavo medio per utente senza peggiorare il coinvolgimento degli utenti. Secondo Kohavi e colleghi, i *site link* aumentarono il ricavo, ma peggiorarono alcune misure dell'esperienza degli utenti e il tempo di caricamento della pagina, probabilmente perché gli annunci occupavano più spazio. La squadra compensò lo spazio in più mostrando, in media, meno annunci per ricerca: così il nuovo formato portò decine di milioni di dollari di ricavo in più all'anno, senza effetti sugli utenti. Nello stesso articolo gli autori raccontano che a Bing erano attivi contemporaneamente oltre 200 esperimenti, su circa 100 milioni di utenti attivi al mese.
 
 Fonti: [Kohavi et al., 2013](https://exp-platform.com/large-scale/){ target="_blank" rel="noopener" }.
 
@@ -137,7 +105,7 @@ Anche lasciando fuori le altre venti parole del messaggio, il confronto è chius
 
 Il modello si chiama *Multinomial Naive Bayes*: «multinomiale» perché usa i conteggi delle parole, «ingenuo» perché le tratta come indipendenti. Nel linguaggio reale una negazione può cambiare il senso dell'intera frase, e il modello non se ne accorge.
 
-**Reale e inventato.** Qui non c'è niente di inventato. Il corpus e i messaggi sono veri, i conteggi sono calcolati su quei testi e il 97,7% è il risultato ottenuto sui 786 messaggi di prova. *20 Newsgroups* è un insieme di dati pubblico, usato da decenni per provare i classificatori di testi: le due categorie, le parole del grafico e il messaggio mostrato sono una scelta di chi scrive, e il valore esatto della percentuale dipende un po' da come si preparano i testi, ma il conto si può rifare.
+**Da dove vengono i numeri.** Il corpus e i messaggi sono veri, i conteggi sono calcolati su quei testi e il 97,7% è il risultato ottenuto sui 786 messaggi di prova. *20 Newsgroups* è un insieme di dati pubblico, usato da decenni per provare i classificatori di testi: le due categorie, le parole del grafico e il messaggio mostrato sono una scelta di chi scrive, e il valore esatto della percentuale dipende un po' da come si preparano i testi, ma il conto si può rifare.
 
 Fonti: [Lang, 1995 (*20 Newsgroups*)](http://qwone.com/~jason/20Newsgroups/){ target="_blank" rel="noopener" } · [McCallum e Nigam, 1998](https://cdn.aaai.org/Workshops/1998/WS-98-05/WS98-05-007.pdf){ target="_blank" rel="noopener" } · [scikit-learn](https://scikit-learn.org/stable/modules/naive_bayes.html#multinomial-naive-bayes){ target="_blank" rel="noopener" }.
 
@@ -178,21 +146,9 @@ $$
 
 Infine moltiplichiamo $\lambda$ per il numero di gocce: otteniamo una stima delle copie presenti *prima* della PCR.
 
-**Un conto semplice.** Su 20.000 gocce, 10.000 sono negative. Allora $f_0=0{,}50$ e
+La stima delle copie è sempre più grande del numero di gocce positive. È proprio l'effetto della tabella: alcune gocce positive contenevano più di una copia, e il modello di Poisson ne tiene conto. Il valore $\lambda$ è una media per goccia, quindi di solito non è un numero intero: non indica una frazione di molecola, ma quante copie contiene una goccia in media.
 
-$$
-\lambda=-\ln(0{,}50)\approx 0{,}693.
-$$
-
-Il modello stima quindi
-
-$$
-20.000\times 0{,}693\approx 13.863
-$$
-
-copie iniziali. Le gocce positive sono 10.000, ma le copie stimate sono circa 13.863: alcune gocce positive contenevano più di una copia. Lo $0{,}693$ è una media per goccia, non una frazione di molecola.
-
-**Reale e inventato.** La PCR digitale a goccioline è una tecnica reale: il sistema Bio-Rad descritto da Hindson e colleghi usa circa 20.000 gocce da un nanolitro e la distribuzione di Poisson per risalire alla concentrazione. Anche il laboratorio CCR Genomics del National Cancer Institute usa questi sistemi. La ripartizione 50% negative e 50% positive è invece inventata per l'esempio.
+**Il caso documentato.** La PCR digitale a goccioline è una tecnica reale: il sistema Bio-Rad descritto da Hindson e colleghi usa circa 20.000 gocce da un nanolitro e la distribuzione di Poisson per risalire alla concentrazione. Anche il laboratorio CCR Genomics del National Cancer Institute usa questi sistemi.
 
 Fonti: [Hindson et al., 2011](https://pmc.ncbi.nlm.nih.gov/articles/PMC3216358/){ target="_blank" rel="noopener" } · [NCI CCR Genomics](https://genomics.ccr.cancer.gov/technologies/droplet-digital-pcr-ddpcr/){ target="_blank" rel="noopener" } · [NHGRI, che cos'è la PCR](https://www.genome.gov/genetics-glossary/Polymerase-Chain-Reaction-PCR){ target="_blank" rel="noopener" }.
 
@@ -210,16 +166,9 @@ Fonti: [Hindson et al., 2011](https://pmc.ncbi.nlm.nih.gov/articles/PMC3216358/)
 
 Infine si divide per la somma dei pesi, così le probabilità tornano a sommare a 1. Il risultato è la **distribuzione a posteriori**.
 
-**Un conto semplice.** Immaginiamo due zone, A e B, con probabilità iniziale 50% ciascuna. Cerchiamo solo in A, con una probabilità di rilevamento del 90% se il relitto è lì. Non troviamo nulla.
+Il conto dice in modo preciso una cosa intuitiva. Se in una zona si è cercato con un sensore molto efficace senza trovare nulla, la probabilità di non trovare il relitto pur essendo lì è piccola: il peso della zona scende molto, e la probabilità si sposta sulle altre zone. Se invece la ricerca era poco efficace, il peso scende poco e la zona resta plausibile. Una ricerca efficace senza risultato è quindi un'informazione forte.
 
-| Zona | Prima | Non lo trovo, se è lì | Peso | Dopo |
-|---|---:|---:|---:|---:|
-| A | 0,50 | 0,10 | 0,05 | 9,1% |
-| B | 0,50 | 1,00 | 0,50 | 90,9% |
-
-La somma dei pesi è 0,55. A rimane possibile, ma è diventata molto meno plausibile: una ricerca efficace senza risultato è un'informazione forte. Se la ricerca fosse stata poco efficace, il peso di A sarebbe sceso molto meno.
-
-**Reale e inventato.** La ricerca dell'AF447 è un caso documentato. Metron costruì la mappa a priori combinando scenari e dati, aggiornò la distribuzione dopo le spedizioni del 2009 e del 2010, e la mappa a posteriori guidò la spedizione del 2011, che trovò il relitto. Le due mappe qui sotto sono quelle originali. L'esempio con due sole zone e le percentuali 50%, 90% e 9,1% è invece inventato.
+**Il caso documentato.** La ricerca dell'AF447 è un caso documentato. Metron costruì la mappa a priori combinando scenari e dati, aggiornò la distribuzione dopo le spedizioni del 2009 e del 2010, e la mappa a posteriori guidò la spedizione del 2011, che trovò il relitto dopo una settimana di ricerca sul fondale. Le due mappe qui sotto sono quelle originali.
 
 <figure class="psi-figure">
   <img src="assets/af447_prior.jpg" alt="Mappa a priori della posizione del relitto AF447: il rosso indica le zone più probabili." loading="lazy">
@@ -251,23 +200,17 @@ dove $\lambda$ è il tasso di guasto, per esempio in ore$^{-1}$. La durata media
 
 Quando invece domina l'usura, il rischio cresce con l'età. In quel caso si usa spesso la **distribuzione di Weibull**, una famiglia più flessibile: con un parametro di forma maggiore di 1 il guasto diventa più probabile man mano che il componente invecchia.
 
-**Un conto semplice.** Prendiamo $\lambda=0{,}0001$ ore$^{-1}$. La durata media è
+**Media e singolo componente.** La durata media $1/\lambda$ non dice quanto durerà un singolo pezzo. Con la distribuzione esponenziale, anzi, la maggior parte dei componenti si guasta prima della media: la probabilità di superarla è
 
 $$
-\frac{1}{\lambda}=10.000\text{ ore}.
+P\left(T>\frac{1}{\lambda}\right)=e^{-\lambda\cdot\frac{1}{\lambda}}=e^{-1}\approx 0{,}37,
 $$
 
-La probabilità di funzionare oltre 1.000 ore è
-
-$$
-e^{-0{,}0001\times 1.000}=e^{-0{,}1}\approx 0{,}905.
-$$
-
-Quindi circa il **90,5%** dei componenti funziona ancora dopo 1.000 ore. Una media di 10.000 ore non significa che ogni pezzo arrivi a 10.000 ore: la media descrive la distribuzione, non il singolo componente.
+qualunque sia il valore di $\lambda$. Solo il 37% circa dei componenti supera la durata media: la media descrive la distribuzione, non il singolo componente.
 
 Nei cataloghi dei cuscinetti si trova spesso la durata $L_{10}$: è la durata entro cui si guasta per fatica il 10% dei cuscinetti nelle condizioni considerate. Il 90% supera quella durata. $L_{10}$ è un *quantile*, cioè una soglia associata a una percentuale della popolazione, non la durata del singolo cuscinetto.
 
-**Reale e inventato.** Texas Instruments documenta l'uso della distribuzione esponenziale per la fase a tasso di guasto costante e della distribuzione di Weibull per i tassi variabili. NSK e SKF descrivono la vita a fatica dei cuscinetti con la statistica di Weibull e con la durata $L_{10}$. Il valore $\lambda=0{,}0001$ ore$^{-1}$, le 10.000 ore e il 90,5% sono inventati per l'esempio.
+**Il caso documentato.** Texas Instruments documenta l'uso della distribuzione esponenziale per la fase a tasso di guasto costante e della distribuzione di Weibull per i tassi variabili. NSK e SKF descrivono la vita a fatica dei cuscinetti con la statistica di Weibull e con la durata $L_{10}$.
 
 <figure class="psi-figure">
   <img src="assets/cuscinetto.jpg" alt="Fotografia NSK di un danno da fatica sulla pista di un anello di cuscinetto." loading="lazy">
@@ -278,7 +221,7 @@ Fonti: [Texas Instruments, <em>Reliability terminology</em>](https://www.ti.com/
 
 ## Il filo comune {: #filo }
 
-I cinque casi sembrano lontanissimi: un pulsante, un testo, una goccia, un aereo, un cuscinetto. Eppure seguono tutti lo stesso schema:
+I cinque casi sembrano lontanissimi: un annuncio, un testo, una goccia, un aereo, un cuscinetto. Eppure seguono tutti lo stesso schema:
 
 > Che cosa osservo? Che cosa voglio sapere? Quale modello collega le due cose?
 

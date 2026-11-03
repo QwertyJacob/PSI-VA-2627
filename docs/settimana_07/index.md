@@ -431,13 +431,23 @@ Abbiamo visto che dalla congiunta si ricavano le marginali. Si può fare il camm
 
 Prendiamo due monete equilibrate e chiamiamo $X$ e $Y$ i loro risultati, con 1 per testa e 0 per croce. Nel primo scenario le lanciamo indipendentemente: le quattro coppie (0, 0), (0, 1), (1, 0) e (1, 1) hanno tutte probabilità $1/4$. Nel secondo scenario lanciamo solo la prima moneta, e poi appoggiamo la seconda sul tavolo mostrando la stessa faccia: ora le coppie possibili sono soltanto (0, 0) e (1, 1), ciascuna con probabilità $1/2$, mentre le coppie miste hanno probabilità zero.
 
-| | $Y=0$ | $Y=1$ | margine | | $Y=0$ | $Y=1$ | margine |
-|---|:---:|:---:|:---:|---|:---:|:---:|:---:|
-| $X=0$ | 0,25 | 0,25 | 0,50 | $X=0$ | 0,50 | 0,00 | 0,50 |
-| $X=1$ | 0,25 | 0,25 | 0,50 | $X=1$ | 0,00 | 0,50 | 0,50 |
-| margine | 0,50 | 0,50 | 1 | margine | 0,50 | 0,50 | 1 |
+Nel primo scenario, con le due monete lanciate indipendentemente, la tabella congiunta è questa:
 
-A sinistra le monete lanciate indipendentemente, a destra la seconda che copia la prima. I margini sono identici: in entrambi gli scenari ciascuna moneta, guardata da sola, dà testa con probabilità $1/2$. Ma le due situazioni sono completamente diverse: nella prima conoscere $X$ non dice nulla su $Y$, nella seconda conoscere $X$ dice esattamente quanto vale $Y$. Le marginali descrivono ciascuna variabile da sola e perdono proprio l’informazione sul legame tra le due, che sta tutta nel modo in cui la probabilità è distribuita dentro la tabella. Marginalizzare è un’operazione che butta via informazione: si può fare in un senso solo.
+| | $Y=0$ | $Y=1$ | margine |
+|---|:---:|:---:|:---:|
+| $X=0$ | 0,25 | 0,25 | 0,50 |
+| $X=1$ | 0,25 | 0,25 | 0,50 |
+| margine | 0,50 | 0,50 | 1 |
+
+Nel secondo scenario, con la seconda moneta che copia la prima, la tabella congiunta diventa:
+
+| | $Y=0$ | $Y=1$ | margine |
+|---|:---:|:---:|:---:|
+| $X=0$ | 0,50 | 0,00 | 0,50 |
+| $X=1$ | 0,00 | 0,50 | 0,50 |
+| margine | 0,50 | 0,50 | 1 |
+
+Confrontiamo le due tabelle. I margini sono identici: in entrambi gli scenari ciascuna moneta, guardata da sola, dà testa con probabilità $1/2$. Ma le due situazioni sono completamente diverse: nella prima conoscere $X$ non dice nulla su $Y$, nella seconda conoscere $X$ dice esattamente quanto vale $Y$. Le marginali descrivono ciascuna variabile da sola e perdono proprio l’informazione sul legame tra le due, che sta tutta nel modo in cui la probabilità è distribuita dentro la tabella. Marginalizzare è un’operazione che butta via informazione: si può fare in un senso solo.
 
 È la ragione per cui Galton ebbe bisogno di una tabella a doppia entrata. La distribuzione delle altezze dei genitori e quella delle altezze dei figli, ciascuna per conto suo, sono due campane quasi uguali, e non dicono nulla su quanto i figli somiglino ai genitori. Quell’informazione sta solo nella congiunta.
 
@@ -458,6 +468,14 @@ La marginalizzazione funziona come prima, ma ora si somma su due variabili. La p
 $$
 P(D=1)=\sum_{f}\sum_{s}P(D=1,\;F=f,\;S=s)=0{,}006+0{,}014+0{,}005+0{,}011+0{,}004+0{,}011=0{,}051.
 $$
+
+Con $D$ il conto è comodo, perché è proprio la variabile che separa le due tabelle. Con le altre variabili bisogna fare più attenzione. Prendiamo la probabilità di aver perso l’olfatto, $P(S=0)$. Con due variabili sarebbe bastato sommare una colonna; qui invece le caselle con $S=0$ stanno in tutte e due le tabelle, perché si può aver perso l’olfatto sia da malati sia da sani. Bisogna quindi sommare due colonne: la colonna $S=0$ della tabella con $D=0$ e la colonna $S=0$ della tabella con $D=1$.
+
+$$
+P(S=0)=\sum_{d}\sum_{f}P(D=d,\;F=f,\;S=0)=\underbrace{0{,}024+0{,}003+0{,}001}_{D=0}+\underbrace{0{,}006+0{,}005+0{,}004}_{D=1}=0{,}043.
+$$
+
+Se dimenticassimo la seconda tabella otterremmo $0{,}028$, cioè $P(D=0,\;S=0)$: una probabilità congiunta, non la marginale di $S$.
 
 Le caselle, qui, sono $2\cdot2\cdot3=12$: due valori di $D$, per due valori di $S$, per tre valori di $F$. Aggiungere una variabile con due valori ha raddoppiato il numero di caselle. La regola generale è il principio di moltiplicazione della [Settimana 3](../settimana_03/index.md#moltiplicazione): il numero di caselle è il prodotto dei numeri di valori delle singole variabili. Questo prodotto cresce in fretta. Con 10 variabili, ciascuna con 5 valori possibili, le caselle sono
 
@@ -516,7 +534,7 @@ C’è un’asimmetria importante tra i due verdetti. Per dimostrare che due var
 
 ### Un programma con due moduli {: #due-moduli }
 
-Il notebook del corso propone un esempio dal libro di Michael Baron che mostra perché serve controllare tutte le caselle. Un programma è composto da due moduli. Chiamiamo $X$ il numero di errori nel primo modulo e $Y$ il numero di errori nel secondo. La loro distribuzione congiunta è data così:
+Il notebook degli anni passati sulle distribuzioni congiunte, [«4.3 Distribuzioni congiunte»](https://colab.research.google.com/github/QwertyJacob/colab_handouts_PSI/blob/main/4.3_Distribuzioni_Congiunte.ipynb), propone un esempio dal libro di Michael Baron che mostra perché serve controllare tutte le caselle. Un programma è composto da due moduli. Chiamiamo $X$ il numero di errori nel primo modulo e $Y$ il numero di errori nel secondo. La loro distribuzione congiunta è data così:
 
 $$
 P(0,0)=P(0,1)=P(1,0)=0{,}20,\quad P(1,1)=P(1,2)=P(1,3)=0{,}10,\quad P(0,2)=P(0,3)=0{,}05,
@@ -577,7 +595,7 @@ La tabella permette anche di studiare grandezze nuove costruite a partire da $X$
 <text x="490.0" y="200.0" text-anchor="start" fill="currentColor" font-size="12">z = 4: 0,10 = 0,10</text>
 <text x="320.0" y="236.0" text-anchor="middle" fill="currentColor" font-size="12">Le caselle dello stesso colore danno lo stesso totale: si sommano.</text>
 </svg>
-<figcaption>Dalla tabella congiunta alla distribuzione di Z = X + Y: per ogni valore z si sommano le caselle con x + y = z, che formano le diagonali della tabella. Esempio dal libro di Baron, ripreso nel notebook del corso.</figcaption>
+<figcaption>Dalla tabella congiunta alla distribuzione di Z = X + Y: per ogni valore z si sommano le caselle con x + y = z, che formano le diagonali della tabella. Esempio dal libro di Baron, ripreso nel notebook 4.3 degli anni passati.</figcaption>
 </figure>
 
 Facendo lo stesso conto per ogni valore otteniamo $P(Z=0)=0{,}20$, $P(Z=1)=0{,}40$, $P(Z=2)=0{,}05+0{,}10=0{,}15$, $P(Z=3)=0{,}05+0{,}10=0{,}15$ e $P(Z=4)=0{,}10$. Per controllo, la somma è $0{,}20+0{,}40+0{,}15+0{,}15+0{,}10=1$.
@@ -648,7 +666,19 @@ $$
 Nei due moduli $\mathbb{E}[XY]=0{,}60$ è diverso da $\mathbb{E}[X]\,\mathbb{E}[Y]=0{,}525$, e questo è coerente con quanto abbiamo trovato: le variabili sono dipendenti. Ma attenzione al verso della freccia. La regola dice che l’indipendenza garantisce l’uguaglianza; non dice che l’uguaglianza garantisca l’indipendenza. Esistono variabili dipendenti per cui la media del prodotto coincide lo stesso con il prodotto delle medie, e le incontreremo nella seconda lezione. Per verificare l’indipendenza resta una sola strada: controllare le caselle.
 
 !!! example "Sosta di verifica"
-    Lanciamo due dadi e chiamiamo $X$ il risultato del primo e $S=X+Y$ la somma dei due. $X$ e $S$ sono indipendenti? Cerca una casella che risponda alla domanda.
+    Lanciamo due dadi equilibrati e indipendenti. Chiamiamo $X$ il risultato del primo, $Y$ quello del secondo e $S=X+Y$ la loro somma. La tabella congiunta di $X$ e $S$, con le marginali, è questa: ogni numero va diviso per 36 per ottenere la probabilità corrispondente.
+
+    | $X \backslash S$ | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | Totale |
+    |:---------------:|--:|--:|--:|--:|--:|--:|--:|--:|---:|---:|---:|-------:|
+    | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 6 |
+    | 2 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 0 | 0 | 0 | 6 |
+    | 3 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 0 | 0 | 6 |
+    | 4 | 0 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 0 | 6 |
+    | 5 | 0 | 0 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 6 |
+    | 6 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 6 |
+    | Totale | 1 | 2 | 3 | 4 | 5 | 6 | 5 | 4 | 3 | 2 | 1 | 36 |
+
+    Per esempio, la casella $X=1$, $S=2$ vale $1/36$: corrisponde all’unico esito $(1,1)$ dei due dadi. $X$ e $S$ sono indipendenti? Cerca una casella che risponda alla domanda.
 
     ??? esempio-svolto "Risposta"
         No. Prendiamo la casella $X=1$, $S=12$: se il primo dado mostra 1, la somma non può essere 12, quindi $P(X=1,\;S=12)=0$. I margini sono invece positivi: $P(X=1)=1/6$ e $P(S=12)=1/36$, con prodotto $1/216\neq0$. Una casella vuota con i margini pieni basta a dimostrare la dipendenza, ed è intuitivo: sapere quanto vale il primo dado cambia ciò che ci aspettiamo dalla somma.
@@ -701,7 +731,7 @@ Con $p=0{,}40$ e $q=0{,}50$ le variabili sono indipendenti solo per $a=0{,}20$: 
 
 ### Laboratorio: dalla tabella alle marginali {: #lab-tabella }
 
-Il primo script rifà con NumPy tutti i conti dei due moduli. La tabella congiunta è una matrice: le marginali sono le somme lungo le righe (`axis=1`) e lungo le colonne (`axis=0`). Per controllare l’indipendenza costruisce la tabella dei prodotti dei margini con `np.outer`, che moltiplica ogni elemento del primo vettore per ogni elemento del secondo, e la confronta casella per casella con la congiunta. Poi calcola la distribuzione di $Z=X+Y$ e i valori attesi con la regola LOTUS a due variabili. In fondo riprende un esempio del notebook: con tre variabili, marginalizzare vuol dire sommare su tutte le combinazioni delle altre due.
+Il primo script rifà con NumPy tutti i conti dei due moduli. La tabella congiunta è una matrice: le marginali sono le somme lungo le righe (`axis=1`) e lungo le colonne (`axis=0`). Per controllare l’indipendenza costruisce la tabella dei prodotti dei margini con `np.outer`, che moltiplica ogni elemento del primo vettore per ogni elemento del secondo, e la confronta casella per casella con la congiunta. Poi calcola la distribuzione di $Z=X+Y$ e i valori attesi con la regola LOTUS a due variabili. In fondo riprende un esempio del notebook 4.3: con tre variabili, marginalizzare vuol dire sommare su tutte le combinazioni delle altre due.
 
 <div class="psi-exec" markdown="1">
 ```python
@@ -746,7 +776,7 @@ print(f"E[X] = {e_x:.3f}   E[Y] = {e_y:.3f}   "
 print(f"E[XY] = {e_xy:.3f}   E[X] E[Y] = {e_x * e_y:.3f}")
 
 
-# Dal notebook: tre variabili con 5 valori ciascuna.
+# Dal notebook 4.3: tre variabili con 5 valori ciascuna.
 def joint(x, y, z):
     return 1 / 125   # 5 * 5 * 5 caselle equiprobabili
 
@@ -1617,7 +1647,7 @@ L’esempio continuo più importante è quello che Galton intuì nei suoi dati. 
 
 ## Esercizi: prima prova, poi apri la soluzione {: #esercizi }
 
-Per ogni esercizio comincia scrivendo, in una frase, quali sono le due variabili, quali valori possono assumere e in quale casella o insieme di caselle cade l’evento che ti viene chiesto. Poi fai il conto. I primi quattro esercizi vengono dalle slide del corso, il quinto dal notebook; gli altri sono nuovi. I risultati numerici servono a controllare il procedimento; all’esame conta il ragionamento.
+Per ogni esercizio comincia scrivendo, in una frase, quali sono le due variabili, quali valori possono assumere e in quale casella o insieme di caselle cade l’evento che ti viene chiesto. Poi fai il conto. I primi quattro esercizi vengono dalle slide del corso, il quinto dal notebook 4.3; gli altri sono nuovi. I risultati numerici servono a controllare il procedimento; all’esame conta il ragionamento.
 
 ### Esercizio 1 — Due dadi {: #esercizio-1 }
 
@@ -1712,10 +1742,11 @@ La **covarianza** $\operatorname{Cov}(X,Y)=\mathbb{E}[(X-\mu_X)(Y-\mu_Y)]=\mathb
 
 ## Riferimenti e letture {: #riferimenti }
 
-La dispensa riprende le slide e il notebook del corso degli anni precedenti, che a loro volta adattano due testi presenti nella bibliografia. Covarianza e correlazione sono nuove quest’anno e sono costruite sugli stessi testi. Le citazioni storiche sono tradotte dall’inglese; le fonti sono letture facoltative.
+La dispensa riprende le slide e il notebook degli anni passati, che a loro volta adattano due testi presenti nella bibliografia. Covarianza e correlazione sono nuove quest’anno e sono costruite sugli stessi testi. Le citazioni storiche sono tradotte dall’inglese; le fonti sono letture facoltative.
 
 - **Chris Piech**, *Probability for Computer Scientists*, materiale del corso Stanford CS109: voci [«Joint Probability»](https://chrispiech.github.io/probabilityForComputerScientists/en/part3/joint/), [«Marginalization»](https://chrispiech.github.io/probabilityForComputerScientists/en/part3/marginalization/), [«Independence in Variables»](https://chrispiech.github.io/probabilityForComputerScientists/en/part3/independent_vars/) e [«Correlation»](https://chrispiech.github.io/probabilityForComputerScientists/en/part3/correlation/). Da qui vengono le tabelle degli studenti e di malattia, olfatto e febbre.
 - **Michael Baron**, *Probability and Statistics for Computer Scientists*, 2ª ed., CRC Press, 2014, cap. 3, § 3.2 (distribuzione congiunta, marginali e indipendenza, Esempio 3.6 dei due moduli) e § 3.3 (valore atteso, covarianza e correlazione, Esempi 3.9 e 3.11). [Scheda dell’editore](https://doi.org/10.1201/b14800).
+- **Notebook Colab degli anni passati**: [«4.3 Distribuzioni congiunte»](https://colab.research.google.com/github/QwertyJacob/colab_handouts_PSI/blob/main/4.3_Distribuzioni_Congiunte.ipynb). Da qui vengono l’esempio dei due moduli, l’esempio con tre variabili del laboratorio e il quinto esercizio. Sono materiale degli anni passati e non sostituiscono la dispensa: come usarli è spiegato nella pagina [Notebook degli anni passati](../notebook.md).
 - **Stefania Boffa**, note del corso di probabilità dell’Università dell’Insubria: l’esempio del marketing, ripreso nelle slide.
 - **Francis Galton**, *Natural Inheritance*, Londra, Macmillan, 1889: cap. V (il quincunx, pp. 63–65) e cap. VII (la regressione, pp. 95 e 104). [Testo su galton.org](https://galton.org/books/natural-inheritance/).
 - **Francis Galton**, «Regression towards mediocrity in hereditary stature», *Journal of the Anthropological Institute* 15 (1886), pp. 246–263: la tabella delle altezze dei 928 figli. [PDF su galton.org](https://galton.org/essays/1880-1889/galton-1886-jaigi-regression-stature.pdf).

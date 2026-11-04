@@ -5,12 +5,12 @@
 
 ## Che cosa è richiesto all’esame {: #esame }
 
-- **Problema dei punti:** risolvere casi piccoli con l’albero, il ragionamento di Pascal o i finali equiprobabili di Fermat; spiegare perché foglie di lunghezza diversa non hanno necessariamente lo stesso peso.
+- **Problema dei punti:** risolvere casi piccoli con l’albero oppure contando, con le formule del calcolo combinatorio, i finali equiprobabili di Fermat; spiegare perché foglie di lunghezza diversa non hanno necessariamente lo stesso peso.
 - **Combinatoria minima:** principio di moltiplicazione, fattoriale, disposizioni e combinazioni. Devi scegliere il conteggio corretto in base a ordine e ripetizione e spiegare perché, per passare dalle disposizioni alle combinazioni, si divide per $k!$.
 - **Probabilità:** usare «casi favorevoli su casi possibili» soltanto sotto equiprobabilità; impostare semplici problemi «almeno uno» mediante il complementare, anche sul modello di de Méré.
-- **Lettura individuale richiesta solo in queste parti:** nei compleanni e nelle tabelle hash, comprendere il modello uniforme e indipendente, contare le coppie e impostare la probabilità di almeno una coincidenza tramite il complementare. È richiesto l’uso della formula esatta fornita e l’interpretazione del risultato.
+- **Compleanni e tabelle hash:** questa parte si studia a casa sulla dispensa, e all’esame ne è richiesto solo il nucleo. Devi saper dichiarare il modello, cioè giorni (o caselle) equiprobabili e scelte indipendenti, e contare le coppie con $\binom{n}{2}$. Devi poi saper costruire, una persona alla volta, la probabilità che i compleanni siano tutti diversi, $\frac{365 \cdot 364 \cdots (365-n+1)}{365^n}$, e ricavare con il complementare la probabilità di almeno una coincidenza. Infine devi saper dire che cosa significa il numero ottenuto: per esempio, con 23 persone una coincidenza è più probabile del contrario, perché le coppie sono già 253. Non devi ricordare a memoria i valori della tabella.
 
-**Facoltativi e non richiesti all’esame:** caso a 56 foglie e tabulazione estesa di Pascal; costruzione del triangolo e ricorrenza «dentro/fuori»; derivazione dell’approssimazione esponenziale; significato e uso della scala $\sqrt{N}$, costante 1,18 e traduzione in $2^{b/2}$; birthday attack; limiti sugli algoritmi di ordinamento e analisi delle prestazioni delle tabelle hash. Non sono richieste dimostrazioni ulteriori rispetto ai ragionamenti elementari elencati sopra.
+**Facoltativi e non richiesti all’esame:** il metodo di Pascal, cioè la funzione $V(a,b)$, la sua ricorrenza e la tabella; il caso a 56 foglie; il triangolo di Pascal, con la sua costruzione e la ricorrenza «dentro/fuori»; derivazione dell’approssimazione esponenziale; significato e uso della scala $\sqrt{N}$, costante 1,18 e traduzione in $2^{b/2}$; birthday attack; limiti sugli algoritmi di ordinamento e analisi delle prestazioni delle tabelle hash. Non sono richieste dimostrazioni ulteriori rispetto ai ragionamenti elementari elencati sopra.
 
 Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
 
@@ -171,8 +171,8 @@ Sommando: $P(A \text{ vince}) = \tfrac{16+24+24+20+15}{128} = \tfrac{99}{128}$. 
 
 ### Pascal: dedurre ogni caso dal successivo {: #pascal }
 
-!!! info "Per l’esame"
-    È richiesto il ragionamento su casi piccoli, a partire dalla prossima manche. La tabulazione estesa fino al gioco a 5 punti e l’implementazione con memoria sono facoltative e non richieste all’esame.
+!!! info "Approfondimento facoltativo — fuori dall’esame"
+    Il metodo di Pascal, cioè la funzione $V(a,b)$, la sua ricorrenza e la tabella, non è richiesto all’esame, e lo stesso vale per l’implementazione con memoria. Per il problema dei punti restano richiesti l’albero nei casi piccoli e il conteggio dei finali equiprobabili di Fermat.
 
 Pascal, nella lettera del 29 luglio 1654, usa un metodo che chiama più «breve». Lo seguiamo un passo alla volta.
 
@@ -493,7 +493,7 @@ Con i server: $\binom{10}{3} = \frac{720}{6} = 120$. Due proprietà si vedono su
 ### Il triangolo di Pascal e i futuri di Fermat {: #triangolo }
 
 !!! info "Approfondimento facoltativo — fuori dall’esame"
-    La costruzione del triangolo e la ricorrenza «dentro/fuori» non sono richieste all’esame. Restano richiesti il coefficiente binomiale e il conteggio di finali equiprobabili nei casi piccoli.
+    Il triangolo di Pascal, con la sua costruzione e la ricorrenza «dentro/fuori», non è richiesto all’esame. Restano richiesti il coefficiente binomiale e il conteggio di finali equiprobabili nei casi piccoli.
 
 Finora abbiamo calcolato $\binom{n}{k}$ con i fattoriali, che diventano enormi in fretta. Esiste un modo più economico: costruire ogni coefficiente a partire da quelli più piccoli, usando solo somme. Per scoprire come, partiamo da un esempio che si può elencare a mano.
 
@@ -830,7 +830,7 @@ print("Script 3: tutti gli assert superati.")
 ### Il paradosso dei compleanni {: #paradosso }
 
 !!! info "Per l’esame"
-    Lettura individuale richiesta per il modello uniforme e indipendente, il conteggio delle coppie e il calcolo con il complementare. Devi saper impostare e usare la formula esatta fornita; non devi memorizzare le probabilità della tabella.
+    Questa parte si studia a casa. All’esame devi saper dichiarare il modello uniforme e indipendente, contare le coppie e costruire la probabilità di almeno una coincidenza con il complementare. Si usa la formula esatta, cioè il prodotto, e non l’approssimazione esponenziale, che è facoltativa. Non devi ricordare a memoria le probabilità della tabella.
 
 Ecco una domanda che sembra innocua. **Quante persone devono essere presenti in una stanza perché la probabilità che almeno due compiano gli anni lo stesso giorno superi il 50%?** Chiunque risponde con un numero grande (183? 100?). La risposta è **23**.
 
@@ -1076,7 +1076,7 @@ Atteso: la tabella con $0.5073$ per $n = 23$; soglie $23$, $119$, $1178$ per $N 
 ### Una tabella hash è un tavolo da compleanni {: #tabella-hash }
 
 !!! info "Per l’esame"
-    Sono richiesti il modello uniforme e indipendente, il conteggio delle coppie e l’impostazione con il complementare, usando la formula esatta fornita. Stima esponenziale, soglia $1{,}18\sqrt{m}$ e analisi delle prestazioni sono facoltative e non richieste all’esame.
+    Sono richiesti il modello uniforme e indipendente, il conteggio delle coppie e l’impostazione con il complementare, con la stessa formula esatta dei compleanni. Stima esponenziale, soglia $1{,}18\sqrt{m}$ e analisi delle prestazioni sono facoltative e non richieste all’esame.
 
 Una **tabella hash** è un array di $m$ posizioni (*slot*). Per inserire una chiave si applica una **funzione hash** $h$ che la trasforma in un numero tra $0$ e $m-1$: la chiave va nello slot $h(\text{chiave})$. Se due chiavi diverse finiscono nello stesso slot si ha una **collisione**, e la struttura dati deve prevedere come gestirla (liste concatenate, indirizzamento aperto…).
 
@@ -1327,7 +1327,7 @@ Atteso: la mediana vicina alla soglia $1{,}18 \cdot 2^{b/2}$ per ogni $b$ (per e
 ## Riepilogo {: #riepilogo }
 
 !!! info "Per l’esame"
-    Questa sintesi comprende anche gli approfondimenti: scala $\sqrt{N}$, birthday attack, prestazioni hash e ricorrenza del triangolo restano fuori dall’esame. Il perimetro richiesto è quello indicato [in apertura](#esame).
+    Questa sintesi comprende anche gli approfondimenti: il metodo di Pascal con la funzione $V$, il triangolo di Pascal, la scala $\sqrt{N}$, il birthday attack e le prestazioni delle tabelle hash restano fuori dall’esame. Il perimetro richiesto è quello indicato [in apertura](#esame).
 
 * Il **problema dei punti** (Pacioli 1494, Pascal e Fermat 1654) si risolve pesando i **futuri possibili**: Fermat li conta, Pascal li deduce uno dall'altro con la ricorsione $V(a,b) = \tfrac12 V(a-1,b) + \tfrac12 V(a,b-1)$.
 * Il **conteggio** minimo: moltiplicazione ($n^k$), disposizioni ($n!/(n-k)!$), combinazioni ($\binom{n}{k}$, ordine ignorato), con il triangolo di Pascal $\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$ e $\sum_k \binom{n}{k} = 2^n$.

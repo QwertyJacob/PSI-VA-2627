@@ -1162,21 +1162,29 @@ In ogni caso, questo fatto è una buona notizia travestita da cattiva: le collis
 
 ### Esplora tu stesso: riempi la tabella {: #widget-hash }
 
-Scegli il numero di slot $m$ e inserisci chiavi casuali, una alla volta o dieci alla volta. Gli slot vuoti sono grigi, quelli occupati da una chiave sono blu, quelli con una collisione sono arancioni. Dopo quante chiavi compare la prima collisione? Ripeti l'esperimento più volte: confronta con $\sqrt{m}$.
+Scegli il numero di slot $m$ con il cursore, poi inserisci chiavi casuali con i pulsanti «+1 chiave» e «+10 chiavi»; il pulsante «Azzera» svuota la tabella. Gli slot vuoti sono grigi, quelli occupati da una chiave sono blu, quelli con una collisione sono arancioni. Dopo quante chiavi compare la prima collisione? Ripeti l'esperimento più volte: confronta con $\sqrt{m}$.
 
 <style>
 .s03-grid { display: grid; grid-template-columns: repeat(auto-fill, 18px); gap: 2px; margin: 10px 0; }
 .s03-cell { width: 18px; height: 18px; border-radius: 3px; background: rgba(128, 128, 128, 0.25); font-size: 10px; line-height: 18px; text-align: center; color: #fff; }
 .s03-cell.c1 { background: #4051b5; }
 .s03-cell.c2 { background: #e07a1f; }
-.s03-box button { margin-right: 8px; padding: 2px 10px; cursor: pointer; }
+/* Material strips the default look of <button>: style them like the site's
+   "Esegui" buttons, filled for the actions; the reset matches the widgets'
+   "Ripristina valori iniziali" button. */
+.s03-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.6rem 0; }
+.s03-box button { font-size: 0.8rem; padding: 0.35rem 0.9rem; border-radius: 1rem; border: 1px solid var(--md-primary-fg-color); background: var(--md-primary-fg-color); color: var(--md-primary-bg-color); cursor: pointer; }
+.s03-box button:hover { filter: brightness(1.08); }
+.s03-box button.s03-reset { background: transparent; color: var(--md-default-fg-color); border-color: var(--md-default-fg-color--lighter); }
+.s03-box button.s03-reset:hover { background: var(--md-default-fg-color--lightest); filter: none; }
+@media print { .s03-actions { display: none; } }
 </style>
 <div class="s03-box" id="s03-hash">
   <label>Slot m: <input type="range" id="s03-hm" min="16" max="400" step="1" value="100"> <b id="s03-hmv">100</b></label>
-  <div>
+  <div class="s03-actions">
     <button id="s03-h1" type="button">+1 chiave</button>
     <button id="s03-h10" type="button">+10 chiavi</button>
-    <button id="s03-hr" type="button">Azzera</button>
+    <button id="s03-hr" class="s03-reset" type="button">Azzera</button>
   </div>
   <div class="s03-grid" id="s03-hgrid"></div>
   <div class="s03-out" id="s03-hout"></div>

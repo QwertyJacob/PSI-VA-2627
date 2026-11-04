@@ -100,7 +100,6 @@ nav:
   - "Modulo I — Fondamenti":
       - "0. Che senso ha essere qui?": 0-senso.md
       - "1. Che cos'è la probabilità?": settimana_01/index.md
-      - "Domande d'esame": settimana_01/domande.md
       - "2. Dall'effetto alla causa: alberi e Teorema di Bayes": settimana_02/index.md
       - "3. L'estate del 1654: Pascal, Fermat e le tabelle hash": settimana_03/index.md
   - "Modulo II — Variabili aleatorie":
@@ -109,4 +108,8 @@ nav:
       - "6. Bertrand, Gauss e l'asteroide Cerere: variabili aleatorie continue e distribuzione normale": settimana_06/index.md
   - "Modulo III — Distribuzioni congiunte, teoremi limite e campionamento":
       - "7. Galton e le altezze di genitori e figli: distribuzioni congiunte, covarianza e correlazione": settimana_07/index.md
+  - "Domande d'esame":
+      - "Introduzione": domande-esame/index.md
+      - "Primo round":
+          - "Settimana 1 — Che cos'è la probabilità?": domande-esame/primo-round/settimana-01.md
   - "La probabilità al lavoro": probabilita-al-lavoro/index.md

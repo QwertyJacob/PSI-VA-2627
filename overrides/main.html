@@ -9,13 +9,6 @@
 {% block extrahead %}
   {{ super() }}
   <script type="module" src="{{ 'javascripts/psi-pet.js' | url }}"></script>
-  {# On an exam-questions page its own nav entry is the active one, whose href
-     is "./": the href rule in extra.css cannot see it, so indent it here. #}
-  {% if page and page.file.src_uri.endswith("/domande.md") %}
-    <style>
-      .md-nav--primary .md-nav__item--active:not(.md-nav__item--nested) > .md-nav__link { padding-left: 0.8rem; }
-    </style>
-  {% endif %}
 {% endblock %}
 
 {% block content %}

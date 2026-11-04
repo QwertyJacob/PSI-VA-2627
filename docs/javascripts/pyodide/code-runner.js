@@ -13,6 +13,9 @@
  *   ```
  *   </div>
  *
+ * On week pages with a notebook in notebooks/, scripts/notebook_hook.py also sets a
+ * `data-colab` URL on the div, shown as an «Apri in Colab» button next to «Esegui».
+ *
  * Pyodide itself (~7MB) plus requested packages are ONLY downloaded the first time a
  * student presses "Esegui" on the page — nothing is fetched on normal page load, so this
  * never slows down reading or printing.
@@ -91,6 +94,21 @@
     var toolbar = document.createElement('div');
     toolbar.className = 'psi-exec-toolbar';
     toolbar.appendChild(runBtn);
+
+    // The week's Colab notebook, scrolled to this same script. The URL is set
+    // at build time by scripts/notebook_hook.py, only on pages with a notebook.
+    var colabUrl = block.getAttribute('data-colab');
+    if (colabUrl) {
+      var colabLink = document.createElement('a');
+      colabLink.className = 'psi-exec-colab-btn';
+      colabLink.href = colabUrl;
+      colabLink.target = '_blank';
+      colabLink.rel = 'noopener';
+      colabLink.title = 'Apri il notebook della settimana in Google Colab, all\'altezza di questo script';
+      colabLink.textContent = 'Apri in Colab';
+      toolbar.appendChild(colabLink);
+    }
+
     toolbar.appendChild(status);
     block.appendChild(toolbar);
 

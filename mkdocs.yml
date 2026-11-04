@@ -70,6 +70,8 @@ extra_css:
 # Per-chapter PDF wiring (button + manifest); see scripts/pdf_hook.py.
 hooks:
   - scripts/pdf_hook.py
+  # «Apri in Colab» next to every runnable script; see scripts/notebook_hook.py.
+  - scripts/notebook_hook.py
 
 extra_javascript:
   - javascripts/mathjax-config.js

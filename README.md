@@ -12,6 +12,7 @@ Questo repository pubblico ospita i sorgenti in Markdown (nella cartella `docs/`
 
 - **Widget interattivi** — controlli grafici e cursori in tempo reale (sviluppati con Chart.js).
 - **Blocchi di codice eseguibili** — codice Python eseguito direttamente nel browser tramite [Pyodide](https://pyodide.org), modificabile ed eseguibile senza installare nulla.
+- **Notebook Colab della settimana** — accanto a ogni script c'è il pulsante *"Apri in Colab"*, che apre in Google Colab il notebook della settimana (in `notebooks/`) all'altezza di quello script.
 - **PDF per capitolo** — ogni pagina dispone del pulsante *"Scarica il PDF"*, che genera la versione stampabile del capitolo con formule MathJax e grafici dei widget ad alta risoluzione.
 - **Mascotte animata** — un Ψ 3D con occhi e sorriso (Three.js) fa da logo: si gira all'apertura della pagina, segue il mouse con gli occhi e accompagna il passaggio da una pagina all'altra. Se WebGL non è disponibile resta visibile il logo SVG statico.
 - **Stampa dell'intero corso** — funzionalità integrata per la stampa unificata tramite plugin dedicato.
@@ -31,8 +32,11 @@ docs/                      sorgenti Markdown delle dispense
   stylesheets/extra.css    stili personalizzati per widget, codice e stampa
 overrides/main.html        override del tema (pulsante PDF, script della mascotte)
 overrides/partials/logo.html  logo animato nell'header
+notebooks/settimana_NN.ipynb  un notebook Colab per settimana con gli script della dispensa
 scripts/
   pdf_hook.py              hook MkDocs per il binding e manifest dei PDF
+  build_notebooks.py       genera i notebook di notebooks/ dagli script delle dispense
+  notebook_hook.py         hook MkDocs per i pulsanti "Apri in Colab"
   build_pdfs.mjs           generatore dei PDF tramite Chromium headless (Playwright)
 mkdocs.yml                 configurazione di MkDocs e navigazione
 requirements-docs.txt      dipendenze Python per la build
@@ -65,6 +69,12 @@ Per verificare che non vi siano link rotti o errori di sintassi:
 ```bash
 mkdocs build --strict
 ```
+
+Quando si modifica uno script eseguibile di una dispensa (un blocco `<div class="psi-exec">`), bisogna rigenerare il notebook della settimana, altrimenti `mkdocs build --strict` si interrompe segnalando il notebook non aggiornato:
+```bash
+python scripts/build_notebooks.py
+```
+I pulsanti aprono i notebook dal branch `main` di GitHub, quindi un notebook nuovo funziona solo dopo essere stato pubblicato su `main`.
 
 ### 2. Generazione PDF (opzionale)
 

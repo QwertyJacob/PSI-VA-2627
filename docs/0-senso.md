@@ -2,6 +2,9 @@
 *Che senso ha studiare e faticare con questa materia*
 Jesús F. Cevallos-Moreno | Autunno-Inverno 2026
 
+!!! info "Nota introduttiva — non è argomento d’esame"
+    Questa pagina è una nota introduttiva al corso: racconta perché vale la pena studiare questa materia e con quale atteggiamento affrontarla. Non contiene argomenti d’esame e non è richiesta all’orale.
+
 > «Perché la gente non pensa prima di programmare? Perché pensare è difficile! Scrivere codice dà l'illusione immediata del progresso: digiti righe, vedi qualcosa sullo schermo, ti senti produttivo. Pensare, invece, richiede di restare fermi a guardare nel vuoto o a fissare un foglio bianco, confrontandosi con la propria ignoranza finché la struttura del problema non diventa trasparente».
 >
 > — Leslie Lamport, *Thinking Above the Code* (2014)

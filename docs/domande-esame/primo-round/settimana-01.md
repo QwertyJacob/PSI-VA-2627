@@ -2,16 +2,18 @@
 description: Le venti domande del primo round dell'esame orale sulla Settimana 1, ciascuna con le idee che una risposta corretta deve contenere.
 ---
 
-[:material-book-open-variant: Torna alla dispensa](index.md){ .md-button }
+[:material-book-open-variant: Apri la dispensa della Settimana 1](../../settimana_01/index.md){ .md-button }
 
 # Settimana 1 — Domande d'esame del primo round
 
-Questa pagina raccoglie le venti domande del primo round dell'esame orale che riguardano la [Settimana 1](index.md). Sono domande sui fondamenti: definizioni, distinzioni, ragionamenti da ricostruire e qualche piccolo calcolo. All'esame si risponde a voce, in circa un minuto. Gli argomenti sono quelli indicati nel [perimetro d'esame](index.md#esame) all'inizio della dispensa.
+Questa pagina raccoglie le venti domande del primo round dell'esame orale che riguardano la [Settimana 1](../../settimana_01/index.md). Sono domande sui fondamenti: definizioni, distinzioni, ragionamenti da ricostruire e qualche piccolo calcolo. All'esame si risponde a voce, in circa un minuto. Gli argomenti sono quelli indicati nel [perimetro d'esame](../../settimana_01/index.md#esame) all'inizio della dispensa.
 
 !!! info "Che cosa significa «risposta attesa»"
     Sotto ogni domanda trovi la risposta attesa. «Attesa» non significa che devi rispondere esattamente con quelle parole, né nello stesso ordine. Significa che una risposta corretta contiene quelle idee principali, perché sono loro a sostenerla. Puoi usare parole tue, un esempio diverso o un altro ordine: conta che le idee ci siano e che siano giuste.
 
 Per studiare conviene provare prima a rispondere da soli, a voce e senza guardare, come si farebbe all'esame. Solo dopo si apre la risposta attesa e si controlla quali idee mancavano. Per questo le risposte sono chiuse: si aprono con un clic sul titolo.
+
+La sezione [Domande d'esame](../index.md) raccoglie anche le domande delle altre settimane e spiega come è fatto il secondo round.
 
 Ogni domanda ha un codice. Per esempio, S1-R1-07 indica la settimana 1, il primo round e la domanda numero 7.
 

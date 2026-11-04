@@ -29,6 +29,8 @@ Script e widget servono a esplorare e verificare i concetti. **Non è richiesta 
 
 Per ogni settimana, consulta le indicazioni in apertura delle dispense.
 
+La sezione [Domande d'esame](domande-esame/index.md) raccoglie tutte le domande del primo round dell'orale, settimana per settimana e ciascuna con la sua risposta attesa. Più avanti vi arriveranno anche alcune domande tipo del secondo round.
+
 ## Il percorso in breve
 
 Il percorso è articolato in 4 moduli tematici distribuiti su **12 settimane**, con lezioni dedicate ai fondamenti teorici, all'interazione con i widget e al laboratorio computazionale.

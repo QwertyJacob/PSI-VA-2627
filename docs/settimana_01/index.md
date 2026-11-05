@@ -12,7 +12,7 @@
 
 **Facoltativi e non richiesti all’esame:** formalismo della σ-algebra e questioni di cardinalità oltre la distinzione intuitiva tra discreto e continuo; inclusione-esclusione a tre eventi; distinzione tra polo epistemico e polo ontico, dettagli delle dispute filosofiche, Carnap, paradossi specialistici e parte quantistica; p-value, optional stopping e dettagli dell’A/B testing. Le altre dimostrazioni formali non sono richieste.
 
-Le venti domande del primo round dell'esame orale su questa settimana, ciascuna con la sua risposta attesa, sono raccolte nella sezione [Domande d'esame](../domande-esame/primo-round/settimana-01.md).
+Le otto domande del primo round dell'esame orale su questa settimana, ciascuna con la sua risposta attesa, sono raccolte nella sezione [Domande d'esame](../domande-esame/primo-round/settimana-01.md).
 
 Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
 

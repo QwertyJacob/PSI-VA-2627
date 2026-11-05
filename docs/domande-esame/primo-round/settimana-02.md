@@ -47,7 +47,7 @@ Che cosa sono la probabilità a priori, la verosimiglianza, l'evidenza e la prob
 ??? success "Risposta attesa"
     Chiamiamo $H$ l'ipotesi «è in corso un'intrusione» ed $E$ l'evidenza «suona l'allarme». La probabilità a priori $P(H)$ è la probabilità dell'intrusione prima di sapere dell'allarme. La verosimiglianza $P(E\mid H)$ dice quanto è probabile che l'allarme suoni se l'intrusione c'è davvero. L'evidenza $P(E)$ è la probabilità complessiva che l'allarme suoni, con o senza intrusione. La probabilità a posteriori $P(H\mid E)$ è la probabilità dell'intrusione dopo aver sentito l'allarme.
 
-### S2-R1-05 · $P(E\mid H)$ e $P(H\mid E)$ {: #s2-r1-05 }
+### S2-R1-05 · Due condizionate da non scambiare {: #s2-r1-05 }
 
 Spiega con un esempio la differenza tra $P(E\mid H)$ e $P(H\mid E)$.
 

@@ -26,7 +26,7 @@
 
 Fino a oggi abbiamo studiato una variabile aleatoria alla volta: il numero di teste, il tempo di attesa di un autobus, l’altezza di una persona. Nel mondo reale, però, le grandezze che ci interessano arrivano quasi sempre in coppia, o in gruppi più numerosi. Di uno studente conosciamo l’anno di corso e anche la situazione sentimentale; di un programma, gli errori in un modulo e gli errori in un altro; di una famiglia, l’altezza dei genitori e quella dei figli. La domanda nuova di questa settimana è come descrivere **due variabili aleatorie insieme**, e come misurare quanto l’una «va d’accordo» con l’altra.
 
-Il lavoro è diviso in due parti, che corrispondono alle due lezioni. Nella prima parte impariamo a scrivere e a leggere una **distribuzione congiunta**: una tabella che assegna una probabilità a ogni coppia di valori. Da quella tabella ricaviamo le **distribuzioni marginali**, cioè le distribuzioni di ciascuna variabile presa da sola, e scopriamo che cosa vuol dire, per due variabili, essere **indipendenti**. Nella seconda parte costruiamo due numeri che riassumono il legame tra due variabili: la **covarianza**, che dice se tendono a stare insieme sopra o sotto la loro media, e il **coefficiente di correlazione**, che misura la stessa cosa su una scala fissa da $-1$ a $1$. Chiudiamo con due avvertimenti che ogni informatico che lavora con i dati deve conoscere: due variabili possono essere legate strettamente e avere correlazione zero, e due variabili correlate non sono per questo una la causa dell’altra.
+Il lavoro è diviso in due parti, che corrispondono alle due lezioni. Nella prima parte impariamo a scrivere e a leggere una **distribuzione congiunta**: una tabella che assegna una probabilità a ogni coppia di valori. Da quella tabella ricaviamo le **distribuzioni marginali**, cioè le distribuzioni di ciascuna variabile presa da sola, e scopriamo che cosa vuol dire, per due variabili, essere **indipendenti**. Nella seconda parte costruiamo due numeri che riassumono il legame tra due variabili: la **covarianza**, che dice se tendono a stare insieme sopra o sotto la loro media, e il **coefficiente di correlazione lineare**, che misura la stessa cosa su una scala fissa da $-1$ a $1$. Come fanno i manuali, lo chiameremo spesso soltanto «correlazione», ma l’aggettivo conta: questo numero vede soltanto i legami che seguono una retta, mentre nel linguaggio comune, e spesso anche nel machine learning, «correlate» vuol dire più in generale «legate in qualche modo». Chiudiamo con due avvertimenti che ogni informatico che lavora con i dati deve conoscere: due variabili possono essere legate strettamente e avere correlazione zero, e due variabili correlate non sono per questo una la causa dell’altra.
 
 Una sola storia accompagna le due lezioni, quella di **Francis Galton**, un gentiluomo inglese dell’Ottocento, cugino di Charles Darwin, ossessionato dalla misura delle caratteristiche umane. Nella prima lezione lo incontriamo con la sua tavola di chiodi e con una domanda sulle altezze: perché, generazione dopo generazione, gli esseri umani non diventano sempre più giganti o sempre più piccoli? Per rispondere, Galton raccolse le altezze di genitori e figli in una tabella a doppia entrata, proprio come quelle che studieremo. Nella seconda lezione lo ritroviamo riparato sotto una roccia durante un acquazzone, nel momento in cui capì come misurare il legame tra due grandezze: è la nascita della correlazione. Non devi ricordare date e nomi: le storie servono a capire perché le idee della settimana sono nate e quale problema risolvono.
 
@@ -936,7 +936,7 @@ Guardiamo i dati di Galton in un altro modo: ogni figlio è un punto, con l’al
 <text x="88.0" y="72.0" text-anchor="start" fill="#e07a1f" font-size="12" font-weight="bold">sotto e sopra: prodotto −</text>
 <text x="514.0" y="330.0" text-anchor="end" fill="#e07a1f" font-size="12" font-weight="bold">sopra e sotto: prodotto −</text>
 </svg>
-<figcaption>I dati di Galton come nuvola di punti. Blu: genitore e figlio dalla stessa parte delle rispettive medie, quindi prodotto degli scarti positivo; arancione: da parti opposte, prodotto negativo. I blu sono circa il 63%. I dati sono raggruppati in classi di un pollice: dentro la sua classe ogni punto è spostato un poco a caso, per vederli tutti.</figcaption>
+<figcaption>I dati di Galton come nuvola di punti. Blu: genitore e figlio dalla stessa parte delle rispettive medie, quindi prodotto degli scarti positivo; arancione: da parti opposte, prodotto negativo. I blu sono circa il 63%. I dati sono raggruppati in classi larghe un pollice (2,54 cm), come nella tabella originale di Galton, quindi molte coppie hanno esattamente gli stessi valori e cadrebbero sullo stesso punto. Per vederle tutte, ogni punto è spostato un poco a caso dentro il suo quadrato di un pollice.</figcaption>
 </figure>
 
 Per ogni punto guardiamo due scarti: quanto il genitore si allontana dalla media dei genitori, $x-\mu_X$, e quanto il figlio si allontana dalla media dei figli, $y-\mu_Y$. Nel quadrante in alto a destra entrambi gli scarti sono positivi: genitore e figlio sono tutti e due sopra la media. Nel quadrante in basso a sinistra sono entrambi negativi: tutti e due sotto la media. In questi due quadranti il prodotto degli scarti, $(x-\mu_X)(y-\mu_Y)$, è positivo, perché è il prodotto di due numeri con lo stesso segno. Negli altri due quadranti uno scarto è positivo e l’altro negativo, e il prodotto è negativo.
@@ -1009,7 +1009,15 @@ A parole: la covarianza è la media del prodotto meno il prodotto delle medie. V
 
     Nell’ultimo passaggio abbiamo sostituito $\mathbb{E}[X]=\mu_X$ e $\mathbb{E}[Y]=\mu_Y$. Dei tre termini con il prodotto delle medie, due si cancellano con il segno opposto e ne resta uno con il segno meno: $\operatorname{Cov}(X,Y)=\mathbb{E}[XY]-\mu_X\mu_Y$. Se prendiamo $Y=X$, la stessa formula dà $\operatorname{Var}(X)=\mathbb{E}[X^2]-\mu_X^2$, la formula della varianza che avevamo visto nella [Lettura C della Settimana 5](../settimana_05/index.md#formula-varianza).
 
-Torniamo ai due moduli del programma. Nell’Atto IV abbiamo già calcolato tutti gli ingredienti: $\mathbb{E}[XY]=0{,}60$, $\mu_X=0{,}5$ e $\mu_Y=1{,}05$. Quindi
+Ora riprendiamo l’esempio dell’[Atto IV](#due-moduli). Un programma è composto da due moduli: $X$ è il numero di errori nel primo modulo e $Y$ il numero di errori nel secondo. Il primo modulo ha al più un errore, quindi $X$ vale 0 oppure 1; il secondo può averne da zero a tre. Ecco di nuovo la tabella della loro distribuzione congiunta, con le marginali sul bordo:
+
+| | $y=0$ | $y=1$ | $y=2$ | $y=3$ | $P(X=x)$ |
+|---|:---:|:---:|:---:|:---:|:---:|
+| $x=0$ | 0,20 | 0,20 | 0,05 | 0,05 | 0,50 |
+| $x=1$ | 0,20 | 0,10 | 0,10 | 0,10 | 0,50 |
+| $P(Y=y)$ | 0,40 | 0,30 | 0,15 | 0,15 | 1 |
+
+Nell’Atto IV avevamo già calcolato, a partire da questa tabella, tutti gli ingredienti che servono. La media del prodotto è $\mathbb{E}[XY]=0{,}60$, perché contribuiscono solo le tre caselle con $x=1$ e $y$ diverso da zero. Le due medie si ricavano dalle marginali: $\mu_X=0\cdot0{,}50+1\cdot0{,}50=0{,}5$ e $\mu_Y=0\cdot0{,}40+1\cdot0{,}30+2\cdot0{,}15+3\cdot0{,}15=1{,}05$. Quindi
 
 $$
 \operatorname{Cov}(X,Y)=0{,}60-0{,}5\cdot1{,}05=0{,}60-0{,}525=0{,}075.
@@ -1049,7 +1057,7 @@ La conseguenza è che il valore della covarianza non dice quanto è forte il leg
 
 ## Atto VII — Il coefficiente di correlazione {: #correlazione }
 
-Per eliminare le unità di misura dividiamo la covarianza per le due deviazioni standard. Il risultato si chiama **coefficiente di correlazione** di $X$ e $Y$, o semplicemente **correlazione**, e si indica con la lettera greca $\rho$ («rho»):
+Per eliminare le unità di misura dividiamo la covarianza per le due deviazioni standard. Il risultato si chiama **coefficiente di correlazione lineare** di $X$ e $Y$, o coefficiente di correlazione di Pearson, o semplicemente **correlazione**, e si indica con la lettera greca $\rho$ («rho»):
 
 $$
 \rho(X,Y)=\frac{\operatorname{Cov}(X,Y)}{\sigma_X\,\sigma_Y}.
@@ -1069,13 +1077,16 @@ $$
 
 Nel terzo passaggio abbiamo portato fuori dal valore atteso le costanti $\sigma_X$ e $\sigma_Y$, per la linearità. La correlazione è dunque la covarianza delle deviazioni misurate in unità statistiche: ciò che Galton aveva intuito sotto la roccia di Naworth.
 
-Applichiamola agli esempi che conosciamo. Per i due server ci servono le varianze. Con la definizione, $X$ vale 0 con probabilità 0,60 e 1 con probabilità 0,40, e la sua media è 0,40, quindi $\operatorname{Var}(X)=0{,}60\cdot(0-0{,}40)^2+0{,}40\cdot(1-0{,}40)^2=0{,}096+0{,}144=0{,}24$; per $Y$ il conto è identico. È il valore $p(1-p)$ di ogni variabile bernoulliana, qui con $p=0{,}40$. Quindi
+??? note "Approfondimento facoltativo — Correlazione lineare e altre misure di legame"
+    Una parola sull’aggettivo «lineare», perché qui si nasconde un equivoco frequente. Il numero $\rho$ misura un legame di un tipo preciso: quanto i punti tendono a disporsi attorno a una retta. Nei manuali di probabilità e di statistica la parola «correlazione», senza altri aggettivi, indica sempre questo numero, e così faremo anche noi. Nel linguaggio di tutti i giorni, e spesso anche tra chi lavora con i dati e con il machine learning, «correlate» ha invece un senso più largo: vuol dire che le due variabili sono legate in qualche modo, cioè che conoscere l’una aiuta a prevedere l’altra. Le due cose non coincidono. Se $\rho$ è diverso da zero le variabili sono certamente legate, ma due variabili legate possono avere $\rho=0$, quando il legame non segue una retta: lo vedremo nell’[Atto VIII](#incorrelazione). Per i legami di altro tipo esistono altre misure, che in questo corso non studiamo. La *correlazione di Spearman* applica la formula di $\rho$ non ai valori ma ai ranghi, cioè alle posizioni dei valori in classifica, e vale 1 ogni volta che $Y$ è una funzione crescente di $X$, anche quando non è una retta. L’*informazione mutua*, che viene dalla teoria dell’informazione, vale zero soltanto quando le variabili sono indipendenti, e quindi si accorge di qualsiasi legame. Quando leggi o scrivi «correlazione», chiediti quale di questi significati è in gioco.
+
+Applichiamola agli esempi che conosciamo. Il primo sono i due server A e B dell’[Atto VI](#covarianza-calcolo): $X=1$ se il server A è sovraccarico e $Y=1$ se lo è il server B, e la loro covarianza vale 0,14. Per la correlazione ci servono le varianze. Con la definizione, $X$ vale 0 con probabilità 0,60 e 1 con probabilità 0,40, e la sua media è 0,40, quindi $\operatorname{Var}(X)=0{,}60\cdot(0-0{,}40)^2+0{,}40\cdot(1-0{,}40)^2=0{,}096+0{,}144=0{,}24$; per $Y$ il conto è identico. È il valore $p(1-p)$ di ogni variabile bernoulliana, qui con $p=0{,}40$. Quindi
 
 $$
 \rho(X,Y)=\frac{0{,}14}{\sqrt{0{,}24}\cdot\sqrt{0{,}24}}=\frac{0{,}14}{0{,}24}\approx0{,}58.
 $$
 
-Per i due moduli del programma calcoliamo le varianze dalle marginali, sempre con la definizione. Per $X$, che vale 0 o 1 con probabilità 0,5 e ha media 0,5, $\operatorname{Var}(X)=0{,}5\cdot0{,}25+0{,}5\cdot0{,}25=0{,}25$ e $\sigma_X=0{,}5$. Per $Y$, con media 1,05,
+Il secondo esempio è il programma con due moduli dell’[Atto IV](#due-moduli), che abbiamo ripreso nell’[Atto VI](#formula-covarianza): $X$ è il numero di errori nel primo modulo e vale 0 o 1, mentre $Y$ è il numero di errori nel secondo modulo e va da 0 a 3. La loro covarianza vale 0,075. Anche qui ci servono le varianze, e le calcoliamo dalle marginali, sempre con la definizione. Per $X$, che vale 0 o 1 con probabilità 0,5 e ha media 0,5, $\operatorname{Var}(X)=0{,}5\cdot0{,}25+0{,}5\cdot0{,}25=0{,}25$ e $\sigma_X=0{,}5$. Per $Y$, che vale 0, 1, 2 o 3 con probabilità 0,40, 0,30, 0,15 e 0,15 e ha media 1,05,
 
 $$
 \operatorname{Var}(Y)=0{,}40\cdot(0-1{,}05)^2+0{,}30\cdot(1-1{,}05)^2+0{,}15\cdot(2-1{,}05)^2+0{,}15\cdot(3-1{,}05)^2=0{,}441+0{,}00075+0{,}135375+0{,}570375=1{,}1475,
@@ -1347,7 +1358,55 @@ $$
 \operatorname{Cov}(X,Y)=\mathbb{E}[XY]-\mu_X\mu_Y=0-0\cdot\tfrac23=0.
 $$
 
-La covarianza è zero, e le variabili sono incorrelate, pur essendo una funzione dell’altra. Il motivo si vede con i quadranti. La media di $Y$ è $2/3$. Il punto $(1,\,1)$ sta a destra e sopra le medie e dà un contributo positivo; il punto $(-1,\,1)$ sta a sinistra e sopra, e dà un contributo negativo della stessa grandezza; il punto $(0,\,0)$ sta esattamente sulla linea verticale della media di $X$, e il suo contributo è zero. Per la simmetria della U, i contributi positivi e negativi si cancellano.
+La covarianza è zero, e le variabili sono incorrelate, pur essendo una funzione dell’altra. Il motivo si vede con i quadranti, nella figura qui sotto. La media di $X$ è 0 e quella di $Y$ è $2/3$, quindi le due linee tratteggiate si incrociano nel punto $(0,\,2/3)$. Il punto $(1,\,1)$ sta a destra e sopra le medie e dà un contributo positivo; il punto $(-1,\,1)$ sta a sinistra e sopra, e dà un contributo negativo della stessa grandezza; il punto $(0,\,0)$ sta esattamente sulla linea verticale della media di $X$, e il suo contributo è zero. Nella figura ogni prodotto degli scarti è disegnato come un rettangolo che va dal punto all’incrocio delle medie: la base è lo scarto di $X$, l’altezza è lo scarto di $Y$, e l’area è il valore del prodotto, colorata in blu se il prodotto è positivo e in arancione se è negativo, come nella figura dei quadranti dell’[Atto VI](#covarianza). Per la simmetria della U, i due rettangoli hanno la stessa area e segni opposti, e i contributi positivi e negativi si cancellano.
+
+<figure markdown="0">
+<svg viewBox="0 0 580 412" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="I tre punti del controesempio Y uguale a X al quadrato: (−1, 1), (0, 0) e (1, 1), ciascuno con probabilità 1/3. Due linee tratteggiate passano per la media di X, 0, e per la media di Y, 2/3. Dal punto (1, 1) all’incrocio delle medie c’è un rettangolo blu di area +1/3; dal punto (−1, 1) un rettangolo arancione uguale, di area −1/3; il punto (0, 0) sta sulla linea verticale e il suo rettangolo è un segmento di area zero. La somma pesata dei tre contributi, cioè la covarianza, è zero.">
+<text x="290.0" y="22.0" text-anchor="middle" fill="currentColor" font-weight="bold">Y = X²: i contributi dei quadranti si cancellano</text>
+<line x1="80" y1="340" x2="500" y2="340" stroke="currentColor"/>
+<line x1="80" y1="40" x2="80" y2="340" stroke="currentColor"/>
+<line x1="150" y1="340" x2="150" y2="344" stroke="currentColor"/>
+<text x="150" y="356" text-anchor="middle" fill="currentColor" font-size="11">−1</text>
+<line x1="290" y1="340" x2="290" y2="344" stroke="currentColor"/>
+<text x="290" y="356" text-anchor="middle" fill="currentColor" font-size="11">0</text>
+<line x1="430" y1="340" x2="430" y2="344" stroke="currentColor"/>
+<text x="430" y="356" text-anchor="middle" fill="currentColor" font-size="11">1</text>
+<line x1="76" y1="300" x2="80" y2="300" stroke="currentColor"/>
+<text x="73" y="304" text-anchor="end" fill="currentColor" font-size="11">0</text>
+<line x1="76" y1="166.7" x2="80" y2="166.7" stroke="currentColor"/>
+<text x="73" y="170.7" text-anchor="end" fill="currentColor" font-size="11">2/3</text>
+<line x1="76" y1="100" x2="80" y2="100" stroke="currentColor"/>
+<text x="73" y="104" text-anchor="end" fill="currentColor" font-size="11">1</text>
+<text x="290" y="374" text-anchor="middle" fill="currentColor" font-size="12">X</text>
+<text x="42" y="190" text-anchor="middle" fill="currentColor" font-size="12" transform="rotate(-90 42 190)">Y = X²</text>
+<line x1="290" y1="40" x2="290" y2="340" stroke="currentColor" stroke-dasharray="5 4"/>
+<line x1="80" y1="166.7" x2="500" y2="166.7" stroke="currentColor" stroke-dasharray="5 4"/>
+<text x="296" y="52" text-anchor="start" fill="currentColor" font-size="11">media di X = 0</text>
+<text x="496" y="182" text-anchor="end" fill="currentColor" font-size="11">media di Y = 2/3</text>
+<text x="496" y="64" text-anchor="end" fill="#4051b5" font-size="12" font-weight="bold">prodotto +</text>
+<text x="86" y="64" text-anchor="start" fill="#e07a1f" font-size="12" font-weight="bold">prodotto −</text>
+<text x="86" y="332" text-anchor="start" fill="#4051b5" font-size="12" font-weight="bold">prodotto +</text>
+<text x="496" y="332" text-anchor="end" fill="#e07a1f" font-size="12" font-weight="bold">prodotto −</text>
+<rect x="290" y="100" width="140" height="66.7" fill="#4051b5" fill-opacity="0.18" stroke="#4051b5" stroke-width="1.5"/>
+<rect x="150" y="100" width="140" height="66.7" fill="#e07a1f" fill-opacity="0.18" stroke="#e07a1f" stroke-width="1.5"/>
+<line x1="290" y1="166.7" x2="290" y2="300" stroke="#888" stroke-width="4"/>
+<text x="360" y="128" text-anchor="middle" fill="#4051b5" font-size="11">scarti +1 e +1/3</text>
+<text x="360" y="146" text-anchor="middle" fill="#4051b5" font-size="12" font-weight="bold">prodotto +1/3</text>
+<text x="220" y="128" text-anchor="middle" fill="#e07a1f" font-size="11">scarti −1 e +1/3</text>
+<text x="220" y="146" text-anchor="middle" fill="#e07a1f" font-size="12" font-weight="bold">prodotto −1/3</text>
+<text x="300" y="232" text-anchor="start" fill="#888" font-size="11">scarti 0 e −2/3</text>
+<text x="300" y="249" text-anchor="start" fill="#888" font-size="12" font-weight="bold">prodotto 0</text>
+<circle cx="290" cy="166.7" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="430" cy="100" r="7" fill="#4051b5"/>
+<circle cx="150" cy="100" r="7" fill="#e07a1f"/>
+<circle cx="290" cy="300" r="7" fill="#888"/>
+<text x="441" y="96" text-anchor="start" fill="currentColor" font-size="12">(1, 1)</text>
+<text x="139" y="96" text-anchor="end" fill="currentColor" font-size="12">(−1, 1)</text>
+<text x="279" y="318" text-anchor="end" fill="currentColor" font-size="12">(0, 0)</text>
+<text x="290" y="400" text-anchor="middle" fill="currentColor" font-size="12">Cov(X, Y) = 1/3 · (+1/3) + 1/3 · (−1/3) + 1/3 · 0 = 0</text>
+</svg>
+<figcaption>Il controesempio Y = X² con i quadranti. I tre punti hanno probabilità 1/3 ciascuno, e le linee tratteggiate passano per le due medie. Il rettangolo che va da un punto all’incrocio delle medie ha per lati i due scarti, quindi la sua area è il prodotto degli scarti: positiva in blu, negativa in arancione. I rettangoli di (1, 1) e di (−1, 1) sono uguali e di segno opposto; quello di (0, 0) è schiacciato in un segmento, perché lo scarto di X è zero, e ha area zero.</figcaption>
+</figure>
 
 Lo stesso accade con relazioni non lineari più generali. Nella figura seguente $Y$ è, a meno di un piccolo rumore, una funzione di $X$: a sinistra con la forma di una U, a destra con la forma di una campana. Conoscere $X$ permette di prevedere $Y$ quasi esattamente, eppure la correlazione è praticamente zero. Puoi vedere lo stesso fenomeno nel widget dell’atto precedente, spuntando la casella «forma a U».
 
@@ -1408,12 +1467,53 @@ La terza variabile si chiama **confondente**. Nel nostro esempio la dimensione d
 
 Gli esempi famosi sono moltissimi. Nei mesi estivi si vendono più gelati e ci sono più annegamenti, ma i gelati non fanno annegare nessuno: il caldo porta le persone sia a comprare gelati sia a fare il bagno. Nel 2012 il cardiologo Franz Messerli pubblicò, in tono semiserio, sul *New England Journal of Medicine* un grafico con il consumo di cioccolato per abitante e il numero di premi Nobel per abitante in 23 paesi: la correlazione era $r\approx0{,}79$. Lo stesso Messerli osservava che il dato non dimostra un rapporto di causa, e il candidato confondente è evidente: i paesi più ricchi consumano più cioccolato e investono di più nella ricerca.
 
-Il problema era chiaro già ai fondatori della correlazione. Karl Pearson, che nel 1897 introdusse l’espressione *correlazione spuria* per un caso in cui una correlazione nasce soltanto dal modo in cui si costruiscono gli indici, vedeva la correlazione come un concetto più ampio della causalità:
+Il problema era chiaro già ai fondatori della correlazione. Karl Pearson, che nel 1897 introdusse a proposito l’espressione  *correlazione spuria*.
 
-> «La causazione ci dice che B accompagnerà A; la correlazione ci dice in quale proporzione di casi B accompagna A, e quando $r$ si avvicina all’unità questa proporzione si avvicina sempre più al 100 per cento.»
-> — K. Pearson, *The Grammar of Science*, 2ª ed., 1900, cap. X, § 7, p. 397 (tradotto dall’inglese)
+Per Pearson, la correlazione misura *quanto spesso due fatti vanno insieme*, e la causa è una possibile spiegazione di perché vanno insieme. Una correlazione perfetta non dice quale dei due fatti produce l’altro, né se entrambi siano prodotti da un terzo. Per studiare una causa serve qualcosa di più dei dati osservati: serve un **esperimento**. Vediamo che cosa vuol dire con l’esperimento più comune nel software, il **test A/B**.
 
-Per Pearson, dunque, la correlazione misura quanto spesso due fatti vanno insieme, e la causa è il caso limite in cui vanno insieme sempre. Ma anche una correlazione perfetta non dice quale dei due fatti produce l’altro, né se entrambi siano prodotti da un terzo. Per stabilire una causa serve qualcosa di più dei dati osservati. Il metodo più solido è l’**esperimento**: si interviene sulla variabile sospettata di essere la causa, assegnando i casi a caso ai due gruppi, e si guarda se l’altra cambia. L’assegnazione casuale fa sì che i confondenti, noti o ignoti, si distribuiscano in modo simile nei due gruppi. Nel software è ciò che si fa con un **test A/B**: invece di confrontare gli utenti che hanno scelto la nuova versione di una pagina con quelli che non l’hanno scelta, si assegna a caso la versione e si confrontano i risultati.
+Un negozio online ha preparato una nuova versione della pagina di pagamento, la versione B, e vuole sapere se fa comprare di più della vecchia, la versione A. La prima idea è offrire la nuova pagina a chi la vuole, con un pulsante «prova la nuova versione», e poi confrontare chi l’ha provata con chi è rimasto alla vecchia. Supponiamo che tra chi ha scelto la B compri il 12% degli utenti, e tra chi è rimasto alla A il 6%. La nuova pagina vende il doppio? Non possiamo dirlo. Chi clicca su «prova la nuova versione» è spesso un cliente attivo, che visita il negozio ogni settimana e compra comunque più degli altri. La parte sinistra della figura qui sotto mostra il problema: nel gruppo B i clienti attivi sono 14 su 20, nel gruppo A soltanto 4. I due gruppi erano diversi già prima di vedere la pagina, e la differenza negli acquisti potrebbe venire tutta da lì. L’attività del cliente è un confondente, come la dimensione del modulo per i `TODO` e i bug: spinge sia a scegliere la B sia a comprare di più.
+
+<figure markdown="0">
+<svg viewBox="0 0 580 290" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="Due pannelli, ciascuno con due gruppi di 20 utenti, versione A e versione B. Nei pallini viola i clienti attivi, in quelli vuoti i clienti occasionali. A sinistra ogni utente sceglie la versione: i clienti attivi sono 4 su 20 nel gruppo A e 14 su 20 nel gruppo B, quindi i gruppi sono diversi già in partenza. A destra la versione si tira a sorte con una moneta: i clienti attivi sono 8 su 20 nel gruppo A e 10 su 20 nel gruppo B, quindi i gruppi sono simili e differiscono solo per la pagina.">
+<text x="290" y="22" text-anchor="middle" fill="currentColor" font-weight="bold">Chi decide la versione che vede ogni utente?</text>
+<line x1="290" y1="38" x2="290" y2="246" stroke="currentColor" stroke-opacity="0.35"/>
+<text x="145" y="48" text-anchor="middle" fill="currentColor" font-weight="bold">Sceglie l’utente</text>
+<text x="145" y="64" text-anchor="middle" fill="currentColor" font-size="12">chi ama le novità clicca sulla B</text>
+<text x="435" y="48" text-anchor="middle" fill="currentColor" font-weight="bold">Decide una moneta</text>
+<text x="435" y="64" text-anchor="middle" fill="currentColor" font-size="12">testa: versione A; croce: versione B</text>
+<rect x="20" y="92" width="120" height="100" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.5"/>
+<text x="80" y="84" text-anchor="middle" fill="currentColor" font-size="12" font-weight="bold">versione A</text>
+<g fill="#8a4fbf"><circle cx="100" cy="112" r="6"/><circle cx="40" cy="132" r="6"/><circle cx="60" cy="132" r="6"/><circle cx="100" cy="132" r="6"/></g>
+<g fill="none" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5"><circle cx="40" cy="112" r="6"/><circle cx="60" cy="112" r="6"/><circle cx="80" cy="112" r="6"/><circle cx="120" cy="112" r="6"/><circle cx="80" cy="132" r="6"/><circle cx="120" cy="132" r="6"/><circle cx="40" cy="152" r="6"/><circle cx="60" cy="152" r="6"/><circle cx="80" cy="152" r="6"/><circle cx="100" cy="152" r="6"/><circle cx="120" cy="152" r="6"/><circle cx="40" cy="172" r="6"/><circle cx="60" cy="172" r="6"/><circle cx="80" cy="172" r="6"/><circle cx="100" cy="172" r="6"/><circle cx="120" cy="172" r="6"/></g>
+<text x="80" y="210" text-anchor="middle" fill="currentColor" font-size="11">attivi: 4 su 20</text>
+<rect x="150" y="92" width="120" height="100" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.5"/>
+<text x="210" y="84" text-anchor="middle" fill="currentColor" font-size="12" font-weight="bold">versione B</text>
+<g fill="#8a4fbf"><circle cx="190" cy="112" r="6"/><circle cx="210" cy="112" r="6"/><circle cx="230" cy="112" r="6"/><circle cx="250" cy="112" r="6"/><circle cx="170" cy="132" r="6"/><circle cx="190" cy="132" r="6"/><circle cx="210" cy="132" r="6"/><circle cx="250" cy="132" r="6"/><circle cx="170" cy="152" r="6"/><circle cx="210" cy="152" r="6"/><circle cx="250" cy="152" r="6"/><circle cx="170" cy="172" r="6"/><circle cx="210" cy="172" r="6"/><circle cx="230" cy="172" r="6"/></g>
+<g fill="none" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5"><circle cx="170" cy="112" r="6"/><circle cx="230" cy="132" r="6"/><circle cx="190" cy="152" r="6"/><circle cx="230" cy="152" r="6"/><circle cx="190" cy="172" r="6"/><circle cx="250" cy="172" r="6"/></g>
+<text x="210" y="210" text-anchor="middle" fill="currentColor" font-size="11">attivi: 14 su 20</text>
+<rect x="310" y="92" width="120" height="100" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.5"/>
+<text x="370" y="84" text-anchor="middle" fill="currentColor" font-size="12" font-weight="bold">versione A</text>
+<g fill="#8a4fbf"><circle cx="390" cy="112" r="6"/><circle cx="350" cy="132" r="6"/><circle cx="370" cy="132" r="6"/><circle cx="350" cy="152" r="6"/><circle cx="330" cy="172" r="6"/><circle cx="370" cy="172" r="6"/><circle cx="390" cy="172" r="6"/><circle cx="410" cy="172" r="6"/></g>
+<g fill="none" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5"><circle cx="330" cy="112" r="6"/><circle cx="350" cy="112" r="6"/><circle cx="370" cy="112" r="6"/><circle cx="410" cy="112" r="6"/><circle cx="330" cy="132" r="6"/><circle cx="390" cy="132" r="6"/><circle cx="410" cy="132" r="6"/><circle cx="330" cy="152" r="6"/><circle cx="370" cy="152" r="6"/><circle cx="390" cy="152" r="6"/><circle cx="410" cy="152" r="6"/><circle cx="350" cy="172" r="6"/></g>
+<text x="370" y="210" text-anchor="middle" fill="currentColor" font-size="11">attivi: 8 su 20</text>
+<rect x="440" y="92" width="120" height="100" rx="6" fill="none" stroke="currentColor" stroke-opacity="0.5"/>
+<text x="500" y="84" text-anchor="middle" fill="currentColor" font-size="12" font-weight="bold">versione B</text>
+<g fill="#8a4fbf"><circle cx="460" cy="112" r="6"/><circle cx="480" cy="112" r="6"/><circle cx="520" cy="112" r="6"/><circle cx="540" cy="112" r="6"/><circle cx="460" cy="132" r="6"/><circle cx="540" cy="132" r="6"/><circle cx="480" cy="152" r="6"/><circle cx="520" cy="152" r="6"/><circle cx="460" cy="172" r="6"/><circle cx="480" cy="172" r="6"/></g>
+<g fill="none" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5"><circle cx="500" cy="112" r="6"/><circle cx="480" cy="132" r="6"/><circle cx="500" cy="132" r="6"/><circle cx="520" cy="132" r="6"/><circle cx="460" cy="152" r="6"/><circle cx="500" cy="152" r="6"/><circle cx="540" cy="152" r="6"/><circle cx="500" cy="172" r="6"/><circle cx="520" cy="172" r="6"/><circle cx="540" cy="172" r="6"/></g>
+<text x="500" y="210" text-anchor="middle" fill="currentColor" font-size="11">attivi: 10 su 20</text>
+<text x="145" y="236" text-anchor="middle" fill="#e03a3a" font-size="12" font-weight="bold">gruppi diversi già in partenza</text>
+<text x="435" y="236" text-anchor="middle" fill="#2e9e5b" font-size="12" font-weight="bold">gruppi simili: cambia solo la pagina</text>
+<circle cx="140" cy="270" r="6" fill="#8a4fbf"/>
+<text x="152" y="274" text-anchor="start" fill="currentColor" font-size="12">cliente attivo (compra spesso)</text>
+<circle cx="360" cy="270" r="6" fill="none" stroke="currentColor" stroke-opacity="0.7" stroke-width="1.5"/>
+<text x="372" y="274" text-anchor="start" fill="currentColor" font-size="12">cliente occasionale</text>
+</svg>
+<figcaption>Due modi di formare i gruppi per confrontare due versioni della pagina di pagamento. A sinistra ogni utente sceglie la versione, e i clienti attivi, in viola, si concentrano nel gruppo B: i due gruppi sono diversi prima ancora di vedere la pagina. A destra la versione si tira a sorte, e i clienti attivi si dividono in modo simile tra i due gruppi. Esempio costruito per la dispensa.</figcaption>
+</figure>
+
+Il test A/B toglie la scelta agli utenti. Quando un utente arriva alla pagina di pagamento, il sistema tira a sorte, come con una moneta: se esce testa gli mostra la versione A, se esce croce la versione B. Così ogni cliente attivo finisce in un gruppo o nell’altro con la stessa probabilità, e i due gruppi ne contengono più o meno lo stesso numero: nella parte destra della figura sono 8 su 20 e 10 su 20. Lo stesso vale per tutte le altre caratteristiche degli utenti, comprese quelle a cui non abbiamo pensato, come il dispositivo, il paese o l’ora della visita: la moneta non guarda niente, quindi non può favorire un gruppo. I due gruppi differiscono soltanto per la pagina che vedono. Se alla fine nel gruppo B si compra di più, e la differenza è troppo grande per essere frutto del caso, la causa è la pagina.
+
+È questo che chiamiamo esperimento: non ci limitiamo a osservare chi ha scelto che cosa, ma interveniamo noi sulla variabile sospettata di essere la causa, qui la versione della pagina, ne decidiamo il valore tirando a sorte e guardiamo se l’altra variabile, qui gli acquisti, cambia. In medicina la stessa idea si chiama *studio clinico randomizzato*: chi riceve il farmaco e chi riceve il placebo lo decide un sorteggio, non il paziente né il medico.
 
 ### Laboratorio: quando la correlazione inganna {: #lab-inganni }
 
@@ -1457,7 +1557,7 @@ Nella prima parte $r$ è circa $+0{,}01$, eppure la media di $Y$ passa da circa 
 
 ### Covarianza e correlazione nei dati dell’informatica {: #correlazione-informatica }
 
-Nei dati dell’informatica covarianza e correlazione compaiono continuamente. Nel machine learning, i dati sono tabelle con una riga per ogni esempio e una colonna per ogni caratteristica, o *feature*. La matrice delle correlazioni tra le colonne è uno dei primi oggetti che si calcolano: due feature con correlazione vicina a $\pm1$ portano quasi la stessa informazione, come la dimensione di un file in byte e in kilobyte, o il numero di righe e il numero di caratteri di un sorgente, e spesso conviene tenerne una sola. Due feature incorrelate, invece, portano informazioni diverse almeno dal punto di vista lineare, con l’avvertenza dell’Atto VIII.
+Nei dati dell’informatica covarianza e correlazione compaiono continuamente. Nel machine learning, i dati sono tabelle con una riga per ogni esempio e una colonna per ogni caratteristica, o *feature*. La matrice delle correlazioni tra le colonne è uno dei primi oggetti che si calcolano: due feature con correlazione vicina a $\pm1$ portano quasi la stessa informazione, come la dimensione di un file in byte e in kilobyte, o il numero di righe e il numero di caratteri di un sorgente, e spesso conviene tenerne una sola. Due feature incorrelate, invece, portano informazioni diverse almeno dal punto di vista lineare, con l’avvertenza dell’Atto VIII. Per questo, quando si scelgono le feature da dare a un modello, accanto alla correlazione lineare si usano spesso misure che vedono anche i legami non lineari, come l’informazione mutua citata nell’[Atto VII](#correlazione).
 
 Nel monitoraggio dei sistemi si calcolano le correlazioni tra metriche, come il carico della CPU, la latenza e la lunghezza delle code, per capire quali segnali si muovono insieme. Durante un incidente, però, quasi tutte le metriche si muovono insieme, perché hanno una causa comune: la correlazione indica dove guardare, non quale metrica sia la causa. È l’avvertimento dell’Atto IX applicato al lavoro quotidiano.
 

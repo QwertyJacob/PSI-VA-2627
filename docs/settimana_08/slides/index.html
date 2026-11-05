@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>PSI 26/27 — Settimana 8: disuguaglianze di Markov e di Čebyšëv, legge dei grandi numeri</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../assets/slides/deck.js"></script>
+  <link rel="stylesheet" href="css/settimana.css">
+</head>
+<body>
+  <div class="reveal"><div class="slides">
+
+    <!-- ═════════════ LEZIONE 1 · mercoledì, 9:00–10:45. Scene: js/lezione1.js ═════════════ -->
+
+    <!-- L1-00 · copertina -->
+    <section id="lezione-1">
+      <p class="cover-week">Settimana 8</p>
+      <h2 class="cover-title">Che cosa si può garantire<br>sapendo solo media e varianza?</h2>
+      <div class="cover-acts"><span>Markov e Čebyšëv</span><span>Lezione 1</span><span>mercoledì, 9:00</span></div>
+      <aside class="notes">Data da confermare. Si parte dal riepilogo della Lezione 2 della Settimana 7 (15 minuti). Dopo San Pietroburgo, il blocco centrale segue il pacco «14. Disuguaglianze» dell'anno scorso (pp. 2–16) e il notebook 4.2.4_Inequalities. Notazione diversa dal pacco: a invece di ε per Markov, k invece di λ per Čebyšëv (λ è il tasso della distribuzione di Poisson). Le parti segnate (S) si saltano se si è in ritardo.</aside>
+    </section>
+
+    <!-- L1-01 · riepilogo della Settimana 7 -->
+    <section id="riepilogo-s7">
+      <p class="badge">Riepilogo · Settimana 7</p>
+      <h2 class="scene-title">Quattro domande su covarianza e correlazione</h2>
+      <div class="rq-grid">
+        <div class="rq-list">
+          <p class="rq fragment"><span>1</span>Che cosa misura $\operatorname{Cov}(X,Y)$? Come si legge il segno?</p>
+          <p class="rq fragment"><span>2</span>Perché $-1\le\rho\le1$, in qualunque unità?</p>
+          <p class="rq fragment"><span>3</span>$Y=X^2$: dipendenti, eppure covarianza zero. Perché?</p>
+          <p class="rq fragment"><span>4</span>Correlate: quali spiegazioni oltre alla causa?</p>
+        </div>
+        <div class="rq-board">
+          <svg class="scene-svg" width="360" height="230" viewBox="0 0 360 230" role="img" aria-label="I quattro quadranti di una nuvola di punti: in alto a destra e in basso a sinistra il prodotto degli scarti è positivo, negli altri due negativo"></svg>
+          risposte alla lavagna
+        </div>
+      </div>
+      <p class="rq-bridge fragment">Oggi: una variabile sola, di cui sappiamo pochissimo.</p>
+      <aside class="notes">Una domanda per click, risposte dalla classe e alla lavagna. (1) La media del prodotto degli scarti: positiva se la probabilità pesa sui quadranti concordi (azzurri), negativa sui discordi. (2) ρ è la covarianza delle variabili standardizzate: niente unità, tra −1 e 1, ±1 solo per una retta esatta. (3) Con X = −1, 0, 1 i contributi +1/3 e −1/3 si annullano: la correlazione vede solo i legami lineari. (4) Confondente, causa inversa, caso. Controlla l'esercizio 6 della Settimana 7: Cov = 0,075, ρ ≈ 0,38. Click 5: il ponte. La covarianza torna venerdì, ma solo nella parte facoltativa della varianza di una somma.</aside>
+    </section>
+
+    <!-- ───── San Pietroburgo (Erlebnis, 10 minuti) ───── -->
+
+    <!-- L1-02 · San Pietroburgo -->
+    <section id="pietroburgo">
+      <p class="badge">San Pietroburgo, seconda metà dell'Ottocento</p>
+      <div class="pb-grid">
+        <svg class="scene-svg" width="560" height="510" viewBox="0 0 560 510" role="img" aria-label="Il meccanismo lambda di Čebyšëv: una manovella arancione ruota attorno a un perno, un bilanciere azzurro oscilla attorno a un secondo perno, una biella bianca prolungata porta un punto verde che, a ogni giro, percorre un tratto quasi rettilineo"></svg>
+        <div>
+          <p class="s08-text" style="text-align:left;margin-left:0"><b>Pafnutij L. Čebyšëv</b> (1821–1894): matematico, e costruttore di meccanismi.</p>
+          <ol class="pb-time">
+            <li><b>1853</b> Bienaymé trova la disuguaglianza.</li>
+            <li><b>1867</b> Čebyšëv, <i>Des valeurs moyennes</i>: la ritrova e dimostra in poche righe la legge dei grandi numeri.</li>
+            <li><b>1884</b> Il suo allievo <b style="color:inherit;margin:0">Andrej Markov</b> la ridimostra con una disuguaglianza ancora più semplice.</li>
+            <li>La domanda dell'ingegnere: <i>che cosa si può garantire?</i></li>
+          </ol>
+        </div>
+      </div>
+      <aside class="notes">Nuova (dispensa, Atto I). All'ingresso il meccanismo. Click: 1 la manovella fa un giro e il punto verde disegna la sua traiettoria; 2 il tratto quasi rettilineo: trasformare un moto circolare in uno rettilineo era un problema serio per le macchine a vapore; Čebyšëv ne progettò decine, e con questi meccanismi costruì perfino una macchina che cammina, presentata a Parigi nel 1878. Da qui vengono anche i suoi polinomi. Gli interessava che cosa si può garantire, non che cosa succede di solito. Click 3–5: le date (non vanno ricordate): Bienaymé 1853, Čebyšëv 1867, Markov nella tesi del 1884. Click 6: la domanda. Proporzioni del meccanismo: manovella 1, telaio 2, bilanciere 2,5, biella 2,5 prolungata a 5: è un'illustrazione, non un disegno originale.</aside>
+    </section>
+
+    <!-- L1-03 · il cruscotto -->
+    <section id="cruscotto">
+      <p class="badge">La domanda, oggi</p>
+      <h2 class="scene-title">Il cruscotto di un servizio web</h2>
+      <div class="cr-board">
+        <div class="cr-tile"><small>tempo medio di risposta</small><b>120 ms</b></div>
+        <div class="cr-tile"><small>deviazione standard</small><b>30 ms</b></div>
+        <div class="cr-tile unk fragment"><small>forma della distribuzione</small><b>???</b></div>
+      </div>
+      <p class="cr-sla fragment">Contratto con il cliente: <b>al più l'1% delle richieste oltre 500 ms</b>.</p>
+      <p class="s08-note fragment">Possiamo garantirlo, senza conoscere la forma?</p>
+      <aside class="notes">Nuova (dispensa, §esame e Atto I). Numeri inventati. Click: 1 la forma della distribuzione nessuno la conosce; 2 il contratto; 3 la domanda. Non rispondere: lancia subito il sondaggio s08-1, d'istinto. La risposta arriva alla fine della lezione, dopo Čebyšëv.</aside>
+    </section>
+
+    <!-- L1-04 · sondaggio s08-1 (lancio) -->
+    <section id="sondaggio-1" class="sondaggio" data-poll="s08-1">
+      <p class="badge">Sondaggio · la risposta arriva alla fine della lezione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Media 120 ms, deviazione standard 30 ms, forma sconosciuta. Qual è la <b>garanzia più forte</b> sulla frazione di richieste oltre 500 ms?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>nessuna: serve la forma della distribuzione</li>
+            <li><span>2</span>al più il 24% circa</li>
+            <li><span>3</span>al più lo 0,6% circa</li>
+            <li><span>4</span>zero: 500 ms è a più di 12 deviazioni standard</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono · votate d'istinto</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Votate d'istinto. NON premere V: si rivela al minuto 91 circa, sul duplicato, dopo il confronto con la normale. Risposta 3 (Čebyšëv: 900/380² ≈ 0,62%).</aside>
+    </section>
+
+    <!-- ───── Quando la distribuzione è nota (pacco 14, pp. 2–8) ───── -->
+
+    <!-- L1-05 · normale «non meglio specificata» -->
+    <section id="nota-normale">
+      <p class="badge">Distribuzione normale · esercizio</p>
+      <div class="s08-two wide-right">
+        <div>
+          <p>$X\sim\mathcal N(\mu,\sigma^2)$, <span class="muted">non meglio specificata</span>.</p>
+          <p>Calcolare la probabilità che $X$ prenda valori in $[\mu-\sigma,\;\mu+\sigma]$.</p>
+          <p class="highlight"><b>Dare un valore numerico.</b></p>
+        </div>
+        <div class="s08-steps">
+          <p class="fragment">$P(\mu-\sigma\le X\le\mu+\sigma)=\Phi_{\mu,\sigma}(\mu+\sigma)-\Phi_{\mu,\sigma}(\mu-\sigma)$</p>
+          <p class="fragment">standardizzando: $\;=\Phi\!\left(\frac{(\mu+\sigma)-\mu}{\sigma}\right)-\Phi\!\left(\frac{(\mu-\sigma)-\mu}{\sigma}\right)=\Phi(1)-\Phi(-1)$</p>
+          <p class="fragment">$=\Phi(1)-\big(1-\Phi(1)\big)=2\,\Phi(1)-1$</p>
+          <p class="fragment">$=2\cdot0{,}8413-1=$ <span class="highlight s08-big">0,6826</span></p>
+        </div>
+      </div>
+      <aside class="notes">Pacco, slide 2–4. «Come do un valore numerico senza μ e σ?» Lascia la domanda in sospeso qualche secondo. Click: 1 la funzione di ripartizione; 2 standardizzando le lettere spariscono; 3 la simmetria Φ(−z) = 1 − Φ(z); 4 la tabella. Attenzione: il pacco scrive 0,6816, è un errore di conto (2 · 0,8413 − 1 = 0,6826; esatto 0,6827).</aside>
+    </section>
+
+    <!-- L1-06 · la regola 68–95–99,7 -->
+    <section id="regola-68">
+      <p class="badge">Distribuzione normale · proprietà</p>
+      <svg class="scene-svg" width="1100" height="470" viewBox="0 0 1100 470" role="img" aria-label="La campana della normale con tre bande: entro una deviazione standard dalla media il 68,27 per cento, entro due il 95,45, entro tre il 99,73"></svg>
+      <aside class="notes">Pacco, slide 5, con i valori esatti (il pacco ha 68,26, 95,44, 99,72). Click: 1 entro σ, 68,27%; 2 entro 2σ, 95,45%; 3 entro 3σ, 99,73%. «Questi numeri valgono per ogni normale, ma solo per la normale.»</aside>
+    </section>
+
+    <!-- L1-07 · uniforme «non meglio specificata» -->
+    <section id="nota-uniforme">
+      <p class="badge">Distribuzione uniforme · esercizio</p>
+      <div class="s08-two">
+        <div>
+          <p>$X\sim\operatorname{Uni}(\alpha,\beta)$: stessa domanda.</p>
+          <svg class="scene-svg" width="560" height="300" viewBox="0 0 560 300" role="img" aria-label="La densità uniforme tra alfa e beta, un rettangolo di altezza uno su beta meno alfa; in verde la striscia tra mu meno sigma e mu più sigma, larga due sigma"></svg>
+        </div>
+        <div class="s08-steps">
+          <p>$\mu=\dfrac{\alpha+\beta}{2},\qquad\sigma=\dfrac{\beta-\alpha}{\sqrt{12}}$</p>
+          <p class="fragment">$P(\mu-\sigma\le X\le\mu+\sigma)=\dfrac{2\sigma}{\beta-\alpha}$</p>
+          <p class="fragment">$=\dfrac{2}{\beta-\alpha}\cdot\dfrac{\beta-\alpha}{\sqrt{12}}=\dfrac{2}{\sqrt{12}}\approx$ <span class="highlight s08-big">0,577</span></p>
+        </div>
+      </div>
+      <aside class="notes">Pacco, slide 6–8. Le lettere α e β sono quelle del pacco; nella Settimana 6 erano a e b, ma a ci serve tra poco. Formule dalla Settimana 6, uniforme. σ ≈ 0,29 (β − α), meno di metà intervallo: μ ± σ sta dentro. Click: 1 lunghezza / lunghezza totale; 2 il numero. «Stessa domanda, risposta diversa.»</aside>
+    </section>
+
+    <!-- L1-08 · tre risposte -->
+    <section id="tre-risposte">
+      <p class="badge">La stessa domanda: $P(\mu-\sigma\le X\le\mu+\sigma)$</p>
+      <svg class="scene-svg" width="1140" height="390" viewBox="0 0 1140 390" role="img" aria-label="Tre densità con la stessa media e la stessa deviazione standard: normale 68,3 per cento entro una deviazione standard, uniforme 57,7, esponenziale 86,5"></svg>
+      <p class="s08-note tr-ask">Se la forma non la conosciamo? Niente conto: cerchiamo un <b>limite</b>.</p>
+      <aside class="notes">Nuova (dispensa, Atto II, figura F1). All'ingresso normale e uniforme. Click 1: l'esponenziale, che non è nel pacco: media = deviazione standard = 1/λ, intervallo da 0 a 2/λ, 1 − e⁻² ≈ 0,865 (se sei in ritardo, mostralo senza conto). Click 2: la conclusione. Il gatto delle slide del pacco con i punti interrogativi arriva tra poco.</aside>
+    </section>
+
+    <!-- L1-09 (S) · Esercizio A -->
+    <section id="es-due-sigma">
+      <p class="badge">Esercizio · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>Stessa domanda, con <b>due</b> deviazioni standard: $P(\mu-2\sigma\le X\le\mu+2\sigma)$</p>
+          <ol class="dv-steps">
+            <li>per $X$ normale?</li>
+            <li>per $X$ uniforme? Attenzione a dove finisce l'intervallo.</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">1. $2\,\Phi(2)-1=2\cdot0{,}9772-1=0{,}9544$</p>
+          <p class="fragment" data-fragment-index="3">2. $2\sigma\approx0{,}58\,(\beta-\alpha)$: $\mu\pm2\sigma$ contiene tutto $[\alpha,\beta]$, quindi $1$</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">(S) Esercizio 1 (a, b) della dispensa. Se lo salti, assegnalo a casa. Click 1: timer di 4′. Click 2–3: la soluzione. Errore atteso per l'uniforme: 4/√12 ≈ 1,15, una «probabilità» maggiore di 1.</aside>
+    </section>
+
+    <!-- ───── Markov (pacco 14, pp. 10–11; notebook 4.2.4) ───── -->
+
+    <!-- L1-10 · il problema di Markov -->
+    <section id="gatto-markov">
+      <p class="badge">Distribuzione sconosciuta</p>
+      <div class="gt-grid">
+        <div>
+          <p>Data una variabile aleatoria <b>non negativa</b>, non meglio specificata, di cui conosciamo soltanto la media $\mathbb E[X]$,</p>
+          <p>e un numero reale $a>0$,</p>
+          <p class="highlight"><b>calcolare un limite massimo</b> per $P(X\ge a)$.</p>
+        </div>
+        <p class="gt-q">???<small>distribuzione sconosciuta</small></p>
+      </div>
+      <aside class="notes">Pacco, slide 10. Nel pacco la soglia si chiama ε; noi la chiamiamo a, perché ε ci servirà venerdì per il margine della legge dei grandi numeri. Lascia dieci secondi di silenzio: «che cosa si potrà mai dire?». Poi i redditi.</aside>
+    </section>
+
+    <!-- L1-11 · i redditi -->
+    <section id="redditi">
+      <p class="badge">Esempio · dal notebook 4.2.4</p>
+      <h2 class="scene-title">Dieci persone, reddito medio 1000 €</h2>
+      <svg class="scene-svg" width="1100" height="360" viewBox="0 0 1100 360" role="img" aria-label="Dieci barre di reddito con media 1000 euro; poi le barre cambiano: una sola persona arriva a 10000 euro e le altre nove scendono a zero"></svg>
+      <p class="rd-note">Una persona a 10 000 €: ha già tutto il totale, le altre nove a zero.</p>
+      <p class="rd-note">Due persone a 10 000 €? Il totale sarebbe almeno 20 000 €: <b>impossibile</b>.</p>
+      <p class="rd-note highlight"><b>Al più 1 su 10 $=\dfrac{1000}{10\,000}$</b>: la media divisa per la soglia.</p>
+      <aside class="notes">Notebook 4.2.4 (cella 3), con un gruppo di dieci persone. All'ingresso i redditi vari. Prima di cliccare chiedi: «quante persone, al massimo, possono guadagnare almeno 10 000 €?». Click 1: il caso estremo; 2: due persone sono impossibili; 3: 10% = media/soglia. Fai dire alla classe le due ipotesi usate: la media fissa il totale (10 000 €); nessuno ha un reddito negativo (un debito potrebbe compensare).</aside>
+    </section>
+
+    <!-- L1-12 · enunciato -->
+    <section id="markov-def">
+      <p class="badge">Disuguaglianza di Markov</p>
+      <p class="s08-text">Se $X$ non assume mai valori negativi e $a>0$:</p>
+      <div class="s08-box s08-mid">$$P(X\ge a)\le\frac{\mathbb E[X]}{a}$$</div>
+      <p class="s08-text fragment">Con $a=c\cdot\mathbb E[X]$: $\quad P\big(X\ge c\,\mathbb E[X]\big)\le\dfrac1c$</p>
+      <p class="s08-text fragment">Il doppio della media: al più $\frac12$. Dieci volte la media: al più $\frac1{10}$.</p>
+      <p class="s08-note fragment">Una variabile non negativa raramente è molto più grande della sua media.</p>
+      <aside class="notes">Pacco, slide 11 (in fondo) e notebook 4.2.4 (Teorema 4.4). Click 1–2: la lettura con i multipli della media; 3: la frase da ricordare. Ora: perché è vera.</aside>
+    </section>
+
+    <!-- L1-13 · la dimostrazione -->
+    <section id="markov-dim">
+      <p class="badge">Disuguaglianza di Markov · perché è vera</p>
+      <div class="s08-two wide-right">
+        <svg class="scene-svg" width="540" height="440" viewBox="0 0 540 440" role="img" aria-label="Il grafico dei valori di X, una retta blu, e della variabile a per l'indicatrice, un gradino arancione che vale 0 prima di a e a da a in poi; la retta sta sempre sopra il gradino"></svg>
+        <div class="s08-steps">
+          <p><span class="lbl">1</span>$I=1$ se $X\ge a$, $\;I=0$ se $X\lt a$</p>
+          <p><span class="lbl">2</span>Sempre $X\ge a\cdot I$ <span class="muted">(qui serve $X\ge0$)</span></p>
+          <p><span class="lbl">3</span>Monotonia: $\mathbb E[X]\ge\mathbb E[a\cdot I]$</p>
+          <p><span class="lbl">4</span>Linearità e indicatrice: $\mathbb E[a\cdot I]=a\,P(X\ge a)$</p>
+          <p><span class="lbl">5</span>Si divide per $a>0$: $\;P(X\ge a)\le\dfrac{\mathbb E[X]}{a}$</p>
+        </div>
+      </div>
+      <aside class="notes">Pacco, slide 11 (dimostrazione con l'indicatrice), dal notebook 4.2.4. Blocco denso. All'ingresso la retta di X. Click: 1 l'indicatrice dell'evento; 2 X ≥ a · I nei due casi: sotto a dice X ≥ 0 (l'ipotesi), da a in su dice X ≥ a (vero); il gradino arancione; 3 monotonia: la media è una somma pesata, se ogni valore è più grande anche la somma pesata lo è; le zone azzurre sono lo «spreco»; 4 E[I] = P(X ≥ a) dalla Settimana 4; 5 dividere per a positivo non cambia il verso. All'esame non si chiede di rifarla: si chiede di usarla. L'uguaglianza vale solo se X vale 0 oppure a: il caso estremo dei redditi.</aside>
+    </section>
+
+    <!-- L1-14 · controllo c1 -->
+    <section id="sondaggio-c1" class="sondaggio" data-poll="s08-c1">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>disuguaglianza di Markov</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, rifai alla lavagna i dieci redditi e il passo X ≥ a · I con i due casi, prima dell'esercizio.</aside>
+    </section>
+
+    <!-- L1-15 · Esercizio B -->
+    <section id="es-file">
+      <p class="badge">Esercizio · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>Su un server la dimensione media dei file è di <b>4 MB</b>.</p>
+          <ol class="dv-steps">
+            <li>Frazione di file da almeno 40 MB?</li>
+            <li>Un collega: «metà dei file pesa almeno 10 MB». Possibile?</li>
+            <li>E un terzo dei file?</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">1. al più $\frac{4}{40}=0{,}1\qquad$ 2. al più $\frac{4}{10}=0{,}4$: la metà è impossibile</p>
+          <p class="fragment" data-fragment-index="3">3. un terzo $\lt0{,}4$: non escluso… ma nemmeno dimostrato</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">Sosta di verifica dell'Atto III. Sostituisce gli esempi frontali di latenza (slide S successiva). Click 1: timer di 4′. Ai bloccati: «una dimensione può essere negativa? allora che cosa puoi usare?». Click 2–3: soluzione. Errori attesi: «sì, il 40%» alla terza domanda (il limite letto come valore); 40/4.</aside>
+    </section>
+
+    <!-- L1-16 (S) · Markov in pratica -->
+    <section id="markov-pratica">
+      <p class="badge">Markov in pratica</p>
+      <div class="s08-two">
+        <div>
+          <p>Tempo di risposta medio 200 ms:</p>
+          <p class="fragment">$P(T\ge1\text{ s})\le0{,}2$, $\;P(T\ge2\text{ s})\le0{,}1$</p>
+          <p class="fragment muted">Se $T$ fosse esponenziale: $0{,}0067$ e $0{,}000045$</p>
+          <p class="fragment">Algoritmo randomizzato: oltre 10 volte il tempo medio al più 1 volta su 10.</p>
+        </div>
+        <div class="s08-card fragment">
+          <p class="red"><b>Attenzione ai valori negativi</b></p>
+          <p>$X=\pm10\,000$, metà e metà: media 0</p>
+          <p>ma $P(X\ge10\,000)=\frac12$, non «al più 0».</p>
+        </div>
+      </div>
+      <aside class="notes">(S) Dispensa, Atto III (markov-uso). Se salti: «Markov è un tetto prudente, e vale solo per variabili non negative». Click 1: il limite; 2: il valore vero per l'esponenziale, decine o migliaia di volte più piccolo: Markov descrive il caso peggiore; 3: gli algoritmi randomizzati (quicksort con pivot casuale): la strategia del riavvio; 4: il controesempio con i valori negativi.</aside>
+    </section>
+
+    <!-- ───── Čebyšëv (pacco 14, pp. 12–16) ───── -->
+
+    <!-- L1-17 · il problema di Čebyšëv -->
+    <section id="gatto-cebysev">
+      <p class="badge">Distribuzione sconosciuta</p>
+      <div class="gt-grid">
+        <div>
+          <p>Data una variabile aleatoria $X$, non meglio specificata, di <b>valore atteso $\mu$</b> e <b>varianza $\sigma^2$</b>,</p>
+          <p>e un numero reale $k>0$,</p>
+          <p class="highlight"><b>calcolare un limite minimo</b> per $P(\mu-k\sigma\le X\le\mu+k\sigma)$.</p>
+          <p class="fragment muted">Qui non serve che $X$ sia non negativa.</p>
+        </div>
+        <p class="gt-q">???<small>distribuzione sconosciuta</small></p>
+      </div>
+      <aside class="notes">Pacco, slide 12. Due correzioni rispetto al pacco: la variabile non deve essere non negativa (il pacco lo scrive per errore, l'ipotesi serve solo a Markov); e il pacco a volte chiede un «limite massimo» per la probabilità di stare dentro: è un limite minimo. Il numero di deviazioni standard si chiama k (pacco: λ). Click: la precisazione.</aside>
+    </section>
+
+    <!-- L1-18 · Markov applicata al quadrato -->
+    <section id="cebysev-dim">
+      <p class="badge">Disuguaglianza di Čebyšëv · perché è vera</p>
+      <p class="s08-text">Guardiamo l'evento opposto: $|X-\mu|\ge a$, con $a>0$. La distanza non è mai negativa… ma di lei conosciamo la media? Del suo <b>quadrato</b> sì: è $\sigma^2$.</p>
+      <div class="s08-steps" style="max-width:1100px;margin:16px auto 0;text-align:left">
+        <p class="fragment"><span class="lbl">1</span>Stesso evento: $\;|X-\mu|\ge a\iff(X-\mu)^2\ge a^2$</p>
+        <p class="fragment"><span class="lbl">2</span>Markov su $(X-\mu)^2\ge0$ con soglia $a^2$: $\;P\big((X-\mu)^2\ge a^2\big)\le\dfrac{\mathbb E\big[(X-\mu)^2\big]}{a^2}$</p>
+        <p class="fragment"><span class="lbl">3</span>Il numeratore è la varianza: $\;P\big(|X-\mu|\ge a\big)\le\dfrac{\sigma^2}{a^2}$</p>
+      </div>
+      <aside class="notes">Pacco, slide 13. Click: 1 due numeri non negativi stanno nello stesso ordine dei loro quadrati; 2 la variabile (X − μ)² è un quadrato, quindi non è mai negativa: Markov si applica; 3 E[(X − μ)²] è la definizione di varianza. «Markov applicata alla variabile giusta.» Scrivi la catena alla lavagna e lasciala.</aside>
+    </section>
+
+    <!-- L1-19 · le tre forme -->
+    <section id="cebysev-def">
+      <p class="badge">Disuguaglianza di Čebyšëv</p>
+      <div class="s08-box s08-mid">$$P\big(|X-\mu|\ge a\big)\le\frac{\sigma^2}{a^2}\qquad\qquad P\big(|X-\mu|\ge k\sigma\big)\le\frac1{k^2}$$$$P\big(|X-\mu|\lt k\sigma\big)\ge1-\frac1{k^2}$$</div>
+      <p class="s08-text fragment">$k=2$: fuori al più $25\%$, dentro almeno $75\%$.</p>
+      <p class="s08-text fragment">$k=3$: fuori al più $11{,}1\%$, dentro almeno $88{,}9\%$.</p>
+      <p class="s08-text fragment">$k=1$: «fuori al più $100\%$»… cioè <b>nulla</b>.</p>
+      <aside class="notes">Pacco, slide 13 (in fondo) e notebook 4.2.4 (Teorema 4.5 e interpretazione per λ = 2, 3). La seconda forma: a = kσ, quindi σ²/(k²σ²) = 1/k². La terza: il complementare. Il pacco la scrive con l'intervallo chiuso, vale anche così. Click 1–3. Sul caso k = 1 lancia s08-3.</aside>
+    </section>
+
+    <!-- L1-20 · sondaggio s08-3 (lancio) -->
+    <section id="sondaggio-3" class="sondaggio" data-poll="s08-3">
+      <p class="badge">Sondaggio · la risposta arriva tra poco</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">$X$ ha media 0 e deviazione standard 1.<br>La probabilità $P(|X|\ge1)$ può valere 1?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>no, al più 1/4</li>
+            <li><span>2</span>no, vale circa il 32%, come per la normale</li>
+            <li><span>3</span>sì, per qualche distribuzione</li>
+            <li><span>4</span>no, Čebyšëv lo vieta</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Due minuti a coppie, poi voto. NON premere V qui. Risposta 3.</aside>
+    </section>
+
+    <!-- L1-21 · rivelazione s08-3 -->
+    <section id="sondaggio-3-rivela" class="sondaggio rivela" data-poll="s08-3">
+      <p class="badge">Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">$X$ ha media 0 e deviazione standard 1.<br>La probabilità $P(|X|\ge1)$ può valere 1?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>no, al più 1/4</li>
+            <li><span>2</span>no, vale circa il 32%, come per la normale</li>
+            <li><span>3</span>sì, per qualche distribuzione</li>
+            <li><span>4</span>no, Čebyšëv lo vieta</li>
+          </ol>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <div class="rv-foot">
+        <p class="rv-line fragment">$X=-1$ oppure $+1$, con probabilità $\frac12$: media 0, deviazione standard 1, sempre a distanza 1.</p>
+        <p class="rv-next fragment">Con $k=1$ Čebyšëv non dice nulla, e non può dire nulla.</p>
+      </div>
+      <aside class="notes">Premi V. Risposta 3. 1: usa k = 2; 2: confonde la normale con tutte le distribuzioni; 4: con k = 1 il limite è 1. Click 1: l'esempio; 2: la conclusione.</aside>
+    </section>
+
+    <!-- L1-22 · controllo c2 -->
+    <section id="sondaggio-c2" class="sondaggio" data-poll="s08-c2">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>disuguaglianza di Čebyšëv</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, rifai la catena dei tre passi alla lavagna e il calcolo per k = 2 prima delle ante.</aside>
+    </section>
+
+    <!-- L1-23 · Esercizio C: le ante -->
+    <section id="es-ante">
+      <p class="badge">Esercizio · a coppie · dal pacco</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>Le ante di legno di un lotto hanno lunghezza media <b>205 cm</b> e varianza <b>8 cm²</b>. Un'anta è difettosa se è più corta di 197 cm o più lunga di 213 cm; il lotto viene rifiutato se contiene più del <b>15%</b> di ante difettose.</p>
+          <p>Sulla base delle informazioni a disposizione, il lotto sarà rifiutato?</p>
+          <p class="fragment" data-fragment-index="2">$\mu=205,\;\sigma^2=8$; $\;|197-205|=|213-205|=8$: simmetrico</p>
+          <p class="fragment" data-fragment-index="3">$P(|X-205|\ge8)\le\dfrac{8}{8^2}=0{,}125\lt0{,}15$</p>
+          <p class="fragment" data-fragment-index="4">In media meno del 15% di difettose. E un lotto concreto? → venerdì</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="5" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">Pacco, slide 14–16. Sostituisce la soluzione frontale del pacco. Click 1: timer di 5′. Click 2–4: dati e simmetria, il limite, la conclusione. Con la forma in k: k = 8/√8 = √8 ≈ 2,83, 1/k² = 1/8. Il pacco scrive λ = 2,82 e «2,82 × 8»: è sbagliato, la distanza è λσ = 8. Errore atteso: k = 8/8 = 1 (diviso per la varianza) e «non si può dire nulla». L'ultima riga lancia l'esercizio 9, venerdì.</aside>
+    </section>
+
+    <!-- L1-24 · il prezzo dell'universalità -->
+    <section id="prezzo">
+      <p class="badge">Il prezzo dell'universalità</p>
+      <p class="s08-lead">Probabilità di stare ad almeno $k$ deviazioni standard dalla media</p>
+      <table class="s08-table pz-table">
+        <thead><tr><th>$k$</th><th>Čebyšëv: al più</th><th>normale</th><th>uniforme</th><th>esponenziale</th></tr></thead>
+        <tbody>
+          <tr><th>1</th><td class="lim">100%</td><td>31,7%</td><td>42,3%</td><td>13,5%</td></tr>
+          <tr><th>1,5</th><td class="lim">44,4%</td><td>13,4%</td><td>13,4%</td><td>8,2%</td></tr>
+          <tr><th>2</th><td class="lim">25%</td><td>4,6%</td><td>0</td><td>5,0%</td></tr>
+          <tr><th>3</th><td class="lim">11,1%</td><td>0,27%</td><td>0</td><td>1,8%</td></tr>
+          <tr><th>4</th><td class="lim">6,25%</td><td>0,006%</td><td>0</td><td>0,67%</td></tr>
+        </tbody>
+      </table>
+      <p class="s08-note fragment">Un limite valido per tutte le distribuzioni vale anche per le peggiori.</p>
+      <p class="s08-text fragment">E non si può migliorare: per ogni $k$ una distribuzione a tre punti lo raggiunge.</p>
+      <aside class="notes">Nuova (dispensa, Atto IV, cebysev-confronto). Fai leggere la riga k = 2: 25% contro 4,6% della normale. Click 1: la frase; 2: la distribuzione a tre punti (riquadro facoltativo della dispensa e widget): μ con probabilità 1 − 1/k², μ ± kσ con 1/(2k²) ciascuno.</aside>
+    </section>
+
+    <!-- L1-25 · rivelazione s08-1 -->
+    <section id="sondaggio-1-rivela" class="sondaggio rivela" data-poll="s08-1">
+      <p class="badge">Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Media 120 ms, deviazione standard 30 ms, forma sconosciuta. Qual è la <b>garanzia più forte</b> sulla frazione di richieste oltre 500 ms?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>nessuna: serve la forma della distribuzione</li>
+            <li><span>2</span>al più il 24% circa</li>
+            <li><span>3</span>al più lo 0,6% circa</li>
+            <li><span>4</span>zero: 500 ms è a più di 12 deviazioni standard</li>
+          </ol>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <div class="rv-foot">
+        <p class="rv-line fragment">Markov: $\frac{120}{500}=24\%$. Čebyšëv, una coda, $a=380$: $\;\frac{30^2}{380^2}=\frac{900}{144\,400}\approx0{,}62\%$</p>
+        <p class="rv-next fragment">Sotto l'1%: il contratto è garantito, qualunque sia la forma.</p>
+      </div>
+      <aside class="notes">Premi V. Risposta 3. 1: l'idea dell'Atto II, che la lezione ha smentito; 2: Markov, vero ma debole; 4: l'intuizione della normale: per una normale è praticamente zero, ma non è garantito. Click 1: i due conti; il limite per una coda è lo stesso delle due code. Click 2: la conclusione, purché media e deviazione standard siano davvero quelle.</aside>
+    </section>
+
+    <!-- L1-26 (S) · widget -->
+    <section id="widget-cebysev">
+      <p class="badge">Čebyšëv contro le distribuzioni vere</p>
+      <div class="wc-box" id="wc-box" data-prevent-swipe>
+        <div class="wc-ctrl">
+          <label>distribuzione <select>
+            <option value="normale">normale</option>
+            <option value="uniforme">uniforme</option>
+            <option value="esponenziale">esponenziale</option>
+            <option value="tre">a tre punti</option>
+          </select></label>
+          <label>$k$ <input type="range" min="1" max="5" step="0.05" value="2"> <b data-v="k">2,00</b></label>
+          <span><button class="psi-btn ghost" type="button" data-try="normale:2">normale, k = 2</button> <button class="psi-btn ghost" type="button" data-try="uniforme:1.8">uniforme, k = 1,8</button> <button class="psi-btn ghost" type="button" data-try="tre:3">tre punti, k = 3</button></span>
+        </div>
+        <svg class="scene-svg" width="1100" height="430" viewBox="0 0 1100 430" role="img" aria-label="Il limite 1 su k al quadrato in arancione e la probabilità vera di stare fuori da mu più o meno k sigma in azzurro, per k da 1 a 5"></svg>
+        <p class="wc-out"></p>
+      </div>
+      <aside class="notes">(S) Il widget della dispensa (Atto IV). Prima di muovere: «per quale distribuzione la curva azzurra sparisce da un certo k in poi?» → l'uniforme, oltre √3 ≈ 1,73. Poi i tre pulsanti: normale k = 2 (25% contro 4,55%); uniforme k = 1,8 (zero); tre punti k = 3: il punto azzurro sta sul limite.</aside>
+    </section>
+
+    <!-- L1-27 · uscita -->
+    <section id="uscita-1">
+      <p class="badge">Domanda d'uscita</p>
+      <p class="ux-q">Un collega: «Per Čebyšëv, fuori da $\mu\pm2\sigma$<br>cade il 25% dei valori». Che cosa correggi?</p>
+      <p class="ux-a fragment">Al più il 25%: è un tetto, non un valore. Per una normale è il 4,6%.</p>
+      <p class="ux-home">A casa: dispensa, Atti I–IV · esercizi 1–5 · laboratorio «Čebyšëv alla prova»<br>Facoltativo: la distribuzione a tre punti<br>Venerdì: perché la media di molte misure si avvicina al valore vero</p>
+      <aside class="notes">Due risposte a voce, poi click 1. Anche se sei in ritardo, fai la domanda in un minuto. Chiudi entro le 10:45.</aside>
+    </section>
+
+    <!-- ═════════════ LEZIONE 2 · venerdì, 11:00–12:45. Scene: js/lezione2.js ═════════════ -->
+
+    <!-- L2-00 · copertina -->
+    <section id="lezione-2">
+      <p class="cover-week">Settimana 8</p>
+      <h2 class="cover-title">Perché la media di molte misure<br>si avvicina al valore vero?</h2>
+      <div class="cover-acts"><span>Legge dei grandi numeri</span><span>Lezione 2</span><span>venerdì, 11:00</span></div>
+      <aside class="notes">Data da confermare. Riepilogo di 10 minuti. Bernoulli è storia (10 minuti); poi la varianza delle somme (notebook 4.4), la media campionaria e i cento dadi del pacco «12. TLC» (pp. 3–8), la legge in due righe con Čebyšëv. Media campionaria: il pacco scrive X̃ₙ, noi X̄ₙ.</aside>
+    </section>
+
+    <!-- L2-01 · riepilogo della Lezione 1 -->
+    <section id="riepilogo-l1">
+      <p class="badge">Riepilogo · mercoledì</p>
+      <h2 class="scene-title">Quattro domande sulle disuguaglianze</h2>
+      <div class="rq-grid">
+        <div class="rq-list">
+          <p class="rq fragment"><span>1</span>Markov: enunciato e ipotesi. Perché servono?</p>
+          <p class="rq fragment"><span>2</span>Čebyšëv: le tre forme. Da dove viene?</p>
+          <p class="rq fragment"><span>3</span>Le ante: quanto vale il limite?</p>
+          <p class="rq fragment"><span>4</span>Perché 75% e non 95% entro $2\sigma$?</p>
+        </div>
+        <div class="rq-board">
+          <svg class="scene-svg" width="360" height="230" viewBox="0 0 360 230" role="img" aria-label="Una tabellina: per k uguale a 1, 2, 3 il limite 1 su k al quadrato, 100, 25 e 11,1 per cento, contro la normale, 31,7, 4,6 e 0,27 per cento"></svg>
+          risposte alla lavagna
+        </div>
+      </div>
+      <p class="rq-bridge fragment">Oggi Čebyšëv lavora per noi: sulla media di molte osservazioni.</p>
+      <aside class="notes">Una domanda per click. (1) X mai negativa, a > 0, P(X ≥ a) ≤ E[X]/a; senza la prima ipotesi i valori negativi compensano. (2) σ²/a², 1/k², 1 − 1/k²; Markov applicata a (X − μ)². (3) 8/64 = 12,5%. (4) Il limite vale per tutte le distribuzioni, anche per quella a tre punti che lo raggiunge. Controlla l'esercizio 4: 0,6 con Markov, 0,04 con Čebyšëv.</aside>
+    </section>
+
+    <!-- ───── L'urna di Bernoulli (Erlebnis, 10 minuti) ───── -->
+
+    <!-- L2-02 · l'urna -->
+    <section id="urna">
+      <p class="badge">Jacob Bernoulli, <i>Ars Conjectandi</i>, 1713</p>
+      <svg class="scene-svg" width="1100" height="470" viewBox="0 0 1100 470" role="img" aria-label="Un'urna con sassolini bianchi e neri, uno ogni cento: 3000 bianchi e 2000 neri. A destra la frazione di bianchi estratti al crescere delle estrazioni, in scala logaritmica: dopo 10 estrazioni salta, poi si avvicina a 3/5 ed entra nella banda tra 29/50 e 31/50"></svg>
+      <aside class="notes">Nuova (dispensa, Atto V; Ars Conjectandi, parte IV, p. 226). Jacob Bernoulli (1654–1705), Basilea; il libro uscì postumo, nel 1713, curato dal nipote. L'urna: 3000 sassolini bianchi e 2000 neri, nascosti; si estrae, si guarda il colore, si rimette. «La frazione di bianchi si avvicina a 3/5?» Simulazione con seme fisso. Click: 1 dopo 10 estrazioni (0,800); 2 dopo 100 (0,530); 3 dopo 1000 (0,600); 4 dopo 25 550, il numero di Bernoulli, e la banda tra 29/50 e 31/50. Le frazioni sono di questa simulazione, non dati storici.</aside>
+    </section>
+
+    <!-- L2-03 · Bernoulli -->
+    <section id="bernoulli">
+      <p class="badge">Il «teorema aureo»</p>
+      <div class="s08-two wide-left">
+        <div>
+          <p class="ur-quote">«Anche il più stupido, per non so quale istinto di natura, da solo e senza alcuna istruzione (cosa davvero mirabile), sa per certo che quante più osservazioni di questo genere si raccolgono, tanto minore è il pericolo di allontanarsi dal bersaglio.»<small>J. Bernoulli, <i>Ars Conjectandi</i>, 1713, p. 225 (dal latino)</small></p>
+          <p class="fragment">Ma la dimostrazione «non è affatto comune»: vent'anni di lavoro (p. 227).</p>
+        </div>
+        <div>
+          <p class="fragment">Con <b>25 550</b> estrazioni la frazione cade tra $\frac{29}{50}$ e $\frac{31}{50}$ con probabilità <b>più di mille volte</b> maggiore che fuori (pp. 238–239).</p>
+          <p class="fragment highlight"><b>Non dice</b> che prima o poi sarà uguale a $\frac35$. Dice che è sempre più improbabile trovarla lontana.</p>
+        </div>
+      </div>
+      <aside class="notes">Nuova (dispensa, Atto V). La citazione è tradotta dal latino (p. 225). Click 1: i vent'anni («per vicennium»). Click 2: 25 550 e la «certezza morale». Click 3: la frase che conta, su cui torniamo nella seconda metà. Il nome «teorema aureo» è della tradizione. Lancia subito s08-2.</aside>
+    </section>
+
+    <!-- L2-04 · sondaggio s08-2 (lancio) -->
+    <section id="sondaggio-2" class="sondaggio" data-poll="s08-2">
+      <p class="badge">Sondaggio · la risposta arriva più avanti</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Una moneta equilibrata viene lanciata <b>un milione</b> di volte. Di quanto differiscono, tipicamente, il numero di teste e quello di croci?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>di nulla o quasi: alla lunga si compensano</li>
+            <li><span>2</span>di qualche unità</li>
+            <li><span>3</span>di qualche decina</li>
+            <li><span>4</span>di qualche centinaio o più</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono · votate d'istinto</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Votate d'istinto. NON premere V: si rivela al minuto 67 circa, dopo la diluizione. Risposta 4 (la deviazione standard di teste − croci è √n = 1000).</aside>
+    </section>
+
+    <!-- ───── Sommare variabili indipendenti (dispensa, Atto VI; notebook 4.4) ───── -->
+
+    <!-- L2-05 · due dadi e un dado contato due volte -->
+    <section id="somma-dadi">
+      <p class="badge">La varianza di una somma</p>
+      <svg class="scene-svg" width="1140" height="390" viewBox="0 0 1140 390" role="img" aria-label="Tre distribuzioni: un dado, con varianza 35 dodicesimi; la somma di due dadi indipendenti, a triangolo, con varianza il doppio; il doppio di un solo dado, con valori pari equiprobabili, con varianza quattro volte"></svg>
+      <aside class="notes">Nuova (dispensa, Atto VI, figura F6); l'idea di X + X viene dal controesempio del pacco 12 (p. 15). All'ingresso un dado: Var = (6,25 + 2,25 + 0,25 + 0,25 + 2,25 + 6,25)/6 = 35/12. Click 1: due dadi indipendenti, il triangolo: 210/36 = 35/6, esattamente il doppio. Click 2: un dado contato due volte: Var(2X) = 4 · 35/12 (regola dei cambi di scala). Stessa media 7. «Perché?» Indipendenti: gli scarti si compensano in parte; 2 e 12 escono 1 volta su 36. Con 2X nessuna compensazione: 1 volta su 6.</aside>
+    </section>
+
+    <!-- L2-06 · sondaggio s08-4 (lancio) -->
+    <section id="sondaggio-4" class="sondaggio" data-poll="s08-4">
+      <p class="badge">Sondaggio · la risposta arriva tra poco</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">$X$ e $Y$: due dadi indipendenti, $\operatorname{Var}(X)=\operatorname{Var}(Y)\approx2{,}92$.<br>Quanto vale $\operatorname{Var}(X-Y)$?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>0, perché i due dadi si annullano</li>
+            <li><span>2</span>circa 2,92, come un dado solo</li>
+            <li><span>3</span>circa 5,83, la somma delle varianze</li>
+            <li><span>4</span>circa 11,67, quattro volte un dado</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto per pensare, poi voto. NON premere V qui. Risposta 3.</aside>
+    </section>
+
+    <!-- L2-07 · rivelazione s08-4 e la regola -->
+    <section id="sondaggio-4-rivela" class="sondaggio rivela" data-poll="s08-4">
+      <p class="badge">Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Due dadi indipendenti, $\operatorname{Var}\approx2{,}92$ ciascuno. Quanto vale $\operatorname{Var}(X-Y)$?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>0, perché i due dadi si annullano</li>
+            <li><span>2</span>circa 2,92, come un dado solo</li>
+            <li><span>3</span>circa 5,83, la somma delle varianze</li>
+            <li><span>4</span>circa 11,67, quattro volte un dado</li>
+          </ol>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <div class="rv-foot">
+        <p class="rv-line fragment"><b>Se $X$ e $Y$ sono indipendenti:</b> $\;\operatorname{Var}(X+Y)=\operatorname{Var}(X)+\operatorname{Var}(Y)$</p>
+        <p class="rv-next fragment">$X-Y=X+(-1)Y$ e $\operatorname{Var}(-Y)=(-1)^2\operatorname{Var}(Y)$: sottrarre incertezze le accumula.</p>
+      </div>
+      <aside class="notes">Premi V. Risposta 3. 1: «media zero» scambiata per «varianza zero»; 2: un dado solo; 4: la regola di 2X applicata alla differenza. Click 1: la regola (nella dispensa, la dimostrazione con la covarianza è facoltativa: il termine in più è 2 Cov, zero per variabili indipendenti). Click 2: la differenza.</aside>
+    </section>
+
+    <!-- L2-08 · i.i.d. e la somma -->
+    <section id="iid-somma">
+      <p class="badge">Molte osservazioni · dal notebook 4.4</p>
+      <p class="s08-text">$X_1,\dots,X_n$ <b>indipendenti e identicamente distribuite</b> (i.i.d.): stessa distribuzione, stessa media $\mu$, stessa varianza $\sigma^2$.</p>
+      <p class="s08-text fragment">La somma $S_n=X_1+\cdots+X_n$:</p>
+      <div class="s08-box s08-mid fragment">$$\mathbb E[S_n]=n\mu\qquad\operatorname{Var}(S_n)=n\sigma^2\qquad\sigma_{S_n}=\sigma\sqrt n$$</div>
+      <p class="s08-text fragment">Cento dadi: media 350, varianza $100\cdot\frac{35}{12}\approx291{,}7$, deviazione standard $\approx17{,}1$.</p>
+      <p class="s08-note fragment">Sommando, l'incertezza sul totale cresce.</p>
+      <aside class="notes">Notebook 4.4, celle 7–9 (S_n diverge, Var(S_n) = nσ²). Il prodotto delle n marginali è la definizione di indipendenza per n variabili (dispensa, iid). Click 1: le formule: la media per linearità, la varianza aggiungendo un addendo alla volta (X₁ + X₂ è indipendente da X₃); 2: i cento dadi; 3: la frase. «E se invece della somma facciamo la media?» Prima l'esercizio.</aside>
+    </section>
+
+    <!-- L2-09 · controllo c3 -->
+    <section id="sondaggio-c3" class="sondaggio" data-poll="s08-c3">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>varianza di una somma</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, rifai alla lavagna il confronto X + Y contro 2X con i numeri dei dadi.</aside>
+    </section>
+
+    <!-- L2-10 · Esercizio D -->
+    <section id="es-dado-moneta">
+      <p class="badge">Esercizio · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>$X$: un dado. $Y=1$ se una moneta dà testa, 0 altrimenti; indipendenti.</p>
+          <ol class="dv-steps">
+            <li>Media e varianza di $X+Y$ e di $X-Y$</li>
+            <li>$\operatorname{Var}(3X)$ contro $\operatorname{Var}(X_1+X_2+X_3)$, tre dadi indipendenti</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">1. medie 4 e 3; varianze uguali: $\frac{35}{12}+\frac14=\frac{19}{6}\approx3{,}17$</p>
+          <p class="fragment" data-fragment-index="3">2. $9\cdot\frac{35}{12}=26{,}25$ contro $3\cdot\frac{35}{12}=8{,}75$ (stessa media 10,5)</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">Esercizio 6 (a, b) della dispensa. Sostituisce la spiegazione frontale della differenza e di 3X. Ricorda alla lavagna Var(Y) = p(1 − p) = 1/4. Click 1: timer di 4′. Click 2–3: soluzione. Errori attesi: Var(X − Y) = 35/12 − 1/4; Var(3X) = 3 · 35/12.</aside>
+    </section>
+
+    <!-- L2-11 · la media campionaria -->
+    <section id="media-campionaria">
+      <p class="badge">La media campionaria · pacco 12</p>
+      <p class="s08-text">$\bar X_n=\dfrac{X_1+\cdots+X_n}{n}=\dfrac{S_n}{n}$ <span class="muted">— è una variabile aleatoria</span></p>
+      <div class="s08-steps" style="max-width:1100px;margin:14px auto 0;text-align:left">
+        <p class="fragment">valore atteso: $\;\mathbb E[\bar X_n]=n\mu/n=\mu$</p>
+        <p class="fragment">varianza: $\;\operatorname{Var}(\bar X_n)=\dfrac{n\sigma^2}{n^2}=\dfrac{\sigma^2}{n}$</p>
+        <p class="fragment highlight"><b>Quindi la varianza tende a zero per grandi valori di $n$!!!</b></p>
+        <p class="fragment">deviazione standard: $\;\sigma_{\bar X_n}=\dfrac{\sigma}{\sqrt n}$</p>
+      </div>
+      <aside class="notes">Pacco 12, slide 6 («Insight matematico»), con X̄ₙ al posto di X̃ₙ. Click 1: linearità; 2: regola dei cambi di scala con a = 1/n: si divide per n²; 3: la frase del pacco, con i suoi tre punti esclamativi; 4: la deviazione standard. Sottolinea: X̄ₙ cambia a ogni serie di lanci, quindi ha una distribuzione.</aside>
+    </section>
+
+    <!-- L2-12 · la media di n dadi -->
+    <section id="media-n">
+      <p class="badge">La media di $n$ dadi</p>
+      <svg class="scene-svg" width="1100" height="380" viewBox="0 0 1100 380" role="img" aria-label="La distribuzione della media di 1, 4 e 16 dadi sullo stesso asse da 1 a 6: sempre centrata in 3,5, sempre più stretta; deviazioni standard 1,71, 0,85 e 0,43"></svg>
+      <p class="s08-note mn-rule">Legge della radice: 4 volte i dati → metà della dispersione. 100 volte → un decimale in più.</p>
+      <aside class="notes">Nuova (dispensa, Atto VI, figura F7). Le aree sono confrontabili. Click: 1 n = 4; 2 n = 16; 3 la legge della radice. La campana che compare per n = 16 è il tema della Settimana 9: non spiegarla ora. Sosta orale: sensore con σ = 2 °C, media di 16 misure → 0,5 °C; per 0,1 °C servono 400 misure.</aside>
+    </section>
+
+    <!-- ───── La legge dei grandi numeri (pacco 12, pp. 3–8) ───── -->
+
+    <!-- L2-13 · cento dadi -->
+    <section id="cento-dadi">
+      <p class="badge">Esempio · note di S. Boffa (pacco 12)</p>
+      <div class="s08-two wide-right">
+        <div>
+          <p>Lanciamo 100 volte un dado: $X_i$ è il risultato del lancio $i$.</p>
+          <p>$X_1,\dots,X_{100}$ hanno la stessa distribuzione e sono indipendenti; per ogni $i$</p>
+          <p>$\mathbb E[X_i]=\frac16(1+2+\cdots+6)=3{,}5$</p>
+          <p class="muted">Il valore teorico, calcolato prima di lanciare.</p>
+        </div>
+        <svg class="scene-svg" width="640" height="420" viewBox="0 0 640 420" role="img" aria-label="La media dei primi n lanci di un dado, al crescere di n fino a mille: all'inizio salta, poi si assesta vicino alla linea della media teorica 3,5"></svg>
+      </div>
+      <aside class="notes">Pacco 12, slide 3–5 (note di S. Boffa e il grafico «Average dice roll by number of rolls»), rifatto con una simulazione a seme fisso. Click: 1 dopo 10 lanci (4,40); 2 dopo 100 (3,68); 3 dopo 1000 (3,490). «La media sperimentale si avvicina alla media teorica.» Che cosa vuol dire «si avvicina»?</aside>
+    </section>
+
+    <!-- L2-14 · che cosa vuol dire avvicinarsi -->
+    <section id="avvicinarsi">
+      <p class="badge">Che cosa vuol dire «si avvicina»?</p>
+      <div class="av-list">
+        <p class="no fragment">Da un certo $n$ in poi, la media è 3,5. <span class="muted">Con $n$ dispari non può nemmeno.</span></p>
+        <p class="no fragment">Da un certo $n$ in poi, resta <b>sicuramente</b> entro 0,1 da 3,5. <span class="muted">Mille sei di fila sono possibili.</span></p>
+        <p class="no fragment">Il caso compensa: dopo tanti sei arrivano più uno. <span class="muted">Il dado non ha memoria.</span></p>
+        <p class="si fragment">Fissato un margine, la <b>probabilità</b> di trovarla fuori diventa sempre più piccola, e tende a zero.</p>
+      </div>
+      <aside class="notes">Nuova (dispensa, Atto VII, convergenza). Un'affermazione per click; prima di ogni click chiedi «vero o falso?». La media è una variabile aleatoria: si può parlare solo delle sue probabilità. La terza è la fallacia del giocatore della Settimana 5. La quarta è la frase di Bernoulli.</aside>
+    </section>
+
+    <!-- L2-15 · convergenza e teorema -->
+    <section id="lgn-teorema">
+      <p class="badge">Legge dei grandi numeri · pacco 12</p>
+      <p class="s08-text"><b>Convergenza in probabilità:</b> $Z_n\xrightarrow{P}c$ se, per ogni $\varepsilon>0$, $\;P\big(|Z_n-c|\ge\varepsilon\big)\to0$</p>
+      <div class="s08-box fragment" style="padding:10px 30px;text-align:left">
+        <p class="s08-text" style="margin:6px 0"><b>Teorema.</b> $X_1,X_2,\dots$ i.i.d. con media $\mu$ e varianza finita $\sigma^2$. Allora</p>
+        $$\bar X_n\xrightarrow{P}\mu\qquad\text{per }n\to\infty$$
+      </div>
+      <p class="s08-text fragment red">$\bar X_n$ è una variabile aleatoria: la convergenza riguarda le sue probabilità.</p>
+      <aside class="notes">Pacco 12, slide 7–8 (teorema dalle note di S. Boffa; la nota in rosso è del pacco). Il margine ε può essere piccolo quanto vuoi: più è piccolo, più grande deve essere n. Click 1: il teorema (il pacco dice «indipendenti e aventi la stessa distribuzione»); 2: la nota. «Debole»: esiste una versione più forte, che non facciamo.</aside>
+    </section>
+
+    <!-- L2-16 · la dimostrazione -->
+    <section id="lgn-dim">
+      <p class="badge">La legge dei grandi numeri, in due righe</p>
+      <p class="s08-text">Čebyšëv su $\bar X_n$, che ha media $\mu$ e varianza $\frac{\sigma^2}{n}$, con $a=\varepsilon$:</p>
+      <div class="s08-box s08-mid fragment">$$P\big(|\bar X_n-\mu|\ge\varepsilon\big)\le\frac{\operatorname{Var}(\bar X_n)}{\varepsilon^2}=\frac{\sigma^2}{n\,\varepsilon^2}\;\xrightarrow[n\to\infty]{}\;0$$</div>
+      <p class="s08-note fragment">Media giusta, varianza che va a zero: quasi sempre vicino alla media.</p>
+      <table class="s08-table fragment" style="margin-top:12px">
+        <thead><tr><th>dado, $\varepsilon=0{,}1$</th><th>$n=100$</th><th>$n=1000$</th><th>$n=10\,000$</th></tr></thead>
+        <tbody>
+          <tr><th>Čebyšëv: al più</th><td class="mg">2,9 (nulla)</td><td class="mg">0,29</td><td class="mg">0,029</td></tr>
+          <tr><th>probabilità vera</th><td>0,56</td><td>0,064</td><td>≈ 0</td></tr>
+        </tbody>
+      </table>
+      <aside class="notes">Nuova (dispensa, lgn-dimostrazione). Blocco denso. Click 1: la catena: σ² ed ε fissati, n al denominatore; una probabilità non negativa sotto una quantità che va a zero va a zero. Click 2: la frase da saper dire all'esame. Click 3: i numeri del dado (σ² = 35/12): Čebyšëv è prudente, ma va a zero, ed è tutto ciò che serve. Le probabilità vere sono approssimazioni normali (Settimana 9).</aside>
+    </section>
+
+    <!-- L2-17 · controllo c4 -->
+    <section id="sondaggio-c4" class="sondaggio" data-poll="s08-c4">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>legge dei grandi numeri</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, ripeti la catena «media μ, varianza σ²/n, Čebyšëv, va a zero» con i numeri del dado.</aside>
+    </section>
+
+    <!-- L2-18 · le frequenze -->
+    <section id="frequenze">
+      <p class="badge">Le frequenze: il teorema di Bernoulli</p>
+      <p class="s08-text">$X_i$ = indicatrice di $A$ nella prova $i$: variabili bernoulliane i.i.d. con media $p$ e varianza $p(1-p)$.</p>
+      <p class="s08-text fragment">$\bar X_n=\dfrac{\text{volte in cui si verifica }A}{n}=f_n\qquad\Longrightarrow\qquad f_n\xrightarrow{P}p$</p>
+      <div class="s08-box s08-mid fragment">$$P\big(|f_n-p|\ge\varepsilon\big)\le\frac{p(1-p)}{n\varepsilon^2}\le\frac1{4n\varepsilon^2}$$</div>
+      <p class="s08-text fragment">$p(1-p)=\frac14-\left(p-\frac12\right)^2\le\frac14$. La stabilità delle frequenze della Settimana 1 è un <b>teorema</b>.</p>
+      <aside class="notes">Nuova (dispensa, frequenze). Click 1: la frequenza relativa è una media di indicatrici; 2: il limite, comodo quando p non è noto; 3: perché p(1 − p) ≤ 1/4, e il ponte con il laboratorio della moneta della Settimana 1 e con l'interpretazione frequentista. Nella dispensa, un riquadro facoltativo rifà i conti di Bernoulli con Čebyšëv (600 600 estrazioni contro 25 550; oggi ne bastano circa 6500).</aside>
+    </section>
+
+    <!-- L2-19 · diluizione -->
+    <section id="diluizione">
+      <p class="badge">Diluizione, non compensazione</p>
+      <svg class="scene-svg" width="1100" height="460" viewBox="0 0 1100 460" role="img" aria-label="Una sequenza di diecimila lanci di moneta, con l'asse dei lanci in scala logaritmica: sopra la differenza tra teste e metà dei lanci, che si allontana da zero fino a più di cento; sotto la frazione di teste, che si stabilizza vicino a un mezzo"></svg>
+      <aside class="notes">Nuova (dispensa, diluizione, figura F9; simulazione a seme fisso). Click: 1 dopo 100 lanci (differenza 11, frazione 0,610); 2 dopo 1000 (28; 0,528); 3 dopo 10 000 (110; 0,511). La differenza cresce, la frazione si ferma: 110 teste in più su 10 000 lanci sono l'1,1%. Ora la rivelazione.</aside>
+    </section>
+
+    <!-- L2-20 · rivelazione s08-2 -->
+    <section id="sondaggio-2-rivela" class="sondaggio rivela" data-poll="s08-2">
+      <p class="badge">Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Un milione di lanci di una moneta equilibrata. Di quanto differiscono, tipicamente, teste e croci?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>di nulla o quasi: alla lunga si compensano</li>
+            <li><span>2</span>di qualche unità</li>
+            <li><span>3</span>di qualche decina</li>
+            <li><span>4</span>di qualche centinaio o più</li>
+          </ol>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <div class="rv-foot">
+        <table class="s08-table dl-table fragment" style="margin:0 auto">
+          <thead><tr><th>lanci</th><th>dev. std di teste − $n/2$</th><th>dev. std della frazione</th></tr></thead>
+          <tbody><tr><th>100</th><td>5</td><td>0,05</td></tr><tr><th>10 000</th><td>50</td><td>0,005</td></tr><tr><th>1 000 000</th><td>500</td><td>0,0005</td></tr></tbody>
+        </table>
+        <p class="rv-next fragment">Dieci teste di fila, poi 990 lanci: attese 505 su 1000. Le dieci teste non tornano: pesano sempre meno.</p>
+      </div>
+      <aside class="notes">Premi V. Risposta 4: teste − croci = 2(teste − n/2), deviazione standard √n = 1000. 1: la compensazione; 2 e 3: la frazione stabile fa pensare a una differenza piccola. Click 1: la tabella (σ√n/2 e 1/(2√n), dalle formule di oggi con σ² = 1/4). Click 2: la diluizione con le dieci teste: la differenza attesa resta 10 per sempre.</aside>
+    </section>
+
+    <!-- L2-21 · Esercizio E -->
+    <section id="es-latenza">
+      <p class="badge">Esercizio · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>Tempo di risposta: media sconosciuta $\mu$, deviazione standard <b>40 ms</b>. Si fa la media di $n$ richieste indipendenti.</p>
+          <ol class="dv-steps">
+            <li>Media e deviazione standard della media di 100 richieste?</li>
+            <li>Con Čebyšëv: probabilità, al più, di sbagliare di almeno 10 ms?</li>
+            <li>Quante richieste servono per portarla al 5%?</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">1. $\mu$ e $\frac{40}{\sqrt{100}}=4$ ms $\qquad$ 2. $\frac{16}{10^2}=0{,}16$</p>
+          <p class="fragment" data-fragment-index="3">3. $\frac{1600}{n\cdot100}\le0{,}05\iff n\ge320$</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">Esercizio 7 della dispensa. Sostituisce la derivazione frontale della formula n ≥ σ²/(δε²): la ricavano loro al punto 3. Click 1: timer di 4′. Click 2–3: soluzione. Errori attesi: deviazione standard 40/100; 40 invece di 1600 al numeratore.</aside>
+    </section>
+
+    <!-- L2-22 · quante osservazioni -->
+    <section id="quante-prove">
+      <p class="badge">Quante osservazioni servono?</p>
+      <div class="s08-box s08-mid">$$P\big(|\bar X_n-\mu|\ge\varepsilon\big)\le\delta\qquad\text{se}\qquad n\ge\frac{\sigma^2}{\delta\,\varepsilon^2}$$</div>
+      <p class="s08-text fragment">Benchmark (pacco 13): $\sigma^2=4$ s², $\varepsilon=0{,}5$ s, 95%: $\;n\ge\dfrac{4}{0{,}05\cdot0{,}25}=$ <b class="highlight">320</b> esecuzioni.</p>
+      <p class="s08-text fragment">Con il teorema del limite centrale (Settimana 9) ne bastano <b>62</b>: il prezzo della prudenza.</p>
+      <p class="s08-text fragment">Monte Carlo, errore 0,01 al 95%: $\;n\ge\dfrac{1}{4\cdot0{,}05\cdot0{,}01^2}=50\,000$ simulazioni.</p>
+      <aside class="notes">Nuova (dispensa, quante-prove); il problema del benchmark è del pacco 13, slide 19, dove si risolve con il TLC (n = 61,4 → 62). Click 1: Čebyšëv, 320, qualunque sia la distribuzione dei tempi; 2: il ponte con la Settimana 9; 3: il Monte Carlo con il limite 1/(4nε²).</aside>
+    </section>
+
+    <!-- L2-23 · controllo c5 -->
+    <section id="sondaggio-c5" class="sondaggio" data-poll="s08-c5">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con il <b>calcolo di quante osservazioni servono</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, rifai il punto 3 dell'esercizio E alla lavagna, isolando n.</aside>
+    </section>
+
+    <!-- L2-24 (S) · widget -->
+    <section id="widget-lgn">
+      <p class="badge">La media che si stabilizza</p>
+      <div class="wc-box" id="wl-box" data-prevent-swipe>
+        <div class="wc-ctrl">
+          <label><select><option value="moneta">moneta</option><option value="dado">dado</option></select></label>
+          <label>sequenze <input type="range" min="1" max="50" step="1" value="20"> <b data-v="m">20</b></label>
+          <label>$n$ <input type="range" min="1" max="4" step="0.01" value="3"> <b data-v="n">1000</b></label>
+          <label>$\varepsilon$ <input type="range" min="0.02" max="0.3" step="0.01" value="0.05"> <b data-v="e">0,05</b></label>
+          <button class="psi-btn ghost" type="button" data-new>nuove</button>
+        </div>
+        <svg class="scene-svg" width="1100" height="400" viewBox="0 0 1100 400" role="img" aria-label="Medie progressive di molte sequenze di lanci, in scala logaritmica, con una banda verde attorno alla media teorica; le sequenze fuori dalla banda al numero di lanci scelto sono rosse"></svg>
+        <p class="wc-out"></p>
+      </div>
+      <aside class="notes">(S) Il widget della dispensa (Atto VII). Moneta, ε = 0,05: n = 100 (limite 1, molte rosse), 1000 (10%), 10 000 (1%, tutte azzurre). Poi dimezza ε: il limite si moltiplica per 4, e per tornare al valore di prima serve n quattro volte più grande. Il pulsante «nuove» rigenera le sequenze.</aside>
+    </section>
+
+    <!-- L2-25 (S) · Esercizio F -->
+    <section id="es-lotto">
+      <p class="badge">Esercizio · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>Le ante di mercoledì: ogni anta difettosa con probabilità $p\le0{,}125$, in modo indipendente. Un lotto di <b>1000</b> ante è rifiutato se le difettose superano il 15%.</p>
+          <ol class="dv-steps">
+            <li>Con $p=0{,}125$: probabilità di rifiuto, al più?</li>
+            <li>E con un lotto di 10 000 ante?</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">1. distanza $0{,}025$: $\;\dfrac{0{,}125\cdot0{,}875}{1000\cdot0{,}025^2}=0{,}175$</p>
+          <p class="fragment" data-fragment-index="3">2. $0{,}0175$: lotto più grande, frazione più vicina a $p$</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">(S) Esercizio 9 (a, b) della dispensa, la nota «dal micro al macro» del notebook 4.2.4. Se lo salti, assegnalo a casa. Click 1: timer di 4′. Click 2–3: soluzione. Perché p = 0,125 è il caso peggiore: il limite cresce con p fino a 0,125. Errori attesi: usare la varianza della lunghezza (8 cm²); dividere per n².</aside>
+    </section>
+
+    <!-- L2-26 (S) · in informatica -->
+    <section id="lgn-informatica">
+      <p class="badge">La legge dei grandi numeri in informatica</p>
+      <div class="dd-cards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1150px;margin:16px auto 0">
+        <div class="s08-card"><p class="s08-big highlight">Monte Carlo</p><p class="s08-text" style="font-size:.7em">media di simulazioni indipendenti; errore come $1/\sqrt n$</p></div>
+        <div class="s08-card fragment"><p class="s08-big highlight">Benchmark</p><p class="s08-text" style="font-size:.7em">esecuzioni i.i.d.? cache fredda, calore, disturbi: si scartano le prime</p></div>
+        <div class="s08-card fragment"><p class="s08-big highlight">Carico</p><p class="s08-text" style="font-size:.7em">molti utenti indipendenti: il totale è prevedibile</p></div>
+      </div>
+      <p class="s08-text fragment" style="margin-top:22px">Senza indipendenza? Markov, 1906–1913: le catene, e le 20 000 lettere dell'<i>Onegin</i> (Lettura A).</p>
+      <aside class="notes">(S) Dispensa, lgn-informatica e Lettura A (facoltativa). Click 1–2: benchmark e carico; 3: Markov contro Nekrasov, che sosteneva che l'indipendenza fosse necessaria; la catena di Markov e le vocali dell'Onegin (1104 coppie vocale-vocale contro circa 3700 se le lettere fossero indipendenti). Se salti: una frase sul Monte Carlo.</aside>
+    </section>
+
+    <!-- L2-27 · uscita -->
+    <section id="uscita-2">
+      <p class="badge">Domanda d'uscita</p>
+      <p class="ux-q">Un benchmark con 10 esecuzioni dà una media di 2,3 s.<br>Il collega: «per la legge dei grandi numeri, il tempo medio vero è 2,3 s». Ha ragione?</p>
+      <p class="ux-a fragment">No: la legge parla di probabilità per $n$ grande. Con 10 esecuzioni l'errore tipico è $\sigma/\sqrt{10}$, e le esecuzioni devono essere i.i.d.</p>
+      <p class="ux-home">A casa: dispensa, Atti V–VII · esercizi 6–10 · laboratori «la varianza delle somme» e «monete a milioni»<br>Facoltativi: la formula con la covarianza, i numeri di Bernoulli, Lettura A (Markov e le catene)<br>Settimana 9: perché la media di molte variabili ha la forma di una campana</p>
+      <aside class="notes">Due risposte a voce, poi click 1. Anche se sei in ritardo, fai la domanda in un minuto. Chiudi entro le 12:45.</aside>
+    </section>
+
+  </div></div>
+  <script src="../../assets/slides/scene.js"></script>
+  <script src="../../assets/sondaggi.js"></script>
+  <script src="../../assets/slides/sondaggio.js"></script>
+  <script src="js/comuni.js"></script>
+  <script src="js/lezione1.js"></script>
+  <script src="js/lezione2.js"></script>
+  <script>PSIDeck.start({ onReady: function (deck) { PSISondaggio.bind(deck); S08.timers(deck); S08L1.widget(); S08L2.widget(); } });</script>
+</body>
+</html>

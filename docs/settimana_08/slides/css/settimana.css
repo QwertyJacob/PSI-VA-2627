@@ -1,0 +1,230 @@
+/*
+ * Settimana 8: disuguaglianze di Markov e di Čebyšëv, legge dei grandi numeri.
+ * Scene: js/comuni.js, js/lezione1.js, js/lezione2.js.
+ * Le regole comuni (badge, copertine, riepiloghi, esercizi, timer, widget,
+ * uscite, varianti dei sondaggi) sono riprese dal mazzo della Settimana 6,
+ * così questo mazzo non dipende dai fogli delle altre settimane.
+ * Misure sul canvas 1280 × 720: base 36 px, testo didattico ≥ 28 px,
+ * tabelle, legende e controlli ≥ 24 px, etichette SVG ≥ 24 px (tacche 22).
+ *
+ * Colori: azzurro = dati e prodotti positivi, arancio = modello e prodotti
+ * negativi, verde = valore cercato, viola = terza variabile, rosso = errore.
+ */
+:root {
+  --r-main-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --r-heading-font: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --r-heading-text-transform: none;
+  --r-main-font-size: 36px;
+  --s08-data: var(--psi-a);
+  --s08-model: #fb923c;
+  --s08-ok: var(--psi-sel);
+  --s08-third: var(--psi-c);
+  --s08-red: #ff6b6b;
+}
+.reveal .slides section { text-align: center; }
+.reveal .slides section.sondaggio { text-align: left; }
+.reveal .badge { display: inline-block; margin: 0 0 16px; padding: 5px 18px; border-radius: 20px; font-size: .67em; font-weight: 700; letter-spacing: .5px; background: #16675f; color: #fff; }
+.reveal .scene-title { font-size: 1.35em; margin: 0 0 12px; }
+.reveal .data { color: var(--s08-data); }
+.reveal .model { color: var(--s08-model); }
+.reveal .highlight { color: var(--s08-ok); }
+.reveal .third { color: var(--s08-third); }
+.reveal .red { color: var(--s08-red); }
+.reveal .muted { color: var(--psi-muted); }
+.reveal .scene-svg { margin: auto; }
+
+/* ── Testi dentro gli SVG ── */
+.reveal .scene-svg .s08-label { font: 26px var(--r-main-font); fill: var(--psi-text); }
+.reveal .scene-svg .s08-small { font: 24px var(--r-main-font); fill: var(--psi-muted); }
+.reveal .scene-svg .s08-tick { font: 22px var(--r-main-font); fill: var(--psi-muted); }
+.reveal .scene-svg .s08-cell { font: 600 24px var(--r-main-font); fill: var(--psi-text); font-variant-numeric: tabular-nums; }
+.reveal .scene-svg .s08-big { font: 700 44px var(--r-main-font); fill: var(--psi-text); }
+.reveal .scene-svg .s08-huge { font: 800 64px var(--r-main-font); fill: var(--psi-text); }
+.reveal .scene-svg .s08-data { fill: var(--s08-data); }
+.reveal .scene-svg .s08-model { fill: var(--s08-model); }
+.reveal .scene-svg .s08-ok { fill: var(--s08-ok); }
+.reveal .scene-svg .s08-third { fill: var(--s08-third); }
+.reveal .scene-svg .s08-red { fill: var(--s08-red); }
+
+/* ── Copertine ── */
+.reveal .cover-week { font-size: .9em; color: var(--psi-muted); margin: 0; letter-spacing: 2px; text-transform: uppercase; }
+.reveal .cover-title { font-size: 2.1em; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; margin: 14px 0 26px; }
+.reveal .cover-acts { display: flex; justify-content: center; gap: 18px; }
+.reveal .cover-acts > span { padding: 8px 22px; border-radius: 20px; font-size: .75em; border: 1px solid #ffffff30; background: #ffffff0a; color: var(--psi-muted); }
+
+/* ── Testi comuni ── */
+.reveal .s08-text { max-width: 1150px; margin: 10px auto; font-size: .8em; line-height: 1.4; }
+.reveal .s08-lead { max-width: 1150px; margin: 0 auto 10px; font-size: .8em; color: var(--psi-muted); }
+.reveal .s08-lead b, .reveal .s08-text b { color: var(--psi-text); }
+.reveal .s08-note { margin: 14px auto 0; font-size: .8em; font-weight: 700; color: var(--s08-ok); max-width: 1150px; }
+.reveal .s08-box { display: table; margin: 6px auto; padding: 0 30px; border-radius: 14px; border: 3px solid var(--s08-ok); background: #38ef7d10; }
+.reveal .s08-box .katex-display { margin: .3em 0; }
+.reveal .s08-mid .katex-display > .katex { font-size: 1.12em; }
+.reveal .mr-res { margin: -6px 0 6px; text-align: center; font-size: .8em; }
+.reveal .md-data { margin: 4px auto 8px; font-size: .62em; color: var(--psi-b); line-height: 1.5; }
+.reveal .s08-quote { margin: 0; font-size: .8em; font-style: italic; color: #e2e8f0; line-height: 1.38; }
+.reveal .s08-quote small { display: block; font-style: normal; font-size: .85em; color: var(--psi-muted); margin-top: 6px; }
+.reveal .s08-quote b { color: var(--s08-ok); }
+.reveal .cu-ask { margin: 22px 0 0; font-size: 1.2em; font-weight: 800; color: var(--psi-b); }
+
+/* ── Tabelle ── */
+.reveal .s08-table { border-collapse: separate; border-spacing: 3px; margin: 0 auto; font-size: .72em; }
+.reveal .s08-table th { color: var(--psi-muted); font-weight: 600; padding: 6px 14px; border: none; text-align: center; line-height: 1.2; vertical-align: bottom; }
+.reveal .s08-table th small { display: block; font-size: .9em; font-weight: 400; }
+.reveal .s08-table tbody th { text-align: left; vertical-align: middle; white-space: nowrap; }
+.reveal .s08-table tbody th small { display: inline; margin-left: 6px; }
+.reveal .s08-table td { text-align: center; padding: 7px 16px; border: none; border-radius: 6px; background: #ffffff0b; font-variant-numeric: tabular-nums; }
+.reveal .s08-table td.mg { color: var(--psi-b); background: #fbbf2414; font-weight: 700; }
+.reveal .s08-table .tot-row td:empty { background: none; }
+.reveal .s08-table .katex { font-size: 1em; }
+
+/* Caselle evidenziate da un frammento: .hl solo finché è il frammento corrente,
+   .hl-keep finché resta visibile. -b ambra, -r rosso. */
+.reveal .slides section .fragment.hl, .reveal .slides section .fragment.hl-keep,
+.reveal .slides section .fragment.hl-b, .reveal .slides section .fragment.hl-b-keep,
+.reveal .slides section .fragment.hl-r, .reveal .slides section .fragment.hl-r-keep { opacity: 1; visibility: inherit; transition: background .3s, color .3s, box-shadow .3s; }
+.reveal .slides section .fragment.hl.current-fragment, .reveal .slides section .fragment.hl-keep.visible { background: #38ef7d33; color: var(--s08-ok); box-shadow: inset 0 0 0 2px var(--s08-ok); }
+.reveal .slides section .fragment.hl-b.current-fragment, .reveal .slides section .fragment.hl-b-keep.visible { background: #fbbf2440; color: var(--psi-b); box-shadow: inset 0 0 0 2px var(--psi-b); }
+.reveal .slides section .fragment.hl-r.current-fragment, .reveal .slides section .fragment.hl-r-keep.visible { background: #ff6b6b33; color: var(--s08-red); box-shadow: inset 0 0 0 2px var(--s08-red); }
+
+/* ── Ritratti ── */
+.reveal .s08-portrait { margin: 0; text-align: center; }
+.reveal .s08-portrait img { display: block; width: 250px; max-width: none; max-height: none; margin: 0 auto 10px; border-radius: 10px; box-shadow: 0 10px 30px #000a; }
+.reveal .s08-portrait figcaption { font-size: .67em; color: var(--psi-muted); line-height: 1.35; }
+
+/* ── Riepiloghi ── */
+.reveal .rq-grid { display: grid; grid-template-columns: 1fr 380px; gap: 36px; align-items: center; max-width: 1180px; margin: 0 auto; text-align: left; }
+.reveal .rq-list { display: flex; flex-direction: column; gap: 14px; }
+.reveal .rq { margin: 0; padding: 12px 20px; border-radius: 12px; background: #ffffff08; border: 1px solid #ffffff1f; font-size: .8em; font-weight: 600; }
+.reveal .rq > span:first-child { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; margin-right: 14px; border-radius: 50%; font-size: .85em; color: var(--psi-b); background: #fbbf2429; }
+.reveal .rq-board { height: 330px; border: 2px dashed #ffffff22; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 0 0 12px; color: #ffffff50; font-size: .67em; }
+.reveal .rq-board svg { margin: 14px auto auto; }
+.reveal .rq-bridge { margin: 22px 0 0; font-size: .8em; font-weight: 700; color: var(--s08-ok); text-align: center; }
+
+/* ── Esercizi ── */
+.reveal .e4-wrap { display: grid; grid-template-columns: 1fr 260px; gap: 30px; align-items: center; text-align: left; }
+.reveal .ex-side { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.reveal .ex-cat { display: block; width: 250px; max-width: none; max-height: none; margin: 0; border-radius: 12px; box-shadow: 0 14px 40px #000b; }
+.reveal .dv-ex { font-size: .8em; }
+.reveal .dv-ex p { margin: 0 0 10px; line-height: 1.38; }
+.reveal .dv-steps { margin: 4px 0 12px 1.2em; }
+.reveal .dv-steps li { margin: 0 0 8px; }
+.reveal .dv-ex .fragment { color: var(--s08-ok); }
+.reveal .ex-timer { font: 800 1.7em 'JetBrains Mono', 'Fira Mono', monospace; font-variant-numeric: tabular-nums; padding: 4px 26px; border-radius: 14px; border: 2px solid #ffffff30; background: #ffffff08; cursor: pointer; user-select: none; }
+.reveal .ex-timer.running { border-color: var(--s08-ok); color: var(--s08-ok); }
+.reveal .ex-timer.done { border-color: var(--s08-red); color: var(--s08-red); animation: s08-blink 1s steps(2) infinite; }
+@keyframes s08-blink { 50% { opacity: .35; } }
+
+/* ── Widget ── */
+.reveal .wd-ctrl { display: flex; justify-content: center; align-items: center; gap: 40px; margin: 0 0 8px; font-size: .72em; }
+.reveal .wd-ctrl label { display: flex; align-items: center; gap: 12px; }
+.reveal .wd-ctrl input[type=range] { width: 300px; accent-color: var(--s08-ok); }
+.reveal .wd-ctrl select { font: inherit; background: #1f2933; color: var(--psi-text); border: 1px solid #ffffff40; border-radius: 8px; padding: 2px 8px; }
+.reveal .wd-ctrl input[type=checkbox] { width: 24px; height: 24px; accent-color: var(--s08-ok); }
+.reveal .wd-ctrl b { display: inline-block; min-width: 3em; text-align: left; }
+.reveal .wd-out { margin: 6px 0 0; font-size: .75em; }
+.reveal .wd-out b { color: var(--s08-ok); }
+.reveal .wd-out .sep { color: #ffffff40; margin: 0 14px; }
+.reveal .wd-try { margin: 10px 0 0; font-size: .7em; color: var(--psi-muted); }
+.reveal .wd-try button { margin: 0 6px; }
+
+/* ── Uscite ── */
+.reveal .ux-q { font-size: 1.05em; font-weight: 700; margin: 10px 0; line-height: 1.35; }
+.reveal .ux-a { font-size: .95em; font-weight: 800; color: var(--s08-ok); margin: 10px 0 0; }
+.reveal .ux-home { margin: 26px 0 0; font-size: .67em; color: var(--psi-muted); line-height: 1.45; }
+
+/* ── Sondaggi: varianti ── */
+.reveal .sondaggio-hint { font-size: .67em; }
+.reveal section.rivela .sondaggio-qr { display: none; }
+.reveal section.rivela .sondaggio-grid { grid-template-columns: 1fr 300px; gap: 36px; }
+.reveal section.rivela .sondaggio-q { font-size: .85em; margin: 0 0 16px; }
+.reveal section.rivela .sondaggio-opts li { font-size: .85em; padding: 8px 18px; }
+.reveal section.rivela .sondaggio-count { font-size: 1.5em; margin: 0; }
+.reveal .rv-foot { margin: 20px 0 0; text-align: center; }
+.reveal .rv-foot .s08-quote { font-size: .75em; }
+.reveal .rv-next { margin: 12px 0 0; font-size: .8em; font-weight: 700; color: var(--s08-ok); }
+.reveal .rv-line { margin: 8px 0 0; font-size: .8em; }
+.reveal .sondaggio-opts.long { grid-template-columns: 1fr; gap: 10px; }
+.reveal .sondaggio-opts.long li { font-size: .82em; font-weight: 600; line-height: 1.3; padding: 10px 20px; align-items: center; }
+
+/* ── Griglie e pannelli comuni della Settimana 8 ── */
+.reveal .s08-two { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; align-items: center; max-width: 1180px; margin: 0 auto; text-align: left; }
+.reveal .s08-two.wide-left { grid-template-columns: 1.25fr 1fr; }
+.reveal .s08-two.wide-right { grid-template-columns: 1fr 1.3fr; }
+.reveal .s08-two p { margin: 0 0 14px; font-size: .8em; line-height: 1.38; }
+.reveal .s08-two .katex-display { margin: .25em 0 .5em; }
+.reveal .s08-steps p { margin: 0 0 12px; font-size: .78em; line-height: 1.35; }
+.reveal .s08-steps .lbl { display: inline-block; min-width: 1.6em; color: var(--psi-b); font-weight: 800; }
+.reveal .s08-tag { display: inline-block; padding: 2px 12px; margin-right: 8px; border-radius: 10px; font-size: .8em; font-weight: 700; background: #ffffff12; color: var(--psi-muted); }
+.reveal .s08-card { padding: 16px 22px; border-radius: 16px; border: 1px solid #ffffff26; background: #ffffff08; }
+.reveal .s08-card p { margin: 0 0 8px; }
+.reveal .s08-big { font-size: 1.15em; font-weight: 800; }
+.reveal .s08-cite { margin: 6px 0 0; font-size: .67em; color: var(--psi-muted); }
+.reveal .s08-mid .katex-display > .katex { font-size: 1.1em; }
+
+/* Il gatto dei punti interrogativi (pacco 14, pp. 2, 6, 10, 12) */
+.reveal .gt-grid { display: grid; grid-template-columns: 1fr 260px; gap: 40px; align-items: center; max-width: 1180px; margin: 0 auto; text-align: left; }
+.reveal .gt-grid p { margin: 0 0 14px; font-size: .8em; line-height: 1.4; }
+.reveal .gt-grid p.gt-q { margin: 0; font: 900 2.6em var(--r-heading-font); color: var(--psi-a); text-align: center; letter-spacing: .05em; }
+.reveal .gt-grid p.gt-q small { display: block; font-size: .2em; font-weight: 600; letter-spacing: 0; color: var(--psi-muted); }
+
+/* ════════ Lezione 1 ════════ */
+
+/* L1-02 San Pietroburgo */
+.reveal .pb-grid { display: grid; grid-template-columns: 560px 1fr; gap: 26px; align-items: center; text-align: left; }
+.reveal .pb-time { margin: 0; padding: 0; list-style: none; }
+.reveal .pb-time li { margin: 0 0 14px; font-size: .75em; line-height: 1.32; opacity: .15; }
+.reveal .pb-time li b { color: var(--psi-b); margin-right: 8px; }
+.reveal .pb-time li i { color: var(--s08-ok); font-style: italic; }
+
+/* L1-03 il cruscotto */
+.reveal .cr-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 1100px; margin: 10px auto 22px; }
+.reveal .cr-tile { padding: 18px 10px; border-radius: 16px; border: 1px solid #ffffff2a; background: #ffffff09; }
+.reveal .cr-tile small { display: block; font-size: .62em; color: var(--psi-muted); letter-spacing: 1px; text-transform: uppercase; }
+.reveal .cr-tile b { display: block; margin-top: 6px; font: 800 1.45em var(--r-heading-font); color: var(--psi-a); }
+.reveal .cr-tile.unk b { color: var(--s08-red); }
+.reveal .cr-sla { display: inline-block; padding: 14px 30px; border-radius: 14px; border: 2px dashed var(--psi-b); font-size: .82em; }
+.reveal .cr-sla b { color: var(--psi-b); }
+
+/* L1-08 tre risposte; L1-24 prezzo */
+.reveal .tr-pct { display: grid; grid-template-columns: repeat(3, 1fr); max-width: 1100px; margin: 0 auto; font-size: .8em; }
+.reveal .pz-table { font-size: .7em; }
+.reveal .pz-table td { min-width: 120px; }
+.reveal .pz-table td.lim { color: var(--psi-b); font-weight: 800; background: #fbbf2414; }
+
+/* L1-11 redditi */
+.reveal .rd-note { margin: 4px auto 0; font-size: .8em; max-width: 1100px; }
+
+/* L1-26 widget di Čebyšëv; L2-24 widget della legge dei grandi numeri */
+.reveal .wc-box { max-width: 1180px; margin: 0 auto; }
+.reveal .wc-ctrl { display: flex; justify-content: center; align-items: center; gap: 34px; flex-wrap: wrap; margin: 0 0 6px; font-size: .68em; }
+.reveal .wc-ctrl label { display: flex; align-items: center; gap: 12px; }
+.reveal .wc-ctrl input[type=range] { width: 260px; accent-color: var(--s08-ok); }
+.reveal .wc-ctrl select { font: inherit; background: #1f2933; color: var(--psi-text); border: 1px solid #ffffff40; border-radius: 8px; padding: 2px 8px; }
+.reveal .wc-ctrl b { display: inline-block; min-width: 2.6em; text-align: left; }
+.reveal .wc-out { margin: 4px auto 0; font-size: .68em; max-width: 1150px; line-height: 1.35; }
+.reveal .wc-out b.lim { color: var(--psi-b); }
+.reveal .wc-out b.vera { color: var(--psi-a); }
+
+/* ════════ Lezione 2 ════════ */
+
+/* L2-02 l'urna */
+.reveal .ur-grid { display: grid; grid-template-columns: 520px 1fr; gap: 30px; align-items: center; text-align: left; }
+.reveal .ur-quote { margin: 0 0 12px; font-size: .74em; font-style: italic; color: #e2e8f0; line-height: 1.36; }
+.reveal .ur-quote small { display: block; font-style: normal; font-size: .85em; color: var(--psi-muted); margin-top: 6px; }
+
+/* L2-15 avvicinarsi */
+.reveal .av-list { max-width: 1150px; margin: 0 auto; text-align: left; }
+.reveal .av-list p { margin: 0 0 14px; padding: 10px 18px; border-radius: 12px; font-size: .78em; line-height: 1.35; background: #ffffff08; border: 1px solid #ffffff1f; }
+.reveal .av-list p.no { border-color: #ff6b6b66; }
+.reveal .av-list p.no::before { content: '✗ '; color: var(--s08-red); font-weight: 800; }
+.reveal .av-list p.si { border-color: var(--s08-ok); background: #38ef7d14; }
+.reveal .av-list p.si::before { content: '✓ '; color: var(--s08-ok); font-weight: 800; }
+
+/* L2-21 diluizione */
+.reveal .dl-table { font-size: .68em; }
+.reveal .dl-table td { min-width: 150px; }
+
+/* Formule nei pannelli: KaTeX poco più grande del testo, così non va a capo. */
+.reveal .s08-steps .katex, .reveal .s08-two .katex { font-size: 1.05em; }
+.reveal .pb-grid .s08-text { margin-left: 0; text-align: left; }

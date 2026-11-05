@@ -110,6 +110,7 @@ nav:
       - "6. Bertrand, Gauss e l'asteroide Cerere: variabili aleatorie continue e distribuzione normale": settimana_06/index.md
   - "Modulo III — Distribuzioni congiunte, teoremi limite e campionamento":
       - "7. Galton e le altezze di genitori e figli: distribuzioni congiunte, covarianza e correlazione": settimana_07/index.md
+      - "8. La scuola di San Pietroburgo: disuguaglianze e legge dei grandi numeri": settimana_08/index.md
   - "Domande d'esame":
       - "Introduzione": domande-esame/index.md
       - "Primo round":

@@ -56,7 +56,7 @@ Il percorso è articolato in 4 moduli tematici distribuiti su **12 settimane**, 
 | Settimana | Argomenti |
 |---|---|
 | **[7. Galton e le altezze di genitori e figli](settimana_07/index.md)** *(bozza completa)* | **Distribuzioni congiunte e correlazione:** distribuzione congiunta di due variabili discrete e distribuzioni marginali, variabili aleatorie indipendenti, covarianza e coefficiente di correlazione; incorrelazione e indipendenza, correlazione e causazione. |
-| **Settimana 8** *(in arrivo)* | **Disuguaglianze e Legge dei Grandi Numeri:** somma di variabili aleatorie indipendenti, disuguaglianze di Markov e Čebyšëv, convergenza in probabilità e Legge Debole dei Grandi Numeri. |
+| **[8. La scuola di San Pietroburgo](settimana_08/index.md)** *(bozza completa)* | **Disuguaglianze e legge dei grandi numeri:** disuguaglianze di Markov e di Čebyšëv come garanzie valide per ogni distribuzione; varianza della somma di variabili indipendenti, media campionaria e legge della radice quadrata; convergenza in probabilità e legge (debole) dei grandi numeri, frequenze e teorema di Bernoulli; garanzie nei sistemi informatici e metodo Monte Carlo. |
 | **Settimana 9** *(in arrivo)* | **Il Teorema del Limite Centrale:** enunciato, cosa garantisce e cosa no, comportamento asintotico della media campionaria. |
 | **Settimana 10** *(in arrivo)* | **Campionamento e introduzione all'inferenza:** campionamento statistico, stimatori puntuali e loro proprietà, errore standard, intervalli di confidenza e Bootstrap computazionale. |
 

@@ -11,7 +11,3 @@ docs/assets/vendor/
 # PDF dei capitoli: li genera il workflow di deploy in site/pdf/;
 # scripts/build_pdfs.mjs ne lascia qui una copia per l'anteprima locale
 docs/pdf/
-
-# di .claude/ si versionano solo le skill del progetto
-.claude/*
-!.claude/skills/

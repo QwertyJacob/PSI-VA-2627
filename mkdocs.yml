@@ -114,4 +114,5 @@ nav:
       - "Introduzione": domande-esame/index.md
       - "Primo round":
           - "Settimana 1 — Che cos'è la probabilità?": domande-esame/primo-round/settimana-01.md
+          - "Settimana 2 — Dall'effetto alla causa: alberi e Teorema di Bayes": domande-esame/primo-round/settimana-02.md
   - "La probabilità al lavoro": probabilita-al-lavoro/index.md

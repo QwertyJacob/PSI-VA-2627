@@ -10,9 +10,10 @@ L'esame orale si svolge in due round. Questa sezione raccoglie le domande pubbli
 
 Le domande del primo round riguardano i fondamenti del corso: definizioni, distinzioni, ragionamenti che le dispense indicano come «da ricostruire» e qualche piccolo calcolo. All'esame hai 30 secondi per leggere la domanda con calma, e poi un minuto e mezzo per rispondere a voce. Qui le trovi tutte, ciascuna con la sua risposta attesa, perciò studiarle significa ripassare il nucleo di ogni settimana.
 
-Le pagine si aggiungono man mano che le settimane vengono pubblicate:
+Le pagine si aggiungeranno man mano nei prossimi giorni:
 
 - [Settimana 1 — Che cos'è la probabilità?](primo-round/settimana-01.md): otto domande.
+- [Settimana 2 — Dall'effetto alla causa: alberi e Teorema di Bayes](primo-round/settimana-02.md): otto domande.
 
 ## Secondo round: domande tipo {: #secondo-round }
 

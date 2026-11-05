@@ -1,4 +1,4 @@
-[:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" } [:material-presentation-play: Slide estese (con ripasso)](slides/extended.html){ .md-button target="_blank" }
+[:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" } [:material-presentation-play: Slide estese (con ripasso)](slides/extended.html){ .md-button target="_blank" } [:material-comment-question-outline: Domande d'esame](../domande-esame/primo-round/settimana-02.md){ .md-button }
 
 # Settimana 2 — Dall'effetto alla causa: alberi di probabilità e Teorema di Bayes
 *Come si torna indietro da ciò che vediamo (un allarme, un test positivo, un crash) a ciò che non vediamo (un attacco, una malattia, un bug), e perché quasi tutti, medici compresi, sbagliano questo conto.*
@@ -11,6 +11,8 @@
 - **Aggiornamento sequenziale:** comprendere che la probabilità a posteriori può diventare la nuova probabilità a priori e che la stessa evidenza non va contata due volte. La formalizzazione dell’indipendenza condizionata è rinviata alla Settimana 12, nell’applicazione a Naive Bayes.
 
 **Facoltativi e non richiesti all’esame:** sensibilità, specificità e metriche di valutazione dei classificatori (argomenti del corso di Machine Learning); dimostrazione formale del lemma sulle partizioni, verifica completa degli assiomi per la probabilità condizionata, induzione sulla regola del cammino e ricostruzione del tavolo storico di Bayes. Nei problemi d’esame le probabilità necessarie saranno espresse direttamente come $P(E \mid H)$, $P(E \mid H^c)$, ecc., oppure in parole, senza richiedere il lessico delle metriche.
+
+Le otto domande del primo round dell'esame orale su questa settimana, ciascuna con la sua risposta attesa, sono raccolte nella sezione [Domande d'esame](../domande-esame/primo-round/settimana-02.md).
 
 Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
 

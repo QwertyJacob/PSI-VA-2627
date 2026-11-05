@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>PSI 26/27 — Settimana 9: il teorema del limite centrale</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../assets/slides/deck.js"></script>
+  <link rel="stylesheet" href="css/settimana.css">
+</head>
+<body>
+  <div class="reveal"><div class="slides">
+
+    <!-- ═════════════ LEZIONE 1 · mercoledì, 9:00–10:45. Scene: js/lezione1.js ═════════════ -->
+
+    <!-- L1-00 · copertina -->
+    <section id="lezione-1">
+      <p class="cover-week">Settimana 9</p>
+      <h2 class="cover-title">Perché sommando cose diverse<br>compare sempre la stessa campana?</h2>
+      <div class="cover-acts"><span>De Moivre e il teorema del limite centrale</span><span>Lezione 1</span><span>mercoledì, 9:00</span></div>
+      <aside class="notes">Data da confermare. Si parte dal riepilogo della Lezione 2 della Settimana 8 (15 minuti). Dopo De Moivre, il blocco centrale segue il pacco «12. TLC» dalla p. 9 alla p. 23 e il notebook 4.4_CLT. Notazione diversa dal pacco: la normale ha la varianza al secondo posto, N(μ, σ²/n), mentre il pacco scrive N(μ, σ/√n); la media campionaria è X̄ₙ e non X̃ₙ. Le parti segnate (S) si saltano se si è in ritardo.</aside>
+    </section>
+
+    <!-- L1-01 · riepilogo della Settimana 8 -->
+    <section id="riepilogo-s8">
+      <p class="badge">Riepilogo · Settimana 8</p>
+      <h2 class="scene-title">Quattro domande su somme e medie</h2>
+      <div class="rq-grid">
+        <div class="rq-list">
+          <p class="rq fragment"><span>1</span>$\operatorname{Var}(X+Y)$ per indipendenti? E $\operatorname{Var}(2X)$?</p>
+          <p class="rq fragment"><span>2</span>Media e varianza di $\bar X_n$? Che cosa costa dimezzare l'errore?</p>
+          <p class="rq fragment"><span>3</span>La legge dei grandi numeri, in due righe.</p>
+          <p class="rq fragment"><span>4</span>Dieci teste di fila: le croci devono recuperare?</p>
+        </div>
+        <div class="rq-board">
+          <svg class="scene-svg" width="360" height="230" viewBox="0 0 360 230" role="img" aria-label="Una tabellina: la somma di n variabili ha media n mu, varianza n sigma quadro, deviazione standard sigma radice di n; la media ha media mu, varianza sigma quadro su n, deviazione standard sigma su radice di n"></svg>
+          risposte alla lavagna
+        </div>
+      </div>
+      <p class="rq-bridge fragment">Sappiamo dove va la media e quanto è dispersa. Oggi: la sua forma.</p>
+      <aside class="notes">Una domanda per click, risposte dalla classe e alla lavagna. (1) Somma delle varianze per indipendenti; Var(2X) = 4 Var X: un dado solo non compensa i suoi scarti. (2) μ e σ²/n, deviazione standard σ/√n: per dimezzare l'errore servono quattro volte più dati. (3) Čebyšëv su X̄ₙ: σ²/(nε²) → 0. (4) Diluizione, non compensazione. Controlla l'esercizio 7 della Settimana 8: 4 ms, 0,16, 320 richieste. Click 5: il ponte.</aside>
+    </section>
+
+    <!-- ───── De Moivre (Erlebnis, 10 minuti) ───── -->
+
+    <!-- L1-02 · De Moivre -->
+    <section id="de-moivre">
+      <p class="badge">Londra, 1733</p>
+      <div class="dm-grid">
+        <ul class="dm-bio">
+          <li class="fragment"><b>1667</b> Abraham De Moivre nasce in Champagne, da famiglia protestante.</li>
+          <li class="fragment"><b>1688</b> Dopo il carcere per motivi di religione, va a Londra.</li>
+          <li class="fragment"><b>caffè</b> Nessun posto all'università: lezioni private, anche nei caffè.</li>
+          <li class="fragment"><b>Newton</b> «Andate dal signor De Moivre: queste cose le sa meglio di me».</li>
+        </ul>
+        <div>
+          <p class="dm-q fragment">«Questo è il problema più difficile che si possa proporre in materia di probabilità, e per questo l'ho riservato per ultimo.»<small>A. De Moivre, <i>The Doctrine of Chances</i>, 3ª ed., 1756, p. 242</small></p>
+          <p class="dm-ask fragment">Un evento al 50%, 3000 prove: è possibile che accada 2000 volte? Quanto è improbabile?</p>
+        </div>
+      </div>
+      <aside class="notes">Nuova (dispensa, Atto I). Una riga per click (non vanno ricordate le date): famiglia protestante; carcere e Londra nel 1688; mai un posto universitario, viveva di lezioni private, anche nei caffè di Londra (probabilmente lo Slaughter's); la frase di Newton. Click 5: la citazione. Click 6: la domanda. Collega a Bernoulli (Settimana 8): la frequenza si avvicina alla probabilità, ma quanto è probabile uno scarto di una certa grandezza? Il problema è sommare centinaia di termini binomiali con numeri di mille cifre.</aside>
+    </section>
+
+    <!-- L1-03 · i 3600 lanci -->
+    <section id="de-moivre-3600">
+      <p class="badge">La risposta del 12 novembre 1733</p>
+      <div class="s09-grid narrow">
+        <svg class="scene-svg" width="820" height="470" viewBox="0 0 820 470" role="img" aria-label="Le probabilità del numero di teste in 3600 lanci, barre sottili tra 1700 e 1900 che formano una campana; la curva di De Moivre sovrapposta; bande verdi entro 30 e entro 60 teste da 1800"></svg>
+        <div class="s09-side">
+          <p class="dim dm-s1">3600 lanci: media <b>1800</b>, deviazione standard <b>½√3600 = 30</b></p>
+          <p class="dim dm-s2">Tra 1770 e 1830: <span class="k">0,682688</span>, «28 contro 13»</p>
+          <p class="dim dm-s3">Tra 1740 e 1860: <span class="k">0,95428</span>, «21 contro 1»</p>
+          <p class="dim dm-s4">La radice quadrata è «il <b>modulo</b> con cui regolare la nostra stima» (p. 248).</p>
+          <p class="dim dm-s5">3000 lanci, 2000 teste: <span class="m">18 deviazioni standard</span> sopra la media.</p>
+        </div>
+      </div>
+      <aside class="notes">Nuova (dispensa, Atto I, figura F1). All'ingresso le barre. Click: 1 la curva arancione di De Moivre (oggi: la normale) e la deviazione standard ½√n, perché il numero di teste ha varianza n/4; 2 la banda verde ±30: 0,682688 (esatto con gli estremi 0,6907); 3 la banda ±60: 0,95428; «li riconoscete? 68 e 95 della regola della Settimana 6»; 4 il modulo: gli scarti crescono come √n, non come n; 5 la risposta alla domanda delle 3000 prove: ½√3000 ≈ 27,4, 500 teste di scarto sono 18 deviazioni standard. A voce: «non serve che n sia immenso: nemmeno la 100ª potenza» (p. 247), per una moneta equilibrata.</aside>
+    </section>
+
+    <!-- L1-04 · sondaggio s09-1 (lancio) -->
+    <section id="sondaggio-1" class="sondaggio" data-poll="s09-1">
+      <p class="badge">Sondaggio · la risposta arriva alla fine della lezione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Lanciamo 10 dadi e sommiamo. Vinci 20 euro se la somma è <b>al più 25</b> o <b>almeno 45</b>. Quanto è probabile vincere?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>circa l'1%</li>
+            <li><span>2</span>circa l'8%</li>
+            <li><span>3</span>circa il 25%</li>
+            <li><span>4</span>circa il 50%</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono · votate d'istinto</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Il gioco del pacco (p. 22). Votate d'istinto. NON premere V: si rivela al minuto 93 circa, sul duplicato, dopo l'esercizio C. Risposta 2 (esatta 0,078).</aside>
+    </section>
+
+    <!-- ───── La forma della somma (pacco 12, pp. 9–13; notebook 4.4) ───── -->
+
+    <!-- L1-05 · non solo questo -->
+    <section id="non-solo">
+      <p class="badge">Non solo questo!!!</p>
+      <p class="s09-lead">$X_1,\dots,X_n$ i.i.d. con $\mathbb{E}[X_i]=\mu$ e $\operatorname{Var}(X_i)=\sigma^2$</p>
+      <div class="s09-two">
+        <div class="s09-card">
+          <p><b>La media</b> $\;\bar X_n=\dfrac{X_1+\cdots+X_n}{n}$</p>
+          <p>$\mathbb{E}[\bar X_n]=\mu\qquad\operatorname{Var}(\bar X_n)=\dfrac{\sigma^2}{n}$</p>
+          <p class="fragment highlight">per $n$ grande: $\;\bar X_n\approx\mathcal N\!\left(\mu,\ \dfrac{\sigma^2}{n}\right)$</p>
+        </div>
+        <div class="s09-card">
+          <p><b>La somma</b> $\;S_n=X_1+\cdots+X_n$</p>
+          <p>$\mathbb{E}[S_n]=n\mu\qquad\operatorname{Var}(S_n)=n\sigma^2$</p>
+          <p class="fragment highlight">per $n$ grande: $\;S_n\approx\mathcal N\big(n\mu,\ n\sigma^2\big)$</p>
+        </div>
+      </div>
+      <p class="s09-note fragment">Media e varianza: Settimana 8, esatte. La novità è la <b>forma</b>: una gaussiana.</p>
+      <aside class="notes">Pacco, slide 9–10. Le prime righe sono la Settimana 8, da far dire alla classe. Click 1: la riga nuova del pacco per la media («Gaussiana!!!»); 2 la stessa per la somma; 3 che cosa è esatto e che cosa è nuovo. Il pacco scrive N(μ, √(σ²/n)) con la deviazione standard: noi scriviamo la varianza, come nella Settimana 6. «Prima di crederci, vediamolo.»</aside>
+    </section>
+
+    <!-- L1-06 · tre lenti -->
+    <section id="tre-lenti">
+      <p class="badge">Passeggiata aleatoria · passi ±1, μ = 0, σ = 1</p>
+      <svg class="scene-svg" width="1180" height="440" viewBox="0 0 1180 440" role="img" aria-label="Le stesse otto passeggiate aleatorie in tre pannelli: la somma si allarga come radice di n, la media si stringe verso zero, la somma divisa per radice di n resta larga uguale"></svg>
+      <p class="s09-note tl-f">$\operatorname{Var}\!\left(\dfrac{S_n}{\sqrt n}\right)=\dfrac{n\sigma^2}{n}=\sigma^2$: con questa lente si può guardare la <b>forma</b>.</p>
+      <aside class="notes">Il notebook 4.4_CLT (celle 7–9). Una pedina va a destra o a sinistra a ogni lancio di moneta: Sₙ è la posizione. È anche il pallino della tavola di Galton (Settimana 7). Click: 1 la somma, deviazione standard √n: si allarga; 2 la media, deviazione standard 1/√n: si stringe (legge dei grandi numeri); 3 dividendo per √n la varianza resta σ² = 1: né si allarga né si stringe; 4 la formula, da fare alla lavagna con Var(aX) = a² Var X. «Con quale forma oscillano le passeggiate nel terzo pannello?»</aside>
+    </section>
+
+    <!-- L1-07 · somme di uniformi -->
+    <section id="uniformi">
+      <p class="badge">Esempio · $X_i\sim\operatorname{Uni}(0,1)$, $\mu=\frac12$, $\sigma^2=\frac1{12}$</p>
+      <svg class="scene-svg" width="1180" height="470" viewBox="0 0 1180 470" role="img" aria-label="Quattro pannelli: la densità della somma di 1, 2, 5 e 10 uniformi in azzurro e la normale con la stessa media e varianza in arancione; in verde la probabilità che la somma sia minore di n terzi, con il valore esatto e quello della normale"></svg>
+      <aside class="notes">Pacco, slide 11–13 (esempio di Piech). Il pacco scrive P(X̃ₙ &lt; n/3), ma le probabilità sono della somma: P(Sₙ &lt; n/3), che è anche P(X̄ₙ &lt; 1/3). Click: 1 n = 1, un rettangolo; 2 n = 2, il triangolo come per due dadi: 2/9 = 0,2222 (area del triangolino) contro 0,2071; 3 n = 5: 0,1017 contro 0,0984; 4 n = 10: 0,0337 contro 0,0339, quarta cifra. La normale ha media n/2 e varianza n/12 (Sₙ ≈ N(n/2, n/12)).</aside>
+    </section>
+
+    <!-- L1-08 (S) · due gobbe -->
+    <section id="due-gobbe">
+      <p class="badge">Anche da una popolazione strana</p>
+      <svg class="scene-svg" width="1180" height="440" viewBox="0 0 1180 440" role="img" aria-label="A sinistra una distribuzione a due gobbe, molto lontana da una campana; a destra l'istogramma della media di 15 valori estratti da quella distribuzione, una campana stretta con la normale sovrapposta"></svg>
+      <aside class="notes">(S) Pacco, slide 20–21 (simulatore di onlinestatbook, Rice University), ridisegnato con la distribuzione «a due gobbe» del widget: con probabilità 0,6 uniforme tra 0 e 2, altrimenti uniforme tra 8 e 10. Click: 1 la media di 15 valori, 10 000 volte: una campana. Se salti: «anche da una distribuzione a due gobbe la media di 15 valori è una campana».</aside>
+    </section>
+
+    <!-- L1-09 (S) · widget -->
+    <section id="widget-somme">
+      <p class="badge">La campana delle somme</p>
+      <div class="wc-box" id="ws-box" data-prevent-swipe>
+        <div class="wc-ctrl">
+          <label><select>
+            <option value="unif">uniforme</option>
+            <option value="dado">dado</option>
+            <option value="esp">esponenziale</option>
+            <option value="gobbe">due gobbe</option>
+            <option value="bern">bernoulliana p = 0,1</option>
+          </select></label>
+          <label>$n$ <input type="range" min="1" max="50" step="1" value="1"> <b data-v="n">1</b></label>
+          <button class="psi-btn ghost" type="button" data-new>nuovo campione</button>
+        </div>
+        <svg class="scene-svg" width="1100" height="400" viewBox="0 0 1100 400" role="img" aria-label="Istogramma azzurro di 20 000 somme simulate di n variabili e densità normale arancione con la stessa media e varianza; linee rosse a più e meno due deviazioni standard"></svg>
+        <p class="wc-out"></p>
+      </div>
+      <aside class="notes">(S) Il widget della dispensa (Atto II). Prima di muovere: «quale distribuzione avrà bisogno di più addendi?». Uniforme: n = 5 basta (code vicine al 2,28%). Esponenziale n = 30: coda destra circa 3%, sinistra circa 1%. Bernoulliana p = 0,1, n = 30: ancora storta. Le due gobbe: una decina di addendi. Il pulsante rigenera il campione.</aside>
+    </section>
+
+    <!-- L1-10 · forma pratica -->
+    <section id="tlc-pratico">
+      <p class="badge">Teorema del limite centrale · forma pratica</p>
+      <p class="s09-lead">$X_1,\dots,X_n$ i.i.d., media $\mu$, varianza $\sigma^2$ <b>finita</b>. Per $n$ grande:</p>
+      <div class="s09-box s09-mid">$$S_n\approx\mathcal N\big(n\mu,\;n\sigma^2\big)\qquad\qquad\bar X_n\approx\mathcal N\!\left(\mu,\;\frac{\sigma^2}{n}\right)$$</div>
+      <p class="tp-line fragment">La somma <b>dimentica la forma</b> degli addendi: ne ricorda solo $\mu$ e $\sigma^2$.</p>
+      <p class="s09-text fragment">Se le $X_i$ sono già normali, la somma è <b>esattamente</b> normale per ogni $n$.</p>
+      <aside class="notes">Nuova (dispensa, Atto II, riquadro). La frase chiave della lezione: della distribuzione di partenza restano solo centro nμ e larghezza σ√n. Click 1: la frase; 2 il caso esatto (notebook, cella 12), che servirà per l'ascensore dell'esercizio 3.</aside>
+    </section>
+
+    <!-- L1-11 · controllo c1 -->
+    <section id="sondaggio-c1" class="sondaggio" data-poll="s09-c1">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>forma della somma</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, rifai alla lavagna le tre lenti (nσ², σ²/n, σ²) e il triangolo delle due uniformi, prima dell'esercizio.</aside>
+    </section>
+
+    <!-- L1-12 · Esercizio A -->
+    <section id="es-cento-dadi">
+      <p class="badge">Esercizio · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>Lanci <b>100 dadi</b> indipendenti. Un dado: media 3,5, varianza $35/12\approx2{,}92$.</p>
+          <ol class="dv-steps">
+            <li>Media e deviazione standard della somma?</li>
+            <li>Tra quali valori cade la somma con probabilità di circa il 95%?</li>
+            <li>E la media dei cento risultati?</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">1. $350$ e $\sqrt{100\cdot2{,}92}\approx17{,}1$</p>
+          <p class="fragment" data-fragment-index="3">2. $350\pm2\cdot17{,}1$: circa da 316 a 384</p>
+          <p class="fragment" data-fragment-index="4">3. da 3,16 a 3,84 · con Čebyšëv solo il 75%</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">Nuova (dispensa, sosta dell'Atto II). Click 1: timer di 4′. Click 2–4: la soluzione. Errori attesi: deviazione standard 100 · 1,71 = 171 (la regola di 100X); usare la varianza 291,7 come larghezza. Con 1,96: da 316,5 a 383,5.</aside>
+    </section>
+
+    <!-- ───── Il teorema (pacco 12, pp. 14–16) ───── -->
+
+    <!-- L1-13 · la somma standardizzata -->
+    <section id="standardizzata">
+      <p class="badge">La somma standardizzata</p>
+      <div class="s09-box s09-mid">$$S_n^*=\frac{S_n-n\mu}{\sigma\sqrt n}$$</div>
+      <div class="s09-steps" style="max-width:1100px;margin:0 auto;text-align:left">
+        <p class="fragment"><span class="lbl">1</span>$\mathbb{E}[S_n^*]=\dfrac{n\mu-n\mu}{\sigma\sqrt n}=0$ &nbsp;·&nbsp; $\operatorname{Var}(S_n^*)=\dfrac{n\sigma^2}{(\sigma\sqrt n)^2}=1$ &nbsp; per ogni $n$</p>
+        <p class="fragment"><span class="lbl">2</span>dividendo sopra e sotto per $n$: $\;S_n^*=\dfrac{\bar X_n-\mu}{\sigma/\sqrt n}$, la media standardizzata</p>
+        <p class="fragment"><span class="lbl">3</span>non si allarga, non si stringe, non si sposta: la terza lente, centrata</p>
+      </div>
+      <aside class="notes">Pacco, slide 14. Il pacco scrive √(nσ²) al denominatore: è σ√n. Click 1: media 0 e varianza 1, alla lavagna con linearità e cambi di scala; 2 la stessa variabile partendo dalla media (√n/n = 1/√n); 3 il legame con le tre lenti. «Verso quale forma va?»</aside>
+    </section>
+
+    <!-- L1-14 · l'enunciato -->
+    <section id="teorema">
+      <p class="badge">Teorema del limite centrale</p>
+      <div class="th-box">
+        <p class="fragment"><span class="lbl">Ipotesi</span>$X_1,X_2,\dots$ <b>indipendenti</b> e con la <b>stessa distribuzione</b></p>
+        <p class="fragment"><span class="lbl"></span>media $\mu$, varianza $\sigma^2$ <b>finita</b> e positiva</p>
+        <p class="fragment"><span class="lbl">Tesi</span>per ogni $t$ reale: $\displaystyle\lim_{n\to\infty}P\big(S_n^*\le t\big)=\Phi(t)$</p>
+        <p class="fragment"><span class="lbl">Nome</span><b>convergenza in distribuzione</b>: la funzione di ripartizione di $S_n^*$ tende a $\Phi$</p>
+      </div>
+      <p class="s09-note fragment">In pratica, per $n$ grande: $\;P(S_n\le s)\approx\Phi\!\left(\dfrac{s-n\mu}{\sigma\sqrt n}\right)$</p>
+      <aside class="notes">Pacco, slide 15 (dalle note di S. Boffa). Una riga per click. Sulla forma non si chiede nulla: discreta o continua, simmetrica o storta. La conclusione riguarda la funzione di ripartizione della Settimana 6. Click 5: la formula pratica, con ≈: per un n fissato il teorema non dice quanto è buona (venerdì).</aside>
+    </section>
+
+    <!-- L1-15 · le due convergenze -->
+    <section id="due-convergenze">
+      <p class="badge">Legge dei grandi numeri e teorema del limite centrale</p>
+      <svg class="scene-svg" width="1180" height="420" viewBox="0 0 1180 420" role="img" aria-label="A sinistra la distribuzione della media di 1, 4 e 16 dadi, sempre più stretta attorno a 3,5; a destra le stesse distribuzioni standardizzate, che si sovrappongono tutte alla stessa campana"></svg>
+      <div class="s09-two" style="max-width:1180px;margin:0 auto">
+        <p class="dc-l"><b class="d">Dove va:</b> $\bar X_n\to\mu$ in probabilità</p>
+        <p class="dc-r"><b class="k">Come oscilla:</b> $\dfrac{\bar X_n-\mu}{\sigma/\sqrt n}\to\mathcal N(0,1)$ in distribuzione</p>
+      </div>
+      <aside class="notes">Nuova (dispensa, Atto III, enunciato). Click: 1–3 la media di 1, 4, 16 dadi (la figura della Settimana 8): si stringe attorno a 3,5, è la legge dei grandi numeri; 4 la stessa media ingrandita di √n/σ: tre distribuzioni che si sovrappongono alla campana. «La prima legge dice dove va la media, la seconda come oscilla, e su quale scala, mentre ci va.»</aside>
+    </section>
+
+    <!-- L1-16 · controllo c2 -->
+    <section id="sondaggio-c2" class="sondaggio" data-poll="s09-c2">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con l'<b>enunciato del teorema</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, rifai il calcolo di media 0 e varianza 1 di S*ₙ e torna alla slide delle due convergenze prima delle lampadine.</aside>
+    </section>
+
+    <!-- L1-17 · la ricetta -->
+    <section id="ricetta">
+      <p class="badge">Che cosa ci permette di fare</p>
+      <p class="rc-quote">Il teorema del limite centrale consente, usando la tavola della funzione di ripartizione della normale standard, di trovare la probabilità di eventi che si rappresentano come somma $X_1+\dots+X_n$ di variabili uguali e indipendenti, <b>a prescindere da quale sia la distribuzione</b> di $X_1,\dots,X_n$.</p>
+      <ol class="rc-steps">
+        <li class="fragment">scrivi l'evento con $S_n$ (o con $\bar X_n$)</li>
+        <li class="fragment">calcola $n\mu$ e $\sigma\sqrt n$ (o $\mu$ e $\sigma/\sqrt n$)</li>
+        <li class="fragment">standardizza la soglia: $z=(s-n\mu)/(\sigma\sqrt n)$</li>
+        <li class="fragment">leggi $\Phi(z)$ nella tabella, con $\Phi(-z)=1-\Phi(z)$</li>
+      </ol>
+      <aside class="notes">Pacco, slide 16 (la frase evidenziata in giallo). Click 1–4: la ricetta, che resta alla lavagna. «Non serve la distribuzione della somma, quasi sempre difficilissima: bastano media e varianza di un addendo.»</aside>
+    </section>
+
+    <!-- L1-18 · le lampadine -->
+    <section id="lampadine">
+      <p class="badge">Esercizio del pacco</p>
+      <p class="s09-text">Una lampadina dura un tempo <b>esponenziale</b> con media <b>10 giorni</b>; quando si spegne, si sostituisce subito.<br>Qual è la probabilità che <b>40 lampadine</b> bastino per un anno?</p>
+      <svg class="scene-svg" width="1180" height="360" viewBox="0 0 1180 360" role="img" aria-label="Tre righe orizzontali, ciascuna fatta di 40 segmenti colorati di lunghezza casuale, una lampadina dopo l'altra, sull'asse dei giorni da 0 a 520; la linea verticale dei 365 giorni; alcune righe la superano, altre no"></svg>
+      <aside class="notes">Pacco, slide 17. All'ingresso la domanda. Click: 1–3 tre anni simulati, ciascuno con quaranta durate in fila (seme fisso): la somma è Sₙ, la linea è l'anno. Qualche volta si arriva, qualche volta no. «Quanto spesso?» Chiedi alla classe: media 400, deviazione standard? (σ = 10 per l'esponenziale, quindi √4000).</aside>
+    </section>
+
+    <!-- L1-19 · la soluzione -->
+    <section id="lampadine-sol">
+      <p class="badge">Le lampadine · soluzione</p>
+      <div class="s09-grid">
+        <div class="s09-steps">
+          <p class="ls-step"><span class="lbl">1</span>$S_{40}=X_1+\dots+X_{40}$, i.i.d. esponenziali: $\mu=\sigma=10$</p>
+          <p class="ls-step"><span class="lbl">2</span>$\mathbb{E}[S_{40}]=400,\ \operatorname{Var}(S_{40})=4000,\ \sigma\sqrt{40}\approx63{,}2$</p>
+          <p class="ls-step"><span class="lbl">3</span>$P(S_{40}\ge365)\approx1-\Phi\!\left(\dfrac{365-400}{63{,}2}\right)=1-\Phi(-0{,}55)$</p>
+          <p class="ls-step"><span class="lbl">4</span>$=\Phi(0{,}55)=$ <span class="highlight s09-big">0,71</span> &nbsp; <span class="muted">esatto: 0,6975</span></p>
+        </div>
+        <svg class="scene-svg" width="400" height="330" viewBox="0 0 400 330" role="img" aria-label="La campana della somma di 40 durate, centrata in 400, con l'area a destra di 365 colorata in verde: 71 per cento"></svg>
+      </div>
+      <aside class="notes">Pacco, slide 18. Un passo per click; la campana a destra si colora all'ultimo. Il pacco giustifica con «40 è maggiore di 30»: è la regola pratica del notebook, ne riparliamo venerdì. Il valore esatto (distribuzione gamma, non la studiamo) è 0,6975: la normale sbaglia di un punto.</aside>
+    </section>
+
+    <!-- L1-20 (S) · Esercizio B -->
+    <section id="es-chiavetta">
+      <p class="badge">Esercizio · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>Copi <b>400 foto</b> su una chiavetta con <b>1000 MB</b> liberi.<br>Dimensioni indipendenti: media 2,4 MB, deviazione standard 1 MB.</p>
+          <ol class="dv-steps">
+            <li>Media e deviazione standard dello spazio totale?</li>
+            <li>Con quale probabilità circa ci stanno tutte?</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">1. $960$ MB e $1\cdot\sqrt{400}=20$ MB</p>
+          <p class="fragment" data-fragment-index="3">2. $\Phi\big((1000-960)/20\big)=\Phi(2)=0{,}977$</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">(S) Nuova (dispensa, sosta della sezione lampadine). Se lo salti, è a casa. Click 1: timer di 4′. Click 2–3: la soluzione. Errori attesi: deviazione standard 400 MB (e quindi Φ(0,1)); dividere per 400.</aside>
+    </section>
+
+    <!-- L1-21 · Esercizio C -->
+    <section id="es-dieci-dadi">
+      <p class="badge">Esercizio · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>Lanciamo un dado <b>10 volte</b> e sommiamo: $X$ è la somma.<br>Vi do <b>20 euro</b> se $X\le25$ oppure $X\ge45$.<br><span class="muted">Vi do una mentina se accettate di giocare.</span></p>
+          <ol class="dv-steps">
+            <li>Media, varianza e deviazione standard di $X$?</li>
+            <li>Probabilità di vincere, con la normale?</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">1. $35$, $\;10\cdot\frac{35}{12}\approx29{,}17$, $\;\approx5{,}40$</p>
+          <p class="fragment" data-fragment-index="3">2. $2\big(1-\Phi(10/5{,}40)\big)=2\big(1-\Phi(1{,}85)\big)\approx0{,}064$</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="5" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">Pacco, slide 22 (esempio di Piech). È la domanda di s09-1, che resta da rivelare. Click 1: timer di 5′. Click 2–3: la soluzione senza correzione. Errori attesi: varianza 35/12 invece di 10 · 35/12; 2Φ(1,85) − 1 (la probabilità di perdere); una coda sola, 0,032. «Il valore esatto è 0,078: da dove viene la differenza?» → slide seguente.</aside>
+    </section>
+
+    <!-- L1-22 · i dieci dadi, soluzione -->
+    <section id="dieci-dadi-sol">
+      <p class="badge">I dieci dadi · la soluzione del pacco</p>
+      <div class="s09-grid">
+        <svg class="scene-svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-label="Le probabilità esatte della somma di dieci dadi, barre da 10 a 60, con la campana normale; in rosso le code fino a 25 e da 45; ingrandita la barra del 25, di cui la normale fino a 25 prende solo metà"></svg>
+        <div class="s09-side">
+          <p class="dim dd-s1">Barre vere, code rosse: <span class="k">0,0780</span></p>
+          <p class="dim dd-s2">Normale fino a 25: prende <b>metà</b> della barra del 25 → <span class="m">0,064</span></p>
+          <p class="dim dd-s3">Correzione di continuità: soglie <b>25,5</b> e <b>44,5</b></p>
+          <p class="dim dd-s4">$2\big(1-\Phi(1{,}76)\big)=$ <span class="k">0,0784</span></p>
+        </div>
+      </div>
+      <aside class="notes">Pacco, slide 23. Click: 1 le code vere (somma delle barre rosse: 0,078); 2 la barra del 25 ingrandita: la normale fino a 25 ne prende solo metà, e lo stesso per il 45, da qui 0,064; 3 la correzione: per una variabile intera X ≤ 25 è lo stesso evento di X &lt; 26, e si sceglie la soglia a metà strada; 4 il conto del pacco, 0,0784 (0,0786 con z esatto). Ripeti che la correzione NON è richiesta all'esame: all'esame si può usare la normale senza correzione. Il gioco conviene agli studenti: 20 · 0,078 ≈ 1,56 euro a partita, più la mentina.</aside>
+    </section>
+
+    <!-- L1-23 · sondaggio s09-1 (rivelazione) -->
+    <section id="sondaggio-1-rivela" class="sondaggio rivela" data-poll="s09-1">
+      <p class="badge">Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Lanciamo 10 dadi e sommiamo. Vinci 20 euro se la somma è <b>al più 25</b> o <b>almeno 45</b>. Quanto è probabile vincere?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>circa l'1%</li>
+            <li><span>2</span>circa l'8%</li>
+            <li><span>3</span>circa il 25%</li>
+            <li><span>4</span>circa il 50%</li>
+          </ol>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <div class="rv-foot">
+        <p class="rv-line fragment">25 e 45 stanno a 1,85 deviazioni standard da 35: circa 8 volte su 100.</p>
+      </div>
+      <aside class="notes">Premi V. Risposta 2. 1: 25 e 45 sembrano lontanissimi da 35, ma la deviazione standard della somma è 5,4; 3: la dispersione di un dado solo; 4: «le due code sono metà». Click 1: la conclusione.</aside>
+    </section>
+
+    <!-- L1-24 · uscita -->
+    <section id="uscita-1">
+      <p class="badge">Domanda d'uscita</p>
+      <p class="ux-q">Un collega: «Per il teorema del limite centrale,<br>la media di 100 dadi vale 3,5». Che cosa correggi?</p>
+      <p class="ux-a fragment">È una variabile aleatoria: circa $\mathcal N(3{,}5;\ 0{,}029)$, di solito tra 3,16 e 3,84.</p>
+      <p class="ux-home">A casa: dispensa, Atti I–III · esercizi 1–5 · laboratorio «la campana delle somme»<br>Venerdì: Laplace, le conseguenze e i limiti del teorema</p>
+      <aside class="notes">Due risposte a voce, poi click 1. La varianza della media è 2,92/100 ≈ 0,029, deviazione standard 0,17; la legge dei grandi numeri dice che si avvicina a 3,5, il teorema dice come oscilla. Anche se sei in ritardo, fai la domanda in un minuto. Chiudi entro le 10:45.</aside>
+    </section>
+
+    <!-- ═════════════ LEZIONE 2 · venerdì, 11:00–12:45. Scene: js/lezione2.js ═════════════ -->
+
+    <!-- L2-00 · copertina -->
+    <section id="lezione-2">
+      <p class="cover-week">Settimana 9</p>
+      <h2 class="cover-title">Fino a dove ci si può fidare<br>della campana?</h2>
+      <div class="cover-acts"><span>Laplace, Cauchy e i limiti del teorema</span><span>Lezione 2</span><span>venerdì, 11:00</span></div>
+      <aside class="notes">Data da confermare. Riepilogo di 10 minuti. Laplace è storia (10 minuti), con la pagina di Galton che chiude il pacco «12. TLC» (p. 24); poi la distribuzione binomiale (notebook 4.4), le 62 esecuzioni del pacco «13. Campionamento» (pp. 18–19) e la domanda d'esame: che cosa il teorema garantisce e che cosa no (il controesempio del pacco, p. 19).</aside>
+    </section>
+
+    <!-- L2-01 · riepilogo della Lezione 1 -->
+    <section id="riepilogo-l1">
+      <p class="badge">Riepilogo · mercoledì</p>
+      <h2 class="scene-title">Quattro domande sul teorema</h2>
+      <div class="rq-grid">
+        <div class="rq-list">
+          <p class="rq fragment"><span>1</span>$S_n\approx\,?\;$ $\bar X_n\approx\,?\;$ Che cosa è esatto?</p>
+          <p class="rq fragment"><span>2</span>L'enunciato con $S_n^*$: che cosa converge, e a che cosa?</p>
+          <p class="rq fragment"><span>3</span>Le lampadine: i quattro passi.</p>
+          <p class="rq fragment"><span>4</span>Dieci dadi: perché 0,064 e non 0,078?</p>
+        </div>
+        <div class="rq-board">
+          <svg class="scene-svg" width="360" height="230" viewBox="0 0 360 230" role="img" aria-label="La ricetta in quattro passi: evento con la somma, media e deviazione standard, standardizzare, leggere Phi"></svg>
+          risposte alla lavagna
+        </div>
+      </div>
+      <p class="rq-bridge fragment">Oggi: chi lo ha reso generale, a che cosa serve, dove smette di valere.</p>
+      <aside class="notes">Una domanda per click. (1) N(nμ, nσ²) e N(μ, σ²/n): media e varianza esatte, forma approssimata. (2) La funzione di ripartizione di S*ₙ tende a Φ: convergenza in distribuzione (la forma), diversa da quella in probabilità (il punto). (3) 400, √4000, −0,55, 0,71. (4) La somma è intera: la normale prende metà delle barre estreme. Controlla l'esercizio 1: 0,898, 0,972, 0,117.</aside>
+    </section>
+
+    <!-- ───── Laplace (Erlebnis, 10 minuti) ───── -->
+
+    <!-- L2-02 · Laplace -->
+    <section id="laplace">
+      <p class="badge">Parigi, 1810</p>
+      <svg class="scene-svg" width="1180" height="470" viewBox="0 0 1180 470" role="img" aria-label="Due strade che partono da sinistra, una dai lanci di moneta di De Moivre nel 1733 e una dagli errori di misura di Gauss nel 1809, e si uniscono a destra nel 1810 con Laplace in una sola campana; in fondo il nome dato da Pólya nel 1920"></svg>
+      <aside class="notes">Nuova (dispensa, Atto IV). Click: 1 la strada delle somme: De Moivre 1733, lanci di moneta; 2 la strada degli errori: Gauss 1809, Theoria motus, la campana ricavata supponendo che la media sia il valore più probabile (Settimana 6); 3 Laplace 1810, «Mémoire sur les approximations des formules qui sont fonctions de très grands nombres»: la somma di molti errori indipendenti di forma qualsiasi è a campana; un errore di misura è una somma, quindi le due strade sono una; supplemento sui minimi quadrati, poi la Théorie analytique (1812); 4 Pólya 1920, «zentraler Grenzwertsatz»: centrale perché ha un ruolo centrale. Dimostrazioni rigorose: Ljapunov 1901, Lindeberg 1922.</aside>
+    </section>
+
+    <!-- L2-03 · Galton -->
+    <section id="galton">
+      <p class="badge">Ordine nell'apparente caos</p>
+      <p class="gl-quote">«Non conosco quasi nulla che sia tanto adatto a colpire l'immaginazione quanto la meravigliosa forma di ordine cosmico espressa dalla “legge di frequenza dell'errore”. I Greci l'avrebbero personificata e divinizzata, se l'avessero conosciuta. Regna con serenità, senza mai farsi notare, in mezzo alla confusione più selvaggia. Quanto più grande è la folla, e quanto maggiore l'apparente anarchia, tanto più perfetto è il suo dominio.»<small>F. Galton, <i>Natural Inheritance</i>, 1889, cap. V, p. 66 (tradotto dall'inglese)</small></p>
+      <p class="gl-note fragment">Galton parla della curva normale («legge di frequenza dell'errore»): il nome «teorema del limite centrale» arriva nel 1920. «La folla» è il nostro $n$.</p>
+      <aside class="notes">Pacco, slide 24, ritradotta dall'originale: la traduzione del pacco fa dire a Galton «teorema del limite centrale», ma lui scrive «Law of Frequency of Error». Galton è quello della tavola dei chiodi della Settimana 7. Click 1: la nota. Lancia subito dopo s09-2.</aside>
+    </section>
+
+    <!-- L2-04 · sondaggio s09-2 (lancio) -->
+    <section id="sondaggio-2" class="sondaggio" data-poll="s09-2">
+      <p class="badge">Sondaggio · la risposta arriva tra poco</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Varianza del tempo di esecuzione 4 s². Media entro 0,5 s dal vero con probabilità del 95%: Čebyšëv chiedeva <b>320</b> esecuzioni. Quante ne bastano se la media è quasi normale?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>circa 320: Čebyšëv è già il valore giusto</li>
+            <li><span>2</span>circa 160</li>
+            <li><span>3</span>circa 62</li>
+            <li><span>4</span>circa 16</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono · votate d'istinto</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Il problema della Settimana 8 (pacco 13, p. 19). Votate d'istinto. NON premere V: si rivela al minuto 46, sul duplicato. Risposta 3.</aside>
+    </section>
+
+    <!-- ───── Usare il teorema (notebook 4.4; pacco 13, pp. 18–19) ───── -->
+
+    <!-- L2-05 · la distribuzione binomiale -->
+    <section id="binomiale">
+      <p class="badge">La distribuzione binomiale è una somma</p>
+      <div class="s09-grid">
+        <svg class="scene-svg" width="760" height="418" viewBox="0 0 800 440" role="img" aria-label="Le probabilità della distribuzione binomiale con p un mezzo per n uguale a 20, 40, 60, 80 e 100, curve sempre più basse e larghe che si spostano a destra; sull'ultima la campana normale tratteggiata"></svg>
+        <div class="s09-side">
+          <p>$X=I_1+\dots+I_n$, bernoulliane i.i.d.</p>
+          <p>media $np$, varianza $np(1-p)$</p>
+          <p class="dim bn-s">$X\approx\mathcal N\big(np,\;np(1-p)\big)$</p>
+          <p class="dim bn-t">se $np$ e $n(1-p)$ sono <b>grandi</b>; se $np$ è piccolo, meglio la distribuzione di Poisson</p>
+        </div>
+      </div>
+      <aside class="notes">Il notebook 4.4_CLT (celle 13 e 16–18). Le prime due righe sono la Settimana 4 e la regola della Settimana 8. Click: 1–3 le PMF per n = 20, 60, 100 (il grafico del notebook, con p = 1/2): sempre più campane; 4 la normale sopra n = 100 e la formula; 5 quando funziona. Con p = 1/2 è il caso di De Moivre: media n/2, deviazione standard ½√n. Il widget della Settimana 4 fa vedere lo stesso.</aside>
+    </section>
+
+    <!-- L2-06 (S) · l'urna di Bernoulli -->
+    <section id="urna-tlc">
+      <p class="badge">L'urna di Bernoulli, tre secoli dopo</p>
+      <p class="s09-text">$p=0{,}6$, frazione entro $\pm0{,}02$, mille volte più probabile dentro che fuori: quante estrazioni?</p>
+      <svg class="scene-svg" width="1180" height="330" viewBox="0 0 1180 330" role="img" aria-label="Tre barre orizzontali in scala logaritmica: il teorema del limite centrale 6500 estrazioni, Bernoulli 25 550, Čebyšëv 600 600"></svg>
+      <aside class="notes">(S) Nuova (dispensa, Atto V, binomiale-normale), promessa della Settimana 8. La frazione è circa N(0,6; 0,24/n); serve Φ(c) ≥ 1 − 1/2002, c = 3,29, n ≥ 3,29² · 0,24/0,02² ≈ 6500. Click: 1 Bernoulli 1713, 25 550; 2 Čebyšëv, 600 600; 3 il teorema, circa 6500 (confermato dal conto binomiale esatto). Asse logaritmico. Se salti: «il teorema dice che ne bastano circa 6500».</aside>
+    </section>
+
+    <!-- L2-07 · Esercizio D -->
+    <section id="es-dado-sospetto">
+      <p class="badge">Esercizio · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>Un dado viene lanciato <b>6000 volte</b>: il sei esce <b>1100 volte</b>.</p>
+          <ol class="dv-steps">
+            <li>Con un dado equilibrato: media e deviazione standard del numero di sei?</li>
+            <li>Probabilità di almeno 1100 sei, con la normale?</li>
+            <li>Che cosa concludi?</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">1. $1000$ e $\sqrt{6000\cdot\frac16\cdot\frac56}\approx28{,}9$</p>
+          <p class="fragment" data-fragment-index="3">2. $z=100/28{,}9\approx3{,}46$: $\;1-\Phi(3{,}46)\approx0{,}0003$</p>
+          <p class="fragment" data-fragment-index="4">3. molto raro: il dado è sospetto</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">Nuova (dispensa, esercizio 5). È la domanda di De Moivre su un dado. Click 1: timer di 4′. Click 2–4: la soluzione (esatta 0,00033). Errori attesi: varianza np = 1000 (dimenticare 1 − p); usare la varianza come deviazione standard; «truccato con certezza».</aside>
+    </section>
+
+    <!-- L2-08 · quante esecuzioni -->
+    <section id="esecuzioni">
+      <p class="badge">Media campionaria · esercizio del pacco</p>
+      <div class="s09-two wide-right">
+        <div>
+          <p>Tempo di esecuzione: varianza $\sigma^2=4$ s². Valore medio vero: $t$.</p>
+          <p>Quante esecuzioni perché la media $\bar X_n$ cada in $[t-0{,}5;\ t+0{,}5]$ con probabilità del <b>95%</b>?</p>
+        </div>
+        <div class="s09-steps">
+          <p class="fragment">$P\big(-0{,}5\lt\bar X_n-t\lt 0{,}5\big)=0{,}95$, con $\bar X_n\approx\mathcal N(t,\,4/n)$</p>
+          <p class="fragment">dividendo per $2/\sqrt n$: $\;P\big(-0{,}25\sqrt n\lt Z\lt 0{,}25\sqrt n\big)=0{,}95$</p>
+          <p class="fragment">$2\,\Phi(0{,}25\sqrt n)-1=0{,}95\ \Rightarrow\ \Phi(0{,}25\sqrt n)=0{,}975$</p>
+          <p class="fragment">tabella al contrario: $0{,}25\sqrt n=1{,}96\ \Rightarrow\ n=61{,}47$</p>
+          <p class="fragment">servono <span class="highlight s09-big">62</span> esecuzioni</p>
+        </div>
+      </div>
+      <aside class="notes">Pacco 13, slide 18–19. Click 1: la domanda in formule; 2 la standardizzazione (la variabile in mezzo è normale standard per il teorema); 3 l'intervallo simmetrico; 4 il problema inverso della Settimana 6: 1,96, il valore preciso che la regola 68–95–99,7 arrotonda a 2; 5 il risultato (il pacco scrive 61,4: è 61,47). Con il gatto del pacco: «avrei dovuto eseguirlo almeno 62 volte».</aside>
+    </section>
+
+    <!-- L2-09 · la formula generale -->
+    <section id="formula-n">
+      <p class="badge">Quante osservazioni servono</p>
+      <div class="s09-box s09-mid">$$n\ \ge\ \left(\frac{z\,\sigma}{\varepsilon}\right)^2\qquad z=1{,}96\ \text{per il }95\%,\quad z=2{,}576\ \text{per il }99\%$$</div>
+      <table class="s09-table fragment" style="margin-top:14px">
+        <thead><tr><th></th><th>Čebyšëv</th><th>teorema del limite centrale</th></tr></thead>
+        <tbody><tr><th>esecuzioni</th><td>320</td><td class="mg">62</td></tr></tbody>
+      </table>
+      <p class="s09-note fragment">Čebyšëv deve valere per ogni distribuzione; la media di molte esecuzioni è quasi normale. Conoscere la forma vale un fattore 5.</p>
+      <p class="s09-text fragment">Qui $t$ è fissato e $\sigma$ noto. Dai dati al parametro: Settimana 10.</p>
+      <aside class="notes">Nuova (dispensa, Atto V). Click 1: il confronto (Settimana 8: 320); 2 il perché: Čebyšëv deve ammettere ±4,47 deviazioni standard, la normale fuori da ±1,96 lascia il 5%; il prezzo è l'approssimazione, che regge se le code non sono troppo pesanti (laboratorio 2); 3 il rovesciamento della domanda, l'intervallo di confidenza, è il tema della Settimana 10.</aside>
+    </section>
+
+    <!-- L2-10 · sondaggio s09-2 (rivelazione) -->
+    <section id="sondaggio-2-rivela" class="sondaggio rivela" data-poll="s09-2">
+      <p class="badge">Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Varianza 4 s², media entro 0,5 s con probabilità del 95%: Čebyšëv chiedeva <b>320</b> esecuzioni. Quante ne bastano se la media è quasi normale?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>circa 320: Čebyšëv è già il valore giusto</li>
+            <li><span>2</span>circa 160</li>
+            <li><span>3</span>circa 62</li>
+            <li><span>4</span>circa 16</li>
+          </ol>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <div class="rv-foot">
+        <p class="rv-line fragment">$(1{,}96\cdot2/0{,}5)^2=7{,}84^2\approx61{,}5$: un limite valido per tutte le distribuzioni non è il valore per questa.</p>
+      </div>
+      <aside class="notes">Premi V. Risposta 3. 1: il limite di Čebyšëv scambiato per un valore; 2: «la metà, per prudenza»; 4: dimenticare il quadrato (zσ/ε = 7,84). Click 1: il conto.</aside>
+    </section>
+
+    <!-- L2-11 · controllo c3 -->
+    <section id="sondaggio-c3" class="sondaggio" data-poll="s09-c3">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con il calcolo di <b>quante osservazioni servono</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, rifai alla lavagna la catena 2Φ(c) − 1 = 0,95 → Φ(c) = 0,975 → c = 1,96, e la lettura della tabella al contrario.</aside>
+    </section>
+
+    <!-- L2-12 (S) · Esercizio E -->
+    <section id="es-montecarlo">
+      <p class="badge">Esercizio · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>Stimi una probabilità con una simulazione Monte Carlo: errore al più <b>0,01</b>, con probabilità del <b>95%</b>. Con Čebyšëv: 50 000 simulazioni.</p>
+          <ol class="dv-steps">
+            <li>Quante con il teorema, senza sapere nulla di $p$? ($\sigma\le1/2$)</li>
+            <li>E se sai che $p\approx0{,}1$?</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">1. $(1{,}96\cdot0{,}5/0{,}01)^2=98^2=9604$</p>
+          <p class="fragment" data-fragment-index="3">2. $\sigma=\sqrt{0{,}09}=0{,}3$: $\;(58{,}8)^2\approx3457$</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">(S) Nuova (dispensa, sosta dell'Atto V; esercizio 8). Se lo salti, è a casa. Click 1: timer di 4′. Click 2–3: la soluzione. Errori attesi: usare σ² = 0,25 al posto di σ = 0,5 (2401); z = 1,645.</aside>
+    </section>
+
+    <!-- ───── Che cosa garantisce, e che cosa no (pacco 12, p. 19) ───── -->
+
+    <!-- L2-13 · garantisce / non garantisce -->
+    <section id="limiti">
+      <p class="badge">La domanda d'esame della settimana</p>
+      <div class="lm-grid">
+        <div class="lm-col si">
+          <h3>Garantisce</h3>
+          <p class="fragment">variabili i.i.d. con varianza finita: la distribuzione di somma e media <b>si avvicina alla normale</b> quando $n$ cresce</p>
+          <p class="fragment">media e varianza ($n\mu$, $n\sigma^2$; $\mu$, $\sigma^2/n$) sono <b>esatte</b> per ogni $n$</p>
+        </div>
+        <div class="lm-col no">
+          <h3>Non garantisce</h3>
+          <p class="fragment">nulla se gli addendi sono <b>dipendenti</b></p>
+          <p class="fragment">un valore di $n$: dipende dall'<b>asimmetria</b>; le <b>code</b> sono le ultime</p>
+          <p class="fragment">nulla se la varianza è <b>infinita</b></p>
+          <p class="fragment">nulla sui <b>singoli dati</b>, né sui massimi</p>
+        </div>
+      </div>
+      <aside class="notes">Nuova (dispensa, Atto VI). Le due colonne vanno anche alla lavagna e restano fino all'esercizio F. Una voce per click. Le prime due voci della colonna rossa si spiegano subito (controesempio e quanto grande), le ultime due nei blocchi successivi (Cauchy, i dati).</aside>
+    </section>
+
+    <!-- L2-14 · controesempio -->
+    <section id="controesempio">
+      <p class="badge">Controesempio · variabili non indipendenti</p>
+      <div class="ce-grid">
+        <div><p>$Y=X+X=2X$</p><p class="no ce-no">$Y\sim\mathcal N(2\mu,\;\sigma^2+\sigma^2)$ ✗</p></div>
+        <div><p>con $X\sim\mathcal N(\mu,\sigma^2)$</p><p class="si ce-si">$Y\sim\mathcal N(2\mu,\;4\sigma^2)$ ✓</p></div>
+      </div>
+      <svg class="scene-svg" width="1180" height="330" viewBox="0 0 1180 330" role="img" aria-label="Due pannelli: a sinistra la distribuzione di dieci copie della stessa variabile esponenziale sommate, che ha ancora la forma esponenziale; a destra la somma di dieci esponenziali indipendenti, già vicina a una campana"></svg>
+      <aside class="notes">Pacco, slide 19. Click: 1 l'errore (sommare le varianze di due copie della stessa variabile); 2 il conto giusto, Var(2X) = 4σ² (Settimana 8); 3 la versione drammatica, nuova: X esponenziale, X + X + … + X = 10X ha ancora la forma esponenziale (una sola fonte di casualità, nessuna compensazione); 4 dieci esponenziali indipendenti, con la stessa media 10, sono già quasi una campana. In informatica: cento richieste sullo stesso lock rallentano insieme.</aside>
+    </section>
+
+    <!-- L2-15 · quanto grande -->
+    <section id="quanto-grande">
+      <p class="badge">«$n>30$»? Dipende dall'asimmetria</p>
+      <div class="s09-grid">
+        <svg class="scene-svg" width="760" height="420" viewBox="0 0 760 420" role="img" aria-label="La somma standardizzata di n tempi esponenziali per n uguale a 1, 5 e 30, confrontata con la normale standard tratteggiata: con 1 è molto storta, con 5 ancora storta, con 30 quasi una campana"></svg>
+        <div>
+          <table class="s09-table qg-table">
+            <thead><tr><th>$n$</th><th>$P(Z_n>2)$</th><th>$P(Z_n<-2)$</th></tr></thead>
+            <tbody>
+              <tr class="qg-1"><th>1</th><td>4,98%</td><td>0</td></tr>
+              <tr class="qg-2"><th>5</th><td>4,10%</td><td>0,02%</td></tr>
+              <tr class="qg-3"><th>30</th><td>3,16%</td><td>1,22%</td></tr>
+              <tr class="qg-4"><th>100</th><td>2,79%</td><td>1,71%</td></tr>
+              <tr><th>normale</th><td class="nor">2,28%</td><td class="nor">2,28%</td></tr>
+            </tbody>
+          </table>
+          <p class="s09-text qg-note" style="text-align:left">Uniforme: bastano 5 addendi. Moneta equilibrata: 100 (De Moivre).</p>
+        </div>
+      </div>
+      <aside class="notes">Nuova (dispensa, Atto VI, figura F5). La regola n > 30 del notebook e delle lampadine (pacco, p. 18) è pratica, non un teorema. Click: 1 n = 1, l'esponenziale stessa; 2 n = 5; 3 n = 30, e le righe della tabella; 4 il confronto con uniforme e moneta. Le code lontane sono le ultime ad arrivare: dodici uniformi meno sei non superano mai 6 (esercizio 6).</aside>
+    </section>
+
+    <!-- L2-16 (S) · la variabile bernoulliana rara -->
+    <section id="bernoulli-rara">
+      <p class="badge">Cento prove, $p=0{,}01$: ancora nessuna campana</p>
+      <div class="s09-grid narrow">
+        <svg class="scene-svg" width="800" height="400" viewBox="0 0 800 400" role="img" aria-label="Le probabilità della distribuzione binomiale con n uguale a 100 e p uguale a 0,01: barre altissime in 0 e 1, poi rapidamente più basse; sovrapposta la campana normale con media 1, che sbaglia molto"></svg>
+        <div class="s09-side">
+          <p>$np=1$: &nbsp;$P(X=0)\approx$ <span class="d">0,366</span></p>
+          <p class="dim br-s">normale (con correzione): <span class="m">0,308</span></p>
+          <p class="dim br-t">conta che $np$ sia grande, non solo $n$: qui vince la distribuzione di Poisson</p>
+        </div>
+      </div>
+      <aside class="notes">(S) Nuova (dispensa, Atto VI, quanto-grande). Click: 1 la campana con media 1 e varianza 0,99, che mette probabilità anche sotto zero; 2 la conclusione (Settimana 5). Se salti: «con np piccolo la distribuzione binomiale resta storta anche con n grande».</aside>
+    </section>
+
+    <!-- L2-17 · controllo c4 -->
+    <section id="sondaggio-c4" class="sondaggio" data-poll="s09-c4">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con <b>indipendenza e grandezza di $n$</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, torna al controesempio di 10X e alla tabella delle code prima di Cauchy.</aside>
+    </section>
+
+    <!-- L2-18 · Cauchy -->
+    <section id="cauchy">
+      <p class="badge">Parigi, 1853 · varianza infinita</p>
+      <div class="s09-grid narrow">
+        <svg class="scene-svg" width="800" height="430" viewBox="0 0 800 430" role="img" aria-label="La densità normale standard e la densità di Cauchy sullo stesso asse da meno 6 a 6: due campane simmetriche, quella di Cauchy più bassa e con code molto più alte, colorate oltre più e meno 3"></svg>
+        <div class="s09-side">
+          <p><b>1824</b> Poisson: una legge degli errori per cui la media non migliora.</p>
+          <p><b>1853</b> Cauchy contro Bienaymé, sui minimi quadrati.</p>
+          <p class="dim ca-s">$f(x)=\dfrac{1}{\pi(1+x^2)}$</p>
+          <p class="dim ca-t">$P(|X|>3)$: <span class="d">0,27%</span> normale, <span class="m">20,5%</span> Cauchy</p>
+          <p class="dim ca-u">varianza infinita, nessuna media</p>
+        </div>
+      </div>
+      <aside class="notes">Nuova (dispensa, Atto VI, figura F6). Bienaymé è quello della disuguaglianza di Čebyšëv (Settimana 8). All'ingresso la campana normale. Click: 1 la campana di Cauchy e la densità; 2 le code oltre ±3; 3 code che scendono come 1/x²: la varianza è infinita e la media non esiste. Lancia subito s09-3.</aside>
+    </section>
+
+    <!-- L2-19 · sondaggio s09-3 (lancio) -->
+    <section id="sondaggio-3" class="sondaggio" data-poll="s09-3">
+      <p class="badge">Sondaggio · la risposta tra due minuti</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Un sensore ha un rumore con distribuzione di <b>Cauchy</b>. Rispetto a una misura sola, la media di <b>1000 misure</b> è…</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>circa 32 volte più precisa (√1000)</li>
+            <li><span>2</span>1000 volte più precisa</li>
+            <li><span>3</span>precisa uguale</li>
+            <li><span>4</span>meno precisa</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Nuova. NON premere V: si rivela dopo la slide delle medie progressive. Risposta 3.</aside>
+    </section>
+
+    <!-- L2-20 · la media di Cauchy -->
+    <section id="cauchy-media">
+      <p class="badge">Medie progressive di 10 000 osservazioni</p>
+      <svg class="scene-svg" width="1180" height="420" viewBox="0 0 1180 420" role="img" aria-label="Due pannelli con l'asse delle osservazioni in scala logaritmica: a sinistra le medie progressive di sei sequenze di esponenziali, che si fermano vicino a 1; a destra quelle di sei sequenze di Cauchy, che continuano a saltare"></svg>
+      <p class="s09-note cm-n">La media di $n$ variabili di Cauchy ha la <b>stessa</b> distribuzione di una sola: fare la media non serve.</p>
+      <aside class="notes">Nuova (dispensa, Atto VI, cauchy). Click: 1 esponenziale: le medie si fermano vicino a 1 (legge dei grandi numeri, teorema); 2 Cauchy: le medie saltano anche dopo migliaia di osservazioni, ogni volta che arriva un valore enorme; 3 il risultato (senza dimostrazione): P(|X̄ₙ| > 1) = 1/2 per ogni n. Pareto in una frase: con α = 1,5 la media (3) esiste ma la varianza è infinita: la media si avvicina a scatti, la campana non arriva (dimensioni dei file, tempi di risposta, traffico). Poi rivela s09-3.</aside>
+    </section>
+
+    <!-- L2-21 · sondaggio s09-3 (rivelazione) -->
+    <section id="sondaggio-3-rivela" class="sondaggio rivela" data-poll="s09-3">
+      <p class="badge">Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Un sensore ha un rumore con distribuzione di <b>Cauchy</b>. Rispetto a una misura sola, la media di <b>1000 misure</b> è…</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>circa 32 volte più precisa (√1000)</li>
+            <li><span>2</span>1000 volte più precisa</li>
+            <li><span>3</span>precisa uguale</li>
+            <li><span>4</span>meno precisa</li>
+          </ol>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <div class="rv-foot">
+        <p class="rv-line fragment">La legge della radice richiede la varianza finita: è l'ipotesi del teorema, e Cauchy non la rispetta.</p>
+      </div>
+      <aside class="notes">Premi V. Risposta 3. 1: la legge della radice, che richiede varianza finita; 2: σ/n al posto di σ/√n; 4: l'intuizione che un valore enorme rovini la media, che però rovina allo stesso modo anche una misura sola. Click 1: la conclusione.</aside>
+    </section>
+
+    <!-- L2-22 (S) · widget -->
+    <section id="widget-code">
+      <p class="badge">La media che non si ferma</p>
+      <div class="wc-box" id="wm-box" data-prevent-swipe>
+        <div class="wc-ctrl">
+          <label><select>
+            <option value="esp">esponenziale</option>
+            <option value="pareto">Pareto α = 1,5</option>
+            <option value="cauchy">Cauchy</option>
+          </select></label>
+          <label>sequenze <input type="range" min="1" max="50" step="1" value="20"> <b data-v="m">20</b></label>
+          <label>$n$ <input type="range" min="1" max="4" step="0.01" value="3"> <b data-v="n">1000</b></label>
+          <button class="psi-btn ghost" type="button" data-new>nuove</button>
+        </div>
+        <svg class="scene-svg" width="1100" height="400" viewBox="0 0 1100 400" role="img" aria-label="Medie progressive di molte sequenze, in scala logaritmica, con una banda verde attorno al centro della distribuzione; le sequenze fuori dalla banda al numero di osservazioni scelto sono rosse"></svg>
+        <p class="wc-out"></p>
+      </div>
+      <aside class="notes">(S) Il widget della dispensa (Atto VI). Esponenziale, banda 1 ± 0,1: tutte dentro prima di 1000. Pareto, 3 ± 0,3: salti verso l'alto e discese lente, qualcuna fuori anche a 10 000. Cauchy, 0 ± 1: metà fuori per ogni n. Il pulsante rigenera le sequenze.</aside>
+    </section>
+
+    <!-- L2-23 · i dati e le medie -->
+    <section id="non-i-dati">
+      <p class="badge">Il teorema parla di somme e medie, non dei dati</p>
+      <svg class="scene-svg" width="1180" height="400" viewBox="0 0 1180 400" role="img" aria-label="A sinistra l'istogramma di 10 000 tempi di risposta simulati, molto asimmetrico, con il p99 segnato; a destra l'istogramma delle medie di gruppi di 50 tempi, una campana simmetrica"></svg>
+      <p class="s09-text nd-n">100 server in parallelo, ognuno lento 1 volta su 100: risposta lenta con probabilità $1-0{,}99^{100}\approx$ <b class="red">63%</b>. Il massimo non è una somma.</p>
+      <aside class="notes">Nuova (dispensa, Atto VI, non-i-dati). Tempi simulati per l'esempio (100 ms più un'attesa con coda pesante). Click: 1 l'istogramma dei tempi: più dati lo rendono più nitido, non più simmetrico; il p99 si misura (Settimana 6); 2 le medie di gruppi di 50 tempi: una campana; 3 il fan-out (Dean e Barroso, «The Tail at Scale», Google, 2013): il tempo dell'utente è il massimo, e si calcola con il complementare (Settimana 3).</aside>
+    </section>
+
+    <!-- L2-24 · controllo c5 -->
+    <section id="sondaggio-c5" class="sondaggio" data-poll="s09-c5">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con <b>Cauchy e con «somme, non dati»</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, rifai il confronto tra l'istogramma dei tempi e quello delle medie, e la colonna rossa della lavagna.</aside>
+    </section>
+
+    <!-- L2-25 · Esercizio F -->
+    <section id="es-campana">
+      <p class="badge">Esercizio · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>Il teorema permette di usare la campana?</p>
+          <ol class="dv-steps">
+            <li>lo spazio totale di 500 backup indipendenti</li>
+            <li>il tempo di <b>una</b> richiesta, su milioni al giorno</li>
+            <li>la somma dei tempi di 100 richieste sullo stesso lock</li>
+            <li>la media di 1000 misure con rumore di Cauchy</li>
+            <li>i guasti su 10 000 dischi, $p=0{,}0001$ ciascuno</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">sì · no, un dato solo · no, dipendenza · no, varianza infinita · no, $np=1$</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">Nuova (dispensa, esercizio 9). Click 1: timer di 4′. Click 2: le risposte; commentale una per una con la colonna rossa della lavagna. Ultimo caso: zero guasti con probabilità 0,37, distribuzione di Poisson con media 1. Errori attesi: «sì» al secondo caso perché «milioni»; «sì» all'ultimo perché n è grande.</aside>
+    </section>
+
+    <!-- L2-26 (S) · in informatica -->
+    <section id="tlc-informatica">
+      <p class="badge">Il teorema del limite centrale in informatica</p>
+      <div class="lm-grid" style="grid-template-columns:1fr 1fr">
+        <div class="lm-col si">
+          <p class="fragment"><b>Carico aggregato</b>: $n\mu$ più qualche $\sigma\sqrt n$ di margine</p>
+          <p class="fragment"><b>Monte Carlo</b>: errore entro $1{,}96\,\sigma/\sqrt n$ il 95% delle volte</p>
+          <p class="fragment"><b>Benchmark</b>: quante ripetizioni (le 62 esecuzioni)</p>
+        </div>
+        <div class="lm-col si">
+          <p class="fragment"><b>Test A/B</b>: differenza di due medie, quasi normale (Settimana 10)</p>
+          <p class="fragment"><b>Generatori</b>: 12 uniformi $-\,6\approx\mathcal N(0,1)$, ma mai oltre 6</p>
+          <p class="fragment" style="border-color:#ff6b6b55">Sempre: indipendenza, varianza finita, somme e non singoli dati</p>
+        </div>
+      </div>
+      <aside class="notes">(S) Nuova (dispensa, tlc-informatica). Un'applicazione per click. Servire molti utenti insieme costa meno: il margine cresce come √n. Dodici uniformi meno sei: media 0, varianza 1 (esercizio 6). Se salti: una frase sul Monte Carlo.</aside>
+    </section>
+
+    <!-- L2-27 · uscita -->
+    <section id="uscita-2">
+      <p class="badge">Domanda d'uscita</p>
+      <p class="ux-q">Abbiamo 10 000 tempi di risposta. Il collega: «per il teorema<br>del limite centrale sono normali: il p99 è $\mu+2{,}326\,\sigma$». Che cosa correggi?</p>
+      <p class="ux-a fragment">Il teorema riguarda le medie, non i singoli tempi: il p99 si misura sui dati.</p>
+      <p class="ux-home">A casa: dispensa, Atti IV–VI · esercizi 6–10 · laboratori «lampadine ed esecuzioni» e «quando la campana non arriva»<br>Facoltativa: Lettura A (perché proprio la campana)<br>Settimana 10: dai dati al parametro, l'intervallo di confidenza e il bootstrap</p>
+      <aside class="notes">Due risposte a voce, poi click 1. Anche se sei in ritardo, fai la domanda in un minuto. Chiudi entro le 12:45.</aside>
+    </section>
+
+  </div></div>
+  <script src="../../assets/slides/scene.js"></script>
+  <script src="../../assets/sondaggi.js"></script>
+  <script src="../../assets/slides/sondaggio.js"></script>
+  <script src="js/comuni.js"></script>
+  <script src="js/lezione1.js"></script>
+  <script src="js/lezione2.js"></script>
+  <script>PSIDeck.start({ onReady: function (deck) { PSISondaggio.bind(deck); S09.timers(deck); S09L1.widget(); S09L2.widget(); } });</script>
+</body>
+</html>

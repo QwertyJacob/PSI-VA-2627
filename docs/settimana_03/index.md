@@ -1,4 +1,4 @@
-[:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" }
+[:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" } [:material-comment-question-outline: Domande d'esame](../domande-esame/primo-round/settimana-03.md){ .md-button }
 
 # Settimana 3 — L'estate del 1654: contare i futuri possibili
 *Come due lettere tra Parigi e Tolosa hanno insegnato a pesare ciò che non è ancora accaduto, e perché lo stesso conteggio spiega le collisioni nelle tabelle hash.*
@@ -8,9 +8,11 @@
 - **Problema dei punti:** risolvere casi piccoli con l’albero oppure contando, con le formule del calcolo combinatorio, i finali equiprobabili di Fermat; spiegare perché foglie di lunghezza diversa non hanno necessariamente lo stesso peso.
 - **Combinatoria minima:** principio di moltiplicazione, fattoriale, disposizioni e combinazioni. Devi scegliere il conteggio corretto in base a ordine e ripetizione e spiegare perché, per passare dalle disposizioni alle combinazioni, si divide per $k!$.
 - **Probabilità:** usare «casi favorevoli su casi possibili» soltanto sotto equiprobabilità; impostare semplici problemi «almeno uno» mediante il complementare, anche sul modello di de Méré.
-- **Compleanni e tabelle hash:** questa parte si studia a casa sulla dispensa, e all’esame ne è richiesto solo il nucleo. Devi saper dichiarare il modello, cioè giorni (o caselle) equiprobabili e scelte indipendenti, e contare le coppie con $\binom{n}{2}$. Devi poi saper costruire, una persona alla volta, la probabilità che i compleanni siano tutti diversi, $\frac{365 \cdot 364 \cdots (365-n+1)}{365^n}$, e ricavare con il complementare la probabilità di almeno una coincidenza. Infine devi saper dire che cosa significa il numero ottenuto: per esempio, con 23 persone una coincidenza è più probabile del contrario, perché le coppie sono già 253. Non devi ricordare a memoria i valori della tabella.
+- **Compleanni e tabelle hash:** all’esame ne è richiesto solo il nucleo. Devi saper dichiarare il modello, cioè giorni (o caselle) equiprobabili e scelte indipendenti, e contare le coppie con $\binom{n}{2}$. Devi poi saper costruire, una persona alla volta, la probabilità che i compleanni siano tutti diversi, $\frac{365 \cdot 364 \cdots (365-n+1)}{365^n}$, e ricavare con il complementare la probabilità di almeno una coincidenza. Basta avere in mente questa frazione. Più avanti la stessa probabilità viene riscritta come produttoria, $\prod_{i=0}^{n-1}\left(1 - \frac{i}{365}\right)$, ma è solo un altro modo di scrivere lo stesso numero: all’esame non devi ricavare questa forma, e puoi lavorare direttamente con la frazione. Infine devi saper dire che cosa significa il numero ottenuto: per esempio, con 23 persone una coincidenza è più probabile del contrario, perché le coppie sono già 253. Non devi ricordare a memoria i valori della tabella.
 
 **Facoltativi e non richiesti all’esame:** il metodo di Pascal, cioè la funzione $V(a,b)$, la sua ricorrenza e la tabella; il caso a 56 foglie; il triangolo di Pascal, con la sua costruzione e la ricorrenza «dentro/fuori»; derivazione dell’approssimazione esponenziale; significato e uso della scala $\sqrt{N}$, costante 1,18 e traduzione in $2^{b/2}$; birthday attack; limiti sugli algoritmi di ordinamento e analisi delle prestazioni delle tabelle hash. Non sono richieste dimostrazioni ulteriori rispetto ai ragionamenti elementari elencati sopra.
+
+Le otto domande del primo round dell'esame orale su questa settimana, ciascuna con la sua risposta attesa, sono raccolte nella sezione [Domande d'esame](../domande-esame/primo-round/settimana-03.md).
 
 Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
 
@@ -830,7 +832,7 @@ print("Script 3: tutti gli assert superati.")
 ### Il paradosso dei compleanni {: #paradosso }
 
 !!! info "Per l’esame"
-    Questa parte si studia a casa. All’esame devi saper dichiarare il modello uniforme e indipendente, contare le coppie e costruire la probabilità di almeno una coincidenza con il complementare. Si usa la formula esatta, cioè il prodotto, e non l’approssimazione esponenziale, che è facoltativa. Non devi ricordare a memoria le probabilità della tabella.
+    All’esame devi saper dichiarare il modello uniforme e indipendente, contare le coppie e costruire la probabilità di almeno una coincidenza con il complementare. Si usa la formula esatta, cioè il prodotto, e non l’approssimazione esponenziale, che è facoltativa. Non devi ricordare a memoria le probabilità della tabella.
 
 Ecco una domanda che sembra innocua. **Quante persone devono essere presenti in una stanza perché la probabilità che almeno due compiano gli anni lo stesso giorno superi il 50%?** Chiunque risponde con un numero grande (183? 100?). La risposta è **23**.
 

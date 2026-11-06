@@ -14,6 +14,7 @@ Le pagine si aggiungeranno man mano nei prossimi giorni:
 
 - [Settimana 1 — Che cos'è la probabilità?](primo-round/settimana-01.md): otto domande.
 - [Settimana 2 — Dall'effetto alla causa: alberi e Teorema di Bayes](primo-round/settimana-02.md): otto domande.
+- [Settimana 3 — L'estate del 1654: contare i futuri possibili](primo-round/settimana-03.md): otto domande.
 
 ## Secondo round: domande tipo {: #secondo-round }
 

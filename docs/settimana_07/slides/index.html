@@ -594,12 +594,521 @@
       <aside class="notes">Cuscinetto: nessun concetto nuovo. Due risposte a voce, poi click 1. L'approfondimento sulla multinomiale è facoltativo. Chiudi entro le 10:45.</aside>
     </section>
 
+    <!-- ═════════════ LEZIONE 2 · venerdì, 11:00–12:45. Scene: js/lezione2.js ═════════════ -->
+
+    <!-- L2-00 · copertina -->
+    <section id="lezione-2">
+      <p class="cover-week">Settimana 7</p>
+      <h2 class="cover-title">Come si misura una somiglianza?</h2>
+      <div class="cover-acts"><span>Covarianza e correlazione</span><span>Lezione 2</span><span>venerdì, 11:00</span></div>
+      <aside class="notes">Data da confermare. Covarianza e correlazione sono nuove quest'anno: non c'è un pacco. Le slide seguono la dispensa (Atti V–IX), costruita su Baron (§ 3.3) e Piech («Correlation»), con gli esempi della Lezione 1 (due moduli, tabelle 0/1) e i dati veri di Galton. Si passa subito al riepilogo.</aside>
+    </section>
+
+    <!-- L2-01 · riepilogo L1 -->
+    <section id="riepilogo-l1">
+      <p class="badge">Riepilogo · mercoledì</p>
+      <h2 class="scene-title">Quattro domande da mercoledì</h2>
+      <div class="rq-grid">
+        <div class="rq-list">
+          <p class="rq fragment"><span>1</span>Che cosa c'è in una casella della tabella congiunta?</p>
+          <p class="rq fragment"><span>2</span>Come si trova $P(X=1)$ dalla tabella?</p>
+          <p class="rq fragment"><span>3</span>Indipendenti: come si verifica? Come si smentisce?</p>
+          <p class="rq fragment"><span>4</span>Quando $\mathbb{E}[XY]=\mathbb{E}[X]\,\mathbb{E}[Y]$?</p>
+        </div>
+        <div class="rq-board">
+          <svg class="scene-svg" width="360" height="230" viewBox="0 0 360 230" role="img" aria-label="Una piccola tabella due per due con i margini"></svg>
+          risposte alla lavagna
+        </div>
+      </div>
+      <aside class="notes">Una domanda per click, risposte dalla classe. (1) La probabilità che succedano insieme due cose, X = x e Y = y: non una condizionata. (2) Sommando la colonna X = 1: probabilità totale. (3) Tutte le caselle uguali al prodotto dei margini; per smentire basta una casella, meglio se vuota con i margini pieni. (4) Per variabili indipendenti; il contrario non vale (oggi lo vediamo). Controlla l'esercizio 5(b) della dispensa: righe 0,20; 0,15; 0,075; 0,075.</aside>
+    </section>
+
+    <!-- ───── Naworth Castle (Erlebnis, 10 minuti) ───── -->
+
+    <!-- L2-02 · i dati di Galton come grafico -->
+    <section id="naworth-dati">
+      <p class="badge">Galton, 1886 · la tabella diventa un grafico</p>
+      <svg class="scene-svg" width="1180" height="560" viewBox="0 0 1180 560" role="img" aria-label="Grafico a bolle dei dati di Galton in centimetri: genitore medio in orizzontale, figlio in verticale. Poi la diagonale dove il figlio è alto come il genitore, la linea orizzontale della media dei figli, e la linea arancione delle medie dei figli per classe, che sta in mezzo"></svg>
+      <aside class="notes">Nuova (dispensa, Atto V). Ogni bolla è una casella della tabella di mercoledì, con area proporzionale al numero di figli. Click: 1 la diagonale: figli alti esattamente come il genitore medio; 2 la linea piatta: l'altezza dei genitori non conta; 3 la linea arancione delle medie dei figli: sta in mezzo; 4 i numeri: genitori alti 180,8 → figli 178,3; bassi 165,3 → 168,2. Galton vuole un NUMERO, che valga anche per grandezze con unità o dispersioni diverse: i genitori medi sono meno dispersi dei figli (la media di due persone oscilla meno).</aside>
+    </section>
+
+    <!-- L2-03 · Naworth Castle -->
+    <section id="naworth">
+      <p class="badge">Naworth Castle</p>
+      <div class="nw-grid">
+        <figure class="s07-portrait">
+          <img src="img/galton.jpg" alt="Ritratto di Francis Galton">
+          <figcaption>Francis Galton</figcaption>
+        </figure>
+        <div class="nw-right">
+          <p class="s07-quote">«Le leggi dell'ereditarietà riguardano soltanto le deviazioni espresse in <b>unità statistiche</b>. […] Un acquazzone improvviso mi costrinse a cercare riparo in una rientranza rossastra della roccia. Lì l'idea mi balenò.»<small>F. Galton, <i>Memories of My Life</i>, 1908, p. 300 (dall'inglese)</small></p>
+          <p class="nw-z fragment">Unità statistiche = standardizzare (Settimana 6): $\;z=\dfrac{x-\mu}{\sigma}$</p>
+          <p class="s07-quote fragment">«Due organi variabili si dicono co-relati quando la variazione dell'uno è accompagnata, in media, da una variazione più o meno grande dell'altro, e nello stesso verso.»<small>F. Galton, <i>Co-relations and their measurement</i>, 1888, p. 135</small></p>
+          <p class="nw-end fragment">Avambraccio e statura: «la sua misura risulta essere 0,8». Pearson, 1896: la formula di oggi.</p>
+        </div>
+      </div>
+      <aside class="notes">Nuova (dispensa, Atto V). Racconto in 3–4 minuti: Galton è ospite al castello di Naworth, piove, si ripara sotto una roccia e capisce che per confrontare grandezze diverse bisogna misurare le deviazioni in deviazioni standard. Click: 1 è la standardizzazione della Settimana 6: un padre a +1σ, non «10 cm sopra»; 2 l'articolo del dicembre 1888 alla Royal Society; 3 il primo coefficiente di correlazione: a una deviazione di 1 (in σ) nell'una corrisponde in media 0,8 nell'altra. Karl Pearson le diede la forma di oggi, che porta il suo nome. La strada: prima la covarianza, poi la misuriamo in unità statistiche.</aside>
+    </section>
+
+    <!-- ───── La covarianza (nuova quest'anno: Baron § 3.3, Piech) ───── -->
+
+    <!-- L2-04 · i quadranti -->
+    <section id="cv-quadranti">
+      <p class="badge">La covarianza</p>
+      <div class="scene-grid cq-grid">
+        <svg class="scene-svg" width="680" height="540" viewBox="0 0 680 540" role="img" aria-label="Nuvola di 928 punti, uno per figlio: genitore medio in orizzontale, figlio in verticale. Due linee tratteggiate alle medie dividono il piano in quattro quadranti; i punti azzurri stanno nei quadranti in alto a destra e in basso a sinistra, gli arancioni negli altri due"></svg>
+        <div class="scene-panel cq-panel">
+          <ol class="scene-steps">
+            <li>Due scarti per punto: $x-\mu_X$ e $y-\mu_Y$.</li>
+            <li>Stesso segno: prodotto <b class="data">positivo</b>.</li>
+            <li>Segni opposti: prodotto <b class="model">negativo</b>.</li>
+            <li class="cq-share"></li>
+          </ol>
+        </div>
+      </div>
+      <aside class="notes">Nuova (dispensa, Atto VI, figura dei quadranti). Un punto per figlio, spostato a caso dentro la sua classe di un pollice per non sovrapporsi. Click: 1 le due medie tratteggiate e i quattro quadranti; 2 in alto a destra e in basso a sinistra genitore e figlio stanno dalla stessa parte delle medie: prodotto positivo; 3 negli altri due quadranti: negativo; 4 quasi due punti su tre sono azzurri. Domanda: «come trasformo questa impressione in un numero?» → la media dei prodotti degli scarti.</aside>
+    </section>
+
+    <!-- L2-05 · definizione -->
+    <section id="cv-def">
+      <p class="badge">La covarianza</p>
+      <div class="s07-box">$$\operatorname{Cov}(X,Y)=\mathbb{E}\big[(X-\mu_X)(Y-\mu_Y)\big]$$</div>
+      <p class="s07-text">Discrete: in ogni casella il prodotto degli scarti, pesato con la probabilità della casella.</p>
+      <div>$$\operatorname{Cov}(X,Y)=\sum_{x}\sum_{y}(x-\mu_X)(y-\mu_Y)\,p_{X,Y}(x,y)$$</div>
+      <div class="cd-signs">
+        <p class="fragment"><b class="data">$\gt0$</b> pesano di più i quadranti concordi: grandi con grandi</p>
+        <p class="fragment"><b class="model">$\lt0$</b> pesano i discordi: prezzo e quantità venduta</p>
+        <p class="fragment"><b class="highlight">$=0$</b> si bilanciano: <b>incorrelate</b></p>
+      </div>
+      <p class="s07-note fragment">Solo per valori numerici veri: «single = 0» è un'etichetta.</p>
+      <aside class="notes">Dispensa, Atto VI. È la regola LOTUS di mercoledì con g(x, y) = (x − μX)(y − μY). Click 1–3: la lettura del segno con i quadranti. Click 4: la covarianza usa differenze e prodotti: sulla tabella degli studenti, con le etichette 0, 1, 2, non ha senso (cambiando le etichette cambierebbe). Lì valgono congiunta, marginali e indipendenza, non la covarianza.</aside>
+    </section>
+
+    <!-- L2-06 · due server, casella per casella -->
+    <section id="cv-server">
+      <p class="badge">Un primo calcolo, casella per casella</p>
+      <p class="s07-lead">Due server sullo stesso bilanciatore: $X=1$ se A è sovraccarico, $Y=1$ se lo è B.</p>
+      <div class="sv-grid">
+        <table class="s07-table">
+          <thead><tr><th></th><th>$Y=0$</th><th>$Y=1$</th><th></th></tr></thead>
+          <tbody>
+            <tr><th>$X=0$</th><td>0,50</td><td>0,10</td><td class="mg">0,60</td></tr>
+            <tr><th>$X=1$</th><td>0,10</td><td>0,30</td><td class="mg">0,40</td></tr>
+            <tr class="tot-row"><th></th><td class="mg">0,60</td><td class="mg">0,40</td><td class="mg">1</td></tr>
+          </tbody>
+        </table>
+        <div>
+          <p class="sv-mu">$\mu_X=\mu_Y=0{,}40\qquad$ scarti: $-0{,}40$ oppure $+0{,}60$</p>
+          <table class="s07-table sv-calc">
+            <thead><tr><th>casella</th><th>prob.</th><th>scarto $X$</th><th>scarto $Y$</th><th>prodotto × prob.</th></tr></thead>
+            <tbody>
+              <tr class="fragment"><td>(0, 0)</td><td>0,50</td><td>−0,40</td><td>−0,40</td><td class="data">+0,080</td></tr>
+              <tr class="fragment"><td>(0, 1)</td><td>0,10</td><td>−0,40</td><td>+0,60</td><td class="model">−0,024</td></tr>
+              <tr class="fragment"><td>(1, 0)</td><td>0,10</td><td>+0,60</td><td>−0,40</td><td class="model">−0,024</td></tr>
+              <tr class="fragment"><td>(1, 1)</td><td>0,30</td><td>+0,60</td><td>+0,60</td><td class="data">+0,108</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="sv-sum fragment">$\operatorname{Cov}(X,Y)=0{,}080-0{,}024-0{,}024+0{,}108=0{,}14$</p>
+      <p class="s07-note fragment">Concordi: 80% della probabilità. Discordi: 20%. Sovraccarichi insieme.</p>
+      <aside class="notes">Dispensa, Atto VI (dati inventati per la dispensa, con i numeri del widget di mercoledì). La media di una variabile 0/1 è la probabilità di valere 1 (variabile bernoulliana, Settimana 4). Una riga per click: il prodotto dei due scarti, per la probabilità della casella. Click 5: la somma. Click 6: perché è positiva: le caselle «d'accordo» portano l'80% della probabilità.</aside>
+    </section>
+
+    <!-- L2-07 · la formula comoda -->
+    <section id="cv-formula">
+      <p class="badge">Una formula più comoda</p>
+      <div class="s07-box">$$\operatorname{Cov}(X,Y)=\mathbb{E}[XY]-\mu_X\,\mu_Y$$</div>
+      <p class="s07-text">la media del prodotto meno il prodotto delle medie</p>
+      <p class="s07-text fragment">Server: $\mathbb{E}[XY]=P(1,1)=0{,}30$, $\quad0{,}30-0{,}40\cdot0{,}40=0{,}14$ <b class="highlight">✓</b></p>
+      <p class="s07-text fragment">Variabili 0/1: $\operatorname{Cov}=a-p\,q$, la differenza del widget di mercoledì.</p>
+      <p class="s07-text fragment">Due moduli: $\;0{,}60-0{,}5\cdot1{,}05=0{,}075$</p>
+      <p class="s07-note fragment">0,075: tanto o poco? Con la covarianza non si può dire.</p>
+      <aside class="notes">Dispensa, Atto VI (formula-covarianza). Si ricava sviluppando il prodotto e usando la linearità: la dimostrazione è un riquadro facoltativo, la formula è richiesta. Con Y = X dà Var(X) = E[X²] − μ². Click: 1 la verifica sui server; 2 il legame con il widget: a − pq misurava quanto la casella (1, 1) si allontana dall'indipendenza; 3 i due moduli, con i numeri di mercoledì; 4 la domanda che apre il prossimo punto.</aside>
+    </section>
+
+    <!-- L2-08 · controllo c3 -->
+    <section id="sondaggio-c3" class="sondaggio" data-poll="s07-c3">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>covarianza</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto, rivelazione immediata (V). Se prevalgono 2 e 3, rifai a voce il segno di una casella dei server prima dell'esercizio.</aside>
+    </section>
+
+    <!-- L2-09 · Esercizio D: commit e build -->
+    <section id="es-commit">
+      <p class="badge">Esercizio · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <p>Integrazione continua. Per un commit a caso: $X=1$ se la build fallisce, $Y=1$ se il commit modifica più di 10 file.</p>
+          <p class="cm-data">$P(0,0)=0{,}60\quad P(0,1)=0{,}15\quad P(1,0)=0{,}10\quad P(1,1)=0{,}15$</p>
+          <ol class="dv-steps">
+            <li>Marginali e medie?</li>
+            <li>$\operatorname{Cov}(X,Y)$?</li>
+            <li>Che cosa dice il segno? Che cosa <b>non</b> dice?</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">$\mu_X=0{,}10+0{,}15=0{,}25\qquad\mu_Y=0{,}15+0{,}15=0{,}30$</p>
+          <p class="fragment" data-fragment-index="3">$\operatorname{Cov}=0{,}15-0{,}25\cdot0{,}30=0{,}075\gt0$: commit grandi e build fallite stanno insieme. Non dice che uno <b>causi</b> l'altro.</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">Esercizio 6 (a, b) della dispensa, senza la correlazione (dati inventati). Sostituisce nella spiegazione frontale il calcolo della covarianza dei due moduli, che resta di una riga (slide prima). Click 1: timer di 4′. Click 2–3: la soluzione. Errori attesi: μX = 0,15 (solo la casella (1, 1)); sottrarre E[XY] − E[X] − E[Y]. Per il punto 3: un possibile confondente sono le funzionalità complesse. La correlazione di questo esercizio (≈ 0,38) si fa a casa.</aside>
+    </section>
+
+    <!-- L2-10 · la covarianza dipende dalle unità -->
+    <section id="cv-unita">
+      <p class="badge">La covarianza dipende dalle unità di misura</p>
+      <p class="s07-text">$\operatorname{Cov}(X,X)=\mathbb{E}\big[(X-\mu_X)^2\big]=\operatorname{Var}(X)$: la varianza è un caso speciale.</p>
+      <p class="s07-text">$\operatorname{Cov}(X,Y)=\operatorname{Cov}(Y,X)$: il prodotto non dipende dall'ordine.</p>
+      <p class="s07-text fragment">Galton, altezze in centimetri: $\operatorname{Cov}\approx13{,}3\ \text{cm}^2$, come una varianza.</p>
+      <p class="cu-ask fragment">E in pollici?</p>
+      <aside class="notes">Dispensa, Atto VI (unità). Come la varianza, la covarianza ha un'unità: il prodotto delle unità di X e di Y. Click 1: il numero di Galton in cm²; click 2: la domanda, poi lancia s07-3.</aside>
+    </section>
+
+    <!-- L2-11 · sondaggio s07-3 (lancio) -->
+    <section id="sondaggio-3" class="sondaggio" data-poll="s07-3">
+      <p class="badge">Sondaggio · la risposta arriva tra poco</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Galton, in centimetri: $\operatorname{Cov}\approx13{,}3\ \text{cm}^2$.<br>Stessi dati in pollici (1 pollice = 2,54 cm). La covarianza…</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>resta 13,3</li>
+            <li><span>2</span>13,3 / 2,54 ≈ 5,2</li>
+            <li><span>3</span>13,3 / 2,54² ≈ 2,06</li>
+            <li><span>4</span>13,3 · 2,54 ≈ 33,8</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto. Risposta 3. NON premere V: si rivela sul duplicato.</aside>
+    </section>
+
+    <!-- L2-12 · rivelazione s07-3 -->
+    <section id="sondaggio-3-rivela" class="sondaggio rivela" data-poll="s07-3">
+      <p class="badge">Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Galton, in centimetri: $\operatorname{Cov}\approx13{,}3\ \text{cm}^2$.<br>Stessi dati in pollici (1 pollice = 2,54 cm). La covarianza…</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>resta 13,3</li>
+            <li><span>2</span>13,3 / 2,54 ≈ 5,2</li>
+            <li><span>3</span>13,3 / 2,54² ≈ 2,06</li>
+            <li><span>4</span>13,3 · 2,54 ≈ 33,8</li>
+          </ol>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <div class="rv-foot">
+        <p class="rv-line fragment">Ogni scarto di $X$ e ogni scarto di $Y$ si divide per 2,54: ogni prodotto per $2{,}54^2\approx6{,}45$.</p>
+        <p class="rv-line fragment">$\operatorname{Cov}(aX+b,\;Y)=a\,\operatorname{Cov}(X,Y)$</p>
+        <p class="rv-next fragment">Il valore non misura la forza del legame; il segno sì.</p>
+      </div>
+      <aside class="notes">Premi V. Risposta 3 (2,062 pollici²). 1: «i dati sono gli stessi», ma il numero ha un'unità. 2: divide uno solo dei due scarti. 4: moltiplica invece di dividere. Click 1: perché. Click 2: la regola; b sparisce perché sposta anche la media, a resta perché moltiplica ogni scarto (come Var(aX + b) = a²Var(X), ma qui un solo fattore). Con a > 0 il segno non cambia. Per la forza del legame bisogna togliere le unità: l'idea di Naworth.</aside>
+    </section>
+
+    <!-- ───── Il coefficiente di correlazione ───── -->
+
+    <!-- L2-13 · definizione -->
+    <section id="co-def">
+      <p class="badge">Il coefficiente di correlazione</p>
+      <div class="s07-box">$$\rho(X,Y)=\frac{\operatorname{Cov}(X,Y)}{\sigma_X\,\sigma_Y}$$</div>
+      <p class="s07-text">un numero puro: le unità si cancellano</p>
+      <p class="s07-text fragment">Standardizziamo: $\;Z_X=\dfrac{X-\mu_X}{\sigma_X}\qquad Z_Y=\dfrac{Y-\mu_Y}{\sigma_Y}$</p>
+      <div class="fragment s07-mid">$$\operatorname{Cov}(Z_X,Z_Y)=\mathbb{E}[Z_X\,Z_Y]=\frac{\mathbb{E}\big[(X-\mu_X)(Y-\mu_Y)\big]}{\sigma_X\,\sigma_Y}=\rho(X,Y)$$</div>
+      <p class="s07-note fragment">La covarianza misurata in <b>unità statistiche</b>: l'idea di Naworth.</p>
+      <aside class="notes">Dispensa, Atto VII. «rho». Click: 1 le variabili standardizzate della Settimana 6, media 0 e deviazione standard 1; 2 la loro covarianza è la media del prodotto (media zero), e le costanti escono dal valore atteso; 3 la correlazione è ciò che Galton aveva intuito sotto la roccia.</aside>
+    </section>
+
+    <!-- L2-14 · tre correlazioni -->
+    <section id="co-esempi">
+      <p class="badge">Tre correlazioni</p>
+      <div class="ce-rows">
+        <div class="ce-row fragment"><p class="ce-name">Due server</p><div>$$\rho=\frac{0{,}14}{\sqrt{0{,}24}\cdot\sqrt{0{,}24}}\approx0{,}58$$</div><p class="ce-say">$\operatorname{Var}=p(1-p)=0{,}24$</p></div>
+        <div class="ce-row fragment"><p class="ce-name">Due moduli</p><div>$$\rho=\frac{0{,}075}{0{,}5\cdot1{,}071}\approx0{,}14$$</div><p class="ce-say">legame debole</p></div>
+        <div class="ce-row fragment"><p class="ce-name">Galton, cm</p><div>$$\rho=\frac{13{,}31}{4{,}54\cdot6{,}39}\approx0{,}46$$</div><p class="ce-say">in pollici:<br>$2{,}062/(1{,}786\cdot2{,}517)\approx0{,}46$</p></div>
+      </div>
+      <p class="s07-note fragment">Cambiano le unità: la covarianza cambia, $\rho$ no.</p>
+      <aside class="notes">Dispensa, Atto VII. Click 1: varianza di una variabile bernoulliana con p = 0,40. Click 2: Var(Y) = 1,1475 dalle marginali (dispensa), σY ≈ 1,071; σX = 0,5. Click 3: σ = 4,54 cm per i genitori medi, 6,39 cm per i figli; in pollici lo stesso 0,46. Click 4: in generale ρ(aX + b, cY + d) = ρ(X, Y) con a, c > 0; il segno si inverte se uno dei due è negativo.</aside>
+    </section>
+
+    <!-- L2-15 · tra −1 e 1 -->
+    <section id="co-nuvole">
+      <p class="badge">Tra −1 e 1</p>
+      <div class="s07-box cn-box">$$-1\le\rho(X,Y)\le1$$</div>
+      <svg class="scene-svg" width="1180" height="280" viewBox="0 0 1180 280" role="img" aria-label="Quattro nuvole di 200 punti: con rho 0,9 un sigaro sottile che sale, con 0,5 una nuvola larga che sale, con 0 una macchia rotonda, con meno 0,7 una nuvola che scende"></svg>
+      <p class="s07-text fragment">$\rho=\pm1$ solo se $Y=aX+b$: tutti i punti su una retta.</p>
+      <p class="s07-text fragment">Orientamento: 0,1–0,2 debole · 0,5 moderato · oltre 0,8 forte.</p>
+      <p class="s07-note fragment">$\rho=0{,}5$ <b>non</b> vuol dire «metà»: è una scala, non una percentuale.</p>
+      <aside class="notes">Dispensa, Atto VII (intervallo-rho). Nuvole simulate con seme fisso. Click 1: i valori estremi; a voce Y = 2X + 3: Cov = 2Var(X), σY = 2σX, ρ = 1. La dimostrazione di |ρ| ≤ 1 è nella Lettura A (facoltativa); all'esame il fatto e il significato degli estremi. Click 2: soglie indicative, dipendono dal campo. Click 3: la lettura sbagliata frequente.</aside>
+    </section>
+
+    <!-- L2-16 · widget: la nuvola e il suo ρ -->
+    <section id="widget-nuvola">
+      <p class="badge">Prevedi, poi muovi ρ</p>
+      <div class="wn-box" id="wn-box" data-prevent-swipe>
+        <div class="wd-ctrl">
+          <label>$\rho$ <input type="range" min="-1" max="1" step="0.05" value="0.5" data-k="rho"> <b data-v="rho">0,50</b></label>
+          <label>unità di $Y$ <select data-k="k"><option value="1">× 1</option><option value="10">× 10</option><option value="100">× 100</option></select></label>
+          <label><input type="checkbox" data-k="u"> forma a U</label>
+        </div>
+        <svg class="scene-svg" width="1000" height="400" viewBox="0 0 1000 400" role="img" aria-label="Nuvola di 200 punti con le due medie tratteggiate; azzurri se il prodotto degli scarti è positivo, arancioni se è negativo"></svg>
+        <p class="wd-out"></p>
+      </div>
+      <aside class="notes">Il widget della dispensa (Atto VII). Prima di muovere: «che cosa succede alla nuvola e ai colori se ρ va verso 1? E verso −1?» ρ = 1: tutti su una retta, tutti azzurri; ρ = −1: tutti arancioni; ρ = 0: colori a metà. r dei punti non coincide con il ρ scelto: 200 punti sono un campione. Unità × 100: la nuvola è identica, la covarianza cento volte più grande, r uguale. La casella «forma a U» serve tra poco.</aside>
+    </section>
+
+    <!-- L2-17 · controllo c4 -->
+    <section id="sondaggio-c4" class="sondaggio" data-poll="s07-c4">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con la <b>correlazione</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto, rivelazione immediata (V). Se prevalgono 2 e 3, rifai il conto dei server (0,14 / 0,24) prima dell'esercizio.</aside>
+    </section>
+
+    <!-- L2-18 · Esercizio E: unità e limiti -->
+    <section id="es-unita">
+      <p class="badge">Esercizio · a coppie</p>
+      <div class="e4-wrap">
+        <div class="dv-ex">
+          <ol class="dv-steps">
+            <li>$\sigma_X=2$, $\sigma_Y=5$, $\operatorname{Cov}(X,Y)=-6$. Quanto vale $\rho$? Che cosa dice?</li>
+            <li>Un collega misura $\operatorname{Cov}=12$ per le stesse variabili. È possibile?</li>
+            <li>Altezza in metri ($\sigma=0{,}07$), peso in kg ($\sigma=10$), $\operatorname{Cov}=0{,}42$. $\rho$? E con l'altezza in cm?</li>
+          </ol>
+          <p class="fragment" data-fragment-index="2">1. $\rho=-6/(2\cdot5)=-0{,}6$: moderato, negativo.<br>2. $12/10=1{,}2\gt1$: impossibile.</p>
+          <p class="fragment" data-fragment-index="3">3. $0{,}42/(0{,}07\cdot10)=0{,}6\qquad$ in cm: $42/(7\cdot10)=0{,}6$</p>
+        </div>
+        <div class="ex-side">
+          <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
+          <div class="ex-timer" data-min="4" title="clic: avvia/pausa · doppio clic: azzera"></div>
+        </div>
+      </div>
+      <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
+      <aside class="notes">La sosta di verifica dell'Atto VII (punti 1 e 2) e l'esercizio 7 (a, b) della dispensa. Sostituisce la spiegazione frontale del limite |Cov| ≤ σXσY e la verifica di ρ al cambio di unità. Click 1: timer di 4′. Click 2–3: la soluzione. Errori attesi: dividere per le varianze (−6/(4·25)); in cm moltiplicare la covarianza per 100 ma dimenticare σ = 7.</aside>
+    </section>
+
+    <!-- ───── Due avvertimenti ───── -->
+
+    <!-- L2-19 · indipendenti ⇒ incorrelate -->
+    <section id="ic-indip">
+      <p class="badge">Incorrelate e indipendenti</p>
+      <p class="s07-text">Mercoledì: $X,\,Y$ indipendenti $\;\Longrightarrow\;\mathbb{E}[XY]=\mu_X\,\mu_Y$</p>
+      <p class="s07-text">Oggi: $\operatorname{Cov}(X,Y)=\mathbb{E}[XY]-\mu_X\,\mu_Y$</p>
+      <div class="s07-box fragment">$$X,\,Y\ \text{indipendenti}\;\Longrightarrow\;\operatorname{Cov}(X,Y)=0\;\Longrightarrow\;\rho=0$$</div>
+      <p class="s07-text fragment">Due dadi: $12{,}25-3{,}5\cdot3{,}5=0$.</p>
+      <p class="cu-ask fragment">E il contrario?</p>
+      <aside class="notes">Dispensa, Atto VIII. Mettiamo insieme due risultati già noti. Click 1: indipendenti ⇒ incorrelate; click 2: i dadi; click 3: la domanda, poi lancia s07-4. È uno degli errori più comuni nell'analisi dei dati.</aside>
+    </section>
+
+    <!-- L2-20 · sondaggio s07-4 (lancio) -->
+    <section id="sondaggio-4" class="sondaggio" data-poll="s07-4">
+      <p class="badge">Sondaggio · la risposta arriva tra poco</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Due variabili hanno correlazione $\rho=0$.<br>Che cosa possiamo concludere?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>sono indipendenti</li>
+            <li><span>2</span>conoscere X non aiuta a prevedere Y</li>
+            <li><span>3</span>nessun legame lineare; un altro legame può esserci</li>
+            <li><span>4</span>niente: ρ dipende dalle unità di misura</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto. Risposta 3. NON premere V: si rivela dopo il controesempio.</aside>
+    </section>
+
+    <!-- L2-21 · Y = X²: dipendenti ma incorrelate -->
+    <section id="ic-x2">
+      <p class="badge">Un controesempio</p>
+      <div class="scene-grid x2-grid">
+        <div class="x2-side">
+          <p class="x2-s0">$X\in\{-1,0,1\}$, ciascuno con probabilità $\frac13$, e $Y=X^2$.</p>
+          <table class="s07-table x2-table">
+            <thead><tr><th></th><th>$X=-1$</th><th>$X=0$</th><th>$X=1$</th><th></th></tr></thead>
+            <tbody>
+              <tr><th>$Y=0$</th><td>0</td><td class="x2-cell">1/3</td><td>0</td><td class="mg">1/3</td></tr>
+              <tr><th>$Y=1$</th><td>1/3</td><td>0</td><td>1/3</td><td class="mg">2/3</td></tr>
+              <tr class="tot-row"><th></th><td class="mg">1/3</td><td class="mg">1/3</td><td class="mg">1/3</td><td class="mg">1</td></tr>
+            </tbody>
+          </table>
+          <p class="x2-s1">Casella $(0,0)$: $\frac13$, ma $\frac13\cdot\frac13=\frac19$: <b class="red">dipendenti</b></p>
+          <p class="x2-s3">$\mu_X=0,\;\;\mathbb{E}[XY]=\mathbb{E}[X^3]=0\;\Rightarrow\;\operatorname{Cov}=0$</p>
+        </div>
+        <svg class="scene-svg" width="480" height="440" viewBox="0 0 480 440" role="img" aria-label="Tre punti: (−1, 1), (0, 0) e (1, 1), con le medie tratteggiate; il punto a destra dà un contributo positivo, quello a sinistra uno negativo uguale, quello al centro zero"></svg>
+      </div>
+      <aside class="notes">Dispensa, Atto VIII. Conoscendo X conosciamo Y con certezza: il legame più stretto possibile. Click: 1 la dipendenza dalla casella (0, 0); 2 i tre punti con le medie (μY = 2/3); 3 i contributi: (1, 1) positivo, (−1, 1) negativo uguale, (0, 0) zero; per la simmetria della U si cancellano; 4 il conto con la formula comoda: XY = X³ vale −1, 0, 1 con probabilità 1/3. Poi la rivelazione.</aside>
+    </section>
+
+    <!-- L2-22 · rivelazione s07-4 -->
+    <section id="sondaggio-4-rivela" class="sondaggio rivela" data-poll="s07-4">
+      <p class="badge">Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Due variabili hanno correlazione $\rho=0$.<br>Che cosa possiamo concludere?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>sono indipendenti</li>
+            <li><span>2</span>conoscere X non aiuta a prevedere Y</li>
+            <li><span>3</span>nessun legame lineare; un altro legame può esserci</li>
+            <li><span>4</span>niente: ρ dipende dalle unità di misura</li>
+          </ol>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <div class="rv-foot">
+        <p class="rv-next fragment">La correlazione vede solo i legami <b>lineari</b>.</p>
+      </div>
+      <aside class="notes">Premi V. Risposta 3. 1 e 2: smentite da Y = X², dove X dice esattamente Y. 4: confonde ρ con la covarianza; ρ non dipende dalle unità. Click: la lezione dell'Atto VIII.</aside>
+    </section>
+
+    <!-- L2-23 · forme non lineari -->
+    <section id="ic-forme">
+      <p class="badge">Legami forti, correlazione zero</p>
+      <svg class="scene-svg" width="1180" height="360" viewBox="0 0 1180 360" role="img" aria-label="Due nuvole di 200 punti: a sinistra una U, a destra una campana. Y è quasi una funzione di X, eppure la correlazione è vicina a zero"></svg>
+      <p class="s07-text fragment">Thread e latenza: pochi thread, coda lunga; troppi, contesa per CPU e memoria. È una U: $\rho\approx0$, eppure il numero di thread è la leva decisiva.</p>
+      <p class="s07-note fragment">Per l'indipendenza: guarda tutta la congiunta, o almeno la nuvola. Non un numero.</p>
+      <aside class="notes">Dispensa, Atto VIII (figura delle due forme; simulate con seme fisso). Le correlazioni stampate sono calcolate sui punti. Click 1: l'esempio informatico. Click 2: la regola pratica; vale anche nel machine learning, quando si scartano feature «perché non correlate». Si può mostrare la U anche nel widget (casella «forma a U»).</aside>
+    </section>
+
+    <!-- L2-24 · correlazione non vuol dire causa -->
+    <section id="ca-todo">
+      <p class="badge">Correlazione non vuol dire causa</p>
+      <p class="s07-lead">Nei moduli di un progetto: commenti TODO e bug segnalati, $r\approx0{,}6$. I TODO causano i bug?</p>
+      <div class="scene-grid ct-grid">
+        <svg class="scene-svg" width="500" height="340" viewBox="0 0 500 340" role="img" aria-label="Schema: in alto Z, la dimensione del modulo, con frecce verso X, i TODO, e verso Y, i bug. Tra X e Y una linea rossa tratteggiata senza freccia"></svg>
+        <ol class="ct-list">
+          <li class="fragment">$X$ causa $Y$</li>
+          <li class="fragment">$Y$ causa $X$: chi corregge un bug lascia un TODO</li>
+          <li class="fragment">un <b>confondente</b> muove entrambe: la dimensione del modulo</li>
+          <li class="fragment">il caso: pochi dati, tantissime coppie provate</li>
+        </ol>
+      </div>
+      <p class="s07-note fragment">A parità di dimensione (moduli da circa 10 000 righe): $r\approx0{,}04$.</p>
+      <aside class="notes">Dispensa, Atto IX (esempio costruito per la dispensa, dati simulati nel terzo laboratorio). Una spiegazione per click; la correlazione da sola non le distingue. Click 5: il risultato del laboratorio: tutti i moduli r ≈ 0,63, moduli di dimensione simile r ≈ 0,04. Confrontare casi con il confondente quasi fisso lo smaschera.</aside>
+    </section>
+
+    <!-- L2-25 · i fondatori e l'esperimento -->
+    <section id="ca-nobel">
+      <p class="badge">Correlazione e causa</p>
+      <p class="s07-text">Gelati e annegamenti, d'estate: il caldo muove entrambi.</p>
+      <p class="s07-text fragment">Cioccolato e premi Nobel per abitante, 23 paesi: $r\approx0{,}79$ (Messerli, 2012). Confondente probabile: la ricchezza.</p>
+      <p class="s07-quote fragment">«La causazione ci dice che B accompagnerà A; la correlazione ci dice in quale proporzione di casi B accompagna A.»<small>K. Pearson, <i>The Grammar of Science</i>, 2ª ed., 1900, p. 397 (dall'inglese)</small></p>
+      <p class="s07-note fragment">Per una causa serve un <b>esperimento</b>: assegnare a caso. Nel software: il <b>test A/B</b>.</p>
+      <aside class="notes">Dispensa, Atto IX. Messerli pubblicò il grafico sul New England Journal of Medicine in tono semiserio e scrisse lui stesso che non prova un nesso causale. Pearson (che nel 1897 introdusse «correlazione spuria») vedeva la causa come il caso limite della correlazione. Click 3: l'assegnazione casuale distribuisce i confondenti, noti o ignoti, in modo simile nei due gruppi: nel test A/B si assegna a caso la versione della pagina invece di confrontare chi l'ha scelta.</aside>
+    </section>
+
+    <!-- L2-26 · controllo c5 -->
+    <section id="sondaggio-c5" class="sondaggio" data-poll="s07-c5">
+      <p class="badge">Controllo comprensione</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Come va con <b>incorrelate ≠ indipendenti</b><br>e <b>correlazione ≠ causa</b>?</p>
+          <ol class="sondaggio-opts">
+            <li><span>1</span>Ho capito e saprei rifarlo</li>
+            <li><span>2</span>Ho capito a metà / ho dubbi</li>
+            <li><span>3</span>Mi sono perso</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo · risultato immediato</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">Un minuto, rivelazione immediata (V). Se prevalgono 2 e 3, torna sulla figura della U e sullo schema del confondente.</aside>
+    </section>
+
+    <!-- L2-27 (S) · sondaggio s07-5 (lancio) -->
+    <section id="sondaggio-5" class="sondaggio" data-poll="s07-5">
+      <p class="badge">Sondaggio · discutete in coppia, poi votate</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Più test automatici, più bug aperti: $r=0{,}6$.<br>Il dirigente: «riduciamo i test». Che cosa rispondi?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>ha ragione: i dati lo dicono</li>
+            <li><span>2</span>r = 0,6 è troppo poco per contare</li>
+            <li><span>3</span>prima chiedersi: confondente, causa inversa, misura?</li>
+            <li><span>4</span>ha torto: è sempre causa inversa</li>
+          </ol>
+          <p class="sondaggio-hint">Inquadra il QR · voto anonimo, uno per telefono</p>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <aside class="notes">(S) Esercizio 10 della dispensa come sondaggio. Due minuti di discussione in coppia, poi voto. Risposta 3. NON premere V qui.</aside>
+    </section>
+
+    <!-- L2-28 (S) · rivelazione s07-5 -->
+    <section id="sondaggio-5-rivela" class="sondaggio rivela" data-poll="s07-5">
+      <p class="badge">Sondaggio · rivelazione (V)</p>
+      <div class="sondaggio-grid">
+        <div>
+          <p class="sondaggio-q">Più test automatici, più bug aperti: $r=0{,}6$.<br>Il dirigente: «riduciamo i test». Che cosa rispondi?</p>
+          <ol class="sondaggio-opts long">
+            <li><span>1</span>ha ragione: i dati lo dicono</li>
+            <li><span>2</span>r = 0,6 è troppo poco per contare</li>
+            <li><span>3</span>prima chiedersi: confondente, causa inversa, misura?</li>
+            <li><span>4</span>ha torto: è sempre causa inversa</li>
+          </ol>
+        </div>
+        <div class="sondaggio-join"></div>
+      </div>
+      <div class="rv-foot">
+        <p class="rv-line fragment">Prodotti grandi: più test <b>e</b> più bug. Dopo tanti bug: più test. I test <b>trovano</b> i bug.</p>
+        <p class="rv-next fragment">Esperimento: aggiungere test a caso, contare i bug segnalati dagli utenti.</p>
+      </div>
+      <aside class="notes">(S) Premi V. Risposta 3. 1: correlazione letta come causa. 2: 0,6 è un legame moderato, il problema non è la forza. 4: la causa inversa è una delle spiegazioni, non l'unica. Click 1: le tre spiegazioni (confondente, causa inversa, misura). Click 2: come decidere.</aside>
+    </section>
+
+    <!-- L2-29 (S) · la correlazione dai dati -->
+    <section id="co-dati">
+      <p class="badge">La correlazione calcolata dai dati</p>
+      <div>$$r=\frac{\sum_i(x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum_i(x_i-\bar x)^2}\;\sqrt{\sum_i(y_i-\bar y)^2}}$$</div>
+      <p class="s07-text">Quattro server, carico CPU (%) e tempo di risposta (ms): (20, 100), (40, 140), (60, 150), (80, 210).</p>
+      <p class="s07-text fragment">$\bar x=50,\;\bar y=150$; prodotti degli scarti: $1500+100+0+1800=3400$</p>
+      <p class="s07-text fragment">quadrati: $2000$ per $x$, $6200$ per $y\qquad r=\dfrac{3400}{\sqrt{2000\cdot6200}}\approx0{,}97$</p>
+      <p class="s07-note fragment">Dividere per $n$ o per $n-1$: $r$ non cambia. Galton: $r\approx0{,}46$.</p>
+      <aside class="notes">(S) Dispensa, Atto VII (correlazione-dati; numeri inventati). Ogni coppia pesa 1/n, come le frequenze del marketing usate come probabilità; il fattore 1/n si semplifica tra numeratore e denominatore. Covarianza dei dati 3400/4 = 850 (% · ms): da sola non dice nulla. Se salti: una frase sul fatto che con i dati si usano le frequenze.</aside>
+    </section>
+
+    <!-- L2-30 · uscita -->
+    <section id="uscita-2">
+      <p class="badge">Domanda d'uscita</p>
+      <p class="ux-q">Tra numero di thread e latenza: $\rho=0{,}02$.<br>Il team: «i thread non contano». Che cosa rispondi?</p>
+      <p class="ux-a fragment">Guarda la nuvola: una U ha $\rho\approx0$, eppure decide tutto.</p>
+      <p class="ux-home">A casa: dispensa, Atti V–IX · esercizi 5–10 · laboratori «la tabella di Galton» e «quando la correlazione inganna»<br>Facoltative: Lettura A (la retta e la regressione verso la media), Lettura B (densità congiunta)<br>Settimana 8: la varianza di una somma, dove torna la covarianza</p>
+      <aside class="notes">Due risposte a voce, poi click 1. Anche se sei in ritardo, fai la domanda d'uscita in un minuto. Chiudi entro le 12:45.</aside>
+    </section>
+
   </div></div>
   <script src="../../assets/slides/scene.js"></script>
   <script src="../../assets/sondaggi.js"></script>
   <script src="../../assets/slides/sondaggio.js"></script>
   <script src="js/comuni.js"></script>
   <script src="js/lezione1.js"></script>
-  <script>PSIDeck.start({ onReady: function (deck) { PSISondaggio.bind(deck); S07.timers(deck); S07L1.widget(); } });</script>
+  <script src="js/lezione2.js"></script>
+  <script>PSIDeck.start({ onReady: function (deck) { PSISondaggio.bind(deck); S07.timers(deck); S07L1.widget(); S07L2.widget(); } });</script>
 </body>
 </html>

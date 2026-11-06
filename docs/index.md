@@ -55,7 +55,7 @@ Il percorso è articolato in 4 moduli tematici distribuiti su **12 settimane**, 
 
 | Settimana | Argomenti |
 |---|---|
-| **[7. Galton e le altezze di genitori e figli](settimana_07/index.md)** *(Lezione 1; Lezione 2 in arrivo)* | **Distribuzioni congiunte e correlazione:** distribuzione congiunta di due variabili discrete e distribuzioni marginali, variabili aleatorie indipendenti, covarianza e coefficiente di correlazione; incorrelazione e indipendenza, correlazione e causazione. |
+| **[7. Galton e le altezze di genitori e figli](settimana_07/index.md)** *(Settimana 7)* | **Distribuzioni congiunte e correlazione:** distribuzione congiunta di due variabili discrete e distribuzioni marginali, variabili aleatorie indipendenti, covarianza e coefficiente di correlazione; incorrelazione e indipendenza, correlazione e causazione. |
 | **Settimana 8** *(in arrivo)* | **Disuguaglianze e Legge dei Grandi Numeri:** somma di variabili aleatorie indipendenti, disuguaglianze di Markov e Čebyšëv, convergenza in probabilità e Legge Debole dei Grandi Numeri. |
 | **Settimana 9** *(in arrivo)* | **Il Teorema del Limite Centrale:** enunciato, cosa garantisce e cosa no, comportamento asintotico della media campionaria. |
 | **Settimana 10** *(in arrivo)* | **Campionamento e introduzione all'inferenza:** campionamento statistico, stimatori puntuali e loro proprietà, errore standard, intervalli di confidenza e Bootstrap computazionale. |

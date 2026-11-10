@@ -46,7 +46,9 @@ Dalla Settimana 6 ci portiamo tre distribuzioni continue con la loro media e la 
 
 Dalla Settimana 7 ci serve la definizione di **variabili indipendenti**: $X$ e $Y$ sono indipendenti se $P(X=x,\;Y=y)=P(X=x)\,P(Y=y)$ per tutte le coppie di valori ([Settimana 7](../settimana_07/index.md#indipendenza)). Per variabili indipendenti la media del prodotto è il prodotto delle medie, $\mathbb{E}[XY]=\mathbb{E}[X]\,\mathbb{E}[Y]$ ([Settimana 7](../settimana_07/index.md#prodotto)).
 
-Infine due idee che finora abbiamo usato senza dimostrarle. Nella [Settimana 1](../settimana_01/index.md#lab-moneta) abbiamo visto in una simulazione che la frequenza delle teste di una moneta si stabilizza vicino a 1/2, ed è l’intuizione su cui si regge l’interpretazione frequentista della probabilità. Nella [Settimana 5](../settimana_05/index.md#fallacia-giocatore) abbiamo visto che questa stabilizzazione non avviene perché il caso «recupera» i ritardi: i ritardi vengono diluiti, non compensati. Lì avevamo anche incontrato il nome che Poisson diede a questo fenomeno, **legge dei grandi numeri**, con la promessa di studiarlo ora. In questa settimana mantieniamo la promessa.
+<!--
+Infine due idee che finora abbiamo usato senza dimostrarle. Nella [Settimana 1](../settimana_01/index.md#lab-moneta) abbiamo visto in una simulazione che la frequenza delle teste di una moneta si stabilizza vicino a 1/2, ed è l’intuizione su cui si regge l’interpretazione frequentista della probabilità. Nella [Settimana 5](../settimana_05/index.md#fallacia-giocatore) abbiamo visto che questa stabilizzazione non avviene perché il caso «recupera» i ritardi: i ritardi vengono diluiti, non compensati: la moneta non ricorda gli esiti passati, perché i lanci sono indipendenti, e proprio questo rende possibile la diluizione. Lì avevamo anche incontrato **legge dei grandi numeri**, il nome che Poisson diede al risultato che descrive la stabilizzazione delle frequenze, con la promessa di studiarlo ora. In questa settimana mantieniamo la promessa.
+-->
 
 ## Atto I — San Pietroburgo e la domanda dell’ingegnere {: #pietroburgo }
 
@@ -54,7 +56,9 @@ Infine due idee che finora abbiamo usato senza dimostrarle. Nella [Settimana 1](
 
 Attorno a lui si formò quella che oggi si chiama la **scuola di San Pietroburgo**. I suoi allievi più famosi furono **Andrej Andreevič Markov** (1856–1922) e Aleksandr Ljapunov, e il loro stile aveva un tratto comune: teoremi con ipotesi chiare e dimostrazioni complete. Nel calcolo delle probabilità questo era tutt’altro che scontato. Dai tempi di Jacob Bernoulli si sapeva che le frequenze tendono a stabilizzarsi, e Poisson, nel 1837, aveva chiamato questo fenomeno «legge dei grandi numeri»; ma le dimostrazioni esistenti erano lunghe, valevano per casi particolari e lasciavano molti punti in ombra.
 
+<!--
 Il passo decisivo fu una disuguaglianza molto semplice. La scoprì per primo, nel 1853, il francese Irénée-Jules Bienaymé; Čebyšëv la ritrovò in modo indipendente e la pubblicò nel 1867, in un articolo intitolato *Des valeurs moyennes*, «Sui valori medi», dove la usò per dimostrare in poche righe una legge dei grandi numeri molto generale. Anni dopo Čebyšëv riconobbe la priorità di Bienaymé, ma la disuguaglianza è rimasta legata al suo nome. Markov, a sua volta, ne diede nella sua tesi del 1884 una dimostrazione nuova, che passa per una disuguaglianza ancora più semplice: quella che oggi porta il nome di Markov e che studieremo per prima.
+-->
 
 La domanda da cui partiamo è quella dell’ingegnere. Di una grandezza aleatoria conosciamo soltanto la media, oppure la media e la deviazione standard. Non sappiamo se la sua distribuzione sia normale, esponenziale o di qualche forma che nessuno ha ancora immaginato. Che cosa possiamo **garantire** sulla probabilità che assuma valori lontani dalla media? È la situazione del cruscotto di monitoraggio da cui siamo partiti: abbiamo due numeri, 120 e 30 millisecondi, e un contratto che chiede una garanzia sulle richieste lente.
 
@@ -64,8 +68,27 @@ Prima di cercarla, però, ripartiamo dal caso che conosciamo: che cosa succede q
 
 ## Atto II — Quando la distribuzione è nota {: #distribuzione-nota }
 
-Le slide del corso aprono con un esercizio dall’aria strana: «Data una variabile normale $X\sim\mathcal{N}(\mu,\sigma^2)$, non meglio specificata, calcolare la probabilità che prenda valori compresi tra $\mu-\sigma$ e $\mu+\sigma$. Dare un valore numerico.» Come si può dare un valore numerico, se non conosciamo né $\mu$ né $\sigma$?
+Cominciamo da un esercizio dall’aria strana. Una variabile normale $X\sim\mathcal{N}(\mu,\sigma^2)$ ha media e deviazione standard che non ci vengono date: sono lettere. Vogliamo la probabilità che $X$ cada tra $\mu-\sigma$ e $\mu+\sigma$, e la risposta deve essere un numero. Come si può dare un numero, se non conosciamo né $\mu$ né $\sigma$?
 
+Il trucco è la standardizzazione della [Settimana 6](../settimana_06/index.md#standardizzazione). Poniamo $Z=(X-\mu)/\sigma$, che è una variabile normale standard. Sottraiamo $\mu$ e dividiamo per $\sigma$ in tutti e tre i membri della disuguaglianza, cosa lecita perché $\sigma>0$:
+
+$$
+P(\mu-\sigma\le X\le\mu+\sigma)=P\!\left(\frac{(\mu-\sigma)-\mu}{\sigma}\le\frac{X-\mu}{\sigma}\le\frac{(\mu+\sigma)-\mu}{\sigma}\right)=P(-1\le Z\le1).
+$$
+
+Le lettere $\mu$ e $\sigma$ spariscono, e resta un conto sulla normale standard, di cui conosciamo la funzione di ripartizione $\Phi$: la probabilità di un intervallo è la funzione di ripartizione calcolata nell’estremo destro meno quella calcolata nell’estremo sinistro.
+
+$$
+\begin{aligned}
+P(-1\le Z\le1)&=\Phi(1)-\Phi(-1)\\
+&=\Phi(1)-\big(1-\Phi(1)\big)\\
+&=2\,\Phi(1)-1=2\cdot0{,}8413-1=0{,}6826.
+\end{aligned}
+$$
+
+Nel secondo passaggio abbiamo usato la simmetria della campana, $\Phi(-z)=1-\Phi(z)$; nel terzo abbiamo letto $\Phi(1)=0{,}8413$ nella tabella. È il primo numero della regola 68–95–99,7: qualunque siano $\mu$ e $\sigma$, una variabile normale cade entro una deviazione standard dalla media con probabilità di circa il 68%.
+
+<!-- Versione precedente, con \Phi_{\mu,\sigma} (pedice non introdotto):
 Il trucco è la standardizzazione della [Settimana 6](../settimana_06/index.md#standardizzazione). La probabilità richiesta è
 
 $$
@@ -83,8 +106,9 @@ P(\mu-\sigma\le X\le\mu+\sigma)&=\Phi(1)-\Phi(-1)\\
 $$
 
 Nel secondo passaggio abbiamo usato la simmetria della campana, $\Phi(-z)=1-\Phi(z)$; nel terzo abbiamo letto $\Phi(1)=0{,}8413$ nella tabella. È il primo numero della regola 68–95–99,7: qualunque siano $\mu$ e $\sigma$, una variabile normale cade entro una deviazione standard dalla media con probabilità di circa il 68%.
+-->
 
-Facciamo la stessa domanda per una variabile uniforme. Per non confondere le lettere con quelle che useremo tra poco, chiamiamo $\alpha$ e $\beta$ gli estremi dell’intervallo, come fanno le slide, e scriviamo $X\sim\operatorname{Uni}(\alpha,\beta)$. Sappiamo dalla Settimana 6 che
+Facciamo la stessa domanda per una variabile uniforme. Per non confondere le lettere con quelle che useremo tra poco, chiamiamo $\alpha$ e $\beta$ gli estremi dell’intervallo e scriviamo $X\sim\operatorname{Uni}(\alpha,\beta)$. Sappiamo dalla Settimana 6 che
 
 $$
 \mu=\frac{\alpha+\beta}{2},\qquad\sigma=\frac{\beta-\alpha}{\sqrt{12}}.
@@ -98,7 +122,7 @@ $$
 
 Anche qui le lettere spariscono: per qualunque variabile uniforme, la probabilità di cadere entro una deviazione standard dalla media è circa il 58%.
 
-Proviamo infine con una variabile esponenziale di parametro $\lambda$, che non è nelle slide ma conosciamo bene. Media e deviazione standard valgono entrambe $1/\lambda$, quindi l’intervallo va da $\mu-\sigma=0$ a $\mu+\sigma=2/\lambda$. Con la funzione di ripartizione della Settimana 6, $P(X\le t)=1-e^{-\lambda t}$,
+Proviamo infine con una variabile esponenziale di parametro $\lambda$, che conosciamo bene. Media e deviazione standard valgono entrambe $1/\lambda$, quindi l’intervallo va da $\mu-\sigma=0$ a $\mu+\sigma=2/\lambda$. Con la funzione di ripartizione della Settimana 6, $P(X\le t)=1-e^{-\lambda t}$,
 
 $$
 P(0\le X\le 2/\lambda)=1-e^{-\lambda\cdot2/\lambda}=1-e^{-2}\approx0{,}865.
@@ -147,7 +171,7 @@ $$
 <figcaption>Tre distribuzioni con la stessa media μ e la stessa deviazione standard σ. L'area verde è la probabilità di cadere entro una deviazione standard dalla media: 68,3% per la normale, 57,7% per l'uniforme, 86,5% per l'esponenziale. La domanda è la stessa, la risposta dipende dalla forma della distribuzione.</figcaption>
 </figure>
 
-Mettiamo insieme i tre risultati. La domanda era sempre la stessa: con quale probabilità la variabile cade entro una deviazione standard dalla media? Le risposte sono tre: circa il 68% per la normale, il 58% per l’uniforme, l’87% per l’esponenziale. In ciascun caso la risposta non dipende dai valori di $\mu$ e di $\sigma$, ma dipende dalla **forma** della distribuzione. Ed ecco il problema: se la forma non la conosciamo, se di una variabile sappiamo soltanto che ha media $\mu$ e varianza $\sigma^2$, non c’è nessun conto da fare. Nelle slide, a questo punto, compare un gatto perplesso con tre punti interrogativi.
+Mettiamo insieme i tre risultati. La domanda era sempre la stessa: con quale probabilità la variabile cade entro una deviazione standard dalla media? Le risposte sono tre: circa il 68% per la normale, il 58% per l’uniforme, l’87% per l’esponenziale. In ciascun caso la risposta non dipende dai valori di $\mu$ e di $\sigma$, ma dipende dalla **forma** della distribuzione. Ed ecco il problema: se la forma non la conosciamo, se di una variabile sappiamo soltanto che ha media $\mu$ e varianza $\sigma^2$, non c’è nessun conto da fare.
 
 L’idea della scuola di San Pietroburgo è di cambiare domanda. Invece del valore esatto, che senza la forma non possiamo avere, cerchiamo un **limite**: un numero che la probabilità non può superare, o sotto il quale non può scendere, qualunque sia la distribuzione. Partiamo dal caso in cui sappiamo ancora meno: soltanto la media.
 
@@ -159,9 +183,9 @@ L’idea della scuola di San Pietroburgo è di cambiare domanda. Invece del valo
 
 ## Atto III — La disuguaglianza di Markov {: #markov }
 
-Le slide pongono il problema così: «Data una variabile aleatoria non negativa, non meglio specificata, e un numero reale positivo, calcolare un limite massimo per la probabilità che la variabile assuma valori maggiori o uguali a quel numero.» Chiamiamo $a$ il numero. Sappiamo soltanto che $X$ non è mai negativa e che ha media $\mathbb{E}[X]$. Che cosa possiamo dire di $P(X\ge a)$?
+Il problema è questo. Di una variabile aleatoria $X$ non sappiamo quasi nulla, e vogliamo un limite massimo per la probabilità che $X$ sia maggiore o uguale a un numero positivo $a$. Sappiamo soltanto che $X$ non è mai negativa e che ha media $\mathbb{E}[X]$. Che cosa possiamo dire di $P(X\ge a)$?
 
-Cominciamo da un esempio con numeri piccoli, preso dal notebook del corso. In un gruppo di dieci persone il reddito medio è di 1000 euro al mese. Nessuno ha un reddito negativo. Quante persone, al massimo, possono guadagnare almeno 10 000 euro?
+Cominciamo da un esempio con numeri piccoli. In un gruppo di dieci persone il reddito medio è di 1000 euro al mese. Nessuno ha un reddito negativo. Quante persone, al massimo, possono guadagnare almeno 10 000 euro?
 
 Un reddito medio di 1000 euro su dieci persone vuol dire che la somma dei redditi è 10 000 euro. Se una persona guadagna 10 000 euro, ha già da sola tutta la somma, e le altre nove devono guadagnare zero. Se due persone guadagnassero almeno 10 000 euro, la somma sarebbe almeno 20 000 euro, e la media almeno 2000: impossibile. Quindi al più una persona su dieci, cioè al più il 10%, può raggiungere i 10 000 euro. E notiamo il rapporto: 10% è proprio $1000/10\,000$, la media divisa per la soglia.
 
@@ -217,7 +241,7 @@ A parole: una variabile non negativa non può essere spesso molto più grande de
 
 ### Perché è vera {: #markov-dimostrazione }
 
-La dimostrazione delle slide traduce in formule l’argomento dei redditi, con lo strumento delle indicatrici della Settimana 4. Definiamo l’indicatrice dell’evento che ci interessa:
+La dimostrazione traduce in formule l’argomento dei redditi, con lo strumento delle indicatrici della Settimana 4. Definiamo l’indicatrice dell’evento che ci interessa:
 
 $$
 I=\begin{cases}1&\text{se }X\ge a,\\0&\text{se }X<a.\end{cases}
@@ -237,7 +261,8 @@ Per vederlo basta distinguere i due casi. Se $X<a$, allora $I=0$ e la disuguagli
 <defs><marker id="s08f3a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
 <line x1="60.0" y1="250.0" x2="550.0" y2="250.0" stroke="currentColor" stroke-width="1" marker-end="url(#s08f3a)"/>
 <line x1="60.0" y1="250.0" x2="60.0" y2="30.0" stroke="currentColor" stroke-width="1" marker-end="url(#s08f3a)"/>
-<text x="552.0" y="242.0" text-anchor="end" fill="currentColor">valori di X</text>
+<text x="552.0" y="242.0" text-anchor="end" fill="currentColor">valore che X assume</text>
+<text x="68.0" y="36.0" text-anchor="start" fill="currentColor">valore di X e di a · I</text>
 <line x1="60.0" y1="250.0" x2="60.0" y2="255.0" stroke="currentColor" stroke-width="1"/>
 <text x="60.0" y="268.0" text-anchor="middle" fill="currentColor">0</text>
 <line x1="55.0" y1="250.0" x2="60.0" y2="250.0" stroke="currentColor" stroke-width="1"/>
@@ -275,8 +300,10 @@ Per vederlo basta distinguere i due casi. Se $X<a$, allora $I=0$ e la disuguagli
 <text x="175.2" y="113.5" text-anchor="middle" fill="currentColor">sotto a: X ≥ 0 = a · I</text>
 <text x="381.6" y="48.4" text-anchor="middle" fill="currentColor">da a in su: X ≥ a = a · I</text>
 </svg>
-<figcaption>La variabile indicatrice I vale 1 quando X ≥ a e 0 altrimenti; qui a = 4. La variabile a · I (arancione) vale 0 a sinistra di a e vale a da a in poi. Se X non è mai negativa, la retta blu dei valori di X sta sempre sopra la linea arancione: X ≥ a · I in ogni caso. Le zone azzurre sono lo «spreco» della disuguaglianza.</figcaption>
+<figcaption>La variabile indicatrice I vale 1 quando X ≥ a e 0 altrimenti; qui a = 4. La variabile a · I (arancione) vale 0 a sinistra di a e vale a da a in poi. Se X non è mai negativa, la retta blu dei valori di X sta sempre sopra la linea arancione: X ≥ a · I in ogni caso. Sull’asse orizzontale c’è il valore che X può assumere; sull’asse verticale c’è il valore delle due variabili che confrontiamo, X e a · I, in corrispondenza di quel valore di X. Le zone azzurre quantificano il divario.</figcaption>
 </figure>
+
+Quando $X$ cade strettamente tra 0 e $a$, la retta blu sta sopra il gradino arancione, perché $X$ è positiva mentre $a\cdot I$ vale 0. Quando $X$ supera $a$, succede lo stesso, perché $X$ è più grande di $a$ mentre $a\cdot I$ vale esattamente $a$.
 
 Il secondo passo è passare ai valori attesi. Se una variabile è sempre maggiore o uguale a un’altra, anche la sua media lo è: è la **monotonia del valore atteso**. Si capisce pensando alla media come a una somma pesata: se ogni valore della prima variabile è almeno grande quanto il valore corrispondente della seconda, e i pesi (le probabilità) sono gli stessi e non negativi, la somma pesata della prima è almeno grande quanto quella della seconda. Quindi
 
@@ -296,9 +323,9 @@ $$
 P(X\ge a)\le\frac{\mathbb{E}[X]}{a}.
 $$
 
-Le zone azzurre della figura dicono dove la disuguaglianza «spreca»: ogni volta che $X$ è strettamente compresa tra 0 e $a$, oppure strettamente maggiore di $a$, il valore di $X$ è più grande di $a\cdot I$. La disuguaglianza diventa un’uguaglianza soltanto per una variabile che vale esattamente 0 oppure esattamente $a$, come il gruppo estremo della figura dei redditi, in cui una persona ha tutto e le altre niente. Non si può quindi migliorare il limite di Markov senza sapere qualcosa di più sulla variabile.
+Questa disuguaglianza ci fornisce il limite di probabilità più stretto possibile quando conosciamo soltanto la media della variabile aleatoria.  Per ottenere un limite ancora più stretto bisogna quindi sapere qualcosa di più sulla distribuzione della variabile. È la strada che prenderemo tra poco con la varianza.
 
-### Che cosa garantisce, e quando non dice nulla {: #markov-uso }
+### Cosa garantisce la disuguaglianza di Markov {: #markov-uso }
 
 Un servizio web risponde in media in 200 millisecondi. Il tempo di risposta $T$ non è mai negativo, quindi possiamo usare la disuguaglianza di Markov senza sapere nient’altro:
 
@@ -306,7 +333,7 @@ $$
 P(T\ge1000\text{ ms})\le\frac{200}{1000}=0{,}2,\qquad P(T\ge2000\text{ ms})\le\frac{200}{2000}=0{,}1.
 $$
 
-Al più una richiesta su cinque supera il secondo, al più una su dieci supera i due secondi. Sono garanzie vere qualunque sia la distribuzione dei tempi, ma sono molto prudenti. Se il tempo di risposta fosse esponenziale con media 200 millisecondi, le probabilità vere sarebbero $e^{-1000/200}=e^{-5}\approx0{,}0067$ e $e^{-10}\approx0{,}000045$: decine o migliaia di volte più piccole dei limiti. La disuguaglianza di Markov descrive il **caso peggiore** tra tutte le distribuzioni con quella media, e il caso peggiore è quello in cui tutta la probabilità «in alto» si concentra esattamente sulla soglia.
+Al più una richiesta su cinque supera il secondo, al più una su dieci supera i due secondi. Sono garanzie vere qualunque sia la distribuzione dei tempi, ma sono molto prudenti. Se il tempo di risposta fosse esponenziale con media 200 millisecondi, le probabilità vere sarebbero $e^{-1000/200}=e^{-5}\approx0{,}0067$ e $e^{-10}\approx0{,}000045$: decine o migliaia di volte più piccole dei limiti. La disuguaglianza di Markov descrive il **caso peggiore** tra tutte le distribuzioni con quella media.
 
 Lo stesso ragionamento si usa per gli algoritmi randomizzati, come il quicksort con il pivot scelto a caso. Se il tempo medio di esecuzione su un certo input è $\bar t$, la disuguaglianza di Markov dice che la probabilità di metterci almeno $10\,\bar t$ è al più 1/10. Su questa idea si basa una strategia molto usata: se un’esecuzione dura troppo, la si interrompe e la si ricomincia con nuove scelte casuali, sapendo che una lunga sfortuna di fila è improbabile.
 
@@ -322,19 +349,19 @@ La disuguaglianza di Markov usa un’informazione sola, la media, e per questo �
 
 ## Atto IV — La disuguaglianza di Čebyšëv {: #cebysev }
 
-Ecco la domanda delle slide: «Data una variabile aleatoria $X$, non meglio specificata, di valore atteso $\mu$ e varianza $\sigma^2$, e un numero reale positivo, calcolare un limite minimo per la probabilità che la variabile prenda valori compresi tra $\mu-k\sigma$ e $\mu+k\sigma$.» Il numero, che qui chiamiamo $k$, conta quante deviazioni standard ci allontaniamo dalla media; le slide lo chiamano $\lambda$, ma noi teniamo la lettera $\lambda$ per il tasso della distribuzione di Poisson e di quella esponenziale. Rispetto a Markov ci sono due differenze. Ora conosciamo anche la varianza. E non serve più che la variabile sia non negativa: $X$ può assumere qualunque valore reale.
+Ecco la domanda. Di una variabile aleatoria $X$ conosciamo il valore atteso $\mu$ e la varianza $\sigma^2$, e nient’altro. Vogliamo un limite minimo per la probabilità che $X$ cada tra $\mu-k\sigma$ e $\mu+k\sigma$, dove il numero positivo $k$ conta quante deviazioni standard ci allontaniamo dalla media. Rispetto a Markov ci sono due differenze. Ora conosciamo anche la varianza. E non serve più che la variabile sia non negativa: $X$ può assumere qualunque valore reale.
 
 ### Markov applicata alla variabile giusta {: #cebysev-dimostrazione }
 
 Conviene ragionare prima sull’evento opposto: la variabile si allontana dalla media di almeno una certa distanza $a>0$, cioè $|X-\mu|\ge a$. La distanza $|X-\mu|$ non è mai negativa, qualunque sia il segno di $X$: è proprio il tipo di variabile a cui si applica Markov. C’è però un problema: di $|X-\mu|$ non conosciamo la media. Conosciamo invece la media del suo quadrato, perché è la definizione di varianza: $\mathbb{E}[(X-\mu)^2]=\sigma^2$. Allora eleviamo al quadrato.
 
-Il primo passo è riscrivere l’evento. Due numeri non negativi stanno nello stesso ordine dei loro quadrati, quindi
+Il primo passo è riscrivere l’evento:
 
 $$
 |X-\mu|\ge a\qquad\text{se e solo se}\qquad(X-\mu)^2\ge a^2.
 $$
 
-I due eventi sono lo stesso evento, scritto in due modi, e hanno la stessa probabilità.
+Il "se è solo se" vuol dire che i due eventi sono lo stesso evento, scritto in due modi, e hanno la stessa probabilità.
 
 Il secondo passo è applicare la disuguaglianza di Markov alla variabile $Y=(X-\mu)^2$, che è un quadrato e quindi non è mai negativa, con la soglia $a^2>0$:
 
@@ -359,9 +386,21 @@ Il terzo passo è riconoscere che il numeratore è la varianza, $\sigma^2$. Rime
     P\big(|X-\mu|<k\sigma\big)\ge1-\frac{1}{k^2}.
     $$
 
-La seconda forma si ottiene sostituendo $a=k\sigma$ nella prima: $\sigma^2/(k\sigma)^2=\sigma^2/(k^2\sigma^2)=1/k^2$. La terza è la regola del complementare: l’evento «la distanza dalla media è minore di $k\sigma$» è il contrario dell’evento «la distanza è almeno $k\sigma$», e la sua probabilità è 1 meno quella dell’altro. Le slide la scrivono con l’intervallo chiuso, $P(\mu-k\sigma\le X\le\mu+k\sigma)\ge1-1/k^2$: vale anche così, perché l’intervallo chiuso contiene quello aperto e quindi ha una probabilità almeno altrettanto grande.
+La seconda forma si ottiene sostituendo $a=k\sigma$ nella prima: $\sigma^2/(k\sigma)^2=\sigma^2/(k^2\sigma^2)=1/k^2$. La terza è la regola del complementare: l’evento «la distanza dalla media è minore di $k\sigma$» è il contrario dell’evento «la distanza è almeno $k\sigma$», e la sua probabilità è 1 meno quella dell’altro. Si trova spesso scritta con l’intervallo chiuso, $P(\mu-k\sigma\le X\le\mu+k\sigma)\ge1-1/k^2$: vale anche così, perché l’intervallo chiuso contiene quello aperto e quindi ha una probabilità almeno altrettanto grande.
 
-Leggiamo qualche valore. Con $k=2$, al più un quarto della probabilità sta a due o più deviazioni standard dalla media, e almeno il 75% sta entro due deviazioni standard. Con $k=3$, al più $1/9\approx11{,}1\%$ sta fuori e almeno l’88,9% sta dentro. Con $k=1$ la disuguaglianza dice soltanto che la probabilità di stare fuori è al più 1, cioè nulla. Non è un difetto della dimostrazione: esistono davvero variabili che non stanno mai entro una deviazione standard dalla media. Per esempio, la variabile che vale $-1$ o $+1$ con probabilità 1/2 ciascuno ha media 0 e deviazione standard 1, ed è sempre a distanza esattamente 1 dalla media: $P(|X|<1)=0$.
+Leggiamo qualche valore. Con $k=2$, al più un quarto della probabilità sta a due o più deviazioni standard dalla media, e almeno il 75% sta entro due deviazioni standard. Con $k=3$, al più $1/9\approx11{,}1\%$ sta fuori e almeno l’88,9% sta dentro. Con $k=1$ la disuguaglianza dice soltanto che la probabilità di stare fuori è al più 1. 
+
+Questa è un’informazione vuota, perché qualunque probabilità è al più 1. Anche la forma con il complementare non aggiunge nulla: dice che la probabilità di stare entro una deviazione standard dalla media è almeno $1-1/1^2=0$. Viene allora da chiedersi di chi sia la colpa. Forse la disuguaglianza è troppo prudente, oppure, conoscendo soltanto la media e la varianza, davvero non si può dire di più. È vera la seconda possibilità: esistono variabili che non hanno nessuna probabilità di cadere a distanza minore di una deviazione standard dalla media.
+
+Ecco l’esempio più semplice. Sia $X$ la variabile che vale $-1$ oppure $+1$, ciascuno con probabilità 1/2. La media è $\mu=(-1)\cdot\tfrac12+(+1)\cdot\tfrac12=0$. Il quadrato di $X$ vale 1 in entrambi i casi, quindi la varianza è $\sigma^2=\mathbb{E}\big[(X-0)^2\big]=\mathbb{E}[X^2]=1$ e la deviazione standard è $\sigma=1$. Ora guardiamo dove cadono i valori. Sia $-1$ sia $+1$ stanno a distanza esattamente 1 dalla media, cioè esattamente a una deviazione standard, e nessun valore è più vicino. Quindi
+
+$$
+P\big(|X-\mu|<\sigma\big)=P\big(|X|<1\big)=0
+\qquad\text{e}\qquad
+P\big(|X-\mu|\ge\sigma\big)=1.
+$$
+
+Per questa variabile la probabilità di stare fuori vale proprio 1, cioè tutto quello che la disuguaglianza concede. Il limite con $k=1$ quindi non è debole: è il migliore possibile, perché c’è una variabile che lo raggiunge. L’esempio non dipende dai numeri scelti. Con gli stessi conti si vede che la variabile che vale $\mu-\sigma$ oppure $\mu+\sigma$, con probabilità 1/2 ciascuno, ha media $\mu$ e deviazione standard $\sigma$, per qualunque scelta di $\mu$ e di $\sigma>0$, e non cade mai a distanza minore di $\sigma$ dalla media. Qui conta che la distanza sia minore di $\sigma$ in senso stretto. I due valori $\mu\pm\sigma$ stanno proprio sul bordo dell’intervallo: l’intervallo chiuso $[\mu-\sigma,\,\mu+\sigma]$ li contiene entrambi e ha probabilità 1, mentre quello aperto non ne contiene nessuno.
 
 <figure markdown="0">
 <svg viewBox="0 0 580 260" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="Una densità asimmetrica con media 3 e deviazione standard radice di 3. In verde la zona tra mu meno 2 sigma e mu più 2 sigma; in rosso le code fuori. Le code pesano 4,4 per cento; la disuguaglianza di Čebyšëv garantisce al più 25 per cento, qualunque sia la forma.">
@@ -527,9 +566,9 @@ Con la distribuzione normale e $k=2$ il widget mostra la differenza che abbiamo 
 
 ### L’esercizio delle ante {: #ante }
 
-Il primo esercizio delle slide su Čebyšëv viene da una fabbrica di mobili. Le ante di legno di un lotto hanno una lunghezza media di 205 cm e una varianza di 8 cm². Un’anta è considerata difettosa se è più corta di 197 cm o più lunga di 213 cm, e il lotto viene rifiutato se contiene più del 15% di ante difettose. Sulla base delle informazioni a disposizione, il lotto sarà rifiutato?
+Il primo esercizio su Čebyšëv viene da una fabbrica di mobili. Le ante di legno di un lotto hanno una lunghezza media di 205 cm e una varianza di 8 cm². Un’anta è considerata difettosa se è più corta di 197 cm o più lunga di 213 cm, e il lotto viene rifiutato se contiene più del 15% di ante difettose. Sulla base delle informazioni a disposizione, il lotto sarà rifiutato?
 
-Cominciamo, come fanno le slide, scrivendo i dati: $\mu=205$ cm e $\sigma^2=8$ cm², quindi $\sigma=\sqrt8\approx2{,}83$ cm. Non conosciamo la forma della distribuzione delle lunghezze, quindi l’unico strumento è Čebyšëv.
+Cominciamo scrivendo i dati: $\mu=205$ cm e $\sigma^2=8$ cm², quindi $\sigma=\sqrt8\approx2{,}83$ cm. Non conosciamo la forma della distribuzione delle lunghezze, quindi l’unico strumento è Čebyšëv.
 
 Il secondo passo è controllare che l’intervallo delle ante buone sia simmetrico rispetto alla media. Lo è: $205-197=8$ e $213-205=8$. Un’anta è difettosa quando la sua lunghezza si allontana dalla media di più di 8 cm, cioè quando $|X-205|>8$. Questo è il motivo per cui conviene controllare la simmetria: la disuguaglianza di Čebyšëv parla di distanze dalla media, e un intervallo simmetrico si traduce in una sola distanza.
 
@@ -543,7 +582,7 @@ La prima disuguaglianza dice soltanto che l’evento «più di 8» è contenuto 
 
 La conclusione: ogni anta è difettosa con probabilità al più del 12,5%, qualunque sia la distribuzione delle lunghezze. Equivalentemente, ogni anta è buona con probabilità almeno dell’87,5%. Poiché 12,5% è sotto la soglia del 15%, in media un lotto contiene meno del 15% di ante difettose, e possiamo aspettarci che i lotti non vengano rifiutati.
 
-C’è un salto nascosto in quest’ultima frase, che il notebook del corso mette in evidenza. Abbiamo calcolato una probabilità per **una** anta, e ne abbiamo tratto una conclusione sulla **percentuale** di ante difettose in un lotto di molte ante. Che la percentuale attesa sia la probabilità del singolo pezzo lo dice la linearità: se $D_i$ è l’indicatrice dell’anta $i$ difettosa, la frazione di difettose in un lotto di $n$ ante è $(D_1+\cdots+D_n)/n$, e la sua media è la media delle $\mathbb{E}[D_i]=P(\text{difettosa})$. Ma che in un lotto concreto la percentuale sia vicina alla sua media, e non per esempio del 20% per sfortuna, è un’altra affermazione: è la legge dei grandi numeri della seconda lezione. Torneremo sulle ante nell’[esercizio 9](#esercizio-9).
+C’è un salto nascosto in quest’ultima frase, che conviene mettere in evidenza. Abbiamo calcolato una probabilità per **una** anta, e ne abbiamo tratto una conclusione sulla **percentuale** di ante difettose in un lotto di molte ante. Che la percentuale attesa sia la probabilità del singolo pezzo lo dice la linearità: se $D_i$ è l’indicatrice dell’anta $i$ difettosa, la frazione di difettose in un lotto di $n$ ante è $(D_1+\cdots+D_n)/n$, e la sua media è la media delle $\mathbb{E}[D_i]=P(\text{difettosa})$. Ma che in un lotto concreto la percentuale sia vicina alla sua media, e non per esempio del 20% per sfortuna, è un’altra affermazione: è la legge dei grandi numeri della seconda lezione. Torneremo sulle ante nell’[esercizio 9](#esercizio-9).
 
 Gli intervalli non sono sempre simmetrici. Se ci interessa una sola coda, per esempio la probabilità che un’anta sia più lunga di 213 cm, possiamo comunque usare Čebyšëv: l’evento $X\ge\mu+a$ è contenuto nell’evento $|X-\mu|\ge a$, quindi
 
@@ -756,7 +795,7 @@ $$
 \mathbb{E}[S_n]=n\mu,\qquad\operatorname{Var}(S_n)=n\sigma^2,\qquad\sigma_{S_n}=\sigma\sqrt n.
 $$
 
-La somma di cento dadi, per esempio, ha media 350, varianza $100\cdot35/12\approx291{,}7$ e deviazione standard circa 17,1. La deviazione standard della somma cresce con $n$, anche se più lentamente di $n$: sommando molte variabili, l’incertezza sul totale **aumenta**. Il notebook del corso lo mostra con una passeggiata aleatoria, in cui la somma dei passi si allontana sempre di più dal punto di partenza.
+La somma di cento dadi, per esempio, ha media 350, varianza $100\cdot35/12\approx291{,}7$ e deviazione standard circa 17,1. La deviazione standard della somma cresce con $n$, anche se più lentamente di $n$: sommando molte variabili, l’incertezza sul totale **aumenta**. Lo si vede bene in una passeggiata aleatoria, in cui la somma dei passi si allontana sempre di più dal punto di partenza.
 
 ### La media campionaria {: #media-campionaria }
 
@@ -785,7 +824,7 @@ $$
     \mathbb{E}[\bar X_n]=\mu,\qquad\operatorname{Var}(\bar X_n)=\frac{\sigma^2}{n},\qquad\sigma_{\bar X_n}=\frac{\sigma}{\sqrt n}.
     $$
 
-Le slide del corso lo commentano con tre punti esclamativi: «quindi la varianza tende a zero per grandi valori di $n$!!!». La media di $n$ osservazioni ha sempre lo stesso centro, $\mu$, ma è sempre meno dispersa attorno a quel centro. Per i dadi: la media di un dado ha deviazione standard 1,71; quella di 4 dadi 0,85; quella di 16 dadi 0,43; quella di 100 dadi 0,17.
+Quindi la varianza della media tende a zero per grandi valori di $n$. La media di $n$ osservazioni ha sempre lo stesso centro, $\mu$, ma è sempre meno dispersa attorno a quel centro. Per i dadi: la media di un dado ha deviazione standard 1,71; quella di 4 dadi 0,85; quella di 16 dadi 0,43; quella di 100 dadi 0,17.
 
 <figure markdown="0">
 <svg viewBox="0 0 580 280" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="La distribuzione della media di n dadi per n uguale a 1, 4 e 16, disegnata come densità sullo stesso asse da 1 a 6. Con un dado è piatta; con 4 dadi è più stretta attorno a 3,5; con 16 dadi è ancora più stretta. Le deviazioni standard sono 1,71, 0,85 e 0,43.">
@@ -860,7 +899,7 @@ Abbiamo ora tutti gli ingredienti per la legge dei grandi numeri: la media campi
 
 ## Atto VII — La legge dei grandi numeri {: #lgn }
 
-Le slide del corso riprendono un esempio dalle note di Stefania Boffa. Lanciamo cento volte un dado e rappresentiamo il risultato del lancio $i$ con la variabile $X_i$. Le cento variabili $X_1,\dots,X_{100}$ hanno la stessa distribuzione e sono indipendenti, e ciascuna ha valore atteso
+Un esempio, che riprendiamo dalle note di Stefania Boffa, è questo. Lanciamo cento volte un dado e rappresentiamo il risultato del lancio $i$ con la variabile $X_i$. Le cento variabili $X_1,\dots,X_{100}$ hanno la stessa distribuzione e sono indipendenti, e ciascuna ha valore atteso
 
 $$
 \mathbb{E}[X_i]=\frac16\cdot1+\frac16\cdot2+\frac16\cdot3+\frac16\cdot4+\frac16\cdot5+\frac16\cdot6=3{,}5.
@@ -905,7 +944,7 @@ Il valore 3,5 è il valor medio **teorico**: è calcolato dalla distribuzione, p
 <text x="133.0" y="77.0" text-anchor="start" fill="#4051b5">dopo 100 lanci: 3,70</text>
 <text x="133.0" y="91.8" text-anchor="start" fill="#4051b5">dopo 1000 lanci: 3,514</text>
 </svg>
-<figcaption>Una sequenza di 1000 lanci di un dado simulati al computer (seme 37). La linea blu è la media dei primi n risultati. All'inizio la media salta molto, perché ogni nuovo lancio pesa tanto; poi si assesta vicino alla media teorica 3,5. È il grafico delle slide del corso, rifatto con una nuova simulazione.</figcaption>
+<figcaption>Una sequenza di 1000 lanci di un dado simulati al computer (seme 37). La linea blu è la media dei primi n risultati. All'inizio la media salta molto, perché ogni nuovo lancio pesa tanto; poi si assesta vicino alla media teorica 3,5.</figcaption>
 </figure>
 
 ### Che cosa vuol dire «avvicinarsi» {: #convergenza }
@@ -1031,13 +1070,13 @@ $$
 n\ge\frac{\sigma^2}{\delta\,\varepsilon^2}.
 $$
 
-Le slide del corso propongono un problema di questo tipo per la Settimana 10, e possiamo già risolverlo nella versione prudente. Vogliamo stimare il tempo medio di esecuzione di un programma eseguendolo più volte nelle stesse condizioni. Sappiamo che la varianza del tempo di esecuzione è $\sigma^2=4$ s². Quante esecuzioni servono perché la media dei tempi misurati cada entro mezzo secondo dal tempo medio vero con probabilità almeno del 95%? Qui $\varepsilon=0{,}5$ s e $\delta=0{,}05$, quindi
+Un problema di questo tipo ricompare nella Settimana 10, e possiamo già risolverlo nella versione prudente. Vogliamo stimare il tempo medio di esecuzione di un programma eseguendolo più volte nelle stesse condizioni. Sappiamo che la varianza del tempo di esecuzione è $\sigma^2=4$ s². Quante esecuzioni servono perché la media dei tempi misurati cada entro mezzo secondo dal tempo medio vero con probabilità almeno del 95%? Qui $\varepsilon=0{,}5$ s e $\delta=0{,}05$, quindi
 
 $$
 n\ge\frac{4}{0{,}05\cdot0{,}5^2}=\frac{4}{0{,}0125}=320.
 $$
 
-Con 320 esecuzioni la garanzia vale qualunque sia la distribuzione dei tempi. Le slide, usando il [teorema del limite centrale della Settimana 9](../settimana_09/index.md#quante-esecuzioni), trovano che ne bastano 62: anche qui il prezzo della prudenza è un fattore cinque. Lo stesso calcolo dice quante simulazioni servono per stimare una probabilità con il metodo Monte Carlo. Con il limite $1/(4n\varepsilon^2)$ delle frequenze, per avere un errore al più di un punto percentuale ($\varepsilon=0{,}01$) con probabilità almeno del 95% bastano $n\ge1/(4\cdot0{,}05\cdot0{,}0001)=50\,000$ simulazioni, qualunque sia la probabilità da stimare.
+Con 320 esecuzioni la garanzia vale qualunque sia la distribuzione dei tempi. Con il [teorema del limite centrale della Settimana 9](../settimana_09/index.md#quante-esecuzioni) si trova che ne bastano 62: anche qui il prezzo della prudenza è un fattore cinque. Lo stesso calcolo dice quante simulazioni servono per stimare una probabilità con il metodo Monte Carlo. Con il limite $1/(4n\varepsilon^2)$ delle frequenze, per avere un errore al più di un punto percentuale ($\varepsilon=0{,}01$) con probabilità almeno del 95% bastano $n\ge1/(4\cdot0{,}05\cdot0{,}0001)=50\,000$ simulazioni, qualunque sia la probabilità da stimare.
 
 #### Esplora: la media che si stabilizza {: #widget-lgn }
 
@@ -1191,11 +1230,11 @@ Da allora le catene di Markov sono diventate uno strumento ovunque. Descrivono c
 
 ## Esercizi: prima prova, poi apri la soluzione {: #esercizi }
 
-Per ogni esercizio comincia scrivendo, in una frase, che cosa conosci della variabile: soltanto la media, la media e la varianza, oppure tutta la distribuzione. Da questo dipende lo strumento da usare. Poi scrivi l’evento come distanza dalla media, se puoi, e fai il conto. I primi tre esercizi vengono dalle slide del corso; il nono riprende un’osservazione del notebook delle disuguaglianze; gli altri sono nuovi. I risultati numerici servono a controllare il procedimento; all’esame conta il ragionamento.
+Per ogni esercizio comincia scrivendo, in una frase, che cosa conosci della variabile: soltanto la media, la media e la varianza, oppure tutta la distribuzione. Da questo dipende lo strumento da usare. Poi scrivi l’evento come distanza dalla media, se puoi, e fai il conto. I risultati numerici servono a controllare il procedimento; all’esame conta il ragionamento.
 
 ### Esercizio 1 — Entro due deviazioni standard {: #esercizio-1 }
 
-Rifai l’esercizio delle slide dell’Atto II con due deviazioni standard. Calcola $P(\mu-2\sigma\le X\le\mu+2\sigma)$ (a) per una variabile normale, (b) per una variabile uniforme, (c) per una variabile esponenziale. (d) Che cosa garantisce la disuguaglianza di Čebyšëv per una variabile qualsiasi?
+Rifai l’esercizio dell’Atto II con due deviazioni standard. Calcola $P(\mu-2\sigma\le X\le\mu+2\sigma)$ (a) per una variabile normale, (b) per una variabile uniforme, (c) per una variabile esponenziale. (d) Che cosa garantisce la disuguaglianza di Čebyšëv per una variabile qualsiasi?
 
 ??? esempio-svolto "Soluzione ragionata"
     (a) Standardizzando, $2\,\Phi(2)-1=2\cdot0{,}9772-1=0{,}9544$. (b) Per l’uniforme $2\sigma\approx0{,}58\,(\beta-\alpha)$ supera la metà della lunghezza dell’intervallo, quindi $[\mu-2\sigma,\;\mu+2\sigma]$ contiene tutto $[\alpha,\beta]$ e la probabilità è 1. (c) Con media e deviazione standard $1/\lambda$, l’intervallo va da $-1/\lambda$, che è sotto zero, a $3/\lambda$: la probabilità è $P(X\le3/\lambda)=1-e^{-3}\approx0{,}950$. (d) Almeno $1-1/2^2=0{,}75$. Le tre distribuzioni stanno tutte sopra il 75%, ciascuna con il suo valore.
@@ -1288,12 +1327,11 @@ La **legge (debole) dei grandi numeri** dice che $\bar X_n$ **converge in probab
 
 ## Riferimenti e letture {: #riferimenti }
 
-La dispensa riprende le slide e i notebook del corso degli anni passati, che a loro volta adattano alcuni testi presenti nella bibliografia. Le citazioni storiche sono tradotte dal latino; le fonti sono letture facoltative.
+Le citazioni storiche sono tradotte dal latino; le fonti sono letture facoltative.
 
 - **Michael Baron**, *Probability and Statistics for Computer Scientists*, 2ª ed., CRC Press, 2014, cap. 3, § 3.3.6 (proprietà della varianza, varianza di una somma) e § 3.3.7 (disuguaglianza di Čebyšëv, con l’Esempio 3.12 sugli errori di un software). Da qui viene l’idea dell’esercizio 4, rielaborato. [Scheda dell’editore](https://doi.org/10.1201/b14800).
-- **Chris Piech**, *Probability for Computer Scientists*, materiale del corso Stanford CS109: [testo online](https://chrispiech.github.io/probabilityForComputerScientists/en/). Molte slide del corso adattano esempi di questo testo.
-- **Stefania Boffa**, note del corso di probabilità dell’Università dell’Insubria: l’esempio dei cento lanci di un dado e l’enunciato della legge dei grandi numeri, ripresi nelle slide.
-- **Notebook Colab degli anni passati**: [«4.2.4 Disuguaglianze di Markov e di Čebyšëv»](https://colab.research.google.com/github/QwertyJacob/colab_handouts_PSI/blob/main/4.2.4_Inequalities.ipynb), da cui vengono l’esempio dei redditi, la dimostrazione con l’indicatrice e le ante, e [«4.4 Teorema del limite centrale»](https://colab.research.google.com/github/QwertyJacob/colab_handouts_PSI/blob/main/4.4_CLT.ipynb), da cui vengono la somma di $n$ variabili e la passeggiata aleatoria. Sono materiale degli anni passati e non sostituiscono la dispensa: come usarli è spiegato nella pagina [Notebook degli anni passati](../notebook.md).
+- **Chris Piech**, *Probability for Computer Scientists*, materiale del corso Stanford CS109: [testo online](https://chrispiech.github.io/probabilityForComputerScientists/en/).
+- **Stefania Boffa**, note del corso di probabilità dell’Università dell’Insubria: l’esempio dei cento lanci di un dado e l’enunciato della legge dei grandi numeri.
 - **Jacob Bernoulli**, *Ars Conjectandi*, Basilea, Thurneysen, 1713, parte IV, capp. IV–V, pp. 223–239: l’istinto del più stupido (p. 225), l’urna con 3000 sassolini bianchi e 2000 neri (p. 226), i vent’anni (p. 227) e le 25 550 estrazioni (pp. 238–239). [Scansione su Internet Archive](https://archive.org/details/jacobibernoulli00bern).
 - **Pafnutij L. Čebyšëv**, «Des valeurs moyennes», *Journal de mathématiques pures et appliquées*, 2ª serie, 12 (1867), pp. 177–184: la disuguaglianza e la legge dei grandi numeri. Biografia su [MacTutor](https://mathshistory.st-andrews.ac.uk/Biographies/Chebyshev/).
 - **Irénée-Jules Bienaymé**, biografia su [MacTutor](https://mathshistory.st-andrews.ac.uk/Biographies/Bienayme/): la scoperta della disuguaglianza nel 1853 e il riconoscimento di Čebyšëv.

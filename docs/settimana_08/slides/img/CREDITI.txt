@@ -1,0 +1,2 @@
+esercizi_time.jpg: immagine del docente, copia di settimana_07/slides/img (a sua volta da settimana_06).
+Nessun ritratto: Čebyšëv e Bernoulli sono rappresentati da scene SVG (il meccanismo lambda e l'urna).

@@ -645,6 +645,26 @@
       <aside class="notes">Esercizio 6 (a, b) della dispensa. Sostituisce la spiegazione frontale della differenza e di 3X. Ricorda alla lavagna Var(Y) = p(1 − p) = 1/4. Click 1: timer di 4′. Click 2–3: soluzione. Errori attesi: Var(X − Y) = 35/12 − 1/4; Var(3X) = 3 · 35/12.</aside>
     </section>
 
+    <!-- L2-11a · la media campionaria: definizione e notazione -->
+    <section id="media-campionaria-def">
+      <p class="badge">La media campionaria · definizione e notazione</p>
+      <div class="s08-two" style="align-items:start">
+        <div>
+          <p><b class="data">Dopo i lanci: i dati.</b> Abbiamo lanciato un dado $n$ volte e annotato i risultati $x_1,\dots,x_n$: è un <b>campione</b>.</p>
+          <p>$$\bar x=\frac{x_1+\cdots+x_n}{n}=\frac1n\sum_{i=1}^{n}x_i$$</p>
+          <p>Si legge «x segnato». Con 2, 5, 3, 6 vale $\bar x=4$: è un <b>numero</b>.</p>
+        </div>
+        <div class="fragment">
+          <p><b class="model">Prima dei lanci: le variabili.</b> I risultati non sono ancora noti: sono $X_1,\dots,X_n$, i.i.d., una per lancio.</p>
+          <p>$$\bar X_n=\frac{X_1+\cdots+X_n}{n}=\frac{S_n}{n}$$</p>
+          <p>È una <b>variabile aleatoria</b>: ogni serie di lanci dà un valore diverso, e il 4 è uno di questi valori.</p>
+        </div>
+      </div>
+      <p class="s08-text fragment">Maiuscola per la variabile, minuscola per il valore osservato; l'indice $n$ dice quante osservazioni mediamo.</p>
+      <p class="s08-note fragment">Da non confondere con $\mu=\mathbb E[X_i]=3{,}5$, che si calcola dalla distribuzione, prima di lanciare.</p>
+      <aside class="notes">Nuova (dispensa, Atto VI, «La media campionaria»). La slide dà un nome e una notazione alla media prima di calcolarne media e varianza nella slide successiva. All'ingresso si vede la colonna dei dati: la media campionaria di un campione è la media aritmetica che gli studenti conoscono già, per esempio dai voti degli esami; nella Settimana 5 l'abbiamo calcolata per i morti per calcio di cavallo di Bortkiewicz, dove valeva 0,61. Il click 1 mostra la stessa media guardata prima di lanciare, quando i risultati sono variabili aleatorie. Il click 2 riprende la convenzione delle maiuscole già usata per X e x. Il click 3 separa la media campionaria dal valore atteso: il 4 dei quattro lanci è diverso da 3,5. Il pacco 12 scrive X̃ₙ, noi scriviamo X̄ₙ come la dispensa.</aside>
+    </section>
+
     <!-- L2-11 · la media campionaria -->
     <section id="media-campionaria">
       <p class="badge">La media campionaria · pacco 12</p>
@@ -687,7 +707,7 @@
     <section id="avvicinarsi">
       <p class="badge">Che cosa vuol dire «si avvicina»?</p>
       <div class="av-list">
-        <p class="no fragment">Da un certo $n$ in poi, la media è 3,5. <span class="muted">Con $n$ dispari non può nemmeno.</span></p>
+        <p class="no fragment">Da un certo $n$ in poi, la media è 3,5. <span class="muted">Con $n$ dispari non può nemmeno (verifica per eserizio ;).</span></p>
         <p class="no fragment">Da un certo $n$ in poi, resta <b>sicuramente</b> entro 0,1 da 3,5. <span class="muted">Mille sei di fila sono possibili.</span></p>
         <p class="no fragment">Il caso compensa: dopo tanti sei arrivano più uno. <span class="muted">Il dado non ha memoria.</span></p>
         <p class="si fragment">Fissato un margine, la <b>probabilità</b> di trovarla fuori diventa sempre più piccola, e tende a zero.</p>
@@ -698,7 +718,8 @@
     <!-- L2-15 · convergenza e teorema -->
     <section id="lgn-teorema">
       <p class="badge">Legge dei grandi numeri · pacco 12</p>
-      <p class="s08-text"><b>Convergenza in probabilità:</b> $Z_n\xrightarrow{P}c$ se, per ogni $\varepsilon>0$, $\;P\big(|Z_n-c|\ge\varepsilon\big)\to0$</p>
+      <p class="s08-text"><b>Convergenza in probabilità:</b> $Z_n\xrightarrow{P}c$ se, per ogni $\varepsilon>0$,</p>
+      <div class="s08-text">$$P\big(|Z_n-c|\ge\varepsilon\big)\to0\qquad\text{per }n\to\infty$$</div>
       <div class="s08-box fragment" style="padding:10px 30px;text-align:left">
         <p class="s08-text" style="margin:6px 0"><b>Teorema.</b> $X_1,X_2,\dots$ i.i.d. con media $\mu$ e varianza finita $\sigma^2$. Allora</p>
         $$\bar X_n\xrightarrow{P}\mu\qquad\text{per }n\to\infty$$
@@ -788,14 +809,14 @@
       <p class="badge">Esercizio · a coppie</p>
       <div class="e4-wrap">
         <div class="dv-ex">
-          <p>Tempo di risposta: media sconosciuta $\mu$, deviazione standard <b>40 ms</b>. Si fa la media di $n$ richieste indipendenti.</p>
+          <p>Tempo di risposta: media sconosciuta $\mu$, deviazione standard <b>40 ms</b>. Per stimare $\mu$ si fa la media $\bar X_n$ di $n$ richieste indipendenti.</p>
           <ol class="dv-steps">
-            <li>Media e deviazione standard della media di 100 richieste?</li>
-            <li>Con Čebyšëv: probabilità, al più, di sbagliare di almeno 10 ms?</li>
-            <li>Quante richieste servono per portarla al 5%?</li>
+            <li>Media e deviazione standard di $\bar X_{100}$, la media di 100 richieste?</li>
+            <li>Con Čebyšëv: quale è la probabilità massima che $\bar X_{100}$ disti da $\mu$ almeno 10&nbsp;ms, cioè $P(|\bar X_{100}-\mu|\ge10)$?</li>
+            <!-- <li>Quante richieste servono per portarla al 5%?</li> -->
           </ol>
           <p class="fragment" data-fragment-index="2">1. $\mu$ e $\frac{40}{\sqrt{100}}=4$ ms $\qquad$ 2. $\frac{16}{10^2}=0{,}16$</p>
-          <p class="fragment" data-fragment-index="3">3. $\frac{1600}{n\cdot100}\le0{,}05\iff n\ge320$</p>
+          <!-- <p class="fragment" data-fragment-index="3">3. $\frac{1600}{n\cdot100}\le0{,}05\iff n\ge320$</p> -->
         </div>
         <div class="ex-side">
           <img class="ex-cat" src="img/esercizi_time.jpg" alt="Esercizi time: un gatto al bilanciere in palestra">
@@ -803,10 +824,11 @@
         </div>
       </div>
       <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
-      <aside class="notes">Esercizio 7 della dispensa. Sostituisce la derivazione frontale della formula n ≥ σ²/(δε²): la ricavano loro al punto 3. Click 1: timer di 4′. Click 2–3: soluzione. Errori attesi: deviazione standard 40/100; 40 invece di 1600 al numeratore.</aside>
+      <aside class="notes">Esercizio 7 (a, b) della dispensa; il punto (c), quante richieste servono, è commentato: si fa con il TLC nella Settimana 9. Click 1: timer di 4′. Click 2: soluzione. Errori attesi: deviazione standard 40/100; 40 invece di 1600 al numeratore.</aside>
     </section>
 
-    <!-- L2-22 · quante osservazioni -->
+    <!-- Commentate: quante osservazioni servono si fa con il TLC (Settimana 9).
+    L2-22 · quante osservazioni
     <section id="quante-prove">
       <p class="badge">Quante osservazioni servono?</p>
       <div class="s08-box s08-mid">$$P\big(|\bar X_n-\mu|\ge\varepsilon\big)\le\delta\qquad\text{se}\qquad n\ge\frac{\sigma^2}{\delta\,\varepsilon^2}$$</div>
@@ -816,7 +838,7 @@
       <aside class="notes">Nuova (dispensa, quante-prove); il problema del benchmark è del pacco 13, slide 19, dove si risolve con il TLC (n = 61,4 → 62). Click 1: Čebyšëv, 320, qualunque sia la distribuzione dei tempi; 2: il ponte con la Settimana 9; 3: il Monte Carlo con il limite 1/(4nε²).</aside>
     </section>
 
-    <!-- L2-23 · controllo c5 -->
+    L2-23 · controllo c5
     <section id="sondaggio-c5" class="sondaggio" data-poll="s08-c5">
       <p class="badge">Controllo comprensione</p>
       <div class="sondaggio-grid">
@@ -833,6 +855,7 @@
       </div>
       <aside class="notes">Un minuto, rivelazione immediata (V). Se 2 + 3 superano un terzo, rifai il punto 3 dell'esercizio E alla lavagna, isolando n.</aside>
     </section>
+    -->
 
     <!-- L2-24 (S) · widget -->
     <section id="widget-lgn">
@@ -870,7 +893,7 @@
         </div>
       </div>
       <span class="fragment ex-go" data-fragment-index="1" aria-hidden="true"></span>
-      <aside class="notes">(S) Esercizio 9 (a, b) della dispensa, la nota «dal micro al macro» del notebook 4.2.4. Se lo salti, assegnalo a casa. Click 1: timer di 4′. Click 2–3: soluzione. Perché p = 0,125 è il caso peggiore: il limite cresce con p fino a 0,125. Errori attesi: usare la varianza della lunghezza (8 cm²); dividere per n².</aside>
+      <aside class="notes">(S) Esercizio 8 (a, b) della dispensa, la nota «dal micro al macro» del notebook 4.2.4. Se lo salti, assegnalo a casa. Click 1: timer di 4′. Click 2–3: soluzione. Perché p = 0,125 è il caso peggiore: il limite cresce con p fino a 0,125. Errori attesi: usare la varianza della lunghezza (8 cm²); dividere per n².</aside>
     </section>
 
     <!-- L2-26 (S) · in informatica -->
@@ -890,7 +913,7 @@
       <p class="badge">Domanda d'uscita</p>
       <p class="ux-q">Un benchmark con 10 esecuzioni dà una media di 2,3 s.<br>Il collega: «per la legge dei grandi numeri, il tempo medio vero è 2,3 s». Ha ragione?</p>
       <p class="ux-a fragment">No: la legge parla di probabilità per $n$ grande. Con 10 esecuzioni l'errore tipico è $\sigma/\sqrt{10}$, e le esecuzioni devono essere i.i.d.</p>
-      <p class="ux-home">A casa: dispensa, Atti V–VII · esercizi 6–10 · laboratori «la varianza delle somme» e «monete a milioni»<br>Facoltativi: la formula con la covarianza, i numeri di Bernoulli, Lettura A (Markov e le catene)<br>Settimana 9: perché la media di molte variabili ha la forma di una campana</p>
+      <p class="ux-home">A casa: dispensa, Atti V–VII · esercizi 6–9 · laboratori «la varianza delle somme» e «monete a milioni»<br>Facoltativi: la formula con la covarianza, Lettura A (Markov e le catene)<br>Settimana 9: perché la media di molte variabili ha la forma di una campana</p>
       <aside class="notes">Due risposte a voce, poi click 1. Anche se sei in ritardo, fai la domanda in un minuto. Chiudi entro le 12:45.</aside>
     </section>
 

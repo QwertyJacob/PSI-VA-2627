@@ -30,7 +30,7 @@ Il lavoro è diviso in due parti, che corrispondono alle due lezioni. Nella prim
 
 Due storie accompagnano le due lezioni. Nella prima siamo a San Pietroburgo, nella seconda metà dell’Ottocento, dove il matematico Pafnutij Čebyšëv, che costruiva anche macchine e meccanismi, e il suo allievo Andrej Markov cercavano risultati che valessero sempre, senza ipotesi difficili da controllare. Nella seconda torniamo indietro di un secolo e mezzo, a Basilea, dove Jacob Bernoulli lavorò per vent’anni alla prima dimostrazione che le frequenze osservate si avvicinano alle probabilità. Non devi ricordare date e nomi: le storie servono a capire perché le idee della settimana sono nate e quale problema risolvono.
 
-All’esame devi saper enunciare la disuguaglianza di Markov con le sue ipotesi (la variabile non è mai negativa e la soglia è positiva) e saperla usare per limitare la probabilità di un valore grande. Della disuguaglianza di Čebyšëv devi conoscere le due forme, quella con la distanza $a$ e quella con il numero $k$ di deviazioni standard, e la forma complementare, che dà la probabilità minima di restare vicino alla media. Devi saperla applicare a un intervallo simmetrico attorno alla media, e anche a una sola coda, e saper spiegare perché i suoi limiti sono più larghi dei valori della regola 68–95–99,7 della distribuzione normale. Devi sapere che la varianza di una somma di variabili indipendenti è la somma delle varianze, saper mostrare con un esempio che per variabili dipendenti non è così, e saper calcolare media e varianza della somma e della media di $n$ variabili indipendenti e identicamente distribuite. Della legge dei grandi numeri devi conoscere l’enunciato, il significato della convergenza in probabilità e il ragionamento in due righe che la ricava dalla disuguaglianza di Čebyšëv. Devi saperla leggere nel caso delle frequenze, spiegare che cosa la legge non dice (non c’è nessuna compensazione) e usarla per stimare quante osservazioni servono per una certa precisione.
+All’esame devi saper enunciare la disuguaglianza di Markov con le sue ipotesi (la variabile non è mai negativa e la soglia è positiva) e saperla usare per limitare la probabilità di un valore grande. Della disuguaglianza di Čebyšëv devi conoscere le due forme, quella con la distanza $a$ e quella con il numero $k$ di deviazioni standard, e la forma complementare, che dà la probabilità minima di restare vicino alla media. Devi saperla applicare a un intervallo simmetrico attorno alla media, e anche a una sola coda, e saper spiegare perché i suoi limiti sono più larghi dei valori della regola 68–95–99,7 della distribuzione normale. Devi sapere che la varianza di una somma di variabili indipendenti è la somma delle varianze, saper mostrare con un esempio che per variabili dipendenti non è così, e saper calcolare media e varianza della somma e della media di $n$ variabili indipendenti e identicamente distribuite. Della legge dei grandi numeri devi conoscere l’enunciato, il significato della convergenza in probabilità e il ragionamento in due righe che la ricava dalla disuguaglianza di Čebyšëv. Devi saperla leggere nel caso delle frequenze, e spiegare che cosa la legge non dice (non c’è nessuna compensazione).
 
 Le dimostrazioni delle due disuguaglianze sono nel testo, perché sono brevi e mostrano da dove vengono i risultati, ma all’esame non è richiesto riprodurle: è richiesto saperle usare. Sono invece **facoltativi e non richiesti all’esame** i riquadri intitolati «Approfondimento facoltativo», tra cui la formula della varianza di una somma di variabili dipendenti, che usa la covarianza della Settimana 7, e la lettura in fondo alla dispensa, che racconta come Markov inventò le catene che portano il suo nome per mostrare che la legge dei grandi numeri può valere anche senza indipendenza. Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
 
@@ -519,7 +519,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var d = sd.value, k = +sk.value;
     document.getElementById('s08-ceb-kv').textContent = k.toFixed(2).replace('.', ',');
     while (svg.firstChild) svg.removeChild(svg.firstChild);
-    var x0 = 55, x1 = 540, y0 = 245, y1 = 20;
+    var x0 = 75, x1 = 540, y0 = 245, y1 = 20;
     function X(v) { return x0 + (v - 1) / 4 * (x1 - x0); }
     function Y(p) { return y0 - p * (y0 - y1); }
     [0, 0.25, 0.5, 0.75, 1].forEach(function (p) {
@@ -533,6 +533,7 @@ document.addEventListener('DOMContentLoaded', function () {
       el('text', { x: X(v), y: y0 + 19, 'text-anchor': 'middle', fill: 'currentColor' }, String(v));
     });
     el('text', { x: (x0 + x1) / 2, y: y0 + 40, 'text-anchor': 'middle', fill: 'currentColor' }, 'k = distanza dalla media, in deviazioni standard');
+    el('text', { x: 16, y: (y0 + y1) / 2, 'text-anchor': 'middle', fill: 'currentColor', transform: 'rotate(-90 16 ' + (y0 + y1) / 2 + ')' }, 'P(|X − μ| ≥ kσ)');
     var pb = [], pd = [];
     for (var i = 0; i <= 400; i++) {
       var v = 1 + 4 * i / 400;
@@ -582,7 +583,7 @@ La prima disuguaglianza dice soltanto che l’evento «più di 8» è contenuto 
 
 La conclusione: ogni anta è difettosa con probabilità al più del 12,5%, qualunque sia la distribuzione delle lunghezze. Equivalentemente, ogni anta è buona con probabilità almeno dell’87,5%. Poiché 12,5% è sotto la soglia del 15%, in media un lotto contiene meno del 15% di ante difettose, e possiamo aspettarci che i lotti non vengano rifiutati.
 
-C’è un salto nascosto in quest’ultima frase, che conviene mettere in evidenza. Abbiamo calcolato una probabilità per **una** anta, e ne abbiamo tratto una conclusione sulla **percentuale** di ante difettose in un lotto di molte ante. Che la percentuale attesa sia la probabilità del singolo pezzo lo dice la linearità: se $D_i$ è l’indicatrice dell’anta $i$ difettosa, la frazione di difettose in un lotto di $n$ ante è $(D_1+\cdots+D_n)/n$, e la sua media è la media delle $\mathbb{E}[D_i]=P(\text{difettosa})$. Ma che in un lotto concreto la percentuale sia vicina alla sua media, e non per esempio del 20% per sfortuna, è un’altra affermazione: è la legge dei grandi numeri della seconda lezione. Torneremo sulle ante nell’[esercizio 9](#esercizio-9).
+C’è un salto nascosto in quest’ultima frase, che conviene mettere in evidenza. Abbiamo calcolato una probabilità per **una** anta, e ne abbiamo tratto una conclusione sulla **percentuale** di ante difettose in un lotto di molte ante. Che la percentuale attesa sia la probabilità del singolo pezzo lo dice la linearità: se $D_i$ è l’indicatrice dell’anta $i$ difettosa, la frazione di difettose in un lotto di $n$ ante è $(D_1+\cdots+D_n)/n$, e la sua media è la media delle $\mathbb{E}[D_i]=P(\text{difettosa})$. Ma che in un lotto concreto la percentuale sia vicina alla sua media, e non per esempio del 20% per sfortuna, è un’altra affermazione: è la legge dei grandi numeri della seconda lezione. Torneremo sulle ante nell’[esercizio 8](#esercizio-8).
 
 Gli intervalli non sono sempre simmetrici. Se ci interessa una sola coda, per esempio la probabilità che un’anta sia più lunga di 213 cm, possiamo comunque usare Čebyšëv: l’evento $X\ge\mu+a$ è contenuto nell’evento $|X-\mu|\ge a$, quindi
 
@@ -665,7 +666,7 @@ Ma subito dopo aggiunge che, sebbene tutti lo sappiano per natura, la dimostrazi
 
 La sua risposta è la prima **legge dei grandi numeri**, che la tradizione chiama «teorema aureo» di Bernoulli: la probabilità che la frazione osservata cada entro un margine fissato attorno alla probabilità vera si avvicina a 1 quanto si vuole, purché le estrazioni siano abbastanza. Bernoulli fece anche il conto per la sua urna. Con 25 550 estrazioni, la frazione di bianchi cade tra 29/50 e 31/50, cioè entro 1/50 da 3/5, con una probabilità più di mille volte maggiore di quella di cadere fuori (pp. 238–239). Bernoulli chiamava **certezza morale** una probabilità così vicina a 1 da poter essere trattata, nella vita pratica, come una certezza.
 
-Notiamo bene che cosa Bernoulli **non** dice. Non dice che, prima o poi, la frazione di bianchi sarà uguale a 3/5, né che lo resterà. Dice che diventa sempre più improbabile trovarla lontana da 3/5. La differenza è sottile, ed è il cuore di questa lezione: la studieremo con cura nell’Atto VII.
+Notiamo bene che cosa Bernoulli **non** dice. Non dice che, prima o poi, la frazione di bianchi sarà uguale a 3/5, né che lo resterà. Dice che diventa sempre più improbabile trovarla _lontana_ da 3/5. La differenza è sottile, ed è il cuore di questa lezione: la studieremo con cura nell’Atto VII.
 
 La dimostrazione di Bernoulli era lunga e faticosa, perché all’epoca mancavano gli strumenti per trattare la somma di molte variabili aleatorie. Centocinquant’anni dopo, con la disuguaglianza di Čebyšëv, lo stesso risultato si ottiene in due righe. Per arrivarci servono due ingredienti: saper calcolare la varianza di una somma di variabili indipendenti, e saper calcolare la varianza di una media. È il tema del prossimo atto.
 
@@ -745,7 +746,7 @@ Confrontiamo con un’altra variabile che ha la stessa media 7: il risultato di 
 <figcaption>Un dado ha varianza 35/12 ≈ 2,92. A sinistra la somma di due dadi indipendenti: valori da 2 a 12, con il 7 più probabile; la varianza è 2,92 + 2,92 = 5,83. A destra il risultato di un solo dado contato due volte, cioè 2X: valori pari, tutti con probabilità 1/6; la varianza è 2² · 2,92 = 11,67. Con due dadi indipendenti gli scarti in parte si compensano; con lo stesso dado non si compensano mai.</figcaption>
 </figure>
 
-La differenza ha una spiegazione intuitiva. Con due dadi indipendenti, quando il primo dà un valore alto il secondo dà spesso un valore normale o basso: gli scarti dei due dadi si compensano in parte, e i valori estremi 2 e 12 richiedono che entrambi i dadi siano estremi nello stesso verso, cosa che succede una volta su 36. Con $2X$, invece, ogni scarto viene raddoppiato senza nessuna compensazione: 2 e 12 escono una volta su sei. L’indipendenza è dunque essenziale.
+La differenza ha una spiegazione intuitiva. Con due dadi indipendenti, i valori estremi 2 e 12 richiedono che entrambi i dadi siano estremi nello stesso verso, cosa che succede una volta su 36. Con $2X$, invece, ogni scarto viene raddoppiato senza nessuna compensazione: 2 e 12 escono una volta su sei. L’indipendenza è dunque essenziale.
 
 !!! abstract "Varianza della somma di variabili indipendenti"
     Se $X$ e $Y$ sono indipendenti, allora
@@ -799,11 +800,23 @@ La somma di cento dadi, per esempio, ha media 350, varianza $100\cdot35/12\appro
 
 ### La media campionaria {: #media-campionaria }
 
-Se invece della somma prendiamo la media, le cose cambiano completamente. La **media campionaria** delle $n$ osservazioni è
+Se invece della somma prendiamo la media, le cose cambiano completamente. Prima di fare i conti, però, diamo un nome preciso a questa media, perché sarà la protagonista di tutta la seconda parte della settimana.
+
+Cominciamo dai dati. Supponiamo di aver già lanciato un dado $n$ volte e di aver annotato i risultati, che indichiamo con $x_1,x_2,\dots,x_n$: $x_1$ è il risultato del primo lancio, $x_2$ quello del secondo, e così via. Un insieme di osservazioni raccolte in questo modo si chiama **campione**, e la sua **media campionaria** è la somma dei valori osservati divisa per il loro numero:
+
+$$
+\bar x=\frac{x_1+x_2+\cdots+x_n}{n}=\frac1n\sum_{i=1}^{n}x_i .
+$$
+
+Il simbolo $\bar x$ si legge «x segnato», oppure «x barra»: la lineetta sopra la lettera ricorda che si tratta di una media calcolata dai dati. Non è nulla di nuovo: è la media aritmetica che si fa con i voti degli esami, e l’abbiamo già calcolata più volte senza darle un nome, per esempio con i morti per calcio di cavallo di Bortkiewicz nella Settimana 5, dove valeva 0,61. Con quattro lanci che danno 2, 5, 3 e 6, la media campionaria è $\bar x=(2+5+3+6)/4=4$. Notiamo che è un numero diverso dal valore atteso del dado, 3,5: il valore atteso si calcola dalla distribuzione, prima di lanciare, mentre la media campionaria si calcola dai risultati, dopo averli osservati.
+
+Ora facciamo un passo in più, che è il cuore della lezione. Guardiamo la media **prima** di lanciare i dadi. In quel momento i risultati non sono ancora numeri noti: sono le variabili aleatorie $X_1,\dots,X_n$, una per lancio. Mettendole al posto dei numeri $x_1,\dots,x_n$ otteniamo la media campionaria come variabile aleatoria:
 
 $$
 \bar X_n=\frac{X_1+X_2+\cdots+X_n}{n}=\frac{S_n}{n}.
 $$
+
+La lettera maiuscola segue la solita convenzione: $X$ indica la variabile aleatoria e $x$ uno dei suoi valori. Allo stesso modo $\bar X_n$ è la variabile, e il numero $\bar x$ calcolato da una particolare serie di lanci, come il 4 di poco fa, è uno dei valori che può assumere. L’indice $n$ ricorda quante osservazioni stiamo mediando.
 
 Attenzione: $\bar X_n$ è una **variabile aleatoria**. Prima di lanciare i dadi non sappiamo quanto varrà la media dei risultati; ogni nuova serie di lanci ne dà un valore diverso. Ha quindi una media e una varianza, che calcoliamo dalla somma. Per la linearità, dividere per $n$ divide la media per $n$:
 
@@ -944,7 +957,7 @@ Il valore 3,5 è il valor medio **teorico**: è calcolato dalla distribuzione, p
 <text x="133.0" y="77.0" text-anchor="start" fill="#4051b5">dopo 100 lanci: 3,70</text>
 <text x="133.0" y="91.8" text-anchor="start" fill="#4051b5">dopo 1000 lanci: 3,514</text>
 </svg>
-<figcaption>Una sequenza di 1000 lanci di un dado simulati al computer (seme 37). La linea blu è la media dei primi n risultati. All'inizio la media salta molto, perché ogni nuovo lancio pesa tanto; poi si assesta vicino alla media teorica 3,5.</figcaption>
+<figcaption>Una sequenza di 1000 lanci di un dado simulati al computer. La linea blu è la media dei primi n risultati. All'inizio la media salta molto, perché ogni nuovo lancio pesa tanto; poi si assesta vicino alla media teorica 3,5.</figcaption>
 </figure>
 
 ### Che cosa vuol dire «avvicinarsi» {: #convergenza }
@@ -981,7 +994,7 @@ $$
 
 Il membro di destra ha al numeratore due numeri fissati, $\sigma^2$ ed $\varepsilon^2$, e al denominatore $n$, che cresce: tende a zero. La probabilità a sinistra non è mai negativa e sta sotto una quantità che tende a zero, quindi tende a zero anche lei. È tutto.
 
-L’idea si può dire in una frase: **la media campionaria ha la media giusta e una varianza che va a zero, e una variabile con varianza piccola, per Čebyšëv, sta quasi sempre vicino alla sua media.** È il ragionamento che devi saper ripetere all’esame.
+L’idea si può dire in una frase: **la media campionaria ha la media giusta e una varianza che va a zero al crescere di $n$**. È il ragionamento che devi saper ripetere all’esame. Nota inoltre che, anche quando $n$ è piccolo, **se una variabile ha varianza piccola, la sua media campionaria sta quasi sempre vicino alla sua media**: lo garantisce Čebyšëv, perché il limite $\sigma^2/(n\varepsilon^2)$ è già piccolo.
 
 Vediamo i numeri per il dado, con il margine $\varepsilon=0{,}1$. Il limite $\sigma^2/(n\varepsilon^2)=2{,}917/(n\cdot0{,}01)$ vale circa 2,9 per $n=100$, che non dice nulla perché supera 1; vale 0,29 per $n=1000$ e 0,029 per $n=10\,000$. Le probabilità vere sono più piccole: con mille lanci la media cade fuori da $3{,}5\pm0{,}1$ circa sei volte su cento, con diecimila lanci praticamente mai. Come sempre, Čebyšëv è prudente; ma ciò che conta qui è che il limite vada a zero, e questo basta per la legge.
 
@@ -1001,10 +1014,31 @@ $$
 P\big(|f_n-p|\ge\varepsilon\big)\le\frac{p(1-p)}{n\,\varepsilon^2}\le\frac{1}{4\,n\,\varepsilon^2}.
 $$
 
-L’ultima disuguaglianza è comoda quando $p$ non lo conosciamo, che è proprio il caso in cui vogliamo stimarlo con una frequenza. Vale perché $p(1-p)$ non supera mai 1/4: infatti $p(1-p)=1/4-(p-1/2)^2$, che è massimo, e vale 1/4, quando $p=1/2$.
+L’ultima disuguaglianza è comoda quando $p$ non lo conosciamo, che è proprio il caso in cui vogliamo stimarlo con una frequenza. Vale perché la varianza $p(1-p)$ non supera mai 1/4, qualunque sia $p$. Prima di dimostrarlo, proviamo qualche valore: con $p=0{,}1$ si ha $0{,}1\cdot0{,}9=0{,}09$; con $p=0{,}3$ si ha $0{,}3\cdot0{,}7=0{,}21$; con $p=0{,}5$ si ha $0{,}5\cdot0{,}5=0{,}25$, cioè proprio 1/4; con $p=0{,}7$ si torna a 0,21. Il prodotto sembra più grande quando i due fattori $p$ e $1-p$ sono uguali, cioè per $p=1/2$.
+
+Per dimostrare che $p(1-p)\le1/4$ basta far vedere che la differenza $\tfrac14-p(1-p)$ non è mai negativa. Sviluppiamo il prodotto, $p(1-p)=p-p^2$, e sostituiamolo nella differenza, cambiando il segno a entrambi i termini:
+
+$$
+\frac14-p(1-p)=\frac14-p+p^2=p^2-p+\frac14 .
+$$
+
+Ora ricordiamo il quadrato di una differenza, $(a-b)^2=a^2-2ab+b^2$, e usiamolo con $a=p$ e $b=1/2$:
+
+$$
+\Big(p-\frac12\Big)^2=p^2-2\cdot p\cdot\frac12+\Big(\frac12\Big)^2=p^2-p+\frac14 .
+$$
+
+È esattamente l’espressione di prima. Quindi
+
+$$
+\frac14-p(1-p)=\Big(p-\frac12\Big)^2 .
+$$
+
+Il membro di destra è un quadrato, e un quadrato non è mai negativo; vale zero soltanto quando $p-1/2=0$, cioè per $p=1/2$. Dunque la differenza non è mai negativa, e $p(1-p)\le1/4$ per ogni $p$, con l’uguaglianza soltanto per $p=1/2$, come suggerivano i valori che abbiamo provato. Possiamo quindi sostituire $p(1-p)$ con 1/4 nel limite di Čebyšëv: il limite diventa un po’ più largo, ma non richiede più di conoscere $p$.
 
 Questo risultato chiude un cerchio aperto nella Settimana 1. Lì avevamo incontrato l’interpretazione frequentista della probabilità e avevamo visto, nel [laboratorio della moneta](../settimana_01/index.md#lab-moneta), le frequenze stabilizzarsi vicino a 1/2. Ora sappiamo che questa stabilizzazione non è un fatto empirico misterioso, né un assioma: è un **teorema**, che segue dagli assiomi di Kolmogorov quando le prove sono indipendenti e hanno tutte la stessa probabilità. Chi interpreta la probabilità come frequenza trova qui una conferma della coerenza della propria lettura; chi la interpreta in altro modo trova una ragione per cui le frequenze osservate sono buoni indizi delle probabilità. Per questo la legge dei grandi numeri è il ponte tra la teoria della probabilità e la statistica, che dai dati vuole risalire ai parametri: la incontreremo di nuovo nella Settimana 10.
 
+<!-- Commentato: il calcolo di quante estrazioni servono si fa con il TLC (Settimana 9).
 ??? note "Approfondimento facoltativo — I numeri di Bernoulli, rifatti con Čebyšëv"
     Rifacciamo il conto dell’urna di Bernoulli con la disuguaglianza di Čebyšëv. La probabilità del bianco è $p=3/5=0{,}6$, quindi $p(1-p)=0{,}24$; il margine è $\varepsilon=1/50=0{,}02$; e la «certezza morale» di Bernoulli chiede che la frazione cada fuori dal margine con probabilità mille volte più piccola di quella di cadere dentro, cioè al più $1/1001$. Imponiamo che il limite di Čebyšëv non superi $1/1001$:
 
@@ -1013,6 +1047,7 @@ Questo risultato chiude un cerchio aperto nella Settimana 1. Lì avevamo incontr
     $$
 
     Čebyšëv garantisce la certezza morale con 600 600 estrazioni. Bernoulli, con un ragionamento più fine e più faticoso, era arrivato a 25 550. Oggi, con il calcolo esatto della distribuzione binomiale, si trova che ne bastano circa 6500. I tre numeri raccontano la stessa storia del confronto con la normale: un limite che vale per ogni distribuzione paga la sua generalità con una grande prudenza. Il [teorema del limite centrale della Settimana 9](../settimana_09/index.md#binomiale-normale) ci darà lo strumento per calcoli molto più precisi, quando $n$ è grande.
+-->
 
 ### Diluizione, non compensazione {: #diluizione }
 
@@ -1062,6 +1097,7 @@ La differenza **cresce** con $n$: dopo un milione di lanci, uno scarto di qualch
 
 La legge dei grandi numeri, dunque, non funziona per **compensazione**, ma per **diluizione**. Supponiamo che una moneta equilibrata dia dieci teste di fila. Dopo altri 990 lanci, il numero atteso di teste è $10+495=505$ su 1000, e la frazione attesa è 0,505; dopo 99 990 lanci in più è $10+49\,995=50\,005$ su 100 000, cioè 0,50005. Le dieci teste iniziali non vengono mai «restituite»: la differenza attesa resta 10 per sempre. Semplicemente, divise per un numero di lanci sempre più grande, pesano sempre meno. La moneta non ha memoria, e la prossima testa ha probabilità 1/2 come la prima.
 
+<!-- Commentato: il calcolo di quante osservazioni servono si fa con il TLC (Settimana 9).
 ### Quante osservazioni servono? {: #quante-prove }
 
 Il limite di Čebyšëv per la media campionaria si può leggere al contrario: invece di chiedersi quanto è probabile sbagliare con $n$ osservazioni, ci si chiede quante osservazioni servono per sbagliare raramente. Se vogliamo che la media cada entro $\varepsilon$ da $\mu$ con probabilità almeno $1-\delta$, basta che il limite $\sigma^2/(n\varepsilon^2)$ non superi $\delta$, cioè
@@ -1077,6 +1113,7 @@ n\ge\frac{4}{0{,}05\cdot0{,}5^2}=\frac{4}{0{,}0125}=320.
 $$
 
 Con 320 esecuzioni la garanzia vale qualunque sia la distribuzione dei tempi. Con il [teorema del limite centrale della Settimana 9](../settimana_09/index.md#quante-esecuzioni) si trova che ne bastano 62: anche qui il prezzo della prudenza è un fattore cinque. Lo stesso calcolo dice quante simulazioni servono per stimare una probabilità con il metodo Monte Carlo. Con il limite $1/(4n\varepsilon^2)$ delle frequenze, per avere un errore al più di un punto percentuale ($\varepsilon=0{,}01$) con probabilità almeno del 95% bastano $n\ge1/(4\cdot0{,}05\cdot0{,}0001)=50\,000$ simulazioni, qualunque sia la probabilità da stimare.
+-->
 
 #### Esplora: la media che si stabilizza {: #widget-lgn }
 
@@ -1212,7 +1249,7 @@ Nella prima tabella la differenza tra teste e metà dei lanci cresce, da poche u
 
 La legge dei grandi numeri è la ragione per cui funzionano molte tecniche quotidiane dell’informatica. Il **metodo Monte Carlo** stima una probabilità o un valore atteso simulando molte prove indipendenti e facendo la media: la legge garantisce che la stima si avvicina al valore vero, e la legge della radice quadrata dice quanto velocemente, con un errore che scende come $1/\sqrt n$. Lo abbiamo usato in quasi tutti i laboratori del corso.
 
-Nel **benchmarking**, per misurare il tempo di esecuzione di un programma lo si esegue molte volte e si fa la media, e il calcolo del numero di esecuzioni che abbiamo appena visto dice quante ne servono. Qui le ipotesi contano. Le esecuzioni devono essere indipendenti e identicamente distribuite, e spesso non lo sono: le prime esecuzioni trovano la cache vuota e sono più lente, il processore può rallentare scaldandosi, un altro programma può disturbare alcune misure. Per questo i benchmark seri scartano le prime esecuzioni «di riscaldamento» e cercano di mantenere le condizioni costanti.
+Nel **benchmarking**, per misurare il tempo di esecuzione di un programma lo si esegue molte volte e si fa la media: la legge garantisce che la media si avvicina al tempo medio vero. Quante esecuzioni servono lo calcoleremo nella [Settimana 9](../settimana_09/index.md#quante-esecuzioni). Qui le ipotesi contano. Le esecuzioni devono essere indipendenti e identicamente distribuite, e spesso non lo sono: le prime esecuzioni trovano la cache vuota e sono più lente, il processore può rallentare scaldandosi, un altro programma può disturbare alcune misure. Per questo i benchmark seri scartano le prime esecuzioni «di riscaldamento» e cercano di mantenere le condizioni costanti.
 
 La stessa legge spiega perché il **carico aggregato** di molti utenti indipendenti è prevedibile anche se ogni utente è imprevedibile: la media di molte richieste indipendenti varia poco, e su questo si basano il dimensionamento dei server e, fuori dall’informatica, le assicurazioni. Infine, la legge ci ricorda i suoi limiti. Se le variabili hanno varianza enorme, come certi tempi di risposta con code molto pesanti, la media converge così lentamente da essere inservibile in pratica; ne parleremo nella [Settimana 9](../settimana_09/index.md#cauchy). E se le osservazioni non sono indipendenti, la legge può valere oppure no: è il tema della lettura facoltativa che segue.
 
@@ -1276,26 +1313,28 @@ Sia $X$ il risultato di un dado equilibrato e $Y$ l’indicatrice di testa nel l
 
 ### Esercizio 7 — La media di molte misure {: #esercizio-7 }
 
-Il tempo di risposta di un servizio ha media sconosciuta $\mu$ e deviazione standard 40 ms. Si misurano $n$ richieste indipendenti, eseguite nelle stesse condizioni, e se ne fa la media. (a) Quali sono la media e la deviazione standard della media di 100 richieste? (b) Con Čebyšëv, quanto è probabile, al più, che la media di 100 richieste sbagli di almeno 10 ms? (c) Quante richieste servono perché quella probabilità sia al più del 5%?
+Il tempo di risposta di un servizio ha media sconosciuta $\mu$ e deviazione standard 40 ms. Si misurano $n$ richieste indipendenti, eseguite nelle stesse condizioni, e se ne fa la media. (a) Quali sono la media e la deviazione standard della media di 100 richieste? (b) Con Čebyšëv, quanto è probabile, al più, che la media di 100 richieste sbagli di almeno 10 ms?<!-- (c) Quante richieste servono perché quella probabilità sia al più del 5%? -->
 
 ??? esempio-svolto "Soluzione ragionata"
-    (a) La media campionaria ha media $\mu$ e deviazione standard $40/\sqrt{100}=4$ ms, cioè varianza 16 ms². (b) $P(|\bar X_{100}-\mu|\ge10)\le16/10^2=0{,}16$. (c) Serve $1600/(n\cdot100)\le0{,}05$, cioè $n\ge1600/(100\cdot0{,}05)=320$ richieste.
+    (a) La media campionaria ha media $\mu$ e deviazione standard $40/\sqrt{100}=4$ ms, cioè varianza 16 ms². (b) $P(|\bar X_{100}-\mu|\ge10)\le16/10^2=0{,}16$.<!-- (c) Serve $1600/(n\cdot100)\le0{,}05$, cioè $n\ge1600/(100\cdot0{,}05)=320$ richieste. -->
 
-### Esercizio 8 — Quante simulazioni? {: #esercizio-8 }
+<!-- Commentato: esercizio sul numero di osservazioni, da fare con il TLC (Settimana 9).
+### Esercizio commentato — Quante simulazioni? {: #esercizio-simulazioni }
 
 Vuoi stimare con una simulazione Monte Carlo la probabilità $p$ che un algoritmo randomizzato fallisca, contando la frazione di fallimenti su $n$ esecuzioni indipendenti. (a) Quante esecuzioni garantiscono, con Čebyšëv, un errore inferiore a 0,01 con probabilità almeno del 95%, senza sapere nulla di $p$? (b) E se sai già che $p$ è circa 0,1? (c) Perché nel secondo caso ne servono meno?
 
 ??? esempio-svolto "Soluzione ragionata"
     (a) Con il limite $1/(4n\varepsilon^2)\le0{,}05$ e $\varepsilon=0{,}01$: $n\ge1/(4\cdot0{,}05\cdot0{,}0001)=50\,000$. (b) Con $p(1-p)=0{,}1\cdot0{,}9=0{,}09$: $n\ge0{,}09/(0{,}05\cdot0{,}0001)=18\,000$. (c) La varianza di una variabile bernoulliana, $p(1-p)$, è massima per $p=1/2$; un evento raro ha frequenza meno variabile, e la sua stima, in termini assoluti, richiede meno prove. Attenzione però: per $p$ molto piccolo un errore di 0,01 può essere grande rispetto a $p$ stesso.
+-->
 
-### Esercizio 9 — Il lotto di ante, rivisto {: #esercizio-9 }
+### Esercizio 8 — Il lotto di ante, rivisto {: #esercizio-8 }
 
 Nell’[esercizio delle ante](#ante) abbiamo garantito che ogni anta è difettosa con probabilità $p\le0{,}125$. Un lotto contiene 1000 ante, difettose in modo indipendente l’una dall’altra con la stessa probabilità $p$, e viene rifiutato se la frazione di difettose supera il 15%. (a) Nel caso peggiore, $p=0{,}125$, con quale probabilità al più il lotto viene rifiutato, secondo Čebyšëv? (b) E se il lotto contiene 10 000 ante? (c) Perché è giusto ragionare sul caso peggiore $p=0{,}125$?
 
 ??? esempio-svolto "Soluzione ragionata"
     (a) La frazione di difettose è la media di 1000 indicatrici con media $p$ e varianza $p(1-p)$. Con $p=0{,}125$, per superare il 15% la frazione deve allontanarsi dalla sua media di almeno $0{,}025$, quindi $P(\text{rifiuto})\le\dfrac{0{,}125\cdot0{,}875}{1000\cdot0{,}025^2}=\dfrac{0{,}109375}{0{,}625}=0{,}175$. (b) Con 10 000 ante il limite si divide per 10: 0,0175. È la legge dei grandi numeri al lavoro: più grande è il lotto, più la frazione di difettose è vicina alla probabilità del singolo pezzo, e meno è probabile un rifiuto per sfortuna. (c) Il limite $p(1-p)/\big(n(0{,}15-p)^2\big)$ cresce con $p$ nell’intervallo da 0 a 0,125: il numeratore cresce e il denominatore si riduce, perché la distanza dalla soglia diminuisce. Il valore massimo è quindi quello con $p=0{,}125$, e vale per ogni $p$ compatibile con quello che sappiamo.
 
-### Esercizio 10 — Dieci teste di fila {: #esercizio-10 }
+### Esercizio 9 — Dieci teste di fila {: #esercizio-9 }
 
 Una moneta equilibrata ha appena dato dieci teste di fila. Un collega dice: «Per la legge dei grandi numeri, adesso devono uscire più croci, così la frequenza torna a 1/2». (a) Qual è la probabilità di testa al prossimo lancio? (b) Dopo 990 lanci in più, qual è il numero atteso di teste in tutto? E la frazione attesa? (c) Spiega in due frasi perché il collega sbaglia.
 
@@ -1320,7 +1359,7 @@ Quando di una variabile conosciamo soltanto la media, o la media e la varianza, 
 
 Per variabili **indipendenti** la varianza della somma è la somma delle varianze, e lo stesso vale per la differenza; per variabili dipendenti non è così, come mostra $\operatorname{Var}(2X)=4\operatorname{Var}(X)$. Per $n$ variabili **i.i.d.** con media $\mu$ e varianza $\sigma^2$, la somma ha media $n\mu$ e varianza $n\sigma^2$, mentre la **media campionaria** $\bar X_n$ ha media $\mu$ e varianza $\sigma^2/n$: la sua deviazione standard scende come $\sigma/\sqrt n$, e per dimezzarla servono quattro volte più dati.
 
-La **legge (debole) dei grandi numeri** dice che $\bar X_n$ **converge in probabilità** a $\mu$: per ogni margine $\varepsilon>0$, $P(|\bar X_n-\mu|\ge\varepsilon)\to0$. Si dimostra applicando Čebyšëv alla media campionaria, $P(|\bar X_n-\mu|\ge\varepsilon)\le\sigma^2/(n\varepsilon^2)$, che tende a zero. Per le indicatrici di un evento è il teorema di Bernoulli: la frequenza relativa converge in probabilità alla probabilità, con il limite $1/(4n\varepsilon^2)$. La legge funziona per diluizione e non per compensazione, e letta al contrario dice quante osservazioni servono: $n\ge\sigma^2/(\delta\varepsilon^2)$ per sbagliare di almeno $\varepsilon$ con probabilità al più $\delta$.
+La **legge (debole) dei grandi numeri** dice che $\bar X_n$ **converge in probabilità** a $\mu$: per ogni margine $\varepsilon>0$, $P(|\bar X_n-\mu|\ge\varepsilon)\to0$. Si dimostra applicando Čebyšëv alla media campionaria, $P(|\bar X_n-\mu|\ge\varepsilon)\le\sigma^2/(n\varepsilon^2)$, che tende a zero. Per le indicatrici di un evento è il teorema di Bernoulli: la frequenza relativa converge in probabilità alla probabilità, con il limite $1/(4n\varepsilon^2)$. La legge funziona per diluizione e non per compensazione.<!-- Letta al contrario dice quante osservazioni servono: $n\ge\sigma^2/(\delta\varepsilon^2)$ per sbagliare di almeno $\varepsilon$ con probabilità al più $\delta$. -->
 
 !!! tip "Prova a raccontarlo senza il formulario"
     Spiega a un compagno perché in un gruppo con reddito medio di 1000 euro al più una persona su dieci può guadagnare 10 000 euro, e come lo stesso ragionamento diventa la disuguaglianza di Markov. Poi mostragli come si ottiene Čebyšëv applicando Markov alla variabile giusta, e usalo per decidere se il lotto di ante sarà rifiutato. Calcola con lui la varianza della somma di due dadi e quella del doppio di un dado, e spiegagli perché sono diverse. Infine raccontagli in due righe perché la media di molte osservazioni si avvicina al valore atteso, e perché dopo dieci teste di fila la moneta non deve nessuna croce a nessuno. Se riesci a farlo, le formule della settimana sono diventate strumenti di ragionamento.

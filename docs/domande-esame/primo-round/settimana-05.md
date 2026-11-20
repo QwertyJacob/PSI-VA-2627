@@ -47,12 +47,12 @@ Ricava la PMF della distribuzione geometrica e la probabilità $P(X>k)$.
 ??? success "Risposta attesa"
     $X=k$ significa che le prime $k-1$ prove falliscono e la $k$-esima riesce. Per l'indipendenza, $P(X=k)=(1-p)^{k-1}p$. $X>k$ significa invece che le prime $k$ prove falliscono tutte, quindi $P(X>k)=(1-p)^k$.
 
-### S5-R1-05 · La media $1/p$ {: #s5-r1-05 }
+### S5-R1-05 · Cinque tentativi in media {: #s5-r1-05 }
 
-Quanto vale la media della distribuzione geometrica? Come la interpreti?
+Un tentativo di connessione riesce con probabilità 0,2, indipendentemente dagli altri, quindi in media servono 5 tentativi. Un collega conclude: «Allora entro 5 tentativi mi connetto quasi sempre». Ha ragione? Scrivi il conto che ti serve, senza svolgerlo.
 
 ??? success "Risposta attesa"
-    $\mathbb{E}[X]=1/p$. Se una prova riesce con probabilità 0,2, cioè una volta su cinque, servono in media 5 prove per il primo successo. Ripetendo molte volte l'attesa, il numero medio di prove necessarie si avvicina a $1/p$.
+    No. La media dice quanti tentativi servono in media, se l'attesa si ripete molte volte; non è un limite che si supera raramente. Servono più di 5 tentativi quando i primi 5 falliscono tutti, e per l'indipendenza questo accade con probabilità $0{,}8^5$, circa 0,33: una volta su tre bisogna aspettare più della media. Molte attese sono brevi, ma alcune sono molto lunghe, ed è anche per queste che la media arriva a 5.
 
 ### S5-R1-06 · Il numero ritardatario {: #s5-r1-06 }
 

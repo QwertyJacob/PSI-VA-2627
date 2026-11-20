@@ -415,8 +415,11 @@
         </tbody>
       </table>
       <p class="s08-note fragment">Un limite valido per tutte le distribuzioni vale anche per le peggiori.</p>
+      <!-- Commentato con il riquadro della dispensa sulla distribuzione a tre punti:
       <p class="s08-text fragment">E non si può migliorare: per ogni $k$ una distribuzione a tre punti lo raggiunge.</p>
-      <aside class="notes">Nuova (dispensa, Atto IV, cebysev-confronto). Fai leggere la riga k = 2: 25% contro 4,6% della normale. Click 1: la frase; 2: la distribuzione a tre punti (riquadro facoltativo della dispensa e widget): μ con probabilità 1 − 1/k², μ ± kσ con 1/(2k²) ciascuno.</aside>
+      Nota del click 2: la distribuzione a tre punti (riquadro facoltativo della dispensa e widget): μ con probabilità 1 − 1/k², μ ± kσ con 1/(2k²) ciascuno.
+      -->
+      <aside class="notes">Nuova (dispensa, Atto IV, cebysev-confronto). Fai leggere la riga k = 2: 25% contro 4,6% della normale. Click 1: la frase.</aside>
     </section>
 
     <!-- L1-25 · rivelazione s08-1 -->
@@ -450,15 +453,15 @@
             <option value="normale">normale</option>
             <option value="uniforme">uniforme</option>
             <option value="esponenziale">esponenziale</option>
-            <option value="tre">a tre punti</option>
+            <!-- <option value="tre">a tre punti</option> -->
           </select></label>
           <label>$k$ <input type="range" min="1" max="5" step="0.05" value="2"> <b data-v="k">2,00</b></label>
-          <span><button class="psi-btn ghost" type="button" data-try="normale:2">normale, k = 2</button> <button class="psi-btn ghost" type="button" data-try="uniforme:1.8">uniforme, k = 1,8</button> <button class="psi-btn ghost" type="button" data-try="tre:3">tre punti, k = 3</button></span>
+          <span><button class="psi-btn ghost" type="button" data-try="normale:2">normale, k = 2</button> <button class="psi-btn ghost" type="button" data-try="uniforme:1.8">uniforme, k = 1,8</button><!-- <button class="psi-btn ghost" type="button" data-try="tre:3">tre punti, k = 3</button> --></span>
         </div>
         <svg class="scene-svg" width="1100" height="430" viewBox="0 0 1100 430" role="img" aria-label="Il limite 1 su k al quadrato in arancione e la probabilità vera di stare fuori da mu più o meno k sigma in azzurro, per k da 1 a 5"></svg>
         <p class="wc-out"></p>
       </div>
-      <aside class="notes">(S) Il widget della dispensa (Atto IV). Prima di muovere: «per quale distribuzione la curva azzurra sparisce da un certo k in poi?» → l'uniforme, oltre √3 ≈ 1,73. Poi i tre pulsanti: normale k = 2 (25% contro 4,55%); uniforme k = 1,8 (zero); tre punti k = 3: il punto azzurro sta sul limite.</aside>
+      <aside class="notes">(S) Il widget della dispensa (Atto IV). Prima di muovere: «per quale distribuzione la curva azzurra sparisce da un certo k in poi?» → l'uniforme, oltre √3 ≈ 1,73. Poi i due pulsanti: normale k = 2 (25% contro 4,55%); uniforme k = 1,8 (zero).</aside>
     </section>
 
     <!-- L1-27 · uscita -->
@@ -466,7 +469,7 @@
       <p class="badge">Domanda d'uscita</p>
       <p class="ux-q">Un collega: «Per Čebyšëv, fuori da $\mu\pm2\sigma$<br>cade il 25% dei valori». Che cosa correggi?</p>
       <p class="ux-a fragment">Al più il 25%: è un tetto, non un valore. Per una normale è il 4,6%.</p>
-      <p class="ux-home">A casa: dispensa, Atti I–IV · esercizi 1–5 · laboratorio «Čebyšëv alla prova»<br>Facoltativo: la distribuzione a tre punti<br>Venerdì: perché la media di molte misure si avvicina al valore vero</p>
+      <p class="ux-home">A casa: dispensa, Atti I–IV · esercizi 1–5 · laboratorio «Čebyšëv alla prova»<br><!-- Facoltativo: la distribuzione a tre punti<br> -->Venerdì: perché la media di molte misure si avvicina al valore vero</p>
       <aside class="notes">Due risposte a voce, poi click 1. Anche se sei in ritardo, fai la domanda in un minuto. Chiudi entro le 10:45.</aside>
     </section>
 
@@ -497,7 +500,7 @@
         </div>
       </div>
       <p class="rq-bridge fragment">Oggi Čebyšëv lavora per noi: sulla media di molte osservazioni.</p>
-      <aside class="notes">Una domanda per click. (1) X mai negativa, a > 0, P(X ≥ a) ≤ E[X]/a; senza la prima ipotesi i valori negativi compensano. (2) σ²/a², 1/k², 1 − 1/k²; Markov applicata a (X − μ)². (3) 8/64 = 12,5%. (4) Il limite vale per tutte le distribuzioni, anche per quella a tre punti che lo raggiunge. Controlla l'esercizio 4: 0,6 con Markov, 0,04 con Čebyšëv.</aside>
+      <aside class="notes">Una domanda per click. (1) X mai negativa, a > 0, P(X ≥ a) ≤ E[X]/a; senza la prima ipotesi i valori negativi compensano. (2) σ²/a², 1/k², 1 − 1/k²; Markov applicata a (X − μ)². (3) 8/64 = 12,5%. (4) Il limite vale per tutte le distribuzioni, anche per le più sfavorevoli. Controlla l'esercizio 4: 0,6 con Markov, 0,04 con Čebyšëv.</aside>
     </section>
 
     <!-- ───── L'urna di Bernoulli (Erlebnis, 10 minuti) ───── -->

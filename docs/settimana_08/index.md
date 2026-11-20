@@ -441,6 +441,7 @@ Confrontiamo la garanzia di Čebyšëv con le probabilità vere delle tre distri
 
 In ogni riga la probabilità vera è sotto il limite, come deve essere, e spesso molto sotto. Per la normale la regola 68–95–99,7 dice che fuori da due deviazioni standard cade circa il 4,6% dei valori; Čebyšëv garantisce soltanto che non ne cada più del 25%. Fuori da tre deviazioni standard la normale ne lascia lo 0,27%, Čebyšëv concede fino all’11,1%. È il prezzo dell’universalità: un limite che vale per tutte le distribuzioni deve valere anche per le più sfavorevoli, e quindi è più largo di quello che serve per una distribuzione particolare.
 
+<!-- Commentato: la distribuzione a tre punti che tocca il limite, da riprendere.
 Si potrebbe sperare di trovare un limite migliore, sempre senza conoscere la forma. Non è possibile: per ogni $k\ge1$ esiste una distribuzione che tocca esattamente il limite. È una distribuzione a tre punti, che puoi vedere nel riquadro qui sotto e nel widget.
 
 ??? note "Approfondimento facoltativo — La distribuzione che tocca il limite"
@@ -470,17 +471,22 @@ Si potrebbe sperare di trovare un limite migliore, sempre senza conoscere la for
 </svg>
 <figcaption>Una variabile che vale μ con probabilità 3/4 e μ ± 2σ con probabilità 1/8 ciascuno. La sua media è μ e la sua varianza è esattamente σ². La probabilità di stare ad almeno 2σ dalla media è 1/4, proprio il limite di Čebyšëv: il limite non si può migliorare, se si conoscono solo media e varianza.</figcaption>
 </figure>
+-->
 
 #### Esplora: Čebyšëv contro le distribuzioni vere {: #widget-cebysev }
 
-Il widget disegna, al variare di $k$, il limite di Čebyšëv $1/k^2$ (in arancione) e la probabilità vera di stare ad almeno $k$ deviazioni standard dalla media per la distribuzione che scegli (in blu). Prima di muovere il cursore, prevedi: per quale distribuzione la curva blu sparisce del tutto da un certo $k$ in poi? Poi scegli la distribuzione «a tre punti» e sposta $k$: la distribuzione viene ricostruita per ogni valore di $k$, e il punto blu cade ogni volta sulla curva arancione.
+Il widget disegna, al variare di $k$, il limite di Čebyšëv $1/k^2$ (in arancione) e la probabilità vera di stare ad almeno $k$ deviazioni standard dalla media per la distribuzione che scegli (in blu). Prima di muovere il cursore, prevedi: per quale distribuzione la curva blu sparisce del tutto da un certo $k$ in poi? Poi sposta $k$ e controlla la previsione.
+
+<!-- Commentato con il riquadro sulla distribuzione a tre punti. Testo precedente:
+Poi scegli la distribuzione «a tre punti» e sposta $k$: la distribuzione viene ricostruita per ogni valore di $k$, e il punto blu cade ogni volta sulla curva arancione.
+-->
 
 <div class="s08-box" id="s08-ceb">
   <label>Distribuzione: <select id="s08-ceb-d">
     <option value="normale">normale</option>
     <option value="uniforme">uniforme</option>
     <option value="esponenziale">esponenziale</option>
-    <option value="tre">a tre punti (costruita per questo k)</option>
+    <!-- <option value="tre">a tre punti (costruita per questo k)</option> -->
   </select></label>
   <label>k = <input type="range" id="s08-ceb-k" min="1" max="5" step="0.05" value="2"> <b id="s08-ceb-kv">2,00</b></label>
   <svg class="s08-svg" id="s08-ceb-svg" viewBox="0 0 560 300" role="img" aria-label="Grafico della probabilità di stare ad almeno k deviazioni standard dalla media, per k da 1 a 5: in arancione il limite di Čebyšëv 1 su k al quadrato, in blu la probabilità vera della distribuzione scelta, con una linea verticale verde sul valore di k scelto."></svg>
@@ -563,7 +569,11 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-Con la distribuzione normale e $k=2$ il widget mostra la differenza che abbiamo visto nella tabella, 25% contro 4,6%. Con la distribuzione uniforme la curva blu si azzera a $k=\sqrt3\approx1{,}73$, perché oltre quella distanza non ci sono più valori. Con la distribuzione a tre punti, infine, il punto blu sta sempre sulla curva arancione: per ogni $k$ esiste una distribuzione che rende la disuguaglianza un’uguaglianza.
+Con la distribuzione normale e $k=2$ il widget mostra la differenza che abbiamo visto nella tabella, 25% contro 4,6%. Con la distribuzione uniforme la curva blu si azzera a $k=\sqrt3\approx1{,}73$, perché oltre quella distanza non ci sono più valori.
+
+<!-- Commentato con il riquadro sulla distribuzione a tre punti. Frase finale del paragrafo precedente:
+Con la distribuzione a tre punti, infine, il punto blu sta sempre sulla curva arancione: per ogni $k$ esiste una distribuzione che rende la disuguaglianza un’uguaglianza.
+-->
 
 ### L’esercizio delle ante {: #ante }
 
@@ -601,13 +611,21 @@ Il limite per una coda sola è lo stesso di quello per le due code insieme: è a
 
 ### Laboratorio: Čebyšëv alla prova {: #lab-cebysev }
 
-Il primo script mette alla prova i due limiti con una simulazione. Genera duecentomila valori da quattro distribuzioni diverse, tutte con media 0 e deviazione standard 1: la normale, l’uniforme, l’esponenziale spostata in modo da avere media 0, e la distribuzione a tre punti costruita per $k=2$. Per ciascuna conta la frazione di valori ad almeno $k$ deviazioni standard dalla media e la confronta con $1/k^2$. In fondo controlla la disuguaglianza di Markov su un tempo di risposta esponenziale con media 200 ms, il caso che abbiamo discusso nell’Atto III.
+<!-- Commentato con il riquadro sulla distribuzione a tre punti. Lo script aveva una quarta distribuzione nel dizionario campioni:
+    # La distribuzione a tre punti costruita per k = 2: vale -2 e 2
+    # con probabilità 1/8 ciascuno e 0 con probabilità 3/4.
+    "tre punti": rng.choice([-2.0, 0.0, 2.0], size=n,
+                            p=[1 / 8, 3 / 4, 1 / 8]),
+e il paragrafo diceva «da quattro distribuzioni diverse, […] la normale, l’uniforme, l’esponenziale spostata in modo da avere media 0, e la distribuzione a tre punti costruita per $k=2$».
+-->
+
+Il primo script mette alla prova i due limiti con una simulazione. Genera duecentomila valori da tre distribuzioni diverse, tutte con media 0 e deviazione standard 1: la normale, l’uniforme e l’esponenziale spostata in modo da avere media 0. Per ciascuna conta la frazione di valori ad almeno $k$ deviazioni standard dalla media e la confronta con $1/k^2$. In fondo controlla la disuguaglianza di Markov su un tempo di risposta esponenziale con media 200 ms, il caso che abbiamo discusso nell’Atto III.
 
 <div class="psi-exec" markdown="1">
 ```python
 import numpy as np
 
-# Quattro distribuzioni diverse, tutte con media 0 e deviazione
+# Tre distribuzioni diverse, tutte con media 0 e deviazione
 # standard 1: così la distanza k·σ dalla media vale proprio k.
 rng = np.random.default_rng(8)
 n = 200_000
@@ -615,10 +633,6 @@ campioni = {
     "normale": rng.normal(0, 1, n),
     "uniforme": rng.uniform(-np.sqrt(3), np.sqrt(3), n),
     "esponenziale": rng.exponential(1, n) - 1,
-    # La distribuzione a tre punti costruita per k = 2: vale -2 e 2
-    # con probabilità 1/8 ciascuno e 0 con probabilità 3/4.
-    "tre punti": rng.choice([-2.0, 0.0, 2.0], size=n,
-                            p=[1 / 8, 3 / 4, 1 / 8]),
 }
 
 for nome, x in campioni.items():
@@ -643,7 +657,11 @@ for a in [400, 1000, 2000]:
 ```
 </div>
 
-Nell’output le frazioni simulate della normale, dell’uniforme e dell’esponenziale sono vicine ai valori della tabella, e tutte sotto il limite. La distribuzione a tre punti è l’unica che lo raggiunge: con $k=2$ circa il 25% dei valori sta a distanza 2, come previsto. Con $k=1{,}5$ la stessa distribuzione resta al 25%, sotto il limite del 44,4%, perché è stata costruita per $k=2$; con $k=3$ non ha più valori fuori. Le righe di Markov mostrano quanto il limite sia prudente quando la distribuzione è esponenziale: 0,2 contro circa 0,0065. Prova a cambiare `k = 2` nella costruzione della distribuzione a tre punti, per esempio con valori $\pm3$ e probabilità $1/18$, $8/9$, $1/18$: sarà la riga $k=3$ a toccare il limite.
+Nell’output le frazioni simulate della normale, dell’uniforme e dell’esponenziale sono vicine ai valori della tabella, e tutte sotto il limite. Le righe di Markov mostrano quanto il limite sia prudente quando la distribuzione è esponenziale: 0,2 contro circa 0,0065.
+
+<!-- Commentato con il riquadro sulla distribuzione a tre punti. Frasi tolte dal paragrafo precedente:
+La distribuzione a tre punti è l’unica che lo raggiunge: con $k=2$ circa il 25% dei valori sta a distanza 2, come previsto. Con $k=1{,}5$ la stessa distribuzione resta al 25%, sotto il limite del 44,4%, perché è stata costruita per $k=2$; con $k=3$ non ha più valori fuori. […] Prova a cambiare `k = 2` nella costruzione della distribuzione a tre punti, per esempio con valori $\pm3$ e probabilità $1/18$, $8/9$, $1/18$: sarà la riga $k=3$ a toccare il limite.
+-->
 
 ### Garanzie per i sistemi informatici {: #garanzie-informatica }
 
@@ -1357,7 +1375,7 @@ L’ultimo gruppo riguarda la legge dei grandi numeri. Non dice che la media sar
 
 ## Riepilogo per lo studio {: #riepilogo }
 
-Quando di una variabile conosciamo soltanto la media, o la media e la varianza, non possiamo calcolare le sue probabilità, che dipendono dalla forma della distribuzione: entro una deviazione standard dalla media cade il 68% di una normale, il 58% di un’uniforme, l’87% di un’esponenziale. Possiamo però limitarle. La **disuguaglianza di Markov** dice che per una variabile mai negativa e una soglia $a>0$ vale $P(X\ge a)\le\mathbb{E}[X]/a$: una variabile non negativa raramente è molto più grande della sua media. Si dimostra osservando che $X\ge a\cdot I$, dove $I$ è l’indicatrice dell’evento $X\ge a$, e prendendo la media. La **disuguaglianza di Čebyšëv** è Markov applicata al quadrato della distanza dalla media: $P(|X-\mu|\ge a)\le\sigma^2/a^2$, cioè $P(|X-\mu|\ge k\sigma)\le1/k^2$ e $P(|X-\mu|<k\sigma)\ge1-1/k^2$. Vale per ogni distribuzione con varianza finita, e per questo è prudente: entro due deviazioni standard garantisce il 75%, dove la normale ne ha il 95%. Non si può migliorare senza altre informazioni, perché una distribuzione a tre punti la raggiunge.
+Quando di una variabile conosciamo soltanto la media, o la media e la varianza, non possiamo calcolare le sue probabilità, che dipendono dalla forma della distribuzione: entro una deviazione standard dalla media cade il 68% di una normale, il 58% di un’uniforme, l’87% di un’esponenziale. Possiamo però limitarle. La **disuguaglianza di Markov** dice che per una variabile mai negativa e una soglia $a>0$ vale $P(X\ge a)\le\mathbb{E}[X]/a$: una variabile non negativa raramente è molto più grande della sua media. Si dimostra osservando che $X\ge a\cdot I$, dove $I$ è l’indicatrice dell’evento $X\ge a$, e prendendo la media. La **disuguaglianza di Čebyšëv** è Markov applicata al quadrato della distanza dalla media: $P(|X-\mu|\ge a)\le\sigma^2/a^2$, cioè $P(|X-\mu|\ge k\sigma)\le1/k^2$ e $P(|X-\mu|<k\sigma)\ge1-1/k^2$. Vale per ogni distribuzione con varianza finita, e per questo è prudente: entro due deviazioni standard garantisce il 75%, dove la normale ne ha il 95%.<!-- Commentato con il riquadro sulla distribuzione a tre punti: Non si può migliorare senza altre informazioni, perché una distribuzione a tre punti la raggiunge. -->
 
 Per variabili **indipendenti** la varianza della somma è la somma delle varianze, e lo stesso vale per la differenza; per variabili dipendenti non è così, come mostra $\operatorname{Var}(2X)=4\operatorname{Var}(X)$. Per $n$ variabili **i.i.d.** con media $\mu$ e varianza $\sigma^2$, la somma ha media $n\mu$ e varianza $n\sigma^2$, mentre la **media campionaria** $\bar X_n$ ha media $\mu$ e varianza $\sigma^2/n$: la sua deviazione standard scende come $\sigma/\sqrt n$, e per dimezzarla servono quattro volte più dati.
 

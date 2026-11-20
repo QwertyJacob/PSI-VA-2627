@@ -10,7 +10,7 @@
 
 *Quante prove servono prima che qualcosa riesca? Quanti eventi capitano mentre osserviamo un sistema? Due domande vicine, due modi diversi di costruire una variabile aleatoria.*
 
-[:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" }
+[:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" } [:material-comment-question-outline: Domande d'esame](../domande-esame/primo-round/settimana-05.md){ .md-button }
 
 ## Il percorso e ciò che è richiesto all’esame {: #esame }
 
@@ -62,6 +62,8 @@ Alla fine della settimana devi saper:
 - l’identità del secondo momento e le derivazioni delle varianze delle distribuzioni di Bernoulli e binomiale (Lettura C).
 
 Una precisazione importante: la **proprietà** $\operatorname{Var}(X)=\lambda$ per la distribuzione di Poisson è richiesta; è la sua *dimostrazione* a essere facoltativa. L’esercizio sul campionamento senza reinserimento richiama un approfondimento facoltativo della Settimana 4.
+
+Le otto domande del primo round dell'esame orale su questa settimana, ciascuna con la sua risposta attesa, sono raccolte nella sezione [Domande d'esame](../domande-esame/primo-round/settimana-05.md).
 
 Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame). I laboratori servono a mettere alla prova le previsioni: una simulazione ci fa *vedere* che una proprietà vale, mentre la spiegazione matematica ci dice *perché* vale. Le due cose si completano.
 

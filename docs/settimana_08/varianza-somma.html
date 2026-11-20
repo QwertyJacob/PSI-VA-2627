@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Varianza di una somma · PSI</title>
+<link rel="icon" href="../assets/img/psi-pet-favicon.svg">
+<script>
+/* Segue il tema scelto sul sito delle dispense (Material lo salva in localStorage). */
+(function () {
+  try {
+    var base = location.pathname.replace(/settimana_08\/[^\/]*$/, '');
+    var p = JSON.parse(localStorage.getItem(base + '.__palette'));
+    var m = p && p.color && p.color.media;
+    if (m === '(prefers-color-scheme: dark)') document.documentElement.setAttribute('data-theme', 'dark');
+    else if (m === '(prefers-color-scheme: light)') document.documentElement.setAttribute('data-theme', 'light');
+  } catch (e) {}
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Literata:opsz,wght@7..72,500;7..72,650&amp;family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&amp;display=swap">
+<style>
+/* Layout: una sola colonna di lettura; i passi della derivazione hanno l'etichetta in un margine a sinistra sugli schermi larghi e sopra il testo sul telefono. Blu = varianze (diagonale), arancio = covarianze (fuori diagonale), in formule e tabelle. */
+:root {
+  --paper: #f5f6f8;
+  --panel: #ffffff;
+  --ink: #1a2130;
+  --muted: #586274;
+  --rule: #d6dbe4;
+  --var-ink: #2b52b5;
+  --cov-ink: #a8590b;
+  --result: #edf1fa;
+  --font-display: "Literata", Georgia, "Times New Roman", serif;
+  --font-body: "STIX Two Text", "STIX Two", Cambria, Georgia, serif;
+  --font-label: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11151c;
+    --panel: #171c25;
+    --ink: #e3e7ee;
+    --muted: #9ba5b6;
+    --rule: #2a3241;
+    --var-ink: #93b1ff;
+    --cov-ink: #f2a65e;
+    --result: #18202e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #11151c;
+  --panel: #171c25;
+  --ink: #e3e7ee;
+  --muted: #9ba5b6;
+  --rule: #2a3241;
+  --var-ink: #93b1ff;
+  --cov-ink: #f2a65e;
+  --result: #18202e;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.62;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.page {
+  max-width: 44rem;
+  margin-inline: auto;
+  padding-block: 2.5rem 4rem;
+  overflow-x: clip;
+}
+p { margin: 0 0 0.9em; }
+a { color: var(--var-ink); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid var(--var-ink);
+  outline-offset: 2px;
+}
+em { font-style: italic; }
+
+/* testata */
+.eyebrow {
+  font-family: var(--font-label);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 0.6rem;
+}
+h1 {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: clamp(2rem, 6vw, 2.7rem);
+  line-height: 1.1;
+  margin: 0 0 1rem;
+  text-wrap: balance;
+}
+.lede { font-size: 1.2rem; color: var(--ink); }
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin: 1rem 0 0;
+}
+.legend span { display: inline-flex; align-items: center; gap: 0.45rem; }
+.swatch { width: 0.85rem; height: 0.85rem; border-radius: 2px; display: inline-block; }
+.swatch.v { background: var(--var-ink); }
+.swatch.c { background: var(--cov-ink); }
+
+/* indice */
+.toc {
+  margin: 2rem 0 0.5rem;
+  padding-block: 1rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.75rem 2rem;
+}
+.toc h2 {
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 0.35rem;
+  border: 0;
+  padding: 0;
+}
+.toc ol { margin: 0; padding-left: 1.6rem; font-size: 1rem; }
+.toc li { margin: 0.1rem 0; }
+.toc a { color: var(--ink); text-decoration: none; }
+.toc a:hover { color: var(--var-ink); text-decoration: underline; }
+
+/* sezioni */
+section { margin-top: 3rem; }
+h2 {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: 1.55rem;
+  line-height: 1.2;
+  margin: 0 0 1rem;
+  text-wrap: balance;
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+}
+.sec-num {
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--var-ink);
+  min-width: 1.4rem;
+}
+h3 {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: 1.15rem;
+  margin: 1.8rem 0 0.6rem;
+}
+.part-title {
+  font-family: var(--font-label);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 4rem 0 -1.5rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--ink);
+}
+
+/* passi */
+.steps { margin: 1rem 0; }
+.step {
+  display: grid;
+  grid-template-columns: 5.6rem minmax(0, 1fr);
+  gap: 0 1.25rem;
+  padding-block: 0.8rem 0.2rem;
+  border-top: 1px solid var(--rule);
+}
+.step-label {
+  font-family: var(--font-label);
+  font-size: 0.74rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 0.32rem;
+}
+.step-label b { display: block; font-weight: 500; color: var(--ink); }
+.step-body { min-width: 0; }
+@media (max-width: 640px) {
+  .step { grid-template-columns: minmax(0, 1fr); }
+  .step-label { padding-top: 0; margin-bottom: 0.3rem; }
+  .step-label b { display: inline; margin-left: 0.4rem; }
+}
+
+/* risultato */
+.result {
+  background: var(--result);
+  border: 1px solid color-mix(in srgb, var(--var-ink) 30%, var(--rule));
+  border-radius: 6px;
+  padding: 0.7rem 1.1rem 0.2rem;
+  margin: 1.4rem 0;
+}
+.result-label {
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--var-ink);
+  margin: 0;
+}
+
+/* formule */
+mjx-container[jax="SVG"][display="true"] {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  padding-block: 2px;
+}
+mjx-assistive-mml { max-width: 100%; }
+mjx-container .m-var { fill: var(--var-ink); stroke: var(--var-ink); color: var(--var-ink); }
+mjx-container .m-cov { fill: var(--cov-ink); stroke: var(--cov-ink); color: var(--cov-ink); }
+
+/* tabella delle covarianze */
+.grid-fig {
+  margin: 1.4rem 0;
+  padding: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+.grid-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  font-family: var(--font-label);
+  font-size: 0.85rem;
+  margin-bottom: 0.8rem;
+}
+.grid-controls input[type="range"] { width: min(14rem, 100%); accent-color: var(--var-ink); }
+.cov-grid {
+  display: grid;
+  gap: 3px;
+  max-width: 100%;
+  margin-inline: auto;
+}
+.cell {
+  aspect-ratio: 1;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-label);
+  font-size: clamp(0.6rem, 2.3vw, 0.78rem);
+  font-variant-numeric: tabular-nums;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  color: var(--ink);
+  min-width: 0;
+}
+.cell.c-var { background: color-mix(in srgb, var(--var-ink) 30%, var(--panel)); border-color: color-mix(in srgb, var(--var-ink) 50%, var(--rule)); }
+.cell.c-cov { background: color-mix(in srgb, var(--cov-ink) 20%, var(--panel)); }
+.grid-fig figcaption {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-top: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+.grid-fig figcaption strong { color: var(--ink); font-weight: 600; }
+
+/* tabella degli esempi */
+.table-wrap { overflow-x: auto; margin: 1.2rem 0; }
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+th, td { padding: 0.45rem 0.7rem; text-align: right; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; white-space: normal; }
+thead th { font-weight: 600; border-bottom: 1.5px solid var(--ink); }
+
+/* calcolatore */
+.calc {
+  margin: 1.4rem 0;
+  padding: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+.calc-title { font-family: var(--font-display); font-weight: 650; font-size: 1.05rem; margin: 0 0 0.7rem; }
+.calc-row { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; align-items: center; font-size: 1rem; }
+.calc-row label { display: inline-flex; align-items: center; gap: 0.5rem; }
+.calc input[type="range"] { width: min(13rem, 100%); accent-color: var(--var-ink); }
+.calc select {
+  font: inherit;
+  font-size: 0.95rem;
+  padding: 0.15rem 0.3rem;
+  background: var(--panel);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
+.presets { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+.presets button {
+  font-family: var(--font-label);
+  font-size: 0.78rem;
+  padding: 0.3rem 0.65rem;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.presets button:hover { border-color: var(--var-ink); color: var(--var-ink); }
+.calc-out {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: 0.6rem 1rem;
+  margin: 1rem 0 0;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--rule);
+}
+.calc-out div { min-width: 0; }
+.calc-out dt { font-size: 0.85rem; color: var(--muted); }
+.calc-out dd { margin: 0; font-family: var(--font-label); font-size: 1.15rem; font-variant-numeric: tabular-nums; }
+.calc-note { font-size: 0.92rem; color: var(--muted); margin: 0.8rem 0 0; }
+
+/* fonti */
+.sources {
+  margin-top: 3.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+.sources h2 { font-size: 1.1rem; color: var(--ink); }
+.sources ol { padding-left: 1.3rem; margin: 0; }
+.sources li { margin-bottom: 0.4rem; }
+
+/* Il file è una pagina autonoma: reset minimo e margini di sicurezza dei telefoni. */
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+.note-box {
+  margin: 1rem 0 0;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--panel);
+  font-size: 1rem;
+}
+.backlink { font-family: var(--font-label); font-size: 0.85rem; margin: 0 0 1.2rem; }
+.backlink a { text-decoration: none; }
+.backlink a:hover { text-decoration: underline; }
+.toc.single { grid-template-columns: minmax(0, 1fr); }
+</style>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    macros: {
+      Var: '\\operatorname{Var}',
+      Cov: '\\operatorname{Cov}',
+      vd: ['\\class{m-var}{#1}', 1],
+      cv: ['\\class{m-cov}{#1}', 1]
+    }
+  },
+  svg: { fontCache: 'global' },
+  options: { enableMenu: false }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg-full.js"></script>
+</head>
+<body>
+<main class="page">
+  <header>
+    <p class="backlink"><a href="./#varianza-somma">← Dispensa della settimana 8</a></p>
+    <p class="eyebrow">PSI · Settimana 8 · approfondimento facoltativo</p>
+    <h1>Varianza di una somma</h1>
+    <p class="lede">Questa pagina ricava, un passo alla volta, la formula della varianza di una somma di variabili aleatorie, prima con due variabili e poi con \(n\), e la usa per calcolare la varianza della media campionaria. Nessun passo usa l’indipendenza: la formula vale sempre, e l’indipendenza serve soltanto, alla fine, a cancellarne una parte.</p>
+    <p class="note-box">È un approfondimento facoltativo della <a href="./#varianza-somma">dispensa della settimana 8</a>, e non è richiesto all’esame.</p>
+    <div class="legend">
+      <span><i class="swatch v"></i>termini di varianza (sulla diagonale)</span>
+      <span><i class="swatch c"></i>termini di covarianza (fuori dalla diagonale)</span>
+    </div>
+    <nav class="toc single" aria-label="Indice">
+      <div>
+        <h2>In questa pagina</h2>
+        <ol>
+          <li><a href="#strumenti">Gli strumenti</a></li>
+          <li><a href="#due">Due variabili</a></li>
+          <li><a href="#coefficienti">Differenza e coefficienti</a></li>
+          <li><a href="#enne">\(n\) variabili</a></li>
+          <li><a href="#media">Dalla somma alla media</a></li>
+        </ol>
+      </div>
+    </nav>
+  </header>
+
+  <section id="strumenti">
+    <h2><span class="sec-num">1</span>Gli strumenti</h2>
+    <p>Servono due definizioni e una proprietà, tutte già incontrate nel corso. Supponiamo sempre che le varianze siano finite, così che tutte le medie che scriviamo esistano.</p>
+    <p>La <strong>varianza</strong> di una variabile \(X\) è la media del quadrato del suo scarto dalla media:</p>
+    \[ \Var(X)=\mathbb{E}\big[(X-\mu_X)^2\big],\qquad \mu_X=\mathbb{E}[X]. \]
+    <p>La <strong>covarianza</strong> di due variabili \(X\) e \(Y\), che abbiamo incontrato nella <a href="../settimana_07/#covarianza">settimana 7</a>, è la media del prodotto dei loro scarti:</p>
+    \[ \Cov(X,Y)=\mathbb{E}\big[(X-\mu_X)(Y-\mu_Y)\big]. \]
+    <p>Dalla definizione seguono subito due fatti. Il prodotto non dipende dall’ordine dei fattori, quindi la covarianza è simmetrica: \(\Cov(X,Y)=\Cov(Y,X)\). E se al posto di \(Y\) mettiamo \(X\) stessa, il prodotto degli scarti diventa il quadrato dello scarto, quindi</p>
+    \[ \Cov(X,X)=\Var(X). \]
+    <p>La varianza è dunque la covarianza di una variabile con sé stessa.</p>
+    <p>La proprietà è la <strong>linearità del valore atteso</strong>. Per qualunque variabili \(U\) e \(V\) e qualunque costanti \(a\), \(b\), \(c\),</p>
+    \[ \mathbb{E}[aU+bV+c]=a\,\mathbb{E}[U]+b\,\mathbb{E}[V]+c, \]
+    <p>e lo stesso vale per una somma di quanti termini si vuole. La linearità vale anche quando \(U\) e \(V\) dipendono l’una dall’altra. È l’unico strumento che useremo, ed è per questo che il risultato varrà per variabili qualsiasi.</p>
+  </section>
+
+<section id="due">
+    <h2><span class="sec-num">2</span>Due variabili</h2>
+    <p>Vogliamo la varianza di \(X+Y\). L’idea è applicare la definizione di varianza alla nuova variabile \(X+Y\), e poi spezzare il conto con la linearità.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-label">Passo 1 <b>la media</b></div>
+        <div class="step-body">
+          <p>Per la linearità, la media della somma è la somma delle medie:</p>
+          \[ \mathbb{E}[X+Y]=\mu_X+\mu_Y. \]
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 2 <b>lo scarto</b></div>
+        <div class="step-body">
+          <p>Lo scarto di \(X+Y\) dalla sua media si riordina raggruppando ogni variabile con la propria media:</p>
+          \[ (X+Y)-(\mu_X+\mu_Y)=(X-\mu_X)+(Y-\mu_Y). \]
+          <p>Lo scarto della somma è la somma degli scarti. Per alleggerire la scrittura chiamiamo \(U=X-\mu_X\) e \(V=Y-\mu_Y\).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 3 <b>la definizione</b></div>
+        <div class="step-body">
+          <p>La varianza di \(X+Y\) è la media del quadrato del suo scarto, e per il passo 2 questo scarto è \(U+V\):</p>
+          \[ \Var(X+Y)=\mathbb{E}\big[(U+V)^2\big]. \]
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 4 <b>il quadrato</b></div>
+        <div class="step-body">
+          <p>Sviluppiamo il quadrato del binomio. Qui non c’è nessuna probabilità: è un’identità algebrica, vera per ogni esito dell’esperimento.</p>
+          \[ (U+V)^2=U^2+2\,UV+V^2. \]
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 5 <b>la media</b></div>
+        <div class="step-body">
+          <p>Prendiamo la media di entrambi i membri e usiamo la linearità per spezzarla in tre pezzi:</p>
+          \[ \mathbb{E}\big[(U+V)^2\big]=\mathbb{E}[U^2]+2\,\mathbb{E}[UV]+\mathbb{E}[V^2]. \]
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 6 <b>i nomi</b></div>
+        <div class="step-body">
+          <p>Ognuno dei tre pezzi ha un nome. \(\mathbb{E}[U^2]=\mathbb{E}\big[(X-\mu_X)^2\big]\) è la varianza di \(X\), \(\mathbb{E}[V^2]\) è la varianza di \(Y\), e \(\mathbb{E}[UV]=\mathbb{E}\big[(X-\mu_X)(Y-\mu_Y)\big]\) è la covarianza:</p>
+          \[ \mathbb{E}[U^2]=\vd{\Var(X)},\qquad \mathbb{E}[V^2]=\vd{\Var(Y)},\qquad \mathbb{E}[UV]=\cv{\Cov(X,Y)}. \]
+        </div>
+      </div>
+    </div>
+    <div class="result">
+      <p class="result-label">Risultato</p>
+      \[ \Var(X+Y)=\vd{\Var(X)}+\vd{\Var(Y)}+2\,\cv{\Cov(X,Y)}. \]
+    </div>
+    <p>In nessuno dei sei passi abbiamo usato l’indipendenza. La formula vale per qualunque coppia di variabili con varianza finita.</p>
+
+    <h3>Quando la covarianza è zero</h3>
+    <p>Per vedere quando l’ultimo termine sparisce conviene riscrivere la covarianza in una forma più comoda. Sviluppiamo il prodotto degli scarti e usiamo ancora la linearità, ricordando che \(\mu_X\) e \(\mu_Y\) sono costanti:</p>
+    \[ \begin{aligned}
+      \Cov(X,Y) &= \mathbb{E}\big[XY-\mu_Y X-\mu_X Y+\mu_X\mu_Y\big] \\
+                &= \mathbb{E}[XY]-\mu_Y\mu_X-\mu_X\mu_Y+\mu_X\mu_Y \\
+                &= \mathbb{E}[XY]-\mu_X\mu_Y .
+    \end{aligned} \]
+    <p>Se \(X\) e \(Y\) sono indipendenti, la media del prodotto è il prodotto delle medie, \(\mathbb{E}[XY]=\mu_X\mu_Y\) (<a href="../settimana_07/#prodotto">settimana 7</a>). La covarianza è allora zero e resta \(\Var(X+Y)=\Var(X)+\Var(Y)\). Per cancellare il termine, però, basta che la covarianza sia zero, cioè che le variabili siano <em>incorrelate</em>, e questo può succedere anche fra variabili dipendenti. L’indipendenza è uno dei modi per arrivarci.</p>
+  </section>
+
+<section id="coefficienti">
+    <h2><span class="sec-num">3</span>Differenza e coefficienti</h2>
+    <p>Lo stesso ragionamento funziona per una combinazione \(aX+bY\), con \(a\) e \(b\) costanti. Ripercorriamo i passi.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-label">Passo 1 <b>media e scarto</b></div>
+        <div class="step-body">
+          <p>La media è \(a\mu_X+b\mu_Y\), e lo scarto si raccoglie come prima:</p>
+          \[ (aX+bY)-(a\mu_X+b\mu_Y)=a(X-\mu_X)+b(Y-\mu_Y)=aU+bV. \]
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 2 <b>il quadrato</b></div>
+        <div class="step-body">
+          \[ (aU+bV)^2=a^2U^2+2ab\,UV+b^2V^2. \]
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 3 <b>la media</b></div>
+        <div class="step-body">
+          \[ \Var(aX+bY)=a^2\,\mathbb{E}[U^2]+2ab\,\mathbb{E}[UV]+b^2\,\mathbb{E}[V^2]. \]
+        </div>
+      </div>
+    </div>
+    <div class="result">
+      <p class="result-label">Risultato</p>
+      \[ \Var(aX+bY)=a^2\,\vd{\Var(X)}+b^2\,\vd{\Var(Y)}+2ab\,\cv{\Cov(X,Y)}. \]
+    </div>
+    <p>Tre casi particolari si leggono subito. Con \(a=1\) e \(b=-1\) si ottiene la differenza. Il coefficiente di \(\Var(Y)\) è \(b^2=1\), quindi le varianze si sommano anche qui; cambia segno soltanto la covarianza:</p>
+    \[ \Var(X-Y)=\vd{\Var(X)}+\vd{\Var(Y)}-2\,\cv{\Cov(X,Y)}. \]
+    <p>Con \(b=0\) si ritrova la regola \(\Var(aX)=a^2\Var(X)\) della <a href="../settimana_05/#varianza">settimana 5</a>. Una costante aggiunta, invece, non cambia nulla, perché sparisce già nello scarto.</p>
+    <p>Con \(Y=X\), cioè lo stesso dado contato due volte, la formula della somma dà</p>
+    \[ \Var(X+X)=\vd{\Var(X)}+\vd{\Var(X)}+2\,\cv{\Cov(X,X)}=4\Var(X), \]
+    <p>lo stesso risultato di \(\Var(2X)=2^2\Var(X)\). Due dadi indipendenti danno invece \(2\Var(X).\) La differenza fra i due casi sta tutta nella covarianza.</p>
+  </section>
+
+<section id="enne">
+    <h2><span class="sec-num">4</span>\(n\) variabili</h2>
+    <p>Ora le variabili sono \(n\): \(X_1,\dots,X_n\), con medie \(\mu_1,\dots,\mu_n\). Chiamiamo \(S_n=X_1+\dots+X_n\) la loro somma e \(U_i=X_i-\mu_i\) lo scarto della variabile \(i\)-esima. I passi sono gli stessi del caso con due variabili; cambia soltanto lo sviluppo del quadrato.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-label">Passo 1 <b>media e scarto</b></div>
+        <div class="step-body">
+          <p>Per la linearità \(\mathbb{E}[S_n]=\mu_1+\dots+\mu_n\), e lo scarto della somma è ancora la somma degli scarti:</p>
+          \[ S_n-\mathbb{E}[S_n]=\sum_{i=1}^{n}(X_i-\mu_i)=\sum_{i=1}^{n}U_i . \]
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 2 <b>la definizione</b></div>
+        <div class="step-body">
+          \[ \Var(S_n)=\mathbb{E}\Big[\Big(\sum_{i=1}^{n}U_i\Big)^2\Big]. \]
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 3 <b>il quadrato</b></div>
+        <div class="step-body">
+          <p>Il quadrato di una somma è la somma moltiplicata per sé stessa. Scriviamo le due copie con due indici diversi, \(i\) e \(j\), e moltiplichiamo ogni termine della prima per ogni termine della seconda:</p>
+          \[ \Big(\sum_{i=1}^{n}U_i\Big)^2=\Big(\sum_{i=1}^{n}U_i\Big)\Big(\sum_{j=1}^{n}U_j\Big)=\sum_{i=1}^{n}\sum_{j=1}^{n}U_iU_j . \]
+          <p>Il risultato ha \(n\cdot n=n^2\) termini, uno per ogni coppia ordinata \((i,j)\). Con \(n=2\) sono \(U_1U_1+U_1U_2+U_2U_1+U_2U_2=U_1^2+2U_1U_2+U_2^2\), cioè il quadrato del binomio del paragrafo 2.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 4 <b>la media</b></div>
+        <div class="step-body">
+          <p>La linearità spezza la media in \(n^2\) pezzi, e ogni pezzo \(\mathbb{E}[U_iU_j]\) è, per definizione, una covarianza:</p>
+          \[ \Var(S_n)=\sum_{i=1}^{n}\sum_{j=1}^{n}\mathbb{E}[U_iU_j]=\sum_{i=1}^{n}\sum_{j=1}^{n}\Cov(X_i,X_j). \]
+          <p>Conviene immaginare i pezzi disposti in una tabella con \(n\) righe e \(n\) colonne, dove la casella \((i,j)\) contiene \(\Cov(X_i,X_j)\). La varianza della somma è la somma di tutte le caselle.</p>
+        </div>
+      </div>
+    </div>
+
+    <figure class="grid-fig">
+      <div class="grid-controls">
+        <label for="n-tipo">numero di variabili: n = <output id="n-tipo-out" for="n-tipo">4</output></label>
+        <input type="range" id="n-tipo" min="2" max="8" step="1" value="4">
+      </div>
+      <div class="cov-grid" id="grid-tipo" role="img" aria-label="Tabella delle covarianze"></div>
+      <figcaption id="cap-tipo"></figcaption>
+    </figure>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-label">Passo 5 <b>diagonale e resto</b></div>
+        <div class="step-body">
+          <p>Sulla diagonale, dove \(i=j\), ci sono \(n\) caselle, e ciascuna contiene \(\Cov(X_i,X_i)=\Var(X_i)\). Fuori dalla diagonale ci sono le altre \(n^2-n=n(n-1)\) caselle. Per la simmetria della covarianza, la casella \((i,j)\) e la casella \((j,i)\) contengono lo stesso numero: le caselle fuori dalla diagonale vanno quindi a coppie, e basta prendere quelle sopra la diagonale, con \(i&lt;j\), che sono \(n(n-1)/2\), e contarle due volte.</p>
+        </div>
+      </div>
+    </div>
+    <div class="result">
+      <p class="result-label">Risultato</p>
+      \[ \Var(S_n)=\sum_{i=1}^{n}\vd{\Var(X_i)}+2\sum_{1\le i&lt;j\le n}\cv{\Cov(X_i,X_j)}. \]
+    </div>
+    <p>Il conto delle caselle torna: \(n+2\cdot\frac{n(n-1)}{2}=n^2\). Con tre variabili, per esempio, le caselle sono nove: tre sulla diagonale e tre coppie fuori.</p>
+    \[ \begin{aligned}
+      \Var(X_1+X_2+X_3) ={}& \vd{\Var(X_1)}+\vd{\Var(X_2)}+\vd{\Var(X_3)} \\
+      &+2\,\cv{\Cov(X_1,X_2)}+2\,\cv{\Cov(X_1,X_3)}+2\,\cv{\Cov(X_2,X_3)} .
+    \end{aligned} \]
+    <p>Se la somma ha dei coefficienti, \(a_1X_1+\dots+a_nX_n\), lo scarto è \(\sum_i a_iU_i\), e ogni casella si porta dietro il prodotto dei suoi due coefficienti:</p>
+    \[ \begin{aligned}
+      \Var\Big(\sum_{i=1}^{n}a_iX_i\Big) &= \sum_{i=1}^{n}\sum_{j=1}^{n}a_ia_j\Cov(X_i,X_j) \\
+      &= \sum_{i=1}^{n}a_i^2\,\vd{\Var(X_i)}+2\sum_{i&lt;j}a_ia_j\,\cv{\Cov(X_i,X_j)} .
+    \end{aligned} \]
+    <p>In forma matriciale è \(a^{\mathsf T}\Sigma\,a\), dove \(\Sigma\) è la tabella delle covarianze vista come matrice e \(a\) il vettore dei coefficienti.</p>
+  </section>
+
+<section id="media">
+    <h2><span class="sec-num">5</span>Dalla somma alla media</h2>
+    <p>La media campionaria è \(\bar X_n=S_n/n\), cioè la somma con tutti i coefficienti uguali a \(1/n\). Nella formula con i coefficienti del paragrafo 4, ogni casella si moltiplica per \(\frac1n\cdot\frac1n=\frac{1}{n^2}\), e quindi tutta la varianza si divide per \(n^2\):</p>
+    \[ \Var(\bar X_n)=\frac{1}{n^2}\Var(S_n). \]
+    <p>Basta dunque calcolare \(\Var(S_n)\) e dividere il risultato per \(n^2\). Lo facciamo in due casi estremi, supponendo che tutte le variabili abbiano la stessa varianza \(\sigma^2\). In entrambi i casi partiamo dalla formula generale del paragrafo 4, senza dare per noto il risultato:</p>
+    \[ \Var(S_n)=\sum_{i=1}^{n}\vd{\Var(X_i)}+2\sum_{1\le i&lt;j\le n}\cv{\Cov(X_i,X_j)}. \]
+
+    <h3>Primo caso: variabili incorrelate</h3>
+    <p>Se le variabili sono indipendenti, o anche soltanto incorrelate, tutte le covarianze fuori dalla diagonale valgono zero, mentre ogni varianza vale \(\sigma^2\).</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-label">Passo 1 <b>sostituire</b></div>
+        <div class="step-body">
+          <p>Mettiamo \(\sigma^2\) al posto di ogni varianza e 0 al posto di ogni covarianza:</p>
+          \[ \Var(S_n)=\sum_{i=1}^{n}\vd{\sigma^2}+2\sum_{1\le i&lt;j\le n}\cv{0}. \]
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 2 <b>le covarianze</b></div>
+        <div class="step-body">
+          <p>La seconda sommatoria somma soltanto zeri, quindi vale zero, qualunque sia il numero dei suoi termini:</p>
+          \[ 2\sum_{1\le i&lt;j\le n}\cv{0}=0. \]
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 3 <b>le varianze</b></div>
+        <div class="step-body">
+          <p>La prima sommatoria somma la stessa costante \(\sigma^2\) una volta per ogni valore di \(i\) da 1 a \(n\), cioè \(n\) volte: il termine non dipende da \(i\), e l’indice serve soltanto a contare i termini. Sommare \(n\) volte la stessa costante è come moltiplicarla per \(n\):</p>
+          \[ \sum_{i=1}^{n}\vd{\sigma^2}=\underbrace{\sigma^2+\sigma^2+\dots+\sigma^2}_{n\ \text{termini}}=n\,\sigma^2. \]
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 4 <b>sommare</b></div>
+        <div class="step-body">
+          <p>Mettiamo insieme i due pezzi:</p>
+          \[ \Var(S_n)=n\,\sigma^2+0=n\,\sigma^2. \]
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 5 <b>dividere per n²</b></div>
+        <div class="step-body">
+          \[ \Var(\bar X_n)=\frac{1}{n^2}\cdot n\,\sigma^2=\frac{n\,\sigma^2}{n^2}=\frac{\sigma^2}{n}. \]
+        </div>
+      </div>
+    </div>
+    <div class="result">
+      <p class="result-label">Risultato · variabili incorrelate</p>
+      \[ \Var(S_n)=n\,\sigma^2,\qquad \Var(\bar X_n)=\frac{\sigma^2}{n}. \]
+    </div>
+    <p>Delle \(n^2\) caselle della tabella sono rimaste soltanto le \(n\) della diagonale. È la formula che la <a href="./#iid">dispensa</a> usa per variabili indipendenti e identicamente distribuite, e il conto mostra che per ottenerla basta che le covarianze siano zero.</p>
+
+    <h3>Secondo caso: \(n\) copie della stessa variabile</h3>
+    <p>Supponiamo ora che le variabili siano tutte la stessa, \(X_1=X_2=\dots=X_n=X\), come un unico dado letto \(n\) volte. Allora ogni covarianza è la covarianza di \(X\) con sé stessa, che è la sua varianza: \(\Cov(X_i,X_j)=\Cov(X,X)=\Var(X)=\sigma^2\). Questa volta anche le caselle fuori dalla diagonale valgono \(\sigma^2\).</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-label">Passo 1 <b>sostituire</b></div>
+        <div class="step-body">
+          <p>Mettiamo \(\sigma^2\) al posto di ogni varianza e anche di ogni covarianza:</p>
+          \[ \Var(S_n)=\sum_{i=1}^{n}\vd{\sigma^2}+2\sum_{1\le i&lt;j\le n}\cv{\sigma^2}. \]
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 2 <b>le varianze</b></div>
+        <div class="step-body">
+          <p>La prima sommatoria è la stessa del primo caso: \(n\) termini uguali a \(\sigma^2\).</p>
+          \[ \sum_{i=1}^{n}\vd{\sigma^2}=n\,\sigma^2. \]
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 3 <b>le covarianze</b></div>
+        <div class="step-body">
+          <p>Anche la seconda sommatoria somma una costante, \(\sigma^2\), ma una volta per ogni coppia \((i,j)\) con \(i&lt;j\). Contiamo le coppie con la tabella del paragrafo 4. Le caselle fuori dalla diagonale sono \(n^2-n=n(n-1)\), e per la simmetria metà stanno sopra la diagonale: le coppie con \(i&lt;j\) sono quindi \(n(n-1)/2\). Con \(n=4\), per esempio, sono 3 nella prima riga, 2 nella seconda e 1 nella terza, in tutto \(3+2+1=6=\frac{4\cdot 3}{2}\). Sommare la costante \(\sigma^2\) per \(n(n-1)/2\) volte è come moltiplicarla per \(n(n-1)/2\):</p>
+          \[ \sum_{1\le i&lt;j\le n}\cv{\sigma^2}=\frac{n(n-1)}{2}\,\sigma^2 . \]
+          <p>Davanti alla sommatoria c’è un 2, che si semplifica con il 2 al denominatore:</p>
+          \[ 2\sum_{1\le i&lt;j\le n}\cv{\sigma^2}=2\cdot\frac{n(n-1)}{2}\,\sigma^2=n(n-1)\,\sigma^2 . \]
+          <p>È il numero di tutte le caselle fuori dalla diagonale, ciascuna con il suo \(\sigma^2\).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 4 <b>sommare i fattori</b></div>
+        <div class="step-body">
+          <p>Le due sommatorie hanno dato due fattori davanti a \(\sigma^2\): \(n\) dalla diagonale e \(n(n-1)\) da fuori. Raccogliamo \(\sigma^2\) e sommiamo i fattori:</p>
+          \[ \begin{aligned}
+            \Var(S_n) &= \vd{n}\,\sigma^2+\cv{n(n-1)}\,\sigma^2 \\
+                      &= \big[\,n+n(n-1)\,\big]\,\sigma^2 \\
+                      &= \big[\,n+n^2-n\,\big]\,\sigma^2 \\
+                      &= n^2\,\sigma^2 .
+          \end{aligned} \]
+          <p>I due fattori sommano \(n^2\), che è il numero di tutte le caselle della tabella: ciascuna vale \(\sigma^2\).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-label">Passo 5 <b>dividere per n²</b></div>
+        <div class="step-body">
+          \[ \Var(\bar X_n)=\frac{1}{n^2}\cdot n^2\,\sigma^2=\sigma^2. \]
+        </div>
+      </div>
+    </div>
+    <div class="result">
+      <p class="result-label">Risultato · copie della stessa variabile</p>
+      \[ \Var(S_n)=n^2\,\sigma^2,\qquad \Var(\bar X_n)=\sigma^2. \]
+    </div>
+    <p>Il risultato si può controllare per un’altra strada. Se tutte le variabili sono \(X\), la somma è \(S_n=nX\), e la regola dei coefficienti del paragrafo 3 dà \(\Var(nX)=n^2\Var(X)=n^2\sigma^2\). La media è \(\bar X_n=nX/n=X\), e ha la varianza di \(X\).</p>
+
+    <h3>Fra i due estremi</h3>
+    <p>Nel primo caso la varianza della media va a zero quando \(n\) cresce, e la legge dei grandi numeri vale. Nel secondo resta \(\sigma^2\) per ogni \(n\): la media di \(n\) copie di \(X\) è \(X\) stessa, e non si avvicina a \(\mu\). Tutte le successioni dipendenti stanno fra questi due estremi. Le \(n\) caselle della diagonale danno sempre \(n\sigma^2\), e il resto dipende dalle \(n(n-1)\) caselle fuori dalla diagonale: se la loro somma cresce più lentamente di \(n^2\), divisa per \(n^2\) va a zero, e con lei la varianza della media.</p>
+  </section>
+
+  <footer class="sources">
+    <p class="backlink"><a href="./#varianza-somma">← Torna alla dispensa della settimana 8</a></p>
+  </footer>
+</main>
+<script>
+(function () {
+  var fmt = function (x, d) {
+    return x.toLocaleString('it-IT', { minimumFractionDigits: d, maximumFractionDigits: d });
+  };
+
+  function drawTipo() {
+    var input = document.getElementById('n-tipo');
+    var n = parseInt(input.value, 10);
+    document.getElementById('n-tipo-out').textContent = n;
+    var grid = document.getElementById('grid-tipo');
+    grid.style.gridTemplateColumns = 'repeat(' + n + ', minmax(0, 46px))';
+    var html = '';
+    for (var i = 1; i <= n; i++) {
+      for (var j = 1; j <= n; j++) {
+        html += '<div class="cell ' + (i === j ? 'c-var' : 'c-cov') + '">' + i + ',' + j + '</div>';
+      }
+    }
+    grid.innerHTML = html;
+    var off = n * (n - 1);
+    grid.setAttribute('aria-label', 'Tabella ' + n + ' per ' + n + ': ' + n + ' caselle sulla diagonale, ' + off + ' fuori dalla diagonale.');
+    document.getElementById('cap-tipo').innerHTML =
+      'La casella <em>i,j</em> contiene Cov(X<sub>i</sub>, X<sub>j</sub>). Con n = ' + n + ' ci sono <strong>' + n +
+      '</strong> caselle sulla diagonale (varianze) e <strong>' + off + '</strong> fuori dalla diagonale (covarianze), cioè ' +
+      (off / 2) + ' coppie contate due volte. In tutto ' + n + ' + ' + off + ' = ' + (n * n) + ' = ' + n + '² caselle.';
+  }
+
+  function drawLag() {
+    var input = document.getElementById('n-lag');
+    var n = parseInt(input.value, 10);
+    document.getElementById('n-lag-out').textContent = n;
+    var grid = document.getElementById('grid-lag');
+    grid.style.gridTemplateColumns = 'repeat(' + n + ', minmax(0, 46px))';
+    var html = '';
+    for (var i = 1; i <= n; i++) {
+      for (var j = 1; j <= n; j++) {
+        var k = Math.abs(i - j);
+        if (k === 0) {
+          html += '<div class="cell c-var">0</div>';
+        } else {
+          var pct = Math.round(8 + 34 * Math.pow(0.68, k - 1));
+          html += '<div class="cell" style="background: color-mix(in srgb, var(--cov-ink) ' + pct + '%, var(--panel))">' + k + '</div>';
+        }
+      }
+    }
+    grid.innerHTML = html;
+    grid.setAttribute('aria-label', 'Tabella ' + n + ' per ' + n + ' in cui ogni casella mostra la distanza k fra i due campioni.');
+    var parts = ['distanza 0: <strong>' + n + '</strong>'];
+    var tot = n;
+    for (var kk = 1; kk < n; kk++) {
+      parts.push('distanza ' + kk + ': <strong>' + (2 * (n - kk)) + '</strong> = 2·' + (n - kk));
+      tot += 2 * (n - kk);
+    }
+    document.getElementById('cap-lag').innerHTML =
+      'Ogni casella mostra la distanza k = |i − j| fra i due campioni; le caselle con la stessa k stanno su due diagonali parallele. Numero di caselle per distanza, con n = ' +
+      n + ': ' + parts.join('; ') + '. In tutto ' + tot + ' = ' + n + '².';
+  }
+
+  function calc() {
+    var d = parseFloat(document.getElementById('delta').value);
+    var n = parseInt(document.getElementById('n-calc').value, 10);
+    document.getElementById('delta-out').textContent = fmt(d, 3);
+    var tau = (1 + d) / (1 - d);
+    var s = 0, p = 1;
+    for (var k = 1; k < n; k++) {
+      p *= d;
+      if (Math.abs(p) < 1e-14) break;
+      s += (1 - k / n) * p;
+    }
+    var taun = 1 + 2 * s;
+    var neff = n / taun;
+    document.getElementById('o-tau').textContent = fmt(tau, tau < 10 ? 3 : 1);
+    document.getElementById('o-taun').textContent = fmt(taun, taun < 10 ? 3 : 1);
+    document.getElementById('o-neff').textContent = fmt(neff, neff < 10 ? 1 : 0);
+    document.getElementById('o-sqrt').textContent = fmt(Math.sqrt(taun), 2);
+    var note;
+    if (taun < 0.999) {
+      note = 'La correlazione è negativa: n campioni dipendenti valgono più di n campioni indipendenti, e la formula σ/√n sovrastima l’errore.';
+    } else if (taun > 1.001) {
+      note = 'La correlazione è positiva: ' + n.toLocaleString('it-IT') + ' campioni valgono circa ' + fmt(neff, neff < 10 ? 1 : 0) +
+        ' campioni indipendenti, e la formula σ/√n dà una barra d’errore ' + fmt(Math.sqrt(taun), 1) + ' volte troppo stretta.';
+    } else {
+      note = 'Senza correlazione i campioni effettivi coincidono con quelli veri.';
+    }
+    document.getElementById('calc-note').textContent = note;
+  }
+
+  if (document.getElementById('n-tipo')) {
+    document.getElementById('n-tipo').addEventListener('input', drawTipo);
+    drawTipo();
+  }
+  if (document.getElementById('n-lag')) {
+    document.getElementById('n-lag').addEventListener('input', drawLag);
+    drawLag();
+  }
+  if (document.getElementById('calc')) {
+    document.getElementById('delta').addEventListener('input', calc);
+    document.getElementById('n-calc').addEventListener('change', calc);
+    Array.prototype.forEach.call(document.querySelectorAll('.presets button'), function (b) {
+      b.addEventListener('click', function () {
+        document.getElementById('delta').value = b.getAttribute('data-d');
+        document.getElementById('n-calc').value = b.getAttribute('data-n');
+        calc();
+      });
+    });
+    calc();
+  }
+})();
+</script>
+</body>
+</html>

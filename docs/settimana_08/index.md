@@ -772,6 +772,8 @@ Una conseguenza sorprende quasi tutti la prima volta. Anche la **differenza** di
 
     Il terzo termine è la [covarianza della Settimana 7](../settimana_07/index.md#covarianza). Se le variabili sono indipendenti la covarianza è zero, perché $\mathbb{E}[XY]=\mu_X\mu_Y$, e resta la somma delle varianze. La stessa conclusione vale anche per variabili soltanto incorrelate. Se la covarianza è positiva, le due variabili tendono a stare dalla stessa parte delle loro medie e gli scarti si sommano invece di compensarsi: la varianza della somma è più grande della somma delle varianze. Il caso estremo è $X+X$: $\operatorname{Cov}(X,X)=\operatorname{Var}(X)$, e la formula dà $\operatorname{Var}(X)+\operatorname{Var}(X)+2\operatorname{Var}(X)=4\operatorname{Var}(X)$, come abbiamo trovato. Per i due moduli della Settimana 7, con $\operatorname{Var}(X)=0{,}25$, $\operatorname{Var}(Y)=1{,}1475$ e $\operatorname{Cov}(X,Y)=0{,}075$, la formula dà $\operatorname{Var}(X+Y)=0{,}25+1{,}1475+0{,}15=1{,}5475$, lo stesso valore che si ottiene dalla distribuzione di $X+Y$.
 
+    Se vuoi vedere questo conto svolto un passo alla volta, e poi esteso a $n$ variabili e alla varianza della media campionaria, trovi tutti i passaggi nella [pagina di approfondimento sulla varianza di una somma](varianza-somma.html).
+
 ### Molte variabili indipendenti e identicamente distribuite {: #iid }
 
 La legge dei grandi numeri riguarda molte osservazioni ripetute: molti lanci dello stesso dado, molte estrazioni dalla stessa urna, molte misure dello stesso tempo di risposta. Per descriverle ci servono $n$ variabili aleatorie $X_1,X_2,\dots,X_n$, una per osservazione, con due proprietà.

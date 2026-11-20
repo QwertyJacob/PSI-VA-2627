@@ -10,7 +10,7 @@
 
 *Quanto vale qualcosa che non conosciamo ancora? Dai giochi interrotti al numero medio di collisioni in un programma.*
 
-[:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" }
+[:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" } [:material-comment-question-outline: Domande d'esame](../domande-esame/primo-round/settimana-04.md){ .md-button }
 
 ## Che cosa è richiesto all’esame {: #esame }
 
@@ -23,6 +23,8 @@
 **Facoltativi e non richiesti all’esame:** formalizzazione dei giochi equi (Lettura A); distribuzione Ipergeometrica, sua PMF, derivazione della media ed esercizio 5 (Lettura B); dettagli tecnici sulla scelta casuale delle funzioni hash. Restano richiesti il significato del valore atteso come prezzo di una possibilità, il modello uniforme e indipendente delle collisioni e il metodo delle indicatrici nelle applicazioni indicate sopra.
 
 **Varianza:** la trattazione è all’inizio della [Settimana 5](../settimana_05/index.md#varianza), dove sono precisate le parti richieste all’esame e quelle facoltative.
+
+Le otto domande del primo round dell'esame orale su questa settimana, ciascuna con la sua risposta attesa, sono raccolte nella sezione [Domande d'esame](../domande-esame/primo-round/settimana-04.md).
 
 Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
 

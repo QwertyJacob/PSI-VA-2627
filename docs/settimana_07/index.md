@@ -20,7 +20,7 @@
 
 *Come si descrivono due grandezze aleatorie che cambiano insieme? Che cosa vuol dire che una «va con» l’altra, e quanto forte è il legame? Da una tabella di studenti universitari alle altezze di genitori e figli raccolte da Francis Galton.*
 
-[:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" }
+[:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" } [:material-comment-question-outline: Domande d'esame](../domande-esame/primo-round/settimana-07.md){ .md-button }
 
 ## Il percorso e ciò che è richiesto all’esame {: #esame }
 
@@ -33,6 +33,8 @@ Una sola storia accompagna le due lezioni, quella di **Francis Galton**, un gent
 All’esame devi saper leggere una tabella congiunta di due variabili discrete, controllare che sia una distribuzione di probabilità e calcolare con essa la probabilità di un evento qualsiasi, sommando le caselle giuste. Devi saper ricavare le distribuzioni marginali sommando lungo le righe e lungo le colonne, e spiegare perché le marginali da sole non bastano a ricostruire la congiunta. Devi conoscere la definizione di variabili indipendenti, saperla verificare su una tabella e saper mostrare la dipendenza con un controesempio. Devi saper calcolare il valore atteso di una funzione di due variabili, in particolare di $X+Y$ e di $XY$, e sapere che per variabili indipendenti $\mathbb{E}[XY]=\mathbb{E}[X]\,\mathbb{E}[Y]$. Della covarianza devi conoscere la definizione, la formula di calcolo e la lettura geometrica con i quattro quadranti; del coefficiente di correlazione la definizione, il fatto che stia sempre tra $-1$ e $1$ e il significato dei valori estremi. Devi saper spiegare perché variabili indipendenti hanno covarianza nulla e perché il contrario non vale, con un esempio, e perché una correlazione non dimostra un rapporto di causa ed effetto.
 
 Sono invece **facoltative e non richieste all’esame** le due letture in fondo alla dispensa: la prima racconta la retta di Galton e la regressione verso la media, e contiene la dimostrazione del fatto che la correlazione sta tra $-1$ e $1$; la seconda mostra come si descrivono due variabili continue con una densità congiunta e gli integrali doppi. Sono facoltativi anche i riquadri intitolati «Approfondimento facoltativo», che contengono soprattutto dimostrazioni: le formule che dimostrano sono richieste, le dimostrazioni no. Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
+
+Le otto domande del primo round dell'esame orale su questa settimana, ciascuna con la sua risposta attesa, sono raccolte nella sezione [Domande d'esame](../domande-esame/primo-round/settimana-07.md).
 
 ## Da dove ripartiamo {: #prima-di-cominciare }
 

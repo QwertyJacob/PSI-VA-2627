@@ -17,6 +17,7 @@ Le pagine si aggiungeranno man mano nei prossimi giorni:
 - [Settimana 3 — L'estate del 1654: contare i futuri possibili](primo-round/settimana-03.md): otto domande.
 - [Settimana 4 — Huygens e il prezzo equo: il valore atteso e la linearità](primo-round/settimana-04.md): otto domande.
 - [Settimana 5 — Bortkiewicz e i calci di cavallo: distribuzione geometrica e distribuzione di Poisson](primo-round/settimana-05.md): otto domande.
+- [Settimana 6 — Bertrand, Gauss e l'asteroide Cerere: variabili aleatorie continue e distribuzione normale](primo-round/settimana-06.md): otto domande.
 
 ## Secondo round: domande tipo {: #secondo-round }
 

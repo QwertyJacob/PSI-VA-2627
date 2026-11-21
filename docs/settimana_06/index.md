@@ -17,7 +17,7 @@
 
 *Che cosa vuol dire scegliere un numero «a caso» quando i valori possibili sono infiniti e non si possono elencare? Da un autobus che passa dopo le due a un asteroide perduto dietro il Sole.*
 
-[:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" }
+[:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" } [:material-comment-question-outline: Domande d'esame](../domande-esame/primo-round/settimana-06.md){ .md-button }
 
 ## Il percorso e ciò che è richiesto all’esame {: #esame }
 
@@ -30,6 +30,8 @@ Due storie accompagnano il percorso. La prima è un paradosso che il matematico 
 All’esame devi saper spiegare perché, per una variabile continua, la probabilità di un singolo valore è zero e perché la probabilità di un intervallo è un’area sotto la densità; devi saper usare la densità e la funzione di ripartizione per calcolare la probabilità che una variabile cada sotto una soglia, sopra una soglia o tra due soglie. Della distribuzione uniforme devi conoscere densità, media e varianza, e saperla usare. Della distribuzione esponenziale devi saper ricavare la coda $P(T>t)=e^{-\lambda t}$ dalla distribuzione di Poisson, conoscere densità, funzione di ripartizione, media e varianza, e dimostrare la proprietà di assenza di memoria. Della distribuzione normale devi conoscere il significato dei parametri $\mu$ e $\sigma$, saper standardizzare una variabile, calcolare probabilità con la tabella di $\Phi$ e con la sua simmetria, usare la regola 68–95–99,7 e risolvere il problema inverso, cioè trovare la soglia che corrisponde a una probabilità assegnata.
 
 Sono invece **facoltative e non richieste all’esame** le due letture in fondo alla dispensa (il paradosso di Bertrand con i conti completi e l’argomento di Jaynes sulle invarianze). Sono facoltativi anche i riquadri intitolati «Approfondimento facoltativo», che contengono soprattutto le dimostrazioni di medie e varianze con gli integrali. Le formule delle medie e delle varianze sono richieste; le loro dimostrazioni con gli integrali no. Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
+
+Le otto domande del primo round dell'esame orale su questa settimana, ciascuna con la sua risposta attesa, sono raccolte nella sezione [Domande d'esame](../domande-esame/primo-round/settimana-06.md).
 
 Una parola sugli integrali, che compariranno in questa settimana. Il simbolo di integrale indicherà sempre un’area sotto una curva. Chi ha già seguito Analisi lo riconoscerà; chi non lo ha ancora fatto può leggerlo come il nome di quell’area. Nel percorso principale le aree da calcolare a mano sono rettangoli; tutte le altre si ottengono da una formula già pronta oppure si leggono in una tabella.
 

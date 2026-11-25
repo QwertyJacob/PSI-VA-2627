@@ -37,7 +37,7 @@
         </div>
       </div>
       <p class="rq-bridge fragment">Sappiamo dove va la media e quanto è dispersa. Oggi: la sua forma.</p>
-      <aside class="notes">Una domanda per click, risposte dalla classe e alla lavagna. (1) Somma delle varianze per indipendenti; Var(2X) = 4 Var X: un dado solo non compensa i suoi scarti. (2) μ e σ²/n, deviazione standard σ/√n: per dimezzare l'errore servono quattro volte più dati. (3) Čebyšëv su X̄ₙ: σ²/(nε²) → 0. (4) Diluizione, non compensazione. Controlla l'esercizio 7 della Settimana 8: 4 ms, 0,16, 320 richieste. Click 5: il ponte.</aside>
+      <aside class="notes">Una domanda per click, risposte dalla classe e alla lavagna. (1) Somma delle varianze per indipendenti; Var(2X) = 4 Var X: un dado solo non compensa i suoi scarti. (2) μ e σ²/n, deviazione standard σ/√n: per dimezzare l'errore servono quattro volte più dati. (3) Čebyšëv su X̄ₙ: σ²/(nε²) → 0. (4) Diluizione, non compensazione. Controlla l'esercizio 7 della Settimana 8: 4 ms e 0,16. Click 5: il ponte.</aside>
     </section>
 
     <!-- ───── De Moivre (Erlebnis, 10 minuti) ───── -->
@@ -54,7 +54,7 @@
         </ul>
         <div>
           <p class="dm-q fragment">«Questo è il problema più difficile che si possa proporre in materia di probabilità, e per questo l'ho riservato per ultimo.»<small>A. De Moivre, <i>The Doctrine of Chances</i>, 3ª ed., 1756, p. 242</small></p>
-          <p class="dm-ask fragment">Un evento al 50%, 3000 prove: è possibile che accada 2000 volte? Quanto è improbabile?</p>
+          <p class="dm-ask fragment">Un evento al 50%, 3000 prove: è possibile che accada 2000 volte? Quanto è improbabile uno scarto così grande?</p>
         </div>
       </div>
       <aside class="notes">Nuova (dispensa, Atto I). Una riga per click (non vanno ricordate le date): famiglia protestante; carcere e Londra nel 1688; mai un posto universitario, viveva di lezioni private, anche nei caffè di Londra (probabilmente lo Slaughter's); la frase di Newton. Click 5: la citazione. Click 6: la domanda. Collega a Bernoulli (Settimana 8): la frequenza si avvicina alla probabilità, ma quanto è probabile uno scarto di una certa grandezza? Il problema è sommare centinaia di termini binomiali con numeri di mille cifre.</aside>
@@ -67,8 +67,8 @@
         <svg class="scene-svg" width="820" height="470" viewBox="0 0 820 470" role="img" aria-label="Le probabilità del numero di teste in 3600 lanci, barre sottili tra 1700 e 1900 che formano una campana; la curva di De Moivre sovrapposta; bande verdi entro 30 e entro 60 teste da 1800"></svg>
         <div class="s09-side">
           <p class="dim dm-s1">3600 lanci: media <b>1800</b>, deviazione standard <b>½√3600 = 30</b></p>
-          <p class="dim dm-s2">Tra 1770 e 1830: <span class="k">0,682688</span>, «28 contro 13»</p>
-          <p class="dim dm-s3">Tra 1740 e 1860: <span class="k">0,95428</span>, «21 contro 1»</p>
+          <p class="dim dm-s2">Tra 1770 e 1830: <span class="k">0,682688</span></p>
+          <p class="dim dm-s3">Tra 1740 e 1860: <span class="k">0,95428</span></p>
           <p class="dim dm-s4">La radice quadrata è «il <b>modulo</b> con cui regolare la nostra stima» (p. 248).</p>
           <p class="dim dm-s5">3000 lanci, 2000 teste: <span class="m">18 deviazioni standard</span> sopra la media.</p>
         </div>
@@ -445,7 +445,7 @@
       <p class="badge">Sondaggio · la risposta arriva tra poco</p>
       <div class="sondaggio-grid">
         <div>
-          <p class="sondaggio-q">Varianza del tempo di esecuzione 4 s². Media entro 0,5 s dal vero con probabilità del 95%: Čebyšëv chiedeva <b>320</b> esecuzioni. Quante ne bastano se la media è quasi normale?</p>
+          <p class="sondaggio-q">Varianza del tempo di esecuzione 4 s². Media entro 0,5 s dal vero con probabilità del 95%: Čebyšëv, valido per ogni distribuzione, ne garantisce <b>320</b>. Quante ne bastano se la media è quasi normale?</p>
           <ol class="sondaggio-opts long">
             <li><span>1</span>circa 320: Čebyšëv è già il valore giusto</li>
             <li><span>2</span>circa 160</li>
@@ -456,7 +456,7 @@
         </div>
         <div class="sondaggio-join"></div>
       </div>
-      <aside class="notes">Il problema della Settimana 8 (pacco 13, p. 19). Votate d'istinto. NON premere V: si rivela al minuto 46, sul duplicato. Risposta 3.</aside>
+      <aside class="notes">Il problema del benchmark (pacco 13, p. 19); il 320 di Čebyšëv si ricava nella slide «Quante osservazioni servono». Votate d'istinto. NON premere V: si rivela al minuto 46, sul duplicato. Risposta 3.</aside>
     </section>
 
     <!-- ───── Usare il teorema (notebook 4.4; pacco 13, pp. 18–19) ───── -->
@@ -481,7 +481,7 @@
       <p class="badge">L'urna di Bernoulli, tre secoli dopo</p>
       <p class="s09-text">$p=0{,}6$, frazione entro $\pm0{,}02$, mille volte più probabile dentro che fuori: quante estrazioni?</p>
       <svg class="scene-svg" width="1180" height="330" viewBox="0 0 1180 330" role="img" aria-label="Tre barre orizzontali in scala logaritmica: il teorema del limite centrale 6500 estrazioni, Bernoulli 25 550, Čebyšëv 600 600"></svg>
-      <aside class="notes">(S) Nuova (dispensa, Atto V, binomiale-normale), promessa della Settimana 8. La frazione è circa N(0,6; 0,24/n); serve Φ(c) ≥ 1 − 1/2002, c = 3,29, n ≥ 3,29² · 0,24/0,02² ≈ 6500. Click: 1 Bernoulli 1713, 25 550; 2 Čebyšëv, 600 600; 3 il teorema, circa 6500 (confermato dal conto binomiale esatto). Asse logaritmico. Se salti: «il teorema dice che ne bastano circa 6500».</aside>
+      <aside class="notes">(S) Nuova (dispensa, Atto V, binomiale-normale), promessa della Settimana 8. La frazione è circa N(0,6; 0,24/n); serve Φ(c) ≥ 1 − 1/2002, c = 3,29, n ≥ 3,29² · 0,24/0,02² ≈ 6500. Click: 1 Bernoulli 1713, 25 550; 2 Čebyšëv, 600 600 (si ricava più avanti, con il benchmark: 0,24 · 1001/0,02²); 3 il teorema, circa 6500 (confermato dal conto binomiale esatto). Asse logaritmico. Se salti: «il teorema dice che ne bastano circa 6500».</aside>
     </section>
 
     <!-- L2-07 · Esercizio D -->
@@ -531,13 +531,14 @@
     <section id="formula-n">
       <p class="badge">Quante osservazioni servono</p>
       <div class="s09-box s09-mid">$$n\ \ge\ \left(\frac{z\,\sigma}{\varepsilon}\right)^2\qquad z=1{,}96\ \text{per il }95\%,\quad z=2{,}576\ \text{per il }99\%$$</div>
+      <p class="s09-text fragment">Čebyšëv: $\;\dfrac{\sigma^2}{n\varepsilon^2}\le\delta\iff n\ge\dfrac{\sigma^2}{\delta\,\varepsilon^2}=\dfrac{4}{0{,}05\cdot0{,}25}=320$</p>
       <table class="s09-table fragment" style="margin-top:14px">
         <thead><tr><th></th><th>Čebyšëv</th><th>teorema del limite centrale</th></tr></thead>
         <tbody><tr><th>esecuzioni</th><td>320</td><td class="mg">62</td></tr></tbody>
       </table>
       <p class="s09-note fragment">Čebyšëv deve valere per ogni distribuzione; la media di molte esecuzioni è quasi normale. Conoscere la forma vale un fattore 5.</p>
       <p class="s09-text fragment">Qui $t$ è fissato e $\sigma$ noto. Dai dati al parametro: Settimana 10.</p>
-      <aside class="notes">Nuova (dispensa, Atto V). Click 1: il confronto (Settimana 8: 320); 2 il perché: Čebyšëv deve ammettere ±4,47 deviazioni standard, la normale fuori da ±1,96 lascia il 5%; il prezzo è l'approssimazione, che regge se le code non sono troppo pesanti (laboratorio 2); 3 il rovesciamento della domanda, l'intervallo di confidenza, è il tema della Settimana 10.</aside>
+      <aside class="notes">Nuova (dispensa, Atto V). Click 1: Čebyšëv letto al contrario, alla lavagna: il tetto σ²/(nε²) non deve superare δ = 0,05; moltiplicando per n/δ, positivo, il verso resta: n ≥ σ²/(δε²) = 320 (n grande abbassa il tetto); 2 il confronto con 62; 3 il perché: Čebyšëv deve ammettere ±4,47 deviazioni standard, la normale fuori da ±1,96 lascia il 5%; il prezzo è l'approssimazione, che regge se le code non sono troppo pesanti (laboratorio 2); 4 il rovesciamento della domanda, l'intervallo di confidenza, è il tema della Settimana 10.</aside>
     </section>
 
     <!-- L2-10 · sondaggio s09-2 (rivelazione) -->
@@ -545,7 +546,7 @@
       <p class="badge">Sondaggio · rivelazione (V)</p>
       <div class="sondaggio-grid">
         <div>
-          <p class="sondaggio-q">Varianza 4 s², media entro 0,5 s con probabilità del 95%: Čebyšëv chiedeva <b>320</b> esecuzioni. Quante ne bastano se la media è quasi normale?</p>
+          <p class="sondaggio-q">Varianza 4 s², media entro 0,5 s con probabilità del 95%: Čebyšëv, valido per ogni distribuzione, ne garantisce <b>320</b>. Quante ne bastano se la media è quasi normale?</p>
           <ol class="sondaggio-opts long">
             <li><span>1</span>circa 320: Čebyšëv è già il valore giusto</li>
             <li><span>2</span>circa 160</li>

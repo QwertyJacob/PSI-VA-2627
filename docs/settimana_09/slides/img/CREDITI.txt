@@ -1,0 +1,2 @@
+esercizi_time.jpg: immagine del docente, copia di settimana_08/slides/img (a sua volta dalle settimane 6 e 7).
+Nessun ritratto: De Moivre, Laplace e Cauchy sono rappresentati da scene SVG (la campana dei 3600 lanci, le due strade, le due campane).

@@ -763,13 +763,13 @@ Lo script stampa le tre coppie di numeri della somma di uniformi, 0,2222 e 0,207
 
 Abbiamo così il teorema e il modo di usarlo. Nella seconda lezione vediamo come Laplace lo rese generale, che cosa permette di fare con le distribuzioni che già conosciamo, e soprattutto quali sono i suoi limiti.
 
-## Atto IV — Laplace: la campana guadagnata due volte {: #laplace }
+## Atto IV — Laplace: due strade verso la campana {: #laplace }
 
 La curva di De Moivre riguardava un caso solo: i lanci di una moneta, cioè somme di variabili che valgono 0 o 1. Per quasi ottant’anni nessuno andò molto più in là. Il passo decisivo lo fece **Pierre-Simon Laplace** (1749–1827), che abbiamo incontrato nella Settimana 1 con il principio di indifferenza e nella Settimana 2 con la probabilità delle cause. Nel 1810 Laplace lesse all’Institut de France una memoria dal titolo lungo e preciso: *Mémoire sur les approximations des formules qui sont fonctions de très grands nombres, et sur leur application aux probabilités*, «Memoria sulle approssimazioni delle formule che sono funzioni di numeri molto grandi, e sulla loro applicazione alle probabilità», stampata nel volume dell’Institut dell’anno 1809. Lì Laplace dimostrò, con gli strumenti di analisi che aveva sviluppato per decenni, che la somma di molti errori indipendenti ha approssimativamente la distribuzione della campana **qualunque sia la legge dei singoli errori**. Era, nella sostanza, il teorema di questa settimana.
 
-Il momento non era casuale. Un anno prima, nel 1809, Gauss aveva pubblicato la *Theoria motus*, il libro con cui aveva ritrovato Cerere, e lì aveva ricavato la stessa campana per un’altra strada, come abbiamo visto nella [Settimana 6](../settimana_06/index.md#cerere). Gauss era partito da un’ipotesi: che la media aritmetica di più osservazioni sia sempre il valore più probabile. Da questa ipotesi aveva dedotto che la legge degli errori deve essere la campana. Era un ragionamento elegante, ma un po’ circolare: per giustificare la media, assumeva che la media fosse la scelta giusta. Il teorema di Laplace forniva una ragione indipendente. L’errore di una misura nasce dalla somma di molte piccole cause indipendenti, e allora ha la forma della campana qualunque sia la forma delle singole cause; e anche la media di molte osservazioni, che è una somma divisa per $n$, ha quella forma. In un supplemento alla stessa memoria Laplace collegò il suo risultato al metodo dei minimi quadrati di Gauss, e due anni dopo raccolse tutto nella sua *Théorie analytique des probabilités* (1812).
+Il momento non era casuale. Un anno prima, nel 1809, Gauss aveva pubblicato la *Theoria motus*, il libro con cui aveva ritrovato Cerere, e lì aveva ricavato la stessa campana per un’altra strada, come abbiamo visto nella [Settimana 6](../settimana_06/index.md#cerere). Gauss era partito da un’abitudine degli astronomi. Quando misuravano più volte la stessa grandezza, per esempio la posizione di una stella, ottenevano numeri un po’ diversi, perché ogni misura contiene un piccolo errore, e come stima del valore vero prendevano la media aritmetica delle misure. Gauss trasformò questa abitudine in un’ipotesi: la stima più attendibile del valore vero, il «valore più probabile» nelle sue parole, è sempre la media delle osservazioni, qualunque siano i numeri che le misure hanno dato. Poi si chiese come devono essere distribuiti gli errori perché questa ipotesi sia vera, e trovò una sola risposta: la campana. Era un ragionamento elegante, ma un po’ circolare. Gauss usava poi la campana per giustificare la media e il metodo dei minimi quadrati, ma per ricavare la campana aveva già supposto che la media fosse la scelta giusta: la conclusione era nascosta nella premessa. Il teorema di Laplace forniva una ragione indipendente, che non parte dalla media. L’errore di una misura nasce dalla somma di molte piccole cause indipendenti, e allora ha la forma della campana qualunque sia la forma delle singole cause; e anche la media di molte osservazioni, che è una somma divisa per $n$, ha quella forma. In un supplemento alla stessa memoria Laplace collegò il suo risultato al metodo dei minimi quadrati di Gauss, e due anni dopo raccolse tutto nella sua *Théorie analytique des probabilités* (1812).
 
-Per tutto l’Ottocento la distribuzione normale fu dunque «guadagnata due volte», per due strade diverse: la strada degli errori di Gauss e la strada delle somme di De Moivre e Laplace. Il teorema del limite centrale mostra che sono la stessa strada, perché un errore di misura è una somma. Il nome del teorema arrivò molto più tardi. Nel 1920 il matematico ungherese George Pólya intitolò un articolo *Über den zentralen Grenzwertsatz der Wahrscheinlichkeitsrechnung und das Momentenproblem*, «Sul teorema limite centrale del calcolo delle probabilità e il problema dei momenti»: centrale perché ha un ruolo centrale in tutta la teoria. L’aggettivo si riferisce al teorema, non al limite. Le dimostrazioni rigorose, con le ipotesi precise, arrivarono tra il 1901, con Aleksandr Ljapunov, allievo di Čebyšëv, e il 1922, con il finlandese Jarl Lindeberg: ne abbiamo parlato in un approfondimento facoltativo della [Settimana 6](../settimana_06/index.md#lab-normale).
+Per tutto l’Ottocento alla distribuzione normale si arrivava dunque per due strade diverse: la strada degli errori di Gauss e la strada delle somme di De Moivre e Laplace. Il teorema del limite centrale mostra che sono la stessa strada, perché un errore di misura è una somma. Il nome del teorema arrivò molto più tardi. Nel 1920 il matematico ungherese George Pólya intitolò un articolo *Über den zentralen Grenzwertsatz der Wahrscheinlichkeitsrechnung und das Momentenproblem*, «Sul teorema limite centrale del calcolo delle probabilità e il problema dei momenti». Pólya lo chiamò *centrale* perché ha, effettivamente, un ruolo centrale in tutta la teoria della probabilità: nel titolo tedesco l’aggettivo accompagna il teorema, non il limite. Il nome italiano più diffuso, «teorema del limite centrale», sembra invece attaccarlo al limite; per questo alcuni libri scrivono «teorema centrale del limite», che rispetta l’intenzione di Pólya. In queste pagine usiamo il nome più diffuso. Le dimostrazioni rigorose, con le ipotesi precise, arrivarono tra il 1901, con Aleksandr Ljapunov, allievo di Čebyšëv, e il 1922, con il finlandese Jarl Lindeberg: ne abbiamo parlato in un approfondimento facoltativo della [Settimana 6](../settimana_06/index.md#lab-normale).
 
 Lasciamo l’ultima parola della storia a Francis Galton, il protagonista della Settimana 7, con una pagina del libro in cui descrive la sua tavola dei chiodi. Galton non parla di teorema del limite centrale, un nome che non esisteva ancora: parla della «legge di frequenza dell’errore», cioè della curva normale, e dell’effetto che gli faceva vederla comparire dal disordine.
 
@@ -794,13 +794,69 @@ $$
 
 L’approssimazione funziona bene quando la distribuzione binomiale è abbastanza simmetrica, cioè quando $p$ non è troppo vicino a 0 o a 1 e il numero atteso di successi $np$, e quello di insuccessi $n(1-p)$, sono entrambi grandi. Quando invece $p$ è piccolo e $np$ resta piccolo, come per gli eventi rari della [Settimana 5](../settimana_05/index.md#approssimazione-binomiale), la distribuzione binomiale è storta e somiglia molto di più a una distribuzione di Poisson che a una campana. Torneremo su questo punto nell’Atto VI.
 
-Possiamo ora mantenere una promessa della Settimana 8, sull’urna di Jacob Bernoulli. L’urna contiene sassolini bianchi con proporzione $p=3/5=0{,}6$, e Bernoulli voleva sapere quante estrazioni con reinserimento servono perché la frazione di bianchi $f_n$ cada entro $0{,}02$ da $0{,}6$ con probabilità mille volte più grande di quella di cadere fuori, cioè con probabilità almeno $1000/1001$. La frazione $f_n$ è una media di indicatrici, quindi per il teorema $f_n\approx\mathcal N\big(0{,}6,\;0{,}24/n\big)$, con deviazione standard $\sqrt{0{,}24/n}$. Standardizzando, l’evento $|f_n-0{,}6|<0{,}02$ diventa $|Z|<0{,}02/\sqrt{0{,}24/n}$, e la sua probabilità è $2\Phi(c)-1$, dove $c$ è quel rapporto. Imponiamo $2\Phi(c)-1\ge1000/1001$, cioè $\Phi(c)\ge1-1/2002\approx0{,}9995$. Leggendo la tabella al contrario, come nel problema inverso della Settimana 6, troviamo $c\ge3{,}29$, e quindi
+Possiamo ora mantenere una promessa della Settimana 8, sull’urna di Jacob Bernoulli. Ricordiamo la domanda. L’urna contiene 3000 sassolini bianchi e 2000 neri, quindi la proporzione di bianchi è $p=3/5=0{,}6$. Estraiamo $n$ sassolini, rimettendo ogni volta nell’urna quello estratto, e chiamiamo $f_n$ la frazione di bianchi tra i sassolini estratti. Bernoulli voleva sapere quante estrazioni servono perché $f_n$ cada entro $0{,}02$ da $0{,}6$, cioè tra $0{,}58$ e $0{,}62$, con una probabilità mille volte più grande di quella di cadere fuori.
+
+Per prima cosa traduciamo «mille volte più grande» in un numero. Se la probabilità di cadere fuori vale $q$, quella di cadere dentro vale $1000q$. Le due probabilità insieme fanno 1, quindi $1000q+q=1$, cioè $q=1/1001$, e la probabilità di cadere dentro vale $1000/1001$. La richiesta di Bernoulli diventa allora
 
 $$
-\frac{0{,}02}{\sqrt{0{,}24/n}}\ge3{,}29\quad\Longleftrightarrow\quad n\ge\frac{3{,}29^2\cdot0{,}24}{0{,}02^2}\approx6500.
+P\big(-0{,}02<f_n-0{,}6<0{,}02\big)\ge\frac{1000}{1001}.
 $$
 
-Tre numeri raccontano tre secoli di storia della stessa domanda: Bernoulli, con il suo ragionamento faticoso, arrivò a 25 550 estrazioni; la disuguaglianza di Čebyšëv, che vale per qualunque distribuzione, ne chiede 600 600, come vedremo tra poco; il teorema del limite centrale, che usa la forma quasi normale della frazione, dice che ne bastano circa 6500. Il calcolo esatto con la distribuzione binomiale conferma questo valore.
+Il numero $1000/1001$ è molto vicino a 1: è la «certezza morale» di cui parlava Bernoulli.
+
+Ora cerchiamo la distribuzione di $f_n$. A ogni estrazione associamo un’indicatrice, che vale 1 se il sassolino è bianco e 0 se è nero. È una variabile bernoulliana di parametro $0{,}6$, quindi ha media $0{,}6$ e varianza $p(1-p)=0{,}6\cdot0{,}4=0{,}24$. La frazione $f_n$ è la media di queste $n$ indicatrici, e per le regole della Settimana 8 ha la stessa media, $0{,}6$, e varianza $0{,}24/n$, cioè deviazione standard $\sqrt{0{,}24/n}$. Per il teorema del limite centrale, quando $n$ è grande la frazione è approssimativamente normale:
+
+$$
+f_n\;\approx\;\mathcal N\big(0{,}6,\;0{,}24/n\big).
+$$
+
+Il passo successivo è standardizzare. Dividiamo i tre membri della doppia disuguaglianza per la deviazione standard $\sqrt{0{,}24/n}$, che è un numero positivo e quindi non cambia i versi:
+
+$$
+-\frac{0{,}02}{\sqrt{0{,}24/n}}<\frac{f_n-0{,}6}{\sqrt{0{,}24/n}}<\frac{0{,}02}{\sqrt{0{,}24/n}}.
+$$
+
+Al centro c’è la frazione standardizzata, che chiamiamo $Z$: per il teorema è approssimativamente normale standard. Ai lati ci sono un numero e il suo opposto. Chiamiamo $c$ il numero di destra. Poiché $\sqrt{0{,}24/n}=\sqrt{0{,}24}/\sqrt n$, dividere per questa quantità equivale a moltiplicare per $\sqrt n/\sqrt{0{,}24}$, e quindi
+
+$$
+c=\frac{0{,}02\,\sqrt n}{\sqrt{0{,}24}}.
+$$
+
+Il numero $c$ dice quante deviazioni standard della frazione stanno nel margine di $0{,}02$. Notiamo che $c$ cresce con $n$: più estrazioni facciamo, più la deviazione standard si stringe, e più deviazioni standard entrano nello stesso margine.
+
+Ci serve ora la probabilità che $Z$ cada nell’intervallo simmetrico $(-c,\,c)$. Per la normale standard vale $P(-c<Z<c)=\Phi(c)-\Phi(-c)$. Per la simmetria della campana, come abbiamo visto con le lampadine, $\Phi(-c)=1-\Phi(c)$, e quindi
+
+$$
+P(-c<Z<c)=\Phi(c)-\big(1-\Phi(c)\big)=2\Phi(c)-1.
+$$
+
+Possiamo finalmente scrivere la richiesta di Bernoulli come una condizione su $\Phi(c)$:
+
+$$
+2\Phi(c)-1\ge\frac{1000}{1001}.
+$$
+
+Per isolare $\Phi(c)$ sommiamo 1 a entrambi i membri e poi dividiamo per 2:
+
+$$
+\Phi(c)\ge\frac12\left(1+\frac{1000}{1001}\right)=\frac{2001}{2002}=1-\frac1{2002}\approx0{,}9995.
+$$
+
+Lo stesso numero si trova anche ragionando sulle code. Le due code fuori dall’intervallo valgono insieme $1/1001$, e per la simmetria ciascuna vale la metà, cioè $1/2002$. A sinistra di $c$ resta quindi tutto il resto, $1-1/2002$.
+
+Ora leggiamo la tabella al contrario, come nel [problema inverso della Settimana 6](../settimana_06/index.md#quantili): il valore $z$ con $\Phi(z)=0{,}9995$ è $z\approx3{,}29$. Poiché $\Phi$ cresce, la condizione $\Phi(c)\ge0{,}9995$ equivale a $c\ge3{,}29$. In parole, il margine di $0{,}02$ deve contenere almeno 3,29 deviazioni standard della frazione. Resta da ricavare $n$. Moltiplichiamo entrambi i membri per $\sqrt{0{,}24}/0{,}02$, che è positivo, e poi eleviamo al quadrato:
+
+$$
+\frac{0{,}02\,\sqrt n}{\sqrt{0{,}24}}\ge3{,}29
+\quad\Longleftrightarrow\quad
+\sqrt n\ge\frac{3{,}29\cdot\sqrt{0{,}24}}{0{,}02}
+\quad\Longleftrightarrow\quad
+n\ge\frac{3{,}29^2\cdot0{,}24}{0{,}02^2}\approx\frac{2{,}598}{0{,}0004}\approx6495.
+$$
+
+Il valore 3,29 è arrotondato, e il teorema del limite centrale dà un’approssimazione, quindi diciamo che servono **circa 6500 estrazioni**. Possiamo controllare che il risultato sia ragionevole: con 6500 estrazioni la deviazione standard della frazione è $\sqrt{0{,}24/6500}\approx0{,}0061$, e il margine $0{,}02$ è proprio circa 3,3 volte questo valore.
+
+Mettiamo ora accanto tre numeri che rispondono alla stessa domanda, a distanza di tre secoli. Bernoulli, nel 1713, con il suo ragionamento lungo e faticoso, arrivò a 25 550 estrazioni. La disuguaglianza di Čebyšëv, che vale per qualunque distribuzione, ne chiede 600 600, come vedremo alla fine della prossima sezione. Il teorema del limite centrale, che sfrutta la forma quasi normale della frazione, dice che ne bastano circa 6500: circa quattro volte meno di Bernoulli e più di novanta volte meno di Čebyšëv. Ma 6500 viene da un’approssimazione, ed è giusto chiedersi se ci si possa fidare. Possiamo controllarlo, perché il numero di bianchi estratti ha distribuzione binomiale di parametri $n$ e $0{,}6$, e con il computer si calcola esattamente la probabilità che la frazione cada tra $0{,}58$ e $0{,}62$. Il calcolo esatto conferma che servono circa 6500 estrazioni.
 
 ### Quante esecuzioni servono {: #quante-esecuzioni }
 
@@ -812,7 +868,7 @@ $$
 P\!\left(-\frac{0{,}5\sqrt n}{2}<\frac{\bar X_n-t}{2/\sqrt n}<\frac{0{,}5\sqrt n}{2}\right)=0{,}95.
 $$
 
-La variabile al centro è la media standardizzata, che per il teorema è approssimativamente normale standard. Chiamiamo $c=0{,}25\sqrt n$ l’estremo destro. La probabilità di un intervallo simmetrico $(-c,\,c)$ per la normale standard è $\Phi(c)-\Phi(-c)=2\Phi(c)-1$, quindi
+La variabile al centro è la media standardizzata, che per il teorema è approssimativamente normale standard. Chiamiamo $c=0{,}25\sqrt n$ l’estremo destro. Come per l’urna di Bernoulli, la probabilità di un intervallo simmetrico $(-c,\,c)$ per la normale standard è $\Phi(c)-\Phi(-c)=2\Phi(c)-1$, quindi
 
 $$
 2\Phi(0{,}25\sqrt n)-1=0{,}95\quad\Longleftrightarrow\quad\Phi(0{,}25\sqrt n)=0{,}975.
@@ -828,13 +884,79 @@ $$
 
 Per una probabilità del 95% si usa $z=1{,}96$; per il 99% si usa $z=2{,}576$.
 
-Confrontiamo questo risultato con quello che garantisce la disuguaglianza di Čebyšëv, che vale per qualunque distribuzione. Nella Settimana 8 l’abbiamo applicata alla media campionaria per dimostrare la [legge dei grandi numeri](../settimana_08/index.md#lgn-dimostrazione), e abbiamo trovato un tetto per la probabilità che la media sbagli di almeno $\varepsilon$:
+Confrontiamo questo risultato con quello che garantisce la disuguaglianza di Čebyšëv, che vale per qualunque distribuzione. Prima, però, conviene dare un nome ai due eventi in gioco, perché parleremo di entrambi. Diciamo che la media **cade vicino** a $t$ quando dista da $t$ meno di $\varepsilon$, e che la media **sbaglia** quando dista da $t$ almeno $\varepsilon$. Uno dei due eventi accade sempre, e non possono accadere insieme, quindi le loro probabilità sommano a 1. Il nostro problema chiede che la media cada vicino a $t$ con probabilità almeno del 95%, e questo equivale a chiedere che la probabilità di sbagliare sia al più $1-0{,}95=0{,}05$. Come nella formula generale, chiamiamo $\delta$ questo valore massimo della probabilità di sbagliare: nel nostro problema $\delta=0{,}05$.
+
+Nella Settimana 8 abbiamo applicato la disuguaglianza di Čebyšëv alla media campionaria per dimostrare la [legge dei grandi numeri](../settimana_08/index.md#lgn-dimostrazione), e abbiamo trovato un tetto per la probabilità di sbagliare:
 
 $$
 P\big(|\bar X_n-t|\ge\varepsilon\big)\le\frac{\sigma^2}{n\,\varepsilon^2}.
 $$
 
-Ora la leggiamo al contrario. Vogliamo che la probabilità di sbagliare sia al più $\delta$; nel nostro problema $\delta=0{,}05$, perché la media deve cadere vicino a $t$ con probabilità del 95%. La probabilità esatta non la conosciamo, ma sappiamo che sta sotto il tetto $\sigma^2/(n\varepsilon^2)$. Se il tetto non supera $\delta$, allora nemmeno la probabilità, che sta sotto il tetto, può superarlo. Basta quindi imporre
+Nella Settimana 8 la leggevamo nel verso diretto: fissato $n$, il tetto diceva quanto può essere grande, al massimo, la probabilità di sbagliare. Ora la leggiamo al contrario: cerchiamo un $n$ per cui la probabilità di sbagliare non superi $\delta$. Questa probabilità non sappiamo calcolarla esattamente, perché non conosciamo la distribuzione dei tempi. Sappiamo però che sta sotto il tetto. L’idea è allora di scegliere $n$ in modo che il tetto stia sotto $\delta$. Così i tre numeri si mettono in fila, dal più piccolo al più grande:
+
+$$
+\underbrace{P\big(|\bar X_n-t|\ge\varepsilon\big)}_{\text{probabilità di sbagliare}}
+\;\le\;
+\underbrace{\frac{\sigma^2}{n\,\varepsilon^2}}_{\text{tetto}}
+\;\le\;
+\underbrace{\;\delta\;}_{\text{massimo accettato}}
+$$
+
+Leggiamo la catena un pezzo alla volta. La prima disuguaglianza è quella di Čebyšëv: vale sempre, qualunque sia $n$, e dice che la probabilità di sbagliare sta sotto il tetto. La seconda, invece, non vale per ogni $n$: siamo noi a doverla ottenere, scegliendo $n$ abbastanza grande. Quando valgono tutte e due, la probabilità di sbagliare sta sotto il tetto e il tetto sta sotto $\delta$, quindi anche la probabilità di sbagliare sta sotto $\delta$. È proprio quello che volevamo, e lo otteniamo senza aver mai calcolato la probabilità di sbagliare.
+
+La figura mostra la stessa idea con i numeri del nostro problema, $\sigma^2=4$ ed $\varepsilon=0{,}5$, per i quali il tetto vale $4/(0{,}25\,n)=16/n$. Il tetto scende quando $n$ cresce. Finché sta sopra la linea di $\delta$, come per $n=200$, la probabilità di sbagliare potrebbe trovarsi tra $\delta$ e il tetto, e Čebyšëv non basta a garantire che stia sotto $\delta$. Quando il tetto scende sotto la linea, come per $n=480$, non resta più spazio: tutto ciò che sta sotto il tetto sta anche sotto $\delta$.
+
+<figure markdown="0">
+<svg viewBox="0 0 580 290" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="Il tetto di Čebyšëv, 16 diviso n, disegnato come una curva blu che scende al crescere del numero di esecuzioni n, e una linea arancione orizzontale alla quota delta uguale a 0,05. La curva scende sotto la linea a n uguale a 320. Con n uguale a 200 il tetto è sopra delta, e la parte della colonna sopra la linea è rossa: la probabilità di sbagliare potrebbe superare delta. Con n uguale a 480 il tetto è sotto delta, e tutta la colonna sta sotto la linea.">
+<text x="290.0" y="18.0" text-anchor="middle" fill="currentColor" font-weight="bold">Il tetto di Čebyšëv scende sotto δ</text>
+<polygon points="60.0,240.0 60.0,40.0 167.8,40.0 167.8,40.0 171.0,45.8 174.2,51.3 177.5,56.5 180.7,61.4 183.9,66.1 187.2,70.5 190.4,74.7 193.6,78.7 196.9,82.5 200.1,86.2 203.3,89.6 206.6,92.9 209.8,96.1 213.0,99.2 216.3,102.1 219.5,104.9 222.7,107.5 226.0,110.1 229.2,112.6 232.4,115.0 235.7,117.3 238.9,119.5 242.1,121.7 245.4,123.7 248.6,125.7 251.8,127.6 255.1,129.5 258.3,131.3 261.5,133.0 264.8,134.7 268.0,136.4 271.2,138.0 274.5,139.5 277.7,141.0 280.9,142.4 284.2,143.8 287.4,145.2 290.6,146.5 293.9,147.8 297.1,149.1 300.3,150.3 303.6,151.5 306.8,152.7 310.0,153.8 313.3,154.9 316.5,156.0 319.7,157.0 323.0,158.0 326.2,159.0 329.4,160.0 332.7,160.9 335.9,161.9 339.1,162.8 342.4,163.7 345.6,164.5 348.8,165.4 352.1,166.2 355.3,167.0 358.5,167.8 361.8,168.6 365.0,169.3 368.2,170.1 371.5,170.8 374.7,171.5 377.9,172.2 381.2,172.9 384.4,173.6 387.6,174.2 390.9,174.9 394.1,175.5 397.3,176.1 400.6,176.7 403.8,177.3 407.0,177.9 410.3,178.5 413.5,179.0 416.7,179.6 420.0,180.1 423.2,180.7 426.4,181.2 429.7,181.7 432.9,182.2 436.1,182.7 439.4,183.2 442.6,183.7 445.8,184.1 449.1,184.6 452.3,185.1 455.5,185.5 458.8,185.9 462.0,186.4 465.2,186.8 468.5,187.2 471.7,187.6 474.9,188.1 478.2,188.5 481.4,188.8 484.6,189.2 487.9,189.6 491.1,190.0 494.3,190.4 497.6,190.7 500.8,191.1 504.0,191.5 507.3,191.8 510.5,192.2 513.7,192.5 517.0,192.8 520.2,193.2 523.4,193.5 526.7,193.8 529.9,194.1 533.1,194.4 536.4,194.8 539.6,195.1 542.8,195.4 545.0,195.6 545.0,240.0" fill="#4051b5" opacity="0.10"/>
+<polyline points="167.8,40.0 167.8,40.0 171.0,45.8 174.2,51.3 177.5,56.5 180.7,61.4 183.9,66.1 187.2,70.5 190.4,74.7 193.6,78.7 196.9,82.5 200.1,86.2 203.3,89.6 206.6,92.9 209.8,96.1 213.0,99.2 216.3,102.1 219.5,104.9 222.7,107.5 226.0,110.1 229.2,112.6 232.4,115.0 235.7,117.3 238.9,119.5 242.1,121.7 245.4,123.7 248.6,125.7 251.8,127.6 255.1,129.5 258.3,131.3 261.5,133.0 264.8,134.7 268.0,136.4 271.2,138.0 274.5,139.5 277.7,141.0 280.9,142.4 284.2,143.8 287.4,145.2 290.6,146.5 293.9,147.8 297.1,149.1 300.3,150.3 303.6,151.5 306.8,152.7 310.0,153.8 313.3,154.9 316.5,156.0 319.7,157.0 323.0,158.0 326.2,159.0 329.4,160.0 332.7,160.9 335.9,161.9 339.1,162.8 342.4,163.7 345.6,164.5 348.8,165.4 352.1,166.2 355.3,167.0 358.5,167.8 361.8,168.6 365.0,169.3 368.2,170.1 371.5,170.8 374.7,171.5 377.9,172.2 381.2,172.9 384.4,173.6 387.6,174.2 390.9,174.9 394.1,175.5 397.3,176.1 400.6,176.7 403.8,177.3 407.0,177.9 410.3,178.5 413.5,179.0 416.7,179.6 420.0,180.1 423.2,180.7 426.4,181.2 429.7,181.7 432.9,182.2 436.1,182.7 439.4,183.2 442.6,183.7 445.8,184.1 449.1,184.6 452.3,185.1 455.5,185.5 458.8,185.9 462.0,186.4 465.2,186.8 468.5,187.2 471.7,187.6 474.9,188.1 478.2,188.5 481.4,188.8 484.6,189.2 487.9,189.6 491.1,190.0 494.3,190.4 497.6,190.7 500.8,191.1 504.0,191.5 507.3,191.8 510.5,192.2 513.7,192.5 517.0,192.8 520.2,193.2 523.4,193.5 526.7,193.8 529.9,194.1 533.1,194.4 536.4,194.8 539.6,195.1 542.8,195.4 545.0,195.6" fill="none" stroke="#4051b5" stroke-width="2.2"/>
+<rect x="214.7" y="156.7" width="14" height="83.3" fill="#4051b5" opacity="0.35"/>
+<rect x="214.7" y="106.7" width="14" height="50.0" fill="#e03a3a" opacity="0.45"/>
+<circle cx="221.7" cy="106.7" r="3.5" fill="#4051b5"/>
+<rect x="441.0" y="184.4" width="14" height="55.6" fill="#4051b5" opacity="0.35"/>
+<circle cx="448.0" cy="184.4" r="3.5" fill="#4051b5"/>
+<line x1="60.0" y1="156.7" x2="545.0" y2="156.7" stroke="#e07a1f" stroke-width="2" stroke-dasharray="6,4"/>
+<text x="545.0" y="172.7" text-anchor="end" fill="#e07a1f" font-weight="bold">δ = 0,05</text>
+<line x1="318.7" y1="156.7" x2="318.7" y2="240.0" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3" opacity="0.7"/>
+<circle cx="318.7" cy="156.7" r="4" fill="#e07a1f"/>
+<line x1="60.0" y1="240.0" x2="545.0" y2="240.0" stroke="currentColor" stroke-width="1"/>
+<line x1="60.0" y1="240.0" x2="60.0" y2="40.0" stroke="currentColor" stroke-width="1"/>
+<line x1="60.0" y1="240.0" x2="60.0" y2="245.0" stroke="currentColor" stroke-width="1"/>
+<text x="60.0" y="258.0" text-anchor="middle" fill="currentColor">0</text>
+<line x1="140.8" y1="240.0" x2="140.8" y2="245.0" stroke="currentColor" stroke-width="1"/>
+<text x="140.8" y="258.0" text-anchor="middle" fill="currentColor">100</text>
+<line x1="221.7" y1="240.0" x2="221.7" y2="245.0" stroke="currentColor" stroke-width="1"/>
+<text x="221.7" y="258.0" text-anchor="middle" fill="currentColor">200</text>
+<line x1="302.5" y1="240.0" x2="302.5" y2="245.0" stroke="currentColor" stroke-width="1"/>
+<line x1="383.3" y1="240.0" x2="383.3" y2="245.0" stroke="currentColor" stroke-width="1"/>
+<text x="383.3" y="258.0" text-anchor="middle" fill="currentColor">400</text>
+<line x1="464.2" y1="240.0" x2="464.2" y2="245.0" stroke="currentColor" stroke-width="1"/>
+<text x="464.2" y="258.0" text-anchor="middle" fill="currentColor">500</text>
+<line x1="545.0" y1="240.0" x2="545.0" y2="245.0" stroke="currentColor" stroke-width="1"/>
+<text x="545.0" y="258.0" text-anchor="middle" fill="currentColor">600</text>
+<line x1="318.7" y1="240.0" x2="318.7" y2="245.0" stroke="currentColor" stroke-width="1"/>
+<text x="318.7" y="258.0" text-anchor="middle" fill="currentColor" font-weight="bold">320</text>
+<line x1="55.0" y1="240.0" x2="60.0" y2="240.0" stroke="currentColor" stroke-width="1"/>
+<text x="52.0" y="244.0" text-anchor="end" fill="currentColor">0</text>
+<line x1="55.0" y1="156.7" x2="60.0" y2="156.7" stroke="currentColor" stroke-width="1"/>
+<text x="52.0" y="160.7" text-anchor="end" fill="currentColor">0,05</text>
+<line x1="55.0" y1="73.3" x2="60.0" y2="73.3" stroke="currentColor" stroke-width="1"/>
+<text x="52.0" y="77.3" text-anchor="end" fill="currentColor">0,10</text>
+<text x="290.0" y="282.0" text-anchor="middle" fill="currentColor">numero di esecuzioni n</text>
+<text x="168.0" y="78.0" text-anchor="end" fill="#4051b5" font-weight="bold">tetto di</text>
+<text x="168.0" y="93.0" text-anchor="end" fill="#4051b5" font-weight="bold">Čebyšëv: 16/n</text>
+<text x="60.0" y="33.0" text-anchor="middle" fill="currentColor" font-size="12">probabilità</text>
+<text x="233.7" y="86.0" text-anchor="start" fill="currentColor" font-size="12"><tspan font-weight="bold">n = 200</tspan>: il tetto sta sopra δ, e la</text>
+<text x="233.7" y="100.0" text-anchor="start" fill="currentColor" font-size="12">probabilità di sbagliare <tspan fill="#e03a3a" font-weight="bold">potrebbe</tspan> superare δ</text>
+<text x="545.0" y="122.0" text-anchor="end" fill="currentColor" font-size="12"><tspan font-weight="bold">n = 480</tspan>: il tetto sta sotto δ, e quindi</text>
+<text x="545.0" y="136.0" text-anchor="end" fill="currentColor" font-size="12">anche la probabilità di sbagliare</text>
+<line x1="448.0" y1="141.0" x2="448.0" y2="179.4" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+</svg>
+<figcaption>Il tetto di Čebyšëv per i tempi di esecuzione, con σ² = 4 ed ε = 0,5: vale σ²/(nε²) = 16/n e scende al crescere di n. La probabilità di sbagliare non la conosciamo, ma sta sempre nella zona azzurra sotto la curva. Con n = 200 la colonna supera la linea arancione di δ: la probabilità di sbagliare potrebbe stare nella parte rossa, e quindi non abbiamo la garanzia. Da n = 320 in poi il tetto sta sotto δ, e con lui tutta la colonna, come si vede per n = 480.</figcaption>
+</figure>
+
+Restano da trovare gli $n$ per cui il tetto sta sotto la linea di $\delta$. Imponiamo quindi
 
 $$
 \frac{\sigma^2}{n\,\varepsilon^2}\le\delta .
@@ -846,13 +968,23 @@ $$
 \frac{\sigma^2}{\delta\,\varepsilon^2}\le n,\qquad\text{cioè}\qquad n\ge\frac{\sigma^2}{\delta\,\varepsilon^2}.
 $$
 
-La condizione chiede che $n$ sia abbastanza grande, ed è giusto così: più osservazioni facciamo, più il tetto si abbassa. Con i nostri numeri, $\sigma^2=4$, $\varepsilon=0{,}5$ e $\delta=0{,}05$, troviamo $n\ge4/(0{,}05\cdot0{,}5^2)=4/0{,}0125=320$. Lo stesso conto per l’urna di Bernoulli, con $\sigma^2=p(1-p)=0{,}24$, $\varepsilon=0{,}02$ e $\delta=1/1001$, dà $n\ge0{,}24\cdot1001/0{,}02^2=600\,600$: è il numero che abbiamo citato sopra.
+La condizione chiede che $n$ sia abbastanza grande, ed è giusto così: più osservazioni facciamo, più il tetto si abbassa. Con i nostri numeri, $\sigma^2=4$, $\varepsilon=0{,}5$ e $\delta=0{,}05$, troviamo $n\ge4/(0{,}05\cdot0{,}5^2)=4/0{,}0125=320$: è il punto in cui, nella figura, il tetto incontra la linea di $\delta$.
 
-Con Čebyšëv servono dunque 320 esecuzioni; con il teorema del limite centrale ne bastano 62, circa cinque volte meno. Da dove viene la differenza? Čebyšëv deve valere per **qualunque** distribuzione con quella varianza, compresa la distribuzione a tre punti che ne raggiunge il limite ([Settimana 8](../settimana_08/index.md#cebysev-confronto)). Ma la media di molte esecuzioni non ha una distribuzione qualunque: il teorema ci dice che è quasi normale, e una variabile normale cade fuori da $\pm1{,}96$ deviazioni standard il 5% delle volte, mentre Čebyšëv, per prudenza, deve ammettere che possa cadere fuori da $\pm4{,}47$ deviazioni standard. Conoscere la forma vale un fattore cinque. Il prezzo è che il risultato è un’approssimazione, e regge se la distribuzione dei tempi non ha code troppo pesanti: il secondo laboratorio lo controlla con tempi molto asimmetrici.
+Con Čebyšëv servono dunque 320 esecuzioni, mentre con il teorema del limite centrale, come abbiamo visto poco fa, ne bastano 62, circa cinque volte meno. Da dove viene la differenza? Dal fatto che Čebyšëv deve valere per **qualunque** distribuzione con quella varianza, comprese le più sfavorevoli, come abbiamo visto nella [tabella della Settimana 8](../settimana_08/index.md#cebysev-confronto), e per essere sicuro in tutti i casi deve essere molto prudente. La media di molte esecuzioni, invece, non ha una distribuzione qualunque: il teorema ci dice che, quando $n$ è grande, è approssimativamente normale. Conoscendo la forma della distribuzione possiamo calcolare la probabilità di sbagliare, invece di accontentarci di un tetto, e quella prudenza non serve più.
+
+I due numeri, inoltre, non sono risposte dello stesso tipo. Il numero 320 di Čebyšëv è una garanzia: vale per ogni distribuzione dei tempi con varianza 4, senza eccezioni. Il numero 62 del teorema viene da un’approssimazione, perché abbiamo trattato la media delle esecuzioni come se fosse esattamente normale. In questo problema l’approssimazione è affidabile. Le 62 esecuzioni sono più del doppio delle 30 della regola pratica che si usa di solito, «basta $n>30$», e il secondo script del [laboratorio](#lab-esecuzioni) conferma il conto anche con tempi molto asimmetrici. Esistono però distribuzioni per cui la regola pratica non basta, e le incontreremo nell’[Atto VI](#quanto-grande).
 
 C’è però un’ipotesi che il conto dà per scontata: le esecuzioni devono essere indipendenti e identicamente distribuite. Un benchmark reale lo è solo se lo prepariamo con cura. Come abbiamo visto nella [Settimana 8](../settimana_08/index.md#lgn-informatica), le prime esecuzioni trovano la cache vuota e sono più lente delle altre, quindi non hanno la stessa distribuzione; per questo si scartano alcune esecuzioni iniziali «di riscaldamento». Anche l’indipendenza può mancare. Se un altro programma occupa il processore per qualche secondo, rallenta molte esecuzioni consecutive insieme: è una causa comune, come il database sovraccarico che incontreremo nell’[Atto VI](#serve-indipendenza), e la media delle esecuzioni varia più di quanto dica la formula $\sigma/\sqrt n$. Se queste condizioni non sono rispettate, 62 esecuzioni non garantiscono la precisione che abbiamo calcolato, e nemmeno un numero più grande di esecuzioni risolve il problema: un errore che colpisce tutte le misure non si riduce facendo la media.
 
-Notiamo infine come è posto il problema. Abbiamo supposto di conoscere $\sigma$, e abbiamo calcolato la probabilità che la media cada vicino a un valore $t$ fissato. Nella pratica succede il contrario: $t$ non lo conosciamo, $\sigma$ nemmeno, e dopo aver misurato i tempi vogliamo dire qualcosa su $t$. Rovesciare la domanda in questo modo, dai dati al parametro, è il tema della Settimana 10, dove costruiremo gli intervalli di confidenza.
+Notiamo anche come è posto il problema. Abbiamo supposto di conoscere $\sigma$, e abbiamo calcolato la probabilità che la media cada vicino a un valore $t$ fissato. Nella pratica succede il contrario: $t$ non lo conosciamo, $\sigma$ nemmeno, e dopo aver misurato i tempi vogliamo dire qualcosa su $t$. Rovesciare la domanda in questo modo, dai dati al parametro, è il tema della Settimana 10, dove costruiremo gli intervalli di confidenza.
+
+Qui lasciamo i tempi di esecuzione e torniamo all’urna di Bernoulli, per mantenere la promessa fatta nella sezione precedente: con Čebyšëv servono 600 600 estrazioni. La formula $n\ge\sigma^2/(\delta\,\varepsilon^2)$ vale per la media di variabili qualsiasi, quindi anche per la frazione di bianchi $f_n$, che è la media delle indicatrici delle estrazioni. Basta tradurre i tre ingredienti. La varianza di una singola indicatrice è $\sigma^2=p(1-p)=0{,}24$. Il margine è $\varepsilon=0{,}02$. Sbagliare, per l’urna, vuol dire che la frazione cade fuori dall’intervallo tra $0{,}58$ e $0{,}62$, e la probabilità di sbagliare deve essere al più $\delta=1/1001$, il numero che abbiamo trovato traducendo «mille volte più grande». Allora
+
+$$
+n\ge\frac{0{,}24}{(1/1001)\cdot0{,}02^2}=\frac{0{,}24\cdot1001}{0{,}0004}=600\,600.
+$$
+
+Con il teorema del limite centrale ne bastavano circa 6500, più di novanta volte meno. Il motivo è lo stesso che abbiamo visto con le esecuzioni: Čebyšëv deve valere per qualunque distribuzione, mentre il teorema sfrutta il fatto che la frazione di bianchi è approssimativamente normale.
 
 !!! example "Sosta di verifica"
     Vogliamo stimare con una simulazione Monte Carlo una probabilità sconosciuta $p$, con un errore al più di $0{,}01$ e con probabilità almeno del 95%. In ogni simulazione l’evento si verifica oppure no, quindi la sua indicatrice è una variabile bernoulliana di parametro $p$, e la frazione di simulazioni in cui si verifica è una media campionaria di indicatrici. La varianza di una variabile bernoulliana, $p(1-p)$, non supera mai $1/4$ ([Settimana 8](../settimana_08/index.md#frequenze)), quindi possiamo usare $\sigma^2=1/4$ qualunque sia $p$. Con Čebyšëv, come per il benchmark, servono $n\ge(1/4)/(0{,}05\cdot0{,}01^2)=50\,000$ simulazioni. Quante ne bastano secondo il teorema del limite centrale?

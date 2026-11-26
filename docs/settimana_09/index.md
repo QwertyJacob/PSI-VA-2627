@@ -22,9 +22,6 @@
 
 [:material-presentation: Apri Slide della Lezione](slides/index.html){ .md-button .md-button--primary target="_blank" }
 
-!!! note "Seconda parte in arrivo"
-    Per ora è pubblicata la prima parte della settimana, quella della Lezione 1: De Moivre e le monete, la forma della somma e il teorema del limite centrale (Atti I–III), con gli esercizi 1–5. La seconda parte, con Laplace, gli usi del teorema e i suoi limiti, sarà pubblicata con la Lezione 2.
-
 ## Il percorso e ciò che è richiesto all’esame {: #esame }
 
 Nella Settimana 8 abbiamo studiato la media di $n$ osservazioni indipendenti. Sappiamo dove si trova, perché la sua media è il valore atteso $\mu$ delle osservazioni; sappiamo quanto è dispersa, perché la sua deviazione standard è $\sigma/\sqrt n$; e sappiamo, grazie alla legge dei grandi numeri, che al crescere di $n$ si avvicina a $\mu$. Con la disuguaglianza di Čebyšëv abbiamo anche limitato la probabilità di trovarla lontana da $\mu$, ma i limiti erano molto prudenti: per stimare il tempo medio di un programma ci sono servite 320 esecuzioni, e abbiamo anticipato che ne bastano 62. Ci mancava un’informazione: la **forma** della distribuzione della media. Questa settimana scopriamo che, quando $n$ è grande, quella forma è quasi sempre la stessa: la campana della distribuzione normale della Settimana 6. È il **teorema del limite centrale**, uno dei risultati più importanti di tutta la probabilità. Grazie a lui possiamo **calcolare**, in modo approssimato, e non soltanto limitare, le probabilità che riguardano somme e medie.
@@ -35,7 +32,7 @@ Due storie accompagnano le due lezioni. Nella prima siamo a Londra all’inizio 
 
 All’esame devi saper enunciare il teorema del limite centrale per la somma e per la media campionaria di variabili indipendenti e identicamente distribuite con varianza finita, nelle sue tre forme: la somma è approssimativamente $\mathcal N(n\mu,\,n\sigma^2)$, la media campionaria è approssimativamente $\mathcal N(\mu,\,\sigma^2/n)$, e la funzione di ripartizione della somma standardizzata tende a $\Phi$. Devi saper spiegare che cosa vuol dire quest’ultima frase (la convergenza in distribuzione) e in che cosa è diversa dalla convergenza in probabilità della Settimana 8. Devi saper usare il teorema per calcolare in modo approssimato la probabilità di un evento che riguarda una somma o una media, anche quando la somma è una variabile binomiale, e per calcolare quante osservazioni servono per una certa precisione, confrontando il risultato con quello di Čebyšëv. Soprattutto devi saper rispondere, con parole tue, alla domanda «che cosa garantisce e che cosa non garantisce il teorema del limite centrale?»: le ipotesi di indipendenza e di varianza finita con un controesempio per ciascuna, il fatto che il teorema non fissa un valore di $n$, il fatto che l’approssimazione è peggiore nelle code, e il fatto che riguarda somme e medie e non i singoli dati.
 
-La **correzione di continuità**, che compare nel gioco dei dieci dadi, è spiegata nel testo ma non è richiesta all’esame: all’esame puoi sempre usare la normale senza correzione. È inoltre **facoltativa e non richiesta all’esame** la lettura in fondo alla dispensa, che spiega perché il limite di una somma, se esiste, debba essere proprio una campana. Le formule esatte che usiamo per controllare il teorema (la distribuzione esatta della somma di uniformi, la distribuzione gamma delle lampadine) non sono richieste: servono soltanto a misurare quanto è buona l’approssimazione. L’intervallo di confidenza, cioè il modo di usare il teorema per dire qualcosa su una media che non conosciamo a partire dai dati, non si studia qui: è il tema della Settimana 10. Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
+La **correzione di continuità**, che compare nel gioco dei dieci dadi, è spiegata nel testo ma non è richiesta all’esame: all’esame puoi sempre usare la normale senza correzione. Le formule esatte che usiamo per controllare il teorema (la distribuzione esatta della somma di uniformi, la distribuzione gamma delle lampadine) non sono richieste: servono soltanto a misurare quanto è buona l’approssimazione. L’intervallo di confidenza, cioè il modo di usare il teorema per dire qualcosa su una media che non conosciamo a partire dai dati, non si studia qui: è il tema della Settimana 10. Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
 
 ## Da dove ripartiamo {: #prima-di-cominciare }
 
@@ -53,7 +50,7 @@ Infine, tre promesse. Nella [Settimana 6](../settimana_06/index.md#lab-normale) 
 
 **Abraham De Moivre** (1667–1754) nacque a Vitry-le-François, in Champagne, in una famiglia protestante. Erano gli anni in cui la Francia di Luigi XIV revocava la tolleranza verso i protestanti, e il giovane De Moivre fu imprigionato per motivi di religione. Nel 1688, appena liberato, lasciò la Francia per l’Inghilterra, e a Londra passò il resto della sua lunga vita. Era stimato dai più grandi matematici del tempo: si racconta che Isaac Newton, quando qualcuno gli chiedeva spiegazioni sui suoi *Principia*, rispondesse «Andate dal signor De Moivre: queste cose le sa meglio di me». Eppure De Moivre non ottenne mai un posto all’università. Visse dando lezioni private di matematica, andando a casa degli allievi o incontrandoli nei caffè di Londra, e uno dei locali in cui passava le sue giornate era probabilmente lo Slaughter’s Coffee House. Morì povero. Il suo libro sul calcolo delle probabilità, *The Doctrine of Chances*, cioè «La dottrina dei casi», ebbe tre edizioni, nel 1718, nel 1738 e nel 1756; l’ultima uscì due anni dopo la sua morte.
 
-Nelle ultime pagine del libro De Moivre affronta una domanda che riprende quella di Jacob Bernoulli, che abbiamo incontrato nella [Settimana 8](../settimana_08/index.md#bernoulli). Bernoulli aveva dimostrato che, ripetendo molte volte una prova, diventa sempre più improbabile trovare la frazione dei successi lontana dalla probabilità del successo. Per la sua urna aveva anche fatto il conto: con 25 550 estrazioni, la frazione di bianchi cade fuori dal margine di 1/50 attorno a 3/5 con una probabilità più di mille volte minore di quella di cadere dentro. Il suo risultato, però, era una garanzia, ottenuta con un ragionamento lungo e faticoso: diceva che uno scarto di una certa grandezza era meno probabile di una soglia, ma non **quanto** fosse probabile davvero. Ed era una garanzia molto prudente: nell’[Atto V](#laplace) vedremo che per la stessa urna bastano circa 6500 estrazioni. De Moivre pone il dubbio in modo concreto. Prendiamo un evento che può accadere o non accadere con la stessa facilità, come testa nel lancio di una moneta equilibrata. Dopo tremila prove, è possibile che l’evento sia accaduto duemila volte e mancato mille? Se lo è, quanto è improbabile uno scarto così grande dalla parità? Attenzione a che cosa chiede: non la probabilità di avere esattamente duemila teste, ma quella di allontanarsi dalla metà almeno così tanto, cioè di avere duemila teste o più, oppure mille o meno. Rispondere con un numero, scrive, renderebbe la mente meglio disposta verso le conclusioni tratte dagli esperimenti. E aggiunge:
+Nelle ultime pagine del libro De Moivre affronta una domanda che riprende quella di Jacob Bernoulli, che abbiamo incontrato nella [Settimana 8](../settimana_08/index.md#bernoulli). Bernoulli aveva dimostrato che, ripetendo molte volte una prova, diventa sempre più improbabile trovare la frazione dei successi lontana dalla probabilità del successo. Per la sua urna aveva anche fatto il conto: con 25 550 estrazioni, la frazione di bianchi cade fuori dal margine di 1/50 attorno a 3/5 con una probabilità più di mille volte minore di quella di cadere dentro. Il suo risultato, però, era una garanzia, ottenuta con un ragionamento lungo e faticoso: diceva che uno scarto di una certa grandezza era meno probabile di una soglia, ma non **quanto** fosse probabile davvero. Ed era una garanzia molto prudente: nell’[Atto V](#binomiale-normale) vedremo che per la stessa urna bastano circa 6500 estrazioni. De Moivre pone il dubbio in modo concreto. Prendiamo un evento che può accadere o non accadere con la stessa facilità, come testa nel lancio di una moneta equilibrata. Dopo tremila prove, è possibile che l’evento sia accaduto duemila volte e mancato mille? Se lo è, quanto è improbabile uno scarto così grande dalla parità? Attenzione a che cosa chiede: non la probabilità di avere esattamente duemila teste, ma quella di allontanarsi dalla metà almeno così tanto, cioè di avere duemila teste o più, oppure mille o meno. Rispondere con un numero, scrive, renderebbe la mente meglio disposta verso le conclusioni tratte dagli esperimenti. E aggiunge:
 
 > «Mi prenderò la libertà di dire che questo è il problema più difficile che si possa proporre in materia di probabilità, e per questo l’ho riservato per ultimo.»
 > — A. De Moivre, *The Doctrine of Chances*, 3ª ed., 1756, p. 242 (tradotto dall’inglese)
@@ -454,7 +451,7 @@ $$
 P(S_2<2/3)\approx\Phi\!\left(\frac{2/3-1}{0{,}408}\right)=\Phi(-0{,}82)\approx0{,}207.
 $$
 
-Con due soli addendi la normale sbaglia di un punto e mezzo percentuale. Con cinque addendi i due valori sono 0,1017 e 0,0984; con dieci sono 0,0337 e 0,0339, e la differenza è nella quarta cifra decimale. I conti esatti per $n=5$ e $n=10$ richiedono una formula che non ci serve; il primo laboratorio (qui sotto) li fa al posto nostro.
+Con due soli addendi la normale sbaglia di un punto e mezzo percentuale. Con cinque addendi i due valori sono 0,1017 e 0,0984; con dieci sono 0,0337 e 0,0339, e la differenza è nella quarta cifra decimale. I conti esatti per $n=5$ e $n=10$ richiedono una formula che non ci serve; il [secondo laboratorio](#lab-somme) li fa al posto nostro.
 
 Lo stesso succede partendo da forme molto diverse. Nella Settimana 8 abbiamo disegnato la distribuzione della media di 1, 4 e 16 dadi, e con sedici dadi era già una campana. C’è anche un esempio più estremo, preso dal [simulatore della Rice University](https://onlinestatbook.com/stat_sim/sampling_dist/): una popolazione con due gobbe, molto lontana da una campana, da cui si estraggono campioni di 15 valori; la distribuzione della somma, e quella della media, dei 15 valori è di nuovo una campana stretta e simmetrica. Le gobbe sono sparite.
 
@@ -674,7 +671,7 @@ $$
 
 Con quaranta lampadine si arriva alla fine dell’anno circa sette volte su dieci. La media del tempo totale, 400 giorni, supera l’anno, ma la deviazione standard di 63 giorni è grande, e uno scarto di 35 giorni sotto la media è tutt’altro che raro.
 
-Quanto è buona questa approssimazione? In questo caso la distribuzione esatta della somma si conosce: la somma di esponenziali indipendenti ha una distribuzione che si chiama distribuzione gamma, che non studiamo, e con quella si trova 0,6975. La normale sbaglia di poco più di un punto percentuale. Il secondo laboratorio ottiene lo stesso numero con una simulazione. Di solito si giustifica l’uso del teorema osservando che «40 è maggiore di 30»: è una regola pratica molto diffusa, e nell’Atto VI vedremo che cosa vale davvero.
+Quanto è buona questa approssimazione? In questo caso la distribuzione esatta della somma si conosce: la somma di esponenziali indipendenti ha una distribuzione che si chiama distribuzione gamma, che non studiamo, e con quella si trova 0,6975. La normale sbaglia di poco più di un punto percentuale. Il [primo laboratorio](#lab-lampadine) ottiene lo stesso numero con una simulazione. Di solito si giustifica l’uso del teorema osservando che «40 è maggiore di 30»: è una regola pratica molto diffusa, e nell’Atto VI vedremo che cosa vale davvero.
 
 !!! example "Sosta di verifica"
     Vuoi copiare 400 foto su una chiavetta con 1000 MB liberi. Le dimensioni delle foto sono indipendenti, con media 2,4 MB e deviazione standard 1 MB. Con quale probabilità circa ci stanno tutte?
@@ -692,7 +689,7 @@ $$
 P(X\le25\ \text{oppure}\ X\ge45)\approx2\big(1-\Phi(1{,}85)\big)=2\,(1-0{,}9678)=0{,}064.
 $$
 
-Il valore esatto, che il primo laboratorio calcola sommando tutti i casi, è 0,078. Questa volta la normale sbaglia di più che con le lampadine, eppure dieci dadi sono una somma ben fatta, simmetrica come le gobbe del widget. Da dove viene la differenza?
+Il valore esatto, che il [secondo laboratorio](#lab-somme) calcola sommando tutti i casi, è 0,078. Questa volta la normale sbaglia di più che con le lampadine, eppure dieci dadi sono una somma ben fatta, simmetrica come le gobbe del widget. Da dove viene la differenza?
 
 Viene dal fatto che $X$ è un numero intero, mentre la normale è continua. La normale distribuisce la probabilità con continuità lungo tutta la retta, mentre $X$ la concentra sui valori interi: per esempio $P(X=25)\approx0{,}014$, ma per una variabile continua la probabilità di un singolo punto è zero. Calcolando $P(X\le25)$ con la normale fino a 25 si prende soltanto «metà» della barra del valore 25, quella a sinistra. Per una variabile intera, infatti, l’evento $X\le25$ è lo stesso evento di $X<26$, e qualunque soglia tra 25 e 26 andrebbe bene; per la normale invece le soglie danno probabilità diverse. La scelta più equilibrata è quella a metà strada, 25,5, e allo stesso modo 44,5 per l’altra coda. Questo spostamento di mezza unità si chiama **correzione di continuità**: quando si approssima con la normale una variabile che assume valori interi, ogni valore intero $k$ è rappresentato dall’intervallo da $k-0{,}5$ a $k+0{,}5$. Con la correzione il conto diventa:
 
@@ -704,9 +701,74 @@ molto vicino al valore esatto 0,0780. Ricordiamo che la correzione di continuit�
 
 Tornando al gioco: si vincono i 20 euro circa otto volte su cento. In media il docente regala $20\cdot0{,}078\approx1{,}56$ euro a partita, più la mentina: per gli studenti il gioco conviene, per il docente no.
 
+### Laboratorio: le lampadine simulate {: #lab-lampadine }
+
+Il primo script controlla con una simulazione il conto delle [lampadine](#lampadine). Simula 10 000 volte le quaranta lampadine, usate una dopo l’altra, e conta in quante prove arrivano a fine anno; poi rifà il conto con il teorema del limite centrale, come nel testo, e confronta i due risultati.
+
+<div class="psi-exec" markdown="1">
+```python
+from math import sqrt
+from statistics import NormalDist
+
+import numpy as np
+
+# Il generatore di numeri casuali. Il numero tra parentesi, il «seme»,
+# fa uscire ogni volta gli stessi numeri, così i risultati si possono ripetere.
+rng = np.random.default_rng(1810)
+
+# La distribuzione normale standard. Z.cdf(z) calcola Phi(z), cioè la tabella
+# letta nel verso diretto; Z.inv_cdf(p) trova lo z per cui Phi(z) = p, cioè
+# legge la tabella al contrario.
+Z = NormalDist()
+
+# Il numero di volte in cui ripetiamo ogni esperimento simulato.
+prove = 10_000
+
+# Ogni lampadina dura un tempo esponenziale con media 10 giorni. Ne usiamo 40,
+# una dopo l'altra, e ci chiediamo se bastano a coprire un anno.
+media_lampadina = 10      # giorni
+dev_std_lampadina = 10    # per l'esponenziale è uguale alla media
+quante_lampadine = 40
+anno = 365                # giorni
+
+# La simulazione. Costruiamo una tabella con una riga per ogni prova e una
+# colonna per ogni lampadina: ogni casella contiene la durata di una lampadina.
+durate = rng.exponential(media_lampadina, size=(prove, quante_lampadine))
+
+# Sommiamo lungo ogni riga (axis=1 vuol dire «lungo le righe»): per ogni prova
+# otteniamo il tempo totale coperto dalle 40 lampadine.
+totali = durate.sum(axis=1)
+
+# Il confronto totali >= anno dà, per ogni prova, True (vero) oppure False
+# (falso). Nella somma ogni True conta 1 e ogni False conta 0, quindi
+# otteniamo il numero di prove in cui le lampadine arrivano a fine anno.
+riuscite = np.sum(totali >= anno)
+stima_simulata = riuscite / prove
+
+# Il conto con il teorema del limite centrale. La somma di 40 durate ha
+# media 40 · 10 = 400 giorni e varianza 40 · 10² = 4000: è la varianza
+# della somma, non di una singola lampadina.
+media_somma = quante_lampadine * media_lampadina
+varianza_somma = quante_lampadine * dev_std_lampadina ** 2
+dev_std_somma = sqrt(varianza_somma)      # circa 63,2 giorni
+
+# Standardizziamo la soglia di 365 giorni.
+z_soglia = (anno - media_somma) / dev_std_somma      # circa -0,55
+
+# Vogliamo P(S >= 365), quindi usiamo il complementare: 1 - Phi(z).
+stima_tlc = 1 - Z.cdf(z_soglia)
+
+print("Lampadine")
+print(f"  probabilità simulata:       {stima_simulata:.3f}")
+print(f"  probabilità con il teorema: {stima_tlc:.3f}")
+```
+</div>
+
+La simulazione dà circa 0,697, praticamente il valore esatto 0,6975, mentre il teorema dà 0,710: con quaranta lampadine la normale sbaglia di poco più di un punto percentuale.
+
 ### Laboratorio: la campana delle somme {: #lab-somme }
 
-Il primo script rifà i conti di questo atto. Calcola in modo esatto la probabilità $P(S_n<n/3)$ per la somma di $n$ uniformi, con una formula che non studiamo, e la confronta con quella della normale; poi costruisce la distribuzione esatta della somma di dieci dadi, aggiungendo un dado alla volta come nella Settimana 7 si costruiva la somma di due, e calcola la probabilità di vincere al gioco nei tre modi: esatta, con la normale senza correzione e con la correzione. Infine disegna l’istogramma di 50 000 somme simulate di $n$ uniformi per $n=1,2,5,10$, con la campana sovrapposta.
+Il secondo script rifà gli altri conti di questo atto. Calcola in modo esatto la probabilità $P(S_n<n/3)$ per la somma di $n$ uniformi, con una formula che non studiamo, e la confronta con quella della normale; poi costruisce la distribuzione esatta della somma di dieci dadi, aggiungendo un dado alla volta come nella Settimana 7 si costruiva la somma di due, e calcola la probabilità di vincere al gioco nei tre modi: esatta, con la normale senza correzione e con la correzione. Infine disegna l’istogramma di 50 000 somme simulate di $n$ uniformi per $n=1,2,5,10$, con la campana sovrapposta.
 
 <div class="psi-exec" markdown="1">
 ```python
@@ -766,17 +828,614 @@ Lo script stampa le tre coppie di numeri della somma di uniformi, 0,2222 e 0,207
 
 Abbiamo così il teorema e il modo di usarlo. Nella seconda lezione vediamo come Laplace lo rese generale, che cosa permette di fare con le distribuzioni che già conosciamo, e soprattutto quali sono i suoi limiti.
 
-## Atti IV–VI — Laplace, gli usi del teorema e i suoi limiti {: #laplace }
+## Atto IV — Laplace: due strade verso la campana {: #laplace }
 
-*Seconda parte in arrivo…* Questa parte della dispensa sarà pubblicata con la Lezione 2. Andremo a Parigi nel 1810, dove Pierre-Simon Laplace capì che la stessa campana nasce dalla somma di errori di qualunque forma. Poi useremo il teorema in due modi nuovi: per approssimare la distribuzione binomiale, che è una somma di indicatrici, e per calcolare quante osservazioni servono per una certa precisione, confrontando il risultato con quello della disuguaglianza di Čebyšëv. Infine vedremo che cosa il teorema garantisce e che cosa no: servono l’indipendenza e una varianza finita, il teorema non dice quanto deve essere grande $n$, e riguarda le somme e le medie, non i singoli dati.
+La curva di De Moivre riguardava un caso solo: i lanci di una moneta, cioè somme di variabili che valgono 0 o 1. Per quasi ottant’anni nessuno andò molto più in là. Il passo decisivo lo fece **Pierre-Simon Laplace** (1749–1827), che abbiamo incontrato nella Settimana 1 con il principio di indifferenza e nella Settimana 2 con la probabilità delle cause. Nel 1810 Laplace lesse all’Institut de France una memoria dal titolo lungo e preciso: *Mémoire sur les approximations des formules qui sont fonctions de très grands nombres, et sur leur application aux probabilités*, «Memoria sulle approssimazioni delle formule che sono funzioni di numeri molto grandi, e sulla loro applicazione alle probabilità», stampata nel volume dell’Institut dell’anno 1809. Lì Laplace dimostrò, con gli strumenti di analisi che aveva sviluppato per decenni, che la somma di molti errori indipendenti ha approssimativamente la distribuzione della campana **qualunque sia la legge dei singoli errori**. Era, nella sostanza, il teorema di questa settimana.
 
+Il momento non era casuale. Un anno prima, nel 1809, Gauss aveva pubblicato la *Theoria motus*, il libro con cui aveva ritrovato Cerere, e lì aveva ricavato la stessa campana per un’altra strada, come abbiamo visto nella [Settimana 6](../settimana_06/index.md#cerere). Gauss era partito da un’abitudine degli astronomi. Quando misuravano più volte la stessa grandezza, per esempio la posizione di una stella, ottenevano numeri un po’ diversi, perché ogni misura contiene un piccolo errore, e come stima del valore vero prendevano la media aritmetica delle misure. Gauss trasformò questa abitudine in un’ipotesi: la stima più attendibile del valore vero, il «valore più probabile» nelle sue parole, è sempre la media delle osservazioni, qualunque siano i numeri che le misure hanno dato. Poi si chiese come devono essere distribuiti gli errori perché questa ipotesi sia vera, e trovò una sola risposta: la campana. Era un ragionamento elegante, ma un po’ circolare. Gauss usava poi la campana per giustificare la media e il metodo dei minimi quadrati, ma per ricavare la campana aveva già supposto che la media fosse la scelta giusta: la conclusione era nascosta nella premessa. Il teorema di Laplace forniva una ragione indipendente, che non parte dalla media. L’errore di una misura nasce dalla somma di molte piccole cause indipendenti, e allora ha la forma della campana qualunque sia la forma delle singole cause; e anche la media di molte osservazioni, che è una somma divisa per $n$, ha quella forma. In un supplemento alla stessa memoria Laplace collegò il suo risultato al metodo dei minimi quadrati di Gauss, e due anni dopo raccolse tutto nella sua *Théorie analytique des probabilités* (1812).
+
+Per tutto l’Ottocento alla distribuzione normale si arrivava dunque per due strade diverse: la strada degli errori di Gauss e la strada delle somme di De Moivre e Laplace. Il teorema del limite centrale mostra che sono la stessa strada, perché un errore di misura è una somma. Il nome del teorema arrivò molto più tardi. Nel 1920 il matematico ungherese George Pólya intitolò un articolo *Über den zentralen Grenzwertsatz der Wahrscheinlichkeitsrechnung und das Momentenproblem*, «Sul teorema limite centrale del calcolo delle probabilità e il problema dei momenti». Pólya lo chiamò *centrale* perché ha, effettivamente, un ruolo centrale in tutta la teoria della probabilità: nel titolo tedesco l’aggettivo accompagna il teorema, non il limite. Il nome italiano più diffuso, «teorema del limite centrale», sembra invece attaccarlo al limite; per questo alcuni libri scrivono «teorema centrale del limite», che rispetta l’intenzione di Pólya. In queste pagine usiamo il nome più diffuso. Le dimostrazioni rigorose, con le ipotesi precise, arrivarono tra il 1901, con Aleksandr Ljapunov, allievo di Čebyšëv, e il 1922, con il finlandese Jarl Lindeberg: ne abbiamo parlato in un approfondimento facoltativo della [Settimana 6](../settimana_06/index.md#lab-normale).
+
+Lasciamo l’ultima parola della storia a Francis Galton, il protagonista della Settimana 7, con una pagina del libro in cui descrive la sua tavola dei chiodi. Galton non parla di teorema del limite centrale, un nome che non esisteva ancora: parla della «legge di frequenza dell’errore», cioè della curva normale, e dell’effetto che gli faceva vederla comparire dal disordine.
+
+> «Non conosco quasi nulla che sia tanto adatto a colpire l’immaginazione quanto la meravigliosa forma di ordine cosmico espressa dalla “legge di frequenza dell’errore”. I Greci l’avrebbero personificata e divinizzata, se l’avessero conosciuta. Regna con serenità, senza mai farsi notare, in mezzo alla confusione più selvaggia. Quanto più grande è la folla, e quanto maggiore l’apparente anarchia, tanto più perfetto è il suo dominio. È la legge suprema dell’irragionevolezza.»
+> — F. Galton, *Natural Inheritance*, 1889, cap. V, p. 66 (tradotto dall’inglese)
+
+«Quanto più grande è la folla»: è il ruolo di $n$ nel teorema. In questa lezione mettiamo la legge di Galton al lavoro, e poi cerchiamo con cura i punti in cui il suo dominio finisce.
+
+## Atto V — Usare il teorema: monete, urne ed esecuzioni {: #usare }
+
+Nella prima lezione abbiamo usato il teorema per calcolare la probabilità di un evento su una somma, come le lampadine o i dieci dadi. In questo atto lo usiamo in due modi nuovi. Il primo è riconoscere una somma dove non sembra di vederla: la distribuzione binomiale, che conosciamo dalla Settimana 4, è una somma di indicatrici, e quindi per $n$ grande ha la forma della campana. Il secondo è leggere il teorema al contrario: invece di chiederci quanto è probabile un errore con $n$ osservazioni, ci chiediamo quante osservazioni servono perché l’errore sia raro. Per confronto faremo lo stesso conto anche con la disuguaglianza di Čebyšëv, che nella Settimana 8 abbiamo usato soltanto nel verso diretto. In entrambi i casi manteniamo due promesse della Settimana 8.
+
+### La distribuzione binomiale, vista da lontano {: #binomiale-normale }
+
+Il caso di De Moivre si inquadra subito nel teorema. Una variabile $X$ con distribuzione binomiale di parametri $n$ e $p$ conta i successi in $n$ prove indipendenti, ciascuna con probabilità di successo $p$. È quindi la somma $X=I_1+\cdots+I_n$ di $n$ indicatrici indipendenti, cioè di $n$ variabili bernoulliane, con media $p$ e varianza $p(1-p)$ ciascuna. Per le regole della Settimana 8, la somma ha media $np$ e varianza $np(1-p)$, e per il teorema del limite centrale, quando $n$ è grande,
+
+$$
+X\;\approx\;\mathcal N\big(np,\;np(1-p)\big).
+$$
+
+È l’**approssimazione normale della distribuzione binomiale**. Per una moneta equilibrata, $p=1/2$, ritroviamo la media $n/2$ e la deviazione standard $\frac12\sqrt n$ di De Moivre. Nel [widget della Settimana 4](../settimana_04/index.md#widget-binomiale) puoi vedere come, aumentando $n$, l’istogramma della distribuzione binomiale prenda la forma di una campana. Poiché $X$ assume valori interi, anche qui vale la correzione di continuità che abbiamo visto con i dieci dadi, utile ma non richiesta.
+
+L’approssimazione funziona bene quando il numero atteso di successi $np$ e quello di insuccessi $n(1-p)$ sono entrambi almeno 10. È una regola pratica, non un teorema: vale per le probabilità ordinarie, non per le code lontane. Quando invece $np$ o $n(1-p)$ restano sotto quella soglia, come per gli eventi rari della [Settimana 5](../settimana_05/index.md#approssimazione-binomiale), la distribuzione binomiale è storta e somiglia molto di più a una distribuzione di Poisson che a una campana. Torneremo su questo punto nell’Atto VI.
+
+Possiamo ora mantenere una promessa della Settimana 8, sull’urna di Jacob Bernoulli. Ricordiamo la domanda. L’urna contiene 3000 sassolini bianchi e 2000 neri, quindi la proporzione di bianchi è $p=3/5=0{,}6$. Estraiamo $n$ sassolini, rimettendo ogni volta nell’urna quello estratto, e chiamiamo $f_n$ la frazione di bianchi tra i sassolini estratti. Bernoulli voleva sapere quante estrazioni servono perché $f_n$ cada entro $0{,}02$ da $0{,}6$, cioè tra $0{,}58$ e $0{,}62$, con una probabilità mille volte più grande di quella di cadere fuori.
+
+Per prima cosa traduciamo «mille volte più grande» in un numero. Se la probabilità di cadere fuori vale $q$, quella di cadere dentro vale $1000q$. Le due probabilità insieme fanno 1, quindi $1000q+q=1$, cioè $q=1/1001$, e la probabilità di cadere dentro vale $1000/1001$. La richiesta di Bernoulli diventa allora
+
+$$
+P\big(-0{,}02<f_n-0{,}6<0{,}02\big)\ge\frac{1000}{1001}.
+$$
+
+Il numero $1000/1001$ è molto vicino a 1: è la «certezza morale» di cui parlava Bernoulli.
+
+Ora cerchiamo la distribuzione di $f_n$. A ogni estrazione associamo un’indicatrice, che vale 1 se il sassolino è bianco e 0 se è nero. È una variabile bernoulliana di parametro $0{,}6$, quindi ha media $0{,}6$ e varianza $p(1-p)=0{,}6\cdot0{,}4=0{,}24$. La frazione $f_n$ è la media di queste $n$ indicatrici, e per le regole della Settimana 8 ha la stessa media, $0{,}6$, e varianza $0{,}24/n$, cioè deviazione standard $\sqrt{0{,}24/n}$. Per il teorema del limite centrale, quando $n$ è grande la frazione è approssimativamente normale:
+
+$$
+f_n\;\approx\;\mathcal N\big(0{,}6,\;0{,}24/n\big).
+$$
+
+Il passo successivo è standardizzare. Dividiamo i tre membri della doppia disuguaglianza per la deviazione standard $\sqrt{0{,}24/n}$, che è un numero positivo e quindi non cambia i versi:
+
+$$
+-\frac{0{,}02}{\sqrt{0{,}24/n}}<\frac{f_n-0{,}6}{\sqrt{0{,}24/n}}<\frac{0{,}02}{\sqrt{0{,}24/n}}.
+$$
+
+Al centro c’è la frazione standardizzata, che chiamiamo $Z$: per il teorema è approssimativamente normale standard. Ai lati ci sono un numero e il suo opposto. Chiamiamo $c$ il numero di destra. Poiché $\sqrt{0{,}24/n}=\sqrt{0{,}24}/\sqrt n$, dividere per questa quantità equivale a moltiplicare per $\sqrt n/\sqrt{0{,}24}$, e quindi
+
+$$
+c=\frac{0{,}02\,\sqrt n}{\sqrt{0{,}24}}.
+$$
+
+Il numero $c$ dice quante deviazioni standard della frazione stanno nel margine di $0{,}02$. Notiamo che $c$ cresce con $n$: più estrazioni facciamo, più la deviazione standard si stringe, e più deviazioni standard entrano nello stesso margine.
+
+Ci serve ora la probabilità che $Z$ cada nell’intervallo simmetrico $(-c,\,c)$. Per la normale standard vale $P(-c<Z<c)=\Phi(c)-\Phi(-c)$. Per la simmetria della campana, come abbiamo visto con le lampadine, $\Phi(-c)=1-\Phi(c)$, e quindi
+
+$$
+P(-c<Z<c)=\Phi(c)-\big(1-\Phi(c)\big)=2\Phi(c)-1.
+$$
+
+Possiamo finalmente scrivere la richiesta di Bernoulli come una condizione su $\Phi(c)$:
+
+$$
+2\Phi(c)-1\ge\frac{1000}{1001}.
+$$
+
+Per isolare $\Phi(c)$ sommiamo 1 a entrambi i membri e poi dividiamo per 2:
+
+$$
+\Phi(c)\ge\frac12\left(1+\frac{1000}{1001}\right)=\frac{2001}{2002}=1-\frac1{2002}\approx0{,}9995.
+$$
+
+Lo stesso numero si trova anche ragionando sulle code. Le due code fuori dall’intervallo valgono insieme $1/1001$, e per la simmetria ciascuna vale la metà, cioè $1/2002$. A sinistra di $c$ resta quindi tutto il resto, $1-1/2002$.
+
+Ora leggiamo la tabella al contrario, come nel [problema inverso della Settimana 6](../settimana_06/index.md#quantili): il valore $z$ con $\Phi(z)=0{,}9995$ è $z\approx3{,}29$. Poiché $\Phi$ cresce, la condizione $\Phi(c)\ge0{,}9995$ equivale a $c\ge3{,}29$. In parole, il margine di $0{,}02$ deve contenere almeno 3,29 deviazioni standard della frazione. Resta da ricavare $n$. Moltiplichiamo entrambi i membri per $\sqrt{0{,}24}/0{,}02$, che è positivo, e poi eleviamo al quadrato:
+
+$$
+\frac{0{,}02\,\sqrt n}{\sqrt{0{,}24}}\ge3{,}29
+\quad\Longleftrightarrow\quad
+\sqrt n\ge\frac{3{,}29\cdot\sqrt{0{,}24}}{0{,}02}
+\quad\Longleftrightarrow\quad
+n\ge\frac{3{,}29^2\cdot0{,}24}{0{,}02^2}\approx\frac{2{,}598}{0{,}0004}\approx6495.
+$$
+
+Il valore 3,29 è arrotondato, e il teorema del limite centrale dà un’approssimazione, quindi diciamo che servono **circa 6500 estrazioni**. Possiamo controllare che il risultato sia ragionevole: con 6500 estrazioni la deviazione standard della frazione è $\sqrt{0{,}24/6500}\approx0{,}0061$, e il margine $0{,}02$ è proprio circa 3,3 volte questo valore.
+
+Mettiamo ora accanto tre numeri che rispondono alla stessa domanda, a distanza di tre secoli. Bernoulli, nel 1713, con il suo ragionamento lungo e faticoso, arrivò a 25 550 estrazioni. La disuguaglianza di Čebyšëv, che vale per qualunque distribuzione, ne chiede 600 600, come vedremo alla fine della prossima sezione. Il teorema del limite centrale, che sfrutta la forma quasi normale della frazione, dice che ne bastano circa 6500: circa quattro volte meno di Bernoulli e più di novanta volte meno di Čebyšëv. Ma 6500 viene da un’approssimazione, ed è giusto chiedersi se ci si possa fidare. Possiamo controllarlo, perché il numero di bianchi estratti ha distribuzione binomiale di parametri $n$ e $0{,}6$, e con il computer si calcola esattamente la probabilità che la frazione cada tra $0{,}58$ e $0{,}62$. Il calcolo esatto conferma che servono circa 6500 estrazioni.
+
+### Quante esecuzioni servono {: #quante-esecuzioni }
+
+Consideriamo il problema seguente. Stiamo realizzando un software e vogliamo stimare il tempo medio di esecuzione $t$, in secondi. Supponiamo di sapere che la varianza del tempo di esecuzione è $\sigma^2=4$. Eseguiamo il programma $n$ volte in condizioni simili, misuriamo ogni volta il tempo e facciamo la media $\bar X_n$. Quante volte dobbiamo eseguirlo perché la media cada nell’intervallo $[t-0{,}5;\;t+0{,}5]$ con probabilità del 95%?
+
+Il problema chiede il valore di $n$ per cui $P(-0{,}5<\bar X_n-t<0{,}5)=0{,}95$. Per il teorema la media campionaria è approssimativamente normale, con media $t$ e deviazione standard $\sigma/\sqrt n=2/\sqrt n$. Standardizziamo i tre membri della doppia disuguaglianza, cioè dividiamoli per $2/\sqrt n$, che equivale a moltiplicarli per $\sqrt n/2$:
+
+$$
+P\!\left(-\frac{0{,}5\sqrt n}{2}<\frac{\bar X_n-t}{2/\sqrt n}<\frac{0{,}5\sqrt n}{2}\right)=0{,}95.
+$$
+
+La variabile al centro è la media standardizzata, che per il teorema è approssimativamente normale standard. Chiamiamo $c=0{,}25\sqrt n$ l’estremo destro. Come per l’urna di Bernoulli, la probabilità di un intervallo simmetrico $(-c,\,c)$ per la normale standard è $\Phi(c)-\Phi(-c)=2\Phi(c)-1$, quindi
+
+$$
+2\Phi(0{,}25\sqrt n)-1=0{,}95\quad\Longleftrightarrow\quad\Phi(0{,}25\sqrt n)=0{,}975.
+$$
+
+Ora leggiamo la tabella al contrario: il valore $z$ con $\Phi(z)=0{,}975$ è $z=1{,}96$. È un numero che conviene ricordare, perché tornerà spesso: **entro 1,96 deviazioni standard dalla media cade il 95% di una normale**, ed è il valore preciso che la regola 68–95–99,7 arrotonda a 2. Resta da risolvere $0{,}25\sqrt n=1{,}96$, cioè $\sqrt n=7{,}84$ e $n=61{,}47$. Il numero di esecuzioni deve essere intero e non deve scendere sotto questo valore, quindi servono **62 esecuzioni**.
+
+Lo stesso ragionamento, con simboli al posto dei numeri, dà una formula generale. Se vogliamo che la media cada entro $\varepsilon$ dal valore vero con probabilità $1-\delta$, e $z$ è il valore con $\Phi(z)=1-\delta/2$, serve
+
+$$
+\frac{\varepsilon\sqrt n}{\sigma}\ge z\qquad\Longleftrightarrow\qquad n\ge\left(\frac{z\,\sigma}{\varepsilon}\right)^2.
+$$
+
+Per una probabilità del 95% si usa $z=1{,}96$; per il 99% si usa $z=2{,}576$.
+
+Confrontiamo questo risultato con quello che garantisce la disuguaglianza di Čebyšëv, che vale per qualunque distribuzione. Prima, però, conviene dare un nome ai due eventi in gioco, perché parleremo di entrambi. Diciamo che la media **cade vicino** a $t$ quando dista da $t$ meno di $\varepsilon$, e che la media **sbaglia** quando dista da $t$ almeno $\varepsilon$. Uno dei due eventi accade sempre, e non possono accadere insieme, quindi le loro probabilità sommano a 1. Il nostro problema chiede che la media cada vicino a $t$ con probabilità almeno del 95%, e questo equivale a chiedere che la probabilità di sbagliare sia al più $1-0{,}95=0{,}05$. Come nella formula generale, chiamiamo $\delta$ questo valore massimo della probabilità di sbagliare: nel nostro problema $\delta=0{,}05$.
+
+Nella Settimana 8 abbiamo applicato la disuguaglianza di Čebyšëv alla media campionaria per dimostrare la [legge dei grandi numeri](../settimana_08/index.md#lgn-dimostrazione), e abbiamo trovato un tetto per la probabilità di sbagliare:
+
+$$
+P\big(|\bar X_n-t|\ge\varepsilon\big)\le\frac{\sigma^2}{n\,\varepsilon^2}.
+$$
+
+Nella Settimana 8 la leggevamo nel verso diretto: fissato $n$, il tetto diceva quanto può essere grande, al massimo, la probabilità di sbagliare. Ora la leggiamo al contrario: cerchiamo un $n$ per cui la probabilità di sbagliare non superi $\delta$. Questa probabilità non sappiamo calcolarla esattamente, perché non conosciamo la distribuzione dei tempi. Sappiamo però che sta sotto il tetto. L’idea è allora di scegliere $n$ in modo che il tetto stia sotto $\delta$. Così i tre numeri si mettono in fila, dal più piccolo al più grande:
+
+$$
+\underbrace{P\big(|\bar X_n-t|\ge\varepsilon\big)}_{\text{probabilità di sbagliare}}
+\;\le\;
+\underbrace{\frac{\sigma^2}{n\,\varepsilon^2}}_{\text{tetto}}
+\;\le\;
+\underbrace{\;\delta\;}_{\text{massimo accettato}}
+$$
+
+Leggiamo la catena un pezzo alla volta. La prima disuguaglianza è quella di Čebyšëv: vale sempre, qualunque sia $n$, e dice che la probabilità di sbagliare sta sotto il tetto. La seconda, invece, non vale per ogni $n$: siamo noi a doverla ottenere, scegliendo $n$ abbastanza grande. Quando valgono tutte e due, la probabilità di sbagliare sta sotto il tetto e il tetto sta sotto $\delta$, quindi anche la probabilità di sbagliare sta sotto $\delta$. È proprio quello che volevamo, e lo otteniamo senza aver mai calcolato la probabilità di sbagliare.
+
+La figura mostra la stessa idea con i numeri del nostro problema, $\sigma^2=4$ ed $\varepsilon=0{,}5$, per i quali il tetto vale $4/(0{,}25\,n)=16/n$. Il tetto scende quando $n$ cresce. Finché sta sopra la linea di $\delta$, come per $n=200$, la probabilità di sbagliare potrebbe trovarsi tra $\delta$ e il tetto, e Čebyšëv non basta a garantire che stia sotto $\delta$. Quando il tetto scende sotto la linea, come per $n=480$, non resta più spazio: tutto ciò che sta sotto il tetto sta anche sotto $\delta$.
+
+<figure markdown="0">
+<svg viewBox="0 0 580 290" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="Il tetto di Čebyšëv, 16 diviso n, disegnato come una curva blu che scende al crescere del numero di esecuzioni n, e una linea arancione orizzontale alla quota delta uguale a 0,05. La curva scende sotto la linea a n uguale a 320. Con n uguale a 200 il tetto è sopra delta, e la parte della colonna sopra la linea è rossa: la probabilità di sbagliare potrebbe superare delta. Con n uguale a 480 il tetto è sotto delta, e tutta la colonna sta sotto la linea.">
+<text x="290.0" y="18.0" text-anchor="middle" fill="currentColor" font-weight="bold">Il tetto di Čebyšëv scende sotto δ</text>
+<polygon points="60.0,240.0 60.0,40.0 167.8,40.0 167.8,40.0 171.0,45.8 174.2,51.3 177.5,56.5 180.7,61.4 183.9,66.1 187.2,70.5 190.4,74.7 193.6,78.7 196.9,82.5 200.1,86.2 203.3,89.6 206.6,92.9 209.8,96.1 213.0,99.2 216.3,102.1 219.5,104.9 222.7,107.5 226.0,110.1 229.2,112.6 232.4,115.0 235.7,117.3 238.9,119.5 242.1,121.7 245.4,123.7 248.6,125.7 251.8,127.6 255.1,129.5 258.3,131.3 261.5,133.0 264.8,134.7 268.0,136.4 271.2,138.0 274.5,139.5 277.7,141.0 280.9,142.4 284.2,143.8 287.4,145.2 290.6,146.5 293.9,147.8 297.1,149.1 300.3,150.3 303.6,151.5 306.8,152.7 310.0,153.8 313.3,154.9 316.5,156.0 319.7,157.0 323.0,158.0 326.2,159.0 329.4,160.0 332.7,160.9 335.9,161.9 339.1,162.8 342.4,163.7 345.6,164.5 348.8,165.4 352.1,166.2 355.3,167.0 358.5,167.8 361.8,168.6 365.0,169.3 368.2,170.1 371.5,170.8 374.7,171.5 377.9,172.2 381.2,172.9 384.4,173.6 387.6,174.2 390.9,174.9 394.1,175.5 397.3,176.1 400.6,176.7 403.8,177.3 407.0,177.9 410.3,178.5 413.5,179.0 416.7,179.6 420.0,180.1 423.2,180.7 426.4,181.2 429.7,181.7 432.9,182.2 436.1,182.7 439.4,183.2 442.6,183.7 445.8,184.1 449.1,184.6 452.3,185.1 455.5,185.5 458.8,185.9 462.0,186.4 465.2,186.8 468.5,187.2 471.7,187.6 474.9,188.1 478.2,188.5 481.4,188.8 484.6,189.2 487.9,189.6 491.1,190.0 494.3,190.4 497.6,190.7 500.8,191.1 504.0,191.5 507.3,191.8 510.5,192.2 513.7,192.5 517.0,192.8 520.2,193.2 523.4,193.5 526.7,193.8 529.9,194.1 533.1,194.4 536.4,194.8 539.6,195.1 542.8,195.4 545.0,195.6 545.0,240.0" fill="#4051b5" opacity="0.10"/>
+<polyline points="167.8,40.0 167.8,40.0 171.0,45.8 174.2,51.3 177.5,56.5 180.7,61.4 183.9,66.1 187.2,70.5 190.4,74.7 193.6,78.7 196.9,82.5 200.1,86.2 203.3,89.6 206.6,92.9 209.8,96.1 213.0,99.2 216.3,102.1 219.5,104.9 222.7,107.5 226.0,110.1 229.2,112.6 232.4,115.0 235.7,117.3 238.9,119.5 242.1,121.7 245.4,123.7 248.6,125.7 251.8,127.6 255.1,129.5 258.3,131.3 261.5,133.0 264.8,134.7 268.0,136.4 271.2,138.0 274.5,139.5 277.7,141.0 280.9,142.4 284.2,143.8 287.4,145.2 290.6,146.5 293.9,147.8 297.1,149.1 300.3,150.3 303.6,151.5 306.8,152.7 310.0,153.8 313.3,154.9 316.5,156.0 319.7,157.0 323.0,158.0 326.2,159.0 329.4,160.0 332.7,160.9 335.9,161.9 339.1,162.8 342.4,163.7 345.6,164.5 348.8,165.4 352.1,166.2 355.3,167.0 358.5,167.8 361.8,168.6 365.0,169.3 368.2,170.1 371.5,170.8 374.7,171.5 377.9,172.2 381.2,172.9 384.4,173.6 387.6,174.2 390.9,174.9 394.1,175.5 397.3,176.1 400.6,176.7 403.8,177.3 407.0,177.9 410.3,178.5 413.5,179.0 416.7,179.6 420.0,180.1 423.2,180.7 426.4,181.2 429.7,181.7 432.9,182.2 436.1,182.7 439.4,183.2 442.6,183.7 445.8,184.1 449.1,184.6 452.3,185.1 455.5,185.5 458.8,185.9 462.0,186.4 465.2,186.8 468.5,187.2 471.7,187.6 474.9,188.1 478.2,188.5 481.4,188.8 484.6,189.2 487.9,189.6 491.1,190.0 494.3,190.4 497.6,190.7 500.8,191.1 504.0,191.5 507.3,191.8 510.5,192.2 513.7,192.5 517.0,192.8 520.2,193.2 523.4,193.5 526.7,193.8 529.9,194.1 533.1,194.4 536.4,194.8 539.6,195.1 542.8,195.4 545.0,195.6" fill="none" stroke="#4051b5" stroke-width="2.2"/>
+<rect x="214.7" y="156.7" width="14" height="83.3" fill="#4051b5" opacity="0.35"/>
+<rect x="214.7" y="106.7" width="14" height="50.0" fill="#e03a3a" opacity="0.45"/>
+<circle cx="221.7" cy="106.7" r="3.5" fill="#4051b5"/>
+<rect x="441.0" y="184.4" width="14" height="55.6" fill="#4051b5" opacity="0.35"/>
+<circle cx="448.0" cy="184.4" r="3.5" fill="#4051b5"/>
+<line x1="60.0" y1="156.7" x2="545.0" y2="156.7" stroke="#e07a1f" stroke-width="2" stroke-dasharray="6,4"/>
+<text x="545.0" y="172.7" text-anchor="end" fill="#e07a1f" font-weight="bold">δ = 0,05</text>
+<line x1="318.7" y1="156.7" x2="318.7" y2="240.0" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3" opacity="0.7"/>
+<circle cx="318.7" cy="156.7" r="4" fill="#e07a1f"/>
+<line x1="60.0" y1="240.0" x2="545.0" y2="240.0" stroke="currentColor" stroke-width="1"/>
+<line x1="60.0" y1="240.0" x2="60.0" y2="40.0" stroke="currentColor" stroke-width="1"/>
+<line x1="60.0" y1="240.0" x2="60.0" y2="245.0" stroke="currentColor" stroke-width="1"/>
+<text x="60.0" y="258.0" text-anchor="middle" fill="currentColor">0</text>
+<line x1="140.8" y1="240.0" x2="140.8" y2="245.0" stroke="currentColor" stroke-width="1"/>
+<text x="140.8" y="258.0" text-anchor="middle" fill="currentColor">100</text>
+<line x1="221.7" y1="240.0" x2="221.7" y2="245.0" stroke="currentColor" stroke-width="1"/>
+<text x="221.7" y="258.0" text-anchor="middle" fill="currentColor">200</text>
+<line x1="302.5" y1="240.0" x2="302.5" y2="245.0" stroke="currentColor" stroke-width="1"/>
+<line x1="383.3" y1="240.0" x2="383.3" y2="245.0" stroke="currentColor" stroke-width="1"/>
+<text x="383.3" y="258.0" text-anchor="middle" fill="currentColor">400</text>
+<line x1="464.2" y1="240.0" x2="464.2" y2="245.0" stroke="currentColor" stroke-width="1"/>
+<text x="464.2" y="258.0" text-anchor="middle" fill="currentColor">500</text>
+<line x1="545.0" y1="240.0" x2="545.0" y2="245.0" stroke="currentColor" stroke-width="1"/>
+<text x="545.0" y="258.0" text-anchor="middle" fill="currentColor">600</text>
+<line x1="318.7" y1="240.0" x2="318.7" y2="245.0" stroke="currentColor" stroke-width="1"/>
+<text x="318.7" y="258.0" text-anchor="middle" fill="currentColor" font-weight="bold">320</text>
+<line x1="55.0" y1="240.0" x2="60.0" y2="240.0" stroke="currentColor" stroke-width="1"/>
+<text x="52.0" y="244.0" text-anchor="end" fill="currentColor">0</text>
+<line x1="55.0" y1="156.7" x2="60.0" y2="156.7" stroke="currentColor" stroke-width="1"/>
+<text x="52.0" y="160.7" text-anchor="end" fill="currentColor">0,05</text>
+<line x1="55.0" y1="73.3" x2="60.0" y2="73.3" stroke="currentColor" stroke-width="1"/>
+<text x="52.0" y="77.3" text-anchor="end" fill="currentColor">0,10</text>
+<text x="290.0" y="282.0" text-anchor="middle" fill="currentColor">numero di esecuzioni n</text>
+<text x="168.0" y="78.0" text-anchor="end" fill="#4051b5" font-weight="bold">tetto di</text>
+<text x="168.0" y="93.0" text-anchor="end" fill="#4051b5" font-weight="bold">Čebyšëv: 16/n</text>
+<text x="60.0" y="33.0" text-anchor="middle" fill="currentColor" font-size="12">probabilità</text>
+<text x="233.7" y="86.0" text-anchor="start" fill="currentColor" font-size="12"><tspan font-weight="bold">n = 200</tspan>: il tetto sta sopra δ, e la</text>
+<text x="233.7" y="100.0" text-anchor="start" fill="currentColor" font-size="12">probabilità di sbagliare <tspan fill="#e03a3a" font-weight="bold">potrebbe</tspan> superare δ</text>
+<text x="545.0" y="122.0" text-anchor="end" fill="currentColor" font-size="12"><tspan font-weight="bold">n = 480</tspan>: il tetto sta sotto δ, e quindi</text>
+<text x="545.0" y="136.0" text-anchor="end" fill="currentColor" font-size="12">anche la probabilità di sbagliare</text>
+<line x1="448.0" y1="141.0" x2="448.0" y2="179.4" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+</svg>
+<figcaption>Il tetto di Čebyšëv per i tempi di esecuzione, con σ² = 4 ed ε = 0,5: vale σ²/(nε²) = 16/n e scende al crescere di n. La probabilità di sbagliare non la conosciamo, ma sta sempre nella zona azzurra sotto la curva. Con n = 200 la colonna supera la linea arancione di δ: la probabilità di sbagliare potrebbe stare nella parte rossa, e quindi non abbiamo la garanzia. Da n = 320 in poi il tetto sta sotto δ, e con lui tutta la colonna, come si vede per n = 480.</figcaption>
+</figure>
+
+Restano da trovare gli $n$ per cui il tetto sta sotto la linea di $\delta$. Imponiamo quindi
+
+$$
+\frac{\sigma^2}{n\,\varepsilon^2}\le\delta .
+$$
+
+Per isolare $n$ moltiplichiamo entrambi i membri per $n/\delta$, che è un numero positivo, quindi il verso della disuguaglianza resta lo stesso:
+
+$$
+\frac{\sigma^2}{\delta\,\varepsilon^2}\le n,\qquad\text{cioè}\qquad n\ge\frac{\sigma^2}{\delta\,\varepsilon^2}.
+$$
+
+La condizione chiede che $n$ sia abbastanza grande, ed è giusto così: più osservazioni facciamo, più il tetto si abbassa. Con i nostri numeri, $\sigma^2=4$, $\varepsilon=0{,}5$ e $\delta=0{,}05$, troviamo $n\ge4/(0{,}05\cdot0{,}5^2)=4/0{,}0125=320$: è il punto in cui, nella figura, il tetto incontra la linea di $\delta$.
+
+Con Čebyšëv servono dunque 320 esecuzioni, mentre con il teorema del limite centrale, come abbiamo visto poco fa, ne bastano 62, circa cinque volte meno. Da dove viene la differenza? Dal fatto che Čebyšëv deve valere per **qualunque** distribuzione con quella varianza, comprese le più sfavorevoli, come abbiamo visto nella [tabella della Settimana 8](../settimana_08/index.md#cebysev-confronto), e per essere sicuro in tutti i casi deve essere molto prudente. La media di molte esecuzioni, invece, non ha una distribuzione qualunque: il teorema ci dice che, quando $n$ è grande, è approssimativamente normale. Conoscendo la forma della distribuzione possiamo calcolare la probabilità di sbagliare, invece di accontentarci di un tetto, e quella prudenza non serve più.
+
+I due numeri, inoltre, non sono risposte dello stesso tipo. Il numero 320 di Čebyšëv è una garanzia: vale per ogni distribuzione dei tempi con varianza 4, senza eccezioni. Il numero 62 del teorema viene da un’approssimazione, perché abbiamo trattato la media delle esecuzioni come se fosse esattamente normale. In questo problema l’approssimazione è affidabile. Le 62 esecuzioni sono più del doppio delle 30 della regola pratica che si usa di solito, «basta $n>30$», e il [terzo laboratorio](#lab-esecuzioni) conferma il conto anche con tempi molto asimmetrici. Esistono però distribuzioni per cui la regola pratica non basta, e le incontreremo nell’[Atto VI](#quanto-grande).
+
+C’è però un’ipotesi che il conto dà per scontata: le esecuzioni devono essere indipendenti e identicamente distribuite. Un benchmark reale lo è solo se lo prepariamo con cura. Come abbiamo visto nella [Settimana 8](../settimana_08/index.md#lgn-informatica), le prime esecuzioni trovano la cache vuota e sono più lente delle altre, quindi non hanno la stessa distribuzione; per questo si scartano alcune esecuzioni iniziali «di riscaldamento». Anche l’indipendenza può mancare. Se un altro programma occupa il processore per qualche secondo, rallenta molte esecuzioni consecutive insieme: è una causa comune, come il database sovraccarico che incontreremo nell’[Atto VI](#serve-indipendenza), e la media delle esecuzioni varia più di quanto dica la formula $\sigma/\sqrt n$. Se queste condizioni non sono rispettate, 62 esecuzioni non garantiscono la precisione che abbiamo calcolato, e nemmeno un numero più grande di esecuzioni risolve il problema: un errore che colpisce tutte le misure non si riduce facendo la media.
+
+Notiamo anche come è posto il problema. Abbiamo supposto di conoscere $\sigma$, e abbiamo calcolato la probabilità che la media cada vicino a un valore $t$ fissato. Nella pratica succede il contrario: $t$ non lo conosciamo, $\sigma$ nemmeno, e dopo aver misurato i tempi vogliamo dire qualcosa su $t$. Rovesciare la domanda in questo modo, dai dati al parametro, è il tema della Settimana 10, dove costruiremo gli intervalli di confidenza.
+
+Qui lasciamo i tempi di esecuzione e torniamo all’urna di Bernoulli, per mantenere la promessa fatta nella sezione precedente: con Čebyšëv servono 600 600 estrazioni. La formula $n\ge\sigma^2/(\delta\,\varepsilon^2)$ vale per la media di variabili qualsiasi, quindi anche per la frazione di bianchi $f_n$, che è la media delle indicatrici delle estrazioni. Basta tradurre i tre ingredienti. La varianza di una singola indicatrice è $\sigma^2=p(1-p)=0{,}24$. Il margine è $\varepsilon=0{,}02$. Sbagliare, per l’urna, vuol dire che la frazione cade fuori dall’intervallo tra $0{,}58$ e $0{,}62$, e la probabilità di sbagliare deve essere al più $\delta=1/1001$, il numero che abbiamo trovato traducendo «mille volte più grande». Allora
+
+$$
+n\ge\frac{0{,}24}{(1/1001)\cdot0{,}02^2}=\frac{0{,}24\cdot1001}{0{,}0004}=600\,600.
+$$
+
+Con il teorema del limite centrale ne bastavano circa 6500, più di novanta volte meno. Il motivo è lo stesso che abbiamo visto con le esecuzioni: Čebyšëv deve valere per qualunque distribuzione, mentre il teorema sfrutta il fatto che la frazione di bianchi è approssimativamente normale.
+
+!!! example "Sosta di verifica"
+    Vogliamo stimare con una simulazione Monte Carlo una probabilità sconosciuta $p$, con un errore al più di $0{,}01$ e con probabilità almeno del 95%. In ogni simulazione l’evento si verifica oppure no, quindi la sua indicatrice è una variabile bernoulliana di parametro $p$, e la frazione di simulazioni in cui si verifica è una media campionaria di indicatrici. La varianza di una variabile bernoulliana, $p(1-p)$, non supera mai $1/4$ ([Settimana 8](../settimana_08/index.md#frequenze)), quindi possiamo usare $\sigma^2=1/4$ qualunque sia $p$. Con Čebyšëv, come per il benchmark, servono $n\ge(1/4)/(0{,}05\cdot0{,}01^2)=50\,000$ simulazioni. Quante ne bastano secondo il teorema del limite centrale?
+
+    ??? esempio-svolto "Risposta"
+        La frequenza è una media di indicatrici con varianza $p(1-p)\le1/4$, quindi $\sigma\le1/2$. Con la formula, $n\ge(1{,}96\cdot0{,}5/0{,}01)^2=98^2=9604$. Bastano circa 9600 simulazioni, poco meno di un quinto delle 50 000 di Čebyšëv.
+
+### Laboratorio: le esecuzioni simulate {: #lab-esecuzioni }
+
+Il terzo script simula il benchmark con tempi di esecuzione volutamente **asimmetrici**: ogni esecuzione dura 8 secondi più un’attesa esponenziale con media 2 secondi, quindi ha media 10 s e varianza 4 s², come nel problema del benchmark, ma una distribuzione molto lontana dalla campana. Per $n=10$, 62 e 320 esecuzioni, conta quante volte la media cade entro mezzo secondo da 10, e confronta il risultato con la probabilità prevista dal teorema.
+
+<div class="psi-exec" markdown="1">
+```python
+from math import sqrt
+from statistics import NormalDist
+
+import numpy as np
+
+# Il generatore di numeri casuali. Il numero tra parentesi, il «seme»,
+# fa uscire ogni volta gli stessi numeri, così i risultati si possono ripetere.
+rng = np.random.default_rng(1810)
+
+# La distribuzione normale standard. Z.cdf(z) calcola Phi(z), cioè la tabella
+# letta nel verso diretto; Z.inv_cdf(p) trova lo z per cui Phi(z) = p, cioè
+# legge la tabella al contrario.
+Z = NormalDist()
+
+# Il numero di volte in cui ripetiamo ogni esperimento simulato.
+prove = 10_000
+
+# I dati del problema del benchmark.
+sigma = 2          # deviazione standard di un tempo, in secondi (varianza 4)
+margine = 0.5      # vogliamo la media entro mezzo secondo dal valore vero
+valore_vero = 10   # il tempo medio vero, in secondi
+
+# Ogni esecuzione dura 8 secondi fissi più un'attesa esponenziale con media
+# 2 secondi. Il tempo ha quindi media 8 + 2 = 10 secondi e varianza 2² = 4,
+# come nel problema, ma la sua distribuzione non ha la forma di una campana.
+for n in [10, 62, 320]:
+    # Una riga per ogni prova e una colonna per ogni esecuzione.
+    tempi = 8 + rng.exponential(2, size=(prove, n))
+
+    # La media delle n esecuzioni, calcolata riga per riga: una per ogni prova.
+    medie = tempi.mean(axis=1)
+
+    # Quanto dista ogni media dal valore vero, in valore assoluto.
+    distanze = np.abs(medie - valore_vero)
+
+    # Le prove in cui la media cade vicino al valore vero, cioè a meno di
+    # mezzo secondo. Il confronto distanze < margine dà, per ogni prova, True
+    # (vero) oppure False (falso); nella somma ogni True conta 1 e ogni False
+    # conta 0, quindi otteniamo il numero di prove in cui la media è vicina.
+    vicine = np.sum(distanze < margine)
+    frazione_simulata = vicine / prove
+
+    # La stessa probabilità secondo il teorema. La media ha deviazione
+    # standard sigma / √n; c è il margine misurato in quelle deviazioni
+    # standard, e l'intervallo simmetrico (-c, c) ha probabilità 2·Phi(c) - 1.
+    dev_std_media = sigma / sqrt(n)
+    c = margine / dev_std_media
+    frazione_tlc = 2 * Z.cdf(c) - 1
+
+    # Il formato .1% stampa il numero come percentuale, con un decimale.
+    print()
+    print(f"Benchmark con n = {n} esecuzioni")
+    print(f"  media vicina al valore vero nel {frazione_simulata:.1%} delle prove")
+    print(f"  il teorema prevede il {frazione_tlc:.1%}")
+```
+</div>
+
+Con 62 esecuzioni la media cade entro mezzo secondo circa il 95% delle volte, come previsto, anche se i singoli tempi sono tutt’altro che normali; con 10 esecuzioni la percentuale scende sotto il 60%, e con 320, il numero di Čebyšëv, sfiora il 100%: la garanzia di Čebyšëv era vera, ma molto più costosa del necessario. Prova a sostituire l’attesa esponenziale con `rng.pareto(1.5, size=(prove, n))`, che ha una coda molto pesante: che cosa succede? La risposta è nel prossimo atto.
+
+## Atto VI — Che cosa il teorema garantisce, e che cosa no {: #limiti }
+
+Il teorema **garantisce** una cosa precisa: se sommiamo variabili indipendenti e identicamente distribuite con varianza finita, la funzione di ripartizione della somma standardizzata si avvicina a $\Phi$ quando il numero degli addendi cresce. In pratica, per $n$ grande, le variabili aleatorie _somma_ $S_n$ e _media campionaria_ $\bar{X}_n$ hanno approssimativamente la distribuzione normale, con il valore atteso e la varianza calcolati nella Settimana 8.
+
+Nota bene: il teorema non dice quanto deve essere grande $n$, e parla di somme e di medie, non dei singoli dati. Il valore atteso e la varianza di $S_n$ e di $\bar{X}_n$, invece, valgono esattamente per ogni $n$: il teorema aggiunge la forma della distribuzione, ma soltanto in modo approssimato e per $n$ grande.
+
+### Servono variabili indipendenti {: #serve-indipendenza }
+
+Un errore da non commettere è applicare il teorema quando le variabili che si sommano **non** sono indipendenti. Se sommiamo il valore di una stessa variabile $X$ con se stessa, $Y=X+X=2X$, la regola della Settimana 8 non vale: se $X\sim\mathcal N(\mu,\sigma^2)$, allora $Y$ è sì normale, ma con varianza $4\sigma^2$ e non $2\sigma^2$. La formula $n\sigma^2$, e quindi la larghezza $\sigma\sqrt n$ della campana, richiede addendi indipendenti.
+
+Il controesempio diventa più drammatico se $X$ non è normale. Supponiamo che $X$ sia esponenziale, e sommiamo $n$ copie della stessa variabile: $X+X+\cdots+X=nX$. Moltiplicare per $n$ cambia la scala ma non la forma, e $nX$ ha la stessa forma esponenziale di $X$, con il picco in zero e la lunga coda a destra, per ogni $n$. Nessuna campana compare mai, perché in tutta la somma c’è una sola fonte di casualità: non ci sono scarti che si compensino. La campana nasce proprio dalla compensazione di molti scarti indipendenti, alcuni in su e alcuni in giù.
+
+Nei sistemi informatici la dipendenza è frequente. I tempi di risposta di cento richieste arrivate nello stesso secondo non sono indipendenti se tutte devono passare per lo stesso database sovraccarico: quando il database rallenta, rallentano tutte insieme. In questo caso, se $\sigma^2$ è la varianza del tempo di risposta di una singola richiesta, la somma dei cento tempi non ha varianza $100\sigma^2$: i ritardi vanno tutti nello stesso verso invece di compensarsi, e la varianza della somma è più grande, spesso molto più grande. La campana con larghezza $\sigma\sqrt{100}$ è quindi troppo stretta per descrivere questa somma, e sottovaluta il rischio di ritardi lunghi. Non ogni dipendenza, però, impedisce alla somma di avvicinarsi a una campana. Pensiamo agli addendi messi in fila nell’ordine in cui arrivano, come le richieste a un server durante una giornata. Due richieste vicine nella fila, arrivate a pochi millisecondi di distanza, trovano il server nello stesso stato e possono influenzarsi; due richieste lontane nella fila, arrivate a ore di distanza, sono quasi indipendenti. Quando la dipendenza si attenua in questo modo, al crescere della distanza nella fila, si può dimostrare che la somma si avvicina comunque a una campana, anche se la larghezza della campana va calcolata tenendo conto della dipendenza. Succede lo stesso con la legge dei grandi numeri: Markov dimostrò che vale anche per variabili dipendenti in questo modo ([Settimana 8, Lettura A](../settimana_08/index.md#catene)). Una _causa comune_ che agisce su tutti gli addendi, come il database sovraccarico, crea invece una dipendenza che non si attenua: lega allo stesso modo gli addendi vicini e quelli lontani, e il teorema non si può applicare.
+
+### Il teorema non dice quanto grande deve essere n {: #quanto-grande }
+
+Il teorema parla di un limite, cioè di che cosa succede quando $n$ tende all’infinito, e non fissa nessun valore di $n$ oltre il quale l’approssimazione sia buona. Nei libri si trova spesso la regola «basta $n>30$», presentata come una regola empirica. È una regola pratica, non un teorema, e il numero giusto dipende dalla distribuzione degli addendi.
+
+Abbiamo già visto i due estremi. Con addendi uniformi tra 0 e 1, che sono simmetrici e senza code, cinque addendi bastano perché la densità somigli già a una campana: su $P(S_n<n/3)$ l’errore è di tre decimi di punto percentuale. Simmetria e assenza di code non sono requisiti del teorema, che chiede soltanto indipendenza e varianza finita: sono le proprietà che rendono l’uniforme il caso più facile. Con una moneta equilibrata, De Moivre diceva che bastano cento lanci. Con gli addendi **asimmetrici** serve molto di più. La figura mostra la somma standardizzata di $n$ tempi esponenziali: con $n=1$ è l’esponenziale stessa, con il picco a sinistra e la lunga coda a destra; con $n=5$ è ancora storta; con $n=30$ è vicina alla campana, ma non sovrapposta.
+
+<figure markdown="0">
+<svg viewBox="0 0 580 285" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="La somma standardizzata di n tempi esponenziali per n uguale a 1, 5 e 30, confrontata con la normale standard tratteggiata. Con n uguale a 1 la curva parte da un picco a sinistra e ha una lunga coda a destra; con 5 è ancora storta; con 30 è vicina alla campana ma la coda destra resta un po' più alta.">
+<text x="290.0" y="18.0" text-anchor="middle" fill="currentColor" font-weight="bold">Somme di tempi esponenziali, standardizzate</text>
+<polyline points="191.4,230.0 191.4,55.1 191.9,55.1 193.7,59.4 195.5,63.6 197.3,67.8 199.0,71.8 200.8,75.7 202.6,79.5 204.4,83.2 206.1,86.9 207.9,90.4 209.7,93.9 211.5,97.3 213.2,100.5 215.0,103.8 216.8,106.9 218.5,109.9 220.3,112.9 222.1,115.8 223.9,118.6 225.6,121.4 227.4,124.1 229.2,126.7 231.0,129.3 232.7,131.8 234.5,134.2 236.3,136.6 238.1,138.9 239.8,141.1 241.6,143.3 243.4,145.5 245.2,147.6 246.9,149.6 248.7,151.6 250.5,153.6 252.3,155.5 254.0,157.3 255.8,159.1 257.6,160.9 259.4,162.6 261.1,164.2 262.9,165.9 264.7,167.5 266.5,169.0 268.2,170.5 270.0,172.0 271.8,173.4 273.5,174.8 275.3,176.2 277.1,177.5 278.9,178.8 280.6,180.1 282.4,181.3 284.2,182.5 286.0,183.7 287.7,184.9 289.5,186.0 291.3,187.1 293.1,188.1 294.8,189.2 296.6,190.2 298.4,191.2 300.2,192.1 301.9,193.1 303.7,194.0 305.5,194.9 307.3,195.8 309.0,196.6 310.8,197.4 312.6,198.2 314.4,199.0 316.1,199.8 317.9,200.5 319.7,201.3 321.5,202.0 323.2,202.7 325.0,203.4 326.8,204.0 328.5,204.7 330.3,205.3 332.1,205.9 333.9,206.5 335.6,207.1 337.4,207.6 339.2,208.2 341.0,208.7 342.7,209.3 344.5,209.8 346.3,210.3 348.1,210.8 349.8,211.2 351.6,211.7 353.4,212.2 355.2,212.6 356.9,213.0 358.7,213.5 360.5,213.9 362.3,214.3 364.0,214.7 365.8,215.0 367.6,215.4 369.4,215.8 371.1,216.1 372.9,216.5 374.7,216.8 376.5,217.1 378.2,217.4 380.0,217.8 381.8,218.1 383.5,218.4 385.3,218.6 387.1,218.9 388.9,219.2 390.6,219.5 392.4,219.7 394.2,220.0 396.0,220.2 397.7,220.5 399.5,220.7 401.3,220.9 403.1,221.2 404.8,221.4 406.6,221.6 408.4,221.8 410.2,222.0 411.9,222.2 413.7,222.4 415.5,222.6 417.3,222.8 419.0,223.0 420.8,223.1 422.6,223.3 424.4,223.5 426.1,223.6 427.9,223.8 429.7,223.9 431.5,224.1 433.2,224.2 435.0,224.4 436.8,224.5 438.5,224.7 440.3,224.8 442.1,224.9 443.9,225.0 445.6,225.2 447.4,225.3 449.2,225.4 451.0,225.5 452.7,225.6 454.5,225.7 456.3,225.8 458.1,225.9 459.8,226.0 461.6,226.1 463.4,226.2 465.2,226.3 466.9,226.4 468.7,226.5 470.5,226.6 472.3,226.7 474.0,226.8 475.8,226.8 477.6,226.9 479.4,227.0 481.1,227.1 482.9,227.1 484.7,227.2 486.5,227.3 488.2,227.4 490.0,227.4 491.8,227.5 493.5,227.5 495.3,227.6 497.1,227.7 498.9,227.7 500.6,227.8 502.4,227.8 504.2,227.9 506.0,227.9 507.7,228.0 509.5,228.0 511.3,228.1 513.1,228.1 514.8,228.2 516.6,228.2 518.4,228.3 520.2,228.3 521.9,228.4 523.7,228.4 525.5,228.4 527.3,228.5 529.0,228.5 530.8,228.5 532.6,228.6 534.4,228.6 536.1,228.7 537.9,228.7 539.7,228.7 541.5,228.8 543.2,228.8 545.0,228.8" fill="none" stroke="#8a4fbf" stroke-width="2.2"/>
+<polyline points="105.0,230.0 106.8,230.0 108.5,230.0 110.3,230.0 112.1,229.9 113.9,229.9 115.6,229.8 117.4,229.7 119.2,229.5 121.0,229.2 122.7,228.9 124.5,228.5 126.3,228.0 128.1,227.4 129.8,226.8 131.6,226.0 133.4,225.2 135.2,224.2 136.9,223.2 138.7,222.1 140.5,220.8 142.3,219.5 144.0,218.1 145.8,216.7 147.6,215.1 149.4,213.5 151.1,211.8 152.9,210.0 154.7,208.2 156.5,206.4 158.2,204.5 160.0,202.6 161.8,200.6 163.5,198.6 165.3,196.6 167.1,194.6 168.9,192.7 170.6,190.7 172.4,188.7 174.2,186.7 176.0,184.8 177.7,182.9 179.5,181.0 181.3,179.2 183.1,177.4 184.8,175.6 186.6,173.9 188.4,172.3 190.2,170.7 191.9,169.2 193.7,167.7 195.5,166.3 197.3,165.0 199.0,163.7 200.8,162.5 202.6,161.4 204.4,160.3 206.1,159.3 207.9,158.4 209.7,157.6 211.5,156.8 213.2,156.1 215.0,155.5 216.8,155.0 218.5,154.5 220.3,154.1 222.1,153.7 223.9,153.5 225.6,153.3 227.4,153.1 229.2,153.0 231.0,153.0 232.7,153.1 234.5,153.2 236.3,153.3 238.1,153.6 239.8,153.8 241.6,154.1 243.4,154.5 245.2,154.9 246.9,155.4 248.7,155.9 250.5,156.4 252.3,157.0 254.0,157.6 255.8,158.3 257.6,159.0 259.4,159.7 261.1,160.4 262.9,161.2 264.7,162.0 266.5,162.8 268.2,163.7 270.0,164.5 271.8,165.4 273.5,166.3 275.3,167.2 277.1,168.2 278.9,169.1 280.6,170.0 282.4,171.0 284.2,172.0 286.0,172.9 287.7,173.9 289.5,174.9 291.3,175.9 293.1,176.9 294.8,177.9 296.6,178.8 298.4,179.8 300.2,180.8 301.9,181.8 303.7,182.8 305.5,183.7 307.3,184.7 309.0,185.7 310.8,186.6 312.6,187.5 314.4,188.5 316.1,189.4 317.9,190.3 319.7,191.2 321.5,192.1 323.2,193.0 325.0,193.9 326.8,194.7 328.5,195.6 330.3,196.4 332.1,197.2 333.9,198.1 335.6,198.9 337.4,199.6 339.2,200.4 341.0,201.2 342.7,201.9 344.5,202.7 346.3,203.4 348.1,204.1 349.8,204.8 351.6,205.5 353.4,206.1 355.2,206.8 356.9,207.4 358.7,208.0 360.5,208.7 362.3,209.3 364.0,209.8 365.8,210.4 367.6,211.0 369.4,211.5 371.1,212.1 372.9,212.6 374.7,213.1 376.5,213.6 378.2,214.1 380.0,214.6 381.8,215.0 383.5,215.5 385.3,215.9 387.1,216.3 388.9,216.8 390.6,217.2 392.4,217.6 394.2,218.0 396.0,218.3 397.7,218.7 399.5,219.1 401.3,219.4 403.1,219.7 404.8,220.1 406.6,220.4 408.4,220.7 410.2,221.0 411.9,221.3 413.7,221.6 415.5,221.8 417.3,222.1 419.0,222.4 420.8,222.6 422.6,222.9 424.4,223.1 426.1,223.3 427.9,223.6 429.7,223.8 431.5,224.0 433.2,224.2 435.0,224.4 436.8,224.6 438.5,224.8 440.3,224.9 442.1,225.1 443.9,225.3 445.6,225.5 447.4,225.6 449.2,225.8 451.0,225.9 452.7,226.1 454.5,226.2 456.3,226.3 458.1,226.5 459.8,226.6 461.6,226.7 463.4,226.8 465.2,226.9 466.9,227.0 468.7,227.2 470.5,227.3 472.3,227.4 474.0,227.4 475.8,227.5 477.6,227.6 479.4,227.7 481.1,227.8 482.9,227.9 484.7,228.0 486.5,228.0 488.2,228.1 490.0,228.2 491.8,228.2 493.5,228.3 495.3,228.4 497.1,228.4 498.9,228.5 500.6,228.5 502.4,228.6 504.2,228.7 506.0,228.7 507.7,228.8 509.5,228.8 511.3,228.8 513.1,228.9 514.8,228.9 516.6,229.0 518.4,229.0 520.2,229.1 521.9,229.1 523.7,229.1 525.5,229.2 527.3,229.2 529.0,229.2 530.8,229.3 532.6,229.3 534.4,229.3 536.1,229.3 537.9,229.4 539.7,229.4 541.5,229.4 543.2,229.4 545.0,229.5" fill="none" stroke="#e07a1f" stroke-width="2.2"/>
+<polyline points="50.0,229.9 51.8,229.9 53.5,229.9 55.3,229.8 57.1,229.8 58.9,229.8 60.6,229.8 62.4,229.7 64.2,229.7 66.0,229.6 67.7,229.6 69.5,229.5 71.3,229.5 73.1,229.4 74.8,229.3 76.6,229.3 78.4,229.2 80.2,229.1 81.9,228.9 83.7,228.8 85.5,228.7 87.3,228.5 89.0,228.4 90.8,228.2 92.6,228.0 94.4,227.8 96.1,227.6 97.9,227.4 99.7,227.1 101.5,226.8 103.2,226.5 105.0,226.2 106.8,225.9 108.5,225.5 110.3,225.1 112.1,224.7 113.9,224.3 115.6,223.9 117.4,223.4 119.2,222.9 121.0,222.3 122.7,221.8 124.5,221.2 126.3,220.5 128.1,219.9 129.8,219.2 131.6,218.5 133.4,217.8 135.2,217.0 136.9,216.2 138.7,215.4 140.5,214.5 142.3,213.6 144.0,212.7 145.8,211.8 147.6,210.8 149.4,209.8 151.1,208.8 152.9,207.8 154.7,206.7 156.5,205.6 158.2,204.5 160.0,203.3 161.8,202.2 163.5,201.0 165.3,199.8 167.1,198.6 168.9,197.4 170.6,196.2 172.4,194.9 174.2,193.7 176.0,192.4 177.7,191.2 179.5,189.9 181.3,188.6 183.1,187.4 184.8,186.1 186.6,184.9 188.4,183.6 190.2,182.4 191.9,181.2 193.7,180.0 195.5,178.8 197.3,177.6 199.0,176.5 200.8,175.3 202.6,174.2 204.4,173.2 206.1,172.1 207.9,171.1 209.7,170.1 211.5,169.2 213.2,168.2 215.0,167.4 216.8,166.5 218.5,165.7 220.3,164.9 222.1,164.2 223.9,163.5 225.6,162.9 227.4,162.3 229.2,161.7 231.0,161.2 232.7,160.8 234.5,160.3 236.3,160.0 238.1,159.6 239.8,159.4 241.6,159.1 243.4,159.0 245.2,158.8 246.9,158.8 248.7,158.7 250.5,158.7 252.3,158.8 254.0,158.9 255.8,159.0 257.6,159.2 259.4,159.5 261.1,159.7 262.9,160.0 264.7,160.4 266.5,160.8 268.2,161.2 270.0,161.7 271.8,162.2 273.5,162.8 275.3,163.4 277.1,164.0 278.9,164.6 280.6,165.3 282.4,166.0 284.2,166.7 286.0,167.5 287.7,168.3 289.5,169.1 291.3,169.9 293.1,170.7 294.8,171.6 296.6,172.5 298.4,173.4 300.2,174.3 301.9,175.2 303.7,176.1 305.5,177.1 307.3,178.0 309.0,179.0 310.8,180.0 312.6,180.9 314.4,181.9 316.1,182.9 317.9,183.9 319.7,184.9 321.5,185.8 323.2,186.8 325.0,187.8 326.8,188.8 328.5,189.7 330.3,190.7 332.1,191.7 333.9,192.6 335.6,193.6 337.4,194.5 339.2,195.4 341.0,196.3 342.7,197.2 344.5,198.1 346.3,199.0 348.1,199.9 349.8,200.7 351.6,201.6 353.4,202.4 355.2,203.2 356.9,204.0 358.7,204.8 360.5,205.6 362.3,206.4 364.0,207.1 365.8,207.8 367.6,208.6 369.4,209.3 371.1,209.9 372.9,210.6 374.7,211.3 376.5,211.9 378.2,212.5 380.0,213.1 381.8,213.7 383.5,214.3 385.3,214.9 387.1,215.4 388.9,215.9 390.6,216.5 392.4,217.0 394.2,217.5 396.0,217.9 397.7,218.4 399.5,218.8 401.3,219.3 403.1,219.7 404.8,220.1 406.6,220.5 408.4,220.9 410.2,221.2 411.9,221.6 413.7,221.9 415.5,222.3 417.3,222.6 419.0,222.9 420.8,223.2 422.6,223.5 424.4,223.8 426.1,224.0 427.9,224.3 429.7,224.5 431.5,224.8 433.2,225.0 435.0,225.2 436.8,225.4 438.5,225.6 440.3,225.8 442.1,226.0 443.9,226.2 445.6,226.4 447.4,226.6 449.2,226.7 451.0,226.9 452.7,227.0 454.5,227.2 456.3,227.3 458.1,227.4 459.8,227.5 461.6,227.7 463.4,227.8 465.2,227.9 466.9,228.0 468.7,228.1 470.5,228.2 472.3,228.3 474.0,228.4 475.8,228.4 477.6,228.5 479.4,228.6 481.1,228.7 482.9,228.7 484.7,228.8 486.5,228.9 488.2,228.9 490.0,229.0 491.8,229.0 493.5,229.1 495.3,229.1 497.1,229.2 498.9,229.2 500.6,229.3 502.4,229.3 504.2,229.3 506.0,229.4 507.7,229.4 509.5,229.4 511.3,229.5 513.1,229.5 514.8,229.5 516.6,229.6 518.4,229.6 520.2,229.6 521.9,229.6 523.7,229.6 525.5,229.7 527.3,229.7 529.0,229.7 530.8,229.7 532.6,229.7 534.4,229.8 536.1,229.8 537.9,229.8 539.7,229.8 541.5,229.8 543.2,229.8 545.0,229.8" fill="none" stroke="#4051b5" stroke-width="2.2"/>
+<polyline points="50.0,229.2 51.8,229.2 53.5,229.1 55.3,229.0 57.1,229.0 58.9,228.9 60.6,228.8 62.4,228.7 64.2,228.6 66.0,228.5 67.7,228.4 69.5,228.3 71.3,228.2 73.1,228.0 74.8,227.9 76.6,227.8 78.4,227.6 80.2,227.4 81.9,227.3 83.7,227.1 85.5,226.9 87.3,226.7 89.0,226.5 90.8,226.3 92.6,226.0 94.4,225.8 96.1,225.5 97.9,225.3 99.7,225.0 101.5,224.7 103.2,224.4 105.0,224.0 106.8,223.7 108.5,223.4 110.3,223.0 112.1,222.6 113.9,222.2 115.6,221.8 117.4,221.3 119.2,220.9 121.0,220.4 122.7,219.9 124.5,219.4 126.3,218.9 128.1,218.4 129.8,217.8 131.6,217.2 133.4,216.6 135.2,216.0 136.9,215.3 138.7,214.7 140.5,214.0 142.3,213.3 144.0,212.6 145.8,211.8 147.6,211.1 149.4,210.3 151.1,209.5 152.9,208.7 154.7,207.8 156.5,207.0 158.2,206.1 160.0,205.2 161.8,204.3 163.5,203.4 165.3,202.5 167.1,201.5 168.9,200.5 170.6,199.6 172.4,198.6 174.2,197.6 176.0,196.5 177.7,195.5 179.5,194.5 181.3,193.4 183.1,192.4 184.8,191.3 186.6,190.3 188.4,189.2 190.2,188.1 191.9,187.1 193.7,186.0 195.5,184.9 197.3,183.9 199.0,182.8 200.8,181.7 202.6,180.7 204.4,179.7 206.1,178.6 207.9,177.6 209.7,176.6 211.5,175.6 213.2,174.7 215.0,173.7 216.8,172.8 218.5,171.9 220.3,171.0 222.1,170.1 223.9,169.3 225.6,168.5 227.4,167.7 229.2,166.9 231.0,166.2 232.7,165.5 234.5,164.9 236.3,164.3 238.1,163.7 239.8,163.1 241.6,162.6 243.4,162.1 245.2,161.7 246.9,161.3 248.7,161.0 250.5,160.7 252.3,160.4 254.0,160.2 255.8,160.0 257.6,159.9 259.4,159.8 261.1,159.7 262.9,159.7 264.7,159.8 266.5,159.8 268.2,160.0 270.0,160.1 271.8,160.4 273.5,160.6 275.3,160.9 277.1,161.3 278.9,161.6 280.6,162.1 282.4,162.5 284.2,163.0 286.0,163.6 287.7,164.2 289.5,164.8 291.3,165.4 293.1,166.1 294.8,166.8 296.6,167.6 298.4,168.4 300.2,169.2 301.9,170.0 303.7,170.9 305.5,171.7 307.3,172.7 309.0,173.6 310.8,174.5 312.6,175.5 314.4,176.5 316.1,177.5 317.9,178.5 319.7,179.5 321.5,180.6 323.2,181.6 325.0,182.7 326.8,183.7 328.5,184.8 330.3,185.8 332.1,186.9 333.9,188.0 335.6,189.0 337.4,190.1 339.2,191.2 341.0,192.2 342.7,193.3 344.5,194.3 346.3,195.4 348.1,196.4 349.8,197.4 351.6,198.4 353.4,199.4 355.2,200.4 356.9,201.4 358.7,202.3 360.5,203.3 362.3,204.2 364.0,205.1 365.8,206.0 367.6,206.9 369.4,207.7 371.1,208.6 372.9,209.4 374.7,210.2 376.5,211.0 378.2,211.7 380.0,212.5 381.8,213.2 383.5,213.9 385.3,214.6 387.1,215.2 388.9,215.9 390.6,216.5 392.4,217.1 394.2,217.7 396.0,218.3 397.7,218.8 399.5,219.3 401.3,219.9 403.1,220.4 404.8,220.8 406.6,221.3 408.4,221.7 410.2,222.1 411.9,222.5 413.7,222.9 415.5,223.3 417.3,223.7 419.0,224.0 420.8,224.3 422.6,224.6 424.4,224.9 426.1,225.2 427.9,225.5 429.7,225.8 431.5,226.0 433.2,226.2 435.0,226.5 436.8,226.7 438.5,226.9 440.3,227.1 442.1,227.2 443.9,227.4 445.6,227.6 447.4,227.7 449.2,227.9 451.0,228.0 452.7,228.1 454.5,228.3 456.3,228.4 458.1,228.5 459.8,228.6 461.6,228.7 463.4,228.8 465.2,228.9 466.9,228.9 468.7,229.0 470.5,229.1 472.3,229.1 474.0,229.2 475.8,229.3 477.6,229.3 479.4,229.4 481.1,229.4 482.9,229.5 484.7,229.5 486.5,229.5 488.2,229.6 490.0,229.6 491.8,229.6 493.5,229.7 495.3,229.7 497.1,229.7 498.9,229.7 500.6,229.8 502.4,229.8 504.2,229.8 506.0,229.8 507.7,229.8 509.5,229.8 511.3,229.9 513.1,229.9 514.8,229.9 516.6,229.9 518.4,229.9 520.2,229.9 521.9,229.9 523.7,229.9 525.5,229.9 527.3,229.9 529.0,229.9 530.8,229.9 532.6,230.0 534.4,230.0 536.1,230.0 537.9,230.0 539.7,230.0 541.5,230.0 543.2,230.0 545.0,230.0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="6,4"/>
+<line x1="50.0" y1="230.0" x2="545.0" y2="230.0" stroke="currentColor" stroke-width="1"/>
+<line x1="50.0" y1="230.0" x2="50.0" y2="235.0" stroke="currentColor" stroke-width="1"/>
+<text x="50.0" y="248.0" text-anchor="middle" fill="currentColor">−3</text>
+<line x1="120.7" y1="230.0" x2="120.7" y2="235.0" stroke="currentColor" stroke-width="1"/>
+<text x="120.7" y="248.0" text-anchor="middle" fill="currentColor">−2</text>
+<line x1="191.4" y1="230.0" x2="191.4" y2="235.0" stroke="currentColor" stroke-width="1"/>
+<text x="191.4" y="248.0" text-anchor="middle" fill="currentColor">−1</text>
+<line x1="262.1" y1="230.0" x2="262.1" y2="235.0" stroke="currentColor" stroke-width="1"/>
+<text x="262.1" y="248.0" text-anchor="middle" fill="currentColor">0</text>
+<line x1="332.9" y1="230.0" x2="332.9" y2="235.0" stroke="currentColor" stroke-width="1"/>
+<text x="332.9" y="248.0" text-anchor="middle" fill="currentColor">1</text>
+<line x1="403.6" y1="230.0" x2="403.6" y2="235.0" stroke="currentColor" stroke-width="1"/>
+<text x="403.6" y="248.0" text-anchor="middle" fill="currentColor">2</text>
+<line x1="474.3" y1="230.0" x2="474.3" y2="235.0" stroke="currentColor" stroke-width="1"/>
+<text x="474.3" y="248.0" text-anchor="middle" fill="currentColor">3</text>
+<line x1="545.0" y1="230.0" x2="545.0" y2="235.0" stroke="currentColor" stroke-width="1"/>
+<text x="545.0" y="248.0" text-anchor="middle" fill="currentColor">4</text>
+<text x="290.0" y="270.0" text-anchor="middle" fill="currentColor">z = (Sₙ − nμ) / (σ√n)</text>
+<text x="209.1" y="60.0" text-anchor="start" fill="#8a4fbf" font-weight="bold">n = 1</text>
+<text x="195.0" y="140.0" text-anchor="end" fill="#e07a1f" font-weight="bold">n = 5</text>
+<text x="297.5" y="148.0" text-anchor="start" fill="#4051b5" font-weight="bold">n = 30</text>
+<text x="403.6" y="180.0" text-anchor="start" fill="currentColor">normale standard</text>
+<line x1="400.0" y1="176.0" x2="354.1" y2="196.0" stroke="currentColor" stroke-width="1" opacity="0.6"/>
+</svg>
+<figcaption>La densità della somma standardizzata di n tempi esponenziali indipendenti, per n = 1 (viola), 5 (arancione) e 30 (blu), confrontata con la normale standard (nero tratteggiato). L’asimmetria dell’esponenziale si attenua lentamente: con 30 addendi il picco è ancora un po’ spostato a sinistra e la coda destra un po’ più alta di quella della campana.</figcaption>
+</figure>
+
+I numeri lo confermano. Per una normale, la probabilità di superare di 2 deviazioni standard la media è il 2,28%, e lo stesso vale per la coda di sinistra. Per la somma di $n$ esponenziali, la coda di destra vale il 4,98% con $n=1$, il 4,10% con $n=5$, il 3,16% con $n=30$ e il 2,79% con $n=100$; la coda di sinistra vale 0 con $n=1$, perché un tempo non può essere negativo, e l’1,22% con $n=30$. Con 30 addendi la coda destra è ancora una volta e mezza quella della normale. Eppure le lampadine, con 40 addendi esponenziali, se la cavavano con un errore di poco più di un punto percentuale. Il motivo non è che 40 sia un numero abbastanza grande in assoluto, ma che la soglia di 365 giorni sta a 0,55 deviazioni standard sotto la media di 400, cioè vicino al centro: lì la campana è già buona, mentre a tradire l’esponenziale sono le code.
+
+C’è un caso ancora più lento: la variabile bernoulliana con $p$ piccolo. Il numero di successi in 100 prove con $p=0{,}01$ ha media 1, e vale zero con probabilità $0{,}99^{100}\approx0{,}366$. La sua distribuzione è una scala di pochi gradini molto storta, che somiglia a una distribuzione di Poisson con media 1 e per niente a una campana. Con cento addendi il teorema non ha ancora fatto il suo lavoro, perché il numero atteso di successi è troppo piccolo. È per questo che, per l’approssimazione normale della distribuzione binomiale, non conta il numero di prove in sé, ma il numero atteso di successi e di insuccessi: come abbiamo visto [nell’Atto V](#binomiale-normale), servono $np$ e $n(1-p)$ almeno 10. Con $p$ vicino a $0$ o a $1$ serve quindi un $n$ molto più grande: con $p=0{,}01$ servono mille prove, mentre con $p=0{,}5$ ne bastano venti.
+
+Infine, anche quando l’approssimazione è buona al centro, lo è meno nelle **code lontane**. Il teorema garantisce che le funzioni di ripartizione si avvicinano, cioè che l’errore assoluto sulle probabilità diventa piccolo; ma una probabilità di un milionesimo calcolata con la normale può essere sbagliata di un fattore dieci senza che l’errore assoluto sia grande. Nei sistemi informatici, dove spesso interessano eventi molto rari come il p99,99 di un tempo di risposta, questo conta: la campana va usata per le probabilità ordinarie, non per quelle estreme. Un esercizio alla fine della dispensa lo mostra con il vecchio trucco di generare numeri normali sommando dodici numeri uniformi (ricorda: p99,99 è il valore superato soltanto da una richiesta su diecimila; la definizione è nella [Settimana 6](../settimana_06/index.md#normale-informatica)).
+
+### Serve una varianza finita: la distribuzione di Cauchy {: #cauchy }
+
+L’ipotesi più sottile è la varianza finita. Tutte le distribuzioni incontrate finora la soddisfano, e si potrebbe pensare che sia una formalità. Non lo è, e la storia di questa ipotesi ci riporta a un protagonista della Settimana 8.
+
+Già nel 1824 Siméon-Denis Poisson aveva notato una legge degli errori molto strana, per la quale la media di molte osservazioni non è più precisa di una singola osservazione. Nel 1853 la stessa legge tornò al centro di una disputa all’Académie des sciences di Parigi. Da una parte c’era Irénée-Jules Bienaymé, lo scopritore della disuguaglianza di Čebyšëv, che difendeva il metodo dei minimi quadrati di Laplace e di Gauss; dall’altra Augustin-Louis Cauchy, che proponeva un metodo diverso e, per mostrare i limiti dei minimi quadrati, usò proprio questa legge. Da allora la distribuzione porta il nome di Cauchy. La sua densità, nella forma più semplice, è
+
+$$
+f(x)=\frac{1}{\pi\,(1+x^2)}\qquad\text{per ogni }x\text{ reale}.
+$$
+
+Il grafico è una campana, simmetrica attorno allo zero, che a prima vista somiglia a quella normale. La differenza sta nelle code. La densità normale scende come $e^{-x^2/2}$, cioè rapidissimamente; la densità di Cauchy scende soltanto come $1/x^2$. La probabilità di cadere oltre 3, in valore assoluto, è lo 0,27% per la normale standard e il 20,5% per Cauchy; oltre 10 è praticamente zero per la normale e ancora il 6,3% per Cauchy. Valori enormi, per una variabile di Cauchy, sono rari ma non rarissimi.
+
+<figure markdown="0">
+<svg viewBox="0 0 580 265" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="La densità normale standard e la densità di Cauchy standard sullo stesso asse da meno 6 a 6. Entrambe sono campane simmetriche centrate in zero, ma quella di Cauchy è più bassa al centro e ha code molto più alte. La probabilità di superare 3 in valore assoluto è 0,27 per cento per la normale e 20,5 per cento per Cauchy.">
+<text x="290.0" y="18.0" text-anchor="middle" fill="currentColor" font-weight="bold">Due campane, code molto diverse</text>
+<polygon points="40.0,210.0 40.0,206.6 41.7,206.6 43.4,206.5 45.1,206.5 46.8,206.4 48.4,206.4 50.1,206.3 51.8,206.3 53.5,206.2 55.2,206.2 56.9,206.1 58.6,206.1 60.3,206.0 62.0,206.0 63.6,205.9 65.3,205.9 67.0,205.8 68.7,205.7 70.4,205.7 72.1,205.6 73.8,205.5 75.5,205.5 77.2,205.4 78.8,205.3 80.5,205.3 82.2,205.2 83.9,205.1 85.6,205.0 87.3,205.0 89.0,204.9 90.7,204.8 92.4,204.7 94.0,204.6 95.7,204.5 97.4,204.4 99.1,204.3 100.8,204.3 102.5,204.2 104.2,204.1 105.9,203.9 107.6,203.8 109.2,203.7 110.9,203.6 112.6,203.5 114.3,203.4 116.0,203.3 117.7,203.1 119.4,203.0 121.1,202.9 122.8,202.8 124.4,202.6 126.1,202.5 127.8,202.3 129.5,202.2 131.2,202.0 132.9,201.9 134.6,201.7 136.3,201.5 138.0,201.4 139.6,201.2 141.3,201.0 143.0,200.8 144.7,200.6 146.4,200.4 148.1,200.2 149.8,200.0 151.5,199.8 153.2,199.5 154.8,199.3 156.5,199.1 158.2,198.8 159.9,198.6 161.6,198.3 163.3,198.0 165.0,197.7 165.0,210.0" fill="#e03a3a" fill-opacity="0.3" stroke="none"/>
+<polygon points="420.0,210.0 420.0,197.7 421.7,198.0 423.4,198.3 425.1,198.6 426.8,198.8 428.5,199.1 430.2,199.3 431.8,199.5 433.5,199.8 435.2,200.0 436.9,200.2 438.6,200.4 440.3,200.6 442.0,200.8 443.7,201.0 445.4,201.2 447.0,201.4 448.7,201.5 450.4,201.7 452.1,201.9 453.8,202.0 455.5,202.2 457.2,202.3 458.9,202.5 460.6,202.6 462.2,202.8 463.9,202.9 465.6,203.0 467.3,203.1 469.0,203.3 470.7,203.4 472.4,203.5 474.1,203.6 475.8,203.7 477.4,203.8 479.1,203.9 480.8,204.1 482.5,204.2 484.2,204.3 485.9,204.3 487.6,204.4 489.3,204.5 491.0,204.6 492.6,204.7 494.3,204.8 496.0,204.9 497.7,205.0 499.4,205.0 501.1,205.1 502.8,205.2 504.5,205.3 506.2,205.3 507.8,205.4 509.5,205.5 511.2,205.5 512.9,205.6 514.6,205.7 516.3,205.7 518.0,205.8 519.7,205.9 521.4,205.9 523.0,206.0 524.7,206.0 526.4,206.1 528.1,206.1 529.8,206.2 531.5,206.2 533.2,206.3 534.9,206.3 536.6,206.4 538.2,206.4 539.9,206.5 541.6,206.5 543.3,206.6 545.0,206.6 545.0,210.0" fill="#e03a3a" fill-opacity="0.3" stroke="none"/>
+<polyline points="40.0,210.0 41.7,210.0 43.4,210.0 45.1,210.0 46.8,210.0 48.4,210.0 50.1,210.0 51.8,210.0 53.5,210.0 55.2,210.0 56.9,210.0 58.6,210.0 60.3,210.0 62.0,210.0 63.6,210.0 65.3,210.0 67.0,210.0 68.7,210.0 70.4,210.0 72.1,210.0 73.8,210.0 75.5,210.0 77.2,210.0 78.8,210.0 80.5,210.0 82.2,210.0 83.9,210.0 85.6,210.0 87.3,210.0 89.0,210.0 90.7,210.0 92.4,210.0 94.0,210.0 95.7,210.0 97.4,210.0 99.1,210.0 100.8,210.0 102.5,210.0 104.2,210.0 105.9,210.0 107.6,210.0 109.2,210.0 110.9,210.0 112.6,210.0 114.3,210.0 116.0,210.0 117.7,210.0 119.4,210.0 121.1,210.0 122.8,210.0 124.4,209.9 126.1,209.9 127.8,209.9 129.5,209.9 131.2,209.9 132.9,209.9 134.6,209.9 136.3,209.8 138.0,209.8 139.6,209.8 141.3,209.8 143.0,209.7 144.7,209.7 146.4,209.6 148.1,209.6 149.8,209.5 151.5,209.4 153.2,209.3 154.8,209.3 156.5,209.2 158.2,209.0 159.9,208.9 161.6,208.8 163.3,208.6 165.0,208.4 166.7,208.2 168.4,208.0 170.1,207.7 171.7,207.4 173.4,207.1 175.1,206.8 176.8,206.4 178.5,206.0 180.2,205.5 181.9,205.1 183.6,204.5 185.3,203.9 186.9,203.3 188.6,202.5 190.3,201.8 192.0,200.9 193.7,200.0 195.4,199.1 197.1,198.0 198.8,196.9 200.5,195.7 202.1,194.4 203.8,193.0 205.5,191.5 207.2,189.9 208.9,188.2 210.6,186.4 212.3,184.5 214.0,182.5 215.7,180.4 217.3,178.2 219.0,175.9 220.7,173.4 222.4,170.8 224.1,168.2 225.8,165.4 227.5,162.5 229.2,159.5 230.9,156.4 232.5,153.2 234.2,149.9 235.9,146.5 237.6,143.1 239.3,139.5 241.0,135.9 242.7,132.2 244.4,128.5 246.1,124.8 247.7,121.0 249.4,117.2 251.1,113.4 252.8,109.5 254.5,105.7 256.2,102.0 257.9,98.3 259.6,94.6 261.3,91.0 262.9,87.5 264.6,84.1 266.3,80.8 268.0,77.7 269.7,74.7 271.4,71.8 273.1,69.1 274.8,66.6 276.5,64.3 278.1,62.1 279.8,60.2 281.5,58.5 283.2,57.0 284.9,55.8 286.6,54.8 288.3,54.1 290.0,53.6 291.7,53.3 293.3,53.3 295.0,53.6 296.7,54.1 298.4,54.8 300.1,55.8 301.8,57.0 303.5,58.5 305.2,60.2 306.9,62.1 308.5,64.3 310.2,66.6 311.9,69.1 313.6,71.8 315.3,74.7 317.0,77.7 318.7,80.8 320.4,84.1 322.1,87.5 323.7,91.0 325.4,94.6 327.1,98.3 328.8,102.0 330.5,105.7 332.2,109.5 333.9,113.4 335.6,117.2 337.3,121.0 338.9,124.8 340.6,128.5 342.3,132.2 344.0,135.9 345.7,139.5 347.4,143.1 349.1,146.5 350.8,149.9 352.5,153.2 354.1,156.4 355.8,159.5 357.5,162.5 359.2,165.4 360.9,168.2 362.6,170.8 364.3,173.4 366.0,175.9 367.7,178.2 369.3,180.4 371.0,182.5 372.7,184.5 374.4,186.4 376.1,188.2 377.8,189.9 379.5,191.5 381.2,193.0 382.9,194.4 384.5,195.7 386.2,196.9 387.9,198.0 389.6,199.1 391.3,200.0 393.0,200.9 394.7,201.8 396.4,202.5 398.1,203.3 399.7,203.9 401.4,204.5 403.1,205.1 404.8,205.5 406.5,206.0 408.2,206.4 409.9,206.8 411.6,207.1 413.3,207.4 414.9,207.7 416.6,208.0 418.3,208.2 420.0,208.4 421.7,208.6 423.4,208.8 425.1,208.9 426.8,209.0 428.5,209.2 430.2,209.3 431.8,209.3 433.5,209.4 435.2,209.5 436.9,209.6 438.6,209.6 440.3,209.7 442.0,209.7 443.7,209.8 445.4,209.8 447.0,209.8 448.7,209.8 450.4,209.9 452.1,209.9 453.8,209.9 455.5,209.9 457.2,209.9 458.9,209.9 460.6,209.9 462.2,210.0 463.9,210.0 465.6,210.0 467.3,210.0 469.0,210.0 470.7,210.0 472.4,210.0 474.1,210.0 475.8,210.0 477.4,210.0 479.1,210.0 480.8,210.0 482.5,210.0 484.2,210.0 485.9,210.0 487.6,210.0 489.3,210.0 491.0,210.0 492.6,210.0 494.3,210.0 496.0,210.0 497.7,210.0 499.4,210.0 501.1,210.0 502.8,210.0 504.5,210.0 506.2,210.0 507.8,210.0 509.5,210.0 511.2,210.0 512.9,210.0 514.6,210.0 516.3,210.0 518.0,210.0 519.7,210.0 521.4,210.0 523.0,210.0 524.7,210.0 526.4,210.0 528.1,210.0 529.8,210.0 531.5,210.0 533.2,210.0 534.9,210.0 536.6,210.0 538.2,210.0 539.9,210.0 541.6,210.0 543.3,210.0 545.0,210.0" fill="none" stroke="#4051b5" stroke-width="2.2"/>
+<polyline points="40.0,206.6 41.7,206.6 43.4,206.5 45.1,206.5 46.8,206.4 48.4,206.4 50.1,206.3 51.8,206.3 53.5,206.2 55.2,206.2 56.9,206.1 58.6,206.1 60.3,206.0 62.0,206.0 63.6,205.9 65.3,205.9 67.0,205.8 68.7,205.7 70.4,205.7 72.1,205.6 73.8,205.5 75.5,205.5 77.2,205.4 78.8,205.3 80.5,205.3 82.2,205.2 83.9,205.1 85.6,205.0 87.3,205.0 89.0,204.9 90.7,204.8 92.4,204.7 94.0,204.6 95.7,204.5 97.4,204.4 99.1,204.3 100.8,204.3 102.5,204.2 104.2,204.1 105.9,203.9 107.6,203.8 109.2,203.7 110.9,203.6 112.6,203.5 114.3,203.4 116.0,203.3 117.7,203.1 119.4,203.0 121.1,202.9 122.8,202.8 124.4,202.6 126.1,202.5 127.8,202.3 129.5,202.2 131.2,202.0 132.9,201.9 134.6,201.7 136.3,201.5 138.0,201.4 139.6,201.2 141.3,201.0 143.0,200.8 144.7,200.6 146.4,200.4 148.1,200.2 149.8,200.0 151.5,199.8 153.2,199.5 154.8,199.3 156.5,199.1 158.2,198.8 159.9,198.6 161.6,198.3 163.3,198.0 165.0,197.7 166.7,197.4 168.4,197.1 170.1,196.8 171.7,196.5 173.4,196.1 175.1,195.8 176.8,195.4 178.5,195.0 180.2,194.6 181.9,194.2 183.6,193.8 185.3,193.3 186.9,192.9 188.6,192.4 190.3,191.9 192.0,191.3 193.7,190.8 195.4,190.2 197.1,189.6 198.8,189.0 200.5,188.4 202.1,187.7 203.8,187.0 205.5,186.3 207.2,185.5 208.9,184.7 210.6,183.9 212.3,183.0 214.0,182.1 215.7,181.2 217.3,180.2 219.0,179.1 220.7,178.0 222.4,176.9 224.1,175.7 225.8,174.4 227.5,173.1 229.2,171.7 230.9,170.2 232.5,168.7 234.2,167.1 235.9,165.5 237.6,163.7 239.3,161.9 241.0,159.9 242.7,157.9 244.4,155.8 246.1,153.6 247.7,151.3 249.4,148.9 251.1,146.4 252.8,143.8 254.5,141.1 256.2,138.3 257.9,135.4 259.6,132.4 261.3,129.4 262.9,126.3 264.6,123.1 266.3,119.8 268.0,116.6 269.7,113.3 271.4,110.1 273.1,106.9 274.8,103.8 276.5,100.8 278.1,98.0 279.8,95.3 281.5,92.9 283.2,90.8 284.9,88.9 286.6,87.4 288.3,86.2 290.0,85.4 291.7,85.0 293.3,85.0 295.0,85.4 296.7,86.2 298.4,87.4 300.1,88.9 301.8,90.8 303.5,92.9 305.2,95.3 306.9,98.0 308.5,100.8 310.2,103.8 311.9,106.9 313.6,110.1 315.3,113.3 317.0,116.6 318.7,119.8 320.4,123.1 322.1,126.3 323.7,129.4 325.4,132.4 327.1,135.4 328.8,138.3 330.5,141.1 332.2,143.8 333.9,146.4 335.6,148.9 337.3,151.3 338.9,153.6 340.6,155.8 342.3,157.9 344.0,159.9 345.7,161.9 347.4,163.7 349.1,165.5 350.8,167.1 352.5,168.7 354.1,170.2 355.8,171.7 357.5,173.1 359.2,174.4 360.9,175.7 362.6,176.9 364.3,178.0 366.0,179.1 367.7,180.2 369.3,181.2 371.0,182.1 372.7,183.0 374.4,183.9 376.1,184.7 377.8,185.5 379.5,186.3 381.2,187.0 382.9,187.7 384.5,188.4 386.2,189.0 387.9,189.6 389.6,190.2 391.3,190.8 393.0,191.3 394.7,191.9 396.4,192.4 398.1,192.9 399.7,193.3 401.4,193.8 403.1,194.2 404.8,194.6 406.5,195.0 408.2,195.4 409.9,195.8 411.6,196.1 413.3,196.5 414.9,196.8 416.6,197.1 418.3,197.4 420.0,197.7 421.7,198.0 423.4,198.3 425.1,198.6 426.8,198.8 428.5,199.1 430.2,199.3 431.8,199.5 433.5,199.8 435.2,200.0 436.9,200.2 438.6,200.4 440.3,200.6 442.0,200.8 443.7,201.0 445.4,201.2 447.0,201.4 448.7,201.5 450.4,201.7 452.1,201.9 453.8,202.0 455.5,202.2 457.2,202.3 458.9,202.5 460.6,202.6 462.2,202.8 463.9,202.9 465.6,203.0 467.3,203.1 469.0,203.3 470.7,203.4 472.4,203.5 474.1,203.6 475.8,203.7 477.4,203.8 479.1,203.9 480.8,204.1 482.5,204.2 484.2,204.3 485.9,204.3 487.6,204.4 489.3,204.5 491.0,204.6 492.6,204.7 494.3,204.8 496.0,204.9 497.7,205.0 499.4,205.0 501.1,205.1 502.8,205.2 504.5,205.3 506.2,205.3 507.8,205.4 509.5,205.5 511.2,205.5 512.9,205.6 514.6,205.7 516.3,205.7 518.0,205.8 519.7,205.9 521.4,205.9 523.0,206.0 524.7,206.0 526.4,206.1 528.1,206.1 529.8,206.2 531.5,206.2 533.2,206.3 534.9,206.3 536.6,206.4 538.2,206.4 539.9,206.5 541.6,206.5 543.3,206.6 545.0,206.6" fill="none" stroke="#e03a3a" stroke-width="2.2"/>
+<line x1="40.0" y1="210.0" x2="545.0" y2="210.0" stroke="currentColor" stroke-width="1"/>
+<line x1="40.0" y1="210.0" x2="40.0" y2="215.0" stroke="currentColor" stroke-width="1"/>
+<text x="40.0" y="228.0" text-anchor="middle" fill="currentColor">−6</text>
+<line x1="124.2" y1="210.0" x2="124.2" y2="215.0" stroke="currentColor" stroke-width="1"/>
+<text x="124.2" y="228.0" text-anchor="middle" fill="currentColor">−4</text>
+<line x1="208.3" y1="210.0" x2="208.3" y2="215.0" stroke="currentColor" stroke-width="1"/>
+<text x="208.3" y="228.0" text-anchor="middle" fill="currentColor">−2</text>
+<line x1="292.5" y1="210.0" x2="292.5" y2="215.0" stroke="currentColor" stroke-width="1"/>
+<text x="292.5" y="228.0" text-anchor="middle" fill="currentColor">0</text>
+<line x1="376.7" y1="210.0" x2="376.7" y2="215.0" stroke="currentColor" stroke-width="1"/>
+<text x="376.7" y="228.0" text-anchor="middle" fill="currentColor">2</text>
+<line x1="460.8" y1="210.0" x2="460.8" y2="215.0" stroke="currentColor" stroke-width="1"/>
+<text x="460.8" y="228.0" text-anchor="middle" fill="currentColor">4</text>
+<line x1="545.0" y1="210.0" x2="545.0" y2="215.0" stroke="currentColor" stroke-width="1"/>
+<text x="545.0" y="228.0" text-anchor="middle" fill="currentColor">6</text>
+<text x="334.6" y="60.0" text-anchor="start" fill="#4051b5" font-weight="bold">normale</text>
+<text x="359.8" y="140.0" text-anchor="start" fill="#e03a3a" font-weight="bold">Cauchy</text>
+<text x="481.9" y="172.0" text-anchor="middle" fill="currentColor">P(|X| &gt; 3):</text>
+<text x="481.9" y="188.0" text-anchor="middle" fill="#4051b5">normale 0,27%</text>
+<text x="103.1" y="172.0" text-anchor="middle" fill="currentColor">P(|X| &gt; 3):</text>
+<text x="103.1" y="188.0" text-anchor="middle" fill="#e03a3a">Cauchy 20,5%</text>
+</svg>
+<figcaption>La densità normale standard (blu) e la densità di Cauchy (rosso). Entrambe sono campane simmetriche centrate in zero, ma quella di Cauchy è più bassa al centro e ha code molto più alte: le aree rosse oltre ±3 valgono insieme il 20,5%, contro lo 0,27% della normale.</figcaption>
+</figure>
+
+Code così pesanti hanno una conseguenza drastica: la varianza di una variabile di Cauchy è infinita, e nemmeno la sua media esiste, perché i valori molto grandi, in un verso e nell’altro, pesano troppo perché la somma pesata dei valori dia un numero. Le ipotesi del teorema del limite centrale, e anche quelle della legge dei grandi numeri, cadono. E il risultato è sorprendente: si può dimostrare, con strumenti che non vediamo, che **la media di $n$ variabili di Cauchy indipendenti ha di nuovo la stessa distribuzione di Cauchy**, per ogni $n$. La probabilità che la media di mille osservazioni stia fuori dall’intervallo da $-1$ a $1$ è il 50%, esattamente come per un’osservazione sola: $-1$ e $1$ sono valori di $x$ per la densità scritta sopra. Fare la media non serve a nulla. Ogni tanto arriva un valore così grande da spostare tutta la media, e più osservazioni si raccolgono, più è facile che ne arrivi uno.
+
+È la situazione opposta a quella che la [Settimana 6](../settimana_06/index.md#lab-normale) descriveva con la condizione di Lindeberg: la campana nasce da molti piccoli contributi, **nessuno dei quali prevale sugli altri**. Con Cauchy, invece, la somma è dominata dal suo addendo più grande.
+
+Cauchy può sembrare una curiosità da matematici, ma code pesanti di questo genere sono comuni nei dati dell’informatica: le dimensioni dei file su un disco, i tempi di risposta di un servizio con qualche richiesta molto lenta, il numero di visite alle pagine di un sito, il traffico di rete. Un modello usato spesso per questi dati è la **distribuzione di Pareto**, per cui la probabilità di superare un valore $x\ge1$ è $x^{-\alpha}$, con un parametro $\alpha$ che regola il peso della coda. Con $\alpha=1{,}5$ la media esiste e vale 3, ma la varianza è infinita: la legge dei grandi numeri vale ancora, ma la media si avvicina a 3 con una lentezza esasperante, e il teorema del limite centrale, nella forma che abbiamo studiato, non si applica. In una simulazione, la media di mille valori cade fuori dall’intervallo da 2,7 a 3,3 circa una volta su tre, e la sua distribuzione è tutt’altro che una campana. È il caso che nella Settimana 8 avevamo rimandato a questa settimana, e la ragione per cui nella Settimana 10, per misurare l’incertezza di una media su dati reali, useremo un altro metodo.
+
+<!--
+#### Esplora: la media che non si ferma {: #widget-code }
+
+Il widget disegna le medie progressive di fino a 50 sequenze indipendenti di osservazioni, con l’asse orizzontale in scala logaritmica, come quello della Settimana 8. Le distribuzioni sono tre: l’esponenziale con media 1, la Pareto con $\alpha=1{,}5$ e media 3, e la distribuzione di Cauchy, centrata in zero. La banda verde è un intervallo attorno al centro: $1\pm0{,}1$ per l’esponenziale, $3\pm0{,}3$ per la Pareto, $0\pm1$ per Cauchy. Alla posizione $n$ scelta, le sequenze con la media dentro la banda sono blu, quelle fuori sono rosse. Prima di guardare, prevedi: con 10 000 osservazioni, quante sequenze di Cauchy saranno ancora fuori dalla banda?
+
+<div class="s09-box" id="s09-code">
+  <label>Distribuzione: <select id="s09-code-d">
+    <option value="esp">esponenziale (media 1)</option>
+    <option value="pareto">Pareto, α = 1,5 (media 3)</option>
+    <option value="cauchy">Cauchy (centro 0)</option>
+  </select></label>
+  <label>sequenze: <input type="range" id="s09-code-m" min="1" max="50" step="1" value="20"> <b id="s09-code-mv">20</b></label><br>
+  <label>n = <input type="range" id="s09-code-n" min="1" max="4" step="0.01" value="3"> <b id="s09-code-nv">1000</b></label>
+  <button type="button" id="s09-code-b">Nuove sequenze</button>
+  <svg class="s09-svg" id="s09-code-svg" viewBox="0 0 560 290" role="img" aria-label="Medie progressive di molte sequenze di osservazioni, con l’asse delle osservazioni in scala logaritmica da 1 a 10000, una banda verde attorno al centro della distribuzione e una linea verticale sul numero di osservazioni scelto. Le sequenze sono blu se a quel punto la loro media è nella banda, rosse se è fuori."></svg>
+  <div class="s09-out" id="s09-code-out"></div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var NMAX = 10000, MMAX = 50, seed = 1853, cum = null, NS = 'http://www.w3.org/2000/svg';
+  var sd = document.getElementById('s09-code-d'), sm = document.getElementById('s09-code-m');
+  var sn = document.getElementById('s09-code-n'), btn = document.getElementById('s09-code-b');
+  var svg = document.getElementById('s09-code-svg'), out = document.getElementById('s09-code-out');
+  var D = {
+    esp: { c: 1, e: 0.1, lo: 0, hi: 2.5, tk: [0, 0.5, 1, 1.5, 2, 2.5], g: function (u) { return -Math.log(1 - u); },
+           nota: function (n) { return 'La varianza è finita: la media di n osservazioni ha deviazione standard 1/√n = ' + it(1 / Math.sqrt(n), 3) + ', e la probabilità di uscire dalla banda va a zero.'; } },
+    pareto: { c: 3, e: 0.3, lo: 1, hi: 7, tk: [1, 2, 3, 4, 5, 6, 7], g: function (u) { return Math.pow(1 - u, -1 / 1.5); },
+              nota: function () { return 'La media esiste, ma la varianza è infinita: la media si avvicina a 3 lentamente e a scatti, e la campana non arriva.'; } },
+    cauchy: { c: 0, e: 1, lo: -4, hi: 4, tk: [-4, -2, 0, 2, 4], g: function (u) { return Math.tan(Math.PI * (u - 0.5)); },
+              nota: function () { return 'Per Cauchy la media di n osservazioni ha la stessa distribuzione di una sola: la probabilità di stare fuori dalla banda è il 50% per ogni n.'; } }
+  };
+  function rng(a) {
+    return function () {
+      a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function it(x, d) { return x.toFixed(d).replace('.', ','); }
+  function el(tag, attrs, txt) {
+    var e = document.createElementNS(NS, tag);
+    for (var a in attrs) e.setAttribute(a, attrs[a]);
+    if (txt != null) e.textContent = txt;
+    svg.appendChild(e); return e;
+  }
+  function simula() {
+    var r = rng(seed), d = D[sd.value];
+    cum = [];
+    for (var j = 0; j < MMAX; j++) {
+      var c = new Float64Array(NMAX + 1), s = 0;
+      for (var i = 1; i <= NMAX; i++) { s += d.g(r()); c[i] = s; }
+      cum.push(c);
+    }
+  }
+  function render() {
+    var d = D[sd.value], M = +sm.value, n = Math.round(Math.pow(10, +sn.value));
+    document.getElementById('s09-code-mv').textContent = M;
+    document.getElementById('s09-code-nv').textContent = n.toLocaleString('it-IT');
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var x0 = 55, x1 = 540, y0 = 240, y1 = 15;
+    function X(k) { return x0 + Math.log(k) / Math.LN10 / 4 * (x1 - x0); }
+    function Y(m) { return y0 - (Math.max(d.lo, Math.min(d.hi, m)) - d.lo) / (d.hi - d.lo) * (y0 - y1); }
+    el('rect', { x: x0, y: Y(d.c + d.e), width: x1 - x0, height: Y(d.c - d.e) - Y(d.c + d.e), fill: '#2e9e5b', 'fill-opacity': 0.18 });
+    el('line', { x1: x0, y1: y0, x2: x1, y2: y0, stroke: 'currentColor' });
+    el('line', { x1: x0, y1: y0, x2: x0, y2: y1, stroke: 'currentColor' });
+    [1, 10, 100, 1000, 10000].forEach(function (k) {
+      el('line', { x1: X(k), y1: y0, x2: X(k), y2: y0 + 5, stroke: 'currentColor' });
+      el('text', { x: X(k), y: y0 + 19, 'text-anchor': 'middle', fill: 'currentColor' }, k.toLocaleString('it-IT'));
+    });
+    el('text', { x: (x0 + x1) / 2, y: y0 + 40, 'text-anchor': 'middle', fill: 'currentColor' }, 'numero di osservazioni (scala logaritmica)');
+    d.tk.forEach(function (v) {
+      el('text', { x: x0 - 8, y: Y(v) + 4, 'text-anchor': 'end', fill: 'currentColor' }, it(v, v % 1 ? 1 : 0).replace('-', '−'));
+    });
+    el('line', { x1: x0, y1: Y(d.c), x2: x1, y2: Y(d.c), stroke: '#e07a1f', 'stroke-width': 1.5, 'stroke-dasharray': '6,4' });
+    var ks = [];
+    for (var t = 0; t <= 320; t++) { var k = Math.round(Math.pow(10, 4 * t / 320)); if (k <= n && ks[ks.length - 1] !== k) ks.push(k); }
+    if (ks[ks.length - 1] !== n) ks.push(n);
+    var fuori = 0;
+    for (var j = 0; j < M; j++) {
+      var c = cum[j], f = Math.abs(c[n] / n - d.c) > d.e;
+      if (f) fuori++;
+      var pts = ks.map(function (k) { return X(k).toFixed(1) + ',' + Y(c[k] / k).toFixed(1); });
+      el('polyline', { points: pts.join(' '), fill: 'none', stroke: f ? '#e03a3a' : '#4051b5', 'stroke-width': 1.3, 'stroke-opacity': 0.75 });
+    }
+    el('line', { x1: X(n), y1: y0, x2: X(n), y2: y1, stroke: '#2e9e5b', 'stroke-width': 2, 'stroke-dasharray': '5,4' });
+    out.innerHTML = 'Dopo n = ' + n.toLocaleString('it-IT') + ' osservazioni, <b class="s09-sim">' + fuori + ' sequenze su ' + M +
+      '</b> (' + it(100 * fuori / M, 0) + '%) hanno la media fuori dalla banda ' + it(d.c, 0) + ' ± ' + it(d.e, d.e < 1 ? 1 : 0) + '. ' + d.nota(n);
+  }
+  sd.addEventListener('change', function () { simula(); render(); });
+  [sm, sn].forEach(function (s) { s.addEventListener('input', render); });
+  btn.addEventListener('click', function () { seed = Math.floor(Math.random() * 1e9); simula(); render(); this.blur(); });
+  simula();
+  render();
+});
+</script>
+
+Con l’esponenziale tutte le sequenze entrano nella banda prima di mille osservazioni e non ne escono più. Con la Pareto le medie salgono a scatti, ogni volta che arriva un valore molto grande, e poi ridiscendono lentamente; anche con diecimila osservazioni qualche sequenza è ancora fuori. Con Cauchy le medie non si fermano mai: circa metà delle sequenze è fuori dalla banda per qualunque $n$, e ogni tanto una media salta lontano all’improvviso.
+
+-->
+
+### Riguarda le somme e le medie, non i singoli dati {: #non-i-dati }
+
+L’ultimo punto è il più importante in pratica, ed è anche l’errore più diffuso. Il teorema del limite centrale **non dice che i dati sono normali**. Dice che la somma, o la media, di molti dati indipendenti è approssimativamente normale. Se raccogliamo i tempi di risposta di diecimila richieste a un servizio web, il loro istogramma resta quello che è, asimmetrico e con la coda pesante, per quanto grande sia il numero delle richieste: aumentare i dati rende soltanto più nitido quell’istogramma storto. Ciò che diventa normale è la **media** dei tempi, se la calcoliamo su molte richieste e ripetiamo il calcolo su molti gruppi di richieste.
+
+Vale la pena fermarsi sulla formula che a questo punto viene naturale. Se una variabile $X$ è normale con media $\mu$ e deviazione standard $\sigma$, il suo quantile al livello $p$ si trova standardizzando al contrario: si cerca nella tabella il valore $z_p$ per cui $\Phi(z_p)=p$, e si torna alla scala originale con $x_p=\mu+z_p\,\sigma$. Per il p99, $p=0{,}99$ e $z_{0{,}99}=2{,}326$, quindi il p99 di una normale è $\mu+2{,}326\,\sigma$; è lo stesso conto del problema inverso della [Settimana 6](../settimana_06/index.md#quantili). La formula, però, vale solo se la distribuzione è normale. I tempi di risposta non lo sono: sono asimmetrici e hanno una coda lunga a destra, e la campana non li descrive. C’è anche una ragione più profonda: il p99 riguarda una singola richiesta, non una media, e il teorema del limite centrale non dice nulla sulla distribuzione delle singole richieste. Per questo il p99 non si calcola con quella formula, ma si misura sui dati. Lo stesso vale per il **massimo**. Un servizio che, per rispondere a un utente, interroga in parallelo 100 server e aspetta la risposta di tutti, risponde lentamente se anche uno solo dei server è lento. Se ogni server è lento una volta su cento, in modo indipendente dagli altri, la probabilità che almeno uno sia lento è $1-0{,}99^{100}\approx0{,}63$: quasi due richieste su tre sono lente, anche se ogni server, preso da solo, è velocissimo quasi sempre. È il calcolo del complementare della Settimana 3, ed è un fenomeno che gli ingegneri di Google hanno chiamato «la coda su larga scala». Il massimo non è una somma, e la campana non lo descrive.
+
+!!! example "Sosta di verifica"
+    Quali di queste affermazioni sono giuste? (a) «Ho misurato diecimila tempi di risposta: per il teorema del limite centrale il loro istogramma è una campana.» (b) «Se sommo i tempi di 50 richieste indipendenti, con una distribuzione qualsiasi con varianza finita, il totale è circa normale.» (c) «Con $n>30$ l’approssimazione normale è sempre buona.» (d) «La media di mille osservazioni di Cauchy è più precisa di una singola osservazione.»
+
+    ??? esempio-svolto "Risposta"
+        È giusta soltanto (b). (a) confonde i dati con la loro media: l’istogramma dei tempi resta asimmetrico; è la media di molti tempi a essere quasi normale. (c) è una regola pratica, non un teorema: con addendi molto asimmetrici, come gli esponenziali o le variabili bernoulliane con $p$ piccolo, trenta addendi non bastano. (d) è falsa: la media di variabili di Cauchy indipendenti ha la stessa distribuzione di una variabile sola, perché la varianza è infinita.
+
+<!--
+### Laboratorio: quando la campana non arriva {: #lab-code }
+
+Il quarto script mette alla prova i limiti del teorema. Nella prima parte misura le due code della somma standardizzata di $n$ tempi esponenziali, da confrontare con il 2,28% della normale. Nella seconda calcola le medie progressive di centomila osservazioni da tre distribuzioni, l’esponenziale, la Pareto con $\alpha=1{,}5$ e Cauchy, ne stampa il valore a quattro tappe e le disegna. Nella terza ripete duemila volte la media di mille osservazioni e conta quante volte cade lontano dal centro.
+
+<div class="psi-exec" markdown="1">
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+rng = np.random.default_rng(1853)
+
+
+def pareto(dimensione):
+    """Pareto con alfa = 1,5: P(X > x) = x**(-1,5) per x >= 1."""
+    return (1 - rng.random(dimensione)) ** (-1 / 1.5)
+
+
+# 1. Le code della somma standardizzata di n esponenziali.
+#    Per una normale sarebbero entrambe il 2,28%.
+print("  n   P(Z > 2)   P(Z < -2)")
+for n in [1, 5, 30, 100]:
+    s = rng.exponential(1, size=(20_000, n)).sum(axis=1)
+    z = (s - n) / np.sqrt(n)
+    print(f"{n:3d}    {np.mean(z > 2):.4f}     {np.mean(z < -2):.4f}")
+
+# 2. Medie progressive di 100 000 osservazioni.
+n = 100_000
+k = np.arange(1, n + 1)
+dati = {"esponenziale": rng.exponential(1, n),
+        "Pareto 1,5": pareto(n),
+        "Cauchy": rng.standard_cauchy(n)}
+print("\nmedia dopo      100     1000    10000   100000")
+for nome, x in dati.items():
+    medie = np.cumsum(x) / k
+    tappe = [medie[t - 1] for t in [100, 1_000, 10_000, n]]
+    print(f"{nome:12s}", "".join(f"{m:9.3f}" for m in tappe))
+    plt.plot(k, medie, label=nome)
+plt.xscale("log")
+plt.ylim(-3, 6)
+plt.xlabel("numero di osservazioni")
+plt.ylabel("media progressiva")
+plt.legend()
+plt.show()
+
+# 3. La media di 1000 osservazioni, ripetuta 2000 volte: quanto
+#    spesso cade lontano dal centro della distribuzione?
+print()
+for nome, x, centro, eps in [
+        ("esponenziale", rng.exponential(1, (2000, 1000)), 1, 0.1),
+        ("Pareto 1,5", pareto((2000, 1000)), 3, 0.3),
+        ("Cauchy", rng.standard_cauchy((2000, 1000)), 0, 1)]:
+    lontane = np.mean(np.abs(x.mean(axis=1) - centro) > eps)
+    print(f"{nome:12s} media fuori da {centro} ± {eps}: {lontane:.1%}")
+```
+</div>
+
+Nella prima tabella la coda destra parte dal 5% circa e scende verso il 2,28% molto lentamente, mentre la coda sinistra sale da zero: è la figura dell’esponenziale, in numeri. Nella seconda la media dell’esponenziale si ferma vicino a 1 già dopo mille osservazioni; quella della Pareto si avvicina a 3 a scatti; quella di Cauchy continua a saltare. Nella terza, la media di mille esponenziali non si allontana quasi mai da 1 di più di 0,1, quella di mille valori di Pareto cade fuori da $3\pm0{,}3$ circa una volta su tre, e quella di mille valori di Cauchy cade fuori da $\pm1$ metà delle volte, come una singola osservazione. Prova a cambiare il seme del generatore: le righe dell’esponenziale cambiano di poco, quelle di Pareto e di Cauchy cambiano moltissimo.
+-->
+
+### Il teorema del limite centrale in informatica {: #tlc-informatica }
+
+Malgrado i suoi limiti, o forse proprio perché li conosciamo, il teorema è uno degli strumenti più usati dell’informatica. Il **carico aggregato** di un servizio, cioè la somma delle richieste di molti utenti indipendenti, è approssimativamente normale anche se ogni utente si comporta in modo imprevedibile: per dimensionare un server si può prevedere un carico medio $n\mu$ e un margine di qualche $\sigma\sqrt n$, che cresce molto più lentamente del numero degli utenti. È la ragione per cui servire molti utenti insieme costa meno che servirli uno per uno. Lo stesso vale per lo spazio occupato da molti file, come nella sosta della chiavetta, e per il tempo totale di una catena di elaborazioni indipendenti.
+
+Ogni volta che si stima una quantità con una **simulazione Monte Carlo**, il teorema dice quanto è precisa la stima: la media di $n$ simulazioni ha un errore approssimativamente normale con deviazione standard $\sigma/\sqrt n$, e quindi cade entro $1{,}96\,\sigma/\sqrt n$ dal valore vero il 95% delle volte. Nei **benchmark**, come nel problema delle 62 esecuzioni, dice quante ripetizioni servono, purché le esecuzioni siano davvero indipendenti e nelle stesse condizioni, come abbiamo [discusso con il benchmark](#quante-esecuzioni).  E nei **generatori di numeri casuali** il teorema è stato per decenni una scorciatoia: sommando dodici numeri uniformi e sottraendo 6 si ottiene un numero approssimativamente normale standard, con i limiti che vedremo in un esercizio.
+
+In tutti questi casi vale la stessa avvertenza: il teorema parla di somme e medie di molte quantità indipendenti con varianza finita. Quando una di queste condizioni manca, o quando interessa un singolo valore, un massimo o un evento rarissimo, la campana va controllata sui dati. Il messaggio della settimana per un ingegnere del software si può riassumere così: qualunque sia la complessità dei singoli componenti di un sistema, la loro somma aggregata tende a comportarsi come una campana con una larghezza che cresce come $\sqrt n$, purché i componenti siano indipendenti e le loro code non siano troppo pesanti.
+
+<!--
 ## Lettura A — Perché proprio la campana? {: #punto-fisso .psi-facoltativo }
 
-*In arrivo…*
+Questa lettura è facoltativa e non è richiesta all’esame. Non dimostra il teorema del limite centrale, che richiede strumenti che non abbiamo, ma spiega con un ragionamento elementare perché, se la somma standardizzata si avvicina a una forma, quella forma deve essere proprio la campana. Lo stesso ragionamento spiega perché la distribuzione di Cauchy si comporta in modo così diverso.
+
+Partiamo da una proprietà della distribuzione normale che abbiamo già usato: la somma di due variabili normali indipendenti è ancora normale. Se $Z_1$ e $Z_2$ sono normali standard indipendenti, la loro somma è normale con media 0 e varianza $1+1=2$, e quindi $(Z_1+Z_2)/\sqrt2$, che ha varianza $2/2=1$, è di nuovo una normale standard. In altre parole, la campana non cambia se si sommano due copie indipendenti e si riporta la varianza a 1 dividendo per $\sqrt2$. Si dice che è un **punto fisso** di questa operazione. Molte distribuzioni non lo sono: sommando due uniformi indipendenti si ottiene un triangolo, sommando due dadi si ottiene la distribuzione a piramide della Settimana 7.
+
+Ora guardiamo la somma standardizzata di $2n$ variabili i.i.d. con media $\mu$ e varianza $\sigma^2$, e dividiamola in due metà: le prime $n$ variabili e le seconde $n$. Chiamiamo $S_n^*$ la somma standardizzata della prima metà e $S_n^{*\prime}$ quella della seconda. Con un passaggio di algebra si verifica che
+
+$$
+S_{2n}^*=\frac{S_{2n}-2n\mu}{\sigma\sqrt{2n}}=\frac{(S_n-n\mu)+(S_n'-n\mu)}{\sigma\sqrt n\cdot\sqrt2}=\frac{S_n^*+S_n^{*\prime}}{\sqrt2},
+$$
+
+dove nel secondo passaggio abbiamo spezzato la somma delle $2n$ variabili nelle due metà, $S_n$ e $S_n'$, e scritto $\sqrt{2n}=\sqrt n\cdot\sqrt2$. Le due metà sono indipendenti e hanno la stessa distribuzione. Supponiamo che, al crescere di $n$, la distribuzione di $S_n^*$ si avvicini a una certa forma limite, che chiamiamo $L$. Allora anche $S_{2n}^*$ si avvicina a $L$, perché è la stessa successione presa più avanti. Ma $S_{2n}^*$ è la somma di due copie indipendenti di qualcosa che somiglia a $L$, divisa per $\sqrt2$. Quindi la forma limite deve avere la proprietà della campana: sommandone due copie indipendenti e dividendo per $\sqrt2$, si deve ritrovare $L$. Si può dimostrare che, tra le distribuzioni con media 0 e varianza 1, l’unica con questa proprietà è la normale standard. Se un limite esiste, dunque, non può che essere la campana; la parte difficile del teorema è dimostrare che il limite esiste davvero.
+
+Il ragionamento spiega anche il ruolo della varianza finita. Il fattore $\sqrt2$ viene dal fatto che le varianze si sommano: due metà con varianza 1 danno una somma con varianza 2, e per riportarla a 1 si divide per $\sqrt2$. Se la varianza è infinita, questo conto non si può fare, e la scala giusta può essere un’altra. La distribuzione di Cauchy è un punto fisso con un fattore diverso: se $C_1$ e $C_2$ sono variabili di Cauchy indipendenti, $(C_1+C_2)/2$ ha di nuovo la distribuzione di Cauchy. Si divide per 2 e non per $\sqrt2$: la somma di due variabili di Cauchy è larga il doppio di una sola, non $\sqrt2$ volte di più. Ripetendo il ragionamento, la somma di $n$ variabili di Cauchy è larga $n$ volte una sola, e la media, che divide per $n$, ha la stessa larghezza di una variabile sola: è il risultato che abbiamo visto nell’Atto VI.
+
+Negli anni Venti del Novecento il matematico francese Paul Lévy studiò tutte le distribuzioni che sono punti fissi in questo senso, con un fattore di scala qualunque, e che oggi si chiamano **distribuzioni stabili**. La normale è l’unica con varianza finita; tutte le altre, come quella di Cauchy, hanno code pesanti. Per somme di variabili con code molto pesanti, come la Pareto con $\alpha$ tra 1 e 2, esiste una versione generalizzata del teorema: la somma, centrata e divisa per un fattore che cresce più in fretta di $\sqrt n$, si avvicina a una di queste distribuzioni stabili con le code pesanti, e non alla campana. La campana è dunque il punto d’arrivo delle somme «ordinarie», quelle in cui nessun addendo può prevalere; le distribuzioni stabili sono il punto d’arrivo delle somme in cui i valori enormi contano.
+-->
 
 ## Esercizi: prima prova, poi apri la soluzione {: #esercizi }
 
-Gli esercizi 1–5 riguardano la prima lezione; quelli della seconda lezione saranno pubblicati con la Lezione 2. Per i conti con la normale usa la tabella di $\Phi$ della Settimana 6.
+Gli esercizi 1–5 riguardano la prima lezione, gli esercizi 6–10 la seconda. Per i conti con la normale usa la tabella di $\Phi$ della Settimana 6.
 
 ### Esercizio 1 — Le lampadine, con altri numeri {: #esercizio-1 }
 
@@ -813,24 +1472,63 @@ Un dado viene lanciato 6000 volte, e il sei esce 1100 volte. (a) Se il dado foss
 ??? esempio-svolto "Soluzione ragionata"
     (a) Il numero di sei è binomiale con $n=6000$ e $p=1/6$: media 1000, varianza $6000\cdot\frac16\cdot\frac56\approx833{,}3$, deviazione standard $\approx28{,}9$. (b) 1100 sta $100/28{,}9\approx3{,}46$ deviazioni standard sopra la media, e $P(X\ge1100)\approx1-\Phi(3{,}46)\approx0{,}0003$, circa tre volte su diecimila. (c) Con un dado equilibrato un risultato così sarebbe molto raro: è più ragionevole sospettare che il dado non sia equilibrato. È la domanda di De Moivre, «quanto è improbabile uno scarto così grande?», applicata a un dado.
 
+### Esercizio 6 — Dodici uniformi meno sei {: #esercizio-6 }
+
+Per decenni molti programmi hanno generato numeri approssimativamente normali così: si sommano dodici numeri uniformi tra 0 e 1, indipendenti, e si sottrae 6. Sia $W=U_1+\cdots+U_{12}-6$. (a) Calcola la media e la varianza di $W$. (b) Perché ci si aspetta che $W$ sia approssimativamente normale standard? Con la normale, quanto vale $P(|W|>2)$? (Il valore vero è 0,0446.) (c) Quanto vale $P(W>6)$? E che cosa dice la normale? Che cosa ne concludi sull’uso di $W$ per simulare eventi molto rari?
+
+??? esempio-svolto "Soluzione ragionata"
+    (a) Ogni uniforme ha media $1/2$ e varianza $1/12$. Quindi $\mathbb{E}[W]=12\cdot\frac12-6=0$ e $\operatorname{Var}(W)=12\cdot\frac1{12}=1$: il numero 12 è scelto proprio perché la varianza venga 1. (b) $W$ è una somma di dodici variabili i.i.d. con varianza finita, spostata di una costante: per il teorema è approssimativamente $\mathcal N(0,1)$, e già con cinque uniformi l’approssimazione era ottima. Con la normale, $P(|W|>2)\approx2\,(1-\Phi(2))=2\cdot0{,}0228=0{,}0455$, molto vicino al valore vero 0,0446. (c) $W$ non può superare 6, perché la somma di dodici uniformi non supera 12: $P(W>6)=0$, mentre per la normale la probabilità è circa un miliardesimo. Anche $P(W>4)$, che per la normale vale circa $3\cdot10^{-5}$, per $W$ è quattro volte più piccola. Per simulare eventi ordinari $W$ va benissimo; per eventi molto rari, che stanno nelle code lontane, no. Le librerie moderne generano numeri normali con metodi esatti.
+
+### Esercizio 7 — Quante richieste? {: #esercizio-7 }
+
+Riprendi l’[esercizio 7 della Settimana 8](../settimana_08/index.md#esercizio-7): il tempo di risposta di un servizio ha deviazione standard 40 ms, e si fa la media di $n$ richieste indipendenti. (a) Quante richieste servono, secondo il teorema del limite centrale, perché la media cada entro 10 ms dal valore vero con probabilità del 95%? Confronta con il numero di richieste che garantisce Čebyšëv, calcolato come per il [benchmark](#quante-esecuzioni). (b) E per una precisione di 5 ms?
+
+??? esempio-svolto "Soluzione ragionata"
+    (a) Con la formula $n\ge(z\sigma/\varepsilon)^2$ e $z=1{,}96$: $n\ge(1{,}96\cdot40/10)^2=7{,}84^2\approx61{,}5$, quindi 62 richieste, contro le $40^2/(0{,}05\cdot10^2)=320$ di Čebyšëv. (b) Dimezzare $\varepsilon$ quadruplica $n$: $(1{,}96\cdot40/5)^2=15{,}68^2\approx245{,}9$, quindi 246 richieste. È la legge della radice quadrata: per una precisione doppia servono quattro volte più dati.
+
+### Esercizio 8 — Quante simulazioni? {: #esercizio-8 }
+
+Vuoi stimare con una simulazione Monte Carlo la probabilità $p$ che un algoritmo randomizzato fallisca, con un errore al più di 0,01. (a) Quante simulazioni servono con probabilità del 95%, se sai già che $p$ è circa 0,1? (b) Quante ne servono con probabilità del 99%, senza sapere nulla di $p$?
+
+??? esempio-svolto "Soluzione ragionata"
+    (a) Con $p\approx0{,}1$ la varianza di una prova è $p(1-p)=0{,}09$, quindi $\sigma=0{,}3$ e $n\ge(1{,}96\cdot0{,}3/0{,}01)^2=58{,}8^2\approx3457{,}4$: circa 3460 simulazioni, contro le $0{,}09/(0{,}05\cdot0{,}01^2)=18\,000$ di Čebyšëv. (b) Senza informazioni su $p$ si usa $\sigma\le1/2$, e con $z=2{,}576$ per il 99%: $n\ge(2{,}576\cdot0{,}5/0{,}01)^2=128{,}8^2\approx16\,590$.
+
+### Esercizio 9 — Si può usare la campana? {: #esercizio-9 }
+
+Per ciascuna situazione, di’ se il teorema del limite centrale permette di approssimare con una normale la grandezza indicata, e perché. (a) Lo spazio totale occupato da 500 backup indipendenti di dimensione variabile. (b) Il tempo di risposta di una singola richiesta, sapendo che il servizio ne riceve milioni al giorno. (c) La somma dei tempi di 100 richieste che arrivano nello stesso istante e aspettano tutte lo stesso lock su un database. (d) La media di 1000 misure disturbate da un rumore con distribuzione di Cauchy. (e) Il numero di dischi guasti in un giorno, su 10 000 dischi indipendenti, ciascuno con probabilità di guasto 0,0001.
+
+??? esempio-svolto "Soluzione ragionata"
+    (a) Sì: è una somma di molte variabili indipendenti, e le dimensioni dei file hanno varianza finita. (b) No: è un singolo valore, non una somma o una media; il numero di richieste non c’entra, e la distribuzione dei tempi resta quella che è, spesso asimmetrica e con la coda pesante. (c) No: i tempi non sono indipendenti, perché dipendono tutti dallo stesso lock; la varianza della somma può essere molto più grande di $100\sigma^2$. (d) No: la distribuzione di Cauchy ha varianza infinita, e la media di mille misure ha la stessa distribuzione di una misura sola. (e) No, anche se $n$ è grande: il numero atteso di guasti è $np=1$, la distribuzione è molto storta (zero guasti con probabilità circa 0,37) e somiglia a una distribuzione di Poisson con media 1, non a una campana.
+
+### Esercizio 10 — Somma o massimo? {: #esercizio-10 }
+
+Per rispondere a un utente, un servizio chiama 100 microservizi. (a) Se li chiama **in sequenza**, uno dopo l’altro, e ciascuno risponde in un tempo indipendente con media 10 ms e deviazione standard 5 ms, qual è la probabilità approssimata che il tempo totale superi 1,1 secondi? (b) Se li chiama **in parallelo** e aspetta l’ultimo, e ciascuno è «lento» con probabilità 0,01, indipendentemente dagli altri, qual è la probabilità che la risposta all’utente sia lenta? (c) In quale dei due casi si usa il teorema del limite centrale?
+
+??? esempio-svolto "Soluzione ragionata"
+    (a) Il tempo totale è una somma di 100 tempi i.i.d.: media 1000 ms, deviazione standard $5\sqrt{100}=50$ ms. $P(S>1100)\approx1-\Phi(100/50)=1-\Phi(2)\approx0{,}023$. (b) La risposta è lenta se almeno un microservizio è lento: $1-0{,}99^{100}\approx0{,}634$. (c) Il teorema si usa soltanto in (a), dove la grandezza è una somma. In (b) la grandezza è un massimo, e si calcola con il complementare e l’indipendenza, come nella Settimana 3. Il confronto mostra perché le code dei singoli componenti contano tanto nei sistemi distribuiti: sommando, gli scarti si compensano; prendendo il massimo, basta un componente lento.
+
 ## Errori da evitare {: #errori }
 
-Il primo errore, il più diffuso, è credere che il teorema renda normali i **dati**. Non è così: rende approssimativamente normali la somma e la media di molti dati indipendenti, mentre ogni singolo dato conserva la sua distribuzione, uniforme, esponenziale o di qualunque altra forma.
+Il primo errore, il più diffuso, è credere che il teorema renda normali i **dati**. Non è così: rende approssimativamente normali la somma e la media di molti dati indipendenti. L’istogramma di diecimila tempi di risposta resta asimmetrico, e il p99 di una singola richiesta va misurato, non calcolato con la campana. Allo stesso modo il teorema non dice nulla sul massimo di molte variabili.
 
-Il secondo gruppo di errori riguarda i conti. La deviazione standard della somma di $n$ variabili i.i.d. è $\sigma\sqrt n$, non $n\sigma$, e quella della media è $\sigma/\sqrt n$, non $\sigma/n$. Quando si standardizza si divide per la deviazione standard, non per la varianza: con le lampadine si divide per $\sqrt{4000}\approx63{,}2$, non per 4000. Bisogna fare attenzione alla notazione: in questa dispensa $\mathcal N(\mu,\sigma^2)$ ha la varianza al secondo posto, mentre alcuni testi e la funzione `NormalDist` di Python vogliono la deviazione standard. Infine, la formula $n\sigma^2$ per la varianza della somma vale per addendi indipendenti: sommare $n$ volte la stessa variabile con se stessa dà varianza $n^2\sigma^2$, come abbiamo ricordato con il dado contato due volte.
+Il secondo gruppo di errori riguarda i conti. La deviazione standard della somma di $n$ variabili i.i.d. è $\sigma\sqrt n$, non $n\sigma$, e quella della media è $\sigma/\sqrt n$, non $\sigma/n$. Quando si standardizza si divide per la deviazione standard, non per la varianza: con le lampadine si divide per $\sqrt{4000}\approx63{,}2$, non per 4000. Bisogna fare attenzione alla notazione: in questa dispensa $\mathcal N(\mu,\sigma^2)$ ha la varianza al secondo posto, mentre alcuni testi e la funzione `NormalDist` di Python vogliono la deviazione standard. E il numero 1,96 corrisponde a $\Phi(z)=0{,}975$, non a $\Phi(z)=0{,}95$: per un intervallo simmetrico al 95% si lascia fuori il 2,5% da ciascuna parte.
 
-L’ultimo gruppo riguarda la lettura dei risultati. Un risultato ottenuto con il teorema è un’approssimazione, e va scritto con $\approx$. Il teorema del limite centrale e la legge dei grandi numeri dicono cose diverse: la seconda dice che la media si avvicina a $\mu$, il primo dice come oscilla attorno a $\mu$ mentre si avvicina, con oscillazioni normali di ampiezza $\sigma/\sqrt n$. La correzione di continuità, se la usi, va nel verso giusto: per $P(X\le25)$ con $X$ intero si usa 25,5, per $P(X\ge45)$ si usa 44,5, così che i valori estremi siano inclusi nell’evento.
+Il terzo gruppo riguarda le ipotesi. La formula $n\sigma^2$ per la varianza della somma vale per addendi indipendenti: sommare la stessa variabile con se stessa dà varianza $n^2\sigma^2$ e nessuna campana nuova. Se la varianza è infinita, come per Cauchy, il teorema non vale, e la media di molte osservazioni può non essere più precisa di una sola. La regola «$n>30$» è una regola pratica e non un teorema: con addendi asimmetrici, o con una variabile binomiale con $np$ piccolo, l’approssimazione può essere cattiva anche con molti addendi.
+
+L’ultimo gruppo riguarda la lettura dei risultati. Un risultato ottenuto con il teorema è un’approssimazione, e va scritto con $\approx$; è più affidabile al centro della distribuzione che nelle code lontane. Il teorema del limite centrale e la legge dei grandi numeri dicono cose diverse: la seconda dice che la media si avvicina a $\mu$, il primo dice come oscilla attorno a $\mu$ mentre si avvicina, con oscillazioni normali di ampiezza $\sigma/\sqrt n$. Infine, la correzione di continuità, se la usi, va nel verso giusto: per $P(X\le25)$ con $X$ intero si usa 25,5, per $P(X\ge45)$ si usa 44,5, così che i valori estremi siano inclusi nell’evento.
 
 ## Riepilogo per lo studio {: #riepilogo }
 
 Sommando $n$ variabili aleatorie indipendenti e identicamente distribuite, con media $\mu$ e varianza $\sigma^2$ finita, si ottiene una somma $S_n$ con media $n\mu$ e varianza $n\sigma^2$, e una media campionaria $\bar X_n$ con media $\mu$ e varianza $\sigma^2/n$: queste formule valgono esattamente per ogni $n$. Il **teorema del limite centrale** aggiunge la forma: per $n$ grande, $S_n\approx\mathcal N(n\mu,\,n\sigma^2)$ e $\bar X_n\approx\mathcal N(\mu,\,\sigma^2/n)$, qualunque sia la distribuzione degli addendi. In forma precisa, la **somma standardizzata** $S_n^*=(S_n-n\mu)/(\sigma\sqrt n)$, che è anche la media standardizzata $(\bar X_n-\mu)/(\sigma/\sqrt n)$, ha funzione di ripartizione che tende a $\Phi$: $\lim_n P(S_n^*\le t)=\Phi(t)$ per ogni $t$. È una **convergenza in distribuzione**, diversa dalla convergenza in probabilità della legge dei grandi numeri: la media si schiaccia su $\mu$, ma le sue oscillazioni, ingrandite di $\sqrt n/\sigma$, hanno sempre la forma della campana. La somma dimentica la forma degli addendi e ne ricorda soltanto la media e la varianza.
 
-La storia comincia con De Moivre, che nel 1733 trovò la campana studiando i lanci di una moneta: gli scarti dalla metà crescono come la radice quadrata del numero dei lanci, e cadono entro una e due deviazioni standard con probabilità di circa il 68% e il 95%.
+La storia è lunga: De Moivre nel 1733 trovò la campana per i lanci di una moneta, con la radice quadrata come «modulo» degli scarti, e i numeri 68% e 95% entro una e due deviazioni standard; Laplace nel 1810 la estese alla somma di errori qualsiasi, dando una seconda ragione, accanto a quella di Gauss, per la legge normale degli errori; Pólya nel 1920 diede al teorema il suo nome.
 
-Per usare il teorema si scrive l’evento in termini di una somma o di una media, se ne calcolano media e deviazione standard, si standardizza e si legge la tabella di $\Phi$. Così si calcola la probabilità che 40 lampadine durino un anno (circa 0,71), che una somma di dieci dadi sia estrema (circa 0,064, oppure 0,078 con la correzione di continuità, facoltativa), che una variabile binomiale, che è una somma di indicatrici, superi una soglia, con $X\approx\mathcal N(np,\,np(1-p))$.
+Per usare il teorema si scrive l’evento in termini di una somma o di una media, se ne calcolano media e deviazione standard, si standardizza e si legge la tabella di $\Phi$. Così si calcola la probabilità che 40 lampadine durino un anno (circa 0,71), che una somma di dieci dadi sia estrema (circa 0,064, oppure 0,078 con la correzione di continuità, facoltativa), che una variabile binomiale superi una soglia, con $X\approx\mathcal N(np,\,np(1-p))$. Letto al contrario, il teorema dice quante osservazioni servono per una certa precisione: $n\ge(z\sigma/\varepsilon)^2$, con $z=1{,}96$ per il 95%, cioè 62 esecuzioni dove Čebyšëv ne chiedeva 320.
+
+Il teorema **garantisce** l’approssimazione normale di somme e medie di variabili i.i.d. con varianza finita, quando $n$ è grande. **Non garantisce** nulla se gli addendi sono dipendenti (la somma di copie della stessa variabile non diventa mai una campana), se la varianza è infinita (la media di variabili di Cauchy ha la stessa distribuzione di una variabile sola; con le code della Pareto la convergenza è lentissima), e non dice quanto grande deve essere $n$, che dipende dall’asimmetria degli addendi; l’approssimazione è peggiore nelle code lontane. Soprattutto, riguarda le somme e le medie, non i singoli dati né i loro massimi.
 
 !!! tip "Prova a raccontarlo senza il formulario"
-    Spiega a un compagno perché il numero di teste in 3600 lanci sta tra 1770 e 1830 circa due volte su tre, e che cosa c’entra la radice quadrata di 3600. Poi mostragli, con le tre lenti della passeggiata aleatoria, perché per vedere la campana bisogna dividere la somma per $\sqrt n$ e non per $n$. Infine calcola con lui la probabilità che quaranta lampadine durino un anno. Se ci riesci, la prima parte della settimana è tua.
+    Spiega a un compagno perché il numero di teste in 3600 lanci sta tra 1770 e 1830 circa due volte su tre, e che cosa c’entra la radice quadrata di 3600. Poi mostragli, con le tre lenti della passeggiata aleatoria, perché per vedere la campana bisogna dividere la somma per $\sqrt n$ e non per $n$. Calcola con lui la probabilità che quaranta lampadine durino un anno, e il numero di esecuzioni che serve per stimare un tempo medio entro mezzo secondo, confrontandolo con quello di Čebyšëv. Infine rispondi alla domanda d’esame: che cosa garantisce il teorema del limite centrale, e che cosa no? Se sai dare un controesempio per ogni ipotesi, e spiegare perché il p99 di un servizio non si calcola con la campana, la settimana è tua.
 
 ## Riferimenti e letture {: #riferimenti }
 

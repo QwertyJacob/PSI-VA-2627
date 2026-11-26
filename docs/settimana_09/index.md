@@ -32,7 +32,7 @@ Due storie accompagnano le due lezioni. Nella prima siamo a Londra all’inizio 
 
 All’esame devi saper enunciare il teorema del limite centrale per la somma e per la media campionaria di variabili indipendenti e identicamente distribuite con varianza finita, nelle sue tre forme: la somma è approssimativamente $\mathcal N(n\mu,\,n\sigma^2)$, la media campionaria è approssimativamente $\mathcal N(\mu,\,\sigma^2/n)$, e la funzione di ripartizione della somma standardizzata tende a $\Phi$. Devi saper spiegare che cosa vuol dire quest’ultima frase (la convergenza in distribuzione) e in che cosa è diversa dalla convergenza in probabilità della Settimana 8. Devi saper usare il teorema per calcolare in modo approssimato la probabilità di un evento che riguarda una somma o una media, anche quando la somma è una variabile binomiale, e per calcolare quante osservazioni servono per una certa precisione, confrontando il risultato con quello di Čebyšëv. Soprattutto devi saper rispondere, con parole tue, alla domanda «che cosa garantisce e che cosa non garantisce il teorema del limite centrale?»: le ipotesi di indipendenza e di varianza finita con un controesempio per ciascuna, il fatto che il teorema non fissa un valore di $n$, il fatto che l’approssimazione è peggiore nelle code, e il fatto che riguarda somme e medie e non i singoli dati.
 
-La **correzione di continuità**, che compare nel gioco dei dieci dadi, è spiegata nel testo ma non è richiesta all’esame: all’esame puoi sempre usare la normale senza correzione. È inoltre **facoltativa e non richiesta all’esame** la lettura in fondo alla dispensa, che spiega perché il limite di una somma, se esiste, debba essere proprio una campana. Le formule esatte che usiamo per controllare il teorema (la distribuzione esatta della somma di uniformi, la distribuzione gamma delle lampadine) non sono richieste: servono soltanto a misurare quanto è buona l’approssimazione. L’intervallo di confidenza, cioè il modo di usare il teorema per dire qualcosa su una media che non conosciamo a partire dai dati, non si studia qui: è il tema della Settimana 10. Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
+La **correzione di continuità**, che compare nel gioco dei dieci dadi, è spiegata nel testo ma non è richiesta all’esame: all’esame puoi sempre usare la normale senza correzione. Le formule esatte che usiamo per controllare il teorema (la distribuzione esatta della somma di uniformi, la distribuzione gamma delle lampadine) non sono richieste: servono soltanto a misurare quanto è buona l’approssimazione. L’intervallo di confidenza, cioè il modo di usare il teorema per dire qualcosa su una media che non conosciamo a partire dai dati, non si studia qui: è il tema della Settimana 10. Per codice, widget e fonti valgono le [indicazioni generali per lo studio](../index.md#esame).
 
 ## Da dove ripartiamo {: #prima-di-cominciare }
 
@@ -451,7 +451,7 @@ $$
 P(S_2<2/3)\approx\Phi\!\left(\frac{2/3-1}{0{,}408}\right)=\Phi(-0{,}82)\approx0{,}207.
 $$
 
-Con due soli addendi la normale sbaglia di un punto e mezzo percentuale. Con cinque addendi i due valori sono 0,1017 e 0,0984; con dieci sono 0,0337 e 0,0339, e la differenza è nella quarta cifra decimale. I conti esatti per $n=5$ e $n=10$ richiedono una formula che non ci serve; il primo laboratorio (qui sotto) li fa al posto nostro.
+Con due soli addendi la normale sbaglia di un punto e mezzo percentuale. Con cinque addendi i due valori sono 0,1017 e 0,0984; con dieci sono 0,0337 e 0,0339, e la differenza è nella quarta cifra decimale. I conti esatti per $n=5$ e $n=10$ richiedono una formula che non ci serve; il [secondo laboratorio](#lab-somme) li fa al posto nostro.
 
 Lo stesso succede partendo da forme molto diverse. Nella Settimana 8 abbiamo disegnato la distribuzione della media di 1, 4 e 16 dadi, e con sedici dadi era già una campana. C’è anche un esempio più estremo, preso dal [simulatore della Rice University](https://onlinestatbook.com/stat_sim/sampling_dist/): una popolazione con due gobbe, molto lontana da una campana, da cui si estraggono campioni di 15 valori; la distribuzione della somma, e quella della media, dei 15 valori è di nuovo una campana stretta e simmetrica. Le gobbe sono sparite.
 
@@ -671,7 +671,7 @@ $$
 
 Con quaranta lampadine si arriva alla fine dell’anno circa sette volte su dieci. La media del tempo totale, 400 giorni, supera l’anno, ma la deviazione standard di 63 giorni è grande, e uno scarto di 35 giorni sotto la media è tutt’altro che raro.
 
-Quanto è buona questa approssimazione? In questo caso la distribuzione esatta della somma si conosce: la somma di esponenziali indipendenti ha una distribuzione che si chiama distribuzione gamma, che non studiamo, e con quella si trova 0,6975. La normale sbaglia di poco più di un punto percentuale. Il secondo laboratorio ottiene lo stesso numero con una simulazione. Di solito si giustifica l’uso del teorema osservando che «40 è maggiore di 30»: è una regola pratica molto diffusa, e nell’Atto VI vedremo che cosa vale davvero.
+Quanto è buona questa approssimazione? In questo caso la distribuzione esatta della somma si conosce: la somma di esponenziali indipendenti ha una distribuzione che si chiama distribuzione gamma, che non studiamo, e con quella si trova 0,6975. La normale sbaglia di poco più di un punto percentuale. Il [primo laboratorio](#lab-lampadine) ottiene lo stesso numero con una simulazione. Di solito si giustifica l’uso del teorema osservando che «40 è maggiore di 30»: è una regola pratica molto diffusa, e nell’Atto VI vedremo che cosa vale davvero.
 
 !!! example "Sosta di verifica"
     Vuoi copiare 400 foto su una chiavetta con 1000 MB liberi. Le dimensioni delle foto sono indipendenti, con media 2,4 MB e deviazione standard 1 MB. Con quale probabilità circa ci stanno tutte?
@@ -689,7 +689,7 @@ $$
 P(X\le25\ \text{oppure}\ X\ge45)\approx2\big(1-\Phi(1{,}85)\big)=2\,(1-0{,}9678)=0{,}064.
 $$
 
-Il valore esatto, che il primo laboratorio calcola sommando tutti i casi, è 0,078. Questa volta la normale sbaglia di più che con le lampadine, eppure dieci dadi sono una somma ben fatta, simmetrica come le gobbe del widget. Da dove viene la differenza?
+Il valore esatto, che il [secondo laboratorio](#lab-somme) calcola sommando tutti i casi, è 0,078. Questa volta la normale sbaglia di più che con le lampadine, eppure dieci dadi sono una somma ben fatta, simmetrica come le gobbe del widget. Da dove viene la differenza?
 
 Viene dal fatto che $X$ è un numero intero, mentre la normale è continua. La normale distribuisce la probabilità con continuità lungo tutta la retta, mentre $X$ la concentra sui valori interi: per esempio $P(X=25)\approx0{,}014$, ma per una variabile continua la probabilità di un singolo punto è zero. Calcolando $P(X\le25)$ con la normale fino a 25 si prende soltanto «metà» della barra del valore 25, quella a sinistra. Per una variabile intera, infatti, l’evento $X\le25$ è lo stesso evento di $X<26$, e qualunque soglia tra 25 e 26 andrebbe bene; per la normale invece le soglie danno probabilità diverse. La scelta più equilibrata è quella a metà strada, 25,5, e allo stesso modo 44,5 per l’altra coda. Questo spostamento di mezza unità si chiama **correzione di continuità**: quando si approssima con la normale una variabile che assume valori interi, ogni valore intero $k$ è rappresentato dall’intervallo da $k-0{,}5$ a $k+0{,}5$. Con la correzione il conto diventa:
 
@@ -701,9 +701,74 @@ molto vicino al valore esatto 0,0780. Ricordiamo che la correzione di continuit�
 
 Tornando al gioco: si vincono i 20 euro circa otto volte su cento. In media il docente regala $20\cdot0{,}078\approx1{,}56$ euro a partita, più la mentina: per gli studenti il gioco conviene, per il docente no.
 
+### Laboratorio: le lampadine simulate {: #lab-lampadine }
+
+Il primo script controlla con una simulazione il conto delle [lampadine](#lampadine). Simula 10 000 volte le quaranta lampadine, usate una dopo l’altra, e conta in quante prove arrivano a fine anno; poi rifà il conto con il teorema del limite centrale, come nel testo, e confronta i due risultati.
+
+<div class="psi-exec" markdown="1">
+```python
+from math import sqrt
+from statistics import NormalDist
+
+import numpy as np
+
+# Il generatore di numeri casuali. Il numero tra parentesi, il «seme»,
+# fa uscire ogni volta gli stessi numeri, così i risultati si possono ripetere.
+rng = np.random.default_rng(1810)
+
+# La distribuzione normale standard. Z.cdf(z) calcola Phi(z), cioè la tabella
+# letta nel verso diretto; Z.inv_cdf(p) trova lo z per cui Phi(z) = p, cioè
+# legge la tabella al contrario.
+Z = NormalDist()
+
+# Il numero di volte in cui ripetiamo ogni esperimento simulato.
+prove = 10_000
+
+# Ogni lampadina dura un tempo esponenziale con media 10 giorni. Ne usiamo 40,
+# una dopo l'altra, e ci chiediamo se bastano a coprire un anno.
+media_lampadina = 10      # giorni
+dev_std_lampadina = 10    # per l'esponenziale è uguale alla media
+quante_lampadine = 40
+anno = 365                # giorni
+
+# La simulazione. Costruiamo una tabella con una riga per ogni prova e una
+# colonna per ogni lampadina: ogni casella contiene la durata di una lampadina.
+durate = rng.exponential(media_lampadina, size=(prove, quante_lampadine))
+
+# Sommiamo lungo ogni riga (axis=1 vuol dire «lungo le righe»): per ogni prova
+# otteniamo il tempo totale coperto dalle 40 lampadine.
+totali = durate.sum(axis=1)
+
+# Il confronto totali >= anno dà, per ogni prova, True (vero) oppure False
+# (falso). Nella somma ogni True conta 1 e ogni False conta 0, quindi
+# otteniamo il numero di prove in cui le lampadine arrivano a fine anno.
+riuscite = np.sum(totali >= anno)
+stima_simulata = riuscite / prove
+
+# Il conto con il teorema del limite centrale. La somma di 40 durate ha
+# media 40 · 10 = 400 giorni e varianza 40 · 10² = 4000: è la varianza
+# della somma, non di una singola lampadina.
+media_somma = quante_lampadine * media_lampadina
+varianza_somma = quante_lampadine * dev_std_lampadina ** 2
+dev_std_somma = sqrt(varianza_somma)      # circa 63,2 giorni
+
+# Standardizziamo la soglia di 365 giorni.
+z_soglia = (anno - media_somma) / dev_std_somma      # circa -0,55
+
+# Vogliamo P(S >= 365), quindi usiamo il complementare: 1 - Phi(z).
+stima_tlc = 1 - Z.cdf(z_soglia)
+
+print("Lampadine")
+print(f"  probabilità simulata:       {stima_simulata:.3f}")
+print(f"  probabilità con il teorema: {stima_tlc:.3f}")
+```
+</div>
+
+La simulazione dà circa 0,697, praticamente il valore esatto 0,6975, mentre il teorema dà 0,710: con quaranta lampadine la normale sbaglia di poco più di un punto percentuale.
+
 ### Laboratorio: la campana delle somme {: #lab-somme }
 
-Il primo script rifà i conti di questo atto. Calcola in modo esatto la probabilità $P(S_n<n/3)$ per la somma di $n$ uniformi, con una formula che non studiamo, e la confronta con quella della normale; poi costruisce la distribuzione esatta della somma di dieci dadi, aggiungendo un dado alla volta come nella Settimana 7 si costruiva la somma di due, e calcola la probabilità di vincere al gioco nei tre modi: esatta, con la normale senza correzione e con la correzione. Infine disegna l’istogramma di 50 000 somme simulate di $n$ uniformi per $n=1,2,5,10$, con la campana sovrapposta.
+Il secondo script rifà gli altri conti di questo atto. Calcola in modo esatto la probabilità $P(S_n<n/3)$ per la somma di $n$ uniformi, con una formula che non studiamo, e la confronta con quella della normale; poi costruisce la distribuzione esatta della somma di dieci dadi, aggiungendo un dado alla volta come nella Settimana 7 si costruiva la somma di due, e calcola la probabilità di vincere al gioco nei tre modi: esatta, con la normale senza correzione e con la correzione. Infine disegna l’istogramma di 50 000 somme simulate di $n$ uniformi per $n=1,2,5,10$, con la campana sovrapposta.
 
 <div class="psi-exec" markdown="1">
 ```python
@@ -792,7 +857,7 @@ $$
 
 È l’**approssimazione normale della distribuzione binomiale**. Per una moneta equilibrata, $p=1/2$, ritroviamo la media $n/2$ e la deviazione standard $\frac12\sqrt n$ di De Moivre. Nel [widget della Settimana 4](../settimana_04/index.md#widget-binomiale) puoi vedere come, aumentando $n$, l’istogramma della distribuzione binomiale prenda la forma di una campana. Poiché $X$ assume valori interi, anche qui vale la correzione di continuità che abbiamo visto con i dieci dadi, utile ma non richiesta.
 
-L’approssimazione funziona bene quando la distribuzione binomiale è abbastanza simmetrica, cioè quando $p$ non è troppo vicino a 0 o a 1 e il numero atteso di successi $np$, e quello di insuccessi $n(1-p)$, sono entrambi grandi. Quando invece $p$ è piccolo e $np$ resta piccolo, come per gli eventi rari della [Settimana 5](../settimana_05/index.md#approssimazione-binomiale), la distribuzione binomiale è storta e somiglia molto di più a una distribuzione di Poisson che a una campana. Torneremo su questo punto nell’Atto VI.
+L’approssimazione funziona bene quando il numero atteso di successi $np$ e quello di insuccessi $n(1-p)$ sono entrambi almeno 10. È una regola pratica, non un teorema: vale per le probabilità ordinarie, non per le code lontane. Quando invece $np$ o $n(1-p)$ restano sotto quella soglia, come per gli eventi rari della [Settimana 5](../settimana_05/index.md#approssimazione-binomiale), la distribuzione binomiale è storta e somiglia molto di più a una distribuzione di Poisson che a una campana. Torneremo su questo punto nell’Atto VI.
 
 Possiamo ora mantenere una promessa della Settimana 8, sull’urna di Jacob Bernoulli. Ricordiamo la domanda. L’urna contiene 3000 sassolini bianchi e 2000 neri, quindi la proporzione di bianchi è $p=3/5=0{,}6$. Estraiamo $n$ sassolini, rimettendo ogni volta nell’urna quello estratto, e chiamiamo $f_n$ la frazione di bianchi tra i sassolini estratti. Bernoulli voleva sapere quante estrazioni servono perché $f_n$ cada entro $0{,}02$ da $0{,}6$, cioè tra $0{,}58$ e $0{,}62$, con una probabilità mille volte più grande di quella di cadere fuori.
 
@@ -972,7 +1037,7 @@ La condizione chiede che $n$ sia abbastanza grande, ed è giusto così: più oss
 
 Con Čebyšëv servono dunque 320 esecuzioni, mentre con il teorema del limite centrale, come abbiamo visto poco fa, ne bastano 62, circa cinque volte meno. Da dove viene la differenza? Dal fatto che Čebyšëv deve valere per **qualunque** distribuzione con quella varianza, comprese le più sfavorevoli, come abbiamo visto nella [tabella della Settimana 8](../settimana_08/index.md#cebysev-confronto), e per essere sicuro in tutti i casi deve essere molto prudente. La media di molte esecuzioni, invece, non ha una distribuzione qualunque: il teorema ci dice che, quando $n$ è grande, è approssimativamente normale. Conoscendo la forma della distribuzione possiamo calcolare la probabilità di sbagliare, invece di accontentarci di un tetto, e quella prudenza non serve più.
 
-I due numeri, inoltre, non sono risposte dello stesso tipo. Il numero 320 di Čebyšëv è una garanzia: vale per ogni distribuzione dei tempi con varianza 4, senza eccezioni. Il numero 62 del teorema viene da un’approssimazione, perché abbiamo trattato la media delle esecuzioni come se fosse esattamente normale. In questo problema l’approssimazione è affidabile. Le 62 esecuzioni sono più del doppio delle 30 della regola pratica che si usa di solito, «basta $n>30$», e il secondo script del [laboratorio](#lab-esecuzioni) conferma il conto anche con tempi molto asimmetrici. Esistono però distribuzioni per cui la regola pratica non basta, e le incontreremo nell’[Atto VI](#quanto-grande).
+I due numeri, inoltre, non sono risposte dello stesso tipo. Il numero 320 di Čebyšëv è una garanzia: vale per ogni distribuzione dei tempi con varianza 4, senza eccezioni. Il numero 62 del teorema viene da un’approssimazione, perché abbiamo trattato la media delle esecuzioni come se fosse esattamente normale. In questo problema l’approssimazione è affidabile. Le 62 esecuzioni sono più del doppio delle 30 della regola pratica che si usa di solito, «basta $n>30$», e il [terzo laboratorio](#lab-esecuzioni) conferma il conto anche con tempi molto asimmetrici. Esistono però distribuzioni per cui la regola pratica non basta, e le incontreremo nell’[Atto VI](#quanto-grande).
 
 C’è però un’ipotesi che il conto dà per scontata: le esecuzioni devono essere indipendenti e identicamente distribuite. Un benchmark reale lo è solo se lo prepariamo con cura. Come abbiamo visto nella [Settimana 8](../settimana_08/index.md#lgn-informatica), le prime esecuzioni trovano la cache vuota e sono più lente delle altre, quindi non hanno la stessa distribuzione; per questo si scartano alcune esecuzioni iniziali «di riscaldamento». Anche l’indipendenza può mancare. Se un altro programma occupa il processore per qualche secondo, rallenta molte esecuzioni consecutive insieme: è una causa comune, come il database sovraccarico che incontreremo nell’[Atto VI](#serve-indipendenza), e la media delle esecuzioni varia più di quanto dica la formula $\sigma/\sqrt n$. Se queste condizioni non sono rispettate, 62 esecuzioni non garantiscono la precisione che abbiamo calcolato, e nemmeno un numero più grande di esecuzioni risolve il problema: un errore che colpisce tutte le misure non si riduce facendo la media.
 
@@ -992,9 +1057,9 @@ Con il teorema del limite centrale ne bastavano circa 6500, più di novanta volt
     ??? esempio-svolto "Risposta"
         La frequenza è una media di indicatrici con varianza $p(1-p)\le1/4$, quindi $\sigma\le1/2$. Con la formula, $n\ge(1{,}96\cdot0{,}5/0{,}01)^2=98^2=9604$. Bastano circa 9600 simulazioni, poco meno di un quinto delle 50 000 di Čebyšëv.
 
-### Laboratorio: lampadine ed esecuzioni simulate {: #lab-esecuzioni }
+### Laboratorio: le esecuzioni simulate {: #lab-esecuzioni }
 
-Il secondo script controlla con una simulazione due conti di questa settimana. Prima simula 10 000 volte le quaranta lampadine e conta quante volte durano almeno un anno. Poi calcola il valore 1,96 con la funzione inversa della normale e il numero di esecuzioni. Infine simula il benchmark con tempi di esecuzione volutamente **asimmetrici**: ogni esecuzione dura 8 secondi più un’attesa esponenziale con media 2 secondi, quindi ha media 10 s e varianza 4 s², come nel problema del benchmark, ma una distribuzione molto lontana dalla campana. Per $n=10$, 62 e 320 esecuzioni, conta quante volte la media cade entro mezzo secondo da 10.
+Il terzo script simula il benchmark con tempi di esecuzione volutamente **asimmetrici**: ogni esecuzione dura 8 secondi più un’attesa esponenziale con media 2 secondi, quindi ha media 10 s e varianza 4 s², come nel problema del benchmark, ma una distribuzione molto lontana dalla campana. Per $n=10$, 62 e 320 esecuzioni, conta quante volte la media cade entro mezzo secondo da 10, e confronta il risultato con la probabilità prevista dal teorema.
 
 <div class="psi-exec" markdown="1">
 ```python
@@ -1003,37 +1068,65 @@ from statistics import NormalDist
 
 import numpy as np
 
+# Il generatore di numeri casuali. Il numero tra parentesi, il «seme»,
+# fa uscire ogni volta gli stessi numeri, così i risultati si possono ripetere.
 rng = np.random.default_rng(1810)
+
+# La distribuzione normale standard. Z.cdf(z) calcola Phi(z), cioè la tabella
+# letta nel verso diretto; Z.inv_cdf(p) trova lo z per cui Phi(z) = p, cioè
+# legge la tabella al contrario.
 Z = NormalDist()
+
+# Il numero di volte in cui ripetiamo ogni esperimento simulato.
 prove = 10_000
 
-# Le lampadine: la somma di 40 durate esponenziali con media 10.
-durate = rng.exponential(10, size=(prove, 40)).sum(axis=1)
-tlc = 1 - Z.cdf((365 - 400) / sqrt(4000))
-print(f"Lampadine: simulata {np.mean(durate >= 365):.3f}   "
-      f"TLC {tlc:.3f}")
+# I dati del problema del benchmark.
+sigma = 2          # deviazione standard di un tempo, in secondi (varianza 4)
+margine = 0.5      # vogliamo la media entro mezzo secondo dal valore vero
+valore_vero = 10   # il tempo medio vero, in secondi
 
-# Il valore z con Phi(z) = 0,975 e il numero di esecuzioni.
-z = Z.inv_cdf(0.975)
-print(f"z = {z:.3f}   n >= {(z * 2 / 0.5) ** 2:.2f}")
-
-# Tempi asimmetrici: 8 s più un'attesa esponenziale con media 2 s.
-# Media 10 s, varianza 4 s², come nel problema del benchmark.
+# Ogni esecuzione dura 8 secondi fissi più un'attesa esponenziale con media
+# 2 secondi. Il tempo ha quindi media 8 + 2 = 10 secondi e varianza 2² = 4,
+# come nel problema, ma la sua distribuzione non ha la forma di una campana.
 for n in [10, 62, 320]:
+    # Una riga per ogni prova e una colonna per ogni esecuzione.
     tempi = 8 + rng.exponential(2, size=(prove, n))
+
+    # La media delle n esecuzioni, calcolata riga per riga: una per ogni prova.
     medie = tempi.mean(axis=1)
-    dentro = np.mean(np.abs(medie - 10) < 0.5)
-    attesa = 2 * Z.cdf(0.5 / (2 / sqrt(n))) - 1
-    print(f"n = {n:3d}: media entro 0,5 s nel {dentro:.1%} "
-          f"dei casi (TLC {attesa:.1%})")
+
+    # Quanto dista ogni media dal valore vero, in valore assoluto.
+    distanze = np.abs(medie - valore_vero)
+
+    # Le prove in cui la media cade vicino al valore vero, cioè a meno di
+    # mezzo secondo. Il confronto distanze < margine dà, per ogni prova, True
+    # (vero) oppure False (falso); nella somma ogni True conta 1 e ogni False
+    # conta 0, quindi otteniamo il numero di prove in cui la media è vicina.
+    vicine = np.sum(distanze < margine)
+    frazione_simulata = vicine / prove
+
+    # La stessa probabilità secondo il teorema. La media ha deviazione
+    # standard sigma / √n; c è il margine misurato in quelle deviazioni
+    # standard, e l'intervallo simmetrico (-c, c) ha probabilità 2·Phi(c) - 1.
+    dev_std_media = sigma / sqrt(n)
+    c = margine / dev_std_media
+    frazione_tlc = 2 * Z.cdf(c) - 1
+
+    # Il formato .1% stampa il numero come percentuale, con un decimale.
+    print()
+    print(f"Benchmark con n = {n} esecuzioni")
+    print(f"  media vicina al valore vero nel {frazione_simulata:.1%} delle prove")
+    print(f"  il teorema prevede il {frazione_tlc:.1%}")
 ```
 </div>
 
-La simulazione delle lampadine dà circa 0,70, contro lo 0,71 della normale. Il valore di $z$ è 1,960 e il numero di esecuzioni circa 61,5. Nel benchmark, con 62 esecuzioni la media cade entro mezzo secondo circa il 95% delle volte, come previsto, anche se i singoli tempi sono tutt’altro che normali; con 10 esecuzioni la percentuale scende sotto il 60%, e con 320, il numero di Čebyšëv, sfiora il 100%: la garanzia di Čebyšëv era vera, ma molto più costosa del necessario. Prova a sostituire l’attesa esponenziale con `rng.pareto(1.5, size=(prove, n))`, che ha una coda molto pesante: che cosa succede? La risposta è nel prossimo atto.
+Con 62 esecuzioni la media cade entro mezzo secondo circa il 95% delle volte, come previsto, anche se i singoli tempi sono tutt’altro che normali; con 10 esecuzioni la percentuale scende sotto il 60%, e con 320, il numero di Čebyšëv, sfiora il 100%: la garanzia di Čebyšëv era vera, ma molto più costosa del necessario. Prova a sostituire l’attesa esponenziale con `rng.pareto(1.5, size=(prove, n))`, che ha una coda molto pesante: che cosa succede? La risposta è nel prossimo atto.
 
 ## Atto VI — Che cosa il teorema garantisce, e che cosa no {: #limiti }
 
-È la domanda d’esame della settimana, e conviene rispondere con ordine. Il teorema **garantisce** una cosa precisa: se sommiamo variabili indipendenti e identicamente distribuite con varianza finita, la funzione di ripartizione della somma standardizzata si avvicina a $\Phi$ quando il numero degli addendi cresce. In pratica, per $n$ grande, la somma e la media hanno approssimativamente la distribuzione normale, con la media e la varianza della Settimana 8, che invece valgono esattamente per ogni $n$. Tutto il resto **non** è garantito, e i punti da conoscere sono quattro: servono l’indipendenza e una varianza finita, il teorema non dice quanto deve essere grande $n$, e parla di somme e di medie, non dei singoli dati.
+Il teorema **garantisce** una cosa precisa: se sommiamo variabili indipendenti e identicamente distribuite con varianza finita, la funzione di ripartizione della somma standardizzata si avvicina a $\Phi$ quando il numero degli addendi cresce. In pratica, per $n$ grande, le variabili aleatorie _somma_ $S_n$ e _media campionaria_ $\bar{X}_n$ hanno approssimativamente la distribuzione normale, con il valore atteso e la varianza calcolati nella Settimana 8.
+
+Nota bene: il teorema non dice quanto deve essere grande $n$, e parla di somme e di medie, non dei singoli dati. Il valore atteso e la varianza di $S_n$ e di $\bar{X}_n$, invece, valgono esattamente per ogni $n$: il teorema aggiunge la forma della distribuzione, ma soltanto in modo approssimato e per $n$ grande.
 
 ### Servono variabili indipendenti {: #serve-indipendenza }
 
@@ -1041,13 +1134,13 @@ Un errore da non commettere è applicare il teorema quando le variabili che si s
 
 Il controesempio diventa più drammatico se $X$ non è normale. Supponiamo che $X$ sia esponenziale, e sommiamo $n$ copie della stessa variabile: $X+X+\cdots+X=nX$. Moltiplicare per $n$ cambia la scala ma non la forma, e $nX$ ha la stessa forma esponenziale di $X$, con il picco in zero e la lunga coda a destra, per ogni $n$. Nessuna campana compare mai, perché in tutta la somma c’è una sola fonte di casualità: non ci sono scarti che si compensino. La campana nasce proprio dalla compensazione di molti scarti indipendenti, alcuni in su e alcuni in giù.
 
-Nei sistemi informatici la dipendenza è frequente. I tempi di risposta di cento richieste arrivate nello stesso secondo non sono indipendenti se tutte passano per lo stesso database sovraccarico: quando il database rallenta, rallentano tutte insieme. La loro somma non ha varianza $100\sigma^2$, ma molto di più, e la campana con larghezza $\sigma\sqrt{100}$ sottovaluta il rischio. Una dipendenza debole, che si attenua tra osservazioni lontane, non impedisce il teorema, come Markov mostrò per la legge dei grandi numeri ([Settimana 8, Lettura A](../settimana_08/index.md#catene)); una causa comune che agisce su tutti gli addendi, invece, sì.
+Nei sistemi informatici la dipendenza è frequente. I tempi di risposta di cento richieste arrivate nello stesso secondo non sono indipendenti se tutte devono passare per lo stesso database sovraccarico: quando il database rallenta, rallentano tutte insieme. In questo caso, se $\sigma^2$ è la varianza del tempo di risposta di una singola richiesta, la somma dei cento tempi non ha varianza $100\sigma^2$: i ritardi vanno tutti nello stesso verso invece di compensarsi, e la varianza della somma è più grande, spesso molto più grande. La campana con larghezza $\sigma\sqrt{100}$ è quindi troppo stretta per descrivere questa somma, e sottovaluta il rischio di ritardi lunghi. Non ogni dipendenza, però, impedisce alla somma di avvicinarsi a una campana. Pensiamo agli addendi messi in fila nell’ordine in cui arrivano, come le richieste a un server durante una giornata. Due richieste vicine nella fila, arrivate a pochi millisecondi di distanza, trovano il server nello stesso stato e possono influenzarsi; due richieste lontane nella fila, arrivate a ore di distanza, sono quasi indipendenti. Quando la dipendenza si attenua in questo modo, al crescere della distanza nella fila, si può dimostrare che la somma si avvicina comunque a una campana, anche se la larghezza della campana va calcolata tenendo conto della dipendenza. Succede lo stesso con la legge dei grandi numeri: Markov dimostrò che vale anche per variabili dipendenti in questo modo ([Settimana 8, Lettura A](../settimana_08/index.md#catene)). Una _causa comune_ che agisce su tutti gli addendi, come il database sovraccarico, crea invece una dipendenza che non si attenua: lega allo stesso modo gli addendi vicini e quelli lontani, e il teorema non si può applicare.
 
 ### Il teorema non dice quanto grande deve essere n {: #quanto-grande }
 
 Il teorema parla di un limite, cioè di che cosa succede quando $n$ tende all’infinito, e non fissa nessun valore di $n$ oltre il quale l’approssimazione sia buona. Nei libri si trova spesso la regola «basta $n>30$», presentata come una regola empirica. È una regola pratica, non un teorema, e il numero giusto dipende dalla distribuzione degli addendi.
 
-Abbiamo già visto i due estremi. Con le variabili uniformi, simmetriche e senza code, cinque addendi bastano per un’ottima approssimazione. Con una moneta equilibrata, De Moivre diceva che bastano cento lanci. Con gli addendi **asimmetrici** serve molto di più. La figura mostra la somma standardizzata di $n$ tempi esponenziali: con $n=1$ è l’esponenziale stessa, con il picco a sinistra e la lunga coda a destra; con $n=5$ è ancora storta; con $n=30$ è vicina alla campana, ma non sovrapposta.
+Abbiamo già visto i due estremi. Con addendi uniformi tra 0 e 1, che sono simmetrici e senza code, cinque addendi bastano perché la densità somigli già a una campana: su $P(S_n<n/3)$ l’errore è di tre decimi di punto percentuale. Simmetria e assenza di code non sono requisiti del teorema, che chiede soltanto indipendenza e varianza finita: sono le proprietà che rendono l’uniforme il caso più facile. Con una moneta equilibrata, De Moivre diceva che bastano cento lanci. Con gli addendi **asimmetrici** serve molto di più. La figura mostra la somma standardizzata di $n$ tempi esponenziali: con $n=1$ è l’esponenziale stessa, con il picco a sinistra e la lunga coda a destra; con $n=5$ è ancora storta; con $n=30$ è vicina alla campana, ma non sovrapposta.
 
 <figure markdown="0">
 <svg viewBox="0 0 580 285" style="width:100%;max-width:560px;display:block;margin:auto;font-family:sans-serif;font-size:13px" role="img" aria-label="La somma standardizzata di n tempi esponenziali per n uguale a 1, 5 e 30, confrontata con la normale standard tratteggiata. Con n uguale a 1 la curva parte da un picco a sinistra e ha una lunga coda a destra; con 5 è ancora storta; con 30 è vicina alla campana ma la coda destra resta un po' più alta.">
@@ -1083,11 +1176,11 @@ Abbiamo già visto i due estremi. Con le variabili uniformi, simmetriche e senza
 <figcaption>La densità della somma standardizzata di n tempi esponenziali indipendenti, per n = 1 (viola), 5 (arancione) e 30 (blu), confrontata con la normale standard (nero tratteggiato). L’asimmetria dell’esponenziale si attenua lentamente: con 30 addendi il picco è ancora un po’ spostato a sinistra e la coda destra un po’ più alta di quella della campana.</figcaption>
 </figure>
 
-I numeri lo confermano. Per una normale, la probabilità di superare di 2 deviazioni standard la media è il 2,28%, e lo stesso vale per la coda di sinistra. Per la somma di $n$ esponenziali, la coda di destra vale il 4,98% con $n=1$, il 4,10% con $n=5$, il 3,16% con $n=30$ e il 2,79% con $n=100$; la coda di sinistra vale 0 con $n=1$, perché un tempo non può essere negativo, e l’1,22% con $n=30$. Con 30 addendi la coda destra è ancora una volta e mezza quella della normale. Le lampadine, con 40 addendi esponenziali, se la cavavano con un errore di un punto percentuale perché la soglia di 365 giorni non era molto lontana dal centro.
+I numeri lo confermano. Per una normale, la probabilità di superare di 2 deviazioni standard la media è il 2,28%, e lo stesso vale per la coda di sinistra. Per la somma di $n$ esponenziali, la coda di destra vale il 4,98% con $n=1$, il 4,10% con $n=5$, il 3,16% con $n=30$ e il 2,79% con $n=100$; la coda di sinistra vale 0 con $n=1$, perché un tempo non può essere negativo, e l’1,22% con $n=30$. Con 30 addendi la coda destra è ancora una volta e mezza quella della normale. Eppure le lampadine, con 40 addendi esponenziali, se la cavavano con un errore di poco più di un punto percentuale. Il motivo non è che 40 sia un numero abbastanza grande in assoluto, ma che la soglia di 365 giorni sta a 0,55 deviazioni standard sotto la media di 400, cioè vicino al centro: lì la campana è già buona, mentre a tradire l’esponenziale sono le code.
 
-C’è un caso ancora più lento: la variabile bernoulliana con $p$ piccolo. Il numero di successi in 100 prove con $p=0{,}01$ ha media 1, e vale zero con probabilità $0{,}99^{100}\approx0{,}366$. La sua distribuzione è una scala di pochi gradini molto storta, che somiglia a una distribuzione di Poisson con media 1 e per niente a una campana. Con cento addendi il teorema non ha ancora fatto il suo lavoro, perché il numero atteso di successi è troppo piccolo. È per questo che, per l’approssimazione normale della distribuzione binomiale, conta che $np$ e $n(1-p)$ siano grandi, e non soltanto $n$.
+C’è un caso ancora più lento: la variabile bernoulliana con $p$ piccolo. Il numero di successi in 100 prove con $p=0{,}01$ ha media 1, e vale zero con probabilità $0{,}99^{100}\approx0{,}366$. La sua distribuzione è una scala di pochi gradini molto storta, che somiglia a una distribuzione di Poisson con media 1 e per niente a una campana. Con cento addendi il teorema non ha ancora fatto il suo lavoro, perché il numero atteso di successi è troppo piccolo. È per questo che, per l’approssimazione normale della distribuzione binomiale, non conta il numero di prove in sé, ma il numero atteso di successi e di insuccessi: come abbiamo visto [nell’Atto V](#binomiale-normale), servono $np$ e $n(1-p)$ almeno 10. Con $p$ vicino a $0$ o a $1$ serve quindi un $n$ molto più grande: con $p=0{,}01$ servono mille prove, mentre con $p=0{,}5$ ne bastano venti.
 
-Infine, anche quando l’approssimazione è buona al centro, lo è meno nelle **code lontane**. Il teorema garantisce che le funzioni di ripartizione si avvicinano, cioè che l’errore assoluto sulle probabilità diventa piccolo; ma una probabilità di un milionesimo calcolata con la normale può essere sbagliata di un fattore dieci senza che l’errore assoluto sia grande. Nei sistemi informatici, dove spesso interessano eventi molto rari come il p99,99 di un tempo di risposta, questo conta: la campana va usata per le probabilità ordinarie, non per quelle estreme. Un esercizio alla fine della dispensa lo mostra con il vecchio trucco di generare numeri normali sommando dodici numeri uniformi.
+Infine, anche quando l’approssimazione è buona al centro, lo è meno nelle **code lontane**. Il teorema garantisce che le funzioni di ripartizione si avvicinano, cioè che l’errore assoluto sulle probabilità diventa piccolo; ma una probabilità di un milionesimo calcolata con la normale può essere sbagliata di un fattore dieci senza che l’errore assoluto sia grande. Nei sistemi informatici, dove spesso interessano eventi molto rari come il p99,99 di un tempo di risposta, questo conta: la campana va usata per le probabilità ordinarie, non per quelle estreme. Un esercizio alla fine della dispensa lo mostra con il vecchio trucco di generare numeri normali sommando dodici numeri uniformi (ricorda: p99,99 è il valore superato soltanto da una richiesta su diecimila; la definizione è nella [Settimana 6](../settimana_06/index.md#normale-informatica)).
 
 ### Serve una varianza finita: la distribuzione di Cauchy {: #cauchy }
 
@@ -1133,12 +1226,13 @@ Il grafico è una campana, simmetrica attorno allo zero, che a prima vista somig
 <figcaption>La densità normale standard (blu) e la densità di Cauchy (rosso). Entrambe sono campane simmetriche centrate in zero, ma quella di Cauchy è più bassa al centro e ha code molto più alte: le aree rosse oltre ±3 valgono insieme il 20,5%, contro lo 0,27% della normale.</figcaption>
 </figure>
 
-Code così pesanti hanno una conseguenza drastica: la varianza di una variabile di Cauchy è infinita, e nemmeno la sua media esiste, perché i valori molto grandi, in un verso e nell’altro, pesano troppo perché la somma pesata dei valori dia un numero. Le ipotesi del teorema del limite centrale, e anche quelle della legge dei grandi numeri, cadono. E il risultato è sorprendente: si può dimostrare, con strumenti che non vediamo, che **la media di $n$ variabili di Cauchy indipendenti ha di nuovo la stessa distribuzione di Cauchy**, per ogni $n$. La probabilità che la media di mille osservazioni stia fuori dall’intervallo da $-1$ a $1$ è il 50%, esattamente come per un’osservazione sola. Fare la media non serve a nulla. Ogni tanto arriva un valore così grande da spostare tutta la media, e più osservazioni si raccolgono, più è facile che ne arrivi uno.
+Code così pesanti hanno una conseguenza drastica: la varianza di una variabile di Cauchy è infinita, e nemmeno la sua media esiste, perché i valori molto grandi, in un verso e nell’altro, pesano troppo perché la somma pesata dei valori dia un numero. Le ipotesi del teorema del limite centrale, e anche quelle della legge dei grandi numeri, cadono. E il risultato è sorprendente: si può dimostrare, con strumenti che non vediamo, che **la media di $n$ variabili di Cauchy indipendenti ha di nuovo la stessa distribuzione di Cauchy**, per ogni $n$. La probabilità che la media di mille osservazioni stia fuori dall’intervallo da $-1$ a $1$ è il 50%, esattamente come per un’osservazione sola: $-1$ e $1$ sono valori di $x$ per la densità scritta sopra. Fare la media non serve a nulla. Ogni tanto arriva un valore così grande da spostare tutta la media, e più osservazioni si raccolgono, più è facile che ne arrivi uno.
 
 È la situazione opposta a quella che la [Settimana 6](../settimana_06/index.md#lab-normale) descriveva con la condizione di Lindeberg: la campana nasce da molti piccoli contributi, **nessuno dei quali prevale sugli altri**. Con Cauchy, invece, la somma è dominata dal suo addendo più grande.
 
-Cauchy può sembrare una curiosità da matematici, ma code pesanti di questo genere sono comuni nei dati dell’informatica: le dimensioni dei file su un disco, i tempi di risposta di un servizio con qualche richiesta molto lenta, il numero di visite alle pagine di un sito, il traffico di rete. Un modello usato spesso per questi dati è la **distribuzione di Pareto**, per cui la probabilità di superare un valore $x\ge1$ è $x^{-\alpha}$, con un parametro $\alpha$ che regola il peso della coda. Con $\alpha=1{,}5$ la media esiste e vale 3, ma la varianza è infinita: la legge dei grandi numeri vale ancora, ma la media si avvicina a 3 con una lentezza esasperante, e il teorema del limite centrale, nella forma che abbiamo studiato, non si applica. In una simulazione, la media di mille valori cade fuori dall’intervallo da 2,7 a 3,3 circa una volta su tre, e la sua distribuzione è tutt’altro che una campana. È il caso che nella Settimana 8 avevamo rimandato a questa settimana, e la ragione per cui nella Settimana 10, per misurare l’incertezza di una media su dati reali, useremo il bootstrap invece delle formule della campana.
+Cauchy può sembrare una curiosità da matematici, ma code pesanti di questo genere sono comuni nei dati dell’informatica: le dimensioni dei file su un disco, i tempi di risposta di un servizio con qualche richiesta molto lenta, il numero di visite alle pagine di un sito, il traffico di rete. Un modello usato spesso per questi dati è la **distribuzione di Pareto**, per cui la probabilità di superare un valore $x\ge1$ è $x^{-\alpha}$, con un parametro $\alpha$ che regola il peso della coda. Con $\alpha=1{,}5$ la media esiste e vale 3, ma la varianza è infinita: la legge dei grandi numeri vale ancora, ma la media si avvicina a 3 con una lentezza esasperante, e il teorema del limite centrale, nella forma che abbiamo studiato, non si applica. In una simulazione, la media di mille valori cade fuori dall’intervallo da 2,7 a 3,3 circa una volta su tre, e la sua distribuzione è tutt’altro che una campana. È il caso che nella Settimana 8 avevamo rimandato a questa settimana, e la ragione per cui nella Settimana 10, per misurare l’incertezza di una media su dati reali, useremo un altro metodo.
 
+<!--
 #### Esplora: la media che non si ferma {: #widget-code }
 
 Il widget disegna le medie progressive di fino a 50 sequenze indipendenti di osservazioni, con l’asse orizzontale in scala logaritmica, come quello della Settimana 8. Le distribuzioni sono tre: l’esponenziale con media 1, la Pareto con $\alpha=1{,}5$ e media 3, e la distribuzione di Cauchy, centrata in zero. La banda verde è un intervallo attorno al centro: $1\pm0{,}1$ per l’esponenziale, $3\pm0{,}3$ per la Pareto, $0\pm1$ per Cauchy. Alla posizione $n$ scelta, le sequenze con la media dentro la banda sono blu, quelle fuori sono rosse. Prima di guardare, prevedi: con 10 000 osservazioni, quante sequenze di Cauchy saranno ancora fuori dalla banda?
@@ -1237,11 +1331,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 Con l’esponenziale tutte le sequenze entrano nella banda prima di mille osservazioni e non ne escono più. Con la Pareto le medie salgono a scatti, ogni volta che arriva un valore molto grande, e poi ridiscendono lentamente; anche con diecimila osservazioni qualche sequenza è ancora fuori. Con Cauchy le medie non si fermano mai: circa metà delle sequenze è fuori dalla banda per qualunque $n$, e ogni tanto una media salta lontano all’improvviso.
 
+-->
+
 ### Riguarda le somme e le medie, non i singoli dati {: #non-i-dati }
 
 L’ultimo punto è il più importante in pratica, ed è anche l’errore più diffuso. Il teorema del limite centrale **non dice che i dati sono normali**. Dice che la somma, o la media, di molti dati indipendenti è approssimativamente normale. Se raccogliamo i tempi di risposta di diecimila richieste a un servizio web, il loro istogramma resta quello che è, asimmetrico e con la coda pesante, per quanto grande sia il numero delle richieste: aumentare i dati rende soltanto più nitido quell’istogramma storto. Ciò che diventa normale è la **media** dei tempi, se la calcoliamo su molte richieste e ripetiamo il calcolo su molti gruppi di richieste.
 
-Per questo, come abbiamo detto nella [Settimana 6](../settimana_06/index.md#normale-informatica), il p99 dei tempi di risposta non si calcola con $\mu+2{,}326\,\sigma$, ma si misura sui dati: riguarda una singola richiesta, non una media, e il teorema non dice nulla su di lui. Lo stesso vale per il **massimo**. Un servizio che, per rispondere a un utente, interroga in parallelo 100 server e aspetta la risposta di tutti, risponde lentamente se anche uno solo dei server è lento. Se ogni server è lento una volta su cento, in modo indipendente dagli altri, la probabilità che almeno uno sia lento è $1-0{,}99^{100}\approx0{,}63$: quasi due richieste su tre sono lente, anche se ogni server, preso da solo, è velocissimo quasi sempre. È il calcolo del complementare della Settimana 3, ed è un fenomeno che gli ingegneri di Google hanno chiamato «la coda su larga scala». Il massimo non è una somma, e la campana non lo descrive.
+Vale la pena fermarsi sulla formula che a questo punto viene naturale. Se una variabile $X$ è normale con media $\mu$ e deviazione standard $\sigma$, il suo quantile al livello $p$ si trova standardizzando al contrario: si cerca nella tabella il valore $z_p$ per cui $\Phi(z_p)=p$, e si torna alla scala originale con $x_p=\mu+z_p\,\sigma$. Per il p99, $p=0{,}99$ e $z_{0{,}99}=2{,}326$, quindi il p99 di una normale è $\mu+2{,}326\,\sigma$; è lo stesso conto del problema inverso della [Settimana 6](../settimana_06/index.md#quantili). La formula, però, vale solo se la distribuzione è normale. I tempi di risposta non lo sono: sono asimmetrici e hanno una coda lunga a destra, e la campana non li descrive. C’è anche una ragione più profonda: il p99 riguarda una singola richiesta, non una media, e il teorema del limite centrale non dice nulla sulla distribuzione delle singole richieste. Per questo il p99 non si calcola con quella formula, ma si misura sui dati. Lo stesso vale per il **massimo**. Un servizio che, per rispondere a un utente, interroga in parallelo 100 server e aspetta la risposta di tutti, risponde lentamente se anche uno solo dei server è lento. Se ogni server è lento una volta su cento, in modo indipendente dagli altri, la probabilità che almeno uno sia lento è $1-0{,}99^{100}\approx0{,}63$: quasi due richieste su tre sono lente, anche se ogni server, preso da solo, è velocissimo quasi sempre. È il calcolo del complementare della Settimana 3, ed è un fenomeno che gli ingegneri di Google hanno chiamato «la coda su larga scala». Il massimo non è una somma, e la campana non lo descrive.
 
 !!! example "Sosta di verifica"
     Quali di queste affermazioni sono giuste? (a) «Ho misurato diecimila tempi di risposta: per il teorema del limite centrale il loro istogramma è una campana.» (b) «Se sommo i tempi di 50 richieste indipendenti, con una distribuzione qualsiasi con varianza finita, il totale è circa normale.» (c) «Con $n>30$ l’approssimazione normale è sempre buona.» (d) «La media di mille osservazioni di Cauchy è più precisa di una singola osservazione.»
@@ -1249,9 +1345,10 @@ Per questo, come abbiamo detto nella [Settimana 6](../settimana_06/index.md#norm
     ??? esempio-svolto "Risposta"
         È giusta soltanto (b). (a) confonde i dati con la loro media: l’istogramma dei tempi resta asimmetrico; è la media di molti tempi a essere quasi normale. (c) è una regola pratica, non un teorema: con addendi molto asimmetrici, come gli esponenziali o le variabili bernoulliane con $p$ piccolo, trenta addendi non bastano. (d) è falsa: la media di variabili di Cauchy indipendenti ha la stessa distribuzione di una variabile sola, perché la varianza è infinita.
 
+<!--
 ### Laboratorio: quando la campana non arriva {: #lab-code }
 
-Il terzo script mette alla prova i limiti del teorema. Nella prima parte misura le due code della somma standardizzata di $n$ tempi esponenziali, da confrontare con il 2,28% della normale. Nella seconda calcola le medie progressive di centomila osservazioni da tre distribuzioni, l’esponenziale, la Pareto con $\alpha=1{,}5$ e Cauchy, ne stampa il valore a quattro tappe e le disegna. Nella terza ripete duemila volte la media di mille osservazioni e conta quante volte cade lontano dal centro.
+Il quarto script mette alla prova i limiti del teorema. Nella prima parte misura le due code della somma standardizzata di $n$ tempi esponenziali, da confrontare con il 2,28% della normale. Nella seconda calcola le medie progressive di centomila osservazioni da tre distribuzioni, l’esponenziale, la Pareto con $\alpha=1{,}5$ e Cauchy, ne stampa il valore a quattro tappe e le disegna. Nella terza ripete duemila volte la media di mille osservazioni e conta quante volte cade lontano dal centro.
 
 <div class="psi-exec" markdown="1">
 ```python
@@ -1306,15 +1403,17 @@ for nome, x, centro, eps in [
 </div>
 
 Nella prima tabella la coda destra parte dal 5% circa e scende verso il 2,28% molto lentamente, mentre la coda sinistra sale da zero: è la figura dell’esponenziale, in numeri. Nella seconda la media dell’esponenziale si ferma vicino a 1 già dopo mille osservazioni; quella della Pareto si avvicina a 3 a scatti; quella di Cauchy continua a saltare. Nella terza, la media di mille esponenziali non si allontana quasi mai da 1 di più di 0,1, quella di mille valori di Pareto cade fuori da $3\pm0{,}3$ circa una volta su tre, e quella di mille valori di Cauchy cade fuori da $\pm1$ metà delle volte, come una singola osservazione. Prova a cambiare il seme del generatore: le righe dell’esponenziale cambiano di poco, quelle di Pareto e di Cauchy cambiano moltissimo.
+-->
 
 ### Il teorema del limite centrale in informatica {: #tlc-informatica }
 
 Malgrado i suoi limiti, o forse proprio perché li conosciamo, il teorema è uno degli strumenti più usati dell’informatica. Il **carico aggregato** di un servizio, cioè la somma delle richieste di molti utenti indipendenti, è approssimativamente normale anche se ogni utente si comporta in modo imprevedibile: per dimensionare un server si può prevedere un carico medio $n\mu$ e un margine di qualche $\sigma\sqrt n$, che cresce molto più lentamente del numero degli utenti. È la ragione per cui servire molti utenti insieme costa meno che servirli uno per uno. Lo stesso vale per lo spazio occupato da molti file, come nella sosta della chiavetta, e per il tempo totale di una catena di elaborazioni indipendenti.
 
-Ogni volta che si stima una quantità con una **simulazione Monte Carlo**, il teorema dice quanto è precisa la stima: la media di $n$ simulazioni ha un errore approssimativamente normale con deviazione standard $\sigma/\sqrt n$, e quindi cade entro $1{,}96\,\sigma/\sqrt n$ dal valore vero il 95% delle volte. Nei **benchmark**, come nel problema delle 62 esecuzioni, dice quante ripetizioni servono, purché le esecuzioni siano davvero indipendenti e nelle stesse condizioni, come abbiamo [discusso con il benchmark](#quante-esecuzioni). Nei **test A/B**, che confrontano due versioni di un sito sulla base delle medie di due gruppi di utenti, la differenza delle medie è approssimativamente normale: è il punto di partenza dei metodi della Settimana 10. E nei **generatori di numeri casuali** il teorema è stato per decenni una scorciatoia: sommando dodici numeri uniformi e sottraendo 6 si ottiene un numero approssimativamente normale standard, con i limiti che vedremo in un esercizio.
+Ogni volta che si stima una quantità con una **simulazione Monte Carlo**, il teorema dice quanto è precisa la stima: la media di $n$ simulazioni ha un errore approssimativamente normale con deviazione standard $\sigma/\sqrt n$, e quindi cade entro $1{,}96\,\sigma/\sqrt n$ dal valore vero il 95% delle volte. Nei **benchmark**, come nel problema delle 62 esecuzioni, dice quante ripetizioni servono, purché le esecuzioni siano davvero indipendenti e nelle stesse condizioni, come abbiamo [discusso con il benchmark](#quante-esecuzioni).  E nei **generatori di numeri casuali** il teorema è stato per decenni una scorciatoia: sommando dodici numeri uniformi e sottraendo 6 si ottiene un numero approssimativamente normale standard, con i limiti che vedremo in un esercizio.
 
 In tutti questi casi vale la stessa avvertenza: il teorema parla di somme e medie di molte quantità indipendenti con varianza finita. Quando una di queste condizioni manca, o quando interessa un singolo valore, un massimo o un evento rarissimo, la campana va controllata sui dati. Il messaggio della settimana per un ingegnere del software si può riassumere così: qualunque sia la complessità dei singoli componenti di un sistema, la loro somma aggregata tende a comportarsi come una campana con una larghezza che cresce come $\sqrt n$, purché i componenti siano indipendenti e le loro code non siano troppo pesanti.
 
+<!--
 ## Lettura A — Perché proprio la campana? {: #punto-fisso .psi-facoltativo }
 
 Questa lettura è facoltativa e non è richiesta all’esame. Non dimostra il teorema del limite centrale, che richiede strumenti che non abbiamo, ma spiega con un ragionamento elementare perché, se la somma standardizzata si avvicina a una forma, quella forma deve essere proprio la campana. Lo stesso ragionamento spiega perché la distribuzione di Cauchy si comporta in modo così diverso.
@@ -1332,6 +1431,7 @@ dove nel secondo passaggio abbiamo spezzato la somma delle $2n$ variabili nelle 
 Il ragionamento spiega anche il ruolo della varianza finita. Il fattore $\sqrt2$ viene dal fatto che le varianze si sommano: due metà con varianza 1 danno una somma con varianza 2, e per riportarla a 1 si divide per $\sqrt2$. Se la varianza è infinita, questo conto non si può fare, e la scala giusta può essere un’altra. La distribuzione di Cauchy è un punto fisso con un fattore diverso: se $C_1$ e $C_2$ sono variabili di Cauchy indipendenti, $(C_1+C_2)/2$ ha di nuovo la distribuzione di Cauchy. Si divide per 2 e non per $\sqrt2$: la somma di due variabili di Cauchy è larga il doppio di una sola, non $\sqrt2$ volte di più. Ripetendo il ragionamento, la somma di $n$ variabili di Cauchy è larga $n$ volte una sola, e la media, che divide per $n$, ha la stessa larghezza di una variabile sola: è il risultato che abbiamo visto nell’Atto VI.
 
 Negli anni Venti del Novecento il matematico francese Paul Lévy studiò tutte le distribuzioni che sono punti fissi in questo senso, con un fattore di scala qualunque, e che oggi si chiamano **distribuzioni stabili**. La normale è l’unica con varianza finita; tutte le altre, come quella di Cauchy, hanno code pesanti. Per somme di variabili con code molto pesanti, come la Pareto con $\alpha$ tra 1 e 2, esiste una versione generalizzata del teorema: la somma, centrata e divisa per un fattore che cresce più in fretta di $\sqrt n$, si avvicina a una di queste distribuzioni stabili con le code pesanti, e non alla campana. La campana è dunque il punto d’arrivo delle somme «ordinarie», quelle in cui nessun addendo può prevalere; le distribuzioni stabili sono il punto d’arrivo delle somme in cui i valori enormi contano.
+-->
 
 ## Esercizi: prima prova, poi apri la soluzione {: #esercizi }
 
